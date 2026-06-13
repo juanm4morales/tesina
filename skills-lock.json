@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "skills": {
+    "citation-management": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/citation-management/SKILL.md",
+      "computedHash": "0e2de2614610100e41121e67f3dbc560bc0435e00cdd06dd502eee87aba87335"
+    },
+    "exploratory-data-analysis": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/exploratory-data-analysis/SKILL.md",
+      "computedHash": "cb20724e99a91c8042e61b0f9035b8ac4456a832edf264ee12a455921401de69"
+    },
+    "hypogenic": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hypogenic/SKILL.md",
+      "computedHash": "b215c7d2db877625de0db39c442b1ed551aee75f20bb1bd51c1e33f1406a34af"
+    },
+    "hypothesis-generation": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hypothesis-generation/SKILL.md",
+      "computedHash": "f3c8dd9984429fbd1ff9d94bc77a9c2de66be94ac2408c28e1eed3df8deaf9e4"
+    },
+    "latex-posters": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/latex-posters/SKILL.md",
+      "computedHash": "868b10b8b64438a88289d8c027ef4e8b696a33b04dbd5b449f5d3bf68573907a"
+    },
+    "literature-review": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/literature-review/SKILL.md",
+      "computedHash": "88a4e01e9ec0539e261378fe033486d4035ef6a7eedd3e9656c0e7dd02e28a26"
+    },
+    "open-notebook": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/open-notebook/SKILL.md",
+      "computedHash": "69e90fc5c4fdb88ec75d270574ff1436a8efe11df4d2dd334e653928646e6b83"
+    },
+    "paper-lookup": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/paper-lookup/SKILL.md",
+      "computedHash": "5dd2882a5758c6c46ebed5d250c11aa8aad109ca580579e288192668f2241e00"
+    },
+    "scholar-evaluation": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scholar-evaluation/SKILL.md",
+      "computedHash": "fad1224acb72ad1b35badb34b90392d91265490f5f3eb62741edb4a22911e303"
+    },
+    "scientific-brainstorming": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scientific-brainstorming/SKILL.md",
+      "computedHash": "5cc7d1679689009be0959aa537e3a13dea3b4335cdf8e735d7fc4359f3ac5938"
+    },
+    "scientific-critical-thinking": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scientific-critical-thinking/SKILL.md",
+      "computedHash": "549ff729677991f52200723c0414a3c2b0ce1a0e36dfd4400d6289bd03370f65"
+    },
+    "scientific-schematics": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scientific-schematics/SKILL.md",
+      "computedHash": "c0203b84249dedf20da6689fa94d3680e4530aa5fc554b91b622f05024fff717"
+    },
+    "scientific-writing": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scientific-writing/SKILL.md",
+      "computedHash": "d0354f82a3bfe9419a4569011cfdf2ec61cf4bed4bd5c7b1498dcb4032680a91"
+    },
+    "statistical-analysis": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/statistical-analysis/SKILL.md",
+      "computedHash": "0447a62cc900ae54e111b285d9281bba9f43b2b3d079e025e19415e22e3b3af9"
+    },
+    "what-if-oracle": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/what-if-oracle/SKILL.md",
+      "computedHash": "e155ea819adc0b7d8529270e91ff2ad8a3c1354a8bea0ebd1b443f278e8cae38"
+    },
+    "xlsx": {
+      "source": "k-dense-ai/claude-scientific-skills",
+      "sourceType": "github",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "computedHash": "5e4fe76dc267752c295ad81f1b742b6e848140db1076a2a12703c55504fe5bd6"
+    }
+  }
+}

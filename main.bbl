@@ -1,0 +1,43 @@
+\begin{thebibliography}{1}
+  \providebibliographyfont{name}{}%
+  \providebibliographyfont{lastname}{}%
+  \providebibliographyfont{title}{\emph}%
+  \providebibliographyfont{jtitle}{\btxtitlefont}%
+  \providebibliographyfont{etal}{\emph}%
+  \providebibliographyfont{journal}{}%
+  \providebibliographyfont{volume}{}%
+  \providebibliographyfont{ISBN}{\MakeUppercase}%
+  \providebibliographyfont{ISSN}{\MakeUppercase}%
+  \providebibliographyfont{url}{\url}%
+  \providebibliographyfont{numeral}{}%
+  \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+
+\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem {fernandez}
+\btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\ \btxtitlefont {Elementos de la teoría del tráfico vehicular}.
+\newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad Católica del Perú}, 2011.
+
+\bibitem {UN2018_CongestionCost}
+\btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over \$160 billion in lost productivity}{Traffic congestion cost Americans over \$160 billion in lost productivity}}.
+\newblock \btxjournalfont {Citado en arXiv:2406.13693 (Reporte original de UN 2018)}, 2018.
+\newblock Fuente: [1] Costos de congestión y emisiones de CO2.
+
+\bibitem {Ault2022_MARL_Limitations}
+\btxnamefont {\btxlastnamefont {Ault}, James} \btxandlong {}\ \btxnamefont {Guni \btxlastnamefont {Sharon}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Cooperative multi-agent reinforcement learning applied to multi-intersection traffic signal control}{Cooperative Multi-agent Reinforcement Learning Applied to Multi-intersection Traffic Signal Control}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 31st ACM International Conference on Information \& Knowledge Management (CIKM '22)}, 2022.
+\newblock {\latintext \btxurlfont{https://people.engr.tamu.edu/guni/papers/CIKM22-MATCS.pdf}}, Fuente: [7, 8] Destaca el "éxito limitado" de SARL y los enfoques independientes en redes.
+
+\bibitem {Feriani2021_MARL_NonStationary}
+\btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont {Ekram \btxlastnamefont {Hossain}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Multi-agent reinforcement learning: Key differences from single-agent rl}{Multi-Agent Reinforcement Learning: Key Differences from Single-Agent RL}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:2508.07001}, 2021.
+\newblock Fuente: [9] Define la no estacionariedad como una diferencia clave de MARL vs SARL.
+
+\bibitem {calymayor}
+\btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\ \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
+\newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
+
+\bibitem {ite_handbook}
+\btxnamefont {\btxlastnamefont {Pande}, Anurag} \btxandlong {}\ \btxnamefont {Brian \btxlastnamefont {Wolshon}}\btxauthorcolon\ \btxtitlefont {Traffic Engineering Handbook}.
+\newblock \btxpublisherfont {John Wiley \& Sons, Inc.}, \btxeditionnumlong {7th}{}, 2016.
+
+\end{thebibliography}

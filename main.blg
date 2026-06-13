@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99e (TeX Live 2026/Arch Linux)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+A level-1 auxiliary file: 0-titulo.aux
+A level-1 auxiliary file: 1-agradecimientos.aux
+A level-1 auxiliary file: 3-introduccion.aux
+A level-1 auxiliary file: 4-marco_teorico.aux
+The style file: babunsrt.bst
+Database file #1: bibliografia.bib
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Warning--empty language in fernandez
+You've used 6 entries,
+            2465 wiz_defined-function locations,
+            623 strings with 6801 characters,
+and the built_in function-call counts, 1352 in all, are:
+= -- 101
+> -- 36
+< -- 0
++ -- 15
+- -- 9
+* -- 116
+:= -- 182
+add.period$ -- 15
+call.type$ -- 6
+change.case$ -- 5
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 95
+empty$ -- 173
+format.name$ -- 24
+if$ -- 306
+int.to.chr$ -- 0
+int.to.str$ -- 6
+missing$ -- 11
+newline$ -- 43
+num.names$ -- 6
+pop$ -- 41
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 29
+stack$ -- 0
+substring$ -- 0
+swap$ -- 33
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 6
+width$ -- 7
+write$ -- 78
+(There was 1 warning)
