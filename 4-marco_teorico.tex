@@ -1,0 +1,152 @@
+\chapter{Marco Teórico}\label{cap:marco_teorico}
+
+\section{Ingeniería de Tránsito y Tráfico}\label{sec:ingenieria_transito}
+
+De acuerdo con las bases conceptuales establecidas por el \textit{Traffic Engineering Handbook} del \textit{Institute of Transportation Engineers} (ITE), la ingeniería de tránsito (o tráfico) se define formalmente como una subdisciplina de la ingeniería de transporte que aborda la planificación, el diseño y la operación de calles y carreteras, sus redes, las tierras adyacentes y su interacción con otros modos de transporte (como el aéreo, marítimo y ferroviario) así como con sus respectivas terminales. En el contexto del modelado de sistemas y las ciencias de la computación, comprender esta disciplina resulta crucial, ya que provee los modelos matemáticos, las variables de estado y los parámetros de control necesarios para simular y optimizar redes de transporte complejas.
+
+Históricamente, desde la primera edición del manual en 1941, el enfoque de la profesión estuvo fuertemente centrado en proporcionar y expandir la capacidad vial mediante la construcción de nuevas infraestructuras y la ampliación de las arterias existentes. Sin embargo, la evidencia empírica a lo largo de las décadas demostró que el aumento de la congestión vehicular no podía mitigarse de forma sostenible únicamente añadiendo capacidad física. En consecuencia, la disciplina experimentó una evolución paradigmática hacia la gestión de la demanda de tráfico, buscando mitigar la congestión a través de la provisión de alternativas de viaje que integran múltiples modos de transporte.
+
+En la actualidad, la práctica moderna se aleja de los enfoques tradicionales que priorizaban exclusivamente el flujo de automóviles. El nuevo paradigma exige que los ingenieros de tránsito conciban opciones de diseño y control que faciliten el movimiento seguro y eficiente de absolutamente todos los usuarios de la vía. Esto implica diseñar para un ecosistema heterogéneo que incluye peatones, ciclistas, usuarios de transporte público de todas las edades y niveles de habilidad, así como operadores de vehículos de emergencia y de carga comercial. Como ejemplo de esta visión integral, en el caso de las calles urbanas, los ingenieros deben considerar diseños de tráfico alternativos que induzcan velocidades de viaje más lentas; esta restricción de la dinámica vehicular no se ve como una penalización, sino como un mecanismo de control para crear entornos más seguros, fomentar la actividad económica en los centros de las ciudades y contribuir a la revitalización urbana.
+
+Desde una perspectiva analítica y metodológica, la ingeniería de tránsito contemporánea integra soluciones sensibles al contexto, haciendo un profundo énfasis en la resiliencia, la sensibilidad ambiental, la confiabilidad del sistema y la sostenibilidad. La disciplina ha migrado hacia un marco de diseño y análisis basado en el rendimiento (\textit{performance-based design}). Bajo esta filosofía sistémica, las redes de transporte se diseñan para ser adaptables a demandas fluctuantes y preferencias cambiantes de los usuarios. Las decisiones de diseño y control óptimo ya no se basan únicamente en minimizar el costo de construcción, sino que los profesionales intentan cuantificar el rendimiento \textit{ex-ante}, \textit{in-itinere} y \textit{ex-post} mediante múltiples métricas de costo-beneficio para la mejora de la movilidad y la creación de comunidades habitables.
+
+Finalmente, el objetivo estructural de este enfoque moderno es lograr una armonización y una conexión fluida entre la vía pública y el entorno de uso de suelo circundante. Este nivel de análisis elimina la fragmentación tradicional del diseño en capas aisladas (donde primero se resolvía el tráfico vehicular y luego se adaptaba el espacio para peatones o personas con discapacidad), promoviendo en su lugar una interacción concurrente y multimodal en la planificación, operación y gestión sistémica de calles y carreteras.
+
+\subsection{Fundamentos de la Dinámica Vehicular}\label{subsec:fundamentos_dinamica_vehicular}
+
+Para alimentar los procesos de toma de decisiones y calibrar los modelos computacionales subyacentes, la ingeniería de tránsito se nutre de rigurosos estudios empíricos que caracterizan la dinámica del sistema. Estos fundamentos estocásticos y deterministas son los que permiten la parametrización de simuladores de tráfico. Entre las variables macroscópicas y microscópicas fundamentales de la dinámica vehicular destacan:
+
+\begin{itemize}
+    \item \textbf{Volumen de Tránsito:} Constituye una entrada clave para múltiples análisis de ingeniería, representando el recuento de vehículos, bicicletas o peatones que pasan por un punto o ingresan a una intersección durante un período determinado.
+    
+    \item \textbf{Velocidad:} Es una métrica fundamental del rendimiento del tráfico utilizada extensivamente en operaciones, diseño y auditorías de seguridad. Analíticamente, se modela a través de dos estadísticos principales: la velocidad media temporal (\textit{Time-Mean Speed}), que representa la media aritmética de las velocidades recolectadas en un punto topológico específico; y la velocidad media espacial (\textit{Space-Mean Speed}), definida como la distancia total recorrida sobre el tiempo total de viaje para todos los vehículos en un segmento, siendo esta última la métrica central empleada en las ecuaciones de conservación teóricas de velocidad-flujo-densidad.
+    
+    \item \textbf{Demora (\textit{Delay}):} Parámetro crítico para medir la calidad del flujo vehicular, que se subdivide funcionalmente en: demora de control (tiempo en cola sumado a pérdidas de tiempo por procesos de aceleración y desaceleración), demora geométrica (reducción de velocidad inducida por la fisonomía de la infraestructura) y demora total de tiempo de viaje.
+    
+    \item \textbf{Longitud de Cola (\textit{Queue Length}):} Permite dimensionar carriles de almacenamiento y provee una medida útil de la eficiencia del control semafórico. Debido a que los modelos matemáticos macroscópicos suelen asumir colas infinitas, se emplean técnicas de simulación computacional para determinar longitudes reales y evitar escenarios de bloqueo (\textit{spillback}) en intersecciones adyacentes o accesos.
+    
+    \item \textbf{Flujo de Saturación y Tiempo Perdido:} El flujo de saturación define la capacidad inherente de una vía, representando la tasa máxima de vehículos que pueden cruzar una intersección en una hora teórica de luz verde ininterrumpida. En conjunto con el tiempo perdido (la fracción no utilizable del ciclo semafórico, compuesta por el tiempo perdido de arranque al inicio del verde y el tiempo perdido de despeje o \textit{clearance}), conforman las bases matemáticas ineludibles para programar fases y estimar la capacidad en controladores de tránsito.
+    
+    \item \textbf{Brechas y Aceptación de Brechas (\textit{Gaps and Gap Acceptance}):} La dinámica de cruce en flujos de tráfico en conflicto depende de la distribución temporal entre vehículos sucesivos (brechas). El estudio de la "brecha crítica" —es decir, el intervalo de tiempo mínimo aceptable para que un conductor realice una maniobra de cruce— es fundamental para los cálculos de capacidad analítica en intersecciones no semaforizadas y rotondas, resultando vital para la parametrización de agentes en modelos de simulación microscópica.
+\end{itemize}
+```
+
+\subsection{Fundamentos de la Dinámica Vehicular}\label{subsec:fundamentos_dinamica_vehicular}
+
+El estudio analítico del tráfico, bajo la premisa de que la circulación constituye un fenómeno físico y social medible \cite{fernandez}, requiere caracterizar matemáticamente el movimiento de las unidades y sus interacciones en la red vial. Esta dinámica se aborda tradicionalmente a través de dos enfoques complementarios: el macroscópico, que trata la corriente vehicular como un medio continuo gobernado por variables agregadas, y el microscópico, que modela las propiedades y trayectorias de unidades discretas individuales \cite{fernandez, calymayor}.
+
+\subsubsection{Dualidad y Correlación de Variables Micro-Macroscópicas}
+
+El estado físico de una corriente de tráfico continuo queda unívocamente determinado por tres variables macroscópicas principales: la tasa de flujo ($q$), la velocidad media de espacio ($\overline{v}_e$) y la densidad o concentración ($k$) \cite{calymayor}. Estas variables se vinculan mediante la ecuación fundamental del flujo vehicular:
+
+\begin{equation}
+    q = \overline{v}_e \cdot k
+\end{equation}
+
+Para el desarrollo de modelos de simulación y la calibración de algoritmos de control, existe una correspondencia biunívoca entre estas propiedades agregadas y las mediciones microscópicas espaciales y temporales tomadas sobre los vehículos individuales \cite{fernandez, calymayor}:
+
+\begin{enumerate}
+    \item \textbf{Tasa de Flujo e Intervalo:} El flujo ($q$) es el recíproco del intervalo temporal promedio ($\overline{t}$) medido entre el paso de dos vehículos consecutivos por una sección fija de la vía ($q = 3600 / \overline{t}$) \cite{fernandez, calymayor}.
+    \item \textbf{Densidad y Espaciamiento:} La concentración ($k$) es el recíproco del espaciamiento espacial promedio ($\overline{s}$) entre puntos homólogos de unidades consecutivas en un instante dado ($k = 1000 / \overline{s}$) \cite{fernandez, calymayor}.
+    \item \textbf{Velocidad Media de Espacio:} A diferencia de la media de tiempo ($\overline{v}_t$, obtenida mediante promedios aritméticos en un punto fijo), la velocidad media de espacio (\textit{space mean speed}, $\overline{v}_e$) representa la media armónica de las velocidades instantáneas \cite{fernandez, calymayor}. Esta variable refleja matemáticamente el tiempo total empleado por la corriente para recorrer un tramo y es la que satisface de forma estricta la ecuación fundamental del flujo \cite{calymayor}.
+\end{enumerate}
+
+\subsubsection{Estabilidad del Tráfico y Propagación de Perturbaciones}
+
+Cuando el espaciamiento entre vehículos consecutivos disminuye por debajo de un umbral crítico, los movimientos de las unidades se acoplan dinámicamente \cite{fernandez}. En este régimen, el vehículo sucesor se comporta analíticamente como un sistema de control realimentado que responde a los estímulos cinemáticos del líder tras un tiempo de reacción o desfase temporal ($T$) \cite{fernandez}.
+
+Desde la perspectiva de los sistemas dinámicos, un aspecto crítico para la gestión de intersecciones es determinar cómo se propagan las perturbaciones de velocidad (maniobras de frenado) a lo largo de una columna de vehículos. Este fenómeno se descompone en dos dominios esenciales \cite{fernandez}:
+
+\begin{itemize}
+    \item \textbf{Estabilidad Local:} Evalúa si un vehículo individual es capaz de amortiguar y estabilizar su velocidad respecto al que lo antecede para evitar una colisión \cite{fernandez}.
+    \item \textbf{Estabilidad Asintótica:} Analiza el comportamiento sistémico a lo largo de la pista, determinando si la amplitud de una fluctuación cinemática se atenúa o se magnifica a medida que se desplaza hacia atrás en la fila de vehículos \cite{fernandez}.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{imagenes/estabilidad_asintotica.png}
+    \caption{Regímenes de estabilidad y de inestabilidad asintótica en el flujo vehicular \cite{fernandez}.}\label{fig:estabilidad_asintotica}
+\end{figure}
+
+Como se describe en la Figura \ref{fig:estabilidad_asintotica}, la evolución espacio-temporal del sistema difiere según su régimen: en un escenario asintóticamente estable la perturbación inicial se disipa, mientras que en uno inestable la fluctuación se magnifica de forma progresiva con cada vehículo seguidor. 
+
+Si el sistema opera en un régimen asintóticamente inestable, una deceleración menor provocará una onda de choque que crecerá en magnitud hasta culminar en una detención total del tráfico (\textit{phantom traffic jam}) \cite{fernandez}. En términos de gestión de infraestructura, la evidencia empírica demuestra que cuando el flujo operativo se aproxima críticamente a la capacidad máxima de la pista ($q \ge 0.9 Q$), cualquier perturbación exógena induce un estado de inestabilidad asintótica irreversible en el sistema dinámico \cite{fernandez}, haciendo indispensable la intervención de mecanismos de control externos para regular la demanda en la red \cite{ite_handbook, calymayor}.
+
+
+
+\subsubsection{Descripción Probabilística y Marcos Estocásticos}
+
+A pesar de las relaciones deterministas del flujo, el tráfico real exhibe una alta heterogeneidad debida al comportamiento estocástico de los conductores y a la dispersión en las tasas de llegada \cite{calymayor}. Para inyectar ruido estadístico y realismo en las herramientas de análisis, es imperativo estructurar un marco probabilístico bajo procesos aleatorios discretos y continuos \cite{calymayor}.
+
+Cuando los vehículos circulan bajo condiciones de flujo libre o dispersión moderada, se asume que las llegadas constituyen eventos mutuamente independientes \cite{calymayor}. Bajo las hipótesis de un proceso puntual de Poisson, la probabilidad de que se registren exactamente $X$ arribos en una sección de control o línea de detención durante un intervalo de tiempo finito $t$ se define como \cite{calymayor}:
+
+\begin{equation}
+    P(X) = \frac{m^X \cdot e^{-m}}{X!}
+\end{equation}
+
+Donde $m$ representa el valor esperado de arribos en dicho intervalo, calculado a partir del volumen horario de diseño ($V$) como $m = (V \cdot t) / 3600$ \cite{calymayor}.
+
+Consecuentemente, la contraparte continua de este proceso gobierna la distribución de los intervalos de tiempo individuales ($t_i$) entre unidades consecutivas. Si el flujo es aleatorio y poissoniano, los tiempos de paso se describen probabilísticamente mediante una distribución exponencial negativa \cite{calymayor}:
+
+\begin{equation}
+    P(t_i \ge t) = e^{-\frac{q}{3600} \cdot t}
+\end{equation}
+
+Este sustrato analítico estocástico constituye la herramienta matemática fundamental para modelar colas de espera, estimar las demoras en los accesos de las intersecciones y parametrizar los generadores aleatorios de tráfico dentro del entorno de simulación computacional \cite{calymayor}.
+
+\subsection{Sistemas de Control de Tráfico}
+
+
+\subsection{Simulación de Tráfico}
+%microscopico (SUMO)
+%mesoscopico
+%macroscopico
+
+%Modelado de flujo vehicular
+\nopagebreak[4]
+
+\section{Aprendizaje por Refuerzo (RL)}
+
+\subsection{El Proceso de Decisión de Markov (MDP)}
+
+\subsection{Métodos Basados en Valor y Basados en Política}
+
+\subsection{\textit{Deep Reinforcement Learning} (DRL)}
+
+Neurona artificial
+Red neuronal
+Deep Learning
+Deep Reinforcement Learning
+
+\section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (MARL)}
+
+\subsection{Generalización de los MDP mediante Teoría de Juegos}
+
+\subsection{Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}
+
+\subsection{Paradigmas de Entrenamiento y Ejecución}
+
+\subsubsection{Entrenamiento y Ejecución Descentralizada (DTE)}
+
+\subsubsection[Entrenamiento Centralizado con Ejecución Descentralizada (CTDE)]{Entrenamiento Centralizado con \\ Ejecución Descentralizada (CTDE)}
+
+\subsection{Algoritmos de Aprendizaje Independiente}
+
+\subsubsection{\textit{Independent Deep Q-Learning} (IDQN)}
+
+\subsubsection{\textit{Independent Proximal Policy Optimization} (IPPO)}
+
+\subsection{Algoritmos de Política Próxima en MARL}
+
+\subsubsection[\textit{Multi-Agent Proximal Policy Optimization} (MAPPO)]{\textit{Multi-Agent Proximal Policy Optimization} \\ (Optimización de Política Próxima Multi-Agente - MAPPO)}
+
+\subsubsection{\textit{Heterogeneous-Agent Proximal Policy Optimization} (Optimización de Política Próxima para Agentes Heterogéneos - HAPPO)}
+\newpage
+
+% -------- ¿¿ METODOLOGIA ?? --------
+
+\section{Control de Tráfico Urbano mediante MARL}
+
+\subsection{Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}
+
+\subsection[Coordinación entre Intersecciones y Mitigación de Congestión]{Coordinación entre Intersecciones \\ y Mitigación de Congestión}
