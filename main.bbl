@@ -1,4 +1,5 @@
-\begin{thebibliography}{1}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CWCL22}
   \providebibliographyfont{name}{}%
   \providebibliographyfont{lastname}{}%
   \providebibliographyfont{title}{\emph}%
@@ -13,31 +14,94 @@
   \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 
 \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
-\bibitem {fernandez}
-\btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\ \btxtitlefont {Elementos de la teoría del tráfico vehicular}.
-\newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad Católica del Perú}, 2011.
+\bibitem [{AL18}]{SUMO2018_SUMO}
+\btxnamefont {\btxlastnamefont {Alvarez~Lopez},~Pablo, et\btxfnamespacelong
+  al.}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Microscopic traffic
+  simulation using sumo}{Microscopic Traffic Simulation using SUMO}}.
+\newblock \btxjournalfont {Proceedings of the 21st International Conference on
+  Intelligent Transportation Systems (ITSC)}, 2018.
+\newblock Fuente: Cita de referencia para el simulador SUMO (Simulation of
+  Urban Mobility).
 
-\bibitem {UN2018_CongestionCost}
-\btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over \$160 billion in lost productivity}{Traffic congestion cost Americans over \$160 billion in lost productivity}}.
-\newblock \btxjournalfont {Citado en arXiv:2406.13693 (Reporte original de UN 2018)}, 2018.
-\newblock Fuente: [1] Costos de congestión y emisiones de CO2.
+\bibitem [{Ale}]{AlegreLSUMORLDoc}
+\btxnamefont {\btxlastnamefont {Alegre}, Lucas\btxfnamespacelong
+  N.}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Sumo-rl 1.4.5
+  documentation}{SUMO-RL 1.4.5 documentation}}.
+\newblock Available at: \url{https://lucasalegre.github.io/sumo-rl/}.
 
-\bibitem {Ault2022_MARL_Limitations}
-\btxnamefont {\btxlastnamefont {Ault}, James} \btxandlong {}\ \btxnamefont {Guni \btxlastnamefont {Sharon}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Cooperative multi-agent reinforcement learning applied to multi-intersection traffic signal control}{Cooperative Multi-agent Reinforcement Learning Applied to Multi-intersection Traffic Signal Control}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 31st ACM International Conference on Information \& Knowledge Management (CIKM '22)}, 2022.
-\newblock {\latintext \btxurlfont{https://people.engr.tamu.edu/guni/papers/CIKM22-MATCS.pdf}}, Fuente: [7, 8] Destaca el "éxito limitado" de SARL y los enfoques independientes en redes.
+\bibitem [{AS22}]{Ault2022_MARL_Limitations}
+\btxnamefont {\btxlastnamefont {Ault}, James} \btxandlong {}\ \btxnamefont
+  {Guni \btxlastnamefont {Sharon}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Cooperative multi-agent reinforcement learning applied to
+  multi-intersection traffic signal control}{Cooperative Multi-agent
+  Reinforcement Learning Applied to Multi-intersection Traffic Signal
+  Control}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 31st ACM
+  International Conference on Information \& Knowledge Management (CIKM '22)},
+  2022.
+\newblock {\latintext
+  \btxurlfont{https://people.engr.tamu.edu/guni/papers/CIKM22-MATCS.pdf}},
+  Fuente: [7, 8] Destaca el "éxito limitado" de SARL y los enfoques
+  independientes en redes.
 
-\bibitem {Feriani2021_MARL_NonStationary}
-\btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont {Ekram \btxlastnamefont {Hossain}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Multi-agent reinforcement learning: Key differences from single-agent rl}{Multi-Agent Reinforcement Learning: Key Differences from Single-Agent RL}}.
-\newblock \btxjournalfont {arXiv preprint arXiv:2508.07001}, 2021.
-\newblock Fuente: [9] Define la no estacionariedad como una diferencia clave de MARL vs SARL.
+\bibitem [{CWCL22}]{gnn_traffic}
+\btxnamefont {\btxlastnamefont {Chu}, Tianshu}, \btxnamefont {Jie
+  \btxlastnamefont {Wang}}, \btxnamefont {Lara \btxlastnamefont
+  {Codecà}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Zhaojian
+  \btxlastnamefont {Li}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase
+  {Graph neural reinforcement learning for intelligent traffic signal
+  control}{Graph Neural Reinforcement Learning for Intelligent Traffic Signal
+  Control}}.
+\newblock \btxjournalfont {IEEE Transactions on Intelligent Transportation
+  Systems}, 23(7):8878--8892, 2022.
 
-\bibitem {calymayor}
-\btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\ \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
+\bibitem [{CyMR18}]{calymayor}
+\btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\
+  \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
 \newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
 
-\bibitem {ite_handbook}
-\btxnamefont {\btxlastnamefont {Pande}, Anurag} \btxandlong {}\ \btxnamefont {Brian \btxlastnamefont {Wolshon}}\btxauthorcolon\ \btxtitlefont {Traffic Engineering Handbook}.
-\newblock \btxpublisherfont {John Wiley \& Sons, Inc.}, \btxeditionnumlong {7th}{}, 2016.
+\bibitem [{FA11}]{fernandez}
+\btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\
+  \btxtitlefont {Elementos de la teoría del tráfico vehicular}.
+\newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad
+  Católica del Perú}, 2011.
+
+\bibitem [{FH21}]{Feriani2021_MARL_NonStationary}
+\btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont
+  {Ekram \btxlastnamefont {Hossain}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Multi-agent reinforcement learning: Key differences from
+  single-agent rl}{Multi-Agent Reinforcement Learning: Key Differences from
+  Single-Agent RL}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:2508.07001}, 2021.
+\newblock Fuente: [9] Define la no estacionariedad como una diferencia clave de
+  MARL vs SARL.
+
+\bibitem [{ne18}]{UN2018_CongestionCost}
+\btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over
+  \$160 billion in lost productivity}{Traffic congestion cost Americans over
+  \$160 billion in lost productivity}}.
+\newblock \btxjournalfont {Citado en arXiv:2406.13693 (Reporte original de UN
+  2018)}, 2018.
+\newblock Fuente: [1] Costos de congestión y emisiones de CO2.
+
+\bibitem [{PW16}]{ite_handbook}
+\btxnamefont {\btxlastnamefont {Pande}, Anurag} \btxandlong {}\ \btxnamefont
+  {Brian \btxlastnamefont {Wolshon}}\btxauthorcolon\ \btxtitlefont {Traffic
+  Engineering Handbook}.
+\newblock \btxpublisherfont {John Wiley \& Sons, Inc.}, \btxeditionnumlong
+  {7th}{}, 2016.
+
+\bibitem [{SB20}]{suttonRL}
+\btxnamefont {\btxlastnamefont {Sutton}, R.S.} \btxandlong {}\ \btxnamefont
+  {A.G. \btxlastnamefont {Barto}}\btxauthorcolon\ \btxtitlefont {Reinforcement
+  learning: An introduction}.
+\newblock \btxpublisherfont {The MIT Press}, Cambridge, MA, 2020.
+
+\bibitem [{W{\etalchar{+}}19}]{WeiH2019ASTSCM}
+\btxnamefont {\btxlastnamefont {Wei}, H.} \btxetalfont {\btxetalshort
+  {.}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {A survey on traffic
+  signal control methods}{A survey on traffic signal control methods}}, 2019.
+\newblock Available at: \url{https://arxiv.org/abs/1904.08117}.
 
 \end{thebibliography}

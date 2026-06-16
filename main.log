@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.11)  11 JUN 2026 23:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.16)  15 JUN 2026 21:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/juanm4morales/Dev/tesina/main.tex
-(/home/juanm4morales/Dev/tesina/main.tex
+**/home/juanm4/Documentos/tesina/main.tex
+(/home/juanm4/Documentos/tesina/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/share/texmf-dist/tex/latex/base/report.cls
@@ -787,11 +787,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip129
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 106.
- (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./3-introduccion.aux) (./4-marco_teorico.aux
-
-LaTeX Warning: Label `subsec:fundamentos_dinamica_vehicular' multiply defined.
-
-))
+ (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./3-introduccion.aux) (./4-marco_teorico.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 114.
@@ -881,7 +877,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (1.19446pt too wide) in paragraph at lines 32--32
+Overfull \hbox (1.19446pt too wide) in paragraph at lines 35--35
  [][] [][][]\T1/cmr/m/n/10.95 Coordinación en-tre In-ter-sec-ciones y Mit-i-gación de Con- 
  []
 
@@ -910,7 +906,7 @@ Overfull \hbox (1.19446pt too wide) in paragraph at lines 32--32
 
  (./3-introduccion.tex
 \bbl@ensure@spanish {Cap\'\i tulo} 1.
-<imagenes/FlotaCirculanteProvinciaRegion.png, id=184, 2814.515pt x 1541.76pt>
+<imagenes/FlotaCirculanteProvinciaRegion.png, id=178, 2814.515pt x 1541.76pt>
 File: imagenes/FlotaCirculanteProvinciaRegion.png Graphic file (type png)
 <use imagenes/FlotaCirculanteProvinciaRegion.png>
 Package pdftex.def Info: imagenes/FlotaCirculanteProvinciaRegion.png  used on input line 7.
@@ -928,18 +924,27 @@ Package pdftex.def Info: imagenes/FlotaCirculanteProvinciaRegion.png  used on in
 
 
 
-] [10{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Overfull \hbox (0.58415pt too wide) in paragraph at lines 30--31
-[]\T1/cmr/bx/n/10.95 Brechas y Aceptación de Brechas (\T1/cmr/bx/it/10.95 Gaps and Gap Ac-cep-tance\T1/cmr/bx/n/10.95 ):
+] [10{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [11]
+Overfull \hbox (5.77919pt too wide) in paragraph at lines 39--40
+\T1/cmr/m/n/10.95 ocu-pan si-multánea-mente una lon-gi-tud es-pecí-fi-ca de vía, ex-pre-sa-do usual-
  []
 
-[11]
-<imagenes/estabilidad_asintotica.png, id=245, 486.81876pt x 682.55pt>
-File: imagenes/estabilidad_asintotica.png Graphic file (type png)
-<use imagenes/estabilidad_asintotica.png>
-Package pdftex.def Info: imagenes/estabilidad_asintotica.png  used on input line 67.
-(pdftex.def)             Requested size: 251.9989pt x 353.31374pt.
- [12] [13 <./imagenes/estabilidad_asintotica.png (PNG copy)>] [14] [15]) [16] (./main.bbl
+
+Overfull \hbox (6.94962pt too wide) in paragraph at lines 46--47
+\T1/cmr/m/n/10.95 o-gos de dos ve-hícu-los con-sec-u-tivos en un in-stante de-ter-mi-na-do [[],
+ []
+
+[12] [13] [14] [15] [16]
+Overfull \hbox (12.6186pt too wide) in paragraph at lines 133--134
+[]\T1/cmr/m/n/10.95 Para reg-u-lar la dinámi-ca de los semá-foros ac-ciona-dos, se es-table-cen parámet-
+ []
+
+
+Overfull \hbox (1.25717pt too wide) in paragraph at lines 144--145
+\T1/cmr/m/n/10.95 tratég-i-ca y asig-nación de flu-jos a largo pla-zo en grandes re-des metropoli-
+ []
+
+[17] [18] [19] [20]) [21] (./main.bbl
 babelbib: Using the BibTeX style's default font for `name'.
 babelbib: Using the BibTeX style's default font for `lastname'.
 babelbib: Using the BibTeX style's default font for `title'.
@@ -951,40 +956,41 @@ babelbib: Using the BibTeX style's default font for `ISBN'.
 babelbib: Using the BibTeX style's default font for `ISSN'.
 babelbib: Using the BibTeX style's default font for `url'.
 babelbib: Using the BibTeX style's default font for `numeral'.
-)
+
+Underfull \hbox (badness 1308) in paragraph at lines 33--46
+\T1/cmr/m/it/10.95 '22)\T1/cmr/m/n/10.95 , 2022.  [][]$\T1/cmtt/m/n/10.95 https : / / people . engr . tamu . edu / guni / papers /
+ []
+
+[22
+
+
+
+])
 
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 59.
 See the caption package documentation for explanation.
 
-[17
-
-
-
-] (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./3-introduccion.aux) (./4-marco_teorico.aux))
+[23] (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./3-introduccion.aux) (./4-marco_teorico.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C4A34E1B6E18633682C591D70E195577;5714.
+(rerunfilecheck)             Checksum: 023ABDFFC2DE2CC49D4901001FDFAABE;5602.
  ) 
 Here is how much of TeX's memory you used:
- 32241 strings out of 469515
- 627241 string characters out of 5470807
- 1071272 words of memory out of 5000000
- 60265 multiletter control sequences out of 15000+600000
- 642832 words of font info for 73 fonts, out of 8000000 for 9000
+ 32255 strings out of 469515
+ 627171 string characters out of 5470807
+ 1070313 words of memory out of 5000000
+ 60263 multiletter control sequences out of 15000+600000
+ 644362 words of font info for 75 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 98i,6n,117p,1083b,760s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on main.pdf (18 pages, 3512481 bytes).
+ 98i,6n,117p,1292b,926s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on main.pdf (24 pages, 3519668 bytes).
 PDF statistics:
- 420 PDF objects out of 1000 (max. 8388607)
- 347 compressed objects within 4 object streams
- 67 named destinations out of 1000 (max. 500000)
- 196 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 494 PDF objects out of 1000 (max. 8388607)
+ 414 compressed objects within 5 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 191 words of extra memory for PDF output out of 10000 (max. 10000000)
 

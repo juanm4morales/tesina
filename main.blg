@@ -5,49 +5,50 @@ A level-1 auxiliary file: 0-titulo.aux
 A level-1 auxiliary file: 1-agradecimientos.aux
 A level-1 auxiliary file: 3-introduccion.aux
 A level-1 auxiliary file: 4-marco_teorico.aux
-The style file: babunsrt.bst
+The style file: babalpha.bst
 Database file #1: bibliografia.bib
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-Warning--empty language in fernandez
-You've used 6 entries,
-            2465 wiz_defined-function locations,
-            623 strings with 6801 characters,
-and the built_in function-call counts, 1352 in all, are:
-= -- 101
-> -- 36
-< -- 0
-+ -- 15
-- -- 9
-* -- 116
-:= -- 182
-add.period$ -- 15
-call.type$ -- 6
-change.case$ -- 5
-chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 95
-empty$ -- 173
-format.name$ -- 24
-if$ -- 306
-int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 11
-newline$ -- 43
-num.names$ -- 6
-pop$ -- 41
+Warning--empty language in SUMO2018_SUMO
+You've used 11 entries,
+            3213 wiz_defined-function locations,
+            764 strings with 8591 characters,
+and the built_in function-call counts, 4287 in all, are:
+= -- 376
+> -- 166
+< -- 5
++ -- 53
+- -- 52
+* -- 402
+:= -- 651
+add.period$ -- 26
+call.type$ -- 11
+change.case$ -- 60
+chr.to.int$ -- 11
+cite$ -- 12
+duplicate$ -- 229
+empty$ -- 395
+format.name$ -- 96
+if$ -- 880
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 17
+newline$ -- 65
+num.names$ -- 33
+pop$ -- 101
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 73
 quote$ -- 0
-skip$ -- 29
+skip$ -- 149
 stack$ -- 0
-substring$ -- 0
-swap$ -- 33
-text.length$ -- 0
-text.prefix$ -- 0
+substring$ -- 109
+swap$ -- 63
+text.length$ -- 5
+text.prefix$ -- 1
 top$ -- 0
-type$ -- 0
+type$ -- 72
 warning$ -- 1
-while$ -- 6
-width$ -- 7
-write$ -- 78
+while$ -- 30
+width$ -- 14
+write$ -- 127
 (There was 1 warning)
