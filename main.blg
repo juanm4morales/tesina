@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99e (TeX Live 2026/Arch Linux)
+This is BibTeX, Version 0.99e (TeX Live 2026)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: 0-titulo.aux
@@ -7,46 +7,50 @@ A level-1 auxiliary file: 3-introduccion.aux
 A level-1 auxiliary file: 4-marco_teorico.aux
 The style file: babalpha.bst
 Database file #1: bibliografia.bib
-Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 12 entries,
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty language in difference_rewards
+Warning--empty language in mnih2015
+Warning--empty language in ctde_survey
+You've used 22 entries,
             3213 wiz_defined-function locations,
-            772 strings with 8838 characters,
-and the built_in function-call counts, 5337 in all, are:
-= -- 461
-> -- 226
-< -- 6
-+ -- 76
-- -- 75
-* -- 542
-:= -- 781
-add.period$ -- 28
-call.type$ -- 12
-change.case$ -- 74
-chr.to.int$ -- 12
-cite$ -- 12
-duplicate$ -- 279
-empty$ -- 478
-format.name$ -- 140
-if$ -- 1094
+            831 strings with 11643 characters,
+and the built_in function-call counts, 13022 in all, are:
+= -- 1094
+> -- 657
+< -- 12
++ -- 241
+- -- 238
+* -- 1536
+:= -- 1822
+add.period$ -- 53
+call.type$ -- 22
+change.case$ -- 179
+chr.to.int$ -- 22
+cite$ -- 25
+duplicate$ -- 657
+empty$ -- 1048
+format.name$ -- 439
+if$ -- 2609
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 16
-newline$ -- 68
-num.names$ -- 36
-pop$ -- 125
+missing$ -- 31
+newline$ -- 115
+num.names$ -- 66
+pop$ -- 252
 preamble$ -- 1
-purify$ -- 88
+purify$ -- 204
 quote$ -- 0
-skip$ -- 176
+skip$ -- 381
 stack$ -- 0
-substring$ -- 156
-swap$ -- 98
-text.length$ -- 6
+substring$ -- 471
+swap$ -- 315
+text.length$ -- 12
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 80
-warning$ -- 0
-while$ -- 36
-width$ -- 15
-write$ -- 137
+type$ -- 156
+warning$ -- 3
+while$ -- 84
+width$ -- 26
+write$ -- 248
+(There were 3 warnings)

@@ -2,9 +2,9 @@
 
 \section{Ingeniería de Tránsito}\label{sec:ingenieria_transito}
 
-La ingeniería de tránsito es la subdisciplina de la ingeniería de transporte enfocada en la planificación, el diseño geométrico y la operación de calles, carreteras y redes viales \cite[p.~1]{ite_handbook}. En este trabajo, sus conceptos se utilizan principalmente desde el punto de vista de la operación del tránsito urbano: permiten describir el funcionamiento de la red vial, identificar variables de desempeño y establecer sobre qué aspectos puede intervenir un sistema de control.
+La ingeniería de tránsito se define como aquella fase de la ingeniería de transporte —disciplina que se enmarca tradicionalmente dentro de la ingeniería civil— que tiene que ver con la planeación segura y eficiente, el proyecto geométrico y la operación del tránsito por calles y carreteras, sus redes, terminales, tierras adyacentes y su relación con otros modos de transporte, tanto motorizados como no motorizados \cite[p.~33]{calymayor}. Asimismo, el \textit{Traffic Engineering Handbook} la describe formalmente como la subdisciplina enfocada en la planificación, el diseño geométrico y la operación de calles, carreteras y redes viales \cite[p.~1]{ite_handbook}. En este trabajo, sus conceptos se abordan principalmente desde la perspectiva de la operación del tránsito urbano: permiten describir el funcionamiento físico de la red vial, caracterizar la oferta y demanda de circulación, e identificar las variables operacionales clave sobre las cuales puede intervenir de manera adaptativa un sistema de control.
 
-Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad vial mediante la construcción de nuevas vías o el ensanche de las existentes \cite[Cap.~1]{ite_handbook}. Sin embargo, el crecimiento de la congestión mostró que agregar capacidad física, aunque puede resultar útil durante cierto período, no constituye por sí solo una solución suficiente al problema \cite[Cap.~1]{ite_handbook}. En áreas urbanas consolidadas, además, ensanchar avenidas o modificar sustancialmente el trazado vial suele ser costoso, limitado y, con frecuencia, no factible \cite[Cap.~2, Sec.~2.6]{calymayor}. Por ello, la práctica contemporánea complementa la provisión de infraestructura con estrategias de gestión de la demanda, operación y control del tránsito, evaluadas mediante indicadores cuantificables de desempeño \cite[Cap.~1]{ite_handbook}. Esta evolución vuelve especialmente relevante el uso de la infraestructura existente mediante dispositivos y mecanismos de control del tránsito \cite[Cap.~2, Sec.~2.6]{calymayor}.
+Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad física vial mediante la construcción de nuevas obras o el ensanche de calzadas \cite[Cap.~1]{ite_handbook}. Sin embargo, el crecimiento sostenido de la congestión evidenció que la ampliación de infraestructura no constituye una solución definitiva al problema. En áreas urbanas consolidadas, además, modificar el trazado vial resulta costoso y geométricamente inviable \cite[Cap.~2]{calymayor}. Por ello, la práctica contemporánea complementa la provisión de infraestructura con estrategias de gestión de la demanda y control dinámico del tránsito, priorizando la optimización de los recursos existentes mediante dispositivos de control semafórico \cite{ite_handbook, calymayor}.
 
 La operación de una red vial puede analizarse a partir de la relación entre la demanda vehicular y la capacidad disponible. La demanda vehicular corresponde a la cantidad de vehículos que requieren desplazarse por un determinado sistema vial, mientras que la oferta vial o capacidad representa la cantidad máxima de vehículos que pueden circular por dicho espacio físico bajo determinadas condiciones de operación \cite[Cap.~2, Sec.~2.4]{calymayor}. Cuando la demanda se aproxima a la capacidad, el tránsito se vuelve inestable; cuando la supera, se presentan condiciones de sobresaturación o flujo forzado, caracterizadas por detenciones frecuentes y grandes demoras \cite[Cap.~2, Sec.~2.4]{calymayor}. En este sentido, la congestión no se entiende solo como una percepción general de mal funcionamiento, sino como un fenómeno con manifestaciones físicas medibles: demoras, colas y detenciones \cite[Cap.~1, Sec.~1.1]{fernandez}.
 
@@ -15,10 +15,60 @@ Antes de introducir los mecanismos de control y su formulación computacional, c
 En este contexto, se emplearán las siguientes nociones:
 
 \begin{itemize}
-    \item \textbf{Intersección, acceso y carril:} una intersección es el área en la que confluyen dos o más corrientes de tránsito \cite[pp.~321--323]{ite_handbook}. Cada aproximación de entrada constituye un acceso \cite[pp.~321--323]{ite_handbook}, y dentro de cada acceso la circulación se organiza en uno o más carriles \cite[Cap.~3, Sec.~3.3]{calymayor}.
-    \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular es la trayectoria que sigue un vehículo al atravesar la intersección hacia una salida determinada, por ejemplo continuar recto o girar \cite{WeiH2019ASTSCM}. Dos movimientos están en conflicto cuando no pueden servirse simultáneamente porque intentan ocupar el mismo espacio de cruce o generan trayectorias incompatibles \cite[Cap.~1, Sec.~1.2]{fernandez}.
-    \item \textbf{Fase, ciclo e intervalo:} una fase es el estado operativo del semáforo que habilita un conjunto de movimientos compatibles y restringe los que entrarían en conflicto \cite[pp.~341--343]{ite_handbook}. La sucesión completa de fases conforma el ciclo semafórico, mientras que cada intervalo corresponde a un tramo temporal durante el cual las indicaciones luminosas permanecen constantes \cite[pp.~341--343]{ite_handbook}.
+    \item \textbf{Intersección, acceso y carril:} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{ite_handbook, calymayor}.
+    \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada (e.g., giros o movimientos directos) \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite[Cap.~1]{fernandez}.
+    \item \textbf{Fase, ciclo e intervalo:} una fase representa el estado operativo del semáforo que otorga el derecho de paso a un grupo de movimientos compatibles de manera simultánea \cite{ite_handbook}. La secuencia completa de fases requerida para servir a todos los movimientos de la intersección constituye el ciclo semafórico, mientras que un intervalo es la fracción temporal del ciclo durante la cual las indicaciones del semáforo no varían \cite{calymayor}.
 \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, thick, font=\small, scale=0.9, transform shape]
+        \colorlet{colConflicto}{catRosaSalmon!90!black}
+        
+        % A) Concurrentes
+        \node[font=\bfseries, anchor=west] at (2, 2.5) {a) Conflictos concurrenciales};
+        \draw[->, colConflicto] (3, 1.5) -- (4.5, 1.5);
+        \draw[->, colConflicto] (4.8, 1.5) -- (6.3, 1.5);
+        \filldraw[colConflicto] (4.65, 1.5) circle (0.1);
+        \node at (3.75, 2) {Vehículo 1};
+        \node at (5.55, 2) {Vehículo 2};
+        
+        % B) Direccionales
+        \node[font=\bfseries, anchor=west] at (2, 0.5) {b) Conflictos direccionales};
+        
+        % Cruce
+        \draw[->, colConflicto] (0, -1) -- (2, -1);
+        \draw[->, colConflicto] (1, -0.0) -- (1, -2.0);
+        \filldraw[colConflicto] (1, -1) circle (0.1);
+        \node at (1, -2.5) {Cruce};
+
+        % Convergencia
+        \draw[->, colConflicto] (3.5, -1) -- (5.5, -1);
+        \draw[->, colConflicto] (3.8, -2.0) to[out=90, in=180] (4.5, -1.0); 
+        \filldraw[colConflicto] (4.5, -1) circle (0.1);
+        \node at (4.5, -2.5) {Convergencia};
+
+        % Divergencia
+        \draw[->, colConflicto] (7, -1) -- (9, -1);
+        \draw[->, colConflicto] (7.7, -1.0) to[out=0, in=90] (8.5, -2.0);
+        \filldraw[colConflicto] (7.7, -1) circle (0.1);
+        \node at (8, -2.5) {Divergencia};
+
+        % Entrelace
+        \draw[->, colConflicto] (10.5, -0.5) to[out=270, in=90] (12.0, -1.5) -- (12.5, -1.5);
+        \draw[->, colConflicto, dashed] (10.5, -1.5) to[out=90, in=270] (12.0, -0.5) -- (12.5, -0.5);
+        \filldraw[colConflicto] (11.25, -1) circle (0.1);
+        \node at (11.5, -2.5) {Entrelace};
+
+        % C) Funcionales
+        \node[font=\bfseries, anchor=west] at (2, -3.5) {c) Conflictos funcionales};
+        \draw[->, colConflicto] (4.5, -4.5) -- (5.2, -4.5) arc (180:0:0.4) -- (6.7, -4.5);
+        \filldraw[colConflicto] (5.6, -4.1) circle (0.1);
+
+    \end{tikzpicture}
+    \caption{Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}
+    \label{fig:conflictos_interseccion}
+\end{figure}
 
 En arterias urbanas, el tránsito se desarrolla bajo condiciones de flujo interrumpido: los vehículos no avanzan únicamente por su interacción con otros vehículos, sino también por la presencia de intersecciones, señales y dispositivos de control de tránsito \cite[pp.~320--324]{ite_handbook}. Las intersecciones son puntos críticos de la red porque allí confluyen distintos accesos y movimientos vehiculares de cruce, convergencia y divergencia que pueden resultar incompatibles entre sí \cite[pp.~321--323]{ite_handbook}. Por ello, su operación requiere ordenar estos movimientos y asignar la prioridad de paso de manera segura y eficiente.
 
@@ -28,27 +78,100 @@ El semáforo es uno de los dispositivos de control de tránsito utilizados para 
 
 Para modelar y optimizar la operación de una red vial, es necesario caracterizar físicamente el movimiento de los vehículos. La ingeniería de tránsito estudia este fenómeno a partir de las características fundamentales de la corriente de tránsito, que permiten describir las condiciones de operación de una vía o intersección mediante magnitudes observables como el flujo, la velocidad y la densidad \cite[pp.~203--204]{ite_handbook}. Cal y Mayor distingue estas magnitudes entre variables principales, que describen el comportamiento agregado del flujo vehicular, y variables asociadas, que expresan relaciones temporales y espaciales entre vehículos consecutivos \cite[p.~302]{calymayor}.
 
-A nivel macroscópico, la corriente de tránsito se representa mediante variables agregadas como la tasa de flujo, la densidad y la velocidad media espacial. A nivel microscópico, se analizan magnitudes propias de la interacción entre vehículos individuales, como el intervalo, el espaciamiento y la velocidad puntual. Esta separación entre escalas es relevante para el modelado computacional: las variables macroscópicas permiten resumir el estado de un tramo o acceso de la red, mientras que las variables microscópicas describen la evolución de cada vehículo dentro del simulador. En conjunto, estas magnitudes constituyen variables dinámicas del flujo y sirven como base para evaluar el desempeño del sistema de control \cite[pp.~21--22]{fernandez}.
+A nivel macroscópico, la corriente de tránsito se representa mediante variables agregadas como la tasa de flujo, la densidad y los promedios de velocidad. A nivel microscópico, se analizan magnitudes propias de vehículos individuales e interacciones entre pares consecutivos, como la velocidad puntual, el intervalo y el espaciamiento \cite[p.~302]{calymayor}. Esta separación entre escalas es relevante para el modelado computacional: las variables macroscópicas resumen el estado operacional de los accesos de la red, mientras que las variables microscópicas describen el comportamiento de cada vehículo dentro del simulador \cite{fernandez}. La correspondencia y las relaciones de conversión entre las variables de ambas escalas se resumen en la Tabla \ref{tab:variables_transito}.
 
 En el nivel macroscópico, las variables principales de la corriente de tránsito son:
 \begin{itemize}
-    \item \textbf{Flujo o tasa de flujo ($q$):} Representa la cantidad de vehículos que atraviesan una sección transversal de la vía durante un intervalo de tiempo determinado. Cuando el intervalo observado es menor que una hora, se expresa habitualmente como una tasa horaria equivalente en vehículos por hora (veh/h), de modo que $q = N/T$ \cite[p.~303]{calymayor}. Esta variable describe la intensidad con la que la demanda vehicular utiliza un tramo o acceso de la red.
-    \item \textbf{Densidad o concentración ($k$):} Indica el número de vehículos que ocupan simultáneamente una longitud específica de vía, expresado usualmente en vehículos por kilómetro (veh/km), y se define como $k = N/d$ \cite[p.~308]{calymayor}. En la práctica, debido a la dificultad de medir directamente esta magnitud espacial, suele aproximarse mediante medidas de ocupación obtenidas a partir de detectores instalados en la calzada \cite[p.~204]{ite_handbook}.
-    \item \textbf{Velocidad media espacial ($v_s$):} Corresponde al promedio de las velocidades de los vehículos que ocupan un tramo de vía en un instante determinado. Esta medida describe la velocidad media de la corriente de tránsito en el espacio y es la que se utiliza en la relación fundamental entre flujo, densidad y velocidad \cite[p.~308]{calymayor}.
+    \item \textbf{Flujo o tasa de flujo ($q$):} representa la cantidad de vehículos que atraviesen una sección transversal de la vía por unidad de tiempo. Si el período de observación es menor a una hora, se proyecta como una tasa horaria equivalente en vehículos por hora (veh/h), $q = N/T$ \cite[p.~303]{calymayor}.
+    \item \textbf{Densidad o concentración ($k$):} indica el número de vehículos que ocupan simultáneamente una longitud específica de vía, expresada en vehículos por kilómetro (veh/km), $k = N/d$ \cite[p.~308]{calymayor}. En la práctica, se suele estimar indirectamente a través del porcentaje de ocupación temporal registrado por detectores inductivos \cite[p.~204]{ite_handbook}.
+    \item \textbf{Velocidad media espacial ($v_s$):} es la velocidad media de los vehículos que ocupan un tramo de vía en un instante determinado. Corresponde al promedio armónico de las velocidades puntuales de los vehículos individuales y representa la magnitud de velocidad consistente con la dinámica del flujo espacial \cite[p.~308]{calymayor}.
+    \item \textbf{Velocidad media temporal ($v_t$):} representa el promedio aritmético de las velocidades de los vehículos que cruzan una sección transversal fija de la vía durante un período de tiempo determinado \cite[p.~308]{calymayor}.
 \end{itemize}
 
-En el nivel microscópico, las variables asociadas describen la separación temporal y espacial entre vehículos individuales:
+En el nivel microscópico, las variables asociadas describen el movimiento del vehículo individual y la separación entre vehículos consecutivos (véase la Figura \ref{fig:variables_microscopicas}):
 \begin{itemize}
-    \item \textbf{Intervalo temporal simple ($h$):} Es el tiempo que transcurre entre el paso de dos vehículos consecutivos por una misma sección de la calzada, medido respecto de puntos homólogos de ambos vehículos, por ejemplo sus parachoques delanteros \cite[p.~303]{calymayor}. En términos promedio, si la tasa de flujo $q$ se expresa en vehículos por hora, el intervalo medio en segundos se relaciona con ella como $h = 3600/q$.
-    \item \textbf{Espaciamiento simple ($s$):} Es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante determinado \cite[p.~308]{calymayor}. El espaciamiento promedio se relaciona inversamente con la densidad de la corriente de tránsito ($s = 1/k$).
-    \item \textbf{Velocidad media temporal ($v_t$):} Es el promedio aritmético de las velocidades de los vehículos que atraviesan una sección fija de la vía durante un intervalo de observación determinado \cite[p.~308]{calymayor}.
+    \item \textbf{Velocidad puntual ($v_i$):} es la velocidad a la que un vehículo individual ($i$) atraviesa una sección transversal específica de la vía.
+    \item \textbf{Intervalo temporal ($h$):} es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos (e.g., parachoques delanteros) \cite[p.~303]{calymayor}. El intervalo promedio en segundos se relaciona con la tasa de flujo como $h_{prom} = 3600/q$.
+    \item \textbf{Espaciamiento simple ($s$):} es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante de tiempo \cite[p.~308]{calymayor}. El espaciamiento promedio se relaciona de forma inversa con la densidad de la corriente de tránsito ($s_{prom} = 1/k$).
 \end{itemize}
 
-Estas variables no actúan de manera independiente, sino que se relacionan mediante la ecuación fundamental del tránsito:
+\begin{table}[H]
+\centering
+\caption{Comparación y correspondencia de variables de tránsito en escalas macroscópica y microscópica.}
+\label{tab:variables_transito}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|p{2.3cm}|p{4.0cm}|p{5.4cm}|}
+\hline
+\textbf{Escala} & \textbf{Variable Principal} & \textbf{Relación / Conversión} \\ \hline
+Macroscópica & Flujo ($q$, veh/h) & $q = 3600 / h_{\text{prom}}$ \\ \cline{2-3}
+ & Densidad ($k$, veh/km) & $k = 1000 / s_{\text{prom}}$ \\ \cline{2-3}
+ & Velocidad media espacial ($v_s$, km/h) & $q = k \cdot v_s$ \\ \cline{2-3}
+ & Velocidad media temporal ($v_t$, km/h) & $v_t = v_s + \frac{\sigma_s^2}{v_s}$ (Relación de Wardrop) \\ \hline
+Microscópica & Velocidad puntual ($v_i$, km/h) & Variable individual de cada vehículo \\ \cline{2-3}
+ & Intervalo temporal ($h$, s) & Tiempo entre pasos de vehículos sucesivos \\ \cline{2-3}
+ & Espaciamiento simple ($s$, m) & Distancia espacial entre parachoques homólogos \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=stealth, font=\small, scale=0.85, transform shape]
+        % Eje de la calle
+        \draw[thick] (0,0) -- (12,0);
+        
+        % Vehículo 1 (Atrás)
+        \filldraw[fill=catAzulCielo, draw=catAzulCielo!80!black, thick, rounded corners=2pt] (2, 0.1) rectangle (4, 0.8);
+        \filldraw[fill=catAzulCielo, draw=catAzulCielo!80!black, thick, rounded corners=2pt] (2.5, 0.8) rectangle (3.5, 1.2);
+        \draw[thick, fill=white] (2.4, 0.1) circle (0.15);
+        \draw[thick, fill=white] (3.6, 0.1) circle (0.15);
+        
+        % Vehículo 2 (Adelante)
+        \filldraw[fill=catAzulCielo, draw=catAzulCielo!80!black, thick, rounded corners=2pt] (8, 0.1) rectangle (10, 0.8);
+        \filldraw[fill=catAzulCielo, draw=catAzulCielo!80!black, thick, rounded corners=2pt] (8.5, 0.8) rectangle (9.5, 1.2);
+        \draw[thick, fill=white] (8.4, 0.1) circle (0.15);
+        \draw[thick, fill=white] (9.6, 0.1) circle (0.15);
+
+        % Dirección
+        \draw[->, thick, gray!80, line width=2pt] (5, 0.5) -- (7, 0.5) node[midway, above, text=black] {Velocidad $v$};
+
+        % Líneas guía (Espacio)
+        \draw[dashed, catRosaSalmon!80!black] (2, 0) -- (2, -1.5); % Trasera V1
+        \draw[dashed, catRosaSalmon!80!black] (4, 0) -- (4, -1.5); % Delantera V1
+        \draw[dashed, catRosaSalmon!80!black] (8, 0) -- (8, -1.5); % Trasera V2
+        \draw[dashed, catRosaSalmon!80!black] (10, 0) -- (10, -1.5); % Delantera V2
+
+        % Líneas guía (Tiempo)
+        \draw[dashed, catVerdeMenta!80!black] (4, 1.2) -- (4, 2.5); % Delantera V1 arriba
+        \draw[dashed, catVerdeMenta!80!black] (2, 1.2) -- (2, 1.8); % Trasera V1 arriba
+        \draw[dashed, catVerdeMenta!80!black] (8, 1.2) -- (8, 2.0); % Trasera V2 arriba
+        \draw[dashed, catVerdeMenta!80!black] (10, 1.2) -- (10, 2.5); % Delantera V2 arriba
+
+        % Cotas Espacio (Abajo)
+        \draw[<->] (2, -0.6) -- (4, -0.6) node[midway, above] {Largo: $l$};
+        \draw[<->] (4, -0.6) -- (8, -0.6) node[midway, above] {Separación: $e$};
+        \draw[<->] (4, -1.2) -- (10, -1.2) node[midway, above] {Espaciamiento: $s$};
+        \node at (11.5, -0.9) {Espacio:};
+
+        % Cotas Tiempo (Arriba)
+        \draw[<->] (2, 1.6) -- (4, 1.6) node[midway, above] {Avance: $\beta$};
+        \draw[<->] (4, 1.8) -- (8, 1.8) node[midway, above] {Brecha o \textit{gap}: $g$};
+        \draw[<->] (4, 2.3) -- (10, 2.3) node[midway, above] {Intervalo o \textit{headway}: $h$};
+        \node at (11.5, 2.0) {Tiempo:};
+
+    \end{tikzpicture}
+    \caption{Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}
+    \label{fig:variables_microscopicas}
+\end{figure}
+
+Estas variables macroscópicas y agregadas se relacionan de manera directa a través de la ecuación fundamental del flujo de tránsito:
 \begin{equation}
     q = k \cdot v_s
 \end{equation}
-Esta expresión indica que el flujo observado en una sección depende de la densidad de vehículos y de la velocidad media espacial de la corriente. En condiciones no saturadas, un aumento de la demanda puede traducirse en mayores valores de flujo. Sin embargo, cuando la densidad se aproxima a valores críticos, la interacción entre vehículos reduce la velocidad media y limita la capacidad efectiva de circulación. En intersecciones semaforizadas, esta relación permite interpretar la formación de colas: durante el rojo, el flujo de salida del acceso se interrumpe y la densidad aguas arriba aumenta; si la demanda acumulada supera la capacidad de descarga durante el verde, persisten demoras y condiciones de flujo forzado \cite[pp.~315--316]{calymayor}.
+Cabe destacar que la velocidad media espacial ($v_s$) es la única físicamente consistente con esta ecuación fundamental. La velocidad media temporal ($v_t$) difiere de esta debido a que asigna mayor peso a los vehículos más rápidos que cruzan el punto de medición en un lapso dado. La vinculación analítica entre ambas variables se establece formalmente mediante la relación de Wardrop \cite{fernandez}:
+\begin{equation}
+    v_t = v_s + \frac{\sigma_s^2}{v_s}
+\end{equation}
+donde $\sigma_s^2$ es la varianza de la distribución de velocidades en el espacio. Dado que la varianza es siempre no negativa, se cumple que $v_t \ge v_s$, igualándose únicamente en el caso hipotético en que todos los vehículos circulen exactamente a la misma velocidad. En intersecciones semaforizadas, esta relación dinámica permite modelar cómo las interrupciones del semáforo durante la luz roja detienen el flujo ($v_s \to 0$), provocando una acumulación de vehículos que eleva la densidad ($k \to k_{max}$) y genera colas y demoras asociadas a condiciones de flujo forzado \cite[pp.~315--316]{calymayor}.
 
 Para un sistema de control de tránsito, estas variables son relevantes porque pueden medirse o estimarse a partir de sensores, detectores o registros del simulador. A partir de ellas es posible construir una representación del estado de la red y evaluar cómo evoluciona la operación ante distintas decisiones de control.
 
@@ -79,9 +202,49 @@ donde $m$ representa el valor esperado o media de llegadas en dicho intervalo. B
     P(h \ge t) = e^{-\frac{q}{3600} \cdot t}
 \end{equation}
 
-Esta representación no pretende describir todos los patrones de llegada posibles, ya que en redes coordinadas, condiciones saturadas o tramos afectados por semáforos previos pueden formarse pelotones y dependencias temporales. Sin embargo, resulta útil como aproximación básica para introducir variabilidad en la demanda y para relacionar el flujo vehicular con conceptos de teoría de colas aplicados al análisis de intersecciones.
+Esta representación probabilística asume independencia entre arribos sucesivos, siendo una aproximación válida únicamente para flujos vehiculares bajos o moderados bajo condiciones de flujo libre, donde no exista la influencia de semáforos cercanos aguas arriba \cite{calymayor}. Sin embargo, este supuesto de independencia decae en condiciones de congestión o en redes viales urbanas semaforizadas. En estos casos, la operación de los semáforos interrumpe periódicamente el flujo y agrupa a los vehículos en pelotones (\textit{platoons}), induciendo una fuerte dependencia espacio-temporal y correlación entre arribos consecutivos. La Figura \ref{fig:distribucion_intervalos} presenta una comparación conceptual de la distribución resultante de los intervalos temporales entre vehículos bajo estas dos condiciones operativas.
 
-Desde la perspectiva de la simulación computacional, incorporar variabilidad estocástica en las llegadas permite evaluar los algoritmos de control bajo escenarios menos rígidos que un patrón determinista. Esto es relevante para este trabajo porque un controlador entrenado o evaluado solo con llegadas constantes podría ajustar su comportamiento a una regularidad artificial y no responder adecuadamente ante fluctuaciones de demanda propias de la operación urbana.
+Esta limitación de los modelos analíticos tradicionales (como los de Poisson o teoría de colas clásica) justifica la necesidad de recurrir a la simulación microscópica de tránsito. En un simulador como SUMO, la formación, dispersión e interacción de pelotones vehiculares emergen de manera natural a partir de los modelos de seguimiento de vehículos y cambio de carril, permitiendo evaluar el control semafórico bajo flujos dinámicos realistas. Asimismo, incorporar arribos estocásticos no Poissonianos, perfiles de demanda variables y la inicialización de múltiples corridas con diferentes semillas aleatorias en el simulador es un procedimiento estándar para evaluar la robustez y capacidad de adaptación de cualquier esquema de control dinámico ante la incertidumbre operativa; esto permite asegurar que los algoritmos sean capaces de responder ante fluctuaciones dinámicas del tráfico en tiempo real, en lugar de optimizarse para una secuencia de flujo determinista y artificial \cite{calymayor, ite_handbook}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.78\textwidth,
+  height=5.5cm,
+  xlabel={Intervalo temporal entre veh\'{i}culos ($t$, s)},
+  ylabel={Densidad de probabilidad $f(t)$},
+  xmin=0, xmax=5.5,
+  ymin=0, ymax=1.25,
+  xtick={0,1,2,3,4,5},
+  ytick={0,0.25,0.50,0.75,1.00,1.25},
+  legend style={at={(0.97,0.97)}, anchor=north east, font=\small},
+  axis lines=left,
+  every axis plot/.append style={line width=1.5pt}
+]
+  %% Curva 1: Exponencial negativa (flujo libre / Poisson)
+  %% f(t) = lambda * exp(-lambda*t), con lambda=1 (media=1s)
+  \addplot[color=catVerdeMenta!80!black, domain=0:5.5, samples=120]
+    {exp(-x)};
+  \addlegendentry{Exponencial negativa (flujo libre)}
+
+  %% Curva 2: Gamma desplazada (flujo con pelotones)
+  %% f(t) = 0  para t < t_min; luego tipo Gamma con pico
+  %% Usamos: f(t) = 4*(t-0.8)*exp(-2*(t-0.8)) para t >= 0.8
+  \addplot[color=catRosaSalmon!80!black, dashed, domain=0:0.799, samples=5]
+    {0};
+  \addplot[color=catRosaSalmon!80!black, dashed, domain=0.8:5.5, samples=120]
+    {4*(x-0.8)*exp(-2*(x-0.8))};
+  \addlegendentry{Flujo con pelotones (red coordinada)}
+
+  %% Linea vertical en t_min
+  \draw[dotted, thick, gray] (axis cs:0.8,0) -- (axis cs:0.8,0.55)
+    node[above, font=\footnotesize, black] {$t_{\min}$};
+\end{axis}
+\end{tikzpicture}
+\caption{Comparaci\'{o}n esquem\'{a}tica de la distribuci\'{o}n de intervalos temporales entre veh\'{i}culos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por sem\'{a}foros (distribuci\'{o}n desplazada con zona de exclusi\'{o}n f\'{i}sica $t_{\min}$ y pico caracter\'{i}stico de pelot\'{o}n).}
+\label{fig:distribucion_intervalos}
+\end{figure}
 
 \subsection{Sistemas de Control de Tránsito}
 
@@ -95,7 +258,45 @@ Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecut
 
 \subsubsection{Modelado de la Capacidad y el Verde Efectivo}
 
-Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite[pp.~59--60]{fernandez}. En la práctica, la descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control. En este trabajo, estos efectos no se modelan mediante fórmulas analíticas de capacidad, sino mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
+Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite[pp.~59--60]{fernandez}. En la práctica, la descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control, como se ilustra conceptualmente en la Figura \ref{fig:verde_efectivo}. En este trabajo, estos efectos no se modelan mediante fórmulas analíticas de capacidad, sino mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[font=\small]
+    % Ejes
+    \draw[->, thick, gray] (0,0) -- (10,0) node[right, text=black] {Tiempo};
+    \draw[->, thick, gray] (0,0) -- (0,5) node[above, text=black, rotate=90, anchor=south, yshift=1ex, xshift=-2em] {Flujo (veh/h)};
+
+    % Fases semáforo (barra inferior)
+    \filldraw[fill=catRosaSalmon!80!white, draw=none] (0,-0.4) rectangle (1.5,0); % Rojo
+    \filldraw[fill=catVerdeMenta!80!white, draw=none] (1.5,-0.4) rectangle (8,0); % Verde
+    \filldraw[fill=seqNivelUno!80!white, draw=none] (8,-0.4) rectangle (9,0); % Amarillo
+    \filldraw[fill=catRosaSalmon!80!white, draw=none] (9,-0.4) rectangle (10,0); % Rojo
+
+    \node at (4.75, -0.65) {Tiempo de verde efectivo ($g$)};
+    \draw[<->] (1.8, -0.2) -- (8.7, -0.2);
+
+    % Curva de flujo
+    \draw[color=catAzulCielo!80!black, ultra thick] 
+        (1.5, 0) .. controls (1.8, 0.1) and (2.0, 4.0) .. (2.3, 4.0) -- 
+        (5.0, 4.0) .. controls (5.3, 4.0) and (5.4, 2.0) .. (5.6, 2.2) .. controls (5.8, 2.4) and (6.2, 2.0) .. (6.5, 2.1) .. controls (7.0, 2.3) and (7.5, 2.0) .. (8.5, 2.1) .. controls (8.6, 2.1) and (8.7, 0.1) .. (8.8, 0);
+
+    % Etiquetas
+    \draw[dashed, gray] (2.3, 4.0) -- (0, 4.0) node[left] {$q_{\max}$};
+    \node[align=center] at (4.8, 4.4) {Operación a flujo\\ de saturación};
+    
+    \draw[<->] (1.5, 3.5) -- (2.3, 3.5) node[midway, above] {Pérdida inicial ($l_1$)};
+    \draw[dashed, gray] (1.5, 0) -- (1.5, 4);
+    \draw[dashed, gray] (2.3, 0) -- (2.3, 4);
+
+    \draw[<->] (8.5, 3.5) -- (8.8, 3.5) node[midway, above] {Pérdida final ($l_2$)};
+    \draw[dashed, gray] (8.5, 0) -- (8.5, 4);
+    \draw[dashed, gray] (8.8, 0) -- (8.8, 4);
+
+    \end{tikzpicture}
+    \caption{Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}
+    \label{fig:verde_efectivo}
+\end{figure}
 
 \subsubsection{Clasificación de los Controladores de Semáforos}
 
@@ -115,61 +316,179 @@ Esta granularidad vuelve a la simulación microscópica especialmente adecuada p
 
 En la simulación microscópica, la evolución de cada vehículo se describe mediante mecanismos internos como el seguimiento vehicular \cite[Cap.~1, Sec.~1.3.2]{fernandez} y el cambio de carril \cite[pp.~352--353]{ite_handbook}. En SUMO, estos mecanismos se parametrizan a través de los tipos de vehículo y determinan cómo cada unidad ajusta su velocidad, mantiene separaciones de seguridad, cambia de carril y avanza sobre su ruta dentro de la red \cite{sumo-doc}.
 
-En este trabajo, tales mecanismos forman parte del entorno de simulación y no constituyen el objeto directo de optimización. El agente no actúa sobre el comportamiento individual de los vehículos, sino sobre las decisiones de control semafórico, cuyos efectos emergen a partir de la dinámica vehicular generada por el simulador.
+\subsubsection{Modelado de Intersecciones y Semáforos en SUMO}
 
-\subsubsection{Entorno de Simulación para Control Semafórico}
+En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. En SUMO, los programas semafóricos se definen mediante fases que especifican, para cada instante, el estado de las señales asociadas a los enlaces controlados de la intersección; por ello, una fase no se interpreta solo como un color general del semáforo, sino como una configuración de permisos para movimientos concretos entre carriles de entrada y salida, cuyos elementos geométricos asociados (carriles y conexiones de cruce) se representan en la Figura \ref{fig:sumo_intersection_elements} \cite{sumo-doc}. Esta representación es compatible con la formulación algorítmica del problema, donde una acción puede consistir en seleccionar una fase, mantener la fase actual o modificar la duración de servicio dentro de restricciones predefinidas.
 
-En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. En SUMO, los programas semafóricos se definen mediante fases que especifican, para cada instante, el estado de las señales asociadas a los enlaces controlados de la intersección; por ello, una fase no se interpreta solo como un color general del semáforo, sino como una configuración de permisos para movimientos concretos entre carriles de entrada y salida \cite{sumo-doc}. Esta representación es compatible con la formulación algorítmica del problema, donde una acción puede consistir en seleccionar una fase, mantener la fase actual o modificar la duración de servicio dentro de restricciones predefinidas.
-
-La interfaz TraCI (\textit{Traffic Control Interface}) permite consultar valores de una simulación en ejecución y modificar su estado de forma externa durante el avance paso a paso \cite{sumo-doc}. A través de esta interfaz, un controlador puede obtener telemetría de vehículos, carriles, detectores, arcos o semáforos, y también aplicar cambios sobre el estado o la fase de los semáforos. Esta capacidad convierte a SUMO en un entorno experimental adecuado para evaluar decisiones secuenciales de control y para integrarlo con bibliotecas orientadas a aprendizaje por refuerzo, como SUMO-RL \cite{SUMO2018_SUMO,AlegreLSUMORLDoc}.
-
-Desde la perspectiva del aprendizaje por refuerzo, esta integración establece una correspondencia directa entre los conceptos del dominio de tránsito y los componentes del problema de decisión secuencial. Variables como la longitud de cola, el número de vehículos detenidos, la ocupación, el flujo de entrada o el tiempo de espera pueden conformar las observaciones del agente, mientras que la selección o permanencia de fases semafóricas constituye el espacio de acciones. De forma análoga, indicadores como la demora, las detenciones acumuladas o el crecimiento de colas pueden emplearse para definir recompensas durante el entrenamiento o métricas de evaluación del sistema de control \cite{WeiH2019ASTSCM,AlegreLSUMORLDoc}. Esta formulación no implica que el algoritmo aprenda ni sustituya los modelos físicos del simulador: la dinámica vehicular permanece como parte del entorno, mientras el controlador aprende una política que asigna acciones a observaciones con el objetivo de mejorar el desempeño operativo \cite{suttonRL}.
-
-En una red urbana semaforizada, sin embargo, el comportamiento de cada intersección no puede analizarse de manera aislada. Las decisiones de fase modifican los patrones de descarga, propagación y acumulación de vehículos, afectando tanto a intersecciones vecinas como a la evolución futura del tránsito en la propia red. Esta interdependencia espacial y temporal justifica el uso de enfoques cooperativos de aprendizaje por refuerzo multiagente, en los que múltiples controladores coordinan sus decisiones para mejorar el desempeño global y no solo el de una intersección individual \cite{WeiH2019ASTSCM,gnn_traffic}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{./imagenes/intersectionElements.png}
+    \caption{Representación en SUMO de carriles entrantes (en azul), carriles salientes (en negro) y enlaces (\textit{links}) que definen las conexiones de giro y cruce.}
+    \label{fig:sumo_intersection_elements}
+\end{figure}
 
 
 \section{Aprendizaje por Refuerzo (RL)}
 
+El aprendizaje por refuerzo (\textit{reinforcement learning}, en inglés) consiste en mapear situaciones (estados) a acciones, con el objetivo de maximizar una señal de recompensa numérica. En el marco del aprendizaje por refuerzo, existen dos elementos esenciales: uno o más agentes y un entorno.
+
+El agente es el tomador de decisiones, al cual no se le indica explícitamente qué acciones tomar, sino que debe descubrir cuáles acciones generan más recompensas a través de la exploración y la experimentación. Generalmente, las acciones pueden afectar no solo la recompensa inmediata, sino también el estado siguiente y, a través de este, todas las recompensas futuras.
+
+El otro elemento es el entorno, que representa el escenario con el que interactúa el agente. Este entorno debe modelarse mediante abstracción de tal manera que la interfaz de comunicación ofrezca al agente lo esencial para el proceso de aprendizaje. Para modelar este entorno se utilizan ideas de la teoría de sistemas dinámicos, específicamente de los procesos de decisión de Markov \cite{suttonRL}.
+
 \subsection{El Proceso de Decisión de Markov (MDP)}
 
-\subsection{Métodos Basados en Valor y Basados en Política}
+Los procesos de decisión de Markov (\textit{Markov Decision Process}, MDP) son una formalización clásica de la toma de decisiones secuencial donde las acciones no sólo influyen en las recompensas inmediatas, sino también en situaciones posteriores o estados y, a través de ellas, en las recompensas futuras. Los MDP pretenden ser una forma matemáticamente idealizada del problema del aprendizaje por refuerzo para el que pueden hacerse afirmaciones teóricas aplicables en la práctica.
+
+En un MDP, el agente y el entorno interactúan en cada uno de una secuencia de pasos temporales discretos, \(t = 0, 1, 2, 3, \ldots\). En cada paso de tiempo \(t\), el agente recibe una representación del estado del entorno, \(S_t \in \mathcal{S}\), y en esa base selecciona una acción, \(A_t \in \mathcal{A}(s)\). Un paso de tiempo después, como consecuencia de esta acción, el agente recibe una recompensa numérica, \(R_{t+1} \in \mathcal{R}\), y se encontrará en un nuevo estado \(S_{t+1}\). Todo este proceso se puede observar esquemáticamente en la Figura \ref{fig:agent_env_interaction}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{imagenes/RL_Agent_Env.png}
+    \caption{Interacción agente-entorno en un proceso de decisión de Markov \cite[p.~48]{suttonRL}.}
+    \label{fig:agent_env_interaction}
+\end{figure}
+
+En los MDP finitos, los conjuntos de estados, acciones y recompensas (\(\mathcal{S}\), \(\mathcal{A}\) y \(\mathcal{R}\)) contienen un número finito de elementos. Las variables aleatorias \(R_t\) y \(S_t\) siguen una distribución de probabilidad discreta \(p\), la cual depende únicamente del estado y la acción precedentes. Esta dependencia exclusiva se conoce como la propiedad de Markov, y para las metodologías utilizadas en este trabajo se asume su cumplimiento \cite{suttonRL}:
+
+\begin{equation}
+p(s',r|s,a) = \Pr\{ S_t=s', R_t=r | S_{t-1} = s, A_{t-1}=a \}
+\end{equation}
+
+Existen métodos que intentan desarrollar un modelo para comprender el entorno. Estos métodos buscan aprender la función de probabilidad $p$ para poder planificar y se denominan métodos \textit{basados en modelo}. Por otro lado, los algoritmos \textit{libres de modelo} aprenden las consecuencias de las acciones a través de la experiencia pura sin estimar la función $p$, y constituyen la familia de algoritmos de mayor interés para el presente trabajo.
+
+\subsection{Retorno}
+
+Como se ha mencionado, el objetivo del agente es maximizar la recompensa acumulada recibida a lo largo del tiempo. En general, se busca maximizar el retorno esperado, donde el retorno, denotado $G_t$, se define como una función específica de una secuencia de recompensas.
+
+En muchos casos resulta necesario priorizar las recompensas inmediatas frente a aquellas más lejanas en el tiempo, para lo cual se emplea un factor de descuento $\gamma \in [0, 1]$. Este parámetro se utiliza para obtener el retorno descontado:
+
+\begin{equation}
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \ldots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+\end{equation}
+
+\subsection{Función de Acción-Valor y Política}
+
+Todo algoritmo de aprendizaje por refuerzo requiere estimar una función de valor, la cual indica qué tan ventajoso es para el agente encontrarse en un determinado estado o elegir cierta acción desde el mismo. Esta noción se define en términos de recompensas futuras esperadas y se encuentra subordinada a formas particulares de actuar, denominadas políticas.
+
+Una política es una función que mapea desde los estados hacia las probabilidades de seleccionar cada acción posible. Si un agente sigue una política $\pi$ en el instante de tiempo $t$, entonces $\pi(a|s)$ es la probabilidad de que $A_t=a$ si $S_t=s$.
+
+La función de valor de un estado $s$ bajo una política $\pi$, denotada $V_{\pi}(s)$, es el retorno esperado al comenzar desde $s$ y seguir la política $\pi$ en adelante. Por otra parte, la función de acción-valor al elegir una acción $a$ en el estado $s$ bajo una política $\pi$, denotada $Q_{\pi}(s,a)$, se define formalmente como:
+
+\begin{equation}
+Q_{\pi}(s,a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi} \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \mid S_t = s, A_t = a \right]
+\end{equation}
+
+Tanto $V_{\pi}$ como $Q_{\pi}$ pueden estimarse empíricamente a partir de la experiencia. Estas funciones permiten establecer un orden parcial sobre las políticas, existiendo siempre al menos una política óptima, denotada por $\pi_{*}$, cuyo retorno esperado es mayor o igual que el de las demás para todos los estados. Las políticas óptimas comparten la misma función de acción-valor óptima $Q_{*}(s,a)$ \cite{suttonRL}.
+
+\subsection{\textit{Q-Learning}}
+
+Una propiedad fundamental de $Q_*$ es que debe satisfacer la ecuación de optimalidad de Bellman, la cual constituye la base teórica del algoritmo \textit{Q-learning}:
+
+\begin{equation}
+Q_* (s,a) = \mathbb{E} \left[ R_{t+1} + \gamma \max_{a'} Q_*(S_{t+1},a') \mid S_t = s, A_t = a \right]
+\end{equation}
+
+A partir de esta relación iterativa, se deriva el siguiente método de actualización temporal para aproximar progresivamente $Q_*$:
+
+\begin{equation}
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_{a} Q(S_{t+1},a) - Q(S_t, A_t) \right]
+\end{equation}
+
+donde \(\alpha\) es la tasa de aprendizaje, un parámetro que controla la velocidad de convergencia. En implementaciones tradicionales, los valores Q se almacenan en una estructura tabular. Sin embargo, cuando el espacio de estados adquiere magnitudes realistas, el enfoque tabular deja de ser escalable, requiriendo el uso de aproximadores de funciones.
+
+\subsection{\textit{Deep Learning} y Redes Neuronales}
+
+El aprendizaje profundo (\textit{deep learning}) es un subcampo del aprendizaje automático que se fundamenta en el entrenamiento de representaciones progresivas a partir de datos. En este paradigma, el procesamiento se estructura a través de modelos denominados redes neuronales, compuestas por múltiples capas de unidades básicas de cómputo conocidas como neuronas artificiales.
+
+Una neurona artificial procesa señales mediante tres componentes principales:
+\begin{enumerate}
+    \item \textbf{Entradas}: Recibe múltiples señales \(x_i\), cada una ponderada por un coeficiente o peso \(w_i\).
+    \item \textbf{Función de Agregación}: Computa la suma ponderada de las entradas junto con un término de sesgo (\textit{bias}) \(b\), representado como \(z = \sum w_i x_i + b\).
+    \item \textbf{Función de Activación}: La variable \(z\) se transforma mediante una función matemática (como ReLU o tangente hiperbólica) para introducir no linealidad en el modelo, lo que permite a la red neuronal aproximar funciones complejas no lineales.
+\end{enumerate}
 
 \subsection{\textit{Deep Reinforcement Learning} (DRL)}
 
-Neurona artificial
-Red neuronal
-Deep Learning
-Deep Reinforcement Learning
+El \textit{Deep Reinforcement Learning} (DRL) combina las técnicas de aprendizaje profundo con el aprendizaje por refuerzo clásico \cite{mnih2015}. En este enfoque, las redes neuronales profundas actúan como aproximadores universales de las funciones de valor o de las políticas, posibilitando que los agentes de RL resuelvan tareas y tomen decisiones en entornos con espacios de estados continuos o de alta dimensionalidad.
+
+\subsubsection{\textit{Deep Q-Learning} (DQN)}
+
+La integración de redes neuronales al algoritmo \textit{Q-learning} da lugar a la arquitectura \textit{Deep Q-Network} (DQN). En DQN, una red neuronal recibe una representación del estado y devuelve los valores Q estimados para todas las acciones disponibles \cite{mnih2015}. Además de escalar a espacios mayores, DQN introduce dos mecanismos cruciales para estabilizar el proceso de entrenamiento:
+\begin{itemize}
+    \item \textbf{Red objetivo (\textit{target network}):} El algoritmo mantiene dos redes neuronales. La red principal parametrizada por \(\theta\) se utiliza para seleccionar acciones y actualizarse en cada paso temporal. Simultáneamente, una red objetivo parametrizada por \(\theta^-\) se emplea para calcular el valor objetivo en la ecuación de actualización. Los pesos de la red objetivo se mantienen congelados y se sincronizan periódicamente con los de la red principal, evitando oscilaciones inestables en las estimaciones.
+    \item \textbf{Repetición de experiencias (\textit{experience replay}):} A medida que el agente interactúa con el entorno, sus transiciones empíricas \((s,a,r,s')\) se guardan en una memoria temporal o \textit{replay buffer}. En lugar de entrenar con secuencias temporales altamente correlacionadas, la red neuronal se optimiza muestreando minilotes (\textit{batches}) aleatorios de esta memoria.
+\end{itemize}
+
+Durante el entrenamiento, la función de pérdida a minimizar se formula en torno a la diferencia de los lados de la ecuación de Bellman:
+
+\begin{equation}
+\mathcal{L}(\theta) = \mathbb{E} \left[ \left( r + \gamma \max_{a'} Q(s', a'; \theta^{-}) - Q(s, a; \theta) \right)^2 \right]
+\end{equation}
+
+\subsubsection{Exploración vs. Explotación}
+
+Para evitar que el agente converja prematuramente a políticas subóptimas, se debe establecer un balance entre explorar el entorno y explotar el conocimiento ya adquirido. En DQN suele utilizarse una política $\epsilon$-greedy: con probabilidad $1-\epsilon$ se selecciona la acción que maximiza el valor Q estimado por la red, y con probabilidad $\epsilon$ se ejecuta una acción aleatoria. Típicamente, $\epsilon$ inicializa en un valor alto y experimenta un decaimiento lineal a lo largo de los episodios formativos hasta alcanzar un valor mínimo residual.
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (MARL)}
 
-\subsection{Generalización de los MDP mediante Teoría de Juegos}
+El aprendizaje por refuerzo multi-agente (\textit{Multi-Agent Reinforcement Learning}, MARL) generaliza los principios del RL hacia sistemas donde múltiples entidades aprenden e interactúan simultáneamente en un entorno compartido \cite{marlbook}. A diferencia del caso individual, las acciones de cada agente modifican el estado global del sistema, lo que induce una dinámica no estacionaria desde la perspectiva local de cualquier participante. En el contexto del control de tráfico urbano, las intersecciones vecinas comparten un objetivo común ---maximizar la eficiencia vehicular---, configurando un escenario estrictamente cooperativo.
 
 \subsection{Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}
 
+Los entornos cooperativos multi-agente suelen formalizarse matemáticamente mediante el marco de los Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP). Este modelo para $n$ agentes se define como una tupla $\langle \mathcal{S}, \{ \mathcal{A}_i \}_{i=1}^n, T, R, \{ \Omega_i \}_{i=1}^n, O, \gamma \rangle$, donde:
+\begin{itemize}
+  \item $\mathcal{S}$ es el conjunto de estados globales del entorno.
+  \item $\mathcal{A}_i$ corresponde al espacio de acciones disponibles para el agente $i$.
+  \item $T(s' \mid s, a_{1:n})$ representa la función de transición conjunta.
+  \item $R(s, a_{1:n})$ es la función de recompensa compartida.
+  \item $\Omega_i$ denota el conjunto de observaciones individuales del agente $i$, regidas por la función de observación $O(o_{1:n} \mid s', a_{1:n})$.
+\end{itemize}
+En este esquema, cada agente basa sus decisiones en su historia local de observaciones $\tau_i$, con el propósito de aprender una política descentralizada $\pi_i(a_i \mid \tau_i)$ que, al combinarse con las demás, maximice el retorno conjunto del sistema \cite{decpomdp-survey}.
+
 \subsection{Paradigmas de Entrenamiento y Ejecución}
 
-\subsubsection{Entrenamiento y Ejecución Descentralizada (DTE)}
+Para abordar la complejidad inherente a los Dec-POMDP, una estrategia ampliamente aceptada es el paradigma de \textbf{Entrenamiento Centralizado con Ejecución Descentralizada} (CTDE, por sus siglas en inglés) \cite{ctde_survey}. Durante la fase de entrenamiento (simulación), los algoritmos pueden aprovechar el estado global del sistema, las recompensas totales y las acciones conjuntas de todos los agentes para estabilizar la convergencia de las redes neuronales críticas. Sin embargo, para la fase de ejecución, se extraen actores o políticas puramente descentralizadas que requieren únicamente las variables observables locales de cada intersección para tomar decisiones de control.
 
-\subsubsection[Entrenamiento Centralizado con Ejecución Descentralizada (CTDE)]{Entrenamiento Centralizado con \\ Ejecución Descentralizada (CTDE)}
+\subsection{Principales Familias de Algoritmos Cooperativos}
 
-\subsection{Algoritmos de Aprendizaje Independiente}
+El desarrollo de MARL ha consolidado distintas familias algorítmicas bajo el paradigma CTDE:
+\begin{itemize}
+    \item \textbf{Descomposición de Valores:} Enfoques como \textit{Value Decomposition Networks} (VDN) \cite{vdn} y QMIX \cite{qmix} intentan factorizar la función de valor global en estimaciones locales por agente. QMIX, por ejemplo, utiliza una red neuronal adicional (red de mezcla) que asegura restricciones de monotonía, garantizando que el máximo conjunto coincida con la selección de los máximos individuales de cada agente.
+    \item \textbf{Métodos Actor-Crítico Centralizados:} Esta vertiente extiende los enfoques de gradiente de política al escenario multi-agente, implementando un ``crítico'' que evalúa las acciones conjuntas a partir del estado global, y actores individuales independientes. Algoritmos como MADDPG (\textit{Multi-Agent Deep Deterministic Policy Gradient}), introducido por Lowe et al. \cite{maddpg}, se inscriben en esta categoría, facilitando el aprendizaje en espacios continuos y atenuando la varianza en la asignación de recompensas.
+    \item \textbf{Asignación de Crédito y Modelado de Recompensas:} En sistemas descentralizados, resulta imperativo aislar la contribución específica de un agente respecto al desempeño colectivo. Para ello se emplean técnicas analíticas como las recompensas de diferencia (\textit{difference rewards}) \cite{difference_rewards}, que cuantifican la divergencia entre el retorno global actual y un escenario contrafactual hipotético en el que el agente evaluado adopta un comportamiento por defecto \cite{coma}.
+\end{itemize}
 
-\subsubsection{\textit{Independent Deep Q-Learning} (IDQN)}
+\subsection{Desafíos Prácticos en MARL}
 
-\subsubsection{\textit{Independent Proximal Policy Optimization} (IPPO)}
-
-\subsection{Algoritmos de Política Próxima en MARL}
-
-\subsubsection[\textit{Multi-Agent Proximal Policy Optimization} (MAPPO)]{\textit{Multi-Agent Proximal Policy Optimization} \\ (Optimización de Política Próxima Multi-Agente - MAPPO)}
-
-\subsubsection{\textit{Heterogeneous-Agent Proximal Policy Optimization} (Optimización de Política Próxima para Agentes Heterogéneos - HAPPO)}
+La adopción de MARL enfrenta obstáculos sustanciales para su implementación práctica:
+\begin{itemize}
+    \item \textbf{No Estacionariedad:} La evolución simultánea de las políticas de múltiples agentes ocasiona que las propiedades probabilísticas del entorno varíen constantemente, lo cual invalida las garantías teóricas de convergencia diseñadas para entornos de un solo agente.
+    \item \textbf{Gestión de Memoria de Experiencias:} Las técnicas de \textit{experience replay} pierden eficacia directa, ya que las transiciones recopiladas en etapas tempranas corresponden a dinámicas de interacción conjuntas que han quedado obsoletas, generando señales de gradiente ruidosas \cite{foerster2017}.
+    \item \textbf{Escalabilidad:} La magnitud combinada de los espacios de estado y acción crece exponencialmente en función de la cantidad de agentes. Para redes urbanas extensas, esta explosión combinatoria exige estrategias avanzadas de parametrización compartida y la adopción de redes neuronales convolucionales o basadas en grafos \cite{gnn_traffic}.
+\end{itemize}
 \newpage
 
 % -------- ¿¿ METODOLOGIA ?? --------
 
 \section{Control de Tráfico Urbano mediante MARL}
 
+\subsection{Entorno de Simulación para Control Semafórico}
+
+La interfaz TraCI (\textit{Traffic Control Interface}) permite consultar valores de una simulación en ejecución y modificar su estado de forma externa durante el avance paso a paso \cite{sumo-doc}. A través de esta interfaz, un controlador puede obtener telemetría de vehículos, carriles, detectores, arcos o semáforos, y también aplicar cambios sobre el estado o la fase de los semáforos. Esta capacidad convierte a SUMO en un entorno experimental adecuado para evaluar decisiones secuenciales de control y para integrarlo con bibliotecas orientadas a aprendizaje por refuerzo, como SUMO-RL \cite{SUMO2018_SUMO,AlegreLSUMORLDoc}.
+
+En este sentido, la integración entre el simulador y la política de control establece un bucle cerrado en el que el simulador actúa como el entorno (u \textit{environment}) y la interfaz de programación expone la telemetría y los actuadores necesarios para guiar el proceso de aprendizaje, permitiendo que el controlador interactúe dinámicamente paso a paso.
+
 \subsection{Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}
 
+Desde la perspectiva del aprendizaje por refuerzo, la formulación del control semafórico establece una correspondencia directa entre los conceptos físicos del dominio del tránsito y los componentes de un problema de decisión secuencial. Las variables que definen el estado del tránsito en la intersección se traducen en observaciones para el agente, el control de las indicaciones luminosas define el espacio de acciones, y el desempeño operativo del sistema se utiliza para guiar el aprendizaje mediante la función de recompensa:
+\begin{itemize}
+    \item \textbf{Espacio de observaciones (estados):} variables como la longitud de cola, el número de vehículos detenidos, el flujo de entrada o el tiempo de espera acumulado en los accesos de la intersección.
+    \item \textbf{Espacio de acciones:} la selección o permanencia de fases semafóricas, respetando los tiempos mínimos y máximos de seguridad física de la intersección.
+    \item \textbf{Función de recompensa:} métricas que cuantifican la calidad del flujo, tales como la reducción de la demora total, la disminución de detenciones consecutivas o la mitigación del crecimiento de colas en accesos críticos.
+\end{itemize}
+Esta formulación no implica que el algoritmo aprenda ni sustituya los modelos físicos del simulador: la dinámica vehicular permanece como parte del entorno, mientras el controlador aprende una política que asigna acciones a observaciones con el objetivo de mejorar el desempeño operativo de forma empírica \cite{WeiH2019ASTSCM,AlegreLSUMORLDoc,suttonRL}.
+
 \subsection[Coordinación entre Intersecciones y Mitigación de Congestión]{Coordinación entre Intersecciones \\ y Mitigación de Congestión}
+
+En una red urbana semaforizada, el comportamiento de cada intersección no puede analizarse de manera aislada. Las decisiones de fase modifican los patrones de descarga, propagación y acumulación de vehículos, afectando tanto a intersecciones vecinas como a la evolución futura del tránsito en la propia red. Esta interdependencia espacial y temporal justifica el uso de enfoques cooperativos de aprendizaje por refuerzo multiagente, en los que múltiples controladores coordinan sus decisiones para mejorar el desempeño global y no solo el de una intersección individual \cite{WeiH2019ASTSCM,gnn_traffic}.
