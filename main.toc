@@ -7,32 +7,32 @@
 \contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{10}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{11}{subsection.2.1.2}%
 \contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{13}{subsubsection*.6}%
-\contentsline {subsubsection}{Descripción Probabilística del Flujo}{14}{subsubsection*.7}%
-\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{15}{subsection.2.1.3}%
-\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{16}{subsubsection*.8}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{16}{subsubsection*.9}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{17}{subsection.2.1.4}%
-\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{18}{subsubsection*.10}%
-\contentsline {subsubsection}{Entorno de Simulación para Control Semafórico}{19}{subsubsection*.11}%
-\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{20}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{20}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{20}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}\textit {Deep Reinforcement Learning} (DRL)}{20}{subsection.2.2.3}%
-\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{20}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Generalización de los MDP mediante Teoría de Juegos}{20}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{20}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{20}{subsection.2.3.3}%
-\contentsline {subsubsection}{Entrenamiento y Ejecución Descentralizada (DTE)}{20}{subsubsection*.12}%
-\contentsline {subsubsection}{Entrenamiento Centralizado con Ejecución Descentralizada (CTDE)}{20}{subsubsection*.13}%
-\contentsline {subsection}{\numberline {2.3.4}Algoritmos de Aprendizaje Independiente}{20}{subsection.2.3.4}%
-\contentsline {subsubsection}{\textit {Independent Deep Q-Learning} (IDQN)}{20}{subsubsection*.14}%
-\contentsline {subsubsection}{\textit {Independent Proximal Policy Optimization} (IPPO)}{20}{subsubsection*.15}%
-\contentsline {subsection}{\numberline {2.3.5}Algoritmos de Política Próxima en MARL}{20}{subsection.2.3.5}%
-\contentsline {subsubsection}{\textit {Multi-Agent Proximal Policy Optimization} (MAPPO)}{20}{subsubsection*.16}%
-\contentsline {subsubsection}{\textit {Heterogeneous-Agent Proximal Policy Optimization} (Optimización de Política Próxima para Agentes Heterogéneos - HAPPO)}{20}{subsubsection*.17}%
-\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{21}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{21}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Coordinación entre Intersecciones y Mitigación de Congestión}{21}{subsection.2.4.2}%
+\contentsline {subsubsection}{Descripción Probabilística del Flujo}{13}{subsubsection*.7}%
+\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{14}{subsection.2.1.3}%
+\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{15}{subsubsection*.8}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{15}{subsubsection*.9}%
+\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{15}{subsection.2.1.4}%
+\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{16}{subsubsection*.10}%
+\contentsline {subsubsection}{Entorno de Simulación para Control Semafórico}{17}{subsubsection*.11}%
+\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{18}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{18}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{18}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}\textit {Deep Reinforcement Learning} (DRL)}{18}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{18}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Generalización de los MDP mediante Teoría de Juegos}{18}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{18}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{18}{subsection.2.3.3}%
+\contentsline {subsubsection}{Entrenamiento y Ejecución Descentralizada (DTE)}{18}{subsubsection*.12}%
+\contentsline {subsubsection}{Entrenamiento Centralizado con Ejecución Descentralizada (CTDE)}{18}{subsubsection*.13}%
+\contentsline {subsection}{\numberline {2.3.4}Algoritmos de Aprendizaje Independiente}{18}{subsection.2.3.4}%
+\contentsline {subsubsection}{\textit {Independent Deep Q-Learning} (IDQN)}{18}{subsubsection*.14}%
+\contentsline {subsubsection}{\textit {Independent Proximal Policy Optimization} (IPPO)}{18}{subsubsection*.15}%
+\contentsline {subsection}{\numberline {2.3.5}Algoritmos de Política Próxima en MARL}{18}{subsection.2.3.5}%
+\contentsline {subsubsection}{\textit {Multi-Agent Proximal Policy Optimization} (MAPPO)}{18}{subsubsection*.16}%
+\contentsline {subsubsection}{\textit {Heterogeneous-Agent Proximal Policy Optimization} (Optimización de Política Próxima para Agentes Heterogéneos - HAPPO)}{18}{subsubsection*.17}%
+\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{19}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{19}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Coordinación entre Intersecciones y Mitigación de Congestión}{19}{subsection.2.4.2}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

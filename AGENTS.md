@@ -19,6 +19,7 @@
 - `main.tex` defines Spanish document settings, `listings` styles, algorithm packages, and comment macros `\JM`, `\PJV`, and `\ACO`; reuse existing definitions instead of redefining them in chapter files.
 - This repo uses `babelbib`/`babalpha`, so BibTeX entries in `bibliografia.bib` should remain compatible with classic BibTeX.
 - With `babelbib`, cited BibTeX entries without a `language` field can produce non-fatal `empty language` warnings; add `language` when cleaning or adding references.
+- In this repo's `babelbib` setup, `language = {english}` is not a safe cleanup option for cited entries; use the repo-consistent `language = {spanish}` when the goal is to eliminate `empty language` warnings.
 
 ## Thesis Writing Notes
 - In thesis prose, prefer `este trabajo`, `esta investigación`, or `el presente trabajo`; avoid using `tesis` unless the user asks otherwise.
@@ -40,3 +41,4 @@
 - Before editing, check `git status --short`; generated files and thesis chapters may already be dirty from prior writing or compilation.
 - Prefer small, section-scoped edits in chapter files and preserve the academic Spanish tone already used in the thesis.
 - After changing section levels or headings, stale `hyperref`/TOC destination warnings can appear on an intermediate pass; use the full `latexmk` command rather than judging from a single `pdflatex` run.
+- `main.synctex.gz` is tracked; a plain `latexmk -pdf ...` can leave it deleted if the last build used SyncTeX. Regenerate it with `latexmk -g -pdf -synctex=1 -interaction=nonstopmode -halt-on-error main.tex` before finishing if the file matters to the worktree.

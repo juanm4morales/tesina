@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{CWCL22}
+\begin{thebibliography}{ALBBW{\etalchar{+}}18}
   \providebibliographyfont{name}{}%
   \providebibliographyfont{lastname}{}%
   \providebibliographyfont{title}{\emph}%
@@ -13,15 +13,21 @@
   \providebibliographyfont{numeral}{}%
   \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 
-\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
-\bibitem [{AL18}]{SUMO2018_SUMO}
-\btxnamefont {\btxlastnamefont {Alvarez~Lopez},~Pablo, et\btxfnamespacelong
-  al.}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Microscopic traffic
-  simulation using sumo}{Microscopic Traffic Simulation using SUMO}}.
-\newblock \btxjournalfont {Proceedings of the 21st International Conference on
-  Intelligent Transportation Systems (ITSC)}, 2018.
-\newblock Fuente: Cita de referencia para el simulador SUMO (Simulation of
-  Urban Mobility).
+\btxselectlanguage {spanish}
+\bibitem [{ALBBW{\etalchar{+}}18}]{SUMO2018_SUMO}
+\btxnamefont {\btxlastnamefont {Alvarez~Lopez}, Pablo}, \btxnamefont {Michael
+  \btxlastnamefont {Behrisch}}, \btxnamefont {Laura \btxlastnamefont
+  {Bieker-Walz}}, \btxnamefont {Jakob \btxlastnamefont {Erdmann}}, \btxnamefont
+  {Yun\btxfnamespacelong Pang \btxlastnamefont {Fl{\"o}tter{\"o}d}},
+  \btxnamefont {Robert \btxlastnamefont {Hilbrich}}, \btxnamefont {Leonhard
+  \btxlastnamefont {L{\"u}cken}}, \btxnamefont {Johannes \btxlastnamefont
+  {Rummel}}, \btxnamefont {Peter \btxlastnamefont {Wagner}}\btxandcomma {}
+  \btxandlong {}\ \btxnamefont {Evamarie \btxlastnamefont
+  {Wie{\ss}ner}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Microscopic
+  traffic simulation using sumo}{Microscopic Traffic Simulation using SUMO}}.
+\newblock \Btxinlong {}\ \btxtitlefont {2018 21st International Conference on
+  Intelligent Transportation Systems (ITSC)}, \btxpageslong {}\ 2575--2582.
+  \btxpublisherfont {IEEE}, 2018.
 
 \bibitem [{Ale}]{AlegreLSUMORLDoc}
 \btxnamefont {\btxlastnamefont {Alegre}, Lucas\btxfnamespacelong
@@ -59,6 +65,13 @@
 \btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
 \newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
+
+\bibitem [{{DLR}25}]{sumo-doc}
+\btxnamefont {\btxlastnamefont {{DLR -- Institute of Transportation
+  Systems}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Sumo user
+  documentation}{SUMO User Documentation}}, 2025.
+\newblock {\latintext \btxurlfont{https://sumo.dlr.de/docs/}}, Consultado en
+  2025.
 
 \bibitem [{FA11}]{fernandez}
 \btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\
