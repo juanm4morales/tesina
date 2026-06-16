@@ -1,109 +1,171 @@
 \chapter{Marco Teórico}\label{cap:marco_teorico}
 
-\section{Ingeniería de Tránsito y Tráfico}\label{sec:ingenieria_transito}
+\section{Ingeniería de Tránsito}\label{sec:ingenieria_transito}
 
-De acuerdo con las bases conceptuales establecidas por el \textit{Traffic Engineering Handbook} del \textit{Institute of Transportation Engineers} (ITE), la ingeniería de tránsito (o tráfico) se define formalmente como una subdisciplina de la ingeniería de transporte que aborda la planificación, el diseño y la operación de calles y carreteras, sus redes, las tierras adyacentes y su interacción con otros modos de transporte (como el aéreo, marítimo y ferroviario) así como con sus respectivas terminales. En el contexto del modelado de sistemas y las ciencias de la computación, comprender esta disciplina resulta crucial, ya que provee los modelos matemáticos, las variables de estado y los parámetros de control necesarios para simular y optimizar redes de transporte complejas.
+La ingeniería de tránsito es la subdisciplina de la ingeniería de transporte enfocada en la planificación, el diseño geométrico y la operación de calles, carreteras y redes viales \cite[p.~1]{ite_handbook}. En este trabajo, sus conceptos se utilizan principalmente desde el punto de vista de la operación del tránsito urbano: permiten describir el funcionamiento de la red vial, identificar variables de desempeño y establecer sobre qué aspectos puede intervenir un sistema de control.
 
-Históricamente, desde la primera edición del manual en 1941, el enfoque de la profesión estuvo fuertemente centrado en proporcionar y expandir la capacidad vial mediante la construcción de nuevas infraestructuras y la ampliación de las arterias existentes. Sin embargo, la evidencia empírica a lo largo de las décadas demostró que el aumento de la congestión vehicular no podía mitigarse de forma sostenible únicamente añadiendo capacidad física. En consecuencia, la disciplina experimentó una evolución paradigmática hacia la gestión de la demanda de tráfico, buscando mitigar la congestión a través de la provisión de alternativas de viaje que integran múltiples modos de transporte.
+Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad vial mediante la construcción de nuevas vías o el ensanche de las existentes \cite[Cap.~1]{ite_handbook}. Sin embargo, el crecimiento de la congestión mostró que agregar capacidad física, aunque puede resultar útil durante cierto período, no constituye por sí solo una solución suficiente al problema \cite[Cap.~1]{ite_handbook}. En áreas urbanas consolidadas, además, ensanchar avenidas o modificar sustancialmente el trazado vial suele ser costoso, limitado y, con frecuencia, no factible \cite[Cap.~2, Sec.~2.6]{calymayor}. Por ello, la práctica contemporánea complementa la provisión de infraestructura con estrategias de gestión de la demanda, operación y control del tránsito, evaluadas mediante indicadores cuantificables de desempeño como la capacidad, las demoras y otros indicadores de operación \cite[Cap.~1]{ite_handbook}. Esta evolución vuelve especialmente relevante el aprovechamiento de la infraestructura existente mediante mecanismos de regulación funcional, entre ellos los dispositivos de control de tránsito \cite[Cap.~2, Sec.~2.6]{calymayor}.
 
-En la actualidad, la práctica moderna se aleja de los enfoques tradicionales que priorizaban exclusivamente el flujo de automóviles. El nuevo paradigma exige que los ingenieros de tránsito conciban opciones de diseño y control que faciliten el movimiento seguro y eficiente de absolutamente todos los usuarios de la vía. Esto implica diseñar para un ecosistema heterogéneo que incluye peatones, ciclistas, usuarios de transporte público de todas las edades y niveles de habilidad, así como operadores de vehículos de emergencia y de carga comercial. Como ejemplo de esta visión integral, en el caso de las calles urbanas, los ingenieros deben considerar diseños de tráfico alternativos que induzcan velocidades de viaje más lentas; esta restricción de la dinámica vehicular no se ve como una penalización, sino como un mecanismo de control para crear entornos más seguros, fomentar la actividad económica en los centros de las ciudades y contribuir a la revitalización urbana.
+La operación de una red vial puede analizarse a partir de la relación entre la demanda vehicular y la capacidad disponible. La demanda vehicular corresponde a la cantidad de vehículos que requieren desplazarse por un determinado sistema vial, mientras que la oferta vial o capacidad representa la cantidad máxima de vehículos que pueden circular por dicho espacio físico bajo determinadas condiciones de operación \cite[Cap.~2, Sec.~2.4]{calymayor}. Cuando la demanda se aproxima a la capacidad, el tránsito se vuelve inestable; cuando la supera, se presentan condiciones de sobresaturación o flujo forzado, caracterizadas por detenciones frecuentes y grandes demoras \cite[Cap.~2, Sec.~2.4]{calymayor}. En este sentido, la congestión no se entiende solo como una percepción general de mal funcionamiento, sino como un fenómeno con manifestaciones físicas medibles: demoras, colas y detenciones \cite[Cap.~1, Sec.~1.1]{fernandez}.
 
-Desde una perspectiva analítica y metodológica, la ingeniería de tránsito contemporánea integra soluciones sensibles al contexto, haciendo un profundo énfasis en la resiliencia, la sensibilidad ambiental, la confiabilidad del sistema y la sostenibilidad. La disciplina ha migrado hacia un marco de diseño y análisis basado en el rendimiento (\textit{performance-based design}). Bajo esta filosofía sistémica, las redes de transporte se diseñan para ser adaptables a demandas fluctuantes y preferencias cambiantes de los usuarios. Las decisiones de diseño y control óptimo ya no se basan únicamente en minimizar el costo de construcción, sino que los profesionales intentan cuantificar el rendimiento \textit{ex-ante}, \textit{in-itinere} y \textit{ex-post} mediante múltiples métricas de costo-beneficio para la mejora de la movilidad y la creación de comunidades habitables.
+\subsection{Terminología de Tránsito}
 
-Finalmente, el objetivo estructural de este enfoque moderno es lograr una armonización y una conexión fluida entre la vía pública y el entorno de uso de suelo circundante. Este nivel de análisis elimina la fragmentación tradicional del diseño en capas aisladas (donde primero se resolvía el tráfico vehicular y luego se adaptaba el espacio para peatones o personas con discapacidad), promoviendo en su lugar una interacción concurrente y multimodal en la planificación, operación y gestión sistémica de calles y carreteras.
-
-\subsection{Fundamentos de la Dinámica Vehicular}\label{subsec:fundamentos_dinamica_vehicular}
-
-Para alimentar los procesos de toma de decisiones y calibrar los modelos computacionales subyacentes, la ingeniería de tránsito se nutre de rigurosos estudios empíricos que caracterizan la dinámica del sistema. Estos fundamentos estocásticos y deterministas son los que permiten la parametrización de simuladores de tráfico. Entre las variables macroscópicas y microscópicas fundamentales de la dinámica vehicular destacan:
+Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar un conjunto breve de términos operativos que se utilizarán de manera recurrente en este trabajo. Esta forma de presentación también es habitual en estudios recientes sobre control semafórico basados en aprendizaje por refuerzo, donde las definiciones de movimientos, fases y señales se explicitan antes de formular el problema de control \cite{WeiH2019ASTSCM}.
 
 \begin{itemize}
-    \item \textbf{Volumen de Tránsito:} Constituye una entrada clave para múltiples análisis de ingeniería, representando el recuento de vehículos, bicicletas o peatones que pasan por un punto o ingresan a una intersección durante un período determinado.
-    
-    \item \textbf{Velocidad:} Es una métrica fundamental del rendimiento del tráfico utilizada extensivamente en operaciones, diseño y auditorías de seguridad. Analíticamente, se modela a través de dos estadísticos principales: la velocidad media temporal (\textit{Time-Mean Speed}), que representa la media aritmética de las velocidades recolectadas en un punto topológico específico; y la velocidad media espacial (\textit{Space-Mean Speed}), definida como la distancia total recorrida sobre el tiempo total de viaje para todos los vehículos en un segmento, siendo esta última la métrica central empleada en las ecuaciones de conservación teóricas de velocidad-flujo-densidad.
-    
-    \item \textbf{Demora (\textit{Delay}):} Parámetro crítico para medir la calidad del flujo vehicular, que se subdivide funcionalmente en: demora de control (tiempo en cola sumado a pérdidas de tiempo por procesos de aceleración y desaceleración), demora geométrica (reducción de velocidad inducida por la fisonomía de la infraestructura) y demora total de tiempo de viaje.
-    
-    \item \textbf{Longitud de Cola (\textit{Queue Length}):} Permite dimensionar carriles de almacenamiento y provee una medida útil de la eficiencia del control semafórico. Debido a que los modelos matemáticos macroscópicos suelen asumir colas infinitas, se emplean técnicas de simulación computacional para determinar longitudes reales y evitar escenarios de bloqueo (\textit{spillback}) en intersecciones adyacentes o accesos.
-    
-    \item \textbf{Flujo de Saturación y Tiempo Perdido:} El flujo de saturación define la capacidad inherente de una vía, representando la tasa máxima de vehículos que pueden cruzar una intersección en una hora teórica de luz verde ininterrumpida. En conjunto con el tiempo perdido (la fracción no utilizable del ciclo semafórico, compuesta por el tiempo perdido de arranque al inicio del verde y el tiempo perdido de despeje o \textit{clearance}), conforman las bases matemáticas ineludibles para programar fases y estimar la capacidad en controladores de tránsito.
-    
-    \item \textbf{Brechas y Aceptación de Brechas (\textit{Gaps and Gap Acceptance}):} La dinámica de cruce en flujos de tráfico en conflicto depende de la distribución temporal entre vehículos sucesivos (brechas). El estudio de la "brecha crítica" —es decir, el intervalo de tiempo mínimo aceptable para que un conductor realice una maniobra de cruce— es fundamental para los cálculos de capacidad analítica en intersecciones no semaforizadas y rotondas, resultando vital para la parametrización de agentes en modelos de simulación microscópica.
+    \item \textbf{Intersección:} Es el área en la que confluyen dos o más corrientes de tránsito y en la que deben ordenarse movimientos potencialmente incompatibles para permitir el cruce, la convergencia o la divergencia de vehículos \cite[pp.~321--323]{ite_handbook}.
+    \item \textbf{Acceso y carril:} Un acceso es cada aproximación por la cual los vehículos ingresan a la intersección desde una rama de la red \cite[pp.~321--323]{ite_handbook}. Dentro de cada acceso, la circulación se organiza en uno o más carriles, entendidos como franjas longitudinales de la calzada destinadas al movimiento ordenado de una fila de vehículos \cite[Cap.~3, Sec.~3.3]{calymayor}.
+    \item \textbf{Movimiento vehicular:} Es la trayectoria que sigue un vehículo al atravesar la intersección desde un acceso de entrada hacia una salida determinada, por ejemplo continuar recto, girar a la izquierda o girar a la derecha. Desde el punto de vista operativo, los movimientos constituyen la unidad básica sobre la cual se asigna prioridad de paso \cite{WeiH2019ASTSCM}.
+    \item \textbf{Movimientos en conflicto:} Son aquellos movimientos vehiculares que no pueden servirse simultáneamente porque intentan ocupar el mismo espacio de cruce o generan trayectorias incompatibles entre sí \cite[Cap.~1, Sec.~1.2]{fernandez}.
+    \item \textbf{Indicación asociada a un movimiento:} Es la indicación luminosa que autoriza, advierte la finalización o prohíbe la ejecución de un movimiento vehicular determinado. En la literatura reciente de control semafórico también se la describe como la señal asociada a un movimiento (\textit{movement signal}) \cite{WeiH2019ASTSCM}.
+    \item \textbf{Fase:} Es el estado operativo del semáforo que habilita simultáneamente un conjunto de movimientos compatibles y restringe los movimientos que entrarían en conflicto con ellos. En una fase se incluyen tanto el derecho de paso como sus transiciones asociadas \cite[pp.~341--343]{ite_handbook}.
+    \item \textbf{Ciclo e intervalo:} El ciclo es la secuencia completa de indicaciones necesarias para servir una vez todas las fases previstas en una intersección. Un intervalo es cada porción de tiempo del ciclo durante la cual las indicaciones luminosas permanecen constantes \cite[pp.~341--343]{ite_handbook}.
+    \item \textbf{Línea de detención:} Es la referencia transversal antes del área de conflicto donde los vehículos deben detenerse cuando la indicación no autoriza el avance. A partir de esta línea se observan y cuantifican operativamente la formación de colas y las demoras \cite[Cap.~1, Sec.~1.1]{fernandez}.
 \end{itemize}
-```
+
+En arterias urbanas, el tránsito se desarrolla bajo condiciones de flujo interrumpido: los vehículos no avanzan únicamente por su interacción con otros vehículos, sino también por la presencia de intersecciones, señales y dispositivos de control de tránsito \cite[pp.~320--324]{ite_handbook}. Las intersecciones son puntos críticos de la red porque allí confluyen distintos accesos y movimientos vehiculares de cruce, convergencia y divergencia que pueden resultar incompatibles entre sí \cite[pp.~321--323]{ite_handbook}. Por ello, su operación requiere ordenar estos movimientos y asignar la prioridad de paso de manera segura y eficiente.
+
+El semáforo es uno de los dispositivos de control de tránsito utilizados para regular la circulación en intersecciones. Su función es asignar la prioridad de paso en forma alternada entre corrientes vehiculares incompatibles, evitando que distintos movimientos intenten ocupar simultáneamente el mismo espacio de cruce \cite[Cap.~1, Sec.~1.2]{fernandez}. Desde el punto de vista del modelado algorítmico, esta capacidad de modificar la prioridad de paso convierte al semáforo en el actuador mediante el cual un sistema de control puede intervenir sobre la operación de la intersección y afectar, directa o indirectamente, las demoras y colas observadas en la red.
 
 \subsection{Fundamentos de la Dinámica Vehicular}\label{subsec:fundamentos_dinamica_vehicular}
 
-El estudio analítico del tráfico, bajo la premisa de que la circulación constituye un fenómeno físico y social medible \cite{fernandez}, requiere caracterizar matemáticamente el movimiento de las unidades y sus interacciones en la red vial. Esta dinámica se aborda tradicionalmente a través de dos enfoques complementarios: el macroscópico, que trata la corriente vehicular como un medio continuo gobernado por variables agregadas, y el microscópico, que modela las propiedades y trayectorias de unidades discretas individuales \cite{fernandez, calymayor}.
+Para modelar y optimizar la operación de una red vial, es necesario caracterizar físicamente el movimiento de los vehículos. La ingeniería de tránsito estudia este fenómeno a partir de las características fundamentales de la corriente de tránsito, que permiten describir las condiciones de operación de una vía o intersección mediante magnitudes observables como el flujo, la velocidad y la densidad \cite[pp.~203--204]{ite_handbook}. Cal y Mayor distingue estas magnitudes entre variables principales, que describen el comportamiento agregado del flujo vehicular, y variables asociadas, que expresan relaciones temporales y espaciales entre vehículos consecutivos \cite[p.~302]{calymayor}.
 
-\subsubsection{Dualidad y Correlación de Variables Micro-Macroscópicas}
+A nivel macroscópico, la corriente de tránsito se representa mediante variables agregadas como la tasa de flujo, la densidad y la velocidad media espacial. A nivel microscópico, se analizan magnitudes propias de la interacción entre vehículos individuales, como el intervalo, el espaciamiento y la velocidad puntual. Esta separación entre escalas es relevante para el modelado computacional: las variables macroscópicas permiten resumir el estado de un tramo o acceso de la red, mientras que las variables microscópicas describen la evolución de cada vehículo dentro del simulador. En conjunto, estas magnitudes constituyen variables dinámicas del flujo y sirven como base para evaluar el desempeño del sistema de control \cite[pp.~21--22]{fernandez}.
 
-El estado físico de una corriente de tráfico continuo queda unívocamente determinado por tres variables macroscópicas principales: la tasa de flujo ($q$), la velocidad media de espacio ($\overline{v}_e$) y la densidad o concentración ($k$) \cite{calymayor}. Estas variables se vinculan mediante la ecuación fundamental del flujo vehicular:
+En el nivel macroscópico, las variables principales de la corriente de tránsito son:
+\begin{itemize}
+    \item \textbf{Flujo o tasa de flujo ($q$):} Representa la cantidad de vehículos que atraviesan una sección transversal de la vía durante un intervalo de tiempo determinado. Cuando el intervalo observado es menor que una hora, se expresa habitualmente como una tasa horaria equivalente en vehículos por hora (veh/h), de modo que $q = N/T$ \cite[p.~303]{calymayor}. Esta variable describe la intensidad con la que la demanda vehicular utiliza un tramo o acceso de la red.
+    \item \textbf{Densidad o concentración ($k$):} Indica el número de vehículos que ocupan simultáneamente una longitud específica de vía, expresado usualmente en vehículos por kilómetro (veh/km), y se define como $k = N/d$ \cite[p.~308]{calymayor}. En la práctica, debido a la dificultad de medir directamente esta magnitud espacial, suele aproximarse mediante medidas de ocupación obtenidas a partir de detectores instalados en la calzada \cite[p.~204]{ite_handbook}.
+    \item \textbf{Velocidad media espacial ($v_s$):} Corresponde al promedio de las velocidades de los vehículos que ocupan un tramo de vía en un instante determinado. Esta medida describe la velocidad media de la corriente de tránsito en el espacio y es la que se utiliza en la relación fundamental entre flujo, densidad y velocidad \cite[p.~308]{calymayor}.
+\end{itemize}
 
+En el nivel microscópico, las variables asociadas describen la separación temporal y espacial entre vehículos individuales:
+\begin{itemize}
+    \item \textbf{Intervalo temporal simple ($h$):} Es el tiempo que transcurre entre el paso de dos vehículos consecutivos por una misma sección de la calzada, medido respecto de puntos homólogos de ambos vehículos, por ejemplo sus parachoques delanteros \cite[p.~303]{calymayor}. En términos promedio, el intervalo se relaciona inversamente con la tasa de flujo ($h = 1/q$).
+    \item \textbf{Espaciamiento simple ($s$):} Es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante determinado \cite[p.~308]{calymayor}. El espaciamiento promedio se relaciona inversamente con la densidad de la corriente de tránsito ($s = 1/k$).
+    \item \textbf{Velocidad media temporal ($v_t$):} Es el promedio aritmético de las velocidades de los vehículos que atraviesan una sección fija de la vía durante un intervalo de observación determinado \cite[p.~308]{calymayor}.
+\end{itemize}
+
+Estas variables no actúan de manera independiente, sino que se relacionan mediante la ecuación fundamental del tránsito:
 \begin{equation}
-    q = \overline{v}_e \cdot k
+    q = k \cdot v_s
 \end{equation}
+Esta expresión indica que el flujo observado en una sección depende de la densidad de vehículos y de la velocidad media espacial de la corriente. En condiciones no saturadas, un aumento de la demanda puede traducirse en mayores valores de flujo. Sin embargo, cuando la densidad se aproxima a valores críticos, la interacción entre vehículos reduce la velocidad media y limita la capacidad efectiva de circulación. En intersecciones semaforizadas, esta relación permite interpretar la formación de colas: durante el rojo, el flujo de salida del acceso se interrumpe y la densidad aguas arriba aumenta; si la demanda acumulada supera la capacidad de descarga durante el verde, persisten demoras y condiciones de flujo forzado \cite[pp.~315--316]{calymayor}.
 
-Para el desarrollo de modelos de simulación y la calibración de algoritmos de control, existe una correspondencia biunívoca entre estas propiedades agregadas y las mediciones microscópicas espaciales y temporales tomadas sobre los vehículos individuales \cite{fernandez, calymayor}:
+Para un sistema de control de tránsito, estas variables son relevantes porque pueden medirse o estimarse a partir de sensores, detectores o registros del simulador. A partir de ellas es posible construir una representación del estado de la red y evaluar cómo evoluciona la operación ante distintas decisiones de control.
 
-\begin{enumerate}
-    \item \textbf{Tasa de Flujo e Intervalo:} El flujo ($q$) es el recíproco del intervalo temporal promedio ($\overline{t}$) medido entre el paso de dos vehículos consecutivos por una sección fija de la vía ($q = 3600 / \overline{t}$) \cite{fernandez, calymayor}.
-    \item \textbf{Densidad y Espaciamiento:} La concentración ($k$) es el recíproco del espaciamiento espacial promedio ($\overline{s}$) entre puntos homólogos de unidades consecutivas en un instante dado ($k = 1000 / \overline{s}$) \cite{fernandez, calymayor}.
-    \item \textbf{Velocidad Media de Espacio:} A diferencia de la media de tiempo ($\overline{v}_t$, obtenida mediante promedios aritméticos en un punto fijo), la velocidad media de espacio (\textit{space mean speed}, $\overline{v}_e$) representa la media armónica de las velocidades instantáneas \cite{fernandez, calymayor}. Esta variable refleja matemáticamente el tiempo total empleado por la corriente para recorrer un tramo y es la que satisface de forma estricta la ecuación fundamental del flujo \cite{calymayor}.
-\end{enumerate}
+\subsubsection{Métricas de Ineficiencia Operativa}
 
-\subsubsection{Estabilidad del Tráfico y Propagación de Perturbaciones}
-
-Cuando el espaciamiento entre vehículos consecutivos disminuye por debajo de un umbral crítico, los movimientos de las unidades se acoplan dinámicamente \cite{fernandez}. En este régimen, el vehículo sucesor se comporta analíticamente como un sistema de control realimentado que responde a los estímulos cinemáticos del líder tras un tiempo de reacción o desfase temporal ($T$) \cite{fernandez}.
-
-Desde la perspectiva de los sistemas dinámicos, un aspecto crítico para la gestión de intersecciones es determinar cómo se propagan las perturbaciones de velocidad (maniobras de frenado) a lo largo de una columna de vehículos. Este fenómeno se descompone en dos dominios esenciales \cite{fernandez}:
-
+La interrupción del flujo causada por semáforos o saturación genera efectos adversos que los sistemas de control buscan mitigar. Siguiendo la terminología de la ingeniería de tránsito, las principales manifestaciones medibles de esta ineficiencia son las demoras, las colas y las detenciones \cite[Cap.~1, Sec.~1.1]{fernandez}:
 \begin{itemize}
-    \item \textbf{Estabilidad Local:} Evalúa si un vehículo individual es capaz de amortiguar y estabilizar su velocidad respecto al que lo antecede para evitar una colisión \cite{fernandez}.
-    \item \textbf{Estabilidad Asintótica:} Analiza el comportamiento sistémico a lo largo de la pista, determinando si la amplitud de una fluctuación cinemática se atenúa o se magnifica a medida que se desplaza hacia atrás en la fila de vehículos \cite{fernandez}.
+    \item \textbf{Demoras:} Representan el tiempo adicional que un vehículo debe invertir para atravesar una intersección respecto del tiempo que le tomaría circular a velocidad de flujo libre. En intersecciones semaforizadas, una parte de esa demora aparece por la espera normal durante la luz roja. Otras demoras se producen cuando las llegadas de vehículos varían, cuando la demanda se acerca o supera la capacidad de la intersección, o cuando quedan colas sin disiparse al finalizar el verde, de modo que algunos vehículos deben esperar más de un ciclo para cruzar \cite[Cap.~1, Sec.~1.1]{fernandez}.
+    \item \textbf{Colas:} Corresponden al número de vehículos acumulados detrás de una línea de detención a la espera de ser servidos. Esta medida espacial es especialmente relevante porque, cuando la cola supera la longitud del arco de aproximación, puede bloquear la intersección aguas arriba y propagar la congestión al resto de la red \cite[Cap.~1, Sec.~1.1]{fernandez}.
+    \item \textbf{Detenciones:} Cuantifican la cantidad de veces que un vehículo debe reducir su velocidad hasta cero durante el recorrido. Una alta frecuencia de detenciones deteriora la continuidad operativa del flujo y suele asociarse con mayores procesos de aceleración y desaceleración \cite[Cap.~1, Sec.~1.1]{fernandez}.
 \end{itemize}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{imagenes/estabilidad_asintotica.png}
-    \caption{Regímenes de estabilidad y de inestabilidad asintótica en el flujo vehicular \cite{fernandez}.}\label{fig:estabilidad_asintotica}
-\end{figure}
+Estas tres métricas constituyen indicadores directos del desempeño operativo de la red. En este trabajo, se adoptan como criterios de evaluación del controlador, ya que permiten cuantificar los efectos de la asignación dinámica de prioridad entre movimientos en conflicto en las intersecciones.
 
-Como se describe en la Figura \ref{fig:estabilidad_asintotica}, la evolución espacio-temporal del sistema difiere según su régimen: en un escenario asintóticamente estable la perturbación inicial se disipa, mientras que en uno inestable la fluctuación se magnifica de forma progresiva con cada vehículo seguidor. 
+\subsubsection{Descripción Probabilística del Flujo}
 
-Si el sistema opera en un régimen asintóticamente inestable, una deceleración menor provocará una onda de choque que crecerá en magnitud hasta culminar en una detención total del tráfico (\textit{phantom traffic jam}) \cite{fernandez}. En términos de gestión de infraestructura, la evidencia empírica demuestra que cuando el flujo operativo se aproxima críticamente a la capacidad máxima de la pista ($q \ge 0.9 Q$), cualquier perturbación exógena induce un estado de inestabilidad asintótica irreversible en el sistema dinámico \cite{fernandez}, haciendo indispensable la intervención de mecanismos de control externos para regular la demanda en la red \cite{ite_handbook, calymayor}.
+En el modelado de tránsito, las llegadas vehiculares no siempre pueden representarse adecuadamente como una secuencia determinista y constante. Para flujos vehiculares bajos y medios, y cuando las llegadas no están fuertemente condicionadas por semáforos previos, es habitual aproximar el número de vehículos que llega a una sección durante un intervalo de tiempo mediante un proceso de Poisson \cite[p.~342]{calymayor}.
 
-
-
-\subsubsection{Descripción Probabilística y Marcos Estocásticos}
-
-A pesar de las relaciones deterministas del flujo, el tráfico real exhibe una alta heterogeneidad debida al comportamiento estocástico de los conductores y a la dispersión en las tasas de llegada \cite{calymayor}. Para inyectar ruido estadístico y realismo en las herramientas de análisis, es imperativo estructurar un marco probabilístico bajo procesos aleatorios discretos y continuos \cite{calymayor}.
-
-Cuando los vehículos circulan bajo condiciones de flujo libre o dispersión moderada, se asume que las llegadas constituyen eventos mutuamente independientes \cite{calymayor}. Bajo las hipótesis de un proceso puntual de Poisson, la probabilidad de que se registren exactamente $X$ arribos en una sección de control o línea de detención durante un intervalo de tiempo finito $t$ se define como \cite{calymayor}:
+Esta aproximación supone independencia estadística entre llegadas y permite describir la variabilidad observada en la demanda de acceso a una intersección \cite[p.~342]{calymayor}. La probabilidad discreta $P(X)$ de que lleguen exactamente $X$ vehículos en un intervalo de tiempo se define como:
 
 \begin{equation}
     P(X) = \frac{m^X \cdot e^{-m}}{X!}
 \end{equation}
 
-Donde $m$ representa el valor esperado de arribos en dicho intervalo, calculado a partir del volumen horario de diseño ($V$) como $m = (V \cdot t) / 3600$ \cite{calymayor}.
-
-Consecuentemente, la contraparte continua de este proceso gobierna la distribución de los intervalos de tiempo individuales ($t_i$) entre unidades consecutivas. Si el flujo es aleatorio y poissoniano, los tiempos de paso se describen probabilísticamente mediante una distribución exponencial negativa \cite{calymayor}:
+donde $m$ representa el valor esperado o media de llegadas en dicho intervalo. Bajo el mismo supuesto, los intervalos de tiempo continuos ($h$) medidos entre vehículos sucesivos se describen mediante una distribución de probabilidad exponencial negativa \cite[p.~343]{calymayor}:
 
 \begin{equation}
-    P(t_i \ge t) = e^{-\frac{q}{3600} \cdot t}
+    P(h \ge t) = e^{-\frac{q}{3600} \cdot t}
 \end{equation}
 
-Este sustrato analítico estocástico constituye la herramienta matemática fundamental para modelar colas de espera, estimar las demoras en los accesos de las intersecciones y parametrizar los generadores aleatorios de tráfico dentro del entorno de simulación computacional \cite{calymayor}.
+Esta representación no pretende describir todos los patrones de llegada posibles, ya que en redes coordinadas, condiciones saturadas o tramos afectados por semáforos previos pueden formarse pelotones y dependencias temporales. Sin embargo, resulta útil como aproximación básica para introducir variabilidad en la demanda y para relacionar el flujo vehicular con conceptos de teoría de colas aplicados al análisis de intersecciones.
 
-\subsection{Sistemas de Control de Tráfico}
+Desde la perspectiva de la simulación computacional, incorporar variabilidad estocástica en las llegadas permite evaluar los algoritmos de control bajo escenarios menos rígidos que un patrón determinista. Esto es relevante para este trabajo porque un controlador entrenado o evaluado solo con llegadas constantes podría ajustar su comportamiento a una regularidad artificial y no responder adecuadamente ante fluctuaciones de demanda propias de la operación urbana.
 
+\subsection{Sistemas de Control de Tránsito}
 
-\subsection{Simulación de Tráfico}
-%microscopico (SUMO)
-%mesoscopico
-%macroscopico
+Para mitigar los conflictos de tránsito e incrementar la seguridad en las intersecciones urbanas de flujo interrumpido, se emplean sistemas de control de tránsito \cite[pp.~323--324]{ite_handbook}. El dispositivo de control por excelencia en estos nodos es el semáforo, definido como un dispositivo electrónico que regula la circulación de vehículos asignando el derecho de paso alternado mediante indicaciones luminosas rojas, amarillas y verdes \cite[p.~169]{calymayor}.
 
-%Modelado de flujo vehicular
-\nopagebreak[4]
+En el modelado algorítmico, los semáforos y sus parámetros de configuración constituyen los elementos actuadores de la red. La modificación de la duración del tiempo de verde efectivo, la secuencia lógica de fases y la sincronización inter-nodal conforman el conjunto de intervenciones dinámicas mediante las cuales el sistema de control buscará optimizar el paso vehicular de manera continua.
+
+Sobre esta base terminológica, la programación temporal de un semáforo se describe mediante la duración de las fases, la longitud de ciclo y la definición de los intervalos de transición y despeje. Estos parámetros determinan cuánto tiempo recibe prioridad cada conjunto de movimientos compatibles y condicionan directamente la capacidad de descarga, las demoras y la seguridad operacional de la intersección \cite[pp.~341--343]{ite_handbook}.
+
+Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecutarse de manera instantánea, sino que deben respetar intervalos de cambio y despeje definidos a partir de criterios físicos y cinemáticos \cite[pp.~348--349]{ite_handbook}. En el contexto de este trabajo, estos intervalos no constituyen la variable principal de decisión del controlador, pero sí actúan como restricciones operativas y de seguridad que delimitan cómo puede efectuarse un cambio de fase:
+\begin{itemize}
+    \item \textbf{Intervalo de Cambio Amarillo ($Y$):} Advierte a los conductores de la finalización inminente de la fase verde. Su duración teórica se calcula mediante la fórmula cinemática del ITE para evitar la denominada ``zona de dilema'' (el espacio donde el conductor no puede frenar con seguridad ni cruzar antes del rojo):
+    \begin{equation}
+        Y = t + \frac{V}{2a \pm 2Gg}
+    \end{equation}
+    donde $V$ es la velocidad de aproximación en el percentil 85 (en m/s), $t$ es el tiempo de percepción-reacción del conductor (generalmente asumido en 1.0 s), $a$ es la tasa de desaceleración promedio (comúnmente $3.0 \text{ m/s}^2$), $g$ es la aceleración de la gravedad y $G$ es la pendiente de aproximación de la vía (en porcentaje decimal, positiva para subidas y negativa para bajadas).
+    
+    \item \textbf{Intervalo de Despeje Rojo ($R$):} También denominado todo-rojo, es el período en el cual todos los accesos a la intersección exhiben luz roja simultáneamente. Su función es permitir que los vehículos que ingresaron al cruce en el último instante del amarillo despejen físicamente el área de conflicto antes de habilitar movimientos incompatibles. Se calcula teóricamente como:
+    \begin{equation}
+        R = \frac{W + L}{V}
+    \end{equation}
+    donde $W$ es el ancho de la intersección (en metros) y $L$ es la longitud física del vehículo de diseño (comúnmente asumida en 6.0 metros).
+\end{itemize}
+
+\subsubsection{Modelado de la Capacidad y el Verde Efectivo}
+
+Desde el punto de vista del rendimiento del flujo, la capacidad de descarga de un acceso semaforizado no es constante, sino que presenta una variación binaria gobernada por la programación del ciclo \cite[p.~59]{fernandez}. Durante la luz roja la capacidad es nula, y durante la luz verde la descarga máxima ocurre a una tasa denominada Flujo de Saturación ($S_i$) \cite[p.~59]{fernandez}, que representa la cantidad límite de vehículos que pueden descargar la fila de espera asumiendo verde constante e ininterrumpido.
+
+No obstante, la descarga real experimenta pérdidas operativas. Al inicio de la fase verde, los conductores demoran un tiempo en reaccionar y poner en marcha los vehículos, lo que se define como la pérdida inicial ($\lambda_1$). Al final, durante el amarillo, algunos vehículos continúan cruzando, representando una ganancia final ($\lambda_2$). Para simplificar la modelación, la ingeniería de tránsito define la descarga efectiva sobre un intervalo rectangular de Verde Efectivo ($v_{ei}$), el cual se calcula para un acceso $i$ como \cite[p.~60]{fernandez}:
+\begin{equation}
+    v_{ei} = V_i - \lambda_1 + \lambda_2
+\end{equation}
+donde $V_i$ es el tiempo físico de verde indicado por el semáforo. En consecuencia, la capacidad real de flujo ($Q_i$) del acceso queda determinada por la razón de verde efectivo ($u_i = v_{ei}/C$) y el flujo de saturación del acceso \cite[p.~60]{fernandez}:
+\begin{equation}
+    Q_i = \left(\frac{v_{ei}}{C}\right) S_i = u_i \cdot S_i
+\end{equation}
+
+\subsubsection{Clasificación de los Controladores de Semáforos}
+
+De acuerdo con su mecanismo operativo y su grado de respuesta a la demanda vehicular, los controladores de semáforos se clasifican clásicamente en dos categorías principales \cite[Sec.~4, pp.~339--340]{ite_handbook}:
+\begin{itemize}
+    \item \textbf{Control de Tiempo Fijo (Pre-programado):} Los planes de señales (ciclos, fases e intervalos) ocurren en cada ciclo de manera idéntica y secuencial. Estos parámetros se determinan estáticamente mediante análisis de datos históricos de tránsito y no varían en respuesta a las fluctuaciones instantáneas de la demanda real.
+    \item \textbf{Control Accionado por el Tránsito (Actuado):} La intersección está equipada con detectores vehiculares instalados en los accesos. El controlador electrónico varía dinámicamente el inicio y duración de las fases en respuesta directa a la demanda registrada en tiempo real. Este tipo de control puede ser totalmente accionado (detectores en todos los accesos) o semi-accionado (detección solo en calles secundarias).
+\end{itemize}
+
+Para regular la dinámica de los semáforos accionados, se establecen parámetros límite de seguridad y operación \cite[pp.~346--348]{ite_handbook}:
+\begin{itemize}
+    \item \textbf{Verde Mínimo:} El menor tiempo aceptable para una indicación de verde, condicionado por la expectativa psicológica del conductor y el tiempo necesario para despejar la cola acumulada entre la línea de parada y el detector.
+    \item \textbf{Verde Máximo:} El límite de tiempo superior para finalizar la fase verde activa en presencia de demanda constante en accesos conflictivos, impidiendo que el controlador retenga indefinidamente el derecho de paso en un solo sentido.
+\end{itemize}
+
+\subsection{Simulación de Tránsito}
+
+Debido a la densidad y complejidad de la red urbana moderna, la sincronización y optimización de los tiempos de semáforos no pueden resolverse analíticamente con modelos estáticos bajo condiciones dinámicas. Por esta razón, se recurre a aproximaciones computacionales mediante simulación de tránsito \cite[p.~355]{ite_handbook}. De acuerdo con la taxonomía formalizada en la literatura clásica de tránsito \cite[Cap.~4, Sec.~4.1, p.~147]{fernandez}, los modelos computacionales de redes viales se clasifican en tres escalas o niveles de resolución principales:
+
+\begin{itemize}
+    \item \textbf{Simulación Macroscópica:} Trata el tránsito vehicular de manera agregada, representando la corriente mediante variables continuas como flujo, densidad y velocidad, y relaciones empíricas de flujo-demora \cite[Cap.~4, Sec.~4.1, p.~147]{fernandez}. Suelen utilizarse para la planeación estratégica y asignación de flujos a largo plazo en grandes redes metropolitanas, pero carecen de la granularidad requerida para optimizar intersecciones individuales debido a que no modelan las intersecciones dinámicamente y suelen asumir capacidades y colas con longitud de almacenamiento infinita \cite[p.~355]{ite_handbook}.
+    
+    \item \textbf{Simulación Mesoscópica:} Representa un nivel de resolución intermedio. En lugar de rastrear cada vehículo individualmente o asumir un flujo global continuo, simula la propagación de pelotones o grupos de vehículos a lo largo de los arcos de la red vial \cite[Cap.~4, Sec.~4.1, p.~147]{fernandez}. Su estructura matemática se apoya en los Histogramas Cíclicos de Flujo, que discretizan en el tiempo el paso de los vehículos por una sección, y en el Modelo de Dispersión del Tránsito de Robertson, que predice cómo el pelotón compacto de vehículos liberado por un semáforo se dispersa exponencialmente a lo largo del arco debido a la variación de velocidades individuales de los conductores antes de arribar al siguiente cruce \cite[Cap.~4, Sec.~4.3, pp.~161--164]{fernandez}.
+    
+    \item \textbf{Simulación Microscópica:} Ofrece el mayor nivel de detalle computacional. Este paradigma modela individualmente el comportamiento dinámico y las interacciones de cada vehículo en la red, resolviendo de manera discreta en el tiempo las decisiones cinemáticas y espaciales del conductor \cite[Cap.~4, Sec.~4.1, p.~147]{fernandez}. En la actualidad, para la investigación en ingeniería de tránsito se emplean entornos modernos como SUMO (\textit{Simulation of Urban MObility}), VISSIM o Aimsun. A diferencia de los simuladores de generaciones anteriores, estas plataformas incorporan interfaces de programación avanzadas (como la API TraCI en SUMO) que permiten intervenir y manipular dinámicamente los estados de la simulación en tiempo real, facilitando la integración con rutinas de control externo. Este enfoque microscópico resulta indispensable para capturar efectos dinámicos complejos, tales como el desbordamiento de colas y los bloqueos de carriles de giro que escapan a los modelos matemáticos agregados \cite[p.~355]{ite_handbook}.
+\end{itemize}
+
+\subsubsection{Modelos Microscópicos de Comportamiento Vehicular}
+
+En la simulación microscópica, cada vehículo se representa como una entidad individual que actualiza su posición, velocidad y aceleración a lo largo del tiempo. Esta dinámica se apoya principalmente en dos familias de modelos: los modelos de seguimiento vehicular, que describen cómo un conductor ajusta su velocidad según el vehículo precedente, y los modelos de cambio de carril, que determinan cuándo una maniobra lateral resulta necesaria y factible \cite[Cap.~1, Sec.~1.3.2]{fernandez}.
+
+En los modelos de seguimiento vehicular, la aceleración o desaceleración de un vehículo depende de variables como la velocidad relativa respecto del vehículo líder, el espaciamiento disponible, el tiempo de reacción y los parámetros de aceleración y frenado. En los modelos de cambio de carril, la maniobra depende tanto de la motivación del conductor, por ejemplo mantener una velocidad deseada o ubicarse en el carril adecuado antes de un giro, como de la disponibilidad de una brecha segura en el carril destino \cite[pp.~352--353]{ite_handbook}.
+
+Desde la perspectiva de este trabajo, estos modelos no constituyen el objeto de optimización principal, sino parte del entorno de simulación. Su relevancia radica en que permiten que las decisiones semafóricas tengan consecuencias dinámicas realistas sobre colas, detenciones, tiempos de espera y propagación local de la congestión. De este modo, el controlador aprende y se evalúa sobre un entorno que aproxima las interacciones microscópicas del tránsito sin que sea necesario modelarlas explícitamente dentro del algoritmo de aprendizaje.
+
+\subsubsection{Entorno de Simulación para Control Semafórico}
+
+En el contexto del control semafórico, la simulación microscópica cumple una función que excede la reproducción de trayectorias vehiculares. Al integrar red vial, demanda, programas semafóricos y parámetros operativos en una dinámica discreta en el tiempo, el simulador permite observar la evolución del sistema y modificar dispositivos de control durante la ejecución. SUMO, mediante TraCI, ofrece precisamente esta interfaz de consulta y actuación externa, por lo que puede utilizarse como entorno experimental para evaluar decisiones secuenciales de control \cite{SUMO2018_SUMO,AlegreLSUMORLDoc}.
+
+Con esta interpretación, los conceptos de ingeniería de tránsito introducidos hasta aquí adquieren un papel operacional dentro del modelo computacional. Magnitudes como flujo, densidad, velocidad, colas, demoras y detenciones describen condiciones del sistema que pueden formar parte de la observación del agente. A su vez, la fase activa, el cumplimiento de un verde mínimo o el tiempo transcurrido desde el último cambio informan restricciones internas del controlador; y las acciones se expresan como decisiones discretas sobre la selección o permanencia de fases semafóricas. Las funciones de recompensa se construyen a partir de indicadores como la demora acumulada, la longitud de cola o las detenciones, de modo que la optimización algorítmica conserva una interpretación directa en términos de desempeño vial \cite{WeiH2019ASTSCM,AlegreLSUMORLDoc}.
+
+Esta formulación no implica que el algoritmo aprenda ni sustituya los modelos físicos del simulador. El seguimiento vehicular, el cambio de carril, la generación de demanda y la evolución de las colas permanecen como mecanismos internos del entorno. El controlador aprende una política, entendida como una regla de decisión que asigna acciones a estados u observaciones con el objetivo de mejorar el retorno esperado \cite{suttonRL}. Por ello, la calidad de la formulación depende de que las observaciones y recompensas sean informativas respecto de la operación, pero también de que las acciones respeten la lógica semafórica: compatibilidad de movimientos, verdes mínimos e intervalos de cambio y despeje.
+
+En redes con más de una intersección, esta representación adquiere una naturaleza distribuida. La decisión tomada en un cruce puede alterar los patrones de llegada, la acumulación de colas y la disponibilidad de espacio en intersecciones vecinas. En consecuencia, optimizar cada semáforo de manera aislada puede producir mejoras locales sin garantizar un desempeño adecuado de la red completa. Esta interdependencia espacial y temporal es una de las motivaciones centrales para formular el control semafórico urbano mediante aprendizaje por refuerzo multiagente, donde cada intersección actúa a partir de información local o parcial, mientras el desempeño se evalúa sobre el comportamiento global del sistema \cite{WeiH2019ASTSCM,gnn_traffic}.
+
 
 \section{Aprendizaje por Refuerzo (RL)}
 
