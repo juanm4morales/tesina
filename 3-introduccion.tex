@@ -1,11 +1,48 @@
 \chapter{Introducción}\label{introduccion}
 
-En las últimas décadas, en el mundo se ha producido un incremento sostenido del parque automotor a nivel mundial, acompañado por un proceso continuo de urbanización que ha a la congestión vehicular en uno de los principales desafíos para la movilidad y eficiencia en áreas urbanas. Según los reportes de flota vehicular de Argentina, elaborados por la Asociación de Fábricas Argentinas de Componentes (AFAC), y utilizando el año 2012 como línea base, el volumen de vehículos registró un aumento del 21,7\% en 2017. Dicha progresión se sostuvo a lo largo de la última década, alcanzando un incremento acumulado del 44,4\% para el año 2025.
+En las últimas décadas, en el mundo se ha producido un incremento sostenido del parque automotor a nivel mundial, acompañado por un proceso continuo de urbanización que ha a la congestión vehicular en uno de los principales desafíos para la movilidad y eficiencia en áreas urbanas. Según los reportes de flota vehicular de Argentina, elaborados por la Asociación de Fábricas Argentinas de Componentes (AFAC), y utilizando el año 2012 como línea base, el volumen de vehículos registró un aumento del 21,7\% en 2017. Dicha progresión se sostuvo a lo largo de la última década, alcanzando un incremento acumulado del 44,4\% para el año 2025 (véase la Figura \ref{fig:flota_circulante}).
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.75\linewidth]{imagenes/FlotaCirculanteProvinciaRegion.png}
-    \caption{Flota Circulante por provincia y región}\label{fig:placeholder}
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.9\linewidth,
+        height=7cm,
+        xlabel={Año},
+        ylabel={Flota Circulante (Millones)},
+        ymin=0,
+        xtick={1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025},
+        xticklabel style={/pgf/number format/1000 sep=},
+        ymajorgrids=true,
+        xmajorgrids=true,
+        grid style=dashed,
+        enlarge x limits=0.03
+    ]
+    % Área sombreada bajo la curva
+    \addplot[fill=catAzulCielo, fill opacity=0.4, draw=none] coordinates {
+        (1990, 0)
+        (1990, 2.203) (1992, 2.627) (1994, 3.420) (1996, 4.109)
+        (1998, 4.941) (2000, 5.666) (2002, 5.943) (2004, 6.345)
+        (2006, 7.081) (2008, 8.224) (2010, 9.389) (2011, 10.246)
+        (2012, 10.930) (2013, 11.245) (2014, 11.520) (2015, 12.012)
+        (2016, 12.503) (2017, 13.302) (2018, 13.950) (2019, 14.301)
+        (2020, 14.564) (2021, 14.840) (2022, 15.079) (2023, 15.299)
+        (2024, 15.552) (2025, 15.784)
+        (2025, 0)
+    };
+    % Línea principal con marcadores
+    \addplot[color=catAzulCielo!80!black, thick, mark=*, mark options={fill=catAzulCielo, draw=catAzulCielo!80!black}, mark size=1.5pt] coordinates {
+        (1990, 2.203) (1992, 2.627) (1994, 3.420) (1996, 4.109)
+        (1998, 4.941) (2000, 5.666) (2002, 5.943) (2004, 6.345)
+        (2006, 7.081) (2008, 8.224) (2010, 9.389) (2011, 10.246)
+        (2012, 10.930) (2013, 11.245) (2014, 11.520) (2015, 12.012)
+        (2016, 12.503) (2017, 13.302) (2018, 13.950) (2019, 14.301)
+        (2020, 14.564) (2021, 14.840) (2022, 15.079) (2023, 15.299)
+        (2024, 15.552) (2025, 15.784)
+    };
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Evolución de la flota vehicular circulante en Argentina (1990--2025). Datos: AFAC.}\label{fig:flota_circulante}
 \end{figure}
 
 El problema de las congestiones trae consigo múltiples consecuencias: desde importantes pérdidas de productividad por demoras en los tiempos de viaje, hasta un aumento en la cantidad de detenciones vehiculares y la consecuente emisión de gases nocivos para la salud y el medio ambiente, tales como \(CO\), \(CO_2\), \(NO_x\), \(HC\).\cite{UN2018_CongestionCost} Este escenario impacta de manera notable en grandes ciudades con gran densidad de vehículos. En este trabajo se tomó como caso de estudio el Área Metropolitana del Gran Mendoza (GM), comprendida entre Avenida San Martín, Avenida Colón, Avenida Belgrano y Avenida Las Heras. Gran parte de estas calles fueron planificadas para soportar flujos de tráfico significativamente menores a los actuales, y la dependencia de semáforos con ciclos fijos agrava la situación, ya que su inflexibilidad les impide adaptarse dinámicamente a los picos de demanda en tiempo real.

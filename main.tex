@@ -9,6 +9,10 @@
 \usepackage[table]{xcolor}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{amssymb}
 \usepackage{url}
 \usepackage{xcolor}
@@ -21,6 +25,28 @@
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+
+% --- Paletas de Colores de la Tesis ---
+% 1. Paleta Categórica: Dinámica del Entorno
+\definecolor{catVerdeMenta}{HTML}{A8E6CF}
+\definecolor{catMelocoton}{HTML}{FFD3B6}
+\definecolor{catRosaSalmon}{HTML}{FFAAA5}
+\definecolor{catAzulCielo}{HTML}{A4C8F0}
+\definecolor{catLilaSuave}{HTML}{CBAACB}
+
+% 2. Paleta Secuencial: Mapas de Calor y Señales
+\definecolor{seqNivelUno}{HTML}{F9E076}
+\definecolor{seqNivelDos}{HTML}{F3B87A}
+\definecolor{seqNivelTres}{HTML}{E28F8E}
+\definecolor{seqNivelCuatro}{HTML}{B9749F}
+\definecolor{seqNivelCinco}{HTML}{7A5C96}
+
+% 3. Paleta Divergente y Comparativa: Rendimiento de Políticas
+\definecolor{divBaseline}{HTML}{D9D9D9}
+\definecolor{divAltUno}{HTML}{99D5CA}
+\definecolor{divAltDos}{HTML}{A0AEC1}
+\definecolor{divPropuesto}{HTML}{F2A68D}
+% --------------------------------------
 
 \definecolor{LightGray}{gray}{0.9}
 \usepackage[spanish]{babelbib}

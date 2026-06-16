@@ -1,10 +1,57 @@
 \chapter{Metodología}
-\label{capitulo 2}
+\label{capitulo:metodologia}
 
-\subsection{SUMO}
-\subsubsection{Tools}
+\section{Integración de SUMO y el Agente de Aprendizaje por Refuerzo}
+
+Para implementar el entrenamiento y la evaluación de la política de control, el flujo de ejecución sigue un esquema de bucle cerrado en el que el script controlador se comunica con la instancia activa de SUMO a través de la interfaz TraCI. Este ciclo operativo se define por el envío secuencial de acciones (selección de fases) y la recepción de telemetría (longitud de colas, ocupación) que se procesan para construir la observación y la recompensa de cada paso de simulación. La Figura \ref{fig:bucle_control_traci} ilustra la topología de esta interacción.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  %% Estilos de nodos
+  nodoSUMO/.style={rectangle, draw=blue!60, fill=blue!8,
+                   rounded corners=4pt, thick,
+                   text width=2.8cm, align=center,
+                   minimum height=1.3cm, font=\small},
+  nodoTraCI/.style={rectangle, draw=green!50!black, fill=green!8,
+                    rounded corners=4pt, thick,
+                    text width=2.4cm, align=center,
+                    minimum height=1.3cm, font=\small},
+  nodoAgente/.style={rectangle, draw=red!60, fill=red!8,
+                     rounded corners=4pt, thick,
+                     text width=2.8cm, align=center,
+                     minimum height=1.3cm, font=\small},
+  %% Estilo de flechas
+  flecha/.style={-{Stealth[length=6pt]}, thick}
+]
+  %% ---- Nodos en layout horizontal ----
+  \node[nodoSUMO]  (sumo)   {\textbf{Entorno (SUMO)}\\ F\'{i}sica de tr\'{a}nsito};
+  \node[nodoTraCI] (traci)  [right=1.2cm of sumo]
+                            {\textbf{API TraCI}\\ Interfaz de control};
+  \node[nodoAgente](agente) [right=1.2cm of traci]
+                            {\textbf{Agente DRL}\\ Pol\'{i}tica de control};
+
+  %% ---- Flecha superior: SUMO -> TraCI (telemetría) ----
+  \draw[flecha] (sumo.east) -- (traci.west)
+    node[midway, above, font=\footnotesize] {Telemetr\'{i}a};
+
+  %% ---- Flecha media: TraCI -> Agente (observación + recompensa) ----
+  \draw[flecha] (traci.east) -- (agente.west)
+    node[midway, above, font=\footnotesize] {Obs., Recomp.};
+
+  %% ---- Flecha de retorno: Agente -> SUMO (acción), por debajo ----
+  \draw[flecha]
+    (agente.south) -- ++(0,-0.8cm)
+    -| (sumo.south)
+    node[midway, below, font=\footnotesize] {Acci\'{o}n: fase sem. seleccionada};
+\end{tikzpicture}
+\caption{Bucle de control cerrado entre el simulador microsc\'{o}pico SUMO, la interfaz TraCI y el agente de Aprendizaje por Refuerzo en la metodología de entrenamiento.}
+\label{fig:bucle_control_traci}
+\end{figure}
+
+\section{Herramientas y Configuración}
+\subsection{Edición de Redes y Tránsito}
 netedit
-Formato de código desde un archivo.
 
 \vspace{0.7cm}
 \lstinputlisting[style=codigo,language=bash,caption=ejemplo1.sh]{codigo_fuente/ejemplo1.sh}
