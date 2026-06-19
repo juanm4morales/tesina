@@ -1,20 +1,28 @@
-This is BibTeX, Version 0.99e (TeX Live 2026)
+This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 13 items.
 A level-1 auxiliary file: 0-titulo.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+A level-1 auxiliary file: 1-resumen.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: 1-agradecimientos.aux
+Reallocating 'name_of_file' (item size: 1) to 19 items.
 A level-1 auxiliary file: 3-introduccion.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
 A level-1 auxiliary file: 4-marco_teorico.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: babalpha.bst
+Reallocating 'name_of_file' (item size: 1) to 13 items.
 Database file #1: bibliografia.bib
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
 Warning--empty language in difference_rewards
 Warning--empty language in mnih2015
 Warning--empty language in ctde_survey
 You've used 22 entries,
             3213 wiz_defined-function locations,
-            831 strings with 11643 characters,
+            832 strings with 11656 characters,
 and the built_in function-call counts, 13022 in all, are:
 = -- 1094
 > -- 657
