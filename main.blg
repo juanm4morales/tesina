@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99e (TeX Live 2026)
+This is BibTeX, Version 0.99e (TeX Live 2026/Arch Linux)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: 0-titulo.aux
@@ -7,8 +7,8 @@ A level-1 auxiliary file: 3-introduccion.aux
 A level-1 auxiliary file: 4-marco_teorico.aux
 The style file: babalpha.bst
 Database file #1: bibliografia.bib
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
 Warning--empty language in difference_rewards
 Warning--empty language in mnih2015
 Warning--empty language in ctde_survey
