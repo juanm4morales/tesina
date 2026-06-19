@@ -4,7 +4,7 @@
 
 La ingeniería de tránsito se define como aquella fase de la ingeniería de transporte —disciplina que se enmarca tradicionalmente dentro de la ingeniería civil— que tiene que ver con la planeación segura y eficiente, el proyecto geométrico y la operación del tránsito por calles y carreteras, sus redes, terminales, tierras adyacentes y su relación con otros modos de transporte, tanto motorizados como no motorizados \cite[p.~33]{calymayor}. Asimismo, el \textit{Traffic Engineering Handbook} la describe formalmente como la subdisciplina enfocada en la planificación, el diseño geométrico y la operación de calles, carreteras y redes viales \cite[p.~1]{ite_handbook}. En este trabajo, sus conceptos se abordan principalmente desde la perspectiva de la operación del tránsito urbano: permiten describir el funcionamiento físico de la red vial, caracterizar la oferta y demanda de circulación, e identificar las variables operacionales clave sobre las cuales puede intervenir de manera adaptativa un sistema de control.
 
-Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad física vial mediante la construcción de nuevas obras o el ensanche de calzadas \cite[Cap.~1]{ite_handbook}. Sin embargo, el crecimiento sostenido de la congestión evidenció que la ampliación de infraestructura no constituye una solución definitiva al problema. En áreas urbanas consolidadas, además, modificar el trazado vial resulta costoso y geométricamente inviable \cite[Cap.~2]{calymayor}. Por ello, la práctica contemporánea complementa la provisión de infraestructura con estrategias de gestión de la demanda y control dinámico del tránsito, priorizando la optimización de los recursos existentes mediante dispositivos de control semafórico \cite{ite_handbook, calymayor}.
+Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad física vial mediante la construcción de nuevas obras o el ensanche de calzadas \cite[Cap.~1]{ite_handbook}. Sin embargo, el crecimiento sostenido de la congestión evidenció que la ampliación de infraestructura no constituye una solución definitiva al problema. En áreas urbanas consolidadas, además, modificar el trazado vial resulta costoso y geométricamente inviable \cite[Cap.~2]{calymayor}. Por ello, la práctica contemporánea complementa la provisión de infraestructura con estrategias de gestión de la demanda \cite{ite_handbook} y control dinámico del tránsito, priorizando la optimización de los recursos existentes mediante dispositivos de control semafórico \cite{calymayor}.
 
 La operación de una red vial puede analizarse a partir de la relación entre la demanda vehicular y la capacidad disponible. La demanda vehicular corresponde a la cantidad de vehículos que requieren desplazarse por un determinado sistema vial, mientras que la oferta vial o capacidad representa la cantidad máxima de vehículos que pueden circular por dicho espacio físico bajo determinadas condiciones de operación \cite[Cap.~2, Sec.~2.4]{calymayor}. Cuando la demanda se aproxima a la capacidad, el tránsito se vuelve inestable; cuando la supera, se presentan condiciones de sobresaturación o flujo forzado, caracterizadas por detenciones frecuentes y grandes demoras \cite[Cap.~2, Sec.~2.4]{calymayor}. En este sentido, la congestión no se entiende solo como una percepción general de mal funcionamiento, sino como un fenómeno con manifestaciones físicas medibles: demoras, colas y detenciones \cite[Cap.~1, Sec.~1.1]{fernandez}.
 
@@ -15,7 +15,7 @@ Antes de introducir los mecanismos de control y su formulación computacional, c
 En este contexto, se emplearán las siguientes nociones:
 
 \begin{itemize}
-    \item \textbf{Intersección, acceso y carril:} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{ite_handbook, calymayor}.
+    \item \textbf{Intersección, acceso y carril:} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso \cite{ite_handbook}, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{calymayor}.
     \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada (e.g., giros o movimientos directos) \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite[Cap.~1]{fernandez}.
     \item \textbf{Fase, ciclo e intervalo:} una fase representa el estado operativo del semáforo que otorga el derecho de paso a un grupo de movimientos compatibles de manera simultánea \cite{ite_handbook}. La secuencia completa de fases requerida para servir a todos los movimientos de la intersección constituye el ciclo semafórico, mientras que un intervalo es la fracción temporal del ciclo durante la cual las indicaciones del semáforo no varían \cite{calymayor}.
 \end{itemize}
@@ -25,45 +25,23 @@ En este contexto, se emplearán las siguientes nociones:
     \begin{tikzpicture}[>=stealth, thick, font=\small, scale=0.9, transform shape]
         \colorlet{colConflicto}{catRosaSalmon!90!black}
         
-        % A) Concurrentes
-        \node[font=\bfseries, anchor=west] at (2, 2.5) {a) Conflictos concurrenciales};
-        \draw[->, colConflicto] (3, 1.5) -- (4.5, 1.5);
-        \draw[->, colConflicto] (4.8, 1.5) -- (6.3, 1.5);
-        \filldraw[colConflicto] (4.65, 1.5) circle (0.1);
-        \node at (3.75, 2) {Vehículo 1};
-        \node at (5.55, 2) {Vehículo 2};
-        
-        % B) Direccionales
-        \node[font=\bfseries, anchor=west] at (2, 0.5) {b) Conflictos direccionales};
-        
         % Cruce
-        \draw[->, colConflicto] (0, -1) -- (2, -1);
-        \draw[->, colConflicto] (1, -0.0) -- (1, -2.0);
-        \filldraw[colConflicto] (1, -1) circle (0.1);
-        \node at (1, -2.5) {Cruce};
+        \draw[->, colConflicto] (0, 0) -- (2, 0);
+        \draw[->, colConflicto] (1, 1) -- (1, -1);
+        \filldraw[colConflicto] (1, 0) circle (0.1);
+        \node at (1, -1.5) {Cruce};
 
         % Convergencia
-        \draw[->, colConflicto] (3.5, -1) -- (5.5, -1);
-        \draw[->, colConflicto] (3.8, -2.0) to[out=90, in=180] (4.5, -1.0); 
-        \filldraw[colConflicto] (4.5, -1) circle (0.1);
-        \node at (4.5, -2.5) {Convergencia};
+        \draw[->, colConflicto] (4, 0) -- (6, 0);
+        \draw[->, colConflicto] (4.3, -1) to[out=90, in=180] (5, 0); 
+        \filldraw[colConflicto] (5, 0) circle (0.1);
+        \node at (5, -1.5) {Convergencia};
 
         % Divergencia
-        \draw[->, colConflicto] (7, -1) -- (9, -1);
-        \draw[->, colConflicto] (7.7, -1.0) to[out=0, in=90] (8.5, -2.0);
-        \filldraw[colConflicto] (7.7, -1) circle (0.1);
-        \node at (8, -2.5) {Divergencia};
-
-        % Entrelace
-        \draw[->, colConflicto] (10.5, -0.5) to[out=270, in=90] (12.0, -1.5) -- (12.5, -1.5);
-        \draw[->, colConflicto, dashed] (10.5, -1.5) to[out=90, in=270] (12.0, -0.5) -- (12.5, -0.5);
-        \filldraw[colConflicto] (11.25, -1) circle (0.1);
-        \node at (11.5, -2.5) {Entrelace};
-
-        % C) Funcionales
-        \node[font=\bfseries, anchor=west] at (2, -3.5) {c) Conflictos funcionales};
-        \draw[->, colConflicto] (4.5, -4.5) -- (5.2, -4.5) arc (180:0:0.4) -- (6.7, -4.5);
-        \filldraw[colConflicto] (5.6, -4.1) circle (0.1);
+        \draw[->, colConflicto] (8, 0) -- (10, 0);
+        \draw[->, colConflicto] (8.7, 0) to[out=0, in=90] (9.5, -1);
+        \filldraw[colConflicto] (8.7, 0) circle (0.1);
+        \node at (9, -1.5) {Divergencia};
 
     \end{tikzpicture}
     \caption{Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}
@@ -204,7 +182,7 @@ donde $m$ representa el valor esperado o media de llegadas en dicho intervalo. B
 
 Esta representación probabilística asume independencia entre arribos sucesivos, siendo una aproximación válida únicamente para flujos vehiculares bajos o moderados bajo condiciones de flujo libre, donde no exista la influencia de semáforos cercanos aguas arriba \cite{calymayor}. Sin embargo, este supuesto de independencia decae en condiciones de congestión o en redes viales urbanas semaforizadas. En estos casos, la operación de los semáforos interrumpe periódicamente el flujo y agrupa a los vehículos en pelotones (\textit{platoons}), induciendo una fuerte dependencia espacio-temporal y correlación entre arribos consecutivos. La Figura \ref{fig:distribucion_intervalos} presenta una comparación conceptual de la distribución resultante de los intervalos temporales entre vehículos bajo estas dos condiciones operativas.
 
-Esta limitación de los modelos analíticos tradicionales (como los de Poisson o teoría de colas clásica) justifica la necesidad de recurrir a la simulación microscópica de tránsito. En un simulador como SUMO, la formación, dispersión e interacción de pelotones vehiculares emergen de manera natural a partir de los modelos de seguimiento de vehículos y cambio de carril, permitiendo evaluar el control semafórico bajo flujos dinámicos realistas. Asimismo, incorporar arribos estocásticos no Poissonianos, perfiles de demanda variables y la inicialización de múltiples corridas con diferentes semillas aleatorias en el simulador es un procedimiento estándar para evaluar la robustez y capacidad de adaptación de cualquier esquema de control dinámico ante la incertidumbre operativa; esto permite asegurar que los algoritmos sean capaces de responder ante fluctuaciones dinámicas del tráfico en tiempo real, en lugar de optimizarse para una secuencia de flujo determinista y artificial \cite{calymayor, ite_handbook}.
+Esta limitación de los modelos analíticos tradicionales (como los de Poisson o teoría de colas clásica) justifica la necesidad de recurrir a la simulación microscópica de tránsito. En un simulador como SUMO, la formación, dispersión e interacción de pelotones vehiculares emergen de manera natural a partir de los modelos de seguimiento de vehículos y cambio de carril, permitiendo evaluar el control semafórico bajo flujos dinámicos realistas. Asimismo, incorporar arribos estocásticos no Poissonianos, perfiles de demanda variables y la inicialización de múltiples corridas con diferentes semillas aleatorias en el simulador es un procedimiento estándar para evaluar la robustez y capacidad de adaptación de cualquier esquema de control dinámico ante la incertidumbre operativa \cite{calymayor}; esto permite asegurar que los algoritmos sean capaces de responder ante fluctuaciones dinámicas del tráfico en tiempo real, en lugar de optimizarse para una secuencia de flujo determinista y artificial \cite{ite_handbook}.
 
 \begin{figure}[H]
 \centering

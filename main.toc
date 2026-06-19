@@ -10,7 +10,7 @@
 \contentsline {subsubsection}{Descripción Probabilística del Flujo}{15}{subsubsection*.10}%
 \contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{16}{subsection.2.1.3}%
 \contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{17}{subsubsection*.12}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{18}{subsubsection*.14}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{17}{subsubsection*.14}%
 \contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{18}{subsection.2.1.4}%
 \contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{19}{subsubsection*.15}%
 \contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{19}{subsubsection*.16}%
