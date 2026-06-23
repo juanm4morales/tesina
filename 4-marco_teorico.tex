@@ -413,53 +413,60 @@ El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporc
 
 \subsection{Aprendizaje Profundo y Redes Neuronales}
 
-En problemas de control complejos, los espacios de estado y acción pueden crecer hasta volver impracticable una representación tabular. En una tabla, cada entrada se actualiza de manera aislada; por lo tanto, el agente debe visitar explícitamente muchas combinaciones de estado y acción para estimar sus valores. La aproximación de funciones permite superar parcialmente esta limitación al representar funciones de valor, políticas o modelos mediante una forma parametrizada. Al modificar sus parámetros a partir de una experiencia concreta, el cambio puede generalizarse a otros estados con características similares \cite{suttonRL,marlbook}.
+\subsubsection{La Unidad Neuronal y Redes \textit{Feedforward}}
 
-El aprendizaje profundo (\textit{deep learning}) es una de las herramientas más utilizadas para aproximar funciones complejas en RL y MARL. Su componente básico es la neurona artificial, una unidad computacional que recibe un vector de entrada $\mathbf{x}$, calcula una combinación lineal de sus componentes mediante pesos $\mathbf{w}$ y un sesgo $b$, y luego aplica una función de activación no lineal $g$:
-\begin{equation}
-    h = g(\mathbf{w}^\top \mathbf{x} + b)
-\end{equation}
+En problemas de control complejos, los métodos tabulares se vuelven impracticables debido a las restricciones de memoria y cómputo que impone la maldición de la dimensionalidad \cite{suttonRL}. La aproximación de funciones soluciona esta limitación al representar funciones mediante una forma parametrizada, permitiendo que el aprendizaje en un estado se generalice a otros estados con características similares. El aprendizaje profundo (\textit{Deep Learning}) emplea redes neuronales artificiales como aproximadores de funciones continuas y no lineales \cite{marlbook}.
 
-Una red neuronal artificial organiza muchas de estas unidades en capas. En una red \textit{feedforward}, o perceptrón multicapa (MLP), la información fluye desde una capa de entrada hacia una o más capas ocultas y finalmente hacia una capa de salida. En forma vectorial, una capa puede escribirse como:
+El componente básico de estas arquitecturas es la unidad neuronal individual. Computacionalmente, una neurona en una capa $k$ ejecuta dos operaciones secuenciales sobre el vector de características de entrada $\mathbf{x}$. Primero, calcula una combinación lineal utilizando un vector de pesos $\mathbf{w}$ y un sesgo (\textit{bias}) escalar $b$. Luego, el resultado se somete a una función de activación no lineal $g_k$:
 \begin{equation}
-    \mathbf{h} = g(\mathbf{W}\mathbf{x} + \mathbf{b})
+    f_{k,u}(\mathbf{x}; \theta_k^u) = g_k(\mathbf{w}^\top \mathbf{x} + b)
 \end{equation}
-donde $\mathbf{W}$ es la matriz de pesos y $\mathbf{b}$ el vector de sesgos. La no linealidad introducida por $g$ es esencial: sin funciones de activación no lineales, una composición de capas equivaldría a una única transformación lineal. En aplicaciones modernas se utilizan con frecuencia activaciones como ReLU, definida como $g(z)=\max(0,z)$, por su simplicidad computacional y buen comportamiento empírico en redes profundas \cite{suttonRL,marlbook}.
+La inclusión de una función de activación es estrictamente necesaria; componer múltiples capas sin funciones no lineales resultaría analíticamente en una simple transformación lineal, anulando la capacidad de representación de la red \cite{marlbook}. Entre las opciones no lineales más comunes destacan ReLU (Unidad Lineal Rectificada, que emite la entrada directamente si es positiva y cero en caso contrario), \textit{leaky} ReLU (una variante que permite un gradiente pequeño para entradas negativas, previniendo la parálisis de la neurona) y Tanh (tangente hiperbólica, que comprime la salida continua en el rango $[-1, 1]$).
 
-Los parámetros de una red neuronal, denotados de forma genérica por $\theta$, se ajustan para minimizar una función de pérdida $\mathcal{L}(\theta)$ o, en el caso de políticas, para maximizar una función objetivo de rendimiento. En el entrenamiento supervisado clásico, la pérdida mide la discrepancia entre predicciones y etiquetas conocidas. En RL, en cambio, los objetivos suelen construirse a partir de retornos observados o de estimaciones bootstrap, como ocurre en los métodos TD. El ajuste se realiza mediante variantes de descenso de gradiente sobre minilotes de datos, y los gradientes se calculan eficientemente mediante retropropagación (\textit{backpropagation}), que aplica sistemáticamente la regla de la cadena:
+Las redes neuronales de propagación hacia adelante (conocidas por su término en inglés \textit{feedforward} o como perceptrones multicapa) estructuran estas unidades en secuencias de múltiples capas: una capa de entrada, capas intermedias u ocultas, y una capa de salida. La computación de una capa entera se puede vectorizar:
 \begin{equation}
-    \frac{\partial \mathcal{L}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial z_j} \frac{\partial z_j}{\partial w_{ij}}
+    \mathbf{h}_k = g_k(\mathbf{W}_k^\top \mathbf{x}_{k-1} + \mathbf{b}_k)
 \end{equation}
-Así, las redes neuronales proporcionan la capacidad de generalización necesaria para tratar observaciones de alta dimensionalidad, como vectores de colas, densidades, fases semafóricas y mediciones locales de tráfico.
+donde $\mathbf{W}_k$ es la matriz de pesos y $\mathbf{b}_k$ el vector de sesgos. El Teorema de Aproximación Universal establece que una red con una única capa oculta suficientemente ancha puede aproximar cualquier función continua; sin embargo, arquitecturas más profundas logran una mejor generalización y una extracción jerárquica de características progresivamente más abstractas \cite{marlbook, suttonRL}.
+
+\subsubsection{El Proceso de Optimización}
+
+Dado que las redes neuronales carecen de una solución de forma cerrada, sus parámetros $\theta$ se ajustan utilizando métodos de optimización iterativa. El proceso se fundamenta en tres componentes técnicos \cite{marlbook}:
+
+\begin{itemize}
+    \item \textbf{Función de Pérdida (\textit{Loss Function}):} Un objetivo matemático diferenciable $\mathcal{L}(\theta)$ que cuantifica la discrepancia entre las predicciones de la red y los valores objetivo. Frecuentemente se emplea el Error Cuadrático Medio (MSE).
+    \item \textbf{Descenso de Gradiente:} El optimizador actualiza los parámetros moviéndose en la dirección del gradiente negativo $-\nabla_\theta \mathcal{L}(\theta)$, ponderado por una tasa de aprendizaje $\alpha$. En la práctica se utiliza el Descenso de Gradiente por Mini-lotes (\textit{Mini-batch Gradient Descent}), que muestrea un subconjunto aleatorio de datos para ofrecer un equilibrio óptimo entre la estabilidad del gradiente y el costo computacional. Optimizadores modernos como Adam adaptan dinámicamente las tasas de aprendizaje para acelerar la convergencia.
+    \item \textbf{Retropropagación (\textit{Backpropagation}):} Para que el descenso de gradiente sea posible en arquitecturas profundas, es necesario computar las derivadas parciales de la función de pérdida respecto a cada parámetro. El algoritmo de \textit{backpropagation} logra esto aplicando eficientemente la regla de la cadena de derivadas, propagando los gradientes desde la capa de salida hacia las capas de entrada.
+\end{itemize}
 
 \subsection{Aprendizaje por Refuerzo Profundo (DRL)}
 
-El Aprendizaje por Refuerzo Profundo (\textit{Deep Reinforcement Learning}, DRL) combina algoritmos de RL con redes neuronales profundas. En este enfoque, las redes actúan como aproximadores de funciones de valor, políticas o modelos, permitiendo operar sobre espacios de estado grandes, continuos o de alta dimensionalidad \cite{mnih2015,marlbook}. Esta combinación es especialmente relevante para control semafórico adaptativo, donde el agente debe decidir a partir de mediciones dinámicas del sistema vial y no de una tabla pequeña de estados discretos.
+El Aprendizaje por Refuerzo Profundo (DRL) combina los algoritmos de RL con la capacidad de generalización del aprendizaje profundo. Esta integración es fundamental cuando los espacios de estado son continuos o de alta dimensionalidad, donde es estadísticamente improbable que un agente visite el mismo estado múltiples veces. Sin embargo, el DRL exige aproximadores robustos capaces de procesar flujos de datos correlacionados temporalmente y de rastrear objetivos no estacionarios \cite{marlbook}.
 
 \subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
 
-La combinación entre aproximación de funciones y aprendizaje por refuerzo no está exenta de dificultades. Sutton y Barto identifican una fuente clásica de inestabilidad conocida como \textit{tríada mortal} (\textit{deadly triad}), que aparece cuando se combinan simultáneamente tres elementos \cite{suttonRL}:
+La aplicación directa de redes neuronales al aprendizaje por refuerzo introduce vulnerabilidades analíticas. Sutton y Barto \cite{suttonRL} establecen que la inestabilidad de los parámetros y la divergencia de los valores están garantizadas matemáticamente si un algoritmo combina simultáneamente tres elementos fundamentales:
+
 \begin{itemize}
-    \item \textbf{Aproximación de funciones}: uso de redes neuronales u otros aproximadores para representar funciones de valor o políticas.
-    \item \textbf{Bootstrapping}: actualización de estimaciones a partir de otras estimaciones, como en los métodos TD.
-    \item \textbf{Entrenamiento \textit{off-policy}}: aprendizaje sobre datos generados por una política de comportamiento distinta de la política objetivo.
+    \item \textbf{Aproximación de Funciones:} Uso de aproximadores potentes y escalables, como las redes neuronales, que extienden el aprendizaje generalizando a través del espacio de estados.
+    \item \textbf{\textit{Bootstrapping}:} La práctica de actualizar estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (como en los métodos TD), en lugar de esperar la consecución de retornos reales completos.
+    \item \textbf{Entrenamiento \textit{Off-Policy}:} Optimizar la función de valor utilizando una distribución de datos o transiciones generadas por una política de comportamiento distinta a la política objetivo que se desea evaluar o mejorar.
 \end{itemize}
 
-La presencia conjunta de estos elementos puede producir oscilaciones o divergencia en el aprendizaje. Por ello, los algoritmos de DRL incorporan mecanismos de estabilización que no son meros detalles de implementación, sino respuestas a dificultades teóricas y empíricas del aprendizaje con datos secuenciales, no estacionarios y generados por el propio agente.
+El análisis de la Tríada Mortal argumenta que es fácticamente imposible prescindir de cualquiera de estos tres vértices en sistemas de control escalables \cite{suttonRL}. Renunciar a la aproximación de funciones restringiría el control a problemas tabulares diminutos. Descartar el \textit{bootstrapping} mitigaría la inestabilidad, pero paralizaría la eficiencia de datos y la viabilidad computacional al requerir almacenar secuencias episódicas enteras. Finalmente, sacrificar el aprendizaje \textit{off-policy} anularía la capacidad del agente de aprender de forma concurrente múltiples modelos predictivos a partir de un único flujo de experiencia. Por consiguiente, resulta imperativo tolerar la Tríada Mortal e incorporar mitigaciones algorítmicas estructurales.
 
 \subsubsection{\textit{Deep Q-Networks} (DQN)}
 
-La integración de redes neuronales profundas con \textit{Q-learning} dio lugar al algoritmo \textit{Deep Q-Network} (DQN), que mostró que era posible aprender políticas de control directamente a partir de representaciones de estado de alta dimensionalidad \cite{mnih2015}. En DQN, una red neuronal parametrizada por $\theta$ aproxima la función $Q(s,a;\theta)$. Para espacios de acción discretos, la red recibe una representación del estado $s$ y devuelve estimaciones de valor para cada acción disponible.
+En los métodos basados en valor, DRL sustituye la tabla clásica por una red neuronal $Q(s, a; \theta)$. En espacios de acción discretos, el algoritmo \textit{Deep Q-Networks} (DQN) procesa el estado $s$ como vector de entrada y computa simultáneamente las estimaciones de valor para todas las acciones en su capa de salida \cite{marlbook, mnih2015}.
 
-El entrenamiento directo de una red Q presenta problemas de estabilidad. A diferencia del aprendizaje supervisado tradicional, las muestras en RL están correlacionadas temporalmente y la distribución de datos cambia a medida que cambia la política del agente. DQN introduce dos mecanismos principales para reducir estos efectos:
+La inestabilidad descrita por la Tríada Mortal se manifiesta en DQN como el ``problema del blanco móvil'': al generalizar, una actualización que incrementa el valor de un estado modifica de forma inadvertida los valores de otros estados. Si además las secuencias de entrenamiento presentan una alta correlación temporal, la red sufre de olvido catastrófico, sobreajustándose a la experiencia más reciente. Para lograr convergencia, DQN introduce dos innovaciones estructurales imperativas \cite{marlbook}:
 
 \begin{itemize}
-    \item \textbf{Repetición de experiencias (\textit{experience replay}):} el agente almacena transiciones $e_t = (s_t, a_t, r_t, s_{t+1})$ en una memoria $\mathcal{D}$ y entrena con minilotes muestreados de esa memoria. Esto reduce la correlación temporal entre muestras consecutivas y permite reutilizar experiencia pasada.
-    \item \textbf{Red objetivo (\textit{target network}):} DQN mantiene una red principal $Q(s,a;\theta)$ y una red objetivo $\hat{Q}(s,a;\theta^-)$ usada para calcular los objetivos TD. Los parámetros $\theta^-$ se actualizan periódicamente a partir de la red principal, lo que evita que el objetivo de aprendizaje cambie en cada paso de gradiente.
+    \item \textbf{Redes Objetivo (\textit{Target Networks}):} Se emplea una red neuronal secundaria separada cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular los valores objetivo en el error TD, amortiguando las oscilaciones y estabilizando el blanco de aprendizaje.
+    \item \textbf{Búferes de Repetición (\textit{Replay Buffers}):} Se almacenan las transiciones históricas del agente $(s, a, r, s')$. El entrenamiento se realiza extrayendo mini-lotes aleatorios de esta memoria, lo cual destruye la correlación temporal intrínseca de los procesos de decisión de Markov y estabiliza la varianza del gradiente.
 \end{itemize}
 
-El entrenamiento de DQN se formula reduciendo el error cuadrático medio (MSE) o la pérdida de Huber entre la predicción actual y el objetivo calculado por la red congelada. La función de pérdida a minimizar es:
-
+La función de pérdida minimizada por DQN es:
 \begin{equation}
 \mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_j, s_{j+1}) \sim \mathcal{D}} \left[ \left( \underbrace{r_j + \gamma \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor Objetivo de TD}} - \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción Actual}} \right)^2 \right]
 \end{equation}
@@ -486,9 +493,17 @@ El entrenamiento de DQN se formula reduciendo el error cuadrático medio (MSE) o
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Exploración vs. Explotación}
+\subsubsection{Aproximación de Políticas (Gradiente de Política)}
 
-En métodos basados en valor como DQN, el dilema exploración-explotación suele abordarse mediante una política $\epsilon$-greedy. Con probabilidad $1-\epsilon$ se selecciona la acción que maximiza el valor Q estimado por la red; con probabilidad $\epsilon$, se elige una acción aleatoria. En muchos entrenamientos, $\epsilon$ comienza en un valor alto y decrece gradualmente hasta un valor mínimo, permitiendo una exploración inicial amplia y una explotación mayor a medida que la política mejora.
+Como alternativa a derivar la política de forma indirecta a partir de una función de valor (por ejemplo, mediante la selección $\epsilon$-greedy detallada en DQN), DRL permite parametrizar de manera directa la política del agente mediante una red neuronal $\pi(a|s; \phi)$ \cite{marlbook}.
+
+Para espacios de acción discretos, la red recibe el estado $s$ como entrada y emite un valor escalar de preferencia para cada acción. Estas preferencias se transforman de forma analítica en una distribución de probabilidad mediante una función \textit{softmax}. Parametrizar directamente la política resulta indispensable en entornos donde la política óptima es inherentemente probabilística (como equilibrios de Nash en juegos de suma cero o bajo observabilidad parcial), y habilita la extensión nativa del control a espacios de acción continuos modelando parámetros de distribuciones estadísticas \cite{marlbook}.
+
+En lugar de minimizar un error de predicción temporal, la optimización paramétrica se rige por el Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}). Este teorema proporciona la justificación formal para actualizar los parámetros $\phi$ ascendiendo por el gradiente del rendimiento esperado \cite{suttonRL}:
+\begin{equation}
+    \nabla_\phi J(\phi) \propto \sum_{s} \Pr(s | \pi) \sum_{a} Q^\pi(s, a) \nabla_\phi \pi(a | s; \phi)
+\end{equation}
+Esta actualización incrementa la probabilidad de ejecutar aquellas acciones que están asociadas a mayores retornos esperados, normalizadas por su probabilidad actual \cite{marlbook}.
 
 \subsubsection{\textit{Proximal Policy Optimization} (PPO)}
 
