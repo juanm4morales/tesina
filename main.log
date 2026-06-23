@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.16)  22 JUN 2026 22:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.4.16)  23 JUN 2026 00:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -931,12 +931,12 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
  (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (2.05296pt too wide) in paragraph at lines 35--35
+Overfull \hbox (2.05296pt too wide) in paragraph at lines 37--37
  [][] [][][]\T1/cmr/m/n/10.95 Desafíos de Es-cal-a-bil-i-dad y No Esta-cionar-iedad en MARL[][] [][]  
  []
 
 
-Overfull \hbox (1.19446pt too wide) in paragraph at lines 39--39
+Overfull \hbox (1.19446pt too wide) in paragraph at lines 41--41
  [][] [][][]\T1/cmr/m/n/10.95 Coordinación en-tre In-ter-sec-ciones y Mit-i-gación de Con- 
  []
 
@@ -1078,29 +1078,39 @@ Overfull \hbox (27.50208pt too wide) in paragraph at lines 409--410
  [][] 
  []
 
-[19] [20] [21]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 468.
+[19]
+Overfull \hbox (6.77995pt too wide) in paragraph at lines 418--419
+\T1/cmr/m/n/10.95 ciona es-ta lim-itación al rep-re-sen-tar fun-ciones me-di-ante una for-ma parametriza-
+ []
 
-Overfull \hbox (36.48239pt too wide) in paragraph at lines 481--482
+[20] [21]
+Overfull \hbox (5.58084pt too wide) in paragraph at lines 452--453
+[]\T1/cmr/bx/it/10.95 Bootstrapping\T1/cmr/bx/n/10.95 : \T1/cmr/m/n/10.95 La prác-ti-ca de ac-tu-alizar es-ti-ma-ciones de val-or apoyán-
+ []
+
+[22]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 475.
+
+Overfull \hbox (36.48239pt too wide) in paragraph at lines 488--489
 [] \T1/cmr/m/n/10.95 Cal-cu-lar ob-je-ti-vo $\OML/cmm/m/it/10.95 y[] \OT1/cmr/m/n/10.95 = []$ 
  []
 
-[22] [23] [24]
-Overfull \hbox (0.68855pt too wide) in paragraph at lines 544--545
+[23] [24] [25]
+Overfull \hbox (0.68855pt too wide) in paragraph at lines 559--560
 \T1/cmr/m/n/10.95 Los en-tornos co-op-er-a-tivos multi-agente sue-len for-malizarse matemáti-ca-mente
  []
 
-[25] [26] [27]
-Overfull \hbox (4.84627pt too wide) in paragraph at lines 586--587
+[26] [27] [28]
+Overfull \hbox (4.84627pt too wide) in paragraph at lines 601--602
 []\T1/cmr/bx/it/10.95 Multi-Agent Deep De-ter-min-is-tic Pol-i-cy Gra-di-ent \T1/cmr/bx/n/10.95 (MAD-DPG)\T1/cmr/m/n/10.95 :
  []
 
-
-Overfull \hbox (14.3543pt too wide) in paragraph at lines 592--592
+[29]
+Overfull \hbox (14.3543pt too wide) in paragraph at lines 607--607
 |[]\T1/cmr/bx/n/12 Desafíos de Es-cal-a-bil-i-dad y No Esta-cionar-iedad en MARL| 
  []
 
-[28] [29]) [30] [31]
+[30]) [31] [32]
 \openout2 = `5-metodologia.aux'.
 
  (./5-metodologia.tex
@@ -1111,12 +1121,12 @@ File: lstlang1.sty 2025/11/14 1.11b listings language file
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 57.
- (./codigo_fuente/ejemplo1.sh) [32
+ (./codigo_fuente/ejemplo1.sh) [33
 
 
 
 
-]) [33]
+]) [34]
 \openout2 = `6-resultados.aux'.
 
  (./6-resultados.tex
@@ -1157,7 +1167,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 26.
 
-) [34
+) [35
 
 
 
@@ -1167,7 +1177,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
  (./7-conclusiones.tex
 \bbl@ensure@spanish {Cap\'\i tulo} 5.
-) [35
+) [36
 
 
 
@@ -1189,7 +1199,7 @@ Underfull \hbox (badness 2865) in paragraph at lines 55--64
 \T1/cmr/m/n/10.95 Spaan: \T1/cmr/m/it/10.95 A Sur-vey of De-cen-tral-ized Par-tial-ly Ob-serv-able
  []
 
-[36
+[37
 
 
 
@@ -1198,12 +1208,12 @@ Underfull \hbox (badness 2237) in paragraph at lines 168--177
 []\T1/cmr/m/n/10.95 Lowe, Ryan, Yi Wu, Aviv Tamar, Jean Harb, Pieter
  []
 
-[37]
+[38]
 Underfull \hbox (badness 1721) in paragraph at lines 246--259
 \T1/cmr/m/it/10.95 Value-decomposition net-works for co-op-er-a-tive multi-agent
  []
 
-) [38] (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./2-resumen.aux) (./3-introduccion.aux) (./4-marco_teorico.aux) (./5-metodologia.aux) (./6-resultados.aux) (./7-conclusiones.aux))
+) [39] (./main.aux (./0-titulo.aux) (./1-agradecimientos.aux) (./2-resumen.aux) (./3-introduccion.aux) (./4-marco_teorico.aux) (./5-metodologia.aux) (./6-resultados.aux) (./7-conclusiones.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1212,18 +1222,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 18FBCABC7A7E2F5CAADB2EA573A6331E;10077.
  ) 
 Here is how much of TeX's memory you used:
- 44660 strings out of 469515
- 1017884 string characters out of 5470807
- 1745744 words of memory out of 5000000
+ 44663 strings out of 469515
+ 1017925 string characters out of 5470807
+ 1745741 words of memory out of 5000000
  72371 multiletter control sequences out of 15000+600000
  654458 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,19n,117p,1217b,2246s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on main.pdf (45 pages, 876628 bytes).
+Output written on main.pdf (46 pages, 881944 bytes).
 PDF statistics:
- 925 PDF objects out of 1000 (max. 8388607)
- 789 compressed objects within 8 object streams
- 169 named destinations out of 1000 (max. 500000)
+ 940 PDF objects out of 1000 (max. 8388607)
+ 802 compressed objects within 9 object streams
+ 172 named destinations out of 1000 (max. 500000)
  332 words of extra memory for PDF output out of 10000 (max. 10000000)
 
