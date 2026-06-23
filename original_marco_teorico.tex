@@ -305,19 +305,20 @@ En este contexto, el simulador de tránsito constituye el entorno operativo sobr
     \label{fig:sumo_intersection_elements}
 \end{figure}
 
+
 \section{Aprendizaje por Refuerzo (RL)}
 
-Dentro del aprendizaje automático suelen distinguirse tres paradigmas principales. En el aprendizaje supervisado, el modelo se entrena a partir de ejemplos etiquetados que indican la salida esperada para cada entrada. En el aprendizaje no supervisado, en cambio, se busca descubrir estructura en datos no etiquetados, por ejemplo mediante agrupamiento o reducción de dimensionalidad. El aprendizaje por refuerzo (\textit{Reinforcement Learning}, RL) aborda un problema distinto: una entidad que toma decisiones debe aprender, mediante interacción con un entorno, qué acciones elegir para maximizar una señal de recompensa acumulada a largo plazo \cite{suttonRL}.
+El aprendizaje por refuerzo (\textit{reinforcement learning}, en inglés) consiste en mapear situaciones (estados) a acciones, con el objetivo de maximizar una señal de recompensa numérica. En el marco del aprendizaje por refuerzo, existen dos elementos esenciales: uno o más agentes y un entorno.
 
-Esta diferencia es central. En RL no existe, en general, un supervisor que indique cuál era la acción correcta en cada situación. El agente aprende por experiencia, ensayando acciones, observando sus consecuencias y ajustando su comportamiento a partir de las recompensas obtenidas. Además, las consecuencias relevantes de una acción no siempre se manifiestan de forma inmediata: una decisión puede producir una recompensa baja en el corto plazo, pero conducir a estados favorables en el futuro. Por este motivo, el aprendizaje por refuerzo se ocupa explícitamente del problema de la recompensa diferida y de la asignación de crédito a decisiones pasadas \cite{suttonRL}.
+El agente es el tomador de decisiones, al cual no se le indica explícitamente qué acciones tomar, sino que debe descubrir cuáles acciones generan más recompensas a través de la exploración y la experimentación. Generalmente, las acciones pueden afectar no solo la recompensa inmediata, sino también el estado siguiente y, a través de este, todas las recompensas futuras.
 
-La formulación básica distingue entre el \textit{agente} (\textit{agent}), que aprende y toma decisiones, y el \textit{entorno} (\textit{environment}), que representa todo aquello externo al agente con lo cual este interactúa. En cada paso temporal, el agente observa una situación del entorno, selecciona una acción y recibe como respuesta una nueva situación junto con una recompensa. El comportamiento del agente está determinado por una \textit{política} (\textit{policy}), denotada por $\pi$, que especifica cómo se eligen las acciones a partir de los estados u observaciones disponibles. La \textit{señal de recompensa} (\textit{reward signal}) define el objetivo inmediato del problema, mientras que la \textit{función de valor} estima la conveniencia de estados o acciones en términos de recompensa futura esperada. Sutton y Barto también distinguen el \textit{modelo} del entorno, entendido como una descripción que permite predecir sus transiciones y recompensas; cuando dicho modelo no se conoce o no se utiliza explícitamente, se habla de métodos libres de modelo (\textit{model-free}) \cite{suttonRL}.
-
-Un aspecto característico de RL es el dilema entre exploración y explotación. El agente debe explotar acciones que, según su experiencia, producen buenos resultados, pero también debe explorar alternativas menos conocidas que podrían conducir a políticas superiores. Si explora demasiado, desperdicia oportunidades de obtener recompensa; si explota demasiado pronto, puede converger a comportamientos subóptimos. Este equilibrio es especialmente relevante en problemas de control, donde las acciones modifican la experiencia futura disponible para el aprendizaje \cite{suttonRL}.
+El otro elemento es el entorno, que representa el escenario con el que interactúa el agente. Este entorno debe modelarse mediante abstracción de tal manera que la interfaz de comunicación ofrezca al agente lo esencial para el proceso de aprendizaje. Para modelar este entorno se utilizan ideas de la teoría de sistemas dinámicos, específicamente de los procesos de decisión de Markov \cite{suttonRL}.
 
 \subsection{El Proceso de Decisión de Markov (MDP)}
 
-El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el Proceso de Decisión de Markov (\textit{Markov Decision Process}, MDP). En un MDP finito, el agente y el entorno interactúan en una secuencia de pasos temporales discretos $t = 0, 1, 2, \dots$. En cada instante $t$, el agente recibe una representación del estado del entorno $S_t \in \mathcal{S}$ y selecciona una acción $A_t \in \mathcal{A}(S_t)$. Como consecuencia de esa acción, el entorno emite una recompensa numérica $R_{t+1} \in \mathcal{R}$ y transita a un nuevo estado $S_{t+1}$ \cite{suttonRL}. Este ciclo se representa en la Figura \ref{fig:agent_env_interaction}.
+Los procesos de decisión de Markov (\textit{Markov Decision Process}, MDP) son una formalización clásica de la toma de decisiones secuencial donde las acciones no sólo influyen en las recompensas inmediatas, sino también en situaciones posteriores o estados y, a través de ellas, en las recompensas futuras. Los MDP pretenden ser una forma matemáticamente idealizada del problema del aprendizaje por refuerzo para el que pueden hacerse afirmaciones teóricas aplicables en la práctica.
+
+En un MDP, el agente y el entorno interactúan en cada uno de una secuencia de pasos temporales discretos, \(t = 0, 1, 2, 3, \ldots\). En cada paso de tiempo \(t\), el agente recibe una representación del estado del entorno, \(S_t \in \mathcal{S}\), y en esa base selecciona una acción, \(A_t \in \mathcal{A}(s)\). Un paso de tiempo después, como consecuencia de esta acción, el agente recibe una recompensa numérica, \(R_{t+1} \in \mathcal{R}\), y se encontrará en un nuevo estado \(S_{t+1}\). Todo este proceso se puede observar esquemáticamente en la Figura \ref{fig:agent_env_interaction}.
 
 \begin{figure}[H]
     \centering
@@ -326,214 +327,86 @@ El marco matemático estándar para estudiar problemas de aprendizaje por refuer
     \label{fig:agent_env_interaction}
 \end{figure}
 
-De forma compacta, un MDP finito puede describirse mediante los conjuntos de estados $\mathcal{S}$, acciones $\mathcal{A}$ y recompensas $\mathcal{R}$, junto con una dinámica probabilística $p$ y un factor de descuento $\gamma$.
+En los MDP finitos, los conjuntos de estados, acciones y recompensas (\(\mathcal{S}\), \(\mathcal{A}\) y \(\mathcal{R}\)) contienen un número finito de elementos. Las variables aleatorias \(R_t\) y \(S_t\) siguen una distribución de probabilidad discreta \(p\), la cual depende únicamente del estado y la acción precedentes. Esta dependencia exclusiva se conoce como la propiedad de Markov, y para las metodologías utilizadas en este trabajo se asume su cumplimiento \cite{suttonRL}:
 
-La dinámica del entorno queda caracterizada por la función $p(s', r \mid s, a)$, que define la probabilidad de observar el siguiente estado $s'$ y la recompensa $r$ al ejecutar la acción $a$ en el estado $s$:
 \begin{equation}
-p(s', r \mid s, a) \doteq \Pr\{S_{t+1} = s', R_{t+1} = r \mid S_t = s, A_t = a\}
-\end{equation}
-La propiedad de Markov establece que, dado el estado y la acción actuales, la distribución del próximo estado y recompensa no depende explícitamente de la historia completa de estados y acciones anteriores. En otras palabras, el estado debe contener la información relevante del pasado para predecir la evolución futura del proceso \cite{suttonRL}.
-
-Una suposición habitual del MDP es que el agente observa un estado suficientemente informativo del entorno. Sin embargo, en muchas aplicaciones reales el agente solo recibe observaciones parciales o ruidosas. En estos casos, el marco se generaliza a un Proceso de Decisión de Markov Parcialmente Observable (POMDP), donde el historial de observaciones puede ser necesario para inferir el estado subyacente \cite{marlbook}. Esta distinción resulta importante para el control semafórico: una simulación puede poseer un estado global bien definido, pero cada controlador suele operar con mediciones locales, como colas, ocupación o tiempos de espera observados en sus aproximaciones.
-
-Para formalizar la meta de maximizar la recompensa a largo plazo se define el retorno $G_t$. En tareas episódicas, el retorno puede calcularse hasta alcanzar un estado terminal. En tareas continuas o con horizonte indefinido, se utiliza con frecuencia el retorno descontado, incorporando un factor $\gamma \in [0,1]$ que pondera las recompensas futuras \cite{suttonRL}:
-\begin{equation}
-G_t \doteq R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
-\end{equation}
-El factor de descuento admite dos interpretaciones complementarias. Matemáticamente, puede asociarse con la probabilidad de continuidad del proceso; desde el punto de vista del objetivo de control, regula la importancia relativa de las recompensas futuras. Un valor cercano a cero induce un comportamiento más miope, mientras que un valor cercano a uno otorga mayor peso a consecuencias de largo plazo \cite{marlbook}. En simulación de tráfico, aun cuando los experimentos se ejecuten en episodios de duración finita, el uso de descuento permite representar que las decisiones semafóricas actuales inciden sobre colas y demoras futuras.
-
-\subsection{Métodos Basados en Valor y Basados en Política}
-
-Los algoritmos de RL pueden agruparse, a grandes rasgos, en métodos basados en valor y métodos basados en política. Esta distinción no agota la taxonomía del campo, pero permite introducir las familias de algoritmos más relevantes para este trabajo.
-
-En los \textit{métodos basados en valor}, la estrategia consiste en estimar qué tan conveniente es encontrarse en un estado o ejecutar una acción determinada. Esto se formaliza mediante la \textit{función de valor de estado} $v_\pi(s) \doteq \mathbb{E}_\pi[G_t \mid S_t = s]$ y la \textit{función de valor de acción} $q_\pi(s, a) \doteq \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$. Ambas funciones satisfacen ecuaciones recursivas conocidas como \textit{ecuaciones de Bellman}, que expresan la relación entre el valor de una situación actual y el valor esperado de sus posibles sucesores \cite{suttonRL}.
-
-Cuando la dinámica del entorno no se conoce completamente, estas funciones pueden estimarse a partir de la experiencia. Los métodos de Diferencia Temporal (\textit{Temporal-Difference}, TD) combinan el muestreo de transiciones reales con actualizaciones basadas en estimaciones previas, mecanismo conocido como \textit{bootstrapping}. Un ejemplo central es \textit{Q-learning}, que actualiza la función de acción-valor hacia una estimación de la función óptima $q_*(s,a)$:
-\begin{equation}
-Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t) \right]
+p(s',r|s,a) = \Pr\{ S_t=s', R_t=r | S_{t-1} = s, A_{t-1}=a \}
 \end{equation}
 
-Por el contrario, los \textit{métodos basados en política} parametrizan directamente la política $\pi(a \mid s, \theta) = \Pr\{A_t = a \mid S_t = s, \theta_t = \theta\}$. En lugar de derivar la acción exclusivamente de una función de valor, ajustan los parámetros $\theta$ para maximizar una medida de rendimiento escalar $J(\theta)$. Para ello aplican ascenso de gradiente sobre el rendimiento esperado:
+Existen métodos que intentan desarrollar un modelo para comprender el entorno. Estos métodos buscan aprender la función de probabilidad $p$ para poder planificar y se denominan métodos \textit{basados en modelo}. Por otro lado, los algoritmos \textit{libres de modelo} aprenden las consecuencias de las acciones a través de la experiencia pura sin estimar la función $p$, y constituyen la familia de algoritmos de mayor interés para el presente trabajo.
+
+\subsection{Retorno}
+
+Como se ha mencionado, el objetivo del agente es maximizar la recompensa acumulada recibida a lo largo del tiempo. En general, se busca maximizar el retorno esperado, donde el retorno, denotado $G_t$, se define como una función específica de una secuencia de recompensas.
+
+En muchos casos resulta necesario priorizar las recompensas inmediatas frente a aquellas más lejanas en el tiempo, para lo cual se emplea un factor de descuento $\gamma \in [0, 1]$. Este parámetro se utiliza para obtener el retorno descontado:
+
 \begin{equation}
-\theta_{t+1} = \theta_t + \alpha \nabla J(\theta_t)
-\end{equation}
-El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporciona la base teórica para estimar este gradiente sin derivar explícitamente la distribución de estados inducida por la política \cite{suttonRL}. En la práctica, muchos algoritmos modernos combinan ambas ideas mediante arquitecturas actor-crítico: un actor representa la política y un crítico estima valores para guiar sus actualizaciones.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[
-        box/.style={draw, rounded corners, align=center, minimum height=0.8cm, font=\small},
-        cat1/.style={box, fill=catAzulCielo!40, text width=4cm},
-        cat2/.style={box, fill=catMelocoton!40, text width=3.5cm},
-        cat3/.style={box, fill=catVerdeMenta!40, text width=3cm},
-        alg/.style={draw, align=center, fill=white, text width=2.8cm, font=\footnotesize, minimum height=0.6cm},
-        arr/.style={-Stealth, thick}
-    ]
-
-    % Nivel 1
-    \node[cat1] (rl) at (0, 0) {Aprendizaje por\\Refuerzo (RL)};
-
-    % Nivel 2
-    \node[cat2] (mf) at (-3.3, -2) {Libre de Modelo\\(\textit{Model-Free})};
-    \node[cat2] (mb) at (3.5, -2) {Basado en Modelo\\(\textit{Model-Based})};
-
-    % Nivel 3 (Ramas de Model-Free)
-    \node[cat3] (ac) at (-3.3, -4) {Actor-Critic};
-    \node[cat3] (val) at (-6.6, -4) {Basados\\en Valor};
-    \node[cat3] (pol) at (0, -4) {Basados\\en Política};
-
-    % Nivel 4 (Algoritmos)
-    \node[alg] (dqn) at (-6.6, -5.5) {Q-Learning\\DQN};
-    \node[alg] (ppo) at (-3.3, -5.5) {A2C, DDPG\\TRPO, PPO};
-    \node[alg] (reinf) at (0, -5.5) {REINFORCE};
-    
-    \node[alg] (alph) at (3.5, -5.5) {Dyna-Q\\AlphaZero};
-
-    % Conexiones Nivel 1 -> Nivel 2
-    \draw[arr] (rl.south) -- (mf.north);
-    \draw[arr] (rl.south) -- (mb.north);
-
-    % Conexiones Nivel 2 -> Nivel 3
-    \draw[arr] (mf.south) -- (val.north);
-    \draw[arr] (mf.south) -- (ac.north);
-    \draw[arr] (mf.south) -- (pol.north);
-
-    % Conexiones Nivel 3 -> Algoritmos
-    \draw[arr] (val.south) -- (dqn.north);
-    \draw[arr] (ac.south) -- (ppo.north);
-    \draw[arr] (pol.south) -- (reinf.north);
-
-    % Conexiones Nivel 2 -> Algoritmos (Model-Based)
-    \draw[arr] (mb.south) -- (alph.north);
-
-    \end{tikzpicture}
-    \caption{Taxonomía no exhaustiva de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit{Model-Free} (adaptada de OpenAI \textit{Spinning Up} \cite{spinningup}).}
-    \label{fig:rl_taxonomy}
-\end{figure}
-
-\subsection{Aprendizaje Profundo y Redes Neuronales}
-
-En problemas de control complejos, los espacios de estado y acción pueden crecer hasta volver impracticable una representación tabular. En una tabla, cada entrada se actualiza de manera aislada; por lo tanto, el agente debe visitar explícitamente muchas combinaciones de estado y acción para estimar sus valores. La aproximación de funciones permite superar parcialmente esta limitación al representar funciones de valor, políticas o modelos mediante una forma parametrizada. Al modificar sus parámetros a partir de una experiencia concreta, el cambio puede generalizarse a otros estados con características similares \cite{suttonRL,marlbook}.
-
-El aprendizaje profundo (\textit{deep learning}) es una de las herramientas más utilizadas para aproximar funciones complejas en RL y MARL. Su componente básico es la neurona artificial, una unidad computacional que recibe un vector de entrada $\mathbf{x}$, calcula una combinación lineal de sus componentes mediante pesos $\mathbf{w}$ y un sesgo $b$, y luego aplica una función de activación no lineal $g$:
-\begin{equation}
-    h = g(\mathbf{w}^\top \mathbf{x} + b)
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \ldots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
 \end{equation}
 
-Una red neuronal artificial organiza muchas de estas unidades en capas. En una red \textit{feedforward}, o perceptrón multicapa (MLP), la información fluye desde una capa de entrada hacia una o más capas ocultas y finalmente hacia una capa de salida. En forma vectorial, una capa puede escribirse como:
+\subsection{Función de Acción-Valor y Política}
+
+Todo algoritmo de aprendizaje por refuerzo requiere estimar una función de valor, la cual indica qué tan ventajoso es para el agente encontrarse en un determinado estado o elegir cierta acción desde el mismo. Esta noción se define en términos de recompensas futuras esperadas y se encuentra subordinada a formas particulares de actuar, denominadas políticas.
+
+Una política es una función que mapea desde los estados hacia las probabilidades de seleccionar cada acción posible. Si un agente sigue una política $\pi$ en el instante de tiempo $t$, entonces $\pi(a|s)$ es la probabilidad de que $A_t=a$ si $S_t=s$.
+
+La función de valor de un estado $s$ bajo una política $\pi$, denotada $V_{\pi}(s)$, es el retorno esperado al comenzar desde $s$ y seguir la política $\pi$ en adelante. Por otra parte, la función de acción-valor al elegir una acción $a$ en el estado $s$ bajo una política $\pi$, denotada $Q_{\pi}(s,a)$, se define formalmente como:
+
 \begin{equation}
-    \mathbf{h} = g(\mathbf{W}\mathbf{x} + \mathbf{b})
+Q_{\pi}(s,a) = \mathbb{E}_{\pi} \left[ G_t \mid S_t = s, A_t = a \right] = \mathbb{E}_{\pi} \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \mid S_t = s, A_t = a \right]
 \end{equation}
-donde $\mathbf{W}$ es la matriz de pesos y $\mathbf{b}$ el vector de sesgos. La no linealidad introducida por $g$ es esencial: sin funciones de activación no lineales, una composición de capas equivaldría a una única transformación lineal. En aplicaciones modernas se utilizan con frecuencia activaciones como ReLU, definida como $g(z)=\max(0,z)$, por su simplicidad computacional y buen comportamiento empírico en redes profundas \cite{suttonRL,marlbook}.
 
-Los parámetros de una red neuronal, denotados de forma genérica por $\theta$, se ajustan para minimizar una función de pérdida $\mathcal{L}(\theta)$ o, en el caso de políticas, para maximizar una función objetivo de rendimiento. En el entrenamiento supervisado clásico, la pérdida mide la discrepancia entre predicciones y etiquetas conocidas. En RL, en cambio, los objetivos suelen construirse a partir de retornos observados o de estimaciones bootstrap, como ocurre en los métodos TD. El ajuste se realiza mediante variantes de descenso de gradiente sobre minilotes de datos, y los gradientes se calculan eficientemente mediante retropropagación (\textit{backpropagation}), que aplica sistemáticamente la regla de la cadena:
+Tanto $V_{\pi}$ como $Q_{\pi}$ pueden estimarse empíricamente a partir de la experiencia. Estas funciones permiten establecer un orden parcial sobre las políticas, existiendo siempre al menos una política óptima, denotada por $\pi_{*}$, cuyo retorno esperado es mayor o igual que el de las demás para todos los estados. Las políticas óptimas comparten la misma función de acción-valor óptima $Q_{*}(s,a)$ \cite{suttonRL}.
+
+\subsection{\textit{Q-Learning}}
+
+Una propiedad fundamental de $Q_*$ es que debe satisfacer la ecuación de optimalidad de Bellman, la cual constituye la base teórica del algoritmo \textit{Q-learning}:
+
 \begin{equation}
-    \frac{\partial \mathcal{L}}{\partial w_{ij}} = \frac{\partial \mathcal{L}}{\partial z_j} \frac{\partial z_j}{\partial w_{ij}}
+Q_* (s,a) = \mathbb{E} \left[ R_{t+1} + \gamma \max_{a'} Q_*(S_{t+1},a') \mid S_t = s, A_t = a \right]
 \end{equation}
-Así, las redes neuronales proporcionan la capacidad de generalización necesaria para tratar observaciones de alta dimensionalidad, como vectores de colas, densidades, fases semafóricas y mediciones locales de tráfico.
 
-\subsection{Aprendizaje por Refuerzo Profundo (DRL)}
+A partir de esta relación iterativa, se deriva el siguiente método de actualización temporal para aproximar progresivamente $Q_*$:
 
-El Aprendizaje por Refuerzo Profundo (\textit{Deep Reinforcement Learning}, DRL) combina algoritmos de RL con redes neuronales profundas. En este enfoque, las redes actúan como aproximadores de funciones de valor, políticas o modelos, permitiendo operar sobre espacios de estado grandes, continuos o de alta dimensionalidad \cite{mnih2015,marlbook}. Esta combinación es especialmente relevante para control semafórico adaptativo, donde el agente debe decidir a partir de mediciones dinámicas del sistema vial y no de una tabla pequeña de estados discretos.
+\begin{equation}
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_{a} Q(S_{t+1},a) - Q(S_t, A_t) \right]
+\end{equation}
 
-\subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
+donde \(\alpha\) es la tasa de aprendizaje, un parámetro que controla la velocidad de convergencia. En implementaciones tradicionales, los valores Q se almacenan en una estructura tabular. Sin embargo, cuando el espacio de estados adquiere magnitudes realistas, el enfoque tabular deja de ser escalable, requiriendo el uso de aproximadores de funciones.
 
-La combinación entre aproximación de funciones y aprendizaje por refuerzo no está exenta de dificultades. Sutton y Barto identifican una fuente clásica de inestabilidad conocida como \textit{tríada mortal} (\textit{deadly triad}), que aparece cuando se combinan simultáneamente tres elementos \cite{suttonRL}:
+\subsection{\textit{Deep Learning} y Redes Neuronales}
+
+El aprendizaje profundo (\textit{deep learning}) es un subcampo del aprendizaje automático que se fundamenta en el entrenamiento de representaciones progresivas a partir de datos. En este paradigma, el procesamiento se estructura a través de modelos denominados redes neuronales, compuestas por múltiples capas de unidades básicas de cómputo conocidas como neuronas artificiales.
+
+Una neurona artificial procesa señales mediante tres componentes principales:
+\begin{enumerate}
+    \item \textbf{Entradas}: Recibe múltiples señales \(x_i\), cada una ponderada por un coeficiente o peso \(w_i\).
+    \item \textbf{Función de Agregación}: Computa la suma ponderada de las entradas junto con un término de sesgo (\textit{bias}) \(b\), representado como \(z = \sum w_i x_i + b\).
+    \item \textbf{Función de Activación}: La variable \(z\) se transforma mediante una función matemática (como ReLU o tangente hiperbólica) para introducir no linealidad en el modelo, lo que permite a la red neuronal aproximar funciones complejas no lineales.
+\end{enumerate}
+
+\subsection{\textit{Deep Reinforcement Learning} (DRL)}
+
+El \textit{Deep Reinforcement Learning} (DRL) combina las técnicas de aprendizaje profundo con el aprendizaje por refuerzo clásico \cite{mnih2015}. En este enfoque, las redes neuronales profundas actúan como aproximadores universales de las funciones de valor o de las políticas, posibilitando que los agentes de RL resuelvan tareas y tomen decisiones en entornos con espacios de estados continuos o de alta dimensionalidad.
+
+\subsubsection{\textit{Deep Q-Learning} (DQN)}
+
+La integración de redes neuronales al algoritmo \textit{Q-learning} da lugar a la arquitectura \textit{Deep Q-Network} (DQN). En DQN, una red neuronal recibe una representación del estado y devuelve los valores Q estimados para todas las acciones disponibles \cite{mnih2015}. Además de escalar a espacios mayores, DQN introduce dos mecanismos cruciales para estabilizar el proceso de entrenamiento:
 \begin{itemize}
-    \item \textbf{Aproximación de funciones}: uso de redes neuronales u otros aproximadores para representar funciones de valor o políticas.
-    \item \textbf{Bootstrapping}: actualización de estimaciones a partir de otras estimaciones, como en los métodos TD.
-    \item \textbf{Entrenamiento \textit{off-policy}}: aprendizaje sobre datos generados por una política de comportamiento distinta de la política objetivo.
+    \item \textbf{Red objetivo (\textit{target network}):} El algoritmo mantiene dos redes neuronales. La red principal parametrizada por \(\theta\) se utiliza para seleccionar acciones y actualizarse en cada paso temporal. Simultáneamente, una red objetivo parametrizada por \(\theta^-\) se emplea para calcular el valor objetivo en la ecuación de actualización. Los pesos de la red objetivo se mantienen congelados y se sincronizan periódicamente con los de la red principal, evitando oscilaciones inestables en las estimaciones.
+    \item \textbf{Repetición de experiencias (\textit{experience replay}):} A medida que el agente interactúa con el entorno, sus transiciones empíricas \((s,a,r,s')\) se guardan en una memoria temporal o \textit{replay buffer}. En lugar de entrenar con secuencias temporales altamente correlacionadas, la red neuronal se optimiza muestreando minilotes (\textit{batches}) aleatorios de esta memoria.
 \end{itemize}
 
-La presencia conjunta de estos elementos puede producir oscilaciones o divergencia en el aprendizaje. Por ello, los algoritmos de DRL incorporan mecanismos de estabilización que no son meros detalles de implementación, sino respuestas a dificultades teóricas y empíricas del aprendizaje con datos secuenciales, no estacionarios y generados por el propio agente.
-
-\subsubsection{\textit{Deep Q-Networks} (DQN)}
-
-La integración de redes neuronales profundas con \textit{Q-learning} dio lugar al algoritmo \textit{Deep Q-Network} (DQN), que mostró que era posible aprender políticas de control directamente a partir de representaciones de estado de alta dimensionalidad \cite{mnih2015}. En DQN, una red neuronal parametrizada por $\theta$ aproxima la función $Q(s,a;\theta)$. Para espacios de acción discretos, la red recibe una representación del estado $s$ y devuelve estimaciones de valor para cada acción disponible.
-
-El entrenamiento directo de una red Q presenta problemas de estabilidad. A diferencia del aprendizaje supervisado tradicional, las muestras en RL están correlacionadas temporalmente y la distribución de datos cambia a medida que cambia la política del agente. DQN introduce dos mecanismos principales para reducir estos efectos:
-
-\begin{itemize}
-    \item \textbf{Repetición de experiencias (\textit{experience replay}):} el agente almacena transiciones $e_t = (s_t, a_t, r_t, s_{t+1})$ en una memoria $\mathcal{D}$ y entrena con minilotes muestreados de esa memoria. Esto reduce la correlación temporal entre muestras consecutivas y permite reutilizar experiencia pasada.
-    \item \textbf{Red objetivo (\textit{target network}):} DQN mantiene una red principal $Q(s,a;\theta)$ y una red objetivo $\hat{Q}(s,a;\theta^-)$ usada para calcular los objetivos TD. Los parámetros $\theta^-$ se actualizan periódicamente a partir de la red principal, lo que evita que el objetivo de aprendizaje cambie en cada paso de gradiente.
-\end{itemize}
-
-El entrenamiento de DQN se formula reduciendo el error cuadrático medio (MSE) o la pérdida de Huber entre la predicción actual y el objetivo calculado por la red congelada. La función de pérdida a minimizar es:
+Durante el entrenamiento, la función de pérdida a minimizar se formula en torno a la diferencia de los lados de la ecuación de Bellman:
 
 \begin{equation}
-\mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_j, s_{j+1}) \sim \mathcal{D}} \left[ \left( \underbrace{r_j + \gamma \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor Objetivo de TD}} - \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción Actual}} \right)^2 \right]
+\mathcal{L}(\theta) = \mathbb{E} \left[ \left( r + \gamma \max_{a'} Q(s', a'; \theta^{-}) - Q(s, a; \theta) \right)^2 \right]
 \end{equation}
-
-\begin{algorithm}[H]
-\caption{Algoritmo \textit{Deep Q-Networks} (DQN) con \textit{Replay Buffer}}
-\label{alg:dqn}
-\begin{algorithmic}[1]
-\State Inicializar la memoria de repetición $\mathcal{D}$ con capacidad $N$
-\State Inicializar la red de acción-valor $Q$ con pesos aleatorios $\theta$
-\State Inicializar la red objetivo $\hat{Q}$ con pesos $\theta^- = \theta$
-\For{episodio $= 1$ hasta $M$}
-    \State Inicializar secuencia y obtener estado inicial $s_1$
-    \For{$t = 1$ hasta $T$}
-        \State Seleccionar una acción $a_t$ mediante política $\epsilon$-greedy a partir de $Q(s_t, a; \theta)$
-        \State Ejecutar acción $a_t$, observar recompensa $r_t$ y siguiente estado $s_{t+1}$
-        \State Almacenar transición $(s_t, a_t, r_t, s_{t+1})$ en $\mathcal{D}$
-        \State Muestrear un minilote aleatorio de transiciones $(s_j, a_j, r_j, s_{j+1})$ desde $\mathcal{D}$
-        \State Calcular objetivo $y_j = \begin{cases} r_j & \text{si } s_{j+1} \text{ es terminal} \\ r_j + \gamma \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^-) & \text{en otro caso} \end{cases}$
-        \State Realizar un paso de descenso de gradiente respecto a la pérdida $(y_j - Q(s_j, a_j; \theta))^2$ para ajustar $\theta$
-        \State Cada $C$ pasos, sincronizar la red objetivo: $\theta^- \leftarrow \theta$
-    \EndFor
-\EndFor
-\end{algorithmic}
-\end{algorithm}
 
 \subsubsection{Exploración vs. Explotación}
 
-En métodos basados en valor como DQN, el dilema exploración-explotación suele abordarse mediante una política $\epsilon$-greedy. Con probabilidad $1-\epsilon$ se selecciona la acción que maximiza el valor Q estimado por la red; con probabilidad $\epsilon$, se elige una acción aleatoria. En muchos entrenamientos, $\epsilon$ comienza en un valor alto y decrece gradualmente hasta un valor mínimo, permitiendo una exploración inicial amplia y una explotación mayor a medida que la política mejora.
-
-\subsubsection{\textit{Proximal Policy Optimization} (PPO)}
-
-DQN pertenece a la familia de métodos basados en valor y resulta natural para espacios de acción discretos. Sin embargo, una parte importante del DRL moderno utiliza métodos actor-crítico, que combinan aprendizaje directo de políticas con estimación de valores. En este esquema se mantienen dos componentes, implementados como redes separadas o como cabezales de una misma arquitectura:
-\begin{itemize}
-    \item \textbf{Actor ($\pi_\theta(a \mid s)$):} representa la política paramétrica y produce una distribución de probabilidad sobre las acciones disponibles.
-    \item \textbf{Crítico ($V_\phi(s)$):} estima el valor esperado de los estados y proporciona una señal para reducir la varianza de las actualizaciones del actor.
-\end{itemize}
-
-Dentro de esta familia, \textit{Proximal Policy Optimization} (PPO) se consolidó como uno de los algoritmos de referencia del estado del arte práctico en aprendizaje por refuerzo profundo, debido a su balance entre estabilidad, simplicidad de implementación y rendimiento empírico \cite{schulman2017ppo}. Su motivación parte de una dificultad conocida de los métodos de gradiente de política: actualizaciones demasiado grandes pueden modificar la política de forma abrupta y degradar el desempeño.
-
-PPO aborda este problema mediante un objetivo sustituto recortado (\textit{clipped surrogate objective}), que limita cuánto puede alejarse la nueva política de la política que generó los datos. Dada la razón de probabilidad
-\begin{equation}
-r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}
-\end{equation}
-entre la política actual y la política anterior, PPO optimiza el siguiente objetivo:
-
-\begin{equation}
-L^{CLIP}(\theta) = \hat{\mathbb{E}}_t \left[ \min\left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right]
-\end{equation}
-
-Aquí, $\hat{A}_t$ es una estimación de la ventaja, es decir, una medida de cuánto mejor o peor resultó una acción respecto de lo esperado por el crítico. El operador $\text{clip}$ restringe la razón $r_t(\theta)$ al intervalo $[1-\epsilon,1+\epsilon]$, reduciendo el incentivo a realizar actualizaciones que cambien excesivamente la política en una sola iteración.
-
-En la práctica, la función objetivo utilizada en PPO suele combinar tres términos: el objetivo de política, una pérdida del crítico para ajustar la función de valor y un término de entropía que favorece la exploración:
-
-\begin{equation}
-\mathcal{L}^{PPO}(\theta, \phi) = \hat{\mathbb{E}}_t \left[ L^{CLIP}(\theta) - c_1 \left( V_\phi(s_t) - V_t^{target} \right)^2 + c_2 S[\pi_\theta](s_t) \right]
-\end{equation}
-
-PPO es esencialmente un método \textit{on-policy}: recolecta trayectorias con la política vigente, estima ventajas y realiza varias épocas de optimización sobre ese bloque de experiencia. En el contexto de este trabajo, su importancia no radica solo en su desempeño como algoritmo de agente único, sino también en que sirve como base para extensiones multi-agente utilizadas como líneas de investigación actuales, entre ellas IPPO, MAPPO y HAPPO.
-
-\begin{algorithm}[H]
-\caption{Algoritmo \textit{Proximal Policy Optimization} (PPO) - Variante \textit{Actor-Critic}}
-\label{alg:ppo}
-\begin{algorithmic}[1]
-\State Inicializar parámetros de política (actor) $\theta$ y función de valor (crítico) $\phi$
-\For{iteración $= 1, 2, \dots$}
-    \State Recolectar un conjunto de trayectorias $\mathcal{D}_k = \{\tau_i\}$ ejecutando la política actual $\pi_{\theta}$ en el entorno
-    \State Calcular las recompensas acumuladas esperadas para cada paso temporal
-    \State Calcular las estimaciones de la ventaja $\hat{A}_t$ basándose en los valores del crítico $V_\phi(s)$
-    \State Optimizar el objetivo $L^{CLIP}(\theta)$ respecto a $\theta$ durante $K$ épocas (\textit{epochs}) sobre minilotes de $\mathcal{D}_k$
-    \State Optimizar la función de pérdida del crítico $L^{VF}(\phi) = (V_\phi(s_t) - \hat{V}_t)^2$ respecto a $\phi$
-\EndFor
-\end{algorithmic}
-\end{algorithm}
+Para evitar que el agente converja prematuramente a políticas subóptimas, se debe establecer un balance entre explorar el entorno y explotar el conocimiento ya adquirido. En DQN suele utilizarse una política $\epsilon$-greedy: con probabilidad $1-\epsilon$ se selecciona la acción que maximiza el valor Q estimado por la red, y con probabilidad $\epsilon$ se ejecuta una acción aleatoria. Típicamente, $\epsilon$ inicializa en un valor alto y experimenta un decaimiento lineal a lo largo de los episodios formativos hasta alcanzar un valor mínimo residual.
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (MARL)}
 
@@ -555,45 +428,23 @@ En este esquema, cada agente basa sus decisiones en su historia local de observa
 
 Para abordar la complejidad inherente a los Dec-POMDP, una estrategia ampliamente aceptada es el paradigma de \textbf{Entrenamiento Centralizado con Ejecución Descentralizada} (CTDE, por sus siglas en inglés) \cite{ctde_survey}. Durante la fase de entrenamiento (simulación), los algoritmos pueden aprovechar el estado global del sistema, las recompensas totales y las acciones conjuntas de todos los agentes para estabilizar la convergencia de las redes neuronales críticas. Sin embargo, para la fase de ejecución, se extraen actores o políticas puramente descentralizadas que requieren únicamente las variables observables locales de cada intersección para tomar decisiones de control.
 
-\subsection{\textit{Multi-Agent Deep Reinforcement Learning} (MADRL)}
+\subsection{Principales Familias de Algoritmos Cooperativos}
 
-La convergencia de los formalismos Dec-POMDP con la capacidad de aproximación generalizada del aprendizaje profundo ha dado origen al campo del \textit{Multi-Agent Deep Reinforcement Learning} (MADRL) \cite{maddpg}. Esta área se ha convertido en el estándar de facto para el control adaptativo de redes de semáforos a gran escala, donde la magnitud combinada de los espacios de estado y acción crece exponencialmente y los algoritmos tabulares resultan inviables en la práctica \cite{gnn_traffic}. 
-
-En la literatura reciente sobre el control semafórico cooperativo, los enfoques algorítmicos se dividen fundamentalmente en dos paradigmas: el Aprendizaje Independiente (\textit{Independent Learning}) y el Entrenamiento Centralizado con Ejecución Descentralizada (\textit{CTDE}) \cite{ctde_survey}.
-
-\subsubsection{Aprendizaje Independiente (IL): IDQN e IPPO}
-
-En el Aprendizaje Independiente, cada intersección semafórica actúa como un agente aislado que ejecuta un algoritmo de RL de un solo agente, tratando al resto de la red vehicular como parte de las dinámicas inherentes del entorno. 
+El desarrollo de MARL ha consolidado distintas familias algorítmicas bajo el paradigma CTDE:
 \begin{itemize}
-    \item \textbf{\textit{Independent DQN} (IDQN)}: Es la extensión multi-agente más intuitiva, donde cada semáforo despliega su propia arquitectura DQN \cite{tampuu2017multiagent}. Aunque conceptualmente simple, sufre gravemente del desafío de la \textbf{no estacionariedad}: como todos los semáforos ajustan sus políticas simultáneamente, las propiedades probabilísticas del entorno varían constantemente. Esto provoca que las transiciones almacenadas en el \textit{Replay Buffer} de un agente queden obsoletas, generando señales de gradiente ruidosas y violando las garantías teóricas de convergencia \cite{foerster2017}.
-    \item \textbf{\textit{Independent PPO} (IPPO)}: Asigna una instancia aislada del algoritmo PPO a cada agente. Sorprendentemente, pese a no poseer mecanismos explícitos de coordinación global ni lidiar de forma estructural con la no estacionariedad, la literatura ha demostrado empíricamente que IPPO exhibe una robustez superlativa en entornos cooperativos descentralizados frente a otros algoritmos IL, posicionándose como una de las líneas base más sólidas en MADRL \cite{de2020independent}.
+    \item \textbf{Descomposición de Valores:} Enfoques como \textit{Value Decomposition Networks} (VDN) \cite{vdn} y QMIX \cite{qmix} intentan factorizar la función de valor global en estimaciones locales por agente. QMIX, por ejemplo, utiliza una red neuronal adicional (red de mezcla) que asegura restricciones de monotonía, garantizando que el máximo conjunto coincida con la selección de los máximos individuales de cada agente.
+    \item \textbf{Métodos Actor-Crítico Centralizados:} Esta vertiente extiende los enfoques de gradiente de política al escenario multi-agente, implementando un ``crítico'' que evalúa las acciones conjuntas a partir del estado global, y actores individuales independientes. Algoritmos como MADDPG (\textit{Multi-Agent Deep Deterministic Policy Gradient}), introducido por Lowe et al. \cite{maddpg}, se inscriben en esta categoría, facilitando el aprendizaje en espacios continuos y atenuando la varianza en la asignación de recompensas.
+    \item \textbf{Asignación de Crédito y Modelado de Recompensas:} En sistemas descentralizados, resulta imperativo aislar la contribución específica de un agente respecto al desempeño colectivo. Para ello se emplean técnicas analíticas como las recompensas de diferencia (\textit{difference rewards}) \cite{difference_rewards}, que cuantifican la divergencia entre el retorno global actual y un escenario contrafactual hipotético en el que el agente evaluado adopta un comportamiento por defecto \cite{coma}.
 \end{itemize}
 
-\subsubsection{Paradigma CTDE}
+\subsection{Desafíos Prácticos en MARL}
 
-Para abordar rigurosamente la no estacionariedad de los Dec-POMDP, los enfoques CTDE aprovechan información global y privilegiada durante la fase de entrenamiento simulado para estabilizar el aprendizaje, pero restringen a los agentes a observaciones estrictamente locales durante la ejecución en tiempo real para mantener la escalabilidad descentralizada. La literatura ha propuesto diversas metodologías bajo este paraguas:
-
-\paragraph{Descomposición de Valor}
-Estos métodos abordan el problema de asignación de crédito dividiendo la función de valor conjunta en utilidades individuales. Para garantizar una toma de decisiones descentralizada coherente, deben cumplir la propiedad \textit{Individual-Global-Max} (IGM), la cual asegura que la acción conjunta óptima a nivel global equivale a la combinación de las acciones individuales que maximizan la utilidad de cada agente.
+La adopción de MARL enfrenta obstáculos sustanciales para su implementación práctica:
 \begin{itemize}
-    \item \textbf{\textit{Value Decomposition Networks} (VDN)}: Asume una descomposición lineal donde el valor de la acción conjunta es la suma aritmética de las utilidades individuales \cite{sunehag2017value}. Aunque facilita la propagación del gradiente a través de una recompensa compartida, esta restricción lineal limita su capacidad para capturar interacciones cooperativas complejas.
-    \item \textbf{QMIX}: Relaja la limitación de VDN introduciendo una descomposición no lineal monótona \cite{rashid2018qmix}. Utiliza una red de mezcla (\textit{mixing network}) cuyos pesos se generan dinámicamente a partir del estado global del sistema, garantizando la propiedad IGM al restringir los pesos a valores estrictamente positivos. Esto permite modelar interdependencias de mayor complejidad.
+    \item \textbf{No Estacionariedad:} La evolución simultánea de las políticas de múltiples agentes ocasiona que las propiedades probabilísticas del entorno varíen constantemente, lo cual invalida las garantías teóricas de convergencia diseñadas para entornos de un solo agente.
+    \item \textbf{Gestión de Memoria de Experiencias:} Las técnicas de \textit{experience replay} pierden eficacia directa, ya que las transiciones recopiladas en etapas tempranas corresponden a dinámicas de interacción conjuntas que han quedado obsoletas, generando señales de gradiente ruidosas \cite{foerster2017}.
+    \item \textbf{Escalabilidad:} La magnitud combinada de los espacios de estado y acción crece exponencialmente en función de la cantidad de agentes. Para redes urbanas extensas, esta explosión combinatoria exige estrategias avanzadas de parametrización compartida y la adopción de redes neuronales convolucionales o basadas en grafos \cite{gnn_traffic}.
 \end{itemize}
-
-\paragraph{Métodos Actor-Crítico Multi-Agente}
-En lugar de descomponer el valor en espacios de acción discretos, estas aproximaciones parametrizan y optimizan directamente la política.
-\begin{itemize}
-    \item \textbf{\textit{Multi-Agent Deep Deterministic Policy Gradient} (MADDPG)}: Extiende DDPG a dominios de múltiples agentes. Cada agente entrena un crítico centralizado que observa el estado global y las acciones concurrentes exactas de todos los demás agentes, mitigando la no estacionariedad al aislar la evaluación de la acción de un agente de la exploración realizada por sus compañeros \cite{lowe2017multi}.
-    \item \textbf{\textit{Counterfactual Multi-Agent Policy Gradients} (COMA)}: Ataca la asignación de crédito calculando una línea base contrafactual para cada agente. Un único crítico centralizado compara el mérito de la acción real tomada por el agente frente al valor esperado si hubiera tomado una acción promedio, manteniendo fijas las acciones del resto del equipo \cite{foerster2018counterfactual}.
-    \item \textbf{\textit{Multi-Agent PPO} (MAPPO)}: Es la adaptación multi-agente de PPO bajo una arquitectura \textit{Actor-Crítico Centralizada} \cite{yu2022surprising}. En MAPPO, el crítico es centralizado y evalúa las decisiones alimentándose del estado global (ej. la distribución total del tránsito en toda la red), reduciendo de manera significativa la varianza en la asignación de recompensas. Al mismo tiempo, el actor de cada agente está descentralizado y toma decisiones condicionado exclusivamente a su observación local.
-    \item \textbf{\textit{Heterogeneous-Agent PPO} (HAPPO)}: Supone una innovación algorítmica sobre MAPPO para esquivar el colapso del desempeño cooperativo. En entornos colaborativos, si todos los agentes actualizan sus políticas de forma simultánea, corren el riesgo de violar la región de confianza estipulada por PPO. HAPPO resuelve esto implementando una descomposición de ventaja multi-agente (\textit{Multi-Agent Advantage Decomposition}) que permite actualizaciones secuenciales. Esto faculta a agentes con redes heterogéneas a aprender colaborativamente con garantías monótonas de mejora de la política conjunta, propiedad invaluable en redes semaforizadas donde las intersecciones difieren considerablemente en su topología \cite{kuba2021trust}.
-\end{itemize}
-
-\subsection{Desafíos de Escalabilidad y No Estacionariedad en MARL}
-
-La aplicación práctica de los métodos descritos en entornos de control a gran escala, como una red urbana de semáforos, enfrenta obstáculos significativos. A medida que aumenta el número de intersecciones gestionadas, el espacio conjunto de observaciones y acciones crece de forma combinatoria. Esta explosión dimensional dificulta la exploración del entorno y obstaculiza la convergencia de las políticas hacia estrategias cooperativas eficientes.
-
-En el aprendizaje independiente, la incorporación de nuevos agentes exacerba la no estacionariedad percibida localmente. Dado que las políticas de todos los agentes evolucionan simultáneamente, el modelo probabilístico del entorno muta desde la perspectiva de cualquier agente individual, restando validez a la experiencia pasada almacenada en la memoria del algoritmo. Por su parte, en los enfoques centralizados (CTDE), si bien esta no estacionariedad se mitiga durante el entrenamiento, el tamaño de la entrada para los críticos centralizados ---que procesan el estado global y las acciones conjuntas de la red completa--- puede volver inviable la optimización computacional debido a un aumento severo en la complejidad muestral \cite{marlbook}. Estos factores impulsan la necesidad de explorar esquemas de representación más compactos y descentralizados que estructuren las dependencias espaciales de la red vehicular para canalizar la coordinación sin colapsar bajo el peso de la dimensionalidad total del sistema.
 \newpage
 
 % -------- ¿¿ METODOLOGIA ?? --------

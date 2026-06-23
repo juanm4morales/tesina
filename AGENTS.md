@@ -4,6 +4,7 @@
 - This is a Spanish LaTeX thesis repository, not an application project. The real entrypoint is `main.tex`.
 - `main.tex` currently includes only `0-titulo`, `1-agradecimientos`, `3-introduccion`, and `4-marco_teorico`; `2-resumen`, `5-metodologia`, `6-resultados`, and `7-conclusiones` are present but commented out.
 - `4-marco_teorico_2.tex` is an alternate/draft file and is not compiled by `main.tex`.
+- An untracked `original_marco_teorico.tex` lives in the repo root; it is a pre-rewrite snapshot of `4-marco_teorico.tex` and is not part of the build. Do not edit it.
 - `.agents/skills/` is a vendored local skill library tracked by the repo; do not edit it unless the task is explicitly about skills.
 - `codigo_fuente/` is not a configured software package; it currently contains only `ejemplo1.sh`.
 
@@ -20,6 +21,9 @@
 - This repo uses `babelbib`/`babalpha`, so BibTeX entries in `bibliografia.bib` should remain compatible with classic BibTeX.
 - With `babelbib`, cited BibTeX entries without a `language` field can produce non-fatal `empty language` warnings; add `language` when cleaning or adding references.
 - In this repo's `babelbib` setup, `language = {english}` is not a safe cleanup option for cited entries; use the repo-consistent `language = {spanish}` when the goal is to eliminate `empty language` warnings.
+- The `empty language` warning only surfaces after a fresh `bibtex` pass, so newly cited entries added without `language = {spanish}` may not show up in the first build; do the `language` fix in the same edit as the new `\cite` to avoid a wasted cycle.
+- Sutton's *Reinforcement Learning: An Introduction* is the 2nd edition (MIT Press, **2018**). In `bibliografia.bib` the entry should be `year = {2018}, edition = {2nd}` — not 2020.
+- The MARL book (`marlbook`) is Albrecht, Christianos & Schäfer, MIT Press 2024; do not revert it to older Littman et al. attributions that may appear in some earlier drafts.
 
 ## Thesis Writing Notes
 - In thesis prose, prefer `este trabajo`, `esta investigación`, or `el presente trabajo`; avoid using `tesis` unless the user asks otherwise.
@@ -35,6 +39,8 @@
 - When connecting simulation to RL, avoid meta-section titles such as `Vínculo...`; prefer substantive headings like `Entorno de Simulación para Control Semafórico` or integrate the transition in prose.
 - For SUMO/SUMO-RL framing, map traffic variables to observations, phase choices to actions, and delay/queue/stop metrics to rewards or evaluation, while keeping the wording grounded in cited sources.
 - Motivate MARL for signal control through spatial/temporal interdependence between intersections; avoid implying each semaforized node is independent when queues and arrivals propagate.
+- The user explicitly asks for prose that does **not** read as AI-generated: avoid formulaic connectors, hedge inflation, and "as an AI" cadence; aim for natural academic Spanish. Strip words like `amalgamar`, `dictaminado`, `detona`, `pernicioso`, `drástico`, `matemáticamente inoperante`, `se detona` before declaring a section done.
+- `estado del arte` is acceptable only in narrow technical context (e.g., PPO as a *practical reference* DRL algorithm); avoid it as an absolute claim for a whole subfield.
 
 ## Workflow Gotchas
 - LaTeX build artifacts (`*.aux`, `main.pdf`, `main.bbl`, logs, etc.) are tracked and there is no `.gitignore`; do not run broad cleanup commands or delete generated files unless explicitly asked.
