@@ -3,54 +3,56 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: 0-titulo.aux
 A level-1 auxiliary file: 1-agradecimientos.aux
+A level-1 auxiliary file: 2-resumen.aux
 A level-1 auxiliary file: 3-introduccion.aux
 A level-1 auxiliary file: 4-marco_teorico.aux
+A level-1 auxiliary file: 5-metodologia.aux
+A level-1 auxiliary file: 6-resultados.aux
+A level-1 auxiliary file: 7-conclusiones.aux
 The style file: babalpha.bst
 Database file #1: bibliografia.bib
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-Warning--empty language in difference_rewards
-Warning--empty language in mnih2015
-Warning--empty language in ctde_survey
-You've used 22 entries,
+Warning--can't use both volume and number fields in foerster2018counterfactual
+You've used 28 entries,
             3213 wiz_defined-function locations,
-            831 strings with 11643 characters,
-and the built_in function-call counts, 13022 in all, are:
-= -- 1094
-> -- 657
+            862 strings with 12932 characters,
+and the built_in function-call counts, 16456 in all, are:
+= -- 1320
+> -- 910
 < -- 12
-+ -- 241
-- -- 238
-* -- 1536
-:= -- 1822
-add.period$ -- 53
-call.type$ -- 22
-change.case$ -- 179
-chr.to.int$ -- 22
-cite$ -- 25
-duplicate$ -- 657
-empty$ -- 1048
-format.name$ -- 439
-if$ -- 2609
-int.to.chr$ -- 1
++ -- 338
+- -- 333
+* -- 2062
+:= -- 2352
+add.period$ -- 64
+call.type$ -- 28
+change.case$ -- 242
+chr.to.int$ -- 27
+cite$ -- 29
+duplicate$ -- 812
+empty$ -- 1288
+format.name$ -- 614
+if$ -- 3203
+int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 31
-newline$ -- 115
-num.names$ -- 66
-pop$ -- 252
+missing$ -- 41
+newline$ -- 134
+num.names$ -- 84
+pop$ -- 325
 preamble$ -- 1
-purify$ -- 204
+purify$ -- 272
 quote$ -- 0
-skip$ -- 381
+skip$ -- 431
 stack$ -- 0
-substring$ -- 471
-swap$ -- 315
+substring$ -- 495
+swap$ -- 387
 text.length$ -- 12
-text.prefix$ -- 2
+text.prefix$ -- 3
 top$ -- 0
-type$ -- 156
-warning$ -- 3
-while$ -- 84
-width$ -- 26
-write$ -- 248
-(There were 3 warnings)
+type$ -- 204
+warning$ -- 1
+while$ -- 98
+width$ -- 34
+write$ -- 298
+(There was 1 warning)

@@ -14,6 +14,22 @@
   \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 
 \btxselectlanguage {spanish}
+\bibitem [{Ach18}]{spinningup}
+\btxnamefont {\btxlastnamefont {Achiam}, Joshua}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Spinning up in deep reinforcement learning}{Spinning Up in
+  Deep Reinforcement Learning}}, 2018.
+\newblock OpenAI. Disponible en: \url{https://spinningup.openai.com/}.
+
+\bibitem [{ACS24}]{marlbook}
+\btxnamefont {\btxlastnamefont {Albrecht}, Stefano\btxfnamespacelong V.},
+  \btxnamefont {Filippos \btxlastnamefont {Christianos}}\btxandcomma {}
+  \btxandlong {}\ \btxnamefont {Lukas \btxlastnamefont
+  {Sch{\"a}fer}}\btxauthorcolon\ \btxtitlefont {Multi-Agent Reinforcement
+  Learning: Foundations and Modern Approaches}.
+\newblock \btxpublisherfont {MIT Press}, 2024.
+\newblock {\latintext \btxurlfont{https://www.marl-book.com/}}, Consultado en
+  2025.
+
 \bibitem [{ALBBW{\etalchar{+}}18}]{SUMO2018_SUMO}
 \btxnamefont {\btxlastnamefont {Alvarez~Lopez}, Pablo}, \btxnamefont {Michael
   \btxlastnamefont {Behrisch}}, \btxnamefont {Laura \btxlastnamefont
@@ -77,18 +93,6 @@
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
 \newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
 
-\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
-\bibitem [{DK11}]{difference_rewards}
-\btxnamefont {\btxlastnamefont {Devlin}, Sam} \btxandlong {}\ \btxnamefont
-  {Daniel \btxlastnamefont {Kudenko}}\btxauthorcolon\ \btxjtitlefont
-  {\btxifchangecase {Potential-based difference rewards for multiagent
-  reinforcement learning}{Potential-Based Difference Rewards for Multiagent
-  Reinforcement Learning}}.
-\newblock \btxjournalfont {Proceedings of the 10th International Conference on
-  Autonomous Agents and Multiagent Systems (AAMAS)}, \btxpageslong {}\
-  1037--1044, 2011.
-
-\btxselectlanguage {spanish}
 \bibitem [{{DLR}25}]{sumo-doc}
 \btxnamefont {\btxlastnamefont {{DLR -- Institute of Transportation
   Systems}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Sumo user
@@ -96,21 +100,34 @@
 \newblock {\latintext \btxurlfont{https://sumo.dlr.de/docs/}}, Consultado en
   2025.
 
+\bibitem [{dWGM{\etalchar{+}}20}]{de2020independent}
+\btxnamefont {\btxlastnamefont {Witt}, Christian\btxfnamespacelong
+  Schroeder~de}, \btxnamefont {Tarun \btxlastnamefont {Gupta}}, \btxnamefont
+  {Denys \btxlastnamefont {Makoviichuk}}, \btxnamefont {Viktor \btxlastnamefont
+  {Maksimov}}, \btxnamefont {Edward \btxlastnamefont {Ivanov}}, \btxnamefont
+  {Michael \btxlastnamefont {Schmid}}, \btxnamefont {Gregory \btxlastnamefont
+  {Yakovlev}}, \btxnamefont {Philip \btxlastnamefont {Torr}}\btxandcomma {}
+  \btxetalfont {\btxetalshort {.}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Is independent learning all you need in the starcraft
+  multi-agent challenge?}{Is independent learning all you need in the starcraft
+  multi-agent challenge?}}
+\newblock \btxjournalfont {arXiv preprint arXiv:2011.09533}, 2020.
+
 \bibitem [{FA11}]{fernandez}
 \btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\
   \btxtitlefont {Elementos de la teoría del tráfico vehicular}.
 \newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad
   Católica del Perú}, 2011.
 
-\bibitem [{FFA{\etalchar{+}}18}]{coma}
+\bibitem [{FFA{\etalchar{+}}18}]{foerster2018counterfactual}
 \btxnamefont {\btxlastnamefont {Foerster}, Jakob}, \btxnamefont {Gregory
   \btxlastnamefont {Farquhar}}, \btxnamefont {Triantafyllos \btxlastnamefont
   {Afouras}}, \btxnamefont {Nantas \btxlastnamefont {Nardelli}}\btxandcomma {}
   \btxandlong {}\ \btxnamefont {Shimon \btxlastnamefont
   {Whiteson}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Counterfactual
-  multi-agent policy gradients}{Counterfactual Multi-Agent Policy Gradients}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the AAAI Conference on
-  Artificial Intelligence}, \btxvolumelong {}~\btxvolumefont {32}, 2018.
+  multi-agent policy gradients}{Counterfactual multi-agent policy gradients}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the AAAI conference on
+  artificial intelligence}, \btxvolumelong {}~\btxvolumefont {32}, 2018.
 
 \bibitem [{FH21}]{Feriani2021_MARL_NonStationary}
 \btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont
@@ -135,7 +152,19 @@
   Conference on Machine Learning (ICML)}, \btxpageslong {}\ 1146--1155.
   \btxpublisherfont {PMLR}, 2017.
 
-\bibitem [{LWT{\etalchar{+}}17}]{maddpg}
+\bibitem [{KCW{\etalchar{+}}21}]{kuba2021trust}
+\btxnamefont {\btxlastnamefont {Kuba}, Jakub\btxfnamespacelong Grudzien},
+  \btxnamefont {Ruiqing \btxlastnamefont {Chen}}, \btxnamefont {Muning
+  \btxlastnamefont {Wen}}, \btxnamefont {Ying \btxlastnamefont {Wen}},
+  \btxnamefont {Fuchun \btxlastnamefont {Sun}}, \btxnamefont {Jun
+  \btxlastnamefont {Wang}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Yaodong
+  \btxlastnamefont {Yang}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase
+  {Trust region policy optimisation in multi-agent reinforcement
+  learning}{Trust region policy optimisation in multi-agent reinforcement
+  learning}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:2109.11251}, 2021.
+
+\bibitem [{LWT{\etalchar{+}}17a}]{maddpg}
 \btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont {Yi \btxlastnamefont
   {Wu}}, \btxnamefont {Aviv \btxlastnamefont {Tamar}}, \btxnamefont {Jean
   \btxlastnamefont {Harb}}, \btxnamefont {Pieter \btxlastnamefont
@@ -146,17 +175,18 @@
 \newblock \Btxinlong {}\ \btxtitlefont {Advances in Neural Information
   Processing Systems (NeurIPS)}, \btxpageslong {}\ 6379--6390, 2017.
 
-\bibitem [{LZPS24}]{marlbook}
-\btxnamefont {\btxlastnamefont {Littman}, Michael\btxfnamespacelong L.},
-  \btxnamefont {Chongjie \btxlastnamefont {Zhang}}, \btxnamefont {Liviu
-  \btxlastnamefont {Panait}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Yoav
-  \btxlastnamefont {Shoham}}\btxauthorcolon\ \btxtitlefont {Multi-Agent
-  Reinforcement Learning: Foundations and Modern Approaches}.
-\newblock \btxpublisherfont {MIT Press}, 2024.
-\newblock {\latintext \btxurlfont{https://www.marl-book.com/}}, Consultado en
-  2025.
+\bibitem [{LWT{\etalchar{+}}17b}]{lowe2017multi}
+\btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont
+  {Yi\btxfnamespacelong I \btxlastnamefont {Wu}}, \btxnamefont {Aviv
+  \btxlastnamefont {Tamar}}, \btxnamefont {Jean \btxlastnamefont {Harb}},
+  \btxnamefont {Pieter \btxlastnamefont {Abbeel}}\btxandcomma {} \btxandlong
+  {}\ \btxnamefont {Igor \btxlastnamefont {Mordatch}}\btxauthorcolon\
+  \btxtitlefont {\btxifchangecase {Multi-agent actor-critic for mixed
+  cooperative-competitive environments}{Multi-agent actor-critic for mixed
+  cooperative-competitive environments}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Advances in neural information
+  processing systems}, \btxvolumelong {}~\btxvolumefont {30}, 2017.
 
-\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 \bibitem [{MKS{\etalchar{+}}15}]{mnih2015}
 \btxnamefont {\btxlastnamefont {Mnih}, V.}, \btxnamefont {K. \btxlastnamefont
   {Kavukcuoglu}}, \btxnamefont {D. \btxlastnamefont {Silver}}, \btxnamefont
@@ -177,7 +207,6 @@
 \newblock \btxjournalfont {Nature}, 518(7540):529–533, 2015.
 \newblock {\latintext \btxurlfont{https://doi.org/10.1038/nature14236}}.
 
-\btxselectlanguage {spanish}
 \bibitem [{ne18}]{UN2018_CongestionCost}
 \btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\
   \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over
@@ -194,44 +223,60 @@
 \newblock \btxpublisherfont {John Wiley \& Sons, Inc.}, \btxeditionnumlong
   {7th}{}, 2016.
 
-\bibitem [{RSDW{\etalchar{+}}18}]{qmix}
+\bibitem [{RSS{\etalchar{+}}18}]{rashid2018qmix}
 \btxnamefont {\btxlastnamefont {Rashid}, Tabish}, \btxnamefont {Mikayel
-  \btxlastnamefont {Samvelyan}}, \btxnamefont {Christian\btxfnamespacelong
-  Schroeder \btxlastnamefont {De~Witt}}, \btxnamefont {Gregory \btxlastnamefont
-  {Farquhar}}, \btxnamefont {Jakob \btxlastnamefont {Foerster}}\btxandcomma {}
-  \btxandlong {}\ \btxnamefont {Shimon \btxlastnamefont
-  {Whiteson}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Qmix: Monotonic
-  value function factorisation for deep multi-agent reinforcement
-  learning}{QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent
-  Reinforcement Learning}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 35th International
-  Conference on Machine Learning (ICML)}, \btxpageslong {}\ 4295--4304.
-  \btxpublisherfont {PMLR}, 2018.
+  \btxlastnamefont {Samvelyan}}, \btxnamefont {Christian \btxlastnamefont
+  {Schroeder}}, \btxnamefont {Gregory \btxlastnamefont {Farquhar}},
+  \btxnamefont {Jakob \btxlastnamefont {Foerster}}\btxandcomma {} \btxandlong
+  {}\ \btxnamefont {Shimon \btxlastnamefont {Whiteson}}\btxauthorcolon\
+  \btxtitlefont {\btxifchangecase {Qmix: Monotonic value function factorisation
+  for deep multi-agent reinforcement learning}{Qmix: Monotonic value function
+  factorisation for deep multi-agent reinforcement learning}}.
+\newblock \Btxinlong {}\ \btxtitlefont {International conference on machine
+  learning}, \btxpageslong {}\ 4295--4304. PMLR, 2018.
 
-\bibitem [{SB20}]{suttonRL}
+\bibitem [{SB18}]{suttonRL}
 \btxnamefont {\btxlastnamefont {Sutton}, R.S.} \btxandlong {}\ \btxnamefont
   {A.G. \btxlastnamefont {Barto}}\btxauthorcolon\ \btxtitlefont {Reinforcement
   learning: An introduction}.
-\newblock \btxpublisherfont {The MIT Press}, Cambridge, MA, 2020.
+\newblock \btxpublisherfont {The MIT Press}, Cambridge, MA, \btxeditionnumlong
+  {2nd}{}, 2018.
 
-\bibitem [{SLG{\etalchar{+}}18}]{vdn}
+\bibitem [{SLG{\etalchar{+}}17}]{sunehag2017value}
 \btxnamefont {\btxlastnamefont {Sunehag}, Peter}, \btxnamefont {Guy
   \btxlastnamefont {Lever}}, \btxnamefont {Audrunas \btxlastnamefont
-  {Gruslys}}, \btxnamefont {Wojciech\btxfnamespacelong M. \btxlastnamefont
+  {Gruslys}}, \btxnamefont {Wojciech\btxfnamespacelong Marian \btxlastnamefont
   {Czarnecki}}, \btxnamefont {Vinicius \btxlastnamefont {Zambaldi}},
   \btxnamefont {Max \btxlastnamefont {Jaderberg}}, \btxnamefont {Marc
   \btxlastnamefont {Lanctot}}, \btxnamefont {Nicolas \btxlastnamefont
-  {Sonnerat}}, \btxnamefont {Joel\btxfnamespacelong Z. \btxlastnamefont
+  {Sonnerat}}, \btxnamefont {Joel\btxfnamespacelong Z \btxlastnamefont
   {Leibo}}, \btxnamefont {Karl \btxlastnamefont {Tuyls}}\btxandcomma {}
-  \btxandlong {}\ \btxnamefont {Thore \btxlastnamefont
-  {Graepel}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase
-  {Value-decomposition networks for cooperative multi-agent
-  learning}{Value-Decomposition Networks For Cooperative Multi-Agent
-  Learning}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 17th International
-  Conference on Autonomous Agents and MultiAgent Systems (AAMAS)},
-  \btxpageslong {}\ 2085--2087. \btxpublisherfont {International Foundation for
-  Autonomous Agents and Multiagent Systems}, 2018.
+  \btxetalfont {\btxetalshort {.}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Value-decomposition networks for cooperative multi-agent
+  learning}{Value-decomposition networks for cooperative multi-agent
+  learning}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:1706.05296}, 2017.
+
+\bibitem [{SWD{\etalchar{+}}17}]{schulman2017ppo}
+\btxnamefont {\btxlastnamefont {Schulman}, John}, \btxnamefont {Filip
+  \btxlastnamefont {Wolski}}, \btxnamefont {Prafulla \btxlastnamefont
+  {Dhariwal}}, \btxnamefont {Alec \btxlastnamefont {Radford}}\btxandcomma {}
+  \btxandlong {}\ \btxnamefont {Oleg \btxlastnamefont {Klimov}}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {Proximal policy optimization
+  algorithms}{Proximal policy optimization algorithms}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:1707.06347}, 2017.
+
+\bibitem [{TMK{\etalchar{+}}17}]{tampuu2017multiagent}
+\btxnamefont {\btxlastnamefont {Tampuu}, Ardi}, \btxnamefont {Tambet
+  \btxlastnamefont {Matiisen}}, \btxnamefont {Dorian \btxlastnamefont
+  {Kodelja}}, \btxnamefont {Ilya \btxlastnamefont {Zauss}}, \btxnamefont
+  {Kristjan \btxlastnamefont {Korjus}}, \btxnamefont {Juhan \btxlastnamefont
+  {Aru}}, \btxnamefont {Jaan \btxlastnamefont {Birk}}\btxandcomma {}
+  \btxandlong {}\ \btxnamefont {Raul \btxlastnamefont
+  {Vicente}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Multiagent
+  cooperation and competition with deep reinforcement learning}{Multiagent
+  cooperation and competition with deep reinforcement learning}}.
+\newblock \btxjournalfont {PloS one}, 12(4):e0172395, 2017.
 
 \bibitem [{W{\etalchar{+}}19}]{WeiH2019ASTSCM}
 \btxnamefont {\btxlastnamefont {Wei}, H.} \btxetalfont {\btxetalshort
@@ -239,7 +284,18 @@
   signal control methods}{A survey on traffic signal control methods}}, 2019.
 \newblock Available at: \url{https://arxiv.org/abs/1904.08117}.
 
-\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem [{YVV{\etalchar{+}}22}]{yu2022surprising}
+\btxnamefont {\btxlastnamefont {Yu}, Chao}, \btxnamefont {Akash
+  \btxlastnamefont {Velu}}, \btxnamefont {Eugene \btxlastnamefont {Vinitsky}},
+  \btxnamefont {Jiaxuan \btxlastnamefont {Gao}}, \btxnamefont {Yu
+  \btxlastnamefont {Wang}}, \btxnamefont {Alexandre \btxlastnamefont
+  {Bayen}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Yi \btxlastnamefont
+  {Wu}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {The surprising
+  effectiveness of ppo in cooperative multi-agent games}{The surprising
+  effectiveness of ppo in cooperative multi-agent games}}.
+\newblock \btxjournalfont {Advances in Neural Information Processing Systems},
+  35:24611--24624, 2022.
+
 \bibitem [{ZLYZ23}]{ctde_survey}
 \btxnamefont {\btxlastnamefont {Zhou}, Mengdi}, \btxnamefont {Xiaoteng
   \btxlastnamefont {Li}}, \btxnamefont {Yaodong \btxlastnamefont

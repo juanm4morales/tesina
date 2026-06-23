@@ -1,47 +1,57 @@
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción}{6}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Motivación}{8}{section.1.1}%
-\contentsline {chapter}{\numberline {2}Marco Teórico}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito}{9}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{10}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{11}{subsection.2.1.2}%
-\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{14}{subsubsection*.9}%
-\contentsline {subsubsection}{Descripción Probabilística del Flujo}{15}{subsubsection*.10}%
-\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{16}{subsection.2.1.3}%
-\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{17}{subsubsection*.12}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{17}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{18}{subsection.2.1.4}%
-\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{19}{subsubsection*.15}%
-\contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{19}{subsubsection*.16}%
-\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{20}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{21}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Retorno}{22}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Función de Acción-Valor y Política}{22}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}\textit {Q-Learning}}{22}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}\textit {Deep Learning} y Redes Neuronales}{23}{subsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.2.6}\textit {Deep Reinforcement Learning} (DRL)}{23}{subsection.2.2.6}%
-\contentsline {subsubsection}{\textit {Deep Q-Learning} (DQN)}{24}{subsubsection*.19}%
-\contentsline {subsubsection}{Exploración vs. Explotación}{24}{subsubsection*.20}%
-\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{24}{section.2.3}%
+\contentsline {chapter}{Resumen}{1}{chapter*.5}%
+\contentsline {chapter}{\numberline {1}Introducción}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivación}{4}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Marco Teórico}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{6}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{7}{subsection.2.1.2}%
+\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{10}{subsubsection*.10}%
+\contentsline {subsubsection}{Descripción Probabilística del Flujo}{11}{subsubsection*.11}%
+\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{12}{subsection.2.1.3}%
+\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{13}{subsubsection*.13}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{13}{subsubsection*.15}%
+\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{14}{subsection.2.1.4}%
+\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{15}{subsubsection*.16}%
+\contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{15}{subsubsection*.17}%
+\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{16}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{17}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{18}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{20}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{21}{subsection.2.2.4}%
+\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{21}{subsubsection*.21}%
+\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{22}{subsubsection*.22}%
+\contentsline {subsubsection}{Exploración vs. Explotación}{23}{subsubsection*.23}%
+\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO)}{23}{subsubsection*.24}%
+\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{25}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{25}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Paradigmas de Entrenamiento y Ejecución}{25}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Principales Familias de Algoritmos Cooperativos}{26}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Desafíos Prácticos en MARL}{26}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{28}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{28}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{28}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{29}{subsection.2.4.3}%
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
+\contentsline {subsection}{\numberline {2.3.2}Paradigmas de Entrenamiento y Ejecución}{26}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}\textit {Multi-Agent Deep Reinforcement Learning} (MADRL)}{26}{subsection.2.3.3}%
+\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO}{26}{subsubsection*.25}%
+\contentsline {subsubsection}{Paradigma CTDE}{27}{subsubsection*.26}%
+\contentsline {paragraph}{Descomposición de Valor}{27}{paragraph*.27}%
+\contentsline {paragraph}{Métodos Actor-Crítico Multi-Agente}{28}{paragraph*.28}%
+\contentsline {subsection}{\numberline {2.3.4}Desafíos de Escalabilidad y No Estacionariedad en MARL}{28}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{30}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{30}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{30}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{31}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}Metodología}{32}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Integración de SUMO y el Agente de Aprendizaje por Refuerzo}{32}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Herramientas y Configuración}{32}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Edición de Redes y Tránsito}{32}{subsection.3.2.1}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{34}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{34}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{34}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{34}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{34}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{34}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{34}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{34}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{34}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{34}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{35}{chapter.5}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
