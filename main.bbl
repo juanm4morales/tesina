@@ -119,16 +119,6 @@
 \newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad
   Católica del Perú}, 2011.
 
-\bibitem [{FFA{\etalchar{+}}18}]{foerster2018counterfactual}
-\btxnamefont {\btxlastnamefont {Foerster}, Jakob}, \btxnamefont {Gregory
-  \btxlastnamefont {Farquhar}}, \btxnamefont {Triantafyllos \btxlastnamefont
-  {Afouras}}, \btxnamefont {Nantas \btxlastnamefont {Nardelli}}\btxandcomma {}
-  \btxandlong {}\ \btxnamefont {Shimon \btxlastnamefont
-  {Whiteson}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Counterfactual
-  multi-agent policy gradients}{Counterfactual multi-agent policy gradients}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the AAAI conference on
-  artificial intelligence}, \btxvolumelong {}~\btxvolumefont {32}, 2018.
-
 \bibitem [{FH21}]{Feriani2021_MARL_NonStationary}
 \btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont
   {Ekram \btxlastnamefont {Hossain}}\btxauthorcolon\ \btxjtitlefont
@@ -164,7 +154,7 @@
   learning}}.
 \newblock \btxjournalfont {arXiv preprint arXiv:2109.11251}, 2021.
 
-\bibitem [{LWT{\etalchar{+}}17a}]{maddpg}
+\bibitem [{LWT{\etalchar{+}}17}]{maddpg}
 \btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont {Yi \btxlastnamefont
   {Wu}}, \btxnamefont {Aviv \btxlastnamefont {Tamar}}, \btxnamefont {Jean
   \btxlastnamefont {Harb}}, \btxnamefont {Pieter \btxlastnamefont
@@ -174,18 +164,6 @@
   Actor-Critic for Mixed Cooperative-Competitive Environments}}.
 \newblock \Btxinlong {}\ \btxtitlefont {Advances in Neural Information
   Processing Systems (NeurIPS)}, \btxpageslong {}\ 6379--6390, 2017.
-
-\bibitem [{LWT{\etalchar{+}}17b}]{lowe2017multi}
-\btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont
-  {Yi\btxfnamespacelong I \btxlastnamefont {Wu}}, \btxnamefont {Aviv
-  \btxlastnamefont {Tamar}}, \btxnamefont {Jean \btxlastnamefont {Harb}},
-  \btxnamefont {Pieter \btxlastnamefont {Abbeel}}\btxandcomma {} \btxandlong
-  {}\ \btxnamefont {Igor \btxlastnamefont {Mordatch}}\btxauthorcolon\
-  \btxtitlefont {\btxifchangecase {Multi-agent actor-critic for mixed
-  cooperative-competitive environments}{Multi-agent actor-critic for mixed
-  cooperative-competitive environments}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Advances in neural information
-  processing systems}, \btxvolumelong {}~\btxvolumefont {30}, 2017.
 
 \bibitem [{MKS{\etalchar{+}}15}]{mnih2015}
 \btxnamefont {\btxlastnamefont {Mnih}, V.}, \btxnamefont {K. \btxlastnamefont
