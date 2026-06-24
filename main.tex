@@ -84,6 +84,10 @@
 \DeclareCaptionFormat{listing}{#1#2#3}
 \captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf},labelsep=space,labelfont=bf}
 
+%Paquete para compuestos químicos
+\usepackage[version=4,arrows=pgf-filled,
+textfontname=sffamily,
+mathfontname=mathsf]{mhchem} %comando \ce{H2O} para escribir fórmulas químicas
 
 \renewcommand{\lstlistingname}{Código}
 \renewcommand{\lstlistlistingname}{Índice de códigos}
@@ -141,6 +145,7 @@ linktoc=all
 
 \include{0-titulo}
 \afterpage{\null\thispagestyle{empty}\newpage}
+\include{1-resumen}
 \include{1-agradecimientos}
 
 \tableofcontents

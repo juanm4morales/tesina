@@ -10,7 +10,7 @@ La operación de una red vial puede analizarse a partir de la relación entre la
 
 \subsection{Terminología de Tránsito}
 
-Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar algunos términos operativos que se utilizarán de manera recurrente en este trabajo. Esta aclaración inicial también es habitual en estudios recientes sobre control semafórico basados en aprendizaje por refuerzo, donde los conceptos de movimientos, fases y señales se explicitan antes de formular el problema de control \cite{WeiH2019ASTSCM}.
+Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar algunos términos operativos que se utilizarán de manera recurrente en este documento. Esta aclaración inicial también es habitual en estudios recientes sobre control semafórico basados en aprendizaje por refuerzo, donde los conceptos de movimientos, fases y señales se explicitan antes de formular el problema de control \cite{WeiH2019ASTSCM}.
 
 En este contexto, se emplearán las siguientes nociones:
 
@@ -20,7 +20,7 @@ En este contexto, se emplearán las siguientes nociones:
     \item \textbf{Fase, ciclo e intervalo:} una fase representa el estado operativo del semáforo que otorga el derecho de paso a un grupo de movimientos compatibles de manera simultánea \cite{ite_handbook}. La secuencia completa de fases requerida para servir a todos los movimientos de la intersección constituye el ciclo semafórico, mientras que un intervalo es la fracción temporal del ciclo durante la cual las indicaciones del semáforo no varían \cite{calymayor}.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
     \begin{tikzpicture}[>=stealth, thick, font=\small, scale=0.9, transform shape]
         \colorlet{colConflicto}{catRosaSalmon!90!black}
