@@ -1,4 +1,5 @@
 \documentclass[11pt,a4paper]{report}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{afterpage}
 \usepackage{titlesec}
 \titleformat{\chapter}[display]{\vspace{-3cm}\normalfont\bfseries}{}{0pt}{\LARGE}
@@ -46,6 +47,55 @@
 \definecolor{divAltUno}{HTML}{99D5CA}
 \definecolor{divAltDos}{HTML}{A0AEC1}
 \definecolor{divPropuesto}{HTML}{F2A68D}
+% --------------------------------------
+
+% --- Paleta Semántica por Dominio ---
+% Convenciones de uso (NO redefinir los colores, solo usar estos aliases):
+%
+% Dinámica de Tránsito:
+%   colVehiculo       -> vehículos en el simulador microscópico
+%   colConflicto      -> puntos de conflicto, corriente saturada / platoon
+%   colFlujoLibre     -> flujo libre, exponencial negativa, separaciones temporales
+%   colSeparacionEsp  -> líneas guía de separaciones espaciales (e, s)
+%   colSeparacionTmp  -> líneas guía de separaciones temporales (g, h)
+%
+% Señalización Semafórica:
+%   colSemaforoRojo    -> fase roja del semáforo
+%   colSemaforoAmarillo-> fase amarilla del semáforo
+%   colSemaforoVerde   -> fase verde del semáforo
+%
+% Arquitectura del Sistema (Metodología):
+%   colEntorno  -> simulador microscópico (SUMO)
+%   colInterfaz -> interfaz de control (TraCI)
+%   colAgente   -> política de control / agente DRL
+%
+% Series de Datos:
+%   colDatoPrimario -> serie principal de datos (p. ej. flota vehicular)
+%
+% Taxonomías y Diagramas Jerárquicos:
+%   colTaxonomiaNivelUno   -> categoría raíz o concepto general
+%   colTaxonomiaNivelDos   -> categorías intermedias
+%   colTaxonomiaNivelTres  -> subcategorías o ramas específicas
+
+\colorlet{colVehiculo}{catAzulCielo!80!black}
+\colorlet{colConflicto}{catRosaSalmon!80!black}
+\colorlet{colFlujoLibre}{catVerdeMenta!80!black}
+\colorlet{colSeparacionEsp}{catRosaSalmon!80!black}
+\colorlet{colSeparacionTmp}{catVerdeMenta!80!black}
+
+\colorlet{colSemaforoRojo}{catRosaSalmon!80!white}
+\colorlet{colSemaforoAmarillo}{seqNivelUno!80!white}
+\colorlet{colSemaforoVerde}{catVerdeMenta!80!white}
+
+\colorlet{colEntorno}{catAzulCielo}
+\colorlet{colInterfaz}{catVerdeMenta}
+\colorlet{colAgente}{catRosaSalmon}
+
+\colorlet{colDatoPrimario}{catAzulCielo!80!black}
+
+\colorlet{colTaxonomiaNivelUno}{catAzulCielo!40}
+\colorlet{colTaxonomiaNivelDos}{catMelocoton!40}
+\colorlet{colTaxonomiaNivelTres}{catVerdeMenta!40}
 % --------------------------------------
 
 \definecolor{LightGray}{gray}{0.9}
@@ -140,6 +190,9 @@ linktoc=all
 \newcommand {\PJV}[1]{{\color{green} {\textbf{Pablo: #1}}}}
 \newcommand {\ACO}[1]{{\color{red} {\textbf{Caro: #1}}}}
 
+\usepackage[nonumberlist]{glossaries}
+\loadglsentries{glosario.tex}
+\makeglossaries
 
 \begin{document}
 
@@ -155,6 +208,10 @@ linktoc=all
 \thispagestyle{empty}
 
 \listoffigures
+\thispagestyle{empty}
+
+\glsaddall
+\printglossary[title=Glosario,toctitle=Glosario]
 \thispagestyle{empty}
 
 \include{2-resumen}

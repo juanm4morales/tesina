@@ -9,41 +9,46 @@ Para implementar el entrenamiento y la evaluación de la política de control, e
 \centering
 \begin{tikzpicture}[
   %% Estilos de nodos
-  nodoSUMO/.style={rectangle, draw=blue!60, fill=blue!8,
+  nodoSUMO/.style={rectangle, draw=colEntorno!60!black, fill=colEntorno!20,
                    rounded corners=4pt, thick,
-                   text width=2.8cm, align=center,
+                   text width=2.7cm, align=center,
                    minimum height=1.3cm, font=\small},
-  nodoTraCI/.style={rectangle, draw=green!50!black, fill=green!8,
+  nodoTraCI/.style={rectangle, draw=colInterfaz!50!black, fill=colInterfaz!20,
                     rounded corners=4pt, thick,
                     text width=2.4cm, align=center,
                     minimum height=1.3cm, font=\small},
-  nodoAgente/.style={rectangle, draw=red!60, fill=red!8,
+  nodoAgente/.style={rectangle, draw=colAgente!60!black, fill=colAgente!20,
                      rounded corners=4pt, thick,
-                     text width=2.8cm, align=center,
+                     text width=2.7cm, align=center,
                      minimum height=1.3cm, font=\small},
   %% Estilo de flechas
-  flecha/.style={-{Stealth[length=6pt]}, thick}
+  flecha/.style={-{Stealth[length=6pt]}, thick, line cap=round},
+  etiqueta/.style={font=\scriptsize, fill=white, inner sep=1.5pt, align=center}
 ]
   %% ---- Nodos en layout horizontal ----
   \node[nodoSUMO]  (sumo)   {\textbf{Entorno (SUMO)}\\ F\'{i}sica de tr\'{a}nsito};
-  \node[nodoTraCI] (traci)  [right=1.2cm of sumo]
+  \node[nodoTraCI] (traci)  [right=1.8cm of sumo]
                             {\textbf{API TraCI}\\ Interfaz de control};
-  \node[nodoAgente](agente) [right=1.2cm of traci]
+  \node[nodoAgente](agente) [right=1.8cm of traci]
                             {\textbf{Agente DRL}\\ Pol\'{i}tica de control};
 
-  %% ---- Flecha superior: SUMO -> TraCI (telemetría) ----
-  \draw[flecha] (sumo.east) -- (traci.west)
-    node[midway, above, font=\footnotesize] {Telemetr\'{i}a};
+  %% ---- Canal de observación: SUMO -> TraCI -> Agente ----
+  \draw[flecha] (sumo.north east) to[bend left=15]
+    node[etiqueta, above=4pt] {Telemetr\'{i}a\\(colas, ocupaci\'{o}n)}
+    (traci.north west);
 
-  %% ---- Flecha media: TraCI -> Agente (observación + recompensa) ----
-  \draw[flecha] (traci.east) -- (agente.west)
-    node[midway, above, font=\footnotesize] {Obs., Recomp.};
+  \draw[flecha] (traci.north east) to[bend left=15]
+    node[etiqueta, above=4pt] {Observaci\'{o}n\\+ recompensa}
+    (agente.north west);
 
-  %% ---- Flecha de retorno: Agente -> SUMO (acción), por debajo ----
-  \draw[flecha]
-    (agente.south) -- ++(0,-0.8cm)
-    -| (sumo.south)
-    node[midway, below, font=\footnotesize] {Acci\'{o}n: fase sem. seleccionada};
+  %% ---- Canal de control: Agente -> TraCI -> SUMO ----
+  \draw[flecha] (agente.south west) to[bend left=15]
+    node[etiqueta, below=4pt] {Acci\'{o}n\\(fase seleccionada)}
+    (traci.south east);
+
+  \draw[flecha] (traci.south west) to[bend left=15]
+    node[etiqueta, below=4pt] {Comando\\de control}
+    (sumo.south east);
 \end{tikzpicture}
 \caption{Bucle de control cerrado entre el simulador microsc\'{o}pico SUMO, la interfaz TraCI y el agente de Aprendizaje por Refuerzo en la metodología de entrenamiento.}
 \label{fig:bucle_control_traci}
