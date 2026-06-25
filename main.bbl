@@ -62,6 +62,16 @@
 \newblock \btxjournalfont {Journal of Artificial Intelligence Research},
   69:1--72, 2020.
 
+\bibitem [{APK03}]{Abdulhai2003}
+\btxnamefont {\btxlastnamefont {Abdulhai}, Baher}, \btxnamefont {Rob
+  \btxlastnamefont {Pringle}}\btxandcomma {} \btxandlong {}\ \btxnamefont
+  {Grigoris\btxfnamespacelong J \btxlastnamefont {Karakoulas}}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {Reinforcement learning for true adaptive
+  traffic signal control}{Reinforcement learning for true adaptive traffic
+  signal control}}.
+\newblock \btxjournalfont {Journal of Transportation Engineering},
+  129(3):278--285, 2003.
+
 \bibitem [{AS22}]{Ault2022_MARL_Limitations}
 \btxnamefont {\btxlastnamefont {Ault}, James} \btxandlong {}\ \btxnamefont
   {Guni \btxlastnamefont {Sharon}}\btxauthorcolon\ \btxtitlefont
@@ -76,6 +86,17 @@
   \btxurlfont{https://people.engr.tamu.edu/guni/papers/CIKM22-MATCS.pdf}},
   Fuente: [7, 8] Destaca el "éxito limitado" de SARL y los enfoques
   independientes en redes.
+
+\bibitem [{CWCL19}]{Chu2019}
+\btxnamefont {\btxlastnamefont {Chu}, Tianshu}, \btxnamefont {Jie
+  \btxlastnamefont {Wang}}, \btxnamefont {Lara \btxlastnamefont
+  {Codec{\`a}}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Zhaojian
+  \btxlastnamefont {Li}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase
+  {Multi-agent deep reinforcement learning for large-scale traffic signal
+  control}{Multi-agent deep reinforcement learning for large-scale traffic
+  signal control}}.
+\newblock \btxjournalfont {IEEE Transactions on Intelligent Transportation
+  Systems}, 21(3):1086--1095, 2019.
 
 \bibitem [{CWCL22}]{gnn_traffic}
 \btxnamefont {\btxlastnamefont {Chu}, Tianshu}, \btxnamefont {Jie
@@ -112,6 +133,18 @@
   multi-agent challenge?}{Is independent learning all you need in the starcraft
   multi-agent challenge?}}
 \newblock \btxjournalfont {arXiv preprint arXiv:2011.09533}, 2020.
+
+\bibitem [{ETAA13}]{ElTantawy2013}
+\btxnamefont {\btxlastnamefont {El-Tantawy}, Samah}, \btxnamefont {Baher
+  \btxlastnamefont {Abdulhai}}\btxandcomma {} \btxandlong {}\ \btxnamefont
+  {Hossam \btxlastnamefont {Abdulbaqi}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Multiagent reinforcement learning for integrated network
+  of adaptive traffic signal controllers (marlin-atsc): methodology and
+  large-scale application on downtown toronto}{Multiagent reinforcement
+  learning for integrated network of adaptive traffic signal controllers
+  (MARLIN-ATSC): methodology and large-scale application on downtown Toronto}}.
+\newblock \btxjournalfont {IEEE Transactions on Intelligent Transportation
+  Systems}, 14(3):1140--1150, 2013.
 
 \bibitem [{FA11}]{fernandez}
 \btxnamefont {\btxlastnamefont {Fernández~A.}, Rodrigo}\btxauthorcolon\
@@ -153,6 +186,16 @@
   learning}{Trust region policy optimisation in multi-agent reinforcement
   learning}}.
 \newblock \btxjournalfont {arXiv preprint arXiv:2109.11251}, 2021.
+
+\bibitem [{LLW16}]{Li2016}
+\btxnamefont {\btxlastnamefont {Li}, Li}, \btxnamefont {Yisheng
+  \btxlastnamefont {Lv}}\btxandcomma {} \btxandlong {}\ \btxnamefont
+  {Fei\btxfnamespacelong Yue \btxlastnamefont {Wang}}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {Traffic signal timing via deep
+  reinforcement learning}{Traffic signal timing via deep reinforcement
+  learning}}.
+\newblock \btxjournalfont {IEEE/CAA Journal of Automatica Sinica},
+  3(3):247--254, 2016.
 
 \bibitem [{LWT{\etalchar{+}}17}]{maddpg}
 \btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont {Yi \btxlastnamefont
@@ -262,6 +305,13 @@
   signal control methods}{A survey on traffic signal control methods}}, 2019.
 \newblock Available at: \url{https://arxiv.org/abs/1904.08117}.
 
+\bibitem [{Wie00}]{Wiering2000}
+\btxnamefont {\btxlastnamefont {Wiering}, Marco\btxfnamespacelong
+  A}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Multi-agent
+  reinforcement learning for traffic light control}{Multi-agent reinforcement
+  learning for traffic light control}}.
+\newblock \btxjournalfont {Machine learning}, 2000.
+
 \bibitem [{YVV{\etalchar{+}}22}]{yu2022surprising}
 \btxnamefont {\btxlastnamefont {Yu}, Chao}, \btxnamefont {Akash
   \btxlastnamefont {Velu}}, \btxnamefont {Eugene \btxlastnamefont {Vinitsky}},
@@ -273,6 +323,17 @@
   effectiveness of ppo in cooperative multi-agent games}}.
 \newblock \btxjournalfont {Advances in Neural Information Processing Systems},
   35:24611--24624, 2022.
+
+\bibitem [{ZKF{\etalchar{+}}24}]{zhong2024heterogeneous}
+\btxnamefont {\btxlastnamefont {Zhong}, Yifan}, \btxnamefont
+  {Jakub\btxfnamespacelong Grudzien \btxlastnamefont {Kuba}}, \btxnamefont
+  {Xidong \btxlastnamefont {Feng}}, \btxnamefont {Siyi \btxlastnamefont {Hu}},
+  \btxnamefont {Jiaming \btxlastnamefont {Ji}}\btxandcomma {} \btxandlong {}\
+  \btxnamefont {Yaodong \btxlastnamefont {Yang}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Heterogeneous-agent reinforcement
+  learning}{Heterogeneous-Agent Reinforcement Learning}}.
+\newblock \btxjournalfont {Journal of Machine Learning Research}, 25:1--67,
+  2024.
 
 \bibitem [{ZLYZ23}]{ctde_survey}
 \btxnamefont {\btxlastnamefont {Zhou}, Mengdi}, \btxnamefont {Xiaoteng
