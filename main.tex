@@ -2,7 +2,7 @@
 \usepackage{afterpage}
 \usepackage{titlesec}
 \titleformat{\chapter}[display]{\vspace{-3cm}\normalfont\bfseries}{}{0pt}{\LARGE}
-\usepackage[provide=*,spanish, es-tabla]{babel}
+\usepackage[provide=*,spanish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
@@ -16,7 +16,7 @@
 \usepackage{amssymb}
 \usepackage{url}
 \usepackage{xcolor}
-\usepackage{caption}
+\usepackage{caption} 
 \usepackage{float}
 \usepackage{listingsutf8}
 \usepackage[framemethod=default]{mdframed}
@@ -134,6 +134,10 @@ colorlinks,
 allcolors=black,
 linktoc=all
 }
+
+%CAROLINA para que sean tablas en vez de cuadros
+\setlocalecaption{spanish}{table}{Tabla}
+\setlocalecaption{spanish}{listtable}{Índice de tablas}
 
 % comment commands
 \newcommand {\JM}[1]{{\color{blue} {\textbf{Juan Martín: #1}}}}

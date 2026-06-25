@@ -10,28 +10,28 @@
 \contentsline {subsubsection}{Descripción Probabilística del Flujo}{17}{subsubsection*.12}%
 \contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{18}{subsection.2.1.3}%
 \contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{19}{subsubsection*.14}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{19}{subsubsection*.16}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{20}{subsection.2.1.4}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{20}{subsubsection*.16}%
+\contentsline {section}{\numberline {2.2}Simulación del Tránsito}{20}{section.2.2}%
 \contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{21}{subsubsection*.17}%
 \contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{21}{subsubsection*.18}%
-\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{22}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{23}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Retorno}{24}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Función de Acción-Valor y Política}{24}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}\textit {Q-Learning}}{24}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}\textit {Deep Learning} y Redes Neuronales}{25}{subsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.2.6}\textit {Deep Reinforcement Learning} (DRL)}{25}{subsection.2.2.6}%
+\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo (RL)}{22}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}El Proceso de Decisión de Markov (MDP)}{23}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Retorno}{24}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Función de Acción-Valor y Política}{24}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}\textit {Q-Learning}}{24}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}\textit {Deep Learning} y Redes Neuronales}{25}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}\textit {Deep Reinforcement Learning} (DRL)}{25}{subsection.2.3.6}%
 \contentsline {subsubsection}{\textit {Deep Q-Learning} (DQN)}{26}{subsubsection*.21}%
 \contentsline {subsubsection}{Exploración vs. Explotación}{26}{subsubsection*.22}%
-\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{26}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{27}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Paradigmas de Entrenamiento y Ejecución}{27}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Principales Familias de Algoritmos Cooperativos}{28}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Desafíos Prácticos en MARL}{28}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{30}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{30}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{30}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{31}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.4}Aprendizaje por Refuerzo Multi-Agente (MARL)}{26}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{27}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Paradigmas de Entrenamiento y Ejecución}{27}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Principales Familias de Algoritmos Cooperativos}{28}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Desafíos Prácticos en MARL}{28}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Control de Tráfico Urbano mediante MARL}{30}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Entorno de Simulación para Control Semafórico}{30}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{30}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Coordinación entre Intersecciones y Mitigación de Congestión}{31}{subsection.2.5.3}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
