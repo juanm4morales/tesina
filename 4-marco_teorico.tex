@@ -10,7 +10,7 @@ La operación de una red vial puede analizarse a partir de la relación entre la
 
 \subsection{Terminología de Tránsito}
 
-Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar algunos términos operativos que se utilizarán de manera recurrente en este documento. Esta aclaración inicial también es habitual en estudios recientes sobre control semafórico basados en aprendizaje por refuerzo, donde los conceptos de movimientos, fases y señales se explicitan antes de formular el problema de control \cite{WeiH2019ASTSCM}.
+Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar algunos términos operativos que se utilizarán de manera recurrente en este documento. Esta aclaración inicial también es habitual en manuales de temporización semafórica, donde se advierte que el término fase puede confundirse con movimiento si no se distingue la unidad de control del conjunto de trayectorias servidas \cite{fhwa_signal_timing_manual}, y en estudios recientes sobre control semafórico basados en aprendizaje por refuerzo, donde los conceptos de movimientos, fases y señales se explicitan antes de formular el problema de control \cite{WeiH2019ASTSCM}.
 
 En este contexto, se emplearán las siguientes nociones:
 
@@ -19,6 +19,69 @@ En este contexto, se emplearán las siguientes nociones:
     \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada (e.g., giros o movimientos directos) \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite{fernandez}.
     \item \textbf{Fase, ciclo e intervalo:} una fase representa el estado operativo del semáforo que otorga el derecho de paso a un grupo de movimientos compatibles de manera simultánea \cite{ite_handbook}. La secuencia completa de fases requerida para servir a todos los movimientos de la intersección constituye el ciclo semafórico, mientras que un intervalo es la fracción temporal del ciclo durante la cual las indicaciones del semáforo no varían \cite{calymayor}.
 \end{itemize}
+
+La Figura \ref{fig:movimientos_fases_interseccion} muestra una representación típica de estos conceptos para una intersección de cuatro accesos. La convención utilizada por manuales de temporización como el de la FHWA asigna números impares a los giros izquierdos y números pares a los movimientos directos; los giros derechos suelen operar junto con el movimiento directo compatible, mientras que los cruces peatonales se sirven de manera concurrente con la corriente vehicular paralela \cite{fhwa_signal_timing_manual}. Esta representación no fija una geometría particular para el caso de estudio, sino que permite distinguir entre movimiento físico, fase semafórica y usuarios servidos por una misma indicación.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        x=0.74cm,
+        y=0.74cm,
+        >=Stealth,
+        font=\small,
+        veh/.style={-{Stealth[length=8pt,width=7pt]}, line width=2.6pt, black!58, line cap=round},
+        ped/.style={<->, dashed, dash pattern=on 4pt off 3pt, line width=1.3pt, colDatoPrimario!80!black},
+        num/.style={font=\bfseries\large, colDatoPrimario!85!black},
+        pnum/.style={font=\small, colDatoPrimario!85!black},
+        road/.style={black!35, line width=0.65pt}
+    ]
+        % Geometría simplificada siguiendo la disposición de FHWA: calzadas y ejes.
+        \draw[road] (-5.4,1.05) -- (-1.05,1.05) -- (-1.05,4.35);
+        \draw[road] (1.05,4.35) -- (1.05,1.05) -- (5.4,1.05);
+        \draw[road] (5.4,-1.05) -- (1.05,-1.05) -- (1.05,-4.35);
+        \draw[road] (-1.05,-4.35) -- (-1.05,-1.05) -- (-5.4,-1.05);
+        \draw[road] (-5.4,0) -- (-1.25,0);
+        \draw[road] (1.25,0) -- (5.4,0);
+        \draw[road] (0,-4.35) -- (0,-1.25);
+        \draw[road] (0,1.25) -- (0,4.35);
+
+        % Movimientos vehiculares: números impares para giros izquierdos y pares para directos.
+        \draw[veh] (-0.25,3.95) -- (-0.25,1.55);
+        \node[num] at (-0.72,4.05) {2};
+        \draw[veh] (0.45,3.90) -- (0.45,2.65) to[out=-90,in=180] (1.70,2.05);
+        \node[num] at (0.90,4.05) {5};
+
+        \draw[veh] (4.15,0.35) -- (1.45,0.35);
+        \node[num] at (4.40,0.75) {4};
+        \draw[veh] (3.95,-0.45) -- (2.75,-0.45) to[out=180,in=90] (2.10,-1.70);
+        \node[num] at (4.40,-0.72) {7};
+
+        \draw[veh] (0.25,-3.95) -- (0.25,-1.55);
+        \node[num] at (0.72,-4.05) {6};
+        \draw[veh] (-0.45,-3.90) -- (-0.45,-2.65) to[out=90,in=0] (-1.70,-2.05);
+        \node[num] at (-0.90,-4.05) {1};
+
+        \draw[veh] (-4.15,-0.35) -- (-1.45,-0.35);
+        \node[num] at (-4.40,-0.75) {8};
+        \draw[veh] (-3.95,0.45) -- (-2.75,0.45) to[out=0,in=-90] (-2.10,1.70);
+        \node[num] at (-4.40,0.72) {3};
+
+        % Movimientos peatonales concurrentes.
+        \draw[ped] (-1.30,1.30) -- (1.30,1.30);
+        \draw[ped] (1.30,1.30) -- (1.30,-1.30);
+        \draw[ped] (-1.30,-1.30) -- (1.30,-1.30);
+        \draw[ped] (-1.30,1.30) -- (-1.30,-1.30);
+        \node[pnum, fill=white, inner sep=1pt] at (0,1.62) {$P4$};
+        \node[pnum, fill=white, inner sep=1pt] at (1.70,-0.35) {$P6$};
+        \node[pnum, fill=white, inner sep=1pt] at (0,-1.62) {$P8$};
+        \node[pnum, fill=white, inner sep=1pt] at (-1.70,-0.35) {$P2$};
+
+        \draw[-{Stealth[length=5pt,width=4pt]}, black!35, line width=0.7pt] (4.35,3.45) -- (4.35,4.05);
+        \node[font=\scriptsize\bfseries, black!45] at (4.35,3.20) {N};
+    \end{tikzpicture}
+    \caption{Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite{fhwa_signal_timing_manual}.}
+    \label{fig:movimientos_fases_interseccion}
+\end{figure}
 
 \begin{figure}[htp]
     \centering
@@ -230,6 +293,8 @@ Para mitigar los conflictos de tránsito e incrementar la seguridad en las inter
 En el modelado algorítmico, los semáforos y sus parámetros de configuración constituyen los elementos actuadores de la red. La modificación de la duración del verde efectivo, la secuencia de fases y la sincronización entre nodos define el conjunto de intervenciones dinámicas mediante las cuales el sistema de control busca optimizar el paso vehicular.
 
 Sobre esta base terminológica, la programación temporal de un semáforo se describe mediante la duración de las fases, la longitud de ciclo y la definición de los intervalos de transición y despeje. Estos parámetros determinan cuánto tiempo recibe prioridad cada conjunto de movimientos compatibles y condicionan directamente la capacidad de descarga, las demoras y la seguridad operacional de la intersección \cite{ite_handbook}.
+
+En relación con los giros izquierdos, los manuales de temporización distinguen entre operación permisiva, protegida y protegida-permisiva. En una fase permisiva, el giro se ejecuta aprovechando brechas en la corriente opuesta; en una fase protegida, el giro recibe una indicación exclusiva y los movimientos conflictivos permanecen detenidos; en una fase protegida-permisiva, ambas condiciones se combinan durante distintos intervalos del ciclo \cite{fhwa_signal_timing_manual}. Para este trabajo, la distinción resulta útil porque muestra que una fase no es solo un color del semáforo, sino una regla operacional que habilita ciertos movimientos, impone cesión de paso en otros y restringe los movimientos en conflicto.
 
 Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecutarse de manera instantánea, sino que deben respetar intervalos de cambio y despeje \cite{ite_handbook}. En este trabajo, esos tiempos se consideran restricciones operativas de seguridad previamente definidas en la configuración del simulador y del sistema semafórico. En consecuencia, su determinación no forma parte del proceso de decisión del agente, cuyo control se limita a la selección de fases dentro de un esquema temporal compatible con dichas restricciones.
 

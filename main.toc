@@ -6,54 +6,54 @@
 \contentsline {chapter}{\numberline {2}Marco Teórico}{4}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Ingeniería de Tránsito}{4}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{4}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{5}{subsection.2.1.2}%
-\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{7}{subsubsection*.14}%
-\contentsline {subsubsection}{Descripción Probabilística del Flujo}{8}{subsubsection*.15}%
+\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{6}{subsection.2.1.2}%
+\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{8}{subsubsection*.15}%
+\contentsline {subsubsection}{Descripción Probabilística del Flujo}{8}{subsubsection*.16}%
 \contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{9}{subsection.2.1.3}%
-\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{9}{subsubsection*.17}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{10}{subsubsection*.19}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{10}{subsection.2.1.4}%
-\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{11}{subsubsection*.20}%
-\contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{11}{subsubsection*.21}%
+\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{10}{subsubsection*.18}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{11}{subsubsection*.20}%
+\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{11}{subsection.2.1.4}%
+\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{11}{subsubsection*.21}%
+\contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{11}{subsubsection*.22}%
 \contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{12}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{12}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{13}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{14}{subsection.2.2.3}%
-\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{14}{subsubsection*.25}%
-\contentsline {subsubsection}{El Proceso de Optimización}{15}{subsubsection*.26}%
-\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{15}{subsection.2.2.4}%
-\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{16}{subsubsection*.27}%
-\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{16}{subsubsection*.28}%
-\contentsline {subsubsection}{Aproximación de Políticas (Gradiente de Política)}{17}{subsubsection*.29}%
-\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO)}{17}{subsubsection*.30}%
+\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{14}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{15}{subsection.2.2.3}%
+\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{15}{subsubsection*.26}%
+\contentsline {subsubsection}{El Proceso de Optimización}{16}{subsubsection*.27}%
+\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{16}{subsection.2.2.4}%
+\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{16}{subsubsection*.28}%
+\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{17}{subsubsection*.29}%
+\contentsline {subsubsection}{Aproximación de Políticas (Gradiente de Política)}{18}{subsubsection*.30}%
+\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO)}{18}{subsubsection*.31}%
 \contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{19}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{19}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{19}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{20}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}\textit {Multi-Agent Deep Reinforcement Learning} (MADRL)}{20}{subsection.2.3.4}%
-\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO}{20}{subsubsection*.31}%
-\contentsline {subsubsection}{Paradigma CTDE: MAPPO y HAPPO}{21}{subsubsection*.32}%
-\contentsline {paragraph}{Multi-Agent Proximal Policy Optimization (MAPPO)}{21}{paragraph*.33}%
-\contentsline {paragraph}{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{22}{paragraph*.34}%
-\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{24}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{24}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{24}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{25}{subsection.2.4.3}%
-\contentsline {chapter}{\numberline {3}Metodología}{26}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Integración de SUMO y el Agente de Aprendizaje por Refuerzo}{26}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Herramientas y Configuración}{26}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Edición de Redes y Tránsito}{26}{subsection.3.2.1}%
-\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{28}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{28}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{28}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{28}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{28}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{28}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{28}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{28}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{28}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{28}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{29}{chapter.5}%
+\contentsline {subsection}{\numberline {2.3.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{20}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{20}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{21}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}\textit {Multi-Agent Deep Reinforcement Learning} (MADRL)}{21}{subsection.2.3.4}%
+\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO}{21}{subsubsection*.32}%
+\contentsline {subsubsection}{Paradigma CTDE: MAPPO y HAPPO}{21}{subsubsection*.33}%
+\contentsline {paragraph}{Multi-Agent Proximal Policy Optimization (MAPPO)}{22}{paragraph*.34}%
+\contentsline {paragraph}{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{23}{paragraph*.35}%
+\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{25}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{25}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{25}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{26}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}Metodología}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Integración de SUMO y el Agente de Aprendizaje por Refuerzo}{27}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Herramientas y Configuración}{27}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Edición de Redes y Tránsito}{27}{subsection.3.2.1}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{29}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{29}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{29}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{29}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{29}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{29}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{29}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{29}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{29}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{30}{chapter.5}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

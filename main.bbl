@@ -152,6 +152,15 @@
 \newblock \btxpublisherfont {Fondo Editorial de la Pontificia Universidad
   Católica del Perú}, 2011.
 
+\bibitem [{{Fed}08}]{fhwa_signal_timing_manual}
+\btxnamefont {\btxlastnamefont {{Federal Highway
+  Administration}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Traffic
+  signal timing manual}{Traffic Signal Timing Manual}}.
+\newblock \Btxtechreplong {}\ FHWA-HOP-08-024, Federal Highway Administration,
+  Office of Operations, 2008.
+\newblock Capítulo 4: Traffic Signal Design. Disponible en:
+  \url{https://ops.fhwa.dot.gov/publications/fhwahop08024/chapter4.htm}.
+
 \bibitem [{FH21}]{Feriani2021_MARL_NonStationary}
 \btxnamefont {\btxlastnamefont {Feriani}, Amal} \btxandlong {}\ \btxnamefont
   {Ekram \btxlastnamefont {Hossain}}\btxauthorcolon\ \btxjtitlefont
