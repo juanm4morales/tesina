@@ -3,15 +3,16 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Evolución de la flota vehicular circulante en Argentina (1990--2025). Datos: AFAC.}}{2}{figure.caption.10}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{5}{figure.caption.11}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{7}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Comparaci\'{o}n esquem\'{a}tica de la distribuci\'{o}n de intervalos temporales entre veh\'{i}culos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por sem\'{a}foros (distribuci\'{o}n desplazada con zona de exclusi\'{o}n f\'{i}sica $t_{\min }$ y pico caracter\'{i}stico de pelot\'{o}n).}}{9}{figure.caption.16}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{10}{figure.caption.18}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Representación en SUMO de carriles entrantes (en azul), carriles salientes (en negro) y enlaces (\textit {links}) que definen las conexiones de giro y cruce.}}{11}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{13}{figure.caption.23}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Taxonomía no exhaustiva de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit {Model-Free} (adaptada de OpenAI \textit {Spinning Up} \cite {spinningup}).}}{14}{figure.caption.24}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite {fhwa_signal_timing_manual}.}}{5}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{5}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{7}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparaci\'{o}n esquem\'{a}tica de la distribuci\'{o}n de intervalos temporales entre veh\'{i}culos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por sem\'{a}foros (distribuci\'{o}n desplazada con zona de exclusi\'{o}n f\'{i}sica $t_{\min }$ y pico caracter\'{i}stico de pelot\'{o}n).}}{9}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{10}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Representación en SUMO de carriles entrantes (en azul), carriles salientes (en negro) y enlaces (\textit {links}) que definen las conexiones de giro y cruce.}}{12}{figure.caption.23}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{13}{figure.caption.24}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Taxonomía no exhaustiva de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit {Model-Free} (adaptada de OpenAI \textit {Spinning Up} \cite {spinningup}).}}{15}{figure.caption.25}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Bucle de control cerrado entre el simulador microsc\'{o}pico SUMO, la interfaz TraCI y el agente de Aprendizaje por Refuerzo en la metodología de entrenamiento.}}{26}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Bucle de control cerrado entre el simulador microsc\'{o}pico SUMO, la interfaz TraCI y el agente de Aprendizaje por Refuerzo en la metodología de entrenamiento.}}{27}{figure.caption.36}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {spanish}{}\relax 
