@@ -14,44 +14,48 @@ The style file: babalpha.bst
 Database file #1: bibliografia.bib
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 33 entries,
+Warning--empty language in difference_rewards
+Warning--can't use both volume and number fields in hessel2019popart
+Warning--empty language in MDPI_Infrastructures2025_RLReview
+You've used 48 entries,
             3213 wiz_defined-function locations,
-            899 strings with 13869 characters,
-and the built_in function-call counts, 18748 in all, are:
-= -- 1552
-> -- 997
-< -- 13
-+ -- 367
-- -- 363
-* -- 2313
-:= -- 2706
-add.period$ -- 75
-call.type$ -- 33
-change.case$ -- 272
-chr.to.int$ -- 33
-cite$ -- 33
-duplicate$ -- 906
-empty$ -- 1465
-format.name$ -- 670
-if$ -- 3657
-int.to.chr$ -- 1
+            970 strings with 16988 characters,
+and the built_in function-call counts, 28233 in all, are:
+= -- 2367
+> -- 1429
+< -- 28
++ -- 525
+- -- 518
+* -- 3387
+:= -- 3970
+add.period$ -- 108
+call.type$ -- 48
+change.case$ -- 396
+chr.to.int$ -- 47
+cite$ -- 51
+duplicate$ -- 1406
+empty$ -- 2259
+format.name$ -- 958
+if$ -- 5620
+int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 51
-newline$ -- 155
-num.names$ -- 99
-pop$ -- 343
+missing$ -- 66
+newline$ -- 220
+num.names$ -- 144
+pop$ -- 536
 preamble$ -- 1
-purify$ -- 307
+purify$ -- 446
 quote$ -- 0
-skip$ -- 496
+skip$ -- 809
 stack$ -- 0
-substring$ -- 658
-swap$ -- 410
-text.length$ -- 13
-text.prefix$ -- 5
+substring$ -- 1078
+swap$ -- 666
+text.length$ -- 28
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 244
-warning$ -- 0
-while$ -- 121
-width$ -- 40
-write$ -- 349
+type$ -- 364
+warning$ -- 3
+while$ -- 186
+width$ -- 55
+write$ -- 503
+(There were 3 warnings)
