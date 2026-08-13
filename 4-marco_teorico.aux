@@ -17,8 +17,8 @@
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{cap:marco_teorico}{{2}{4}{Marco Teórico}{chapter.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito}{4}{section.2.1}\protected@file@percent }
-\newlabel{sec:ingenieria_transito}{{2.1}{4}{Ingeniería de Tránsito}{section.2.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito y Simulación}{4}{section.2.1}\protected@file@percent }
+\newlabel{sec:ingenieria_transito}{{2.1}{4}{Ingeniería de Tránsito y Simulación}{section.2.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{4}{subsection.2.1.1}\protected@file@percent }
 \citation{ite_handbook}
 \citation{calymayor}
@@ -54,17 +54,17 @@
 \citation{calymayor}
 \citation{calymayor}
 \citation{calymayor}
+\citation{calymayor}
 \@writefile{toc}{\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{8}{subsubsection*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Descripción Probabilística del Flujo}{8}{subsubsection*.16}\protected@file@percent }
-\citation{calymayor}
+\@writefile{toc}{\contentsline {subsubsection}{Descripción Probabilística del Flujo y Pelotones Vehiculares}{8}{subsubsection*.16}\protected@file@percent }
 \citation{calymayor}
 \citation{ite_handbook}
 \citation{ite_handbook}
 \citation{calymayor}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparaci\'{o}n esquem\'{a}tica de la distribuci\'{o}n de intervalos temporales entre veh\'{i}culos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por sem\'{a}foros (distribuci\'{o}n desplazada con zona de exclusi\'{o}n f\'{i}sica $t_{\min }$ y pico caracter\'{i}stico de pelot\'{o}n).}}{9}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:distribucion_intervalos}{{2.4}{9}{Comparaci\'{o}n esquem\'{a}tica de la distribuci\'{o}n de intervalos temporales entre veh\'{i}culos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por sem\'{a}foros (distribuci\'{o}n desplazada con zona de exclusi\'{o}n f\'{i}sica $t_{\min }$ y pico caracter\'{i}stico de pelot\'{o}n)}{figure.caption.17}{}}
+\citation{ite_handbook}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de la distribución de intervalos temporales entre vehículos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por semáforos (distribución desplazada con zona de exclusión física $t_{\min }$ y pico característico de pelotón).}}{9}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:distribucion_intervalos}{{2.4}{9}{Comparación esquemática de la distribución de intervalos temporales entre vehículos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por semáforos (distribución desplazada con zona de exclusión física $t_{\min }$ y pico característico de pelotón)}{figure.caption.17}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{9}{subsection.2.1.3}\protected@file@percent }
-\citation{ite_handbook}
 \citation{fhwa_signal_timing_manual}
 \citation{ite_handbook}
 \citation{fernandez}
@@ -72,6 +72,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{10}{subsubsection*.18}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{10}{figure.caption.19}\protected@file@percent }
 \newlabel{fig:verde_efectivo}{{2.5}{10}{Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{10}{subsubsection*.20}\protected@file@percent }
 \citation{ite_handbook}
 \citation{ite_handbook}
 \citation{fernandez}
@@ -79,117 +80,165 @@
 \citation{SUMO2018_SUMO}
 \citation{sumo-doc}
 \citation{sumo-doc}
-\citation{fernandez}
-\citation{ite_handbook}
 \citation{sumo-doc}
-\citation{sumo-doc}
-\@writefile{toc}{\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{11}{subsubsection*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{11}{subsection.2.1.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{11}{subsubsection*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Modelado de Intersecciones y Semáforos en SUMO}{11}{subsubsection*.22}\protected@file@percent }
+\citation{SUMO2018_SUMO}
+\citation{sumo_doc_2025}
+\citation{sumo-doc}
+\citation{sumo_doc_2025}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces Elementos geométricos y conexiones de una intersección semaforizada en SUMO bajo sentido de circulación por la derecha (Argentina): carriles entrantes ($L_{\text  {in}}$), salientes ($L_{\text  {out}}$), líneas de detención y enlaces de cruzamiento (\textit  {links}) en verde prioritario (\textbf  {G}) y rojo retenido en conflicto (\textbf  {r}).}}{12}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:sumo_intersection_elements}{{2.6}{12}{Elementos geométricos y conexiones de una intersección semaforizada en SUMO bajo sentido de circulación por la derecha (Argentina): carriles entrantes ($L_{\text {in}}$), salientes ($L_{\text {out}}$), líneas de detención y enlaces de cruzamiento (\textit {links}) en verde prioritario (\textbf {G}) y rojo retenido en conflicto (\textbf {r})}{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Componentes y Configuración de SUMO}{12}{subsubsection*.23}\protected@file@percent }
+\citation{sumo_doc_2025}
+\citation{sumo_doc_2025}
+\citation{sumo-doc}
+\citation{calymayor}
+\citation{suttonRL}
+\citation{yu2022surprising}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Requerimientos mínimos de archivos de configuración para la simulación en SUMO \cite  {sumo_doc_2025}.}}{13}{table.caption.24}\protected@file@percent }
+\newlabel{tab:sumo_input_files}{{2.2}{13}{Requerimientos mínimos de archivos de configuración para la simulación en SUMO \cite {sumo_doc_2025}}{table.caption.24}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Métricas de Evaluación Operacional y Aprendizaje}{13}{subsubsection*.25}\protected@file@percent }
 \citation{suttonRL}
 \citation{suttonRL}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces Representación en SUMO de carriles entrantes (en azul), carriles salientes (en negro) y enlaces (\textit  {links}) que definen las conexiones de giro y cruce.}}{12}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:sumo_intersection_elements}{{2.6}{12}{Representación en SUMO de carriles entrantes (en azul), carriles salientes (en negro) y enlaces (\textit {links}) que definen las conexiones de giro y cruce}{figure.caption.23}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{12}{section.2.2}\protected@file@percent }
 \citation{suttonRL}
 \citation{suttonRL}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{14}{section.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{14}{subsection.2.2.1}\protected@file@percent }
 \citation{suttonRL}
 \citation{suttonRL}
 \citation{suttonRL}
 \citation{marlbook}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{13}{subsection.2.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite  {suttonRL}.}}{13}{figure.caption.24}\protected@file@percent }
-\newlabel{fig:agent_env_interaction}{{2.7}{13}{Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}}{figure.caption.24}{}}
 \citation{suttonRL}
 \citation{marlbook}
 \citation{suttonRL}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite  {suttonRL}.}}{15}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:agent_env_interaction}{{2.7}{15}{Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}}{figure.caption.26}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{15}{subsection.2.2.2}\protected@file@percent }
 \citation{suttonRL}
 \citation{spinningup}
 \citation{spinningup}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{14}{subsection.2.2.2}\protected@file@percent }
+\citation{suttonRL}
+\citation{marlbook}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.8}{\ignorespaces Taxonomía de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit  {Model-Free} (adaptada de OpenAI \textit  {Spinning Up} \cite  {spinningup}).}}{16}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:rl_taxonomy}{{2.8}{16}{Taxonomía de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit {Model-Free} (adaptada de OpenAI \textit {Spinning Up} \cite {spinningup})}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{16}{subsection.2.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit  {Feedforward}}{16}{subsubsection*.28}\protected@file@percent }
+\citation{marlbook}
+\citation{marlbook}
 \citation{suttonRL}
 \citation{marlbook}
 \citation{marlbook}
-\citation{marlbook}
-\citation{suttonRL}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.8}{\ignorespaces Taxonomía no exhaustiva de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit  {Model-Free} (adaptada de OpenAI \textit  {Spinning Up} \cite  {spinningup}).}}{15}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:rl_taxonomy}{{2.8}{15}{Taxonomía no exhaustiva de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit {Model-Free} (adaptada de OpenAI \textit {Spinning Up} \cite {spinningup})}{figure.caption.25}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{15}{subsection.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit  {Feedforward}}{15}{subsubsection*.26}\protected@file@percent }
-\citation{marlbook}
-\citation{marlbook}
+\@writefile{toc}{\contentsline {subsubsection}{El Proceso de Optimización}{17}{subsubsection*.29}\protected@file@percent }
 \citation{suttonRL}
 \citation{suttonRL}
-\@writefile{toc}{\contentsline {subsubsection}{El Proceso de Optimización}{16}{subsubsection*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{16}{subsection.2.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit  {Deadly Triad})}{16}{subsubsection*.28}\protected@file@percent }
 \citation{marlbook}
 \citation{mnih2015}
 \citation{marlbook}
-\@writefile{toc}{\contentsline {subsubsection}{\textit  {Deep Q-Networks} (DQN)}{17}{subsubsection*.29}\protected@file@percent }
-\citation{marlbook}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{18}{subsection.2.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit  {Deadly Triad})}{18}{subsubsection*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\textit  {Deep Q-Networks} (DQN)}{18}{subsubsection*.31}\protected@file@percent }
 \citation{marlbook}
 \citation{suttonRL}
-\citation{marlbook}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algoritmo \textit  {Deep Q-Networks} (DQN) con \textit  {Replay Buffer}}}{18}{algorithm.1}\protected@file@percent }
-\newlabel{alg:dqn}{{1}{18}{Algoritmo \textit {Deep Q-Networks} (DQN) con \textit {Replay Buffer}}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Aproximación de Políticas (Gradiente de Política)}{18}{subsubsection*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\textit  {Proximal Policy Optimization} (PPO)}{18}{subsubsection*.31}\protected@file@percent }
+\citation{schulman2015high}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algoritmo \textit  {Deep Q-Networks} (DQN) con \textit  {Replay Buffer}}}{19}{algorithm.1}\protected@file@percent }
+\newlabel{alg:dqn}{{1}{19}{Algoritmo \textit {Deep Q-Networks} (DQN) con \textit {Replay Buffer}}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit  {Policy Gradient}}{19}{subsubsection*.32}\protected@file@percent }
+\citation{suttonRL}
+\citation{schulman2015high}
+\citation{kakade2002approximately}
+\citation{schulman2015trust}
 \citation{schulman2017ppo}
+\@writefile{toc}{\contentsline {subsubsection}{\textit  {Proximal Policy Optimization} (PPO) y Mejora Monótona}{20}{subsubsection*.33}\protected@file@percent }
 \citation{marlbook}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Algoritmo \textit  {Proximal Policy Optimization} (PPO) - Variante \textit  {Actor-Critic}}}{19}{algorithm.2}\protected@file@percent }
-\newlabel{alg:ppo}{{2}{19}{Algoritmo \textit {Proximal Policy Optimization} (PPO) - Variante \textit {Actor-Critic}}{algorithm.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{19}{section.2.3}\protected@file@percent }
+\citation{shapley1953stochastic}
+\citation{marlbook}
+\citation{marlbook}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Algoritmo \textit  {Proximal Policy Optimization} (PPO) - Variante \textit  {Actor-Critic}}}{21}{algorithm.2}\protected@file@percent }
+\newlabel{alg:ppo}{{2}{21}{Algoritmo \textit {Proximal Policy Optimization} (PPO) - Variante \textit {Actor-Critic}}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{21}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}{21}{subsection.2.3.1}\protected@file@percent }
+\citation{marlbook}
+\citation{decpomdp-survey}
 \citation{decpomdp-survey}
 \citation{marlbook}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf  {a}$) que modifica el estado global del entorno de tráfico.}}{22}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:marl_interaction}{{2.9}{22}{Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf {a}$) que modifica el estado global del entorno de tráfico}{figure.caption.34}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{22}{subsection.2.3.2}\protected@file@percent }
 \citation{marlbook}
 \citation{foerster2017}
 \citation{marlbook}
 \citation{ctde_survey}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP)}{20}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{20}{subsection.2.3.2}\protected@file@percent }
+\citation{marlbook}
 \citation{maddpg}
+\citation{marlbook}
 \citation{tampuu2017multiagent}
 \citation{foerster2017}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{23}{subsection.2.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Multi-Agent Deep Reinforcement Learning (MADRL) y Algoritmos Baseline}{23}{subsection.2.3.4}\protected@file@percent }
 \citation{de2020independent}
+\citation{yu2022surprising}
+\citation{yu2022surprising}
+\@writefile{toc}{\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO como Algoritmos Baseline}{24}{subsubsection*.35}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.10}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). El Crítico utiliza información global privileged para guiar las actualizaciones de los Actores locales durante la simulación.}}{24}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:ctde_architecture}{{2.10}{24}{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). El Crítico utiliza información global privileged para guiar las actualizaciones de los Actores locales durante la simulación}{figure.caption.36}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}Multi-Agent Proximal Policy Optimization (MAPPO)}{24}{subsection.2.3.5}\protected@file@percent }
+\newlabel{subsec:mappo}{{2.3.5}{24}{Multi-Agent Proximal Policy Optimization (MAPPO)}{subsection.2.3.5}{}}
+\citation{yu2022surprising}
+\citation{hessel2019popart}
+\citation{yu2022surprising}
+\@writefile{toc}{\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en MAPPO}{25}{subsubsection*.37}\protected@file@percent }
+\citation{kuba2021trust}
+\citation{kuba2021trust}
+\citation{zhong2024heterogeneous}
+\citation{kuba2021trust}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Algoritmo \textit  {Multi-Agent Proximal Policy Optimization} (MAPPO)}}{26}{algorithm.3}\protected@file@percent }
+\newlabel{alg:mappo}{{3}{26}{Algoritmo \textit {Multi-Agent Proximal Policy Optimization} (MAPPO)}{algorithm.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.6}Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{26}{subsection.2.3.6}\protected@file@percent }
+\newlabel{subsec:happo}{{2.3.6}{26}{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{subsection.2.3.6}{}}
+\citation{kuba2021trust}
 \citation{sunehag2017value}
 \citation{rashid2018qmix}
-\citation{yu2022surprising}
+\@writefile{toc}{\contentsline {subsubsection}{Compartición de Experiencia vs. Compartición de Parámetros}{27}{subsubsection*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{27}{subsubsection*.39}\protected@file@percent }
+\citation{zhong2024heterogeneous}
+\citation{wang2023order}
+\citation{kuba2021trust}
 \citation{kuba2021trust}
 \citation{zhong2024heterogeneous}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{21}{subsection.2.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}\textit  {Multi-Agent Deep Reinforcement Learning} (MADRL)}{21}{subsection.2.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO}{21}{subsubsection*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Paradigma CTDE: MAPPO y HAPPO}{21}{subsubsection*.33}\protected@file@percent }
-\citation{yu2022surprising}
-\citation{yu2022surprising}
-\@writefile{toc}{\contentsline {paragraph}{Multi-Agent Proximal Policy Optimization (MAPPO)}{22}{paragraph*.34}\protected@file@percent }
-\citation{kuba2021trust}
-\citation{zhong2024heterogeneous}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Algoritmo \textit  {Multi-Agent Proximal Policy Optimization} (MAPPO)}}{23}{algorithm.3}\protected@file@percent }
-\newlabel{alg:mappo}{{3}{23}{Algoritmo \textit {Multi-Agent Proximal Policy Optimization} (MAPPO)}{algorithm.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{23}{paragraph*.35}\protected@file@percent }
-\citation{zhong2024heterogeneous}
-\citation{kuba2021trust}
-\citation{sumo-doc}
-\citation{SUMO2018_SUMO}
+\@writefile{toc}{\contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{28}{subsubsection*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Garantía de Mejora Monótona}{28}{subsubsection*.41}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de actualización secuencial de HAPPO. A diferencia de PPO Independiente, la actualización de cada agente está matemáticamente condicionada por el cociente de probabilidad compuesto $M_{i_m}$, que propaga los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{29}{figure.caption.42}\protected@file@percent }
+\newlabel{fig:happo_sequential}{{2.11}{29}{Esquema de actualización secuencial de HAPPO. A diferencia de PPO Independiente, la actualización de cada agente está matemáticamente condicionada por el cociente de probabilidad compuesto $M_{i_m}$, que propaga los cambios efectuados por los agentes que lo precedieron en la secuencia}{figure.caption.42}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Algoritmo \textit  {Heterogeneous-Agent Proximal Policy Optimization} (HAPPO)}}{29}{algorithm.4}\protected@file@percent }
+\newlabel{alg:happo}{{4}{29}{Algoritmo \textit {Heterogeneous-Agent Proximal Policy Optimization} (HAPPO)}{algorithm.4}{}}
 \citation{AlegreLSUMORLDoc}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Algoritmo \textit  {Heterogeneous-Agent Proximal Policy Optimization} (HAPPO)}}{25}{algorithm.4}\protected@file@percent }
-\newlabel{alg:happo}{{4}{25}{Algoritmo \textit {Heterogeneous-Agent Proximal Policy Optimization} (HAPPO)}{algorithm.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{25}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{25}{subsection.2.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{25}{subsection.2.4.2}\protected@file@percent }
-\citation{WeiH2019ASTSCM}
-\citation{AlegreLSUMORLDoc}
-\citation{suttonRL}
-\citation{WeiH2019ASTSCM}
-\citation{gnn_traffic}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{26}{subsection.2.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas PPO en entornos multi-agente cooperativos.}}{30}{table.caption.43}\protected@file@percent }
+\newlabel{tab:marl_ppo_comparison}{{2.3}{30}{Comparación sintética de familias algorítmicas PPO en entornos multi-agente cooperativos}{table.caption.43}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{30}{section.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Formalización del Control Semafórico Coordinado como Dec-POMDP}{30}{subsection.2.4.1}\protected@file@percent }
+\citation{MDPI_Infrastructures2025_RLReview}
+\citation{difference_rewards}
+\citation{presslight2019}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Funciones de Recompensa en Control Semafórico}{31}{subsection.2.4.2}\protected@file@percent }
+\citation{ray_doc_2025}
+\citation{ray_doc_2025}
+\citation{liaw2018tune}
+\citation{liang2018rllib}
+\citation{akiba2019optuna}
+\citation{optuna_doc_2025}
+\citation{akiba2019optuna}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Frameworks Tecnológicos de Escalado y Optimización}{32}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Ecosistema Ray: Ray Core, Ray Tune y RLlib}{32}{subsection.2.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Framework Optuna y Pipeline de Optimización Multietapa}{32}{subsection.2.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Optimización Bayesiana TPE y Poda Asíncrona ASHA}{32}{subsubsection*.44}\protected@file@percent }
+\citation{li2020system}
+\citation{yu2022surprising}
+\@writefile{toc}{\contentsline {subsubsection}{Pipeline Multietapa y Métrica de Retorno Robusto al Riesgo (CVaR)}{33}{subsubsection*.45}\protected@file@percent }
 \@setckpt{4-marco_teorico}{
-\setcounter{page}{27}
-\setcounter{equation}{19}
-\setcounter{enumi}{5}
+\setcounter{page}{34}
+\setcounter{equation}{36}
+\setcounter{enumi}{2}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
@@ -197,13 +246,13 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{2}
-\setcounter{section}{4}
-\setcounter{subsection}{3}
+\setcounter{section}{5}
+\setcounter{subsection}{2}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{8}
-\setcounter{table}{1}
+\setcounter{figure}{11}
+\setcounter{table}{3}
 \setcounter{caption@flags}{2}
 \setcounter{continuedfloat}{0}
 \setcounter{float@type}{32}
@@ -214,7 +263,7 @@
 \setcounter{mdf@env@ii}{0}
 \setcounter{mdf@zref@counter}{0}
 \setcounter{algorithm}{4}
-\setcounter{ALG@line}{12}
+\setcounter{ALG@line}{16}
 \setcounter{ALG@rem}{0}
 \setcounter{ALG@nested}{0}
 \setcounter{ALG@Lnr}{2}
@@ -231,9 +280,9 @@
 \setcounter{tcbrasternum}{1}
 \setcounter{tcbraster}{0}
 \setcounter{section@level}{0}
-\setcounter{Item}{5}
+\setcounter{Item}{7}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{23}
+\setcounter{bookmark@seq@number}{27}
 \setcounter{LT@tables}{0}
 \setcounter{LT@chunks}{0}
 \setcounter{lstlisting}{0}
