@@ -91,16 +91,6 @@
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
 \newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
 
-\bibitem [{DK11}]{difference_rewards}
-\btxnamefont {\btxlastnamefont {Devlin}, Sam} \btxandlong {}\ \btxnamefont
-  {Daniel \btxlastnamefont {Kudenko}}\btxauthorcolon\ \btxtitlefont
-  {\btxifchangecase {Potential-based difference rewards for multiagent
-  reinforcement learning}{Potential-Based Difference Rewards for Multiagent
-  Reinforcement Learning}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 10th International
-  Conference on Autonomous Agents and Multiagent Systems (AAMAS)},
-  \btxpageslong {}\ 1037--1044, 2011.
-
 \bibitem [{{DLR}25}]{sumo-doc}
 \btxnamefont {\btxlastnamefont {{DLR -- Institute of Transportation
   Systems}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Sumo user
@@ -250,19 +240,6 @@
 \newblock \btxjournalfont {Nature}, 518(7540):529–533, 2015.
 \newblock {\latintext \btxurlfont{https://doi.org/10.1038/nature14236}}.
 
-\bibitem [{MMLK25}]{MDPI_Infrastructures2025_RLReview}
-\btxnamefont {\btxlastnamefont {Michailidis}, Panagiotis}, \btxnamefont
-  {Iakovos \btxlastnamefont {Michailidis}}, \btxnamefont
-  {Charalampos\btxfnamespacelong Rafail \btxlastnamefont
-  {Lazaridis}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Elias
-  \btxlastnamefont {Kosmatopoulos}}\btxauthorcolon\ \btxjtitlefont
-  {\btxifchangecase {Traffic signal control via reinforcement learning: A
-  review on applications and innovations}{Traffic Signal Control via
-  Reinforcement Learning: A Review on Applications and Innovations}}.
-\newblock \btxjournalfont {Infrastructures}, 10(5):114, 2025.
-\newblock Fuente: [4, 5] Revisión que documenta la evolución de RL como
-  framework para TSC.
-
 \bibitem [{ne18}]{UN2018_CongestionCost}
 \btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\
   \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over
@@ -373,20 +350,6 @@
   {.}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {A survey on traffic
   signal control methods}{A survey on traffic signal control methods}}, 2019.
 \newblock Available at: \url{https://arxiv.org/abs/1904.08117}.
-
-\bibitem [{WCZ{\etalchar{+}}19}]{presslight2019}
-\btxnamefont {\btxlastnamefont {Wei}, Hua}, \btxnamefont {Chacha
-  \btxlastnamefont {Chen}}, \btxnamefont {Guanjie \btxlastnamefont {Zheng}},
-  \btxnamefont {Kan \btxlastnamefont {Wu}}, \btxnamefont {Vikash
-  \btxlastnamefont {Gayah}}, \btxnamefont {Kai \btxlastnamefont
-  {Xu}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Zhenhui \btxlastnamefont
-  {Li}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Presslight: Learning
-  max pressure control to coordinate traffic signals in arterial
-  network}{PressLight: Learning Max Pressure Control to Coordinate Traffic
-  Signals in Arterial Network}}.
-\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 25th ACM SIGKDD
-  International Conference on Knowledge Discovery \& Data Mining},
-  \btxpageslong {}\ 1290--1298, 2019.
 
 \bibitem [{Wie00}]{Wiering2000}
 \btxnamefont {\btxlastnamefont {Wiering}, Marco\btxfnamespacelong

@@ -14,9 +14,8 @@
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf {a}$) que modifica el estado global del entorno de tráfico.}}{23}{figure.caption.34}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{25}{figure.caption.36}%
 \contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de actualización secuencial de HAPPO. A diferencia de PPO Independiente, la actualización de cada agente está matemáticamente condicionada por el cociente de probabilidad compuesto $M_{i_m}$, que propaga los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{30}{figure.caption.42}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Mapeo conceptual del control semafórico como interacción Dec-POMDP. Los actores seleccionan fases a partir de observaciones locales; durante el entrenamiento CTDE, el crítico puede utilizar información global para estimar valores o ventajas.}}{31}{figure.caption.44}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico secuencial de la investigación experimental.}}{34}{figure.caption.45}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico secuencial de la investigación experimental.}}{33}{figure.caption.44}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {spanish}{}\relax 

@@ -496,6 +496,8 @@ Para evaluar rigurosamente el impacto de las estrategias de control semafórico 
     \item \textbf{Valores de pérdida (\textit{loss values}):} Indicadores de diagnóstico durante el entrenamiento en DRL/MADRL \cite{yu2022surprising}. Incluyen la pérdida de política o actor ($\mathcal{L}^{\text{CLIP}}$), la pérdida de error cuadrático medio de la función de valor del crítico ($\mathcal{L}^{\text{VF}}$) y el término de entropía de la política ($S[\pi]$). Su seguimiento permite identificar inestabilidades del gradiente y cambios en el proceso de optimización; por sí solo, no demuestra la calidad operacional del controlador.
 \end{itemize}
 
+En este marco, SUMO no solo permite reproducir la evolución microscópica de la red, sino también interactuar con ella mediante TraCI. La posibilidad de observar el estado del tránsito y modificar las fases semafóricas en pasos discretos convierte el control semafórico en un problema de decisión secuencial, lo que motiva la introducción del aprendizaje por refuerzo en la siguiente sección \cite{sumo-doc}.
+
 
 \section{Aprendizaje por Refuerzo (RL)}
 
@@ -504,6 +506,8 @@ Dentro del aprendizaje automático suelen distinguirse tres paradigmas principal
 Esta diferencia es central. En RL no existe, en general, un supervisor que indique cuál era la acción correcta en cada situación. El agente aprende por experiencia, ensayando acciones, observando sus consecuencias y ajustando su comportamiento a partir de las recompensas obtenidas. Además, las consecuencias relevantes de una acción no siempre se manifiestan de forma inmediata: una decisión puede producir una recompensa baja en el corto plazo, pero conducir a estados favorables en el futuro. Por este motivo, el aprendizaje por refuerzo se ocupa explícitamente del problema de la recompensa diferida y de la asignación de crédito a decisiones pasadas \cite{suttonRL}.
 
 La formulación básica distingue entre el \textit{agente} (\textit{agent}), que aprende y toma decisiones, y el \textit{entorno} (\textit{environment}), que representa todo aquello externo al agente con lo cual este interactúa. En cada paso temporal, el agente observa una situación del entorno, selecciona una acción y recibe como respuesta una nueva situación junto con una recompensa. El comportamiento del agente está determinado por una \textit{política} (\textit{policy}), denotada por $\pi$, que especifica cómo se eligen las acciones a partir de los estados u observaciones disponibles. La \textit{señal de recompensa} (\textit{reward signal}) define el objetivo inmediato del problema, mientras que la \textit{función de valor} estima la conveniencia de estados o acciones en términos de recompensa futura esperada. Sutton y Barto también distinguen el \textit{modelo} del entorno, entendido como una descripción que permite predecir sus transiciones y recompensas; cuando dicho modelo no se conoce o no se utiliza explícitamente, se habla de métodos libres de modelo (\textit{model-free}).
+
+En el control semafórico, el controlador de una intersección puede interpretarse como el agente y la red vial simulada en SUMO como el entorno. La selección de una fase constituye la acción, mientras que la evolución posterior del tránsito produce nuevas observaciones y una señal de recompensa que orienta el aprendizaje \cite{sumo-doc}.
 
 Un aspecto característico de RL es el dilema entre exploración y explotación. El agente debe explotar acciones que, según su experiencia, producen buenos resultados, pero también debe explorar alternativas menos conocidas que podrían conducir a políticas superiores. Si explora demasiado, desperdicia oportunidades de obtener recompensa; si explota demasiado pronto, puede converger a comportamientos subóptimos. Este equilibrio es especialmente relevante en problemas de control, donde las acciones modifican la experiencia futura disponible para el aprendizaje \cite{suttonRL}.
 
@@ -768,6 +772,8 @@ El siguiente pseudocódigo resume el ciclo conceptual de PPO. La recolección de
 
 El aprendizaje por refuerzo multi-agente (\textit{Multi-Agent Reinforcement Learning}, MARL) generaliza los principios del RL hacia sistemas donde múltiples entidades aprenden e interactúan simultáneamente en un entorno compartido \cite{marlbook}. A diferencia del caso individual, las acciones de cada agente modifican el estado global del sistema, lo que induce una dinámica no estacionaria desde la perspectiva local de cualquier participante. En el contexto de sistemas dinámicos cooperativos, múltiples controladores coordinan sus decisiones para optimizar un objetivo común.
 
+En una intersección aislada, el control puede analizarse mediante un único agente. Sin embargo, en una red vial la fase seleccionada en una intersección modifica las corrientes que llegan a otras, por lo que los controladores quedan acoplados por la dinámica del tránsito. Esta dependencia espacial motiva la extensión del aprendizaje por refuerzo hacia un escenario multi-agente.
+
 \subsection{Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}
 
 La formalización matemática de los entornos multi-agente requiere extender el MDP individual incorporando nociones de la Teoría de Juegos. El modelo matemático fundamental para representar decisiones secuenciales con múltiples participantes es el Juego Estocástico o Juego Markoviano (\textit{Stochastic Game} o \textit{Markov Game}), introducido por Shapley \cite{shapley1953stochastic} y adaptado al aprendizaje por refuerzo por Albrecht et al. \cite{marlbook}.
@@ -777,6 +783,8 @@ Un Juego Estocástico para $n$ agentes se define mediante la tupla:
     \langle \mathcal{N}, \mathcal{S}, \{ \mathcal{A}_i \}_{i=1}^n, P, \{ R_i \}_{i=1}^n, \gamma \rangle
 \end{equation}
 donde $\mathcal{N} = \{1, \dots, n\}$ representa el conjunto de agentes, $\mathcal{S}$ es el espacio de estados globales, $\mathcal{A}_i$ es el espacio de acciones del agente $i$, $P(s' \mid s, \mathbf{a})$ representa la función de transición de estados condicionada a la acción conjunta $\mathbf{a} = (a_1, \dots, a_n) \in \boldsymbol{\mathcal{A}} \equiv \mathcal{A}_1 \times \dots \times \mathcal{A}_n$, y $R_i(s, \mathbf{a})$ representa la función de recompensa asignada al agente $i$. En un entorno estrictamente cooperativo, todos los agentes comparten exactamente la misma señal de recompensa ($R_1 = R_2 = \dots = R_n = R$), de modo que el objetivo de cada agente es maximizar el retorno global esperado del sistema.
+
+En el control semafórico de una red, el conjunto de agentes puede corresponder a las intersecciones controladas, mientras que cada espacio de acciones contiene las fases válidas de una intersección. El estado global y la transición representan la evolución conjunta de la red, que puede ser simulada en SUMO, y $R_i$ resume la señal de aprendizaje asociada con el desempeño del controlador $i$.
 
 En la teoría de juegos, el \textbf{Equilibrio de Nash} es un concepto de solución que caracteriza la estabilidad frente a desviaciones unilaterales \cite{marlbook}. Una política conjunta $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ constituye un Equilibrio de Nash si ningún agente $i \in \mathcal{N}$ puede incrementar unilateralmente su retorno esperado desviándose de su política $\pi_i^*$, asumiendo que los demás agentes mantienen sus políticas fijas en $\boldsymbol{\pi}_{-i}^*$:
 \begin{equation}
@@ -863,6 +871,8 @@ La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios m
 Para abordar estas patologías en escenarios Dec-POMDP, la literatura clasifica los algoritmos en función de cómo fluye la información durante el proceso de optimización. Se distinguen fundamentalmente dos enfoques: el Aprendizaje Independiente (\textit{Independent Learning}, IL) y el Entrenamiento Centralizado con Ejecución Descentralizada (\textit{Centralized Training with Decentralized Execution}, CTDE) \cite{ctde_survey, marlbook}.
 
 En el primero, los agentes se entrenan localmente utilizando métodos de agente único, tratando empíricamente al resto de los agentes como parte de la dinámica del entorno. En el segundo, durante el entrenamiento, los algoritmos pueden explotar información global privilegiada (historiales conjuntos o concatenación de observaciones) para guiar y estabilizar la optimización de las funciones de valor. Durante la ejecución, el componente centralizado no participa en la selección de acciones y los actores utilizan únicamente sus observaciones locales. Esta separación entre información disponible durante el entrenamiento y durante la ejecución constituye la característica central de CTDE.
+
+En la implementación empleada, esta separación se concreta mediante un crítico compartido que procesa las observaciones de los agentes durante el entrenamiento, mientras que cada actor conserva su observación local para seleccionar acciones durante la ejecución.
 
 \subsection{Multi-Agent Deep Reinforcement Learning (MADRL) y Algoritmos Baseline}
 
@@ -1145,58 +1155,4 @@ Para finalizar el estudio comparativo de los algoritmos basados en Optimización
 \end{tabular}
 \end{table}
 
-\section{Control de Tráfico Urbano mediante MARL}
-
-Una vez establecidos los marcos teóricos de la Ingeniería de Tránsito y del Aprendizaje por Refuerzo Multi-Agente, esta sección formaliza el mapeo directo entre los conceptos físicos del dominio del tráfico y la tupla de decisión secuencial Dec-POMDP, definiendo la arquitectura de interacción entre el simulador y los controladores inteligentes.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[
-        box/.style={rectangle, rounded corners=4pt, thick, align=center, text width=2.75cm, minimum width=2.9cm, minimum height=1.05cm, font=\footnotesize},
-        env/.style={box, draw=colEntorno!80!black, fill=colEntorno!20},
-        obs/.style={box, draw=colInterfaz!80!black, fill=colInterfaz!20},
-        ag/.style={box, draw=colAgente!80!black, fill=colAgente!20},
-        rew/.style={box, draw=colDatoPrimario!80!black, fill=colDatoPrimario!15},
-        arr/.style={-{Stealth[length=6pt]}, thick, draw=black!75},
-        lbl/.style={font=\scriptsize, fill=white, inner sep=2pt, align=center}
-    ]
-        \node[env] (sumo) at (0,2.0) {Entorno microscópico\\SUMO / red vial};
-        \node[obs] (observ) at (4,2.0) {Observaciones locales\\$o_i$: colas, velocidad, fase};
-        \node[ag] (actor) at (8,2.0) {Actor local\\$\pi_i(a_i\mid o_i)$};
-        \node[env] (fase) at (12,2.0) {Acción semafórica\\$a_i$: fase válida};
-        \node[rew] (critic) at (0,-0.45) {Durante CTDE\\crítico con información global};
-        \node[rew] (reward) at (12,-0.45) {Recompensa\\demora, cola, detenciones};
-
-        % Ciclo de interacción local.
-        \draw[arr] (sumo.east) -- node[lbl] {telemetría} (observ.west);
-        \draw[arr] (observ.east) -- (actor.west);
-        \draw[arr] (actor.east) -- (fase.west);
-        \draw[arr] (fase.north) to[out=90,in=90] node[lbl, above] {control} (sumo.north);
-
-        % Señales utilizadas durante el entrenamiento y la actualización.
-        \draw[arr, dashed] (sumo.south) -- node[lbl, left] {estado global} (critic.north);
-        \draw[arr, dashed] (critic.east) -| node[lbl, below] {valor / ventaja} (actor.south);
-        \draw[arr] (sumo.south east) to[out=-45,in=180] node[lbl, below] {desempeño} (reward.west);
-        \draw[arr] (reward.north) -| node[lbl, right] {actualización} (actor.south);
-    \end{tikzpicture}
-    \caption{Mapeo conceptual del control semafórico como interacción Dec-POMDP. Los actores seleccionan fases a partir de observaciones locales; durante el entrenamiento CTDE, el crítico puede utilizar información global para estimar valores o ventajas.}
-    \label{fig:traffic_rl_mapping}
-\end{figure}
-
-\subsection{Formalización del Control Semafórico Coordinado como Dec-POMDP}
-
-En el contexto del control adaptativo de red, cada intersección semaforizada se modela como un agente inteligente $i \in \mathcal{N} = \{1, \dots, n\}$. La interacción entre la red vial simulada en SUMO y el sistema de control se formaliza mediante los elementos de la tupla Dec-POMDP:
-
-\begin{itemize}
-    \item \textbf{Entorno:} El simulador microscópico SUMO representa la evolución dinámica de la red vial. La interfaz de simulación permite intercambiar observaciones y acciones en pasos discretos; los detalles de la integración se especifican en el Capítulo \ref{capitulo:metodologia}.
-    \item \textbf{Observaciones ($o_i \in \Omega_i$):} Cada intersección recibe información local de sus accesos y fases. En la implementación se utilizan variables de tránsito como colas, velocidad, espera y estado de fase; estas variables constituyen una decisión de modelado y se detallan en la metodología. Debe distinguirse la densidad física de la ocupación medida por un detector.
-    \item \textbf{Acciones ($a_i \in \mathcal{A}_i$):} Cada agente selecciona o mantiene una fase semafórica válida. La duración de las decisiones y las transiciones de seguridad son restricciones del entorno, no parte de la teoría general del Dec-POMDP.
-    \item \textbf{Recompensa:} La señal de realimentación representa el objetivo operacional del controlador. Puede penalizar colas, demoras o detenciones, o combinar señales locales y globales. Las funciones concretas evaluadas en este trabajo se presentan en el Capítulo \ref{capitulo:metodologia}.
-    \item \textbf{Coordinación:} Una acción local puede modificar el flujo que llega a intersecciones vecinas y producir acumulación aguas abajo. CTDE ofrece un mecanismo para utilizar información global durante el entrenamiento y conservar actores locales durante la ejecución; que emerjan olas verdes o se reduzca el desbordamiento de colas es una hipótesis de desempeño que debe evaluarse experimentalmente.
-\end{itemize}
-
-\subsection{Funciones de Recompensa en Control Semafórico}
-
-En un Dec-POMDP para control semafórico, la recompensa vincula las decisiones de los agentes con el desempeño operacional de la red. En términos generales, puede construirse a partir de demoras, colas, detenciones, emisiones o medidas de coordinación. La literatura distingue entre señales absolutas, que penalizan el estado observado, y señales diferenciales, que representan el cambio de una métrica entre pasos consecutivos.
-
-En este último caso, debe distinguirse una recompensa diferencial temporal de las \textit{difference rewards} de la teoría de MARL. Las primeras comparan una métrica en dos instantes; las segundas estiman contrafactualmente la contribución marginal de un agente. La presión de tránsito y las penalizaciones por desbordamiento de cola pertenecen al dominio específico de la ingeniería de tránsito y requieren definir carriles, movimientos, capacidad y ocupación. Por ello, las funciones concretas, la mezcla vecinal y sus parámetros se presentan y justifican en el Capítulo \ref{capitulo:metodologia}, donde también se describen las métricas de evaluación \cite{MDPI_Infrastructures2025_RLReview, difference_rewards, presslight2019}.
+La correspondencia anterior permite interpretar IPPO como una referencia de aprendizaje independiente y MAPPO y HAPPO como arquitecturas que incorporan información conjunta durante el entrenamiento. El capítulo siguiente especifica cómo se instancian las observaciones, las acciones y las señales de recompensa en el entorno utilizado para la evaluación experimental.
