@@ -19,70 +19,57 @@
 \contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{14}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{14}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{15}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{16}{subsection.2.2.3}%
-\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{16}{subsubsection*.28}%
+\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{17}{subsection.2.2.3}%
+\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{17}{subsubsection*.28}%
 \contentsline {subsubsection}{El Proceso de Optimización}{17}{subsubsection*.29}%
 \contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{18}{subsection.2.2.4}%
 \contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{18}{subsubsection*.30}%
-\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{18}{subsubsection*.31}%
-\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit {Policy Gradient}}{19}{subsubsection*.32}%
-\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO) y Mejora Monótona}{20}{subsubsection*.33}%
-\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{21}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}{21}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{22}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{23}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Multi-Agent Deep Reinforcement Learning (MADRL) y Algoritmos Baseline}{23}{subsection.2.3.4}%
-\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO como Algoritmos Baseline}{24}{subsubsection*.35}%
-\contentsline {subsection}{\numberline {2.3.5}Multi-Agent Proximal Policy Optimization (MAPPO)}{24}{subsection.2.3.5}%
-\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en MAPPO}{25}{subsubsection*.37}%
-\contentsline {subsection}{\numberline {2.3.6}Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{26}{subsection.2.3.6}%
-\contentsline {subsubsection}{Compartición de Experiencia vs. Compartición de Parámetros}{27}{subsubsection*.38}%
-\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{27}{subsubsection*.39}%
+\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{19}{subsubsection*.31}%
+\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit {Policy Gradient}}{20}{subsubsection*.32}%
+\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO) y control de las actualizaciones}{21}{subsubsection*.33}%
+\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{22}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}{22}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{23}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{24}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Multi-Agent Deep Reinforcement Learning (MADRL) y Algoritmos Baseline}{24}{subsection.2.3.4}%
+\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO como Algoritmos Baseline}{25}{subsubsection*.35}%
+\contentsline {subsection}{\numberline {2.3.5}Multi-Agent Proximal Policy Optimization (MAPPO)}{25}{subsection.2.3.5}%
+\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en MAPPO}{26}{subsubsection*.37}%
+\contentsline {subsection}{\numberline {2.3.6}Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{27}{subsection.2.3.6}%
+\contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{27}{subsubsection*.38}%
+\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{28}{subsubsection*.39}%
 \contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{28}{subsubsection*.40}%
-\contentsline {subsubsection}{Garantía de Mejora Monótona}{28}{subsubsection*.41}%
-\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{30}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Formalización del Control Semafórico Coordinado como Dec-POMDP}{30}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Funciones de Recompensa en Control Semafórico}{31}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Frameworks Tecnológicos de Escalado y Optimización}{32}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Ecosistema Ray: Ray Core, Ray Tune y RLlib}{32}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Framework Optuna y Pipeline de Optimización Multietapa}{32}{subsection.2.5.2}%
-\contentsline {subsubsection}{Optimización Bayesiana TPE y Poda Asíncrona ASHA}{32}{subsubsection*.44}%
-\contentsline {subsubsection}{Pipeline Multietapa y Métrica de Retorno Robusto al Riesgo (CVaR)}{33}{subsubsection*.45}%
-\contentsline {chapter}{\numberline {3}Metodología y Diseño Experimental}{34}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Enfoque y Diseño de Investigación}{34}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Especificación del Stack Tecnológico}{35}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Diseño de Escenarios de Tránsito en SUMO}{36}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Escenarios Sintéticos: $3\times 1$, $3\times 3$ y $4\times 4\_H$}{36}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Escenario Urbano Real: Gran Mendoza (Corredor Vicente Zapata)}{37}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{37}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{37}{subsection.3.4.1}%
-\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{37}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{38}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{38}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{38}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{39}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Diseño de Experimentos de Búsqueda Hiperparamétrica}{39}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Infraestructura Computacional de Alto Rendimiento y Orquestación Distribuida}{39}{subsection.3.7.1}%
-\contentsline {section}{\numberline {3.8}Diseño de Experimentos de Evaluación de Rendimiento}{40}{section.3.8}%
-\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{41}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{41}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{41}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{41}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{41}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{41}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{41}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{41}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{41}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{41}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{42}{chapter.5}%
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
-\babel@toc {spanish}{}\relax 
+\contentsline {subsubsection}{Garantía de Mejora Monótona}{29}{subsubsection*.41}%
+\contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{31}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Formalización del Control Semafórico Coordinado como Dec-POMDP}{31}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Funciones de Recompensa en Control Semafórico}{32}{subsection.2.4.2}%
+\contentsline {chapter}{\numberline {3}Metodología y Diseño Experimental}{33}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Enfoque y Diseño de Investigación}{33}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Especificación del Stack Tecnológico}{34}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Diseño de Escenarios de Tránsito en SUMO}{35}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Escenarios Sintéticos: $3\times 1$, $3\times 3$ y $4\times 4\_H$}{35}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Escenario Urbano Real: Gran Mendoza (Corredor Vicente Zapata)}{36}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{36}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{36}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{36}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{37}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{37}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{37}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{38}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Diseño de Experimentos de Búsqueda Hiperparamétrica}{38}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Infraestructura Computacional de Alto Rendimiento y Orquestación Distribuida}{38}{subsection.3.7.1}%
+\contentsline {section}{\numberline {3.8}Diseño de Experimentos de Evaluación de Rendimiento}{39}{section.3.8}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{40}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{40}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{40}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{40}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{40}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{40}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{40}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{40}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{40}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{40}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{41}{chapter.5}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

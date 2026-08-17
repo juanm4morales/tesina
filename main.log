@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.29)  12 AUG 2026 21:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.29)  17 AUG 2026 03:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1395,7 +1395,7 @@ Package hyperref Info: Link coloring ON on input line 197.
 \openout2 = `0-titulo.aux'.
 
  (./0-titulo.tex
-<imagenes/UNCUYO-FI.png, id=224, 1462.46375pt x 245.91875pt>
+<imagenes/UNCUYO-FI.png, id=212, 1462.46375pt x 245.91875pt>
 File: imagenes/UNCUYO-FI.png Graphic file (type png)
 <use imagenes/UNCUYO-FI.png>
 Package pdftex.def Info: imagenes/UNCUYO-FI.png  used on input line 17.
@@ -1510,8 +1510,8 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.20     \item \textbf
-                      {Fase, ciclo e intervalo:} una fase representa el esta...
+l.22     \item \textbf
+                      {IntersecciÃ³n, acceso y carril:} una intersecciÃ³n es...
 [4
 
 
@@ -1522,34 +1522,32 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.113 E
-       l semÃ¡foro es uno de los dispositivos de control de trÃ¡nsito utiliz...
-[5]
+l.116 
+       [5]
 pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.133     \item \textbf
-                       {Espaciamiento simple ($s$):} es la distancia fÃ­sica...
-[6]
-Underfull \hbox (badness 1874) in paragraph at lines 147--147
+l.134 \begin{itemize}
+                      [6]
+Underfull \hbox (badness 1874) in paragraph at lines 151--151
 []|$\OML/cmm/m/it/10.95 v[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 v[] \OT1/c
 mr/m/n/10.95 + []$ \T1/cmr/m/n/10.95 (Relación de
  []
 
 
-Underfull \hbox (badness 1194) in paragraph at lines 149--149
+Underfull \hbox (badness 1194) in paragraph at lines 153--153
 []|\T1/cmr/m/n/10.95 Intervalo tem-po-ral ($\OML/cmm/m/it/10.95 h$\T1/cmr/m/n/1
 0.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
 []|\T1/cmr/m/n/10.95 Espaciamiento sim-ple
  []
 
 
-Underfull \hbox (badness 1189) in paragraph at lines 150--150
+Underfull \hbox (badness 1189) in paragraph at lines 154--154
 []|\T1/cmr/m/n/10.95 Distancia es-pa-cial en-tre para-
  []
 
@@ -1558,188 +1556,159 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.212 
-       [7]
+l.214 \end{equation}
+                     [7]
 pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.237 
-       [8]
+l.237 \begin{equation}
+                       [8]
 pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.284 
+l.290 
        [9]
 pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.334 
+l.340 
        [10] [11] [12]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 458.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 464.
 
-Underfull \hbox (badness 10000) in paragraph at lines 477--477
+Underfull \hbox (badness 10000) in paragraph at lines 483--483
 []|\T1/cmr/m/n/10 Elementos Adi-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 478--478
+Underfull \hbox (badness 10000) in paragraph at lines 484--484
 []|\T1/cmr/m/n/10 Configuración
  []
 
-[13] [14] [15] [16] [17]
-Overfull \hbox (8.66034pt too wide) in paragraph at lines 662--663
-[]\T1/cmr/m/n/10.95 El análi-sis de la Tría-da Mor-tal ar-gu-men-ta que es fác-
-ti-ca-mente im-posi-ble pre-scindir de cualquiera
- []
-
-[18]
+[13] [14] [15] [16] [17] [18]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 682.
- [19] [20] [21] [22] [23] [24] [25] [26] [27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 1138--1138
-[]|\T1/cmr/bx/n/10 PPO Agente
- []
-
-
-Underfull \hbox (badness 4060) in paragraph at lines 1138--1138
-[]|\T1/cmr/bx/n/10 IPPO (In-de-pen-
- []
-
-
-Underfull \hbox (badness 3250) in paragraph at lines 1138--1138
-[]|\T1/cmr/bx/n/10 MAPPO (CTDE
+put line 671.
+ [19] [20] [21] [22] [23] [24] [25] [26] [27]
+[28] [29]
+Underfull \hbox (badness 10000) in paragraph at lines 1137--1137
+[]|\T1/cmr/bx/n/10 HAPPO /
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1138--1138
-[]|\T1/cmr/bx/n/10 HAPPO
+[]|\T1/cmr/m/n/10 IL (De-scen-tral-iza-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1138--1138
-\T1/cmr/bx/n/10 (HARL Het-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1139--1139
-[]|\T1/cmr/m/n/10 DTE (De-scen-tral-
- []
-
-
-Underfull \hbox (badness 7030) in paragraph at lines 1139--1139
+Underfull \hbox (badness 7030) in paragraph at lines 1138--1138
 []|\T1/cmr/m/n/10 CTDE (Cen-tral-iza-
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 1139--1139
+[]|\T1/cmr/m/n/10 Actores lo-cales;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1139--1139
+\T1/cmr/m/n/10 puede com-par-tir
+ []
+
+
+Underfull \hbox (badness 6412) in paragraph at lines 1139--1139
+[]|$\OML/cmm/m/it/10 n$ \T1/cmr/m/n/10 políti-cas het-
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 1140--1140
 []|\T1/cmr/bx/n/10 Arquitectura
  []
 
 
-Underfull \hbox (badness 3250) in paragraph at lines 1140--1140
-\T1/cmr/m/n/10 di-entes o com-par-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1140--1140
-[]|\T1/cmr/m/n/10 Compartición de
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1140--1140
-[]|$\OML/cmm/m/it/10 n$ \T1/cmr/m/n/10 Ac-tores het-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1141--1141
-[]|\T1/cmr/bx/n/10 Arquitectura
- []
-
-
-Underfull \hbox (badness 5802) in paragraph at lines 1141--1141
+Underfull \hbox (badness 5802) in paragraph at lines 1140--1140
 []|$\OML/cmm/m/it/10 n$ \T1/cmr/m/n/10 Críti-cos lo-cales
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 1141--1141
+Underfull \hbox (badness 2221) in paragraph at lines 1140--1140
 []|\T1/cmr/m/n/10 Un Críti-co Cen-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1142--1142
-[]|\T1/cmr/m/n/10 Simultáneo in-de-
+Underfull \hbox (badness 4084) in paragraph at lines 1141--1141
+[]|\T1/cmr/m/n/10 Actualización se-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1142--1142
-[]|\T1/cmr/m/n/10 Secuencial con
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
 []|\T1/cmr/m/n/10 Ventaja lo-cal
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
+Underfull \hbox (badness 10000) in paragraph at lines 1142--1142
 []|\T1/cmr/m/n/10 Ventaja lo-cal
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
+Underfull \hbox (badness 10000) in paragraph at lines 1142--1142
 []|\T1/cmr/m/n/10 Ventaja con-jun-ta
  []
 
 
+Underfull \hbox (badness 1796) in paragraph at lines 1143--1143
+[]|\T1/cmr/m/n/10 No es-tric-ta para
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
+[]|\T1/cmr/m/n/10 Teórica ba-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
+\T1/cmr/m/n/10 jo supuestos;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1143--1143
+\T1/cmr/m/n/10 HAPPO-clip es
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 1144--1144
-[]|\T1/cmr/m/n/10 Sin garan-tía (no
- []
-
-
-Underfull \hbox (badness 1107) in paragraph at lines 1144--1144
-[]|\T1/cmr/m/n/10 Sin garan-tía monó-
+[]|\T1/cmr/m/n/10 Compatible; com-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1144--1144
-[]|\T1/cmr/m/n/10 Garantizada
+[]|\T1/cmr/m/n/10 Diseñada para
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1144--1144
-\T1/cmr/m/n/10 monó-tona
+Underfull \hbox (badness 1742) in paragraph at lines 1144--1144
+\T1/cmr/m/n/10 agentes het-erogé-
  []
 
+[30]
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
-[]|\T1/cmr/bx/n/10 Soporte para
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
-\T1/cmr/bx/n/10 Het-ero-genei-
- []
+Package pgf Warning: Returning node center instead of a point on node border. D
+id you specify a point identical to the center of node ``fase''? on input line 
+1174.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
-[]|\T1/cmr/m/n/10 Nativo y
- []
+Package pgf Warning: Returning node center instead of a point on node border. D
+id you specify a point identical to the center of node ``reward''? on input lin
+e 1176.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
-\T1/cmr/m/n/10 matemáti-ca-
- []
-
-[29] [30] [31] [32]) [33]
+[31]) [32]
 \openout2 = `5-metodologia.aux'.
 
  (./5-metodologia.tex
 \bbl@ensure@spanish {Cap\'\i tulo} 3.
-[34
+[33
 
 
 
@@ -1764,7 +1733,7 @@ Underfull \hbox (badness 1152) in paragraph at lines 71--71
 []|\T1/cmr/m/n/10 Cómputo dis-tribui-do mult-i-nú-cleo ges-
  []
 
-[35]
+[34]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 82.
@@ -1818,7 +1787,7 @@ ec-ciones or-ga-ni-zadas en cuadrícu-la cer-ra-da ($\OT1/cmr/m/n/10.95 7\OML/cm
 m/m/it/10.95 :\OT1/cmr/m/n/10.95 087[]$\T1/cmr/m/n/10.95 ).
  []
 
-[36] [37]
+[35] [36]
 Overfull \hbox (1.00348pt too wide) in paragraph at lines 163--164
 \T1/cmr/m/n/10.95 por la in-ter-sec-ción $\OML/cmm/m/it/10.95 i$\T1/cmr/m/n/10.
 95 . En cruces con ge-ometrías asimétri-c-as, la ca-pa \T1/cmtt/m/n/10.95 Actio
@@ -1831,7 +1800,7 @@ Overfull \hbox (5.20331pt too wide) in paragraph at lines 174--175
 jo re-suelve el com-pro-miso en-tre el rendimien-
  []
 
-[38]
+[37]
 Underfull \hbox (badness 10000) in paragraph at lines 211--211
 []|\T1/cmr/m/n/10 Estimación de ven-ta-ja
  []
@@ -1846,7 +1815,7 @@ Underfull \hbox (badness 1990) in paragraph at lines 215--215
 []|\T1/cmr/m/n/10 Reutilización de datos \T1/cmr/m/it/10 on-
  []
 
-[39]) [40]
+[38]) [39]
 \openout2 = `6-resultados.aux'.
 
  (./6-resultados.tex
@@ -1887,7 +1856,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 26.
 
-) [41
+) [40
 
 
 
@@ -1897,7 +1866,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
  (./7-conclusiones.tex
 \bbl@ensure@spanish {Cap\'\i tulo} 5.
-) [42
+) [41
 
 
 
@@ -1914,16 +1883,16 @@ babelbib: Using the BibTeX style's default font for `ISBN'.
 babelbib: Using the BibTeX style's default font for `ISSN'.
 babelbib: Using the BibTeX style's default font for `url'.
 babelbib: Using the BibTeX style's default font for `numeral'.
-[43
+[42
 
 
 
-] [44] [45])
+] [43] [44])
 
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 135.
 See the caption package documentation for explanation.
 
-[46] (./main.aux (./0-titulo.aux) (./1-resumen.aux) (./1-agradecimientos.aux)
+[45] (./main.aux (./0-titulo.aux) (./1-resumen.aux) (./1-agradecimientos.aux)
 (./2-resumen.aux) (./3-introduccion.aux) (./4-marco_teorico.aux)
 (./5-metodologia.aux) (./6-resultados.aux) (./7-conclusiones.aux))
  ***********
@@ -1931,12 +1900,12 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 693193A5E009C9F1FBF73701AC6270AE;15154.
+(rerunfilecheck)             Checksum: 7C1963A837283103AA17DF9ED87F8C2F;14182.
  ) 
 Here is how much of TeX's memory you used:
- 53741 strings out of 469515
- 1229027 string characters out of 5470807
- 1880504 words of memory out of 5000000
+ 53719 strings out of 469515
+ 1228777 string characters out of 5470807
+ 1879489 words of memory out of 5000000
  81234 multiletter control sequences out of 15000+600000
  663322 words of font info for 127 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1960,30 +1929,31 @@ st/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
 /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fo
-nts/type1/public/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/cm-super/sfbx0700.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx
-0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/
-share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dis
-t/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/
-sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></
-usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf
--dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/cm-super/sfrm0900.pfb></usr/share/texmf-dist/fonts/type1/public/cm-su
-per/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pf
-b></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/t
-exmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts
-/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/c
-m-super/sfss0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfss109
-5.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/sha
-re/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/f
-onts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf-dist/fonts/type1/publ
-ic/cm-super/sftt1095.pfb>
-Output written on main.pdf (57 pages, 1012402 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/publi
+c/cm-super/sfbi1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx
+0700.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></usr/
+share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dis
+t/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/
+sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></
+usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf
+-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/cm-super/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-su
+per/sfrm0900.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pf
+b></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/t
+exmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts
+/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/type1/public/c
+m-super/sfrm1728.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfss080
+0.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf-dist/f
+onts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/cm-super/sftt1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sft
+t1095.pfb>
+Output written on main.pdf (56 pages, 1005841 bytes).
 PDF statistics:
- 1292 PDF objects out of 1440 (max. 8388607)
- 1120 compressed objects within 12 object streams
- 281 named destinations out of 1000 (max. 500000)
- 450 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1242 PDF objects out of 1440 (max. 8388607)
+ 1071 compressed objects within 11 object streams
+ 259 named destinations out of 1000 (max. 500000)
+ 426 words of extra memory for PDF output out of 10000 (max. 10000000)
 
