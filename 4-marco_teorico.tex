@@ -1152,8 +1152,7 @@ Una vez establecidos los marcos teóricos de la Ingeniería de Tránsito y del A
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[
-        node distance=0.45cm and 0.45cm,
-        box/.style={rectangle, rounded corners=4pt, thick, align=center, minimum width=2.7cm, minimum height=1.0cm, font=\small},
+        box/.style={rectangle, rounded corners=4pt, thick, align=center, text width=2.75cm, minimum width=2.9cm, minimum height=1.05cm, font=\footnotesize},
         env/.style={box, draw=colEntorno!80!black, fill=colEntorno!20},
         obs/.style={box, draw=colInterfaz!80!black, fill=colInterfaz!20},
         ag/.style={box, draw=colAgente!80!black, fill=colAgente!20},
@@ -1161,21 +1160,24 @@ Una vez establecidos los marcos teóricos de la Ingeniería de Tránsito y del A
         arr/.style={-{Stealth[length=6pt]}, thick, draw=black!75},
         lbl/.style={font=\scriptsize, fill=white, inner sep=2pt, align=center}
     ]
-        \node[env] (sumo) {Entorno microscópico\\SUMO / red vial};
-        \node[obs, right=of sumo] (observ) {Observaciones locales\\$o_i$: colas, velocidad, fase};
-        \node[ag, right=of observ] (actor) {Actor local\\$\pi_i(a_i\mid o_i)$};
-        \node[env, right=of actor] (fase) {Acción semafórica\\$a_i$: fase válida};
-        \node[rew, below=1.0cm of actor] (reward) {Recompensa\\demora, cola, detenciones};
-        \node[rew, below=1.0cm of sumo] (critic) {Durante CTDE\\crítico con información global};
+        \node[env] (sumo) at (0,2.0) {Entorno microscópico\\SUMO / red vial};
+        \node[obs] (observ) at (4,2.0) {Observaciones locales\\$o_i$: colas, velocidad, fase};
+        \node[ag] (actor) at (8,2.0) {Actor local\\$\pi_i(a_i\mid o_i)$};
+        \node[env] (fase) at (12,2.0) {Acción semafórica\\$a_i$: fase válida};
+        \node[rew] (critic) at (0,-0.45) {Durante CTDE\\crítico con información global};
+        \node[rew] (reward) at (12,-0.45) {Recompensa\\demora, cola, detenciones};
 
-        \draw[arr] (sumo) -- node[lbl] {telemetría} (observ);
-        \draw[arr] (observ) -- (actor);
-        \draw[arr] (actor) -- (fase);
-        \draw[arr] (fase) |- (sumo);
-        \draw[arr] (sumo) |- (reward);
-        \draw[arr] (reward) -| node[lbl, below] {actualización} (actor);
-        \draw[arr, dashed] (sumo) -- node[lbl, left] {estado global} (critic);
-        \draw[arr, dashed] (critic) -| node[lbl, right] {valor / ventaja} (actor);
+        % Ciclo de interacción local.
+        \draw[arr] (sumo.east) -- node[lbl] {telemetría} (observ.west);
+        \draw[arr] (observ.east) -- (actor.west);
+        \draw[arr] (actor.east) -- (fase.west);
+        \draw[arr] (fase.north) to[out=90,in=90] node[lbl, above] {control} (sumo.north);
+
+        % Señales utilizadas durante el entrenamiento y la actualización.
+        \draw[arr, dashed] (sumo.south) -- node[lbl, left] {estado global} (critic.north);
+        \draw[arr, dashed] (critic.east) -| node[lbl, below] {valor / ventaja} (actor.south);
+        \draw[arr] (sumo.south east) to[out=-45,in=180] node[lbl, below] {desempeño} (reward.west);
+        \draw[arr] (reward.north) -| node[lbl, right] {actualización} (actor.south);
     \end{tikzpicture}
     \caption{Mapeo conceptual del control semafórico como interacción Dec-POMDP. Los actores seleccionan fases a partir de observaciones locales; durante el entrenamiento CTDE, el crítico puede utilizar información global para estimar valores o ventajas.}
     \label{fig:traffic_rl_mapping}
