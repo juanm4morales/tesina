@@ -1,5 +1,7 @@
 \chapter{Marco Teórico}\label{cap:marco_teorico}
 
+Este capítulo presenta los conceptos necesarios para formular el control semafórico como un problema de decisión secuencial. Primero se describen las variables y los elementos de la operación del tránsito; luego se introduce su representación en un simulador microscópico; finalmente se presentan los fundamentos del aprendizaje por refuerzo (RL) y del aprendizaje por refuerzo multiagente (MARL), que permiten formular políticas de control para la red vial.
+
 \section{Ingeniería de Tránsito y Simulación}\label{sec:ingenieria_transito}
 
 La ingeniería de tránsito se define como aquella fase de la ingeniería de transporte —disciplina que se enmarca tradicionalmente dentro de la ingeniería civil— que se ocupa de la planeación segura y eficiente, el proyecto geométrico y la operación del tránsito por calles y carreteras, sus redes, terminales, tierras adyacentes y su relación con otros modos de transporte \cite{calymayor}. Asimismo, el \textit{Traffic Engineering Handbook} la describe formalmente como la subdisciplina enfocada en la planificación, el diseño geométrico y la operación de redes viales \cite{ite_handbook}. En este trabajo, sus conceptos se abordan desde la perspectiva del modelado computacional y la gestión adaptativa: permiten describir el funcionamiento físico de la red vial, caracterizar la oferta y demanda de circulación, e identificar las variables operacionales sobre las cuales puede intervenir un sistema de control inteligente.
@@ -8,19 +10,21 @@ Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énf
 
 La operación de una red vial puede analizarse a partir de la relación entre la demanda vehicular y la capacidad disponible. La demanda vehicular ($D$) corresponde a la cantidad de vehículos que requieren desplazarse por un determinado sistema vial en un lapso dado, mientras que la oferta vial o capacidad ($c$) representa la cantidad máxima de vehículos que pueden circular por dicho espacio físico bajo determinadas condiciones de operación \cite{calymayor}. Cuando la demanda se aproxima a la capacidad, el tránsito se vuelve inestable; cuando la supera ($D > c$), se presentan condiciones de sobresaturación o flujo forzado, caracterizadas por detenciones frecuentes y grandes demoras. En este sentido, la congestión no se entiende solo como una percepción general de mal funcionamiento, sino como un fenómeno con manifestaciones físicas medibles: demoras, colas y detenciones \cite{fernandez}.
 
+Estas magnitudes cumplen una función doble en el modelo computacional: pueden formar parte de las observaciones y de la señal de recompensa de los agentes, y también se utilizan para evaluar el desempeño del controlador. Su definición permite vincular la descripción física del tránsito con la formulación posterior del problema de aprendizaje.
+
 \subsection{Terminología de Tránsito}
 
-Antes de introducir los mecanismos de control y su formulación computacional, conviene precisar algunos términos operativos que se utilizarán de manera recurrente en este documento. Esta aclaración inicial es habitual en manuales de temporización semafórica, donde se advierte que el término fase puede confundirse con movimiento si no se distingue la unidad de control del conjunto de trayectorias servidas \cite{fhwa_signal_timing_manual}, y en estudios de control semafórico basados en aprendizaje por refuerzo, donde los conceptos de movimientos, fases y señales se explicitan antes de formular el problema de decisión \cite{WeiH2019ASTSCM}.
+Antes de formular el problema de control, es necesario distinguir algunos términos operativos que se utilizarán a lo largo del capítulo. En particular, se diferencian los movimientos que realizan los vehículos, las fases que habilitan esos movimientos y los intervalos durante los cuales se mantienen las indicaciones semafóricas \cite{fhwa_signal_timing_manual,WeiH2019ASTSCM}.
 
 En este contexto, se emplearán las siguientes nociones:
 
 \begin{itemize}
     \item \textbf{Intersección, acceso y carril:} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso \cite{ite_handbook}, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{calymayor}.
-    \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada (e.g., giros o movimientos directos) \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite{fernandez}.
-    \item \textbf{Fase, ciclo e intervalo:} una fase representa el estado operativo del semáforo que otorga el derecho de paso a un grupo de movimientos compatibles de manera simultánea \cite{ite_handbook}. La secuencia completa de fases requerida para servir a todos los movimientos de la intersección constituye el ciclo semafórico, mientras que un intervalo es la fracción temporal del ciclo durante la cual las indicaciones del semáforo no varían \cite{calymayor}.
+    \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada, por ejemplo, un giro o un movimiento directo \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite{fernandez}.
+    \item \textbf{Fase, ciclo e intervalo:} una fase es una configuración de señales que habilita simultáneamente un conjunto de movimientos compatibles \cite{ite_handbook}. El ciclo corresponde a la secuencia completa de fases necesaria para atender los movimientos de la intersección. Un intervalo es el período durante el cual las indicaciones semafóricas permanecen constantes \cite{calymayor}.
 \end{itemize}
 
-La Figura \ref{fig:movimientos_fases_interseccion} muestra una representación típica de estos conceptos para una intersección de cuatro accesos. La convención utilizada por manuales de temporización como el de la FHWA asigna números impares a los giros izquierdos y números pares a los movimientos directos; los giros derechos suelen operar junto con el movimiento directo compatible, mientras que los cruces peatonales se sirven de manera concurrente con la corriente vehicular paralela \cite{fhwa_signal_timing_manual}. Esta representación no fija una geometría particular para el caso de estudio, sino que permite distinguir entre movimiento físico, fase semafórica y usuarios servidos por una misma indicación.
+La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en una intersección de cuatro accesos. La numeración sigue de manera esquemática una convención habitual de los manuales de temporización semafórica; no representa una configuración obligatoria para el caso de estudio. La figura permite distinguir entre movimiento físico, fase semafórica y usuarios servidos por una misma indicación \cite{fhwa_signal_timing_manual}.
 
 \begin{figure}[H]
     \centering
@@ -129,7 +133,7 @@ En el nivel macroscópico, las variables principales de la corriente de tránsit
 En el nivel microscópico, las variables asociadas describen el movimiento del vehículo individual y la separación entre vehículos consecutivos (véase la Figura \ref{fig:variables_microscopicas}):
 \begin{itemize}
     \item \textbf{Velocidad puntual ($v_i$):} es la velocidad instantánea a la que un vehículo individual ($i$) atraviesa una sección transversal específica de la vía.
-    \item \textbf{Intervalo temporal ($h$):} es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos (e.g., parachoques delanteros) \cite{calymayor}. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
+    \item \textbf{Intervalo temporal ($h$):} es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos, por ejemplo, los parachoques delanteros \cite{calymayor}. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
     \item \textbf{Espaciamiento simple ($s$):} es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante de tiempo \cite{calymayor}. El espaciamiento promedio en metros ($s_{\text{prom}}$) se relaciona de forma inversa con la densidad de la corriente de tránsito como $s_{\text{prom}} = 1000/k$.
 \end{itemize}
 
@@ -200,15 +204,15 @@ Microscópica & Velocidad puntual ($v_i$, km/h) & Variable individual de cada ve
     \label{fig:variables_microscopicas}
 \end{figure}
 
-Estas variables macroscópicas y agregadas se relacionan de manera directa a través de la ecuación fundamental del flujo de tránsito:
+Estas variables macroscópicas se relacionan de manera directa a través de la ecuación fundamental del flujo de tránsito:
 \begin{equation}
     q = k \cdot v_s
 \end{equation}
-donde $q$ es la tasa de flujo, $k$ es la densidad y $v_s$ es la velocidad media espacial. Cabe destacar que la velocidad media espacial ($v_s$) es la única físicamente consistente con esta ecuación fundamental. La velocidad media temporal ($v_t$) difiere de esta debido a que asigna mayor peso a los vehículos más rápidos que cruzan el punto de medición en un lapso dado. La vinculación analítica entre ambas variables se establece formalmente mediante la relación de Wardrop \cite{fernandez}:
+donde $q$ es la tasa de flujo, $k$ es la densidad y $v_s$ es la velocidad media espacial. Esta ecuación utiliza la velocidad media espacial, ya que relaciona el flujo y la cantidad de vehículos presentes en un tramo. La velocidad media temporal ($v_t$) difiere de ella porque asigna mayor peso a los vehículos más rápidos que cruzan un punto de medición durante un intervalo dado. La relación entre ambas variables se expresa mediante la relación de Wardrop \cite{fernandez}:
 \begin{equation}
     v_t = v_s + \frac{\sigma_s^2}{v_s}
 \end{equation}
-donde $\sigma_s^2$ representa la varianza de la distribución de las velocidades de los vehículos en el espacio. Dado que la varianza es siempre no negativa ($\sigma_s^2 \ge 0$), se cumple que $v_t \ge v_s$, igualándose únicamente en el caso hipotético en que todos los vehículos circulen exactamente a la misma velocidad. En intersecciones semaforizadas, esta relación dinámica permite modelar cómo las interrupciones del semáforo durante la luz roja detienen el flujo ($v_s \to 0$), provocando una acumulación de vehículos que eleva la densidad ($k \to k_{\max}$) y genera colas y demoras asociadas a condiciones de flujo forzado \cite{calymayor}.
+donde $\sigma_s^2$ representa la varianza de la distribución de las velocidades de los vehículos en el espacio. Dado que la varianza es no negativa ($\sigma_s^2 \ge 0$), se cumple que $v_t \ge v_s$, con igualdad únicamente cuando todos los vehículos circulan a la misma velocidad. En una intersección semaforizada, una indicación roja puede reducir localmente la velocidad media y aumentar la acumulación de vehículos en los accesos. Estos efectos se manifiestan en la formación de colas y en el incremento de las demoras \cite{calymayor}.
 
 \subsubsection{Métricas de Ineficiencia Operativa}
 
@@ -218,6 +222,8 @@ La interrupción del flujo causada por semáforos o saturación genera efectos a
     \item \textbf{Colas:} Corresponden al número de vehículos acumulados detrás de una línea de detención a la espera de ser servidos. Esta medida espacial es especialmente relevante porque, cuando la cola supera la longitud del arco de aproximación, puede bloquear la intersección aguas arriba y propagar la congestión al resto de la red.
     \item \textbf{Detenciones:} Cuantifican la cantidad de veces que un vehículo debe reducir su velocidad hasta cero durante el recorrido. Una alta frecuencia de detenciones deteriora la continuidad operativa del flujo y suele asociarse con mayores procesos de aceleración y desaceleración.
 \end{itemize}
+
+Estas magnitudes permiten describir el desempeño operacional de una intersección y de la red. En la formulación computacional, también pueden utilizarse para construir observaciones, señales de recompensa o criterios de evaluación del controlador.
 
 \subsubsection{Descripción Probabilística del Flujo y Pelotones Vehiculares}
 
@@ -235,7 +241,7 @@ donde $h$ es el intervalo temporal en segundos, $q$ es el flujo en veh/h, y $t$ 
 
 Esta representación probabilística asume independencia entre arribos sucesivos, siendo una aproximación válida únicamente para flujos vehiculares bajos o moderados bajo condiciones de flujo libre, donde no exista la influencia de semáforos cercanos aguas arriba \cite{calymayor}. Sin embargo, este supuesto de independencia decae en condiciones de congestión o en redes viales urbanas semaforizadas. En estos casos, la operación de los semáforos interrumpe periódicamente el flujo y agrupa a los vehículos en pelotones (\textit{platoons}), induciendo una fuerte dependencia espacio-temporal y correlación entre arribos consecutivos. La Figura \ref{fig:distribucion_intervalos} presenta una comparación conceptual de la distribución resultante de los intervalos temporales entre vehículos bajo estas dos condiciones operativas.
 
-Esta limitación de los modelos analíticos tradicionales (como los de Poisson o teoría de colas clásica) justifica la necesidad de recurrir a la simulación microscópica de tránsito. En un simulador como SUMO, la formación, dispersión e interacción de pelotones vehiculares emergen de manera natural a partir de los modelos de seguimiento de vehículos y cambio de carril, permitiendo evaluar el control semafórico bajo flujos dinámicos realistas. Asimismo, incorporar arribos estocásticos no Poissonianos, perfiles de demanda variables y la inicialización de múltiples corridas con diferentes semillas aleatorias en el simulador es un procedimiento estándar para evaluar la robustez y capacidad de adaptación de cualquier esquema de control dinámico ante la incertidumbre operativa \cite{calymayor}; esto permite asegurar que los algoritmos sean capaces de responder ante fluctuaciones dinámicas del tráfico en tiempo real, en lugar de optimizarse para una secuencia de flujo determinista y artificial \cite{ite_handbook}.
+Esta limitación de los modelos analíticos tradicionales justifica el uso de simulación microscópica para estudiar el control semafórico bajo condiciones variables. En SUMO, la formación, dispersión e interacción de los pelotones emergen de la dinámica simulada de los vehículos y de sus cambios de carril. El uso de distintos perfiles de demanda y semillas de simulación permite evaluar el comportamiento del controlador frente a variaciones en las condiciones de operación.
 
 \begin{figure}[H]
 \centering
@@ -270,15 +276,15 @@ Esta limitación de los modelos analíticos tradicionales (como los de Poisson o
     node[above, font=\footnotesize, black] {$t_{\min}$};
 \end{axis}
 \end{tikzpicture}
-\caption{Comparación esquemática de la distribución de intervalos temporales entre vehículos en flujo libre (exponencial negativa, consistente con el proceso de Poisson) y en flujo coordinado por semáforos (distribución desplazada con zona de exclusión física $t_{\min}$ y pico característico de pelotón).}
+\caption{Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}
 \label{fig:distribucion_intervalos}
 \end{figure}
 
 \subsection{Sistemas de Control de Tránsito}
 
-Para mitigar los conflictos de tránsito e incrementar la seguridad en las intersecciones urbanas de flujo interrumpido, se emplean sistemas de control de tránsito \cite{ite_handbook}. El dispositivo de control por excelencia en estos nodos es el semáforo, definido como un dispositivo electrónico que regula la circulación de vehículos asignando el derecho de paso alternado mediante indicaciones luminosas rojas, amarillas y verdes \cite{calymayor}.
+Para ordenar los movimientos en conflicto y regular el paso en las intersecciones urbanas se utilizan sistemas de control de tránsito \cite{ite_handbook}. El semáforo asigna el derecho de paso de manera alternada mediante indicaciones luminosas rojas, amarillas y verdes \cite{calymayor}.
 
-En el modelado algorítmico, los semáforos y sus parámetros de configuración constituyen los elementos actuadores de la red. La modificación de la duración del verde efectivo, la secuencia de fases y la sincronización entre nodos define el conjunto de intervenciones dinámicas mediante las cuales el sistema de control busca optimizar el paso vehicular.
+En el modelo computacional, el semáforo actúa como el mecanismo mediante el cual el controlador interviene sobre la red. La selección de fases, la duración del verde efectivo y la coordinación entre intersecciones modifican la prioridad de paso y afectan la evolución de las colas y las demoras.
 
 Sobre esta base terminológica, la programación temporal de un semáforo se describe mediante la duración de las fases, la longitud de ciclo y la definición de los intervalos de transición y despeje. Estos parámetros determinan cuánto tiempo recibe prioridad cada conjunto de movimientos compatibles y condicionan directamente la capacidad de descarga, las demoras y la seguridad operacional de la intersección \cite{ite_handbook}.
 
@@ -347,7 +353,7 @@ En este contexto, el simulador de tránsito constituye el entorno operativo sobr
 \begin{itemize}
     \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} Los carriles entrantes conducen el flujo vehicular hacia la línea de detención de la intersección por la derecha de cada acceso, mientras que los carriles salientes reciben el flujo descargado tras cruzar el nodo.
     \item \textbf{Líneas de detención (\textit{stop lines}):} Delimitación física continua en color blanco en el límite de los carriles entrantes $L_{\text{in}}$ con el área interna de cruzamiento (\textit{junction}).
-    \item \textbf{Enlaces de conexión (*links*):} Rutas internas que conectan un carril entrante especifico con un carril saliente de destino. A cada enlace se le asigna un estado semafórico instantáneo ($G$ para verde prioritario, $g$ para verde permisivo, y $r$ para rojo o detención). Como se ilustra en la Figura \ref{fig:sumo_intersection_elements}, mientras los movimientos directos se encuentran habilitados en verde ($G$), el giro a la izquierda en conflicto (representado por el enlace en rojo salmón) se mantiene retenido en luz roja ($r$) para prevenir colisiones.
+    \item \textbf{Enlaces de conexión (\textit{links}):} Rutas internas que conectan un carril entrante específico con un carril saliente de destino. A cada enlace se le asigna un estado semafórico instantáneo ($G$ para verde prioritario, $g$ para verde permisivo, y $r$ para rojo o detención). Como se ilustra en la Figura \ref{fig:sumo_intersection_elements}, mientras los movimientos directos se encuentran habilitados en verde ($G$), el giro a la izquierda en conflicto (representado por el enlace en rojo salmón) se mantiene retenido en luz roja ($r$) para prevenir colisiones.
 \end{itemize}
 Esta representación es compatible con la formulación algorítmica del problema, donde una acción consiste en seleccionar una fase que habilita un conjunto de enlaces compatibles mientras mantiene en rojo ($r$) los movimientos en conflicto.
 
@@ -446,14 +452,14 @@ Esta representación es compatible con la formulación algorítmica del problema
 
 \subsubsection{Componentes y Configuración de SUMO}
 
-Para la generación, edición y control en tiempo real de los escenarios de simulación microscópica, el entorno SUMO se complementa con un conjunto integrado de herramientas y librerías auxiliares \cite{SUMO2018_SUMO, sumo_doc_2025}:
+Para la generación, edición y control en tiempo real de los escenarios de simulación microscópica, el entorno SUMO se complementa con un conjunto integrado de herramientas y librerías auxiliares \cite{SUMO2018_SUMO, sumo-doc}:
 \begin{itemize}
     \item \textbf{\textit{netedit}:} Herramienta gráfica que permite proyectar y editar la geometría y la lógica operacional de la red vial de forma interactiva. Facilita la creación y modificación bidireccional de nodos, accesos, carriles, restricciones de giro, conexiones internas (\textit{links}), sensores inductivos y programas de temporización semafórica.
-    \item \textbf{\textit{osmwebwizard}:} Herramienta automatizada con interfaz web que permite importar áreas geográficas reales desde OpenStreetMap (OSM) y transformarlas al formato nativo de SUMO, extrayendo la topología urbana, los límites de velocidad y perfiles sintéticos de demanda vehicular.
+    \item \textbf{\textit{osmWebWizard}:} Herramienta automatizada con interfaz web que permite importar áreas geográficas reales desde OpenStreetMap (OSM) y transformarlas al formato nativo de SUMO, extrayendo información de la red como la topología urbana y los límites de velocidad.
     \item \textbf{\textit{TraCI} (\textit{Traffic Control Interface}):} Protocolo de comunicación cliente-servidor mediante sockets TCP que habilita la interacción dinámica a paso discreto entre la simulación y scripts externos de control \cite{sumo-doc}. A través de TraCI, los agentes de aprendizaje por refuerzo recolectan observaciones del estado del tránsito (colas, velocidades, ocupación) e imponen decisiones sobre las fases del semáforo.
 \end{itemize}
 
-Desde la perspectiva del modelado computacional, la ejecución de una simulación microscópica en SUMO requiere una especificación mínima de archivos de configuración en formato XML \cite{sumo_doc_2025}, cuyos componentes principales se resumen en la Tabla \ref{tab:sumo_input_files}:
+Desde la perspectiva del modelado computacional, la ejecución de una simulación microscópica en SUMO se organiza mediante archivos de configuración en formato XML \cite{sumo-doc}. En los escenarios considerados, sus componentes principales se resumen en la Tabla \ref{tab:sumo_input_files}:
 \begin{itemize}
     \item \textbf{Archivo de red (\texttt{.net.xml}):} Define la estructura física e infraestructura de la red vial, incluyendo las coordenadas nodales, la geometría de arcos, los carriles por acceso, las conexiones de cruzamiento y la lógica de accionamiento semafórico.
     \item \textbf{Archivo de rutas (\texttt{.rou.xml}):} Especifica las características de la flota vehicular (dimensiones, aceleración, velocidad deseada y modelo de seguimiento) junto con los itinerarios o flujos de origen a destino.
@@ -464,7 +470,7 @@ Desde la perspectiva del modelado computacional, la ejecución de una simulació
 
 \begin{table}[H]
 \centering
-\caption{Requerimientos mínimos de archivos de configuración para la simulación en SUMO \cite{sumo_doc_2025}.}
+\caption{Archivos de configuración empleados en los escenarios de simulación en SUMO \cite{sumo-doc}.}
 \label{tab:sumo_input_files}
 \setlength{\tabcolsep}{4pt}
 \small
@@ -481,13 +487,13 @@ Configuración Maestra & \texttt{.sumocfg} & Unificación de archivos, resoluci�
 
 \subsubsection{Métricas de Evaluación Operacional y Aprendizaje}
 
-Para evaluar rigurosamente el impacto de las estrategias de control semafórico tanto desde la perspectiva de la ingeniería de tránsito como del aprendizaje automático, este trabajo distingue cuatro métricas fundamentales de evaluación:
+Para evaluar rigurosamente el impacto de las estrategias de control semafórico tanto desde la perspectiva de la ingeniería de tránsito como del aprendizaje automático, este trabajo distingue cuatro tipos de indicadores para la evaluación y el diagnóstico del entrenamiento:
 
 \begin{itemize}
-    \item \textbf{Emisión de Gases $\text{CO}_2$:} Cuantifica el impacto ambiental y la ineficiencia energética del flujo vehicular. En SUMO, las emisiones se estiman mediante modelos de emisión microscópicos (como HBEFA o PHEMlight \cite{sumo-doc}), relacionando instantáneamente la masa de $\text{CO}_2$ emitida en gramos con los perfiles de velocidad, aceleración y tiempo en ralentí (\textit{idling}) de cada vehículo. Una reducción en la masa total de $\text{CO}_2$ refleja mayor fluidez y menor frecuencia de detenciones.
+    \item \textbf{Emisión de gases $\text{CO}_2$:} Cuantifica el impacto ambiental y la ineficiencia energética del flujo vehicular. En SUMO, las emisiones se estiman mediante modelos microscópicos como HBEFA o PHEMlight \cite{sumo-doc}, relacionando la masa de $\text{CO}_2$ emitida en gramos con los perfiles de velocidad, aceleración y tiempo en ralentí (\textit{idling}) de cada vehículo. Una reducción de la masa total de $\text{CO}_2$ puede asociarse con una operación más fluida y una menor frecuencia de detenciones.
     \item \textbf{Tiempo de Espera Promedio Global y por Agente:} Métrica operacional primaria en ingeniería de tránsito \cite{calymayor}. El tiempo de espera cuantifica la acumulación en segundos que un vehículo permanece detenido (velocidad $v < 0.1$ m/s) antes de cruzar la intersección. Se evalúa a nivel local por cada agente $i$ (intersección) y de forma agregada a nivel global de la red vial, permitiendo medir la reducción directa de la demora operacional.
     \item \textbf{Recompensa Acumulada Descontada:} Métrica interna de RL/MARL definida como el retorno episódico $G_0 = \sum_{t=0}^T \gamma^t R_t$. Expresa la capacidad del agente para maximizar de forma persistente su objetivo escalar proyectado en el tiempo \cite{suttonRL}.
-    \item \textbf{Valores de Pérdida (\textit{Loss Values}):} Indicadores de diagnóstico durante el entrenamiento en DRL/MADRL \cite{yu2022surprising}. Incluyen la pérdida de política o actor ($\mathcal{L}^{\text{CLIP}}$), la pérdida de error cuadrático medio de la función de valor del crítico ($\mathcal{L}^{\text{VF}}$) y el término de entropía de la política ($S[\pi]$). Su seguimiento permite detectar inestabilidades del gradiente, monitorear la tasa de convergencia y prevenir el colapso prematuro de la política (\textit{policy collapse}).
+    \item \textbf{Valores de pérdida (\textit{loss values}):} Indicadores de diagnóstico durante el entrenamiento en DRL/MADRL \cite{yu2022surprising}. Incluyen la pérdida de política o actor ($\mathcal{L}^{\text{CLIP}}$), la pérdida de error cuadrático medio de la función de valor del crítico ($\mathcal{L}^{\text{VF}}$) y el término de entropía de la política ($S[\pi]$). Su seguimiento permite identificar inestabilidades del gradiente y cambios en el proceso de optimización; por sí solo, no demuestra la calidad operacional del controlador.
 \end{itemize}
 
 
@@ -554,11 +560,19 @@ Los algoritmos de RL pueden agruparse, a grandes rasgos, en métodos basados en 
 
 En los \textit{métodos basados en valor}, la estrategia consiste en estimar qué tan conveniente es encontrarse en un estado o ejecutar una acción determinada. Esto se formaliza mediante la \textit{función de valor de estado} $v_\pi(s) \doteq \mathbb{E}_\pi[G_t \mid S_t = s]$ y la \textit{función de valor de acción} $q_\pi(s, a) \doteq \mathbb{E}_\pi[G_t \mid S_t = s, A_t = a]$. Ambas funciones satisfacen ecuaciones recursivas conocidas como \textit{ecuaciones de Bellman}, que expresan la relación entre el valor de una situación actual y el valor esperado de sus posibles sucesores \cite{suttonRL}.
 
+Para una política fija, las ecuaciones de Bellman permiten evaluar el valor esperado de los estados y acciones. Cuando el objetivo es encontrar la mejor acción disponible, se utilizan las ecuaciones de optimalidad de Bellman:
+\begin{equation}
+    q_*(s,a) = \mathbb{E}\left[R_{t+1} + \gamma \max_{a'} q_*(S_{t+1},a') \mid S_t=s,A_t=a\right].
+\end{equation}
+Esta relación justifica el objetivo de actualización de Q-learning y, posteriormente, de DQN. La maximización sobre las acciones futuras convierte el problema de evaluación de una política en un problema de control orientado a aproximar la función de acción-valor óptima $q_*$ \cite{suttonRL}.
+
 Cuando la dinámica del entorno no se conoce completamente, estas funciones pueden estimarse a partir de la experiencia. Los métodos de Diferencia Temporal (\textit{Temporal-Difference}, TD) combinan el muestreo de transiciones reales con actualizaciones basadas en estimaciones previas, mecanismo conocido como \textit{bootstrapping}. Un ejemplo central es \textit{Q-learning}, que actualiza la función de acción-valor hacia una estimación de la función óptima $q_*(s,a)$:
 \begin{equation}
 Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t) \right]
 \end{equation}
 donde $Q(S_t, A_t)$ es la estimación del valor de la acción $A_t$ en el estado $S_t$, $\alpha \in (0, 1]$ representa la tasa de aprendizaje (\textit{learning rate}), $R_{t+1}$ es la recompensa observada, $\gamma$ es el factor de descuento, y $\max_a Q(S_{t+1}, a)$ estima el valor máximo alcanzable en el siguiente estado $S_{t+1}$.
+
+Q-learning es un método \textit{off-policy}: la política que genera las transiciones puede diferir de la política cuyo valor óptimo se estima. En cambio, los métodos de gradiente de política utilizan, en principio, muestras generadas por la política que se está optimizando y se consideran \textit{on-policy}. Esta distinción resulta central para comparar IDQN con IPPO, MAPPO y HAPPO, especialmente en entornos multiagente donde las políticas de los demás agentes cambian durante el entrenamiento.
 
 Por el contrario, los \textit{métodos basados en política} parametrizan directamente la política $\pi(a \mid s, \theta) = \Pr\{A_t = a \mid S_t = s, \theta_t = \theta\}$, donde $\theta \in \mathbb{R}^d$ representa el vector de parámetros ajustables (pesos neuronales). En lugar de derivar la acción exclusivamente de una función de valor, ajustan los parámetros $\theta$ para maximizar una medida de rendimiento escalar $J(\theta)$. Para ello aplican ascenso de gradiente sobre el rendimiento esperado:
 \begin{equation}
@@ -569,51 +583,24 @@ donde $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[
-        box/.style={draw, rounded corners=4pt, align=center, minimum height=0.85cm, font=\small, thick},
-        cat1/.style={box, fill=colTaxonomiaNivelUno, draw=colTaxonomiaNivelUno!80!black, text width=4.2cm},
-        cat2/.style={box, fill=colTaxonomiaNivelDos, draw=colTaxonomiaNivelDos!80!black, text width=3.6cm},
-        cat3/.style={box, fill=colTaxonomiaNivelTres, draw=colTaxonomiaNivelTres!80!black, text width=3.2cm},
-        alg/.style={draw=black!70, align=center, fill=white, text width=2.9cm, font=\footnotesize, minimum height=0.65cm, rounded corners=2pt},
+        box/.style={draw, rounded corners=4pt, align=center, minimum height=0.9cm, font=\small, thick},
+        root/.style={box, fill=colTaxonomiaNivelUno, draw=colTaxonomiaNivelUno!80!black, text width=4.0cm},
+        branch/.style={box, fill=colTaxonomiaNivelDos, draw=colTaxonomiaNivelDos!80!black, text width=3.7cm},
+        alg/.style={box, fill=white, draw=black!70, text width=3.2cm, font=\footnotesize},
         arr/.style={-{Stealth[length=5pt]}, thick, draw=black!80}
     ]
-
-    % Nivel 1
-    \node[cat1] (rl) at (0, 0) {\textbf{Aprendizaje por Refuerzo (RL)}};
-
-    % Nivel 2
-    \node[cat2] (mf) at (-3.4, -1.8) {\textbf{Libre de Modelo}\\(\textit{Model-Free})};
-    \node[cat2] (mb) at (3.6, -1.8) {\textbf{Basado en Modelo}\\(\textit{Model-Based})};
-
-    % Nivel 3 (Ramas de Model-Free)
-    \node[cat3] (val) at (-6.8, -3.6) {Basados en Valor};
-    \node[cat3] (ac) at (-3.4, -3.6) {Actor-Cr\'{i}tico};
-    \node[cat3] (pol) at (0, -3.6) {Basados en Politica};
-
-    % Nivel 4 (Algoritmos)
-    \node[alg] (dqn) at (-6.8, -5.2) {Q-Learning\\DQN};
-    \node[alg] (ppo) at (-3.4, -5.2) {A2C, DDPG\\TRPO, PPO};
-    \node[alg] (reinf) at (0, -5.2) {REINFORCE};
-    \node[alg] (alph) at (3.6, -5.2) {Dyna-Q\\AlphaZero};
-
-    % Conexiones Nivel 1 -> Nivel 2
-    \draw[arr] (rl.south) -- (mf.north);
-    \draw[arr] (rl.south) -- (mb.north);
-
-    % Conexiones Nivel 2 -> Nivel 3
-    \draw[arr] (mf.south) -- (val.north);
-    \draw[arr] (mf.south) -- (ac.north);
-    \draw[arr] (mf.south) -- (pol.north);
-
-    % Conexiones Nivel 3 -> Algoritmos
-    \draw[arr] (val.south) -- (dqn.north);
-    \draw[arr] (ac.south) -- (ppo.north);
-    \draw[arr] (pol.south) -- (reinf.north);
-
-    % Conexiones Nivel 2 -> Algoritmos (Model-Based)
-    \draw[arr] (mb.south) -- (alph.north);
+    \node[root] (rl) at (0,0) {RL libre de modelo\\(\textit{Model-Free})};
+    \node[branch] (value) at (-3.5,-1.8) {Basado en valor};
+    \node[branch] (policy) at (3.5,-1.8) {Basado en política\\actor--crítico};
+    \node[alg] (dqn) at (-3.5,-3.6) {DQN\\$\longrightarrow$ IDQN};
+    \node[alg] (ppo) at (3.5,-3.6) {PPO\\$\longrightarrow$ IPPO, MAPPO, HAPPO};
+    \draw[arr] (rl.south) -- (value.north);
+    \draw[arr] (rl.south) -- (policy.north);
+    \draw[arr] (value.south) -- (dqn.north);
+    \draw[arr] (policy.south) -- (ppo.north);
 
     \end{tikzpicture}
-    \caption{Taxonomía de algoritmos de Aprendizaje por Refuerzo, enfocada en métodos \textit{Model-Free} (adaptada de OpenAI \textit{Spinning Up} \cite{spinningup}).}
+    \caption{Relación entre las familias de algoritmos utilizadas en esta investigación. Los cuatro métodos evaluados son libres de modelo y se derivan de las líneas DQN y PPO.}
     \label{fig:rl_taxonomy}
 \end{figure}
 
@@ -627,13 +614,13 @@ El componente básico de estas arquitecturas es la unidad neuronal individual. C
 \begin{equation}
     f_{k,u}(\mathbf{x}; \theta_k^u) = g_k(\mathbf{w}^\top \mathbf{x} + b)
 \end{equation}
-donde $\mathbf{x} \in \mathbb{R}^d$ es el vector de entrada, $\mathbf{w} \in \mathbb{R}^d$ representa los pesos asociativos, $b \in \mathbb{R}$ es el sesgo, y $g_k$ es la función de activación diferenciable. La inclusión de una función de activación no lineal es estrictamente necesaria; componer múltiples capas sin funciones no lineales resultaría analíticamente en una simple transformación lineal, anulando la capacidad de representación de la red \cite{marlbook}. Entre las opciones no lineales más comunes destacan ReLU (Unidad Lineal Rectificada, $g(z) = \max(0, z)$), \textit{leaky} ReLU ($g(z) = \max(\alpha z, z)$ con $\alpha \ll 1$) y Tanh (tangente hiperbólica, comprimiendo las salidas en $[-1, 1]$).
+donde $\mathbf{x} \in \mathbb{R}^d$ es el vector de entrada, $\mathbf{w} \in \mathbb{R}^d$ representa los pesos asociativos, $b \in \mathbb{R}$ es el sesgo, y $g_k$ es una función de activación no lineal apta para la optimización mediante gradientes. La inclusión de una función no lineal es necesaria; componer múltiples capas lineales resultaría en una transformación lineal, limitando la capacidad de representación de la red \cite{marlbook}. Entre las opciones comunes destacan ReLU (Unidad Lineal Rectificada, $g(z) = \max(0, z)$), que es no diferenciable en cero pero admite subgradientes, \textit{leaky} ReLU ($g(z) = \max(\alpha z, z)$ con $\alpha \ll 1$) y Tanh (tangente hiperbólica, con salidas en $[-1, 1]$).
 
 Las redes neuronales de propagación hacia adelante (\textit{feedforward} o perceptrones multicapa) estructuran estas unidades en secuencias de múltiples capas: una capa de entrada, capas intermedias u ocultas, y una capa de salida. La computación de una capa entera se puede vectorizar:
 \begin{equation}
     \mathbf{h}_k = g_k(\mathbf{W}_k^\top \mathbf{x}_{k-1} + \mathbf{b}_k)
 \end{equation}
-donde $\mathbf{W}_k$ es la matriz de pesos de la capa $k$, $\mathbf{x}_{k-1}$ es la salida activada de la capa previa y $\mathbf{b}_k$ es el vector de sesgos. El Teorema de Aproximación Universal establece que una red con una única capa oculta suficientemente ancha puede aproximar cualquier función continua; sin embargo, arquitecturas más profundas logran una mejor generalización y una extracción jerárquica de características progresivamente más abstractas \cite{marlbook, suttonRL}.
+donde $\mathbf{W}_k$ es la matriz de pesos de la capa $k$, $\mathbf{x}_{k-1}$ es la salida activada de la capa previa y $\mathbf{b}_k$ es el vector de sesgos. El Teorema de Aproximación Universal establece que una red con una única capa oculta suficientemente ancha puede aproximar cualquier función continua en un dominio compacto. Esto no implica que una red ancha sea equivalente, en términos de entrenamiento o generalización, a una red profunda; bajo presupuestos comparables de parámetros, una mayor profundidad puede facilitar la representación jerárquica de funciones complejas \cite{marlbook}.
 
 \subsubsection{El Proceso de Optimización}
 
@@ -651,7 +638,7 @@ El Aprendizaje por Refuerzo Profundo (DRL) combina los algoritmos de RL con la c
 
 \subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
 
-La aplicación directa de redes neuronales al aprendizaje por refuerzo introduce vulnerabilidades analíticas. Sutton y Barto \cite{suttonRL} establecen que la inestabilidad de los parámetros y la divergencia de los valores están garantizadas matemáticamente si un algoritmo combina simultáneamente tres elementos fundamentales:
+La aplicación de aproximadores de funciones al aprendizaje por refuerzo introduce dificultades de estabilidad. Sutton y Barto \cite{suttonRL} denominan \textit{Tríada Mortal} a la combinación de tres elementos que puede producir inestabilidad o divergencia en las estimaciones de valor, especialmente cuando no se cumplen condiciones suficientes de representación y actualización:
 
 \begin{itemize}
     \item \textbf{Aproximación de Funciones:} Uso de aproximadores potentes y escalables, como las redes neuronales, que extienden el aprendizaje generalizando a través del espacio de estados.
@@ -659,17 +646,17 @@ La aplicación directa de redes neuronales al aprendizaje por refuerzo introduce
     \item \textbf{Entrenamiento \textit{Off-Policy}:} Optimizar la función de valor utilizando una distribución de datos o transiciones generadas por una política de comportamiento distinta a la política objetivo que se desea evaluar o mejorar.
 \end{itemize}
 
-El análisis de la Tríada Mortal argumenta que es fácticamente imposible prescindir de cualquiera de estos tres vértices en sistemas de control escalables \cite{suttonRL}. Renunciar a la aproximación de funciones restringiría el control a problemas tabulares diminutos. Descartar el \textit{bootstrapping} mitigaría la inestabilidad, pero paralizaría la eficiencia de datos y la viabilidad computacional al requerir almacenar secuencias episódicas enteras. Finalmente, sacrificar el aprendizaje \textit{off-policy} anularía la capacidad del agente de aprender de forma concurrente múltiples modelos predictivos a partir de un único flujo de experiencia. Por consiguiente, resulta imperativo tolerar la Tríada Mortal e incorporar mitigaciones algorítmicas estructurales.
+La tríada no implica divergencia inevitable ni obliga a conservar sus tres componentes. La aproximación de funciones suele ser necesaria para escalar a espacios de estados grandes o continuos, mientras que el \textit{bootstrapping} y el aprendizaje \textit{off-policy} pueden evitarse mediante métodos Monte Carlo y métodos \textit{on-policy}, respectivamente. Estos intercambios modifican la varianza, el sesgo y la eficiencia de muestras del aprendizaje; por ello, los algoritmos profundos incorporan mecanismos de estabilización en lugar de asumir que la divergencia es inevitable \cite{suttonRL, marlbook}.
 
 \subsubsection{\textit{Deep Q-Networks} (DQN)}
 
 En los métodos basados en valor, DRL sustituye la tabla clásica por una red neuronal $Q(s, a; \theta)$. En espacios de acción discretos, el algoritmo \textit{Deep Q-Networks} (DQN) procesa el estado $s$ como vector de entrada y computa simultáneamente las estimaciones de valor para todas las acciones en su capa de salida \cite{marlbook, mnih2015}.
 
-La inestabilidad descrita por la Tríada Mortal se manifiesta en DQN como el ``problema del blanco móvil'': al generalizar, una actualización que incrementa el valor de un estado modifica de forma inadvertida los valores de otros estados. Si además las secuencias de entrenamiento presentan una alta correlación temporal, la red sufre de olvido catastrófico, sobreajustándose a la experiencia más reciente. Para lograr convergencia, DQN introduce dos innovaciones estructurales imperativas \cite{marlbook}:
+La inestabilidad descrita por la Tríada Mortal se manifiesta en DQN como el ``problema del blanco móvil'': al generalizar, una actualización que incrementa el valor de un estado puede modificar también los valores estimados para otros estados. Además, las transiciones consecutivas presentan correlación temporal y pueden inducir sobreajuste a la experiencia reciente. Para mitigar estos efectos y estabilizar empíricamente la optimización, DQN emplea dos componentes estructurales \cite{marlbook, mnih2015}:
 
 \begin{itemize}
     \item \textbf{Redes Objetivo (\textit{Target Networks}):} Se emplea una red neuronal secundaria separada cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular los valores objetivo en el error TD, amortiguando las oscilaciones y estabilizando el blanco de aprendizaje.
-    \item \textbf{Búferes de Repetición (\textit{Replay Buffers}):} Se almacenan las transiciones históricas del agente $(s, a, r, s')$. El entrenamiento se realiza extrayendo mini-lotes aleatorios de esta memoria, lo cual destruye la correlación temporal intrínseca de los procesos de decisión de Markov y estabiliza la varianza del gradiente.
+    \item \textbf{Búferes de Repetición (\textit{Replay Buffers}):} Se almacenan las transiciones históricas del agente $(s, a, r, s')$. El entrenamiento se realiza extrayendo mini-lotes aleatorios de esta memoria, lo cual reduce la correlación temporal intrínseca de las trayectorias y aproxima el entrenamiento a la hipótesis de muestras independientes. Este mecanismo no constituye, por sí mismo, una garantía de convergencia con aproximadores no lineales.
 \end{itemize}
 
 La función de pérdida minimizada por DQN es:
@@ -678,27 +665,31 @@ La función de pérdida minimizada por DQN es:
 \end{equation}
 donde $\mathcal{D}$ es el búfer de repetición de experiencias, $(s_j, a_j, r_j, s_{j+1})$ representa una transición muestreada, $\theta$ indica los parámetros de la red $Q$ actual y $\theta^-$ representa los parámetros congelados de la red objetivo.
 
+El procedimiento conceptual de DQN combina la recolección de transiciones, la selección de acciones mediante una política $\epsilon$-greedy y la actualización de la red a partir de mini-lotes extraídos del búfer de experiencias. La siguiente descripción resume el algoritmo sin imponer decisiones particulares de implementación:
+
 \begin{algorithm}[H]
-\caption{Algoritmo \textit{Deep Q-Networks} (DQN) con \textit{Replay Buffer}}
+\caption{Deep Q-Network con repetición de experiencias}
 \label{alg:dqn}
 \begin{algorithmic}[1]
-\State Inicializar la memoria de repetición $\mathcal{D}$ con capacidad $N$
-\State Inicializar la red de acción-valor $Q$ con pesos aleatorios $\theta$
-\State Inicializar la red objetivo $\hat{Q}$ con pesos $\theta^- = \theta$
-\For{episodio $= 1$ hasta $M$}
-    \State Inicializar secuencia y obtener estado inicial $s_1$
-    \For{$t = 1$ hasta $T$}
-        \State Seleccionar una acción $a_t$ mediante política $\epsilon$-greedy a partir de $Q(s_t, a; \theta)$
-        \State Ejecutar acción $a_t$, observar recompensa $r_t$ y siguiente estado $s_{t+1}$
-        \State Almacenar transición $(s_t, a_t, r_t, s_{t+1})$ en $\mathcal{D}$
-        \State Muestrear un minilote aleatorio de transiciones $(s_j, a_j, r_j, s_{j+1})$ desde $\mathcal{D}$
-        \State Calcular objetivo $y_j = \begin{cases} r_j & \text{si } s_{j+1} \text{ es terminal} \\ r_j + \gamma \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^-) & \text{en otro caso} \end{cases}$
-        \State Realizar un paso de descenso de gradiente respecto a la pérdida $(y_j - Q(s_j, a_j; \theta))^2$ para ajustar $\theta$
-        \State Cada $C$ pasos, sincronizar la red objetivo: $\theta^- \leftarrow \theta$
+\State Inicializar el búfer de experiencias $\mathcal{D}$ con capacidad $N$
+\State Inicializar la red de acción-valor $Q(s,a;\theta)$ con parámetros aleatorios
+\State Inicializar la red objetivo $\hat{Q}(s,a;\theta^-)$ con $\theta^- \leftarrow \theta$
+\For{episodio $= 1, 2, \dots$}
+    \State Inicializar el estado $s_t$
+    \For{$t = 1, 2, \dots, T$}
+        \State Seleccionar $a_t$ mediante una política $\epsilon$-greedy basada en $Q(s_t,a;\theta)$
+        \State Ejecutar $a_t$ y observar la recompensa $r_{t+1}$, el estado $s_{t+1}$ y si el episodio terminó
+        \State Almacenar $(s_t,a_t,r_{t+1},s_{t+1},d_{t+1})$ en $\mathcal{D}$
+        \State Muestrear un mini-lote de transiciones desde $\mathcal{D}$
+        \State Calcular $y_j = r_{j+1} + \gamma(1-d_{j+1})\max_{a'}\hat{Q}(s_{j+1},a';\theta^-)$
+        \State Actualizar $\theta$ minimizando $\left(y_j-Q(s_j,a_j;\theta)\right)^2$
+        \State Actualizar periódicamente la red objetivo: $\theta^- \leftarrow \theta$
+        \State $s_t \leftarrow s_{t+1}$
     \EndFor
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+En esta expresión, $d_{j+1}$ es un indicador que toma el valor uno cuando la transición conduce a un estado terminal y cero en caso contrario.
 
 \subsubsection{Aproximación de Políticas, Función de Ventaja y \textit{Policy Gradient}}
 
@@ -722,15 +713,15 @@ En lugar de minimizar un error cuadrático de predicción, la optimización para
 \end{equation}
 donde $\nabla_\theta J(\theta)$ representa el gradiente del desempeño esperado, $\pi_\theta(A_t \mid S_t)$ es la probabilidad otorgada a la acción ejecutada $A_t$ en el estado $S_t$, y $\hat{A}_t$ es la ventaja estimada. Esta formulación incrementa la probabilidad de elegir acciones con ventaja positiva ($\hat{A}_t > 0$) y reduce la probabilidad de aquellas con ventaja negativa.
 
-\subsubsection{\textit{Proximal Policy Optimization} (PPO) y Mejora Monótona}
+\subsubsection{\textit{Proximal Policy Optimization} (PPO) y control de las actualizaciones}
 
 Una dificultad conocida de los métodos de gradiente de política tradicionales (como REINFORCE o A2C) es su sensibilidad a la tasa de aprendizaje: actualizaciones de parámetros con pasos demasiado grandes pueden modificar la distribución de la política de forma abrupta, provocando un colapso catastrófico del desempeño del cual el agente raramente se recupera.
 
-Para resolver esta vulnerabilidad, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (TRPO \cite{schulman2015trust}) formalizaron el principio de \textbf{Mejora Monótona de la Política} (\textit{Monotonic Policy Improvement}). Este principio garantiza matemáticamente que en cada iteración de optimización $k$, el retorno esperado del agente es monótonamente no decreciente:
+Para limitar el riesgo de actualizaciones demasiado grandes, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (TRPO \cite{schulman2015trust}) estudiaron métodos de región de confianza. Bajo supuestos específicos y una optimización que respeta la restricción de divergencia entre políticas, el procedimiento teórico de TRPO puede establecer una mejora monótona del retorno:
 \begin{equation}
     J(\pi_{k+1}) \ge J(\pi_k)
 \end{equation}
-donde $J(\pi_k)$ representa el desempeño esperado de la política en la iteración $k$, y $J(\pi_{k+1})$ es el desempeño esperado tras actualizar sus parámetros. Mientras que TRPO logra esta garantía imponiendo una restricción severa sobre la divergencia Kullback-Leibler (KL) mediante optimización cuadrática de segundo orden, \textit{Proximal Policy Optimization} (PPO) \cite{schulman2017ppo} aproxima este comportamiento mediante un objetivo sustituto recortado (\textit{clipped surrogate objective}) computable mediante descenso de gradiente de primer orden.
+donde $J(\pi_k)$ representa el desempeño esperado de la política en la iteración $k$. TRPO implementa esta idea mediante una restricción explícita sobre la divergencia Kullback--Leibler (KL). Por su parte, \textit{Proximal Policy Optimization} (PPO) \cite{schulman2017ppo} aproxima el comportamiento de una región de confianza mediante un objetivo sustituto recortado (\textit{clipped surrogate objective}) computable con métodos de primer orden. El recorte limita cambios excesivos en la política, pero no constituye una garantía estricta de mejora monótona en cada actualización.
 
 Dada la razón de probabilidad entre la política actual y la anterior:
 \begin{equation}
@@ -742,27 +733,36 @@ L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \min\left( r_t(\theta) \hat{
 \end{equation}
 donde $\epsilon > 0$ es un hiperparámetro de recorte (típicamente $\epsilon \approx 0.1\text{--}0.2$), y $\text{clip}(r, 1-\epsilon, 1+\epsilon)$ acota la razón $r$ al intervalo $[1-\epsilon, 1+\epsilon]$. El operador $\min$ toma el valor más pesimista entre la ventaja ponderada simple y la ventaja recortada, eliminando el incentivo a realizar actualizaciones que modifiquen excesivamente la política si la ventaja es positiva, y acotando la penalización si la ventaja es negativa.
 
-En la práctica, la función objetivo completa de PPO combina el término de política, la pérdida de ajuste del crítico y un término de entropía para favorecer la exploración:
+En la práctica, el objetivo del actor de PPO se combina con una pérdida de valor y, opcionalmente, con un término de entropía para favorecer la exploración. Si se expresa todo como un objetivo a maximizar, una forma compacta es:
 \begin{equation}
-\mathcal{L}^{\text{PPO}}(\theta, \phi) = \hat{\mathbb{E}}_t \left[ L^{\text{CLIP}}(\theta) - c_1 \left( V_\phi(s_t) - V_t^{\text{target}} \right)^2 + c_2 S[\pi_\theta](s_t) \right]
+J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - V_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
 \end{equation}
 donde $\phi$ representa los parámetros de la red del crítico $V_\phi$, $V_t^{\text{target}}$ son los retornos observados objetivo, $S[\pi_\theta]$ denota la entropía de la distribución de la política, y $c_1, c_2 > 0$ son coeficientes de ponderación escalar.
 
-PPO es un algoritmo *on-policy* caracterizado por su estabilidad y simplicidad. En esta tesina, su importancia no se limita a su rol individual, sino que constituye la base algorítmica sobre la cual se estructuran tanto el *baseline* independiente (IPPO) como las extensiones cooperativas multi-agente (MAPPO y HAPPO).
+PPO es un algoritmo predominantemente \textit{on-policy} que reutiliza de forma limitada el lote recolectado con la política vigente. En esta investigación constituye la base conceptual de IPPO, MAPPO y HAPPO; las diferencias entre estas variantes se explican en la sección multiagente.
+
+El siguiente pseudocódigo resume el ciclo conceptual de PPO. La recolección de trayectorias se realiza con la política vigente y el lote se reutiliza durante un número limitado de épocas; posteriormente se descarta para obtener nuevas muestras con la política actualizada:
 
 \begin{algorithm}[H]
-\caption{Algoritmo \textit{Proximal Policy Optimization} (PPO) - Variante \textit{Actor-Critic}}
+\caption{Proximal Policy Optimization (PPO)}
 \label{alg:ppo}
 \begin{algorithmic}[1]
-\State Inicializar parámetros de política (actor) $\theta$ y función de valor (crítico) $\phi$
+\State Inicializar los parámetros del actor $\theta$ y del crítico $\phi$
 \For{iteración $= 1, 2, \dots$}
-    \State Recolectar un conjunto de trayectorias $\mathcal{D}_k = \{\tau_i\}$ ejecutando la política actual $\pi_{\theta}$ en el entorno
-    \State Calcular los valores del crítico $V_\phi(s)$ y las estimaciones de ventaja $\hat{A}_t^{\text{GAE}}$
-    \State Optimizar el objetivo $L^{\text{CLIP}}(\theta)$ respecto a $\theta$ durante $K$ épocas (\textit{epochs}) sobre minilotes de $\mathcal{D}_k$
-    \State Optimizar la función de pérdida del crítico $L^{\text{VF}}(\phi) = (V_\phi(s_t) - \hat{V}_t)^2$ respecto a $\phi$
+    \State Recolectar trayectorias con la política $\pi_{\theta_{\mathrm{old}}}$
+    \State Calcular los retornos objetivo y las ventajas estimadas $\hat{A}_t$
+    \For{época $= 1$ hasta $K$}
+        \State Muestrear mini-lotes del conjunto de trayectorias recolectado
+        \State Calcular $r_t(\theta) = \frac{\pi_\theta(a_t\mid s_t)}{\pi_{\theta_{\mathrm{old}}}(a_t\mid s_t)}$
+        \State Actualizar $\theta$ maximizando $L^{\mathrm{CLIP}}(\theta)$
+        \State Actualizar $\phi$ minimizando el error cuadrático del valor
+        \State Incorporar, si corresponde, un término de entropía para favorecer la exploración
+    \EndFor
+    \State $\theta_{\mathrm{old}} \leftarrow \theta$
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (MARL)}
 
@@ -778,11 +778,11 @@ Un Juego Estocástico para $n$ agentes se define mediante la tupla:
 \end{equation}
 donde $\mathcal{N} = \{1, \dots, n\}$ representa el conjunto de agentes, $\mathcal{S}$ es el espacio de estados globales, $\mathcal{A}_i$ es el espacio de acciones del agente $i$, $P(s' \mid s, \mathbf{a})$ representa la función de transición de estados condicionada a la acción conjunta $\mathbf{a} = (a_1, \dots, a_n) \in \boldsymbol{\mathcal{A}} \equiv \mathcal{A}_1 \times \dots \times \mathcal{A}_n$, y $R_i(s, \mathbf{a})$ representa la función de recompensa asignada al agente $i$. En un entorno estrictamente cooperativo, todos los agentes comparten exactamente la misma señal de recompensa ($R_1 = R_2 = \dots = R_n = R$), de modo que el objetivo de cada agente es maximizar el retorno global esperado del sistema.
 
-En el marco de la Teoría de Juegos, la solución teórica a la que aspiran los algoritmos de MARL es el \textbf{Equilibrio de Nash} \cite{marlbook}. Una política conjunta $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ constituye un Equilibrio de Nash si ningún agente $i \in \mathcal{N}$ puede incrementar unilateralmente su retorno esperado desviándose de su política $\pi_i^*$, asumiendo que los demás agentes mantienen sus políticas fijas en $\boldsymbol{\pi}_{-i}^*$:
+En la teoría de juegos, el \textbf{Equilibrio de Nash} es un concepto de solución que caracteriza la estabilidad frente a desviaciones unilaterales \cite{marlbook}. Una política conjunta $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ constituye un Equilibrio de Nash si ningún agente $i \in \mathcal{N}$ puede incrementar unilateralmente su retorno esperado desviándose de su política $\pi_i^*$, asumiendo que los demás agentes mantienen sus políticas fijas en $\boldsymbol{\pi}_{-i}^*$:
 \begin{equation}
     J(\pi_i, \boldsymbol{\pi}_{-i}^*) \le J(\pi_i^*, \boldsymbol{\pi}_{-i}^*), \quad \forall \pi_i \in \Pi_i, \quad \forall i \in \mathcal{N}
 \end{equation}
-donde $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ es la combinación de políticas individuales en equilibrio, $\pi_i$ representa cualquier política alternativa ejecutable por el agente $i$, $\Pi_i$ denota el espacio de políticas válidas del agente $i$, y $\boldsymbol{\pi}_{-i}^* = (\pi_1^*, \dots, \pi_{i-1}^*, \pi_{i+1}^*, \dots, \pi_n^*)$ es el vector de políticas fijas de todos los demás agentes excepto el agente $i$. En términos sencillos, un Equilibrio de Nash representa un punto de convergencia donde ninguna entidad tiene un incentivo individual para alterar unilateralmente su estrategia.
+donde $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ es la combinación de políticas individuales en equilibrio, $\pi_i$ representa cualquier política alternativa ejecutable por el agente $i$, $\Pi_i$ denota el espacio de políticas válidas del agente $i$, y $\boldsymbol{\pi}_{-i}^* = (\pi_1^*, \dots, \pi_{i-1}^*, \pi_{i+1}^*, \dots, \pi_n^*)$ es el vector de políticas fijas de los demás agentes. En un problema cooperativo de recompensa común, este concepto describe estabilidad, pero no garantiza por sí mismo que la política conjunta maximice el retorno global. Por esa razón, el objetivo operativo de este trabajo se formula como la maximización del retorno conjunto, mientras que el equilibrio de Nash se utiliza como concepto de análisis de convergencia.
 
 En escenarios reales de control distribuido, ningún agente dispone de visibilidad completa del estado global del sistema. Cada participante recopila información únicamente de sus sensores locales. Por consiguiente, los entornos cooperativos multi-agente con observabilidad parcial se formalizan matemáticamente mediante el marco de los Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP) \cite{marlbook, decpomdp-survey}.
 
@@ -790,7 +790,7 @@ Un Dec-POMDP para $n$ agentes se define como una tupla:
 \begin{equation}
     \langle \mathcal{N}, \mathcal{S}, \{ \mathcal{A}_i \}_{i=1}^n, P, R, \{ \Omega_i \}_{i=1}^n, O, \gamma \rangle
 \end{equation}
-donde $\Omega_i$ denota el conjunto de observaciones individuales del agente $i$, regidas por la función de observación probabilística $O(o_1, \dots, o_n \mid s', \mathbf{a}) = \Pr\{O_1 = o_1, \dots, O_n = o_n \mid S' = s', \mathbf{A} = \mathbf{a}\}$. En este esquema, cada agente $i$ basa sus decisiones únicamente en su historial u observación local $o_i \in \Omega_i$, con el propósito de aprender una política descentralizada $\pi_i(a_i \mid o_i)$ que, al combinarse con las políticas de los demás agentes en la política conjunta $\boldsymbol{\pi} = (\pi_1, \dots, \pi_n)$, maximice el retorno acumulado conjunto del sistema \cite{decpomdp-survey}.
+donde $\Omega_i$ denota el conjunto de observaciones individuales del agente $i$, regidas por la función de observación probabilística $O(o_1, \dots, o_n \mid s', \mathbf{a}) = \Pr\{O_1 = o_1, \dots, O_n = o_n \mid S' = s', \mathbf{A} = \mathbf{a}\}$. En este esquema, cada agente $i$ basa sus decisiones en su observación local $o_i \in \Omega_i$ o en una representación de su historial de observaciones, con el propósito de aprender una política descentralizada $\pi_i(a_i \mid o_i)$ que, al combinarse con las políticas de los demás agentes en la política conjunta $\boldsymbol{\pi} = (\pi_1, \dots, \pi_n)$, maximice el retorno acumulado conjunto del sistema \cite{decpomdp-survey}.
 
 \begin{figure}[H]
     \centering
@@ -853,8 +853,8 @@ La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios m
     \begin{equation}
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
     \end{equation}
-    cambia de forma continua a lo largo del entrenamiento. Aquí $\mathbf{a}_{-i}$ representa las acciones conjuntas del resto de los agentes y $\boldsymbol{\pi}_{-i}$ sus respectivas políticas. Esta co-adaptación rompe la Propiedad de Markov base desde la perspectiva local e invalida las garantías de convergencia de los algoritmos de agente único \cite{marlbook,foerster2017}.
-    \item \textbf{Observabilidad Parcial:} Dado el modelo Dec-POMDP inherente, la falta de telemetría global restringe la visión de cada agente a variables puramente locales. Esto introduce estocasticidad e incertidumbre en la varianza de los gradientes evaluados, dificultando la estimación precisa de las funciones de valor.
+    cambia a lo largo del entrenamiento. Aquí $\mathbf{a}_{-i}$ representa las acciones conjuntas del resto de los agentes y $\boldsymbol{\pi}_{-i}$ sus respectivas políticas. Aunque el sistema global puede continuar describiéndose mediante un juego markoviano, la dinámica percibida por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su observación. En consecuencia, las condiciones de convergencia de los algoritmos de agente único dejan de ser suficientes \cite{marlbook,foerster2017}.
+    \item \textbf{Observabilidad Parcial:} Dado el modelo Dec-POMDP inherente, la falta de telemetría global restringe la visión de cada agente a variables locales. Esta información incompleta aumenta la incertidumbre de las estimaciones y dificulta el aprendizaje preciso de las funciones de valor.
     \item \textbf{Asignación de Crédito Multi-Agente (\textit{Credit Assignment}):} En juegos de recompensa común, resulta complejo discernir analíticamente la contribución o el demérito marginal que la acción de un agente aislado produjo sobre el desempeño sistémico global. Una decisión local subóptima podría recibir un refuerzo positivo si el resto del sistema operó de manera sumamente eficiente, sesgando las actualizaciones de la política \cite{marlbook}.
 \end{itemize}
 
@@ -862,7 +862,7 @@ La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios m
 
 Para abordar estas patologías en escenarios Dec-POMDP, la literatura clasifica los algoritmos en función de cómo fluye la información durante el proceso de optimización. Se distinguen fundamentalmente dos enfoques: el Aprendizaje Independiente (\textit{Independent Learning}, IL) y el Entrenamiento Centralizado con Ejecución Descentralizada (\textit{Centralized Training with Decentralized Execution}, CTDE) \cite{ctde_survey, marlbook}.
 
-En el primero, los agentes se entrenan localmente utilizando métodos de agente único, tratando empíricamente al resto de los agentes como parte de la dinámica del entorno. En el segundo, durante la fase de entrenamiento simulado (\textit{offline}), los algoritmos explotan información global privilegiada (historiales conjuntos o concatenación de observaciones) para guiar y estabilizar la optimización de las funciones de valor. Una vez finalizado el entrenamiento, el componente centralizado se descarta y los actores ejecutan políticas condicionadas estrictamente a observaciones locales en tiempo real (\textit{online}).
+En el primero, los agentes se entrenan localmente utilizando métodos de agente único, tratando empíricamente al resto de los agentes como parte de la dinámica del entorno. En el segundo, durante el entrenamiento, los algoritmos pueden explotar información global privilegiada (historiales conjuntos o concatenación de observaciones) para guiar y estabilizar la optimización de las funciones de valor. Durante la ejecución, el componente centralizado no participa en la selección de acciones y los actores utilizan únicamente sus observaciones locales. Esta separación entre información disponible durante el entrenamiento y durante la ejecución constituye la característica central de CTDE.
 
 \subsection{Multi-Agent Deep Reinforcement Learning (MADRL) y Algoritmos Baseline}
 
@@ -873,8 +873,8 @@ En esta investigación, para evaluar rigurosamente el desempeño de las arquitec
 \subsubsection{Aprendizaje Independiente (IL): IDQN e IPPO como Algoritmos Baseline}
 
 \begin{itemize}
-    \item \textbf{\textit{Independent DQN} (IDQN) como Baseline Basado en Valor:} Representa la extensión multi-agente más directa de Q-Learning profundo \cite{tampuu2017multiagent}. Su principal vulnerabilidad metodológica radica en que, al ser un algoritmo \textit{off-policy}, depende críticamente del remuestreo de transiciones desde un \textit{Replay Buffer}. En un entorno MARL no estacionario, esas memorias corresponden a configuraciones históricas donde los demás agentes operaban bajo políticas pasadas. Entrenar sobre estos datos obsoletos agrava la inestabilidad descrita por la Tríada Mortal, provocando la divergencia del valor y el colapso del aprendizaje \cite{foerster2017}. En la evaluación experimental de este trabajo, IDQN sirve como \textit{baseline} representativo de los métodos basados en valor independientes.
-    \item \textbf{\textit{Independent PPO} (IPPO) como Baseline Basado en Política:} Asigna una instancia del algoritmo PPO a cada agente. A diferencia de IDQN, la literatura ha demostrado empíricamente que IPPO exhibe una mayor robustez técnica frente a la no estacionariedad \cite{de2020independent}. Esta resiliencia se fundamenta en su naturaleza \textit{on-policy}: al descartar memorias pasadas y extraer gradientes únicamente de datos muestreados en proximidad temporal directa con la política conjunta actual, asegura que las actualizaciones respondan a la dinámica vigente del sistema. Adicionalmente, el recorte paramétrico ($\text{clip}$) previene saltos perjudiciales en el espacio de la política. IPPO constituye el \textit{baseline} independiente principal contra el cual se contrastan los algoritmos coordinados.
+    \item \textbf{\textit{Independent DQN} (IDQN) como línea de base basada en valor:} Representa una extensión directa de DQN en la que cada agente mantiene su propia función de acción-valor \cite{tampuu2017multiagent}. Como método \textit{off-policy}, puede reutilizar transiciones históricas mediante un \textit{replay buffer}; en MARL, esas transiciones fueron generadas mientras los demás agentes seguían políticas posiblemente distintas. Este desfasaje puede agravar la no estacionariedad y las dificultades de estabilidad del aprendizaje basado en valor \cite{foerster2017}. En la evaluación experimental de este trabajo, IDQN sirve como línea de base independiente para los métodos basados en valor.
+    \item \textbf{\textit{Independent PPO} (IPPO) como línea de base basada en política:} Asigna una instancia de PPO a cada agente. Al utilizar lotes recolectados con las políticas vigentes y descartar la memoria histórica acumulativa, reduce la exposición a transiciones generadas bajo políticas antiguas, aunque no elimina la no estacionariedad causada por el aprendizaje simultáneo \cite{de2020independent}. El recorte de PPO limita cambios excesivos en cada actualización, pero no ofrece una garantía general de convergencia. IPPO constituye la línea de base independiente principal frente a los algoritmos coordinados.
 \end{itemize}
 
 \begin{figure}[H]
@@ -903,8 +903,8 @@ En esta investigación, para evaluar rigurosamente el desempeño de las arquitec
 
         % Conexiones Entrenamiento
         \draw[arr] (estado) -- (critico);
-        \draw[arr, dashed, colConflicto] (critico.210) |- (-2.5, 0.6) -- node[left, font=\scriptsize, text=colConflicto] {Gradiente} (actor1.north);
-        \draw[arr, dashed, colConflicto] (critico.330) |- (1.5, 0.6) -- node[right, font=\scriptsize, text=colConflicto] {Gradiente} (actor2.north);
+        \draw[arr, dashed, colConflicto] (critico.210) |- (-2.5, 0.6) -- node[left, font=\scriptsize, text=colConflicto] {Ventaja / valor} (actor1.north);
+        \draw[arr, dashed, colConflicto] (critico.330) |- (1.5, 0.6) -- node[right, font=\scriptsize, text=colConflicto] {Ventaja / valor} (actor2.north);
 
         \draw[arr] (-2.5, -1.6) -- node[left, lbl] {$o_1$} (actor1);
         \draw[arr] (1.5, -1.6) -- node[right, lbl] {$o_n$} (actor2);
@@ -923,25 +923,25 @@ En esta investigación, para evaluar rigurosamente el desempeño de las arquitec
         \draw[arr] (actor1_ex) -- node[left, lbl] {$a_1$} (5.0, 3.2);
         \draw[arr] (actor2_ex) -- node[right, lbl] {$a_n$} (8.0, 3.2);
     \end{tikzpicture}
-    \caption{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). El Crítico utiliza información global privileged para guiar las actualizaciones de los Actores locales durante la simulación.}
+    \caption{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}
     \label{fig:ctde_architecture}
 \end{figure}
 
 \subsection{Multi-Agent Proximal Policy Optimization (MAPPO)}\label{subsec:mappo}
 
-Para abordar la asignación de crédito y la no estacionariedad sin perder la capacidad de ejecución descentralizada, Yu et al. \cite{yu2022surprising} introdujeron \textit{Multi-Agent Proximal Policy Optimization} (MAPPO), adaptando el algoritmo PPO de agente único al entorno multi-agente cooperativo bajo el paradigma CTDE (véase la Figura \ref{fig:ctde_architecture}).
+Para estudiar cómo una configuración de PPO puede funcionar en tareas cooperativas, Yu et al. \cite{yu2022surprising} evaluaron empíricamente la variante conocida como \textit{Multi-Agent Proximal Policy Optimization} (MAPPO), adaptando PPO al entorno multiagente bajo el paradigma CTDE (véase la Figura \ref{fig:ctde_architecture}). Su contribución principal fue sistematizar prácticas de implementación y evaluar su efecto, no proponer desde cero un algoritmo independiente de PPO.
 
 En MAPPO, la estructura distingue entre actores descentralizados y un crítico centralizado:
 \begin{itemize}
-    \item \textbf{Actores localizados ($\pi_{\theta_i}(a_i \mid o_i)$):} Cada agente $i$ mantiene una red de política paramétrica que procesa únicamente su observación local $o_i$ y emite una distribución sobre las acciones locales $a_i$. En entornos con agentes homogéneos, es habitual utilizar compartición de parámetros (\textit{Parameter Sharing}), entrenando una única red de actor compartida por todos los agentes pero evaluada en sus observaciones individuales.
-    \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, una red de función de valor global $V_\phi(s)$ recibe el estado global $s$ del entorno (o la concatenación del vector de observaciones de todos los agentes $s = (o_1, \dots, o_n)$). El crítico estima el valor esperado del retorno conjunto $G_t$ y computa la ventaja conjunta $\hat{A}_t$ utilizando GAE \cite{yu2022surprising}.
+    \item \textbf{Actores descentralizados ($\pi_{\theta_i}(a_i \mid o_i)$):} Cada agente $i$ mantiene una política que procesa su observación local $o_i$ y produce una distribución sobre las acciones locales $a_i$. En entornos homogéneos puede utilizarse compartición de parámetros para mejorar la eficiencia de aprendizaje, pero esta práctica no constituye un requisito conceptual de MAPPO.
+    \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, una red de función de valor puede recibir el estado global $s$ del entorno o una representación construida a partir de observaciones conjuntas. El crítico estima el retorno y proporciona valores para calcular ventajas mediante GAE; durante la ejecución no es necesario disponer de este componente \cite{yu2022surprising}.
 \end{itemize}
 
-El objetivo de optimización del actor en MAPPO extiende la pérdida recortada de PPO a la acción conjunta:
+En la formulación práctica de MAPPO, el objetivo del actor se expresa como un promedio de términos PPO individuales. La política conjunta se factoriza en políticas locales, pero la pérdida no debe interpretarse como una única razón de probabilidad conjunta:
 \begin{equation}
 L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n} \sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t(s_t, \mathbf{a}_t), \, \text{clip}(r_t^i(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t(s_t, \mathbf{a}_t) \right) \right]
 \end{equation}
-donde $r_t^i(\theta) = \frac{\pi_\theta(a_t^i \mid o_t^i)}{\pi_{\theta_{\text{old}}}(a_t^i \mid o_t^i)}$ es la razón de probabilidad individual del agente $i$, $n$ es el número total de agentes, $\hat{A}_t(s_t, \mathbf{a}_t)$ es la ventaja conjunta evaluada por el crítico centralizado, y $\epsilon$ es el hiperparámetro de recorte.
+donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ es la razón de probabilidad individual del agente $i$, $n$ es el número total de agentes, $\hat{A}_t$ es la ventaja utilizada por la implementación y $\epsilon$ es el hiperparámetro de recorte. En entornos con recompensa común, esta ventaja puede calcularse utilizando un crítico centralizado; la forma exacta depende de la definición del estado y de la implementación.
 
 Por su parte, el crítico centralizado se actualiza minimizando el error cuadrático medio respecto al retorno objetivo descontado normalizado:
 \begin{equation}
@@ -951,10 +951,10 @@ donde $\phi$ son los parámetros del crítico centralizado y $R_t^{\text{target}
 
 \subsubsection{Factores Críticos de Diseño y Optimización en MAPPO}
 
-A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostraron empíricamente que la efectividad de MAPPO depende fuertemente de cinco decisiones de diseño e hiperparámetros específicos:
+A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostraron empíricamente que la efectividad de MAPPO depende fuertemente de varias decisiones de diseño e hiperparámetros:
 
 \begin{enumerate}
-    \item \textbf{Normalización del Valor (Estadísticas Móviles y Algoritmo PopArt):} En juegos cooperativos complejos, las variaciones continuas en la política conjunta provocan fluctuaciones drásticas en la escala del retorno acumulado $R_t^{\text{target}}$, lo que desestabiliza la regresión de la red del crítico. MAPPO resuelve esta inestabilidad estandarizando dinámicamente los objetivos de valor. Esto se logra mediante el cálculo de la media y la desviación estándar móviles de los retornos observados (\textit{Running Statistics}), o bien mediante la aplicación del algoritmo PopArt (\textit{Preserving Outputs Precisely under Adaptive Rescaling Targets} \cite{hessel2019popart}), el cual reescala los objetivos ajustando adaptativamente los pesos de la capa final del crítico. Al computar el estimador de ventaja GAE, las salidas del crítico se desnormalizan para conservar la escala física de los rendimientos al guiar la actualización del actor.
+    \item \textbf{Normalización del valor:} La normalización de los retornos puede mejorar el ajuste del crítico cuando la escala de las recompensas cambia durante el aprendizaje. Yu et al. analizan esta decisión junto con otras prácticas de implementación; PopArt es una alternativa posible, no una condición necesaria de MAPPO \cite{yu2022surprising, hessel2019popart}.
     \item \textbf{Representación del Estado Global en el Crítico:} Yu et al. \cite{yu2022surprising} evaluaron distintas opciones para estructurar la entrada $s$ del crítico centralizado:
     \begin{itemize}
         \item Concatenación de Observaciones Locales (\textit{Concatenated Local}, $CL$): forma el estado uniendo las observaciones locales de todos los agentes $s = (o_1, \dots, o_n)$.
@@ -962,10 +962,9 @@ A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostra
         \item Estado Específico por Agente (\textit{Agent-Specific State}, $AS$): combina el estado del entorno con la información local del agente $i$ ($AS_i = EP \cup o_i$).
         \item Filtrado de Características Redundantes (\textit{Feature Pruning}, $FP$): remueve variables locales duplicadas o de baja varianza en el vector $AS_i$.
     \end{itemize}
-    El estudio concluye que utilizar la combinación de características específicas del agente con filtrado de redundancias ($AS + FP$) equilibra la precisión predictiva del crítico sin inflar la dimensionalidad de entrada.
-    \item \textbf{Reutilización Restringida de Datos (Épocas y Minilotes):} Mientras que PPO de agente único suele reutilizar la experiencia recolectada durante 20 o más épocas divididas en múltiples minilotes pequeños, en MARL la no estacionariedad torna peligrosa la reutilización excesiva. MAPPO restringe la optimización a un máximo de $K \in [5, 15]$ épocas por actualización y recomienda emplear 1 o 2 subdivisiones de minilotes para evitar un desfasaje grave respecto a la política de recolección.
-    \item \textbf{Rango Estricto de Recorte (Clipping $\epsilon$):} Para limitar la deriva destructiva de la política conjunta inducida por el aprendizaje concurrente, MAPPO requiere mantener un valor de recorte $\epsilon \le 0.2$ (típicamente $\epsilon \in [0.05, 0.1]$). Este rango acota las desviaciones en la distribución de acciones conjuntas, asegurando transiciones estables hacia patrones de coordinación.
-    \item \textbf{Tamaño de Lote (Batch Size):} Existe un umbral crítico de muestras \textit{on-policy} por actualización por debajo del cual la varianza del estimador de ventaja impide descubrir la coordinación entre nodos. Superado este tamaño de lote mínimo, el rendimiento se estabiliza.
+    El estudio encuentra que las representaciones específicas por agente y el filtrado de redundancias pueden ser útiles en determinados bancos de prueba. Esta evidencia debe trasladarse al escenario de tránsito mediante evaluación, no como una regla universal.
+    \item \textbf{Reutilización restringida de datos:} En los experimentos de Yu et al., pocas épocas y una o dos particiones del lote resultaron favorables en varios entornos cooperativos. Son recomendaciones empíricas sensibles a la dificultad del problema, no garantías de estabilidad para cualquier red vial.
+    \item \textbf{Rango de recorte y tamaño de lote:} Valores de $\epsilon$ inferiores a $0.2$ y lotes suficientemente grandes tendieron a favorecer la estabilidad en sus experimentos. La selección final debe justificarse con la búsqueda hiperparamétrica de esta investigación.
 \end{enumerate}
 
 
@@ -982,7 +981,7 @@ A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostra
     \State Almacenar las transiciones $(s_t, o_t, \mathbf{a}_t, \hat{A}_t, R_t^{\text{target}})$ en $\mathcal{D}$
     \For{época $= 1$ hasta $K$}
         \State Muestrear minilotes de datos desde $\mathcal{D}$
-        \State Actualizar la política minimizando la pérdida de recorte PPO conjunta:
+        \State Actualizar la política maximizando el objetivo de recorte PPO por agente:
         \Statex $\mathcal{L}^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n}\sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t, \, \text{clip}(r_t^i(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right]$
         \State Actualizar el crítico $\phi$ minimizando el error cuadrático medio del valor:
         \Statex $\mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right]$
@@ -994,16 +993,16 @@ A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostra
 
 \subsection{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}\label{subsec:happo}
 
-En sistemas de control complejos, los agentes presentan con frecuencia asimetrías físicas y operacionales: diferencias en la configuración de actuadores, distintos espacios de acciones o demandas regionales contrapuestas. En estos escenarios, la práctica habitual de compartir parámetros entre los agentes (\textit{Parameter Sharing}) impone una homogeneización forzada que restringe la especialización táctica necesaria de cada nodo. Por otro lado, entrenar políticas independientes sin compartir parámetros (como en IPPO) carece de garantías teóricas de convergencia y suele conducir a oscilaciones destructivas debido al aprendizaje simultáneo no coordinado \cite{kuba2021trust}.
+En sistemas de control complejos, los agentes pueden presentar asimetrías físicas y operacionales: diferencias en la configuración de actuadores, distintos espacios de acciones o demandas regionales contrapuestas. En entornos homogéneos, compartir parámetros puede mejorar la eficiencia de aprendizaje; en entornos heterogéneos, esa práctica puede limitar la especialización. Además, las actualizaciones independientes no poseen una garantía general de convergencia debido al aprendizaje simultáneo no coordinado \cite{kuba2021trust}.
 
-Para solucionar esta limitación, Kuba et al. \cite{kuba2021trust} y Zhong et al. \cite{zhong2024heterogeneous} formularon el paradigma de Aprendizaje Multi-Agente Heterogéneo (\textit{Heterogeneous-Agent Reinforcement Learning}, HARL) y desarrollaron el algoritmo \textit{Heterogeneous-Agent Proximal Policy Optimization} (HAPPO). HAPPO preserva la heterogeneidad de los actores permitiendo que cada agente $i$ posea su propia arquitectura de red neuronal y parámetros $\theta^i$ adaptados a su espacio de acciones local $\mathcal{A}_i$, manteniendo las garantías teóricas de mejora monótona del rendimiento conjunto y convergencia a un Equilibrio de Nash \cite{kuba2021trust}.
+Kuba et al. \cite{kuba2021trust} propusieron HATRPO y HAPPO como algoritmos que permiten políticas heterogéneas sin exigir compartición de parámetros ni una descomposición monótona de la función de valor conjunta. Cada agente $i$ puede mantener su propia arquitectura y parámetros $\theta^i$, adaptados a su espacio de acciones local $\mathcal{A}_i$. Los resultados teóricos de mejora monótona y convergencia se refieren al procedimiento de región de confianza bajo supuestos explícitos; la variante práctica HAPPO sustituye la restricción KL por un objetivo recortado y debe interpretarse como una aproximación \cite{kuba2021trust, zhong2024heterogeneous}.
 
-\subsubsection{Compartición de Experiencia vs. Compartición de Parámetros}
+\subsubsection{Compartición de Parámetros y Políticas Heterogéneas}
 
-Una distinción central entre MAPPO y HAPPO radica en la gestión de los modelos y la experiencia:
+Una distinción central entre MAPPO y HAPPO radica en la homogeneidad de las políticas y en el orden de actualización:
 \begin{itemize}
-    \item \textbf{Compartición de Parámetros (\textit{Parameter Sharing}):} Utilizado habitualmente por MAPPO, impone que todos los agentes compartan los mismos pesos neuronales $\theta_1 = \dots = \theta_n = \theta$. Esto exige que los espacios de observación y acción de todos los agentes sean homogéneos.
-    \item \textbf{Compartición de Experiencia (\textit{Experience Sharing}):} Adoptado por HAPPO, permite que cada agente mantenga una red de actor independiente $\pi_{\theta^i}(a_i \mid o_i)$ con topología y pesos propios. No obstante, en lugar de entrenar $n$ críticos individuales, todos los agentes comparten un único crítico centralizado $V_\phi(s)$ y reutilizan el mismo lote de trayectorias colectivas. Esto logra una elevada eficiencia de datos sin forzar simetría en los actores.
+    \item \textbf{Compartición de parámetros:} En MAPPO se utiliza habitualmente cuando los agentes poseen espacios de observación y acción compatibles. Todos los agentes pueden compartir los mismos pesos $\theta_1 = \dots = \theta_n = \theta$, aunque la formulación de MAPPO también puede implementarse sin esta restricción.
+    \item \textbf{Políticas heterogéneas y actualización secuencial:} HAPPO permite que cada agente mantenga una política independiente $\pi_{\theta^i}(a_i \mid o_i)$ y actualiza los actores siguiendo una permutación. El lote de trayectorias de la iteración actual se reutiliza de forma limitada; esto no equivale a un búfer histórico de \textit{experience sharing} como el empleado por algoritmos específicos de compartición de experiencia.
 \end{itemize}
 
 \subsubsection{Lema de Descomposición de la Ventaja Multi-Agente}
@@ -1020,21 +1019,21 @@ donde $A^{\boldsymbol{\pi}}(s, \mathbf{a})$ representa la ventaja conjunta globa
 \end{equation}
 donde $Q_{i_{1:m}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})$ representa el valor esperado de la acción conjunta considerando las acciones fijadas por los primeros $m$ agentes en la secuencia, y $Q_{i_{1:m-1}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}})$ es el valor marginalizado sobre los agentes restantes.
 
-En esta formulación, las acciones de los agentes que aún no han actualizado su política en la secuencia ($\mathbf{a}_{i_{m+1:n}}$) se marginalizan por esperanza matemática bajo la política conjunta vigente. La gran relevancia teórica de este lema es que se cumple para cualquier juego cooperativo de recompensa común sin requerir ningún supuesto de aditividad o monotonía sobre la función de valor, a diferencia de los esquemas de descomposición de valor como VDN \cite{sunehag2017value} o QMIX \cite{rashid2018qmix}.
+En esta formulación, las acciones de los agentes que aún no han actualizado su política en la secuencia ($\mathbf{a}_{i_{m+1:n}}$) se marginalizan por esperanza matemática bajo la política conjunta vigente. La gran relevancia teórica de este lema es que se cumple para cualquier juego cooperativo de recompensa común sin requerir ningún supuesto de aditividad o monotonía sobre la función de valor, a diferencia de los esquemas de descomposición de valor como VDN \cite{vdn} o QMIX \cite{qmix}.
 
 \subsubsection{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}
 
 Para explotar la descomposición de la ventaja sin incurrir en la instabilidad del entrenamiento simultáneo, HAPPO actualiza las políticas de los agentes de manera secuencial dentro de cada iteración de optimización $k$.
 
-En cada época de entrenamiento $k$, se genera una permutación aleatoria de agentes $i_{1:n} \in \text{Sym}(n)$. El sorteo aleatorio evita que un agente monopolice la prioridad de actualización, garantizando la convergencia hacia un Equilibrio de Nash \cite{zhong2024heterogeneous, wang2023order}.
+En cada iteración de entrenamiento $k$, se genera una permutación de agentes $i_{1:n} \in \text{Sym}(n)$. En el análisis teórico, asignar probabilidad no nula a los órdenes posibles es una condición que interviene en el resultado asintótico de convergencia; en una implementación finita, la aleatorización del orden reduce sesgos de prioridad, pero no constituye por sí sola una garantía \cite{kuba2021trust, wang2023order}.
 
 Cuando le corresponde el turno de optimización al agente $i_m$, los agentes anteriores en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan sus parámetros originales $\theta_k^{i_j}$. Para guiar la actualización del agente $i_m$ respetando la modificación sufrida por la distribución conjunta debido a los agentes precedentes, Kuba et al. \cite{kuba2021trust} demostraron que no es necesario entrenar un crítico separado por cada subgrupo, sino que la ventaja marginal ajustada se puede calcular multiplicando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ por la productoria de los ratios de probabilidad de los agentes que ya se actualizaron.
 
-Se define así el factor de razón de política compuesto $M_{i_{1:m}}(s, \mathbf{a})$:
+Se define así la ventaja conjunta ponderada por los ratios de los agentes ya actualizados:
 \begin{equation}
-    M_{i_{1:m}}(s, \mathbf{a}) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}}^{i_j}(a^{i_j} \mid o^{i_j})}{\pi_{\theta_k}^{i_j}(a^{i_j} \mid o^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s, \mathbf{a})
+    M_{i_{1:m}}(s, \mathbf{a}) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}^{i_j}}^{i_j}(a^{i_j} \mid o^{i_j})}{\pi_{\theta_k^{i_j}}^{i_j}(a^{i_j} \mid o^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s, \mathbf{a})
 \end{equation}
-donde $\pi_{\theta_{k+1}}^{i_j}$ es la política recién optimizada del agente precedido $i_j$, $\pi_{\theta_k}^{i_j}$ es su política previa, y $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ es la ventaja conjunta de la red. Para el primer agente de la secuencia ($m=1$), la productoria es vacía y se define como $M_{i_1}(s, \mathbf{a}) \equiv A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$.
+Donde $\pi_{\theta_{k+1}^{i_j}}^{i_j}$ es la política recién optimizada del agente precedido $i_j$, $\pi_{\theta_k^{i_j}}^{i_j}$ es su política previa, y $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ es la ventaja conjunta. Para el primer agente de la secuencia ($m=1$), la productoria es vacía y se define como $M_{i_1}(s, \mathbf{a}) \equiv A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$. Por tanto, $M$ no es únicamente un cociente de probabilidades: es una señal de ventaja reponderada.
 
 El factor $M_{i_{1:m}}(s, \mathbf{a})$ actúa como un modificador de importancia que ajusta la señal de ventaja para el agente $i_m$, absorbiendo analíticamente el desfasaje en la distribución de la acción conjunta provocado por las actualizaciones precedentes sin necesidad de realizar nuevas simulaciones en el entorno.
 
@@ -1044,20 +1043,20 @@ L^{\text{HAPPO}}(\theta^{i_m}) = \hat{\mathbb{E}}_t \left[ \min\left( r_t^{i_m}(
 \end{equation}
 donde $r_t^{i_m}(\theta^{i_m}) = \frac{\pi_{\theta^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ representa la razón de probabilidad individual del agente $i_m$.
 
-Una vez realizada la actualización de descenso de gradiente sobre $\theta^{i_m}$, es indispensable recalcular la razón de probabilidad post-optimización $\rho_{\text{post}}^{i_m} = \frac{\pi_{\theta_{k+1}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ y actualizar recursivamente el factor $M$ para los agentes restantes:
+Una vez realizada la actualización de descenso de gradiente sobre $\theta^{i_m}$, es indispensable recalcular la razón de probabilidad post-optimización $\rho_{\text{post}}^{i_m} = \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ y actualizar recursivamente el factor $M$ para los agentes restantes:
 \begin{equation}
     M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t)
 \end{equation}
 
 \subsubsection{Garantía de Mejora Monótona}
 
-La combinación de la descomposición exacta de la ventaja con el recorte de la razón de política compuesta en HAPPO permite demostrar el siguiente resultado analítico central \cite{kuba2021trust, zhong2024heterogeneous}:
+El trabajo de Kuba et al. demuestra una propiedad de mejora monótona para un procedimiento de iteración de políticas multiagente con restricciones de región de confianza y bajo supuestos explícitos \cite{kuba2021trust}. La variante práctica HAPPO reemplaza la restricción KL por un objetivo recortado, por lo que esta garantía no se transfiere automáticamente a cada actualización de una implementación neuronal:
 
-En cada iteración de optimización $k$, la actualización secuencial de los actores garantiza que el retorno esperado conjunto del sistema es monótonamente no decreciente:
+En el procedimiento teórico, la actualización secuencial satisface:
 \begin{equation}
     J(\boldsymbol{\pi}_{k+1}) \ge J(\boldsymbol{\pi}_k)
 \end{equation}
-donde $J(\boldsymbol{\pi}_k)$ representa el rendimiento esperado de la política conjunta en el paso $k$. Esta propiedad de \textbf{mejora monótona} elimina las oscilaciones destructivas que caracterizan al aprendizaje independiente (IPPO/IDQN) y proporciona una base teórica sólida para garantizar la convergencia a un Equilibrio de Nash local en sistemas multi-agente complejos.
+donde $J(\boldsymbol{\pi}_k)$ representa el rendimiento esperado de la política conjunta en el paso $k$. El resultado depende de las hipótesis del procedimiento analítico y no significa que HAPPO-clip elimine las oscilaciones ni que una ejecución finita con redes neuronales converja necesariamente a un equilibrio de Nash. En esta investigación, HAPPO se evalúa como una estrategia que busca mejorar la coordinación y la estabilidad frente a actualizaciones independientes.
 
 \begin{figure}[H]
     \centering
@@ -1113,7 +1112,7 @@ donde $J(\boldsymbol{\pi}_k)$ representa el rendimiento esperado de la política
         \State Obtener el agente actual $i_m$ y su factor modificador $M_{i_m}(s, \mathbf{a})$
         \State Actualizar $\theta^{i_m}$ a $\theta_{k+1}^{i_m}$ maximizando la pérdida recortada HAPPO:
         \Statex $L^{\text{HAPPO}}(\theta^{i_m}) = \hat{\mathbb{E}}_t \left[ \min\left( r_t^{i_m}(\theta^{i_m}) M_{i_m}(s_t, \mathbf{a}_t), \, \text{clip}\left(r_t^{i_m}(\theta^{i_m}), 1-\epsilon, 1+\epsilon\right) M_{i_m}(s_t, \mathbf{a}_t) \right) \right]$
-        \State Recalcular la razón post-optimización: $\rho_{\text{post}}^{i_m} \leftarrow \frac{\pi_{\theta_{k+1}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$
+        \State Recalcular la razón post-optimización: $\rho_{\text{post}}^{i_m} \leftarrow \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$
         \For{$j = m+1 \dots n$}
             \State Actualizar el factor modificador para agentes subsecuentes: 
             \Statex $M_{i_j}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_j}(s_t, \mathbf{a}_t)$
@@ -1135,14 +1134,14 @@ Para finalizar el estudio comparativo de los algoritmos basados en Optimización
 \small
 \begin{tabular}{|p{2.6cm}|p{2.8cm}|p{3.1cm}|p{3.2cm}|p{2.8cm}|}
 \hline
-\textbf{Eje de Análisis} & \textbf{PPO Agente Único} & \textbf{IPPO (Independiente)} & \textbf{MAPPO (CTDE Homogéneo)} & \textbf{HAPPO (HARL Heterogéneo)} \\ \hline
-\textbf{Paradigma} & Agente Único & DTE (Descentralizado) & CTDE (Centralizado/Desc.) & CTDE / HARL \\ \hline
-\textbf{Arquitectura de Actores} & Único $\pi_\theta(a \mid s)$ & $n$ Actores independientes o compartidos & Compartición de Parámetros ($\pi_\theta$ único) & $n$ Actores heterogéneos ($\pi_{\theta^i}$) \\ \hline
+\textbf{Eje de análisis} & \textbf{PPO de agente único} & \textbf{IPPO independiente} & \textbf{MAPPO / CTDE} & \textbf{HAPPO / HARL} \\ \hline
+\textbf{Paradigma} & Agente Único & IL (Descentralizado) & CTDE (Centralizado/Desc.) & CTDE / HARL \\ \hline
+\textbf{Actores} & Único $\pi_\theta(a \mid s)$ & $n$ políticas locales & Actores locales; puede compartir parámetros & $n$ políticas heterogéneas \\ \hline
 \textbf{Arquitectura del Crítico} & Único $V_\phi(s)$ & $n$ Críticos locales $V_{\phi_i}(o_i)$ & Un Crítico Centralizado $V_\phi(s)$ & Un Crítico Centralizado $V_\phi(s)$ \\ \hline
-\textbf{Mecanismo de Optimización} & Simultáneo / Directo & Simultáneo independiente & Simultáneo paralelo & Secuencial con Permutación $i_{1:n}$ \\ \hline
+\textbf{Optimización} & PPO estándar & PPO local simultáneo & PPO local con crítico global & Actualización secuencial $i_{1:n}$ \\ \hline
 \textbf{Señal de Ventaja} & Ventaja local $\hat{A}(s, a)$ & Ventaja local $\hat{A}_i(o_i, a_i)$ & Ventaja conjunta $\hat{A}(s, \mathbf{a})$ & Factor compuesto $M_{i_{1:m}}(s, \mathbf{a})$ \\ \hline
-\textbf{Mejora Monótona} & Garantizada (TRPO/PPO) & Sin garantía (no estacionario) & Sin garantía monótona estricta & Garantizada monótona ($J_{k+1} \ge J_k$) \\ \hline
-\textbf{Soporte para Heterogeneidad} & No aplica & Limitado e inestable & Limitado (exige Parameter Sharing) & Nativo y matemáticamente exacto \\ \hline
+\textbf{Mejora monótona} & No estricta para PPO & Sin garantía general & Sin garantía estricta & Teórica bajo supuestos; HAPPO-clip es aproximado \\ \hline
+\textbf{Tipo de agente} & No aplica & Depende de la implementación & Compatible; compartir parámetros es opcional & Diseñada para agentes heterogéneos \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1150,84 +1149,52 @@ Para finalizar el estudio comparativo de los algoritmos basados en Optimización
 
 Una vez establecidos los marcos teóricos de la Ingeniería de Tránsito y del Aprendizaje por Refuerzo Multi-Agente, esta sección formaliza el mapeo directo entre los conceptos físicos del dominio del tráfico y la tupla de decisión secuencial Dec-POMDP, definiendo la arquitectura de interacción entre el simulador y los controladores inteligentes.
 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.45cm and 0.45cm,
+        box/.style={rectangle, rounded corners=4pt, thick, align=center, minimum width=2.7cm, minimum height=1.0cm, font=\small},
+        env/.style={box, draw=colEntorno!80!black, fill=colEntorno!20},
+        obs/.style={box, draw=colInterfaz!80!black, fill=colInterfaz!20},
+        ag/.style={box, draw=colAgente!80!black, fill=colAgente!20},
+        rew/.style={box, draw=colDatoPrimario!80!black, fill=colDatoPrimario!15},
+        arr/.style={-{Stealth[length=6pt]}, thick, draw=black!75},
+        lbl/.style={font=\scriptsize, fill=white, inner sep=2pt, align=center}
+    ]
+        \node[env] (sumo) {Entorno microscópico\\SUMO / red vial};
+        \node[obs, right=of sumo] (observ) {Observaciones locales\\$o_i$: colas, velocidad, fase};
+        \node[ag, right=of observ] (actor) {Actor local\\$\pi_i(a_i\mid o_i)$};
+        \node[env, right=of actor] (fase) {Acción semafórica\\$a_i$: fase válida};
+        \node[rew, below=1.0cm of actor] (reward) {Recompensa\\demora, cola, detenciones};
+        \node[rew, below=1.0cm of sumo] (critic) {Durante CTDE\\crítico con información global};
+
+        \draw[arr] (sumo) -- node[lbl] {telemetría} (observ);
+        \draw[arr] (observ) -- (actor);
+        \draw[arr] (actor) -- (fase);
+        \draw[arr] (fase) |- (sumo);
+        \draw[arr] (sumo) |- (reward);
+        \draw[arr] (reward) -| node[lbl, below] {actualización} (actor);
+        \draw[arr, dashed] (sumo) -- node[lbl, left] {estado global} (critic);
+        \draw[arr, dashed] (critic) -| node[lbl, right] {valor / ventaja} (actor);
+    \end{tikzpicture}
+    \caption{Mapeo conceptual del control semafórico como interacción Dec-POMDP. Los actores seleccionan fases a partir de observaciones locales; durante el entrenamiento CTDE, el crítico puede utilizar información global para estimar valores o ventajas.}
+    \label{fig:traffic_rl_mapping}
+\end{figure}
+
 \subsection{Formalización del Control Semafórico Coordinado como Dec-POMDP}
 
 En el contexto del control adaptativo de red, cada intersección semaforizada se modela como un agente inteligente $i \in \mathcal{N} = \{1, \dots, n\}$. La interacción entre la red vial simulada en SUMO y el sistema de control se formaliza mediante los elementos de la tupla Dec-POMDP:
 
 \begin{itemize}
-    \item \textbf{Entorno ($environment$) e Interfaz TraCI:} El simulador microscópico SUMO actúa como el entorno dinámico. A través de la interfaz TraCI (\textit{Traffic Control Interface}) y la librería de abstracción SUMO-RL \cite{AlegreLSUMORLDoc}, se establece un bucle de control discreto paso a paso donde el sistema lee la telemetría del tráfico y envía comandos de fase a los semáforos.
-    \item \textbf{Espacio de observaciones ($o_i \in \Omega_i$):} Vector de características locales registrado en los accesos de la intersección $i$ en el instante $t$. Incluye la longitud de cola por carril ($q_l$), la densidad u ocupación ($k_l$), la velocidad media espacial ($v_l$), el número de vehículos detenidos y el indicador de la fase semafórica activa actualmente.
-    \item \textbf{Espacio de acciones ($a_i \in \mathcal{A}_i$):} Selección discreta de la siguiente fase semafórica a activar o mantener. Cada decisión se ejecuta durante un tiempo de verde fijo $g$ (e.g., 5 segundos). Si el agente decide cambiar de fase, el entorno intercala de forma automática los intervalos de seguridad física ($t_{\text{amarillo}} + t_{\text{rojo\_todo}}$) antes de iniciar la nueva fase.
-    \item \textbf{Función de recompensa ($R_i$):} En el marco abstracto del Dec-POMDP, la recompensa actúa como una señal escalar de realimentación diseñada para incentivar la fluidez vehicular penalizando las manifestaciones físicas de la congestión (colas, demoras y detenciones). La especificación matemática exacta y las distintas funciones de recompensa evaluadas y comparadas en este trabajo se formulan formalmente en el Capítulo \ref{capitulo:metodologia} (Metodología).
-    \item \textbf{Coordinación y prevención de congestión (\textit{Spillback}):} Las decisiones operativas de un semáforo afectan de forma directa a las intersecciones adyacentes. Una fase verde prolongada en un acceso principal descarga un pelotón de vehículos que avanza hacia el nodo contiguo; si ese nodo no ajusta oportunamente su temporización, la cola resultante puede bloquear la intersección aguas arriba (\textit{spillback}). Mediante algoritmos CTDE (MAPPO) y HARL (HAPPO), los agentes aprenden a coordinar secuencias de verde continuas (olas verdes adaptativas), maximizando la capacidad de descarga global.
+    \item \textbf{Entorno:} El simulador microscópico SUMO representa la evolución dinámica de la red vial. La interfaz de simulación permite intercambiar observaciones y acciones en pasos discretos; los detalles de la integración se especifican en el Capítulo \ref{capitulo:metodologia}.
+    \item \textbf{Observaciones ($o_i \in \Omega_i$):} Cada intersección recibe información local de sus accesos y fases. En la implementación se utilizan variables de tránsito como colas, velocidad, espera y estado de fase; estas variables constituyen una decisión de modelado y se detallan en la metodología. Debe distinguirse la densidad física de la ocupación medida por un detector.
+    \item \textbf{Acciones ($a_i \in \mathcal{A}_i$):} Cada agente selecciona o mantiene una fase semafórica válida. La duración de las decisiones y las transiciones de seguridad son restricciones del entorno, no parte de la teoría general del Dec-POMDP.
+    \item \textbf{Recompensa:} La señal de realimentación representa el objetivo operacional del controlador. Puede penalizar colas, demoras o detenciones, o combinar señales locales y globales. Las funciones concretas evaluadas en este trabajo se presentan en el Capítulo \ref{capitulo:metodologia}.
+    \item \textbf{Coordinación:} Una acción local puede modificar el flujo que llega a intersecciones vecinas y producir acumulación aguas abajo. CTDE ofrece un mecanismo para utilizar información global durante el entrenamiento y conservar actores locales durante la ejecución; que emerjan olas verdes o se reduzca el desbordamiento de colas es una hipótesis de desempeño que debe evaluarse experimentalmente.
 \end{itemize}
 
 \subsection{Funciones de Recompensa en Control Semafórico}
 
-En la formalización de un Dec-POMDP para el control semafórico adaptativo, la función de recompensa $R_i$ constituye la señal de realimentación cuantitativa mediante la cual el sistema guía el aprendizaje de los agentes \cite{MDPI_Infrastructures2025_RLReview}. En este trabajo, el marco computacional \texttt{marlTLC} formaliza e implementa un conjunto jerárquico de funciones de recompensa orientadas a resolver el compromiso entre la optimización local y la coordinación sistémica:
+En un Dec-POMDP para control semafórico, la recompensa vincula las decisiones de los agentes con el desempeño operacional de la red. En términos generales, puede construirse a partir de demoras, colas, detenciones, emisiones o medidas de coordinación. La literatura distingue entre señales absolutas, que penalizan el estado observado, y señales diferenciales, que representan el cambio de una métrica entre pasos consecutivos.
 
-\begin{itemize}
-    \item \textbf{Formulaciones Diferenciales y Absolutas:} Las recompensas absolutas, como la demora negativa ($R = -W_{\text{acc}}$) o la longitud de cola negativa ($R = -N_{\text{queue}}$), penalizan permanentemente el estado actual del tráfico. Sin embargo, en simulación microscópica con flujos dinámicos, esta penalización absoluta acumula deriva de varianza a lo largo del episodio. Las formulaciones diferenciales computan la mejora discreta respecto al paso temporal anterior:
-    \begin{equation}
-        R_{\text{diff\_halted}} = N_{\text{halted}}(t-1) - N_{\text{halted}}(t)
-    \end{equation}
-    \begin{equation}
-        R_{\text{diff\_waiting}} = W_{\text{acc}}(t-1) - W_{\text{acc}}(t)
-    \end{equation}
-    donde un valor positivo indica una reducción efectiva en el número de vehículos detenidos o en la demora acumulada, proporcionando un gradiente de progreso local paso a paso que estabiliza la asignación de crédito temporal \cite{difference_rewards}.
-    \item \textbf{Presión de Tráfico (\textit{PressureReward}):} Basada en la teoría de flujo de saturación y control de presión máxima (\textit{Max-Pressure}) \cite{presslight2019}, la presión $P_i$ en una intersección $i$ evalúa la diferencia entre los vehículos detenidos en los carriles entrantes ($L_{\text{in}}$) y los vehículos en los carriles salientes ($L_{\text{out}}$):
-    \begin{equation}
-        P_i = \left| \sum_{l \in L_{\text{in}}} N_{\text{halted}, l} - \sum_{m \in L_{\text{out}}} N_{\text{halted}, m} \right|
-    \end{equation}
-    Definiendo $R_{\text{pressure}} = -P_i$, la maximización del incentivo equivale a igualar las tasas de descarga y prevenir la acumulación de presión aguas abajo.
-    \item \textbf{Normalización por Volumen Vehicular:} Para evitar que intersecciones con mayor volumen dominen desproporcionadamente la señal de aprendizaje en redes heterogéneas, se aplica la normalización por la cantidad de vehículos activos:
-    \begin{equation}
-        R_{\text{diff\_waiting\_norm}} = \frac{W_{\text{acc}}(t-1) - W_{\text{acc}}(t)}{\max(N_{\text{veh}}(t), 1)}
-    \end{equation}
-    \item \textbf{Mezcla Cooperativa Vecinal ($\lambda$-mix):} Para mitigar el comportamiento egoísta o miope de agentes independientes, la función \texttt{NeighborMixReward} combina de manera convexa la señal local $L_i$ con la media de las recompensas observadas en las intersecciones vecinas $N_i$:
-    \begin{equation}
-        R_i = (1 - \lambda) L_i + \lambda \left( \frac{1}{|\text{Nei}(i)|} \sum_{j \in \text{Nei}(i)} L_j \right)
-    \end{equation}
-    donde $\lambda = \frac{w}{1+w} \in [0, 1)$ parametriza la fracción de cooperación vecinal (siendo $w \ge 0$ el peso de mezcla histórica). Esta señal compartida promueve la coordinación espacial y favorece la aparición espontánea de olas verdes entre nodos adyacentes.
-    \item \textbf{Penalización por Desbordamiento de Cola (\textit{Spillback Penalty}):} Cuando la densidad en los carriles salientes supera el umbral crítico de capacidad ($k \ge 95\%$), la señal \texttt{SpillbackPenaltyReward} inyecta un castigo escalar severo. Esto desincentiva acciones que saturen los accesos contiguos, bloqueando físicamente el cruce aguas arriba (\textit{spillback}).
-\end{itemize}
-
-\section{Frameworks Tecnológicos de Escalado y Optimización}
-
-La evaluación experimental de algoritmos de Aprendizaje por Refuerzo Multi-Agente Profundo en escenarios de simulación microscópica exige infraestructuras de cómputo capaces de escalar la recolección de experiencia y optimizar iterativamente espacios de hiperparámetros de alta dimensionalidad.
-
-\subsection{Ecosistema Ray: Ray Core, Ray Tune y RLlib}
-
-Ray es un framework de computación distribuida de código abierto diseñado para escalar aplicaciones de inteligencia artificial y aprendizaje por refuerzo \cite{ray_doc_2025}. En esta investigación, la pila tecnológica se apoya en tres módulos fundamentales del ecosistema Ray:
-
-\begin{itemize}
-    \item \textbf{Ray Core:} Infraestructura distribuida subyacente basada en el modelo de actores y tareas asíncronas. Permite gestionar de manera paralela múltiples procesos de simulación en SUMO interactuando a través de TraCI en entornos multinúcleo o distribuidores de cómputo HPC \cite{ray_doc_2025}.
-    \item \textbf{Ray Tune:} Plataforma distribuida para la selección de modelos y optimización de hiperparámetros \cite{liaw2018tune}. Ray Tune coordina la ejecución paralela de pruebas (\textit{trials}), gestiona dinámicamente los recursos de hardware (CPU/GPU) por experimento y registra métricas de telemetría en tiempo real.
-    \item \textbf{RLlib:} Librería de referencia para aprendizaje por refuerzo distribuido masivo \cite{liang2018rllib}. Ofrece abstracciones nativas para entornos multi-agente bajo el paradigma CTDE (MAPPO y HAPPO), soportando compartición de parámetros (\textit{Parameter Sharing}), vectorización paralela de entornos TraCI y recolección eficiente de trayectorias \textit{on-policy}.
-\end{itemize}
-
-\subsection{Framework Optuna y Pipeline de Optimización Multietapa}
-
-Para sintonizar de forma rigurosa los hiperparámetros algorítmicos (como la tasa de aprendizaje $\alpha$, el rango de recorte PPO $\epsilon$, el número de épocas $K$ y la entropía), se emplea el framework de optimización automática Optuna \cite{akiba2019optuna, optuna_doc_2025}.
-
-\subsubsection{Optimización Bayesiana TPE y Poda Asíncrona ASHA}
-
-La exploración estocástica del espacio de búsqueda en Optuna se estructura mediante dos componentes algorítmicos principales:
-\begin{itemize}
-    \item \textbf{Muestreo Bayesiano TPE (\textit{Tree-structured Parzen Estimator}):} A diferencia de la búsqueda aleatoria o en grilla, TPE construye estimadores de densidad condicional no paramétricos $l(x)$ y $g(x)$ para modelar las distribuciones de hiperparámetros asociadas a los desempeños superiores e inferiores observados, respectivamente \cite{akiba2019optuna}. El algoritmo muestrea iterativamente las regiones que maximizan la razón de verosimilitud (\textit{Likelihood Ratio}), concentrando la exploración en las cuencas de convergencia más prometedoras.
-    \item \textbf{Poda Asíncrona ASHA (\textit{Asynchronous Successive Halving Algorithm}):} Dado el costo computacional de ejecutar simulaciones completas en SUMO, ASHA monitorea asíncronamente las curvas de aprendizaje intermedias y cancela tempranamente (\textit{pruning}) las pruebas que se ubican en los percentiles inferiores de desempeño \cite{li2020system}. Se define un período de gracia (\textit{grace period}) adecuado para preservar pruebas MARL cuya convergencia coordinada suele ser lenta en las fases iniciales.
-\end{itemize}
-
-\subsubsection{Pipeline Multietapa y Métrica de Retorno Robusto al Riesgo (CVaR)}
-
-Con el propósito de mitigar la maldición de la dimensionalidad sin introducir sesgo humano temprano, la optimización se organiza en un \textbf{Pipeline Multietapa}:
-\begin{enumerate}
-    \item \textbf{Fase 1 (Exploración Estocástica de Amplio Espectro - \textit{Broad Search}):} Explora el espacio global mediante distribuciones no restringidas en Optuna (\texttt{loguniform}, \texttt{uniform} extensos), identificando las cuencas de atracción del algoritmo en distintos escenarios viales.
-    \item \textbf{Fase 2 (Refinamiento Bayesiano Guiado por Evidencia - \textit{Refined Search}):} Bajo el principio de la \textbf{Navaja de Ockham Bayesiana}, refina las distribuciones probabilísticas alrededor de los valles óptimos de la Fase 1. Si un parámetro convergió contra el límite del rango inicial (censura de frontera), el método expande formalmente sus fronteras para verificar la existencia del óptimo global.
-\end{enumerate}
-
-En entornos MARL, los algoritmos sufren con frecuencia de \textbf{colapso de política} (\textit{Policy Collapse}), una degradación repentina de las políticas cooperativas causada por la alta varianza del aprendizaje concurrente \cite{yu2022surprising}. Para forzar a Optuna a seleccionar únicamente configuraciones estables y seguras, la función objetivo abandona el promedio aritmético simple en favor de una métrica de \textbf{Retorno Robusto al Riesgo} inspirada en el Valor en Riesgo Condicional (CVaR):
-\begin{equation}
-    \text{Robust\_Return} = \mathbb{E}[\mathcal{R}] - \alpha \cdot \left( \mathbb{E}[\mathcal{R}] - \min(\mathcal{R}) \right)
-\end{equation}
-donde $\mathbb{E}[\mathcal{R}]$ representa la recompensa promedio esperada del lote, $\min(\mathcal{R})$ es la peor recompensa episódica registrada en el lote, y $\alpha \in [0, 1]$ es el factor de aversión al riesgo (típicamente $\alpha = 0.5$). Penalizar la varianza inferior descarta configuraciones inestables y garantiza la mejora monótona del desempeño conjunto en el sistema de control.
+En este último caso, debe distinguirse una recompensa diferencial temporal de las \textit{difference rewards} de la teoría de MARL. Las primeras comparan una métrica en dos instantes; las segundas estiman contrafactualmente la contribución marginal de un agente. La presión de tránsito y las penalizaciones por desbordamiento de cola pertenecen al dominio específico de la ingeniería de tránsito y requieren definir carriles, movimientos, capacidad y ocupación. Por ello, las funciones concretas, la mezcla vecinal y sus parámetros se presentan y justifican en el Capítulo \ref{capitulo:metodologia}, donde también se describen las métricas de evaluación \cite{MDPI_Infrastructures2025_RLReview, difference_rewards, presslight2019}.
