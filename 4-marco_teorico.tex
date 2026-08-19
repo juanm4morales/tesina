@@ -33,55 +33,65 @@ La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en un
         y=0.74cm,
         >=Stealth,
         font=\small,
-        veh/.style={-{Stealth[length=8pt,width=7pt]}, line width=2.6pt, black!58, line cap=round},
-        ped/.style={<->, dashed, dash pattern=on 4pt off 3pt, line width=1.3pt, colDatoPrimario!80!black},
+        veh/.style={-{Stealth[length=7pt,width=6pt]}, line width=2.35pt, black!62, line cap=round, line join=round},
+        ped/.style={<->, dashed, dash pattern=on 5pt off 3pt, line width=1.2pt, colDatoPrimario, line cap=round, shorten <=2pt, shorten >=2pt, >={Stealth[length=4pt,width=3pt]}},
         num/.style={font=\bfseries\large, colDatoPrimario!85!black},
         pnum/.style={font=\small, colDatoPrimario!85!black},
-        road/.style={black!35, line width=0.65pt}
+        road/.style={black!30, line width=0.75pt, line cap=round}
     ]
-        % Geometría simplificada siguiendo la disposición de FHWA: calzadas y ejes.
-        \draw[road] (-5.4,1.05) -- (-1.05,1.05) -- (-1.05,4.35);
-        \draw[road] (1.05,4.35) -- (1.05,1.05) -- (5.4,1.05);
-        \draw[road] (5.4,-1.05) -- (1.05,-1.05) -- (1.05,-4.35);
-        \draw[road] (-1.05,-4.35) -- (-1.05,-1.05) -- (-5.4,-1.05);
-        \draw[road] (-5.4,0) -- (-1.25,0);
-        \draw[road] (1.25,0) -- (5.4,0);
-        \draw[road] (0,-4.35) -- (0,-1.25);
-        \draw[road] (0,1.25) -- (0,4.35);
+        % Bordes exteriores de la calzada (sin guías interiores).
+        \draw[road] (-4.85, 1.60) -- ( 4.85, 1.60);
+        \draw[road] (-4.85,-1.60) -- ( 4.85,-1.60);
+        \draw[road] (-1.60,-4.85) -- (-1.60, 4.85);
+        \draw[road] ( 1.60,-4.85) -- ( 1.60, 4.85);
 
-        % Movimientos vehiculares: números impares para giros izquierdos y pares para directos.
-        \draw[veh] (-0.25,3.95) -- (-0.25,1.55);
-        \node[num] at (-0.72,4.05) {2};
-        \draw[veh] (0.45,3.90) -- (0.45,2.65) to[out=-90,in=180] (1.70,2.05);
-        \node[num] at (0.90,4.05) {5};
+        % Movimientos vehiculares, compactos y totalmente contenidos en su acceso.
+        % Norte
+        \draw[veh] (-0.34,4.18) -- (-0.34,2.02);
+        \node[num] at (-0.34,4.46) {2};
+        \draw[veh] (0.34,4.18) -- (0.34,2.52) .. controls (0.34,2.12) and (0.86,2.12) .. (1.22,2.12);
+        \node[num] at (0.34,4.46) {5};
 
-        \draw[veh] (4.15,0.35) -- (1.45,0.35);
-        \node[num] at (4.40,0.75) {4};
-        \draw[veh] (3.95,-0.45) -- (2.75,-0.45) to[out=180,in=90] (2.10,-1.70);
-        \node[num] at (4.40,-0.72) {7};
+        % Este
+        \draw[veh] (4.18,0.34) -- (2.00,0.34);
+        \node[num] at (4.50,0.34) {4};
+        \draw[veh] (4.18,-0.34) -- (2.42,-0.34) .. controls (2.10,-0.34) and (2.10,-0.92) .. (2.10,-1.28);
+        \node[num] at (4.50,-0.34) {7};
 
-        \draw[veh] (0.25,-3.95) -- (0.25,-1.55);
-        \node[num] at (0.72,-4.05) {6};
-        \draw[veh] (-0.45,-3.90) -- (-0.45,-2.65) to[out=90,in=0] (-1.70,-2.05);
-        \node[num] at (-0.90,-4.05) {1};
+        % Sur
+        \draw[veh] (-0.34,-4.18) -- (-0.34,-2.52) .. controls (-0.34,-2.12) and (-0.88,-2.12) .. (-1.22,-2.12);
+        \node[num] at (-0.34,-4.46) {1};
+        \draw[veh] (0.34,-4.18) -- (0.34,-2.00);
+        \node[num] at (0.34,-4.46) {6};
 
-        \draw[veh] (-4.15,-0.35) -- (-1.45,-0.35);
-        \node[num] at (-4.40,-0.75) {8};
-        \draw[veh] (-3.95,0.45) -- (-2.75,0.45) to[out=0,in=-90] (-2.10,1.70);
-        \node[num] at (-4.40,0.72) {3};
+        % Oeste
+        \draw[veh] (-4.18,0.34) -- (-2.42,0.34) .. controls (-2.10,0.34) and (-2.10,0.92) .. (-2.10,1.28);
+        \node[num] at (-4.50,0.34) {3};
+        \draw[veh] (-4.18,-0.34) -- (-2.00,-0.34);
+        \node[num] at (-4.50,-0.34) {8};
 
-        % Movimientos peatonales concurrentes.
-        \draw[ped] (-1.30,1.30) -- (1.30,1.30);
-        \draw[ped] (1.30,1.30) -- (1.30,-1.30);
-        \draw[ped] (-1.30,-1.30) -- (1.30,-1.30);
-        \draw[ped] (-1.30,1.30) -- (-1.30,-1.30);
-        \node[pnum, fill=white, inner sep=1pt] at (0,1.62) {$P4$};
-        \node[pnum, fill=white, inner sep=1pt] at (1.70,-0.35) {$P6$};
-        \node[pnum, fill=white, inner sep=1pt] at (0,-1.62) {$P8$};
-        \node[pnum, fill=white, inner sep=1pt] at (-1.70,-0.35) {$P2$};
+        % Rótulos discretos de la vía, como en la referencia FHWA.
+        \node[font=\bfseries\scriptsize, text=black!55, anchor=south] at (-3.55,1.66) {Calle secundaria};
+        \node[font=\bfseries\scriptsize, text=black!55, anchor=west] at (1.72,-4.35) {Calle principal};
 
-        \draw[-{Stealth[length=5pt,width=4pt]}, black!35, line width=0.7pt] (4.35,3.45) -- (4.35,4.05);
-        \node[font=\scriptsize\bfseries, black!45] at (4.35,3.20) {N};
+        % Caja peatonal central.
+        \draw[ped] (-1.45, 1.45) -- ( 1.45, 1.45);
+        \draw[ped] ( 1.45, 1.45) -- ( 1.45,-1.45);
+        \draw[ped] ( 1.45,-1.45) -- (-1.45,-1.45);
+        \draw[ped] (-1.45,-1.45) -- (-1.45, 1.45);
+        \node[pnum] at ( 0.00, 1.15) {$P4$};
+        \node[pnum] at ( 1.15, 0.00) {$P6$};
+        \node[pnum] at ( 0.00,-1.15) {$P8$};
+        \node[pnum] at (-1.15, 0.00) {$P2$};
+
+        % Leyenda interna bajo la figura.
+        \draw[veh] (-4.05,-5.45) -- (-3.00,-5.45);
+        \node[anchor=west, font=\small, text=black!65] at (-2.72,-5.45) {Movimientos vehiculares};
+        \draw[ped] (-4.05,-5.98) -- (-3.00,-5.98);
+        \node[anchor=west, font=\small, text=black!65] at (-2.72,-5.98) {Movimientos peatonales};
+
+        \draw[-{Stealth[length=5pt,width=4pt]}, black!38, line width=0.7pt] (4.35,3.55) -- (4.35,4.15);
+        \node[font=\scriptsize\bfseries, black!45] at (4.35,3.30) {N};
     \end{tikzpicture}
     \caption{Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite{fhwa_signal_timing_manual}.}
     \label{fig:movimientos_fases_interseccion}
