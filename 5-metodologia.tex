@@ -1,21 +1,41 @@
 \chapter{Metodología y Diseño Experimental}
 \label{capitulo:metodologia}
 
-En este capítulo se detalla el marco metodológico de la investigación, la operacionalización de las variables, el diseño de los escenarios de simulación, la arquitectura de los componentes computacionales y los protocolos experimentales adoptados para evaluar las hipótesis planteadas. El estudio se encuadra dentro de un enfoque **cuantitativo, aplicado y experimental puro**, donde la simulación microscópica de tránsito actúa como el laboratorio controlado para evaluar la capacidad de aprendizaje, coordinación y robustez de las distintas arquitecturas de Aprendizaje por Refuerzo Multi-Agente (MARL).
+En este capítulo se detalla el marco metodológico de la investigación, la operacionalización de las variables, el modelado físico y calibración de los escenarios de simulación, la arquitectura computacional del entorno distribuido y los protocolos experimentales adoptados para contrastar las hipótesis planteadas. El estudio se encuadra dentro de un enfoque cuantitativo, aplicado y experimental puro de medidas repetidas, donde la simulación microscópica de tránsito constituye el laboratorio controlado para evaluar el desempeño, la coordinación espacial y la robustez de las arquitecturas de Aprendizaje por Refuerzo Multi-Agente (MARL).
 
 ---
 
 \section{Enfoque y Diseño de Investigación}
 \label{sec:enfoque_diseno}
 
-De acuerdo con la tipología metodológica de investigación en ciencias computacionales \cite{marlbook}, este trabajo adopta un **diseño experimental cuantitativo de medidas repetidas**. Se manipulan sistemáticamente variables independientes (familias algorítmicas, grado de cooperación espacial y escenarios de demanda vial) en entornos computacionales controlados para medir sus efectos sobre variables dependientes primarias (demora acumulada $W_{\text{net}}$, tasa de completitud CR y emisiones contaminantes de $\text{CO}_2$).
+Este trabajo adopta un \textbf{diseño experimental cuantitativo de medidas repetidas}. Se manipulan sistemáticamente variables independientes (familias algorítmicas, grado de cooperación vecinal $\rho$ y topologías de demanda vial) en entornos computacionales controlados para medir sus efectos sobre variables dependientes primarias vinculadas al desempeño operacional del tránsito, la equidad del servicio y la sostenibilidad ambiental.
 
-La utilización de la simulación microscópica (mediante el simulador SUMO) como plataforma experimental primaria responde a tres razones científicas:
+La utilización de la simulación microscópica (mediante el simulador SUMO \cite{SUMO2018_SUMO}) como plataforma experimental primaria responde a tres fundamentos científicos:
 \begin{enumerate}
-    \item \textbf{Seguridad y Viabilidad Operacional:} Probar algoritmos estocásticos de control semafórico en tiempo real sobre una red urbana real implica un riesgo inaceptable para la seguridad vial y la fluidez del tránsito.
-    \item \textbf{Aislamiento de Variables Extrañas:} La simulación permite neutralizar perturbaciones estocásticas no controladas (condiciones meteorológicas, incidentes viales o fluctuaciones aleatorias fuera de modelo), garantizando la validez interna del estudio.
-    \item \textbf{Replicabilidad Exacta:} Permite someter a todas las familias de control (algoritmos independientes, coordinados y de tiempo fijo) exactamente a la misma secuencia determinista de demanda mediante la fijación rigurosa de semillas aleatorias.
+    \item \textbf{Seguridad y Viabilidad Operacional:} Evaluar algoritmos estocásticos de aprendizaje en tiempo real sobre una red urbana física real implica un riesgo inaceptable para la seguridad vial y la fluidez del tránsito vehicular.
+    \item \textbf{Aislamiento de Variables Exógenas:} La simulación permite neutralizar perturbaciones estocásticas no controladas (condiciones meteorológicas adversas, siniestros viales o fluctuaciones exógenas fuera del modelo), garantizando la validez interna del estudio.
+    \item \textbf{Replicabilidad Determinista:} Permite someter a todas las familias de control (algoritmos independientes, coordinados y de tiempo fijo) exactamente a las mismas condiciones de demanda mediante la fijación determinista de semillas pseudoaleatorias.
 \end{enumerate}
+
+Para evaluar rigurosamente el impacto de las políticas aprendidas, se formalizan cuatro variables dependientes primarias a partir de la telemetría microscópica de SUMO (\texttt{TripInfo}):
+\begin{itemize}
+    \item \textbf{Demora Acumulada Global ($W_{\text{net}}$):} Métrica operacional primaria expresada en segundos acumulados de retraso que experimentan los vehículos detenidos (velocidad $v < 0.1\text{ m/s}$) a lo largo de la red durante la ventana controlada:
+    \begin{equation}
+        W_{\text{net}} = \sum_{t=1}^{T} \sum_{v \in \mathcal{V}_t} w_v(t)
+    \end{equation}
+    donde $\mathcal{V}_t$ es el conjunto de vehículos activos en la calzada en el paso temporal $t$ y $w_v(t)$ es el tiempo de espera acumulado del vehículo $v$.
+    \item \textbf{Tasa de Completitud Corregida ($\text{CR}$):} Proporción de la demanda generada que completa exitosamente su itinerario dentro del horizonte de evaluación. Para garantizar que la métrica refleje fielmente la demanda real y no ignore a los vehículos retenidos en los accesos de origen por efectos de sobresaturación, se define la formulación:
+    \begin{equation}
+        \text{CR} = \frac{\text{throughput}}{\text{departed} + \text{pending\_vehicles\_end}}
+    \end{equation}
+    donde $\text{throughput}$ representa la cantidad de vehículos que completaron su recorrido en la red, $\text{departed}$ los que ingresaron físicamente a la calzada y $\text{pending\_vehicles\_end}$ aquellos que permanecieron encolados en los puntos de inserción al término del horizonte temporal. Adicionalmente, se registran la tasa de inserción ($\text{IR} = \frac{\text{inserted}}{\text{loaded}}$) y la completitud de insertados ($\text{CI} = \frac{\text{throughput}}{\text{inserted}}$) para un diagnóstico granular del flujo.
+    \item \textbf{Equidad Espacial de Demoras (Coeficiente de Gini, $G_{\text{wait}}$):} Cuantifica el grado de desigualdad en la distribución del tiempo de espera medio entre las distintas intersecciones semaforizadas de la red:
+    \begin{equation}
+        G_{\text{wait}} = \frac{2 \sum_{i=1}^{N} i \cdot \bar{w}_{(i)} - (N + 1) \sum_{i=1}^{N} \bar{w}_{(i)}}{N \sum_{i=1}^{N} \bar{w}_{(i)}}
+    \end{equation}
+    donde $\bar{w}_{(1)} \le \bar{w}_{(2)} \le \dots \le \bar{w}_{(N)}$ son los tiempos de espera medios ordenados de cada controlador y $N$ es el total de intersecciones. Esta métrica se complementa con la desviación estándar inter-intersección ($\sigma_{\text{wait}}$) para evaluar si las políticas aprendidas distribuyen equitativamente el servicio o si sacrifican accesos secundarios en favor de arterias dominantes.
+    \item \textbf{Emisiones Contaminantes de $\text{CO}_2$:} Masa total de dióxido de carbono emitida en gramos, calculada a partir de los perfiles instantáneos de aceleración y velocidad mediante los modelos microscópicos integrados en SUMO (PHEMlight/HBEFA \cite{sumo-doc}).
+\end{itemize}
 
 La Figura \ref{fig:flujo_metodologico_general} ilustra la secuencia metodológica estructurada en siete fases interconectadas que rige esta investigación.
 
@@ -27,13 +47,13 @@ La Figura \ref{fig:flujo_metodologico_general} ilustra la secuencia metodológic
   >=Stealth,
   paso/.style={rectangle, draw=colEntorno!80!black, fill=colEntorno!10, rounded corners=5pt, thick, text width=13.5cm, align=left, inner sep=6pt}
 ]
-  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, definición de accesos, conectividad de \textit{links} mediante parches PlainXML y perfiles de demanda en SUMO.};
-  \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del Dec-POMDP:} Especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con \textit{Action Masking} y recompensa $\lambda$-mix.};
-  \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la Infraestructura de Entorno:} Abstracción C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la API Multi-Agent de Ray RLlib.};
-  \node[paso, below=of p3] (p4) {\textbf{4. Configuración e Integración Algorítmica:} Definición de arquitecturas neuronales en PyTorch (MLP $[256, 256]$) e hiperparámetros para IDQN, IPPO, MAPPO y HAPPO.};
-  \node[paso, below=of p4] (p5) {\textbf{5. Optimización Hiperparamétrica Multietapa:} Muestreo Bayesiano (Optuna TPE), poda asíncrona (ASHA) y función objetivo de Retorno Robusto al Riesgo (CVaR).};
-  \node[paso, below=of p5] (p6) {\textbf{6. Orquestación y Ejecución Distribuida en HPC:} Despliegue mediante SLURM en los clusters Toko y Mendieta con almacenamiento local en nodo (\texttt{/scratch}).};
-  \node[paso, below=of p6] (p7) {\textbf{7. Protocolo de Evaluación Estadística:} Evaluación en semillas no vistas (OOD), horizontes de 12 horas, pruebas de hipótesis y guardias de validación (\textit{guards}).};
+  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, conectividad de enlaces internos mediante parches PlainXML, sanitización con \texttt{netconvert --tls.rebuild} y calibración de flota heterogénea.};
+  \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del Dec-POMDP:} Especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con enmascaramiento (\textit{action masking}) y recompensa $\lambda$-mix / `neighborhood\_relevance`.};
+  \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la Infraestructura de Entorno:} Abstracción en memoria compartida mediante \textit{bindings} en C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la API Multi-Agent de Ray RLlib.};
+  \node[paso, below=of p3] (p4) {\textbf{4. Configuración e Integración Algorítmica:} Definición de arquitecturas neuronales en PyTorch (MLP $[128, 128]$ y $[256, 256]$) e hiperparámetros para IDQN, IPPO, MAPPO y HAPPO.};
+  \node[paso, below=of p4] (p5) {\textbf{5. Optimización Hiperparamétrica Multietapa (HPO):} Muestreo Bayesiano (Optuna TPE), poda asíncrona (ASHA) y función objetivo física de Retorno Robusto al Riesgo (CVaR).};
+  \node[paso, below=of p5] (p6) {\textbf{6. Orquestación y Ejecución Distribuida en HPC:} Despliegue mediante SLURM en los clusters Toko y Mendieta con almacenamiento local en nodo (\texttt{/scratch}) y aislamiento de puertos Ray.};
+  \node[paso, below=of p6] (p7) {\textbf{7. Protocolo de Evaluación Estadística y Confirmación:} Confirmación pareada en 10 semillas, evaluación en semillas fuera de distribución (OOD), pruebas no paramétricas de Wilcoxon, $\hat{A}_{12}$ de Vargha-Delaney y guardias de validación de fallo seguro.};
 
   \draw[->, line width=1.2pt, colEntorno!80!black] (p1) -- (p2);
   \draw[->, line width=1.2pt, colEntorno!80!black] (p2) -- (p3);
@@ -48,68 +68,94 @@ La Figura \ref{fig:flujo_metodologico_general} ilustra la secuencia metodológic
 
 ---
 
-\section{Especificación del Stack Tecnológico}
+\section{Especificación del Ecosistema Tecnológico}
 \label{sec:stack_tecnologico}
 
-Para garantizar la reproducibilidad científica, la Tabla \ref{tab:stack_tecnologico} detalla el ecosistema de software y hardware sobre el cual se desarrolló y ejecutó el marco computacional \texttt{marlTLC}.
+Para garantizar la reproducibilidad científica, la Tabla \ref{tab:stack_tecnologico} detalla las librerías, marcos de trabajo y plataformas de cómputo sobre las cuales se desarrolló y ejecutó el entorno \texttt{marlTLC}.
 
 \begin{table}[H]
 \centering
-\caption{Especificación del stack tecnológico utilizado en la investigación.}
+\caption{Especificación de las tecnologías y herramientas utilizadas en la investigación.}
 \label{tab:stack_tecnologico}
 \setlength{\tabcolsep}{5pt}
 \small
-\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{6.2cm}|}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{6.2cm}|}
 \hline
 \textbf{Componente} & \textbf{Herramienta / Versión} & \textbf{Función Metodológica} \\ \hline
-Lenguaje de Programación & Python 3.12 & Núcleo del sistema y orquestación. \\ \hline
-Simulador de Tránsito & SUMO 1.20+ / TraCI & Simulación microscópica y telemetría de red. \\ \hline
-Binding de Simulación & \texttt{libsumo} (C++) & Ejecución de simulación de alta velocidad en memoria. \\ \hline
-Framework MARL & Ray RLlib 2.x & Abstracción de entornos multi-agente y algoritmos CTDE. \\ \hline
-Aprendizaje Profundo & PyTorch 2.x & Arquitectura de redes neuronales (Actor-Crítico MLP). \\ \hline
-Optimización Automática & Optuna 3.x & Muestreo Bayesiano TPE y poda asíncrona ASHA. \\ \hline
-Infraestructura HPC & Clusters Toko y Mendieta & Cómputo distribuido multinúcleo gestionado vía SLURM. \\ \hline
+Lenguaje de Programación & Python 3.10+ & Núcleo del sistema, tipado estático (\texttt{typing.Protocol}) y scripts de orquestación. \\ \hline
+Simulador de Tránsito & SUMO 1.20+ / TraCI & Simulación microscópica, dinámica cinemática y telemetría de red. \\ \hline
+\textit{Bindings} de Simulación & \texttt{libsumo} (C++) & Ejecución de la simulación en memoria compartida mediante \textit{bindings} en C++ (\texttt{LIBSUMO\_AS\_TRACI=1}). \\ \hline
+Framework MARL & Ray RLlib 2.x \cite{liang2018rllib} & Abstracción de entornos multi-agente (\texttt{MultiAgentEnv}, \texttt{RLModuleSpec}, \texttt{LearnerGroup}). \\ \hline
+Aprendizaje Profundo & PyTorch 2.x & Modelado neuronal y optimización (Actor-Crítico MLP, \textit{action masking}). \\ \hline
+Optimización Automática & Optuna 3.x \cite{akiba2019optuna} & Muestreo Bayesiano TPE y poda asíncrona de pruebas (ASHA \cite{li2020system}). \\ \hline
+Infraestructura HPC & Clusters Toko y Mendieta & Cómputo distribuido multinúcleo gestionado vía SLURM con I/O local (\texttt{/scratch}). \\ \hline
 \end{tabular}
 \end{table}
 
+La interacción técnica entre estas capas opera de forma integrada: Python orquesta la ejecución; Ray RLlib gestiona los procesos concurrentes de recolección de trayectorias (\textit{env runners}); PyTorch computa las derivadas y optimiza las redes neuronales en los módulos de aprendizaje (\textit{learners}); \texttt{SumoRllibEnv} encapsula la lógica episódica; y \texttt{libsumo} ejecuta los cálculos físicos de cinemática vehicular directamente en la memoria del proceso sin latencia de red ni serialización TCP.
+
 ---
 
-\section{Diseño de Escenarios de Tránsito en SUMO}
+\section{Diseño y Calibración de Escenarios de Tránsito en SUMO}
 \label{sec:diseno_escenarios}
 
-La evaluación de los algoritmos se realiza sobre cuatro escenarios de red en SUMO, construidos mediante la herramienta gráfica \texttt{netedit} y scripts en Python, cubriendo un espectro representativo de complejidades topológicas y dinámicas de flujo.
+La evaluación empírica de los algoritmos se realiza sobre cuatro escenarios de red en SUMO, construidos mediante la herramienta gráfica \texttt{netedit}, utilitarios de conversión \texttt{netconvert} y scripts de generación en Python, cubriendo un espectro representativo de complejidades topológicas y dinámicas de flujo.
 
-\subsection{Escenarios Sintéticos: $3\times1$, $3\times3$ y $4\times4\_H$}
+\subsection{Metodología de Modelado Geométrico y Sanitización Topológica}
+\label{subsec:metodologia_modelado_sumo}
+
+La construcción de las redes se rige por un protocolo riguroso de diseño y compilación en SUMO:
+\begin{enumerate}
+    \item \textbf{Diseño Geométrico y Accesos:} Definición de calzadas, cantidad de carriles por aproximación y longitudes de almacenamiento en \texttt{netedit}.
+    \item \textbf{Parches de Conectividad PlainXML (\texttt{.con.xml}):} Para preservar la reproducibilidad y mantener un historial auditable, las restricciones de giro y maniobras prohibidas se declaran explícitamente en archivos PlainXML (por ejemplo, mediante directivas \texttt{<delete from="..." to="..."/>}) en lugar de editar manualmente el archivo compilado \texttt{.net.xml}.
+    \item \textbf{Sanitización y Reconstrucción de Lógica Semafórica:} Tras aplicar modificaciones geométricas o de conexión, la red se recompila mediante \texttt{netconvert} con el parámetro obligatorio \texttt{--tls.rebuild}. Esto recalcula la correspondencia entre los enlaces físicos de cruzamiento y los índices de control (\textit{linkIndex}) de las fases semafóricas (\texttt{tlLogic}), evitando estados no asignados o desfasados.
+\end{enumerate}
+
+\subsection{Escenarios Sintéticos: \texorpdfstring{$3\times1$, $3\times3$ y $4\times4\_H$}{3x1, 3x3 y 4x4_H}}
 \label{subsec:escenarios_sinteticos}
 
 Todas las redes sintéticas comparten reglas operacionales estandarizadas:
 \begin{itemize}
-    \item \textbf{Límite de Velocidad:} $13.89\text{ m/s}$ ($50\text{ km/h}$) en todas las arterias urbanas.
-    \item \textbf{Mezcla Vehicular Heterogénea:} Calibrada para representar un parque automotor urbano realista mediante tres clases de vehículos en el archivo \texttt{urban\_vehicle\_mix.add.xml}:
+    \item \textbf{Límite de Velocidad Máxima:} $13.89\text{ m/s}$ ($50\text{ km/h}$) en todas las arterias urbanas.
+    \item \textbf{Calibración de Flota Vehicular Heterogénea:} Para modelar el comportamiento urbano realista y evitar sesgos de homogeneidad, se definieron tres clases de vehículos en el archivo \texttt{urban\_vehicle\_mix.add.xml}, fundamentadas en modelos cinemáticos de confort fisiológico urbano \cite{sumo-doc}:
     \begin{enumerate}
-        \item \texttt{SLOWVEHTYPE} ($25\%$): Conductores cautelosos o vehículos pesados ($a = 1.9\text{ m/s}^2, b = 4.0\text{ m/s}^2, v_{\max} = 30\text{ km/h}$).
-        \item \texttt{MEDVEHTYPE} ($60\%$): Vehículo de pasajeros promedio ($a = 2.6\text{ m/s}^2, b = 4.5\text{ m/s}^2, v_{\max} = 50\text{ km/h}$).
-        \item \texttt{FASTVEHTYPE} ($15\%$): Conductores agresivos ($a = 3.1\text{ m/s}^2, b = 5.0\text{ m/s}^2, v_{\max} = 70\text{ km/h}$ acotado a $50\text{ km/h}$ por el límite del carril).
+        \item \texttt{SLOWVEHTYPE} ($25\%$): Conductores cautelosos o vehículos pesados con menor aceleración ($a = 1.9\text{ m/s}^2, d = 4.0\text{ m/s}^2, v_{\max} = 8.33\text{ m/s} = 30\text{ km/h}$).
+        \item \texttt{MEDVEHTYPE} ($60\%$): Vehículo de pasajeros promedio representativo ($a = 2.6\text{ m/s}^2, d = 4.5\text{ m/s}^2, v_{\max} = 13.89\text{ m/s} = 50\text{ km/h}$).
+        \item \texttt{FASTVEHTYPE} ($15\%$): Conductores dinámicos con mayor aceleración desde reposo ($a = 3.1\text{ m/s}^2, d = 5.0\text{ m/s}^2, v_{\max} = 19.44\text{ m/s} = 70\text{ km/h}$, acotado a $50\text{ km/h}$ por el límite del carril).
     \end{enumerate}
+    Parámetros compartidos: longitud $4.5\text{ m}$, brecha mínima de seguridad (\textit{minGap}) $2.5\text{ m}$ e imperfección del conductor de Krauss $\sigma = 0.5$.
+    \item \textbf{Generación de Demanda por Zonas (TAZ) y Arribos Estocásticos:} Las rutas se generan mediante la herramienta \texttt{random\_routes\_taz.py} a partir de matrices de zonas de asignación de tránsito (TAZ). Los intervalos entre llegadas vehiculares se modelan como procesos de Poisson con distribución exponencial:
+    \begin{equation}
+        \text{period} = \text{exp}(\lambda_{\text{arr}}) \quad \text{con} \quad \lambda_{\text{arr}} = \frac{\text{flow}}{3600}\text{ veh/s}
+    \end{equation}
+    \item \textbf{Calibración por Bisección hacia Tasa de Completitud Saturada ($\text{CR} \approx 0.70$):} Para garantizar una base de comparación homogénea y equitativa donde las políticas de aprendizaje deban operar en un régimen de saturación estandarizado, los flujos totales de cada red se calibraron mediante el método numérico de bisección bajo control semafórico de tiempo fijo sobre un horizonte efectivo de evaluación ($4200\text{ s} = 600\text{ s}$ de calentamiento $+ 3600\text{ s}$ de control).
 \end{itemize}
 
 Las tres topologías sintéticas cumplen funciones analíticas complementarias:
 \begin{itemize}
-    \item \textbf{Corredor Arterial $3\times1$:} Tres nodos dispuestas en línea recta con flujo bidireccional dominante ($3.260\text{ veh/h}$). Permite evaluar la capacidad de los agentes para sincronizar olas verdes sin interferencia de lazos cerrados.
-    \item \textbf{Malla Simétrica $3\times3$:} Nueve intersecciones organizadas en cuadrícula cerrada ($7.087\text{ veh/h}$). Al contener lazos de dependencia circular, constituye el escenario crítico para evaluar la resiliencia de los algoritmos frente al colapso por desbordamiento de cola (\textit{gridlock}).
-    \item \textbf{Cuadrícula Heterogénea $4\times4\_H$:} Dieciséis intersecciones asimétricas ($7.202\text{ veh/h}$) con arterias principales de mayor capacidad que actúan como vías de escape para drenar la congestión.
+    \item \textbf{Corredor Arterial $3\times1$ (3.260 veh/h):} Tres intersecciones dispuestas en línea recta con flujo bidireccional dominante (40\% este-oeste, 35\% oeste-este). Constituye un Grafo Dirigido Acíclico (DAG) sin lazos de realimentación circular. La dinámica de desbordamiento y propagación de colas (\textit{spillback}) es estrictamente lineal y la disipación de la congestión ocurre de forma natural aguas abajo, lo que permite evaluar la capacidad de sincronización de olas verdes sin interferencia de cuellos de botella circulares.
+    \item \textbf{Malla Simétrica $3\times3$ (7.087 veh/h):} Nueve intersecciones organizadas en una cuadrícula cerrada con demandas diagonales cruzadas (37.5\% en cada eje). La alta interconexión genera lazos de dependencia circular: la saturación de una intersección central bloquea a sus vecinas, las cuales a su vez retienen el flujo de acceso, desencadenando una cascada de desbordamiento de colas (\textit{spillback}) que culmina en un bloqueo mutuo total e irreversible de la red (\textit{gridlock}). Constituye el banco de pruebas crítico para evaluar la estabilidad de MARL frente a estados absorbentes de congestión.
+    \item \textbf{Cuadrícula Heterogénea $4\times4\_H$ (7.202 veh/h):} Dieciséis intersecciones asimétricas estructuradas con dos arterias principales de mayor capacidad. Estas arterias actúan como vías de drenaje que canalizan el tránsito de los nodos interiores hacia los extremos de la red, ofreciendo rutas alternativas y mitigando la formación de ciclos de bloqueo cerrados.
 \end{itemize}
 
 \subsection{Escenario Urbano Real: Gran Mendoza (Corredor Vicente Zapata)}
 \label{subsec:escenario_mendoza}
 
-Para evaluar la transferibilidad de las políticas entrenadas hacia un entorno urbano real, se construyó el escenario del Gran Mendoza a partir de datos geoespaciales de OpenStreetMap y calibración física.
+Para evaluar la transferibilidad de las políticas aprendidas hacia un entorno vial real, se construyó el escenario del Gran Mendoza a partir de datos geoespaciales de OpenStreetMap y aforos empíricos continuos.
 
 \begin{itemize}
-    \item \textbf{Procesamiento Topológico:} La geometría de la red fue procesada mediante la herramienta \texttt{netconvert} y parches PlainXML (\texttt{.con.xml}) para preservar la conectividad de giros y prohibiciones de maniobra observadas en terreno.
-    \item \textbf{Calibración de Flujos Empíricos:} Se utilizaron los datos de aforo vehicular continuo registrados por la Cámara 169 en el corredor Vicente Zapata.
-    \item \textbf{Matriz Origen-Destino Híbrida:} La demanda vehicular combina un componente fijo espacialmente explícito ($60\%$ de la demanda distribuida en $476$ pares OD calibrados) con un remanente estocástico ($40\%$ restante) generado por \texttt{randomRoutesTaz} con la semilla congelada \texttt{104773}.
-    \item \textbf{Calibración Dinámica:} El escenario simula un horizonte operacional continuo de 12 horas ($06:00\text{--}18:00$), alcanzando un estadístico de calidad de flujo $\text{GEH} < 5$ en más del $85\%$ de las mediciones de volumen en los enlaces comparables.
+    \item \textbf{Procesamiento Topológico y Conectividad:} La geometría urbana fue importada y procesada mediante la herramienta \texttt{netconvert} y parches PlainXML (\texttt{gran\_mendoza2\_fix\_connections.con.xml} y \texttt{gran\_mendoza2\_prohibit\_turns.con.xml}, incluyendo la restricción física de giro a la izquierda desde Av. San Martín sur hacia calle Colón mediante directivas \texttt{<delete>}) para preservar rigurosamente las maniobras permitidas, giros protegidos y restricciones viales observadas en terreno.
+    \item \textbf{Calibración de Flujos Empíricos con Cámaras Termográficas:} Se utilizaron los registros continuos de aforo vehicular proporcionados por cámaras termográficas (Tecnotrans / ThermICam), focalizando la calibración sobre la Cámara 169 situada en el corredor José Vicente Zapata (sección sobre canal Cacique Guaymallén, acceso oeste a la Ciudad de Mendoza), la cual registra un promedio empírico de $25.283,85\text{ veh/día}$ en días hábiles completos.
+    \item \textbf{Matriz Origen-Destino Híbrida (v14):} La demanda vehicular se estructuró a través del contrato OD canónico v14 (volumen nominal de $260.000\text{ veh/día}$):
+    \begin{enumerate}
+        \item \textit{Componente Fijo Calibrado ($60\%$):} Distribuido en $476$ entradas en \texttt{mendoza\_od\_proportions.json} (473 pares explícitamente calibrados que incorporan la intervención de reducción de tráfico desde origen TAZ 12 Av. Perú y el incremento de recorridos sobre calle Patricias Mendocinas, más 3 ceros estructurales que bloquean pares frágiles como $21\to17$, $0\to3$ y $10\to5$).
+        \item \textit{Remanente Estocástico ($40\%$):} Distribuido aleatoriamente entre pares alcanzables mediante \texttt{random\_routes\_taz.py} utilizando la semilla congelada de remanente \texttt{104773} (seleccionada por estabilidad entre 18 candidatas).
+    \end{enumerate}
+    \item \textbf{Calibración Dinámica en Horizonte Extendido:} El escenario reproduce un horizonte continuo de 12 horas ($06:00\text{--}18:00$, semilla SUMO congelada \texttt{104729}) y una ventana proxy de 2 horas ($06:30\text{--}08:30$, $t=1800\text{--}9000$), alcanzando un estadístico de calidad de flujo $\text{GEH} < 5$ en más del $85\%$ de las mediciones de volumen en los enlaces comparables:
+    \begin{equation}
+        \text{GEH} = \sqrt{\frac{2 (M - C)^2}{M + C}}
+    \end{equation}
+    donde $M$ es el volumen modelado en la simulación y $C$ es el conteo empírico observado.
 \end{itemize}
 
 ---
@@ -117,19 +163,19 @@ Para evaluar la transferibilidad de las políticas entrenadas hacia un entorno u
 \section{Arquitectura de Integración Entorno-Agentes}
 \label{sec:arquitectura_entorno_agentes}
 
-El marco computacional \texttt{marlTLC} integra el simulador SUMO con la librería Ray RLlib a través de la interfaz \texttt{SumoRllibEnv}.
+El marco computacional \texttt{marlTLC} integra el simulador SUMO con la librería Ray RLlib a través de la interfaz personalizada \texttt{SumoRllibEnv}. La especificación detallada de las clases y patrones de diseño orientados a objetos que sustentan esta arquitectura se expone en el Apéndice \ref{apendice:arquitectura_software}.
 
 \subsection{Ciclo Episódico e Interfaz de Simulación}
 \label{subsec:ciclo_episodico}
 
-Para acelerar la recolección de experiencias, las simulaciones se ejecutan mediante la abstracción C++ \texttt{libsumo} (configurada mediante la variable de entorno \texttt{LIBSUMO\_AS\_TRACI=1}).
+Para maximizar la eficiencia en la recolección de muestras durante el entrenamiento distribuido, las simulaciones prescinden de la interfaz gráfica y se ejecutan mediante la abstracción nativa C++ \texttt{libsumo} (activada mediante la variable de entorno \texttt{LIBSUMO\_AS\_TRACI=1}). Esta integración enlaza el simulador directamente en el espacio de memoria compartida del proceso Python, eliminando la sobrecarga de serialización y la latencia de comunicación por sockets TCP de la API TraCI estándar.
 
-Cada episodio inyecta un período de \textbf{calentamiento físico (\textit{warmup}) de 600 segundos} bajo control semafórico de tiempo fijo. Al finalizar el \textit{warmup}, el estado microscópico completo de la simulación se congela en memoria. Los llamados a la función \texttt{reset()} restauran directamente dicho punto de control (\textit{checkpoint}), garantizando que el entrenamiento de los agentes MARL inicie siempre en un régimen de tránsito saturado realista.
-
-Las decisiones se ejecutan en pasos discretos de $\Delta t = 5.0\text{ s}$. Si un agente decide cambiar la fase activa, el entorno intercala automáticamente la secuencia de seguridad física obligatoria:
-\begin{equation}
-t_{\text{transición}} = t_{\text{amarillo}} (3\text{ s}) + t_{\text{rojo\_todo}} (2\text{ s})
-\end{equation}
+El ciclo de vida episódico opera bajo el siguiente protocolo de inicialización y control:
+\begin{enumerate}
+    \item \textbf{Período de Calentamiento Inicial (\textit{warmup}):} Cada episodio ejecuta una fase inicial de 600 segundos bajo control semafórico de tiempo fijo. Esta fase puebla la red con vehículos hasta alcanzar el régimen estacionario saturado, evitando que los agentes aprendan sobre una red vacía no representativa.
+    \item \textbf{Almacenamiento y Restauración de Puntos de Control (\textit{checkpoint}):} Al finalizar la fase de calentamiento, el estado microscópico completo de la red se almacena en memoria o archivo de estado XML (\texttt{state\_pid...xml}). Cada invocación a la función \texttt{reset()} restaura directamente este punto de control, garantizando que el entrenamiento comience instantáneamente en condiciones de congestión realista sin incurrir en el costo computacional de resimular el período inicial. El tiempo de control efectivo $\text{sim\_time}$ transcurre exclusivamente en el intervalo $[t_{\text{warmup}}, t_{\text{warmup}} + \text{sim\_time}]$.
+    \item \textbf{Paso de Decisión y Transiciones Semafóricas:} Las decisiones se ejecutan en pasos discretos de $\Delta t = 5.0\text{ s}$. Cuando un agente determina un cambio en la fase activa, el entorno intercala de forma obligatoria la fase amarilla de seguridad de duración $\text{yellow\_time} = 4\text{ s}$, requiriendo además un tiempo mínimo de verde $\text{min\_green\_time} = 5\text{ s}$ antes de habilitar una nueva transición, garantizando el despeje de los vehículos en la zona de conflicto.
+\end{enumerate}
 
 ---
 
@@ -141,52 +187,51 @@ La interacción distribuida entre las intersecciones semaforizadas se formaliza 
 \subsection{Espacio de Observaciones y Codificación Logarítmica}
 \label{subsec:observaciones_encoder}
 
-La observación $o_i^{(t)}$ de la intersección $i$ en el paso $t$ combina la longitud de cola por carril entrante ($q_l$), la velocidad media ($v_l$), el estado de la fase activa y el tiempo de espera acumulado cuantizado ($w_l$).
+La observación local $o_i^{(t)}$ recibida por el agente $i$ en el paso $t$ combina la fase activa actual y el tiempo de espera acumulado por carril entrante ($w_l$), cuantizado mediante codificación logarítmica.
 
-Para evitar que valores extremos de tiempo de espera distorsionen la escala del vector de entrada en las redes neuronales, se aplica la clase \texttt{Encoder} (\texttt{src/marlTLC/utils/encoder.py}). 
+Para evitar que valores extremos de tiempo de espera distorsionen la escala del vector de entrada y provoquen la saturación de los gradientes en las redes neuronales, se aplica la clase \texttt{Encoder} (\texttt{src/marlTLC/utils/encoder.py}). Esta transformación aplica una compresión logarítmica no lineal híbrida que proporciona alta resolución para demoras bajas y una pendiente lineal acotada para demoras elevadas:
+\begin{equation}
+    e(x) = \text{ceil}\left( F \cdot \log_2\left( \frac{x}{M \cdot L} + 1 \right) + L^2 \cdot x \right)
+\end{equation}
+donde $L = \frac{I-1}{M}$ y $F = (1 - L) \frac{I-1}{\log_2(1/L + 1)}$, mapeando el valor continuo $x$ al rango discreto $[0, I-1]$.
 
 En esta formulación:
 \begin{itemize}
-    \item \textbf{Número de Intervalos ($I$):} Corresponde al hiperparámetro \texttt{encoder\_intervals}, el cual define la resolución del espacio discreto de observación y es optimizado automáticamente mediante exploración Bayesiana en Optuna.
-    \item \textbf{Cota de Saturación del Carril ($M$):} Corresponde al parámetro \texttt{max\_lane\_value}, el cual se determina empíricamente antes del entrenamiento mediante el script de calibración \texttt{scripts/calibrate\_encoder\_m.py}. El procedimiento ejecuta simulaciones preliminares del escenario objetivo y calcula el percentil 99 de los tiempos de espera acumulados observados en todos los carriles controlados. Los valores calibrados consolidados (almacenados en \texttt{.encoder\_M.json}) son $M = 1184\text{ s}$ para el escenario $3\times1$, $M = 1136\text{ s}$ para $3\times3$, $M = 712\text{ s}$ para $4\times4\_H$ y $M = 1494\text{ s}$ para Gran Mendoza.
+    \item \textbf{Número de Intervalos ($I$):} Corresponde al hiperparámetro \texttt{encoder\_intervals} (explorado en el rango $[4, 64]$), que define la resolución del espacio discreto y es optimizado automáticamente mediante exploración Bayesiana en Optuna.
+    \item \textbf{Cota de Saturación del Carril ($M$):} Corresponde a \texttt{max\_lane\_value}, determinado empíricamente calculando el percentil 99 ($P_{99}$) de los tiempos de espera acumulados en simulaciones preliminares de cada red: $M = 1184\text{ s}$ para $3\times1$, $M = 1136\text{ s}$ para $3\times3$, $M = 712\text{ s}$ para $4\times4\_H$ y $M = 1494\text{ s}$ para Gran Mendoza.
 \end{itemize}
-
-La función cuantiza la variable continua $x$ mediante la regla logarítmica:
-\begin{equation}
-e(x) = \text{ceil}\left( F \cdot \log_2\left( \frac{x}{M \cdot L} + 1 \right) + L^2 \cdot x \right)
-\end{equation}
-donde $L = \frac{I-1}{M}$ y $F = (1 - L) \frac{I-1}{\log_2(1/L + 1)}$, mapeando el valor continuo $x$ al rango discreto $[0, I-1]$.
 
 \subsection{Espacio de Acciones y Enmascaramiento Dinámico}
 \label{subsec:acciones_masking}
 
-El espacio de acciones $\mathcal{A}_i = \{0, 1, \dots, K_i - 1\}$ representa el conjunto de fases verdes seleccionables por la intersección $i$. En cruces con geometrías asimétricas, la capa \texttt{ActionMaskingTorchRLModule} aplica un enmascaramiento sobre los *logits* $z_i(a)$ emitida por el actor:
+El espacio de acciones $\mathcal{A}_i = \{0, 1, \dots, K_i - 1\}$ representa el conjunto de fases verdes seleccionables por la intersección $i$. En cruces con geometrías asimétricas o restricciones de maniobra, la capa personalizada \texttt{ActionMaskingTorchRLModule} aplica un enmascaramiento dinámico sobre los \textit{logits} $z_i(a)$ antes del cómputo de la distribución Softmax:
 \begin{equation}
-\text{logit}_i(a) = \begin{cases} 
-z_i(a) & \text{si la fase } a \text{ es geométricamente válida} \\
--10^9 & \text{si la fase } a \text{ es inválida}
-\end{cases}
+    \text{logit}_i(a) = \begin{cases} 
+    z_i(a) & \text{si la fase } a \text{ es válida y cumple } t_{\text{verde}} \ge \text{min\_green\_time} \\
+    -10^9 & \text{en caso contrario}
+    \end{cases}
 \end{equation}
+garantizando que el agente asigne probabilidad nula a combinaciones incompatibles y asegurando la integridad física de las fases.
 
 \subsection{Función de Recompensa Compuesta y Coordinación Vecinal}
 \label{subsec:recompensa_coordinacion}
 
-La función de recompensa implementada en este trabajo resuelve el compromiso entre el rendimiento local y la cooperación distribuida sin recurrir a términos heurísticos adicionales.
+La función de recompensa resuelve el compromiso entre el desempeño operacional local y la cooperación distribuida sin recurrir a términos heurísticos adicionales.
 
 \begin{enumerate}
-    \item \textbf{Recompensa Local Diferencial Normalizada ($L_i$):} Mide la variación en el tiempo de espera acumulado por vehículo entre pasos temporales consecutivos:
+    \item \textbf{Recompensa Local Diferencial ($L_i$):} Cuantifica la variación en el tiempo de espera acumulado entre pasos temporales consecutivos:
     \begin{equation}
-    L_i^{(t)} = \frac{W_{\text{acc}, i}(t-1) - W_{\text{acc}, i}(t)}{\max\left(N_{\text{veh}, i}(t), 1\right)}
+        L_i^{(t)} = W_{\text{acc}, i}(t-1) - W_{\text{acc}, i}(t)
     \end{equation}
-    \item \textbf{Recompensa Compartida Vecinal ($N_i$):} Corresponde al promedio de las recompensas locales obtenidas por los nodos pertenecientes al vecindario topológico directo $N(i)$:
+    \item \textbf{Recompensa Compartida Vecinal ($N_i$):} Corresponde al promedio de las señales locales obtenidas por las intersecciones pertenecientes al vecindario topológico directo $\mathcal{N}(i)$:
     \begin{equation}
-    N_i^{(t)} = \frac{1}{|N(i)|} \sum_{j \in N(i)} L_j^{(t)}
+        N_i^{(t)} = \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} L_j^{(t)}
     \end{equation}
-    \item \textbf{Mezcla Convexa $\lambda$-mix (\texttt{NeighborMixReward}):} Combina ambas señales mediante el parámetro de cooperación $\lambda \in [0, 1)$:
+    \item \textbf{Mezcla Convexa Normalizada $\lambda$-mix (\texttt{NeighborhoodRelevanceReward}):} Para desacoplar la escala de la recompensa del grado de cooperación, se adopta la combinación convexa normalizada gobernada por el hiperparámetro $\rho \in [0, 1)$ (\texttt{neighborhood\_relevance}):
     \begin{equation}
-    R_i^{(t)} = (1 - \lambda) L_i^{(t)} + \lambda N_i^{(t)}
+        R_i^{(t)} = (1 - \rho) L_i^{(t)} + \rho N_i^{(t)} \quad \text{con} \quad \rho \in [0, 0.95]
     \end{equation}
-    donde $\lambda = \frac{w}{1+w}$, siendo $w \ge 0$ el peso de ponderación vecinal.
+    donde $\rho = 0$ representa el ancla puramente local. Esta formulación preserva algebraicamente el ordenamiento y las trayectorias de valor observadas, acotando la señal y facilitando la convergencia del entrenamiento.
 \end{enumerate}
 
 ---
@@ -194,56 +239,70 @@ La función de recompensa implementada en este trabajo resuelve el compromiso en
 \section{Implementación Algorítmica e Hiperparámetros}
 \label{sec:implementacion_algoritmos}
 
-Los algoritmos de aprendizaje independiente (IDQN e IPPO) y de entrenamiento centralizado (MAPPO y HAPPO) se implementaron en PyTorch e integraron en la API de Ray RLlib mediante el módulo \texttt{algo\_factory.py}. La Tabla \ref{tab:hiperparametros_exactos} resume la parametrización utilizada.
+Los cuatro algoritmos evaluados (los esquemas independientes IDQN e IPPO, y las arquitecturas de entrenamiento centralizado MAPPO y HAPPO) se implementaron en PyTorch e integraron en la API de Ray RLlib mediante el módulo de fábrica \texttt{algo\_factory.py}.
 
-\begin{table}[H]
-\centering
-\caption{Especificación de hiperparámetros algorítmicos finales.}
-\label{tab:hiperparametros_exactos}
-\setlength{\tabcolsep}{5pt}
-\small
-\begin{tabular}{|p{5.0cm}|p{3.5cm}|p{4.5cm}|}
-\hline
-\textbf{Hiperparámetro} & \textbf{Valor Seleccionado} & \textbf{Ámbito de Aplicación} \\ \hline
-Arquitectura Neuronal & MLP $[256, 256]$ & Redes de Actor y Crítico. \\ \hline
-Tasa de Aprendizaje ($\alpha$) & $3 \times 10^{-4}$ & Optimizador Adam. \\ \hline
-Factor de Descuento ($\gamma$) & $0.99$ & Retorno descontado episódico. \\ \hline
-Parámetro GAE ($\lambda_{\text{GAE}}$) & $0.95$ & Estimación de ventaja (PPO/MAPPO/HAPPO). \\ \hline
-Rango de Recorte PPO ($\epsilon$) & $0.19$ & Pérdida recortada $L^{\text{CLIP}}$. \\ \hline
-Tamaño de Lote de Entrenamiento & $4000$ muestras & Buffer por iteración. \\ \hline
-Tamaño de Minilote & $128$ muestras & Subdivisión para gradiente. \\ \hline
-Épocas por Iteración ($K$) & $10$ & Reutilización de datos \textit{on-policy}. \\ \hline
-\end{tabular}
-\end{table}
+\subsection{Mecanismos de Aprendizaje Independiente y Centralizado}
+\label{subsec:mecanismos_algoritmos}
+
+\begin{itemize}
+    \item \textbf{IDQN e IPPO (Aprendizaje Independiente):} Cada intersección aprende una política local $\pi_{\theta_i}(a_i | o_i)$ tratando a los demás controladores como parte del entorno no estacionario. En IPPO, cada agente cuenta con su propia red de valor local $V_{\phi_i}(o_i)$.
+    \item \textbf{MAPPO (PPO Multi-Agente Centralizado \cite{yu2022surprising}):} Emplea el paradigma CTDE. Durante la ejecución, cada actor selecciona acciones de forma descentralizada a partir de su observación local $o_i$. Durante el entrenamiento, un crítico centralizado compartido (\texttt{SharedCriticTorchRLModule}) evalúa el estado global concatenado $s = (o_1, o_2, \dots, o_N)$ para estimar $V_{\phi}(s)$ y computar las ventajas GAE ($\lambda_{\text{GAE}}$).
+    \item \textbf{HAPPO (PPO para Agentes Heterogéneos \cite{kuba2021trust}):} Extiende MAPPO al aprendizaje en agentes con espacios de acción o roles heterogéneos mediante el \textbf{Lema de Descomposición de Ventajas Multi-Agente}. En cada época de entrenamiento, los agentes se actualizan de forma secuencial según un orden determinado mediante la probabilidad \texttt{greedy\_selection\_prob} ($0.0 \to$ orden aleatorio, $1.0 \to$ orden codicioso según la magnitud de ventaja $|\bar{A}_i|$, $(0, 1) \to$ orden semi-codicioso). Tras optimizar el actor $i_m$, se recomputa el ratio post-optimización:
+    \begin{equation}
+        \rho_{\text{post}}^{(i_m)} = \frac{\pi_{\theta_{k+1}}^{(i_m)}(a|o)}{\pi_{\theta_k}^{(i_m)}(a|o)}
+    \end{equation}
+    y se propaga multiplicativamente sobre el factor de ventaja $M^{(i_j)} \leftarrow M^{(i_j)} \cdot \rho_{\text{post}}^{(i_m)}$ para todos los agentes restantes $j > m$, garantizando teóricamente la mejora monótona del retorno conjunto.
+\end{itemize}
 
 ---
 
-\section{Diseño de Experimentos de Búsqueda Hiperparamétrica}
+\section{Diseño de Experimentos de Búsqueda Hiperparamétrica (HPO)}
 \label{sec:experimentos_hiperparametros}
 
-La exploración de hiperparámetros se ejecutó en dos fases utilizando la integración entre Optuna, Ray Tune y el algoritmo de poda ASHA:
+La exploración de hiperparámetros se ejecutó mediante la integración entre Optuna \cite{akiba2019optuna}, Ray Tune y el algoritmo de poda asíncrona ASHA \cite{li2020system}, estructurada en dos fases secuenciales:
 
 \begin{enumerate}
-    \item \textbf{Fase 1 (Exploración Bayesiana):} Búsqueda amplia con muestreo TPE sobre 40 configuraciones por escenario.
-    \item \textbf{Fase 2 (Refinamiento Bayesiano):} Expansión de los rangos de búsqueda tras detectar censura de frontera en el peso de mezcla vecinal ($w \in [1.0, 5.0]$).
+    \item \textbf{Fase 1 (Exploración Bayesiana Amplia):} Muestreo mediante Estimadores de Densidad Parzen Estructurados por Árbol (TPE) sobre un presupuesto de 100 pruebas por combinación (ampliable a 150), evaluando las arquitecturas compacta (\texttt{h128}: $[128, 128]$) y ancha (\texttt{h256}: $[256, 256]$) como estudios independientes de Ray Tune para evitar objetos no resueltos en \texttt{model\_config}. El espacio de búsqueda comprende 13 dimensiones para MAPPO y 14 para HAPPO:
+    \begin{itemize}
+        \item $\rho \in [0.0, 0.95]$ (\texttt{uniform})
+        \item $\alpha \in [3\times 10^{-5}, 10^{-3}]$ (\texttt{loguniform})
+        \item $\epsilon \in [0.10, 0.22]$ (\texttt{uniform})
+        \item $\lambda_{\text{GAE}} \in [0.88, 0.99]$ (\texttt{uniform})
+        \item $c_{\text{entropy}} \in [0.0, 0.01]$ (\texttt{uniform})
+        \item $\text{grad\_clip} \in [0.25, 5.0]$ (\texttt{loguniform})
+        \item $c_{\text{KL}} \in [0.05, 0.5]$ (\texttt{loguniform})
+        \item $d_{\text{KL\_target}} \in [0.005, 0.03]$ (\texttt{loguniform})
+        \item $\text{vf\_clip} \in [5.0, 20.0]$ (\texttt{loguniform})
+        \item $K \in [5, 15]$ MAPPO / $[5, 18]$ HAPPO (\texttt{randint})
+        \item $N_{\text{episodes}} \in [2, 12]$ (\texttt{randint})
+        \item $I \in [4, 64]$ (\texttt{randint})
+        \item $B_{\text{mini}} \in \{128, 256, 512\}$ (\texttt{choice})
+        \item $p_{\text{greedy}} \in [0.20, 0.90]$ (solo HAPPO, \texttt{uniform})
+    \end{itemize}
+    Parámetros fijos: $\gamma = 0.99$, $\text{lane\_metric} = \text{acc\_waiting\_time}$, $\text{use\_kl\_loss} = \text{True}$. Semillas HPO de entrenamiento: $101$ ($3\times1$), $137$ ($3\times3$), $179$ ($4\times4\_H$); semillas de evaluación: $100101, 100137, 100179$. La semilla histórica $42$ queda prohibida.
+    \item \textbf{Fase 2 (Confirmación Pareada):} Reentrenamiento a presupuesto completo (40 iteraciones) sobre 10 semillas pareadas independientes de entrenamiento (\texttt{211, 223, 227, 229, 233, 239, 241, 251, 257, 263}) y 10 semillas de evaluación (\texttt{200211, ..., 200263}), comparando el $\rho$ óptimo congelado frente a la línea base puramente local ($\rho = 0$).
 \end{enumerate}
 
-Para evitar políticas inestables, la función objetivo optimiza el \textbf{Retorno Robusto al Riesgo} (inspirado en CVaR):
+Para prevenir la selección de políticas inestables que exhiban alto retorno promedio pero colapsos episódicos catastróficos por bloqueo total de la red (\textit{gridlock}), la función objetivo optimiza el \textbf{Retorno Robusto al Riesgo} sobre las métricas físicas de SUMO TripInfo:
 \begin{equation}
-\text{Robust\_Return} = \mathbb{E}[\mathcal{R}] - 0.5 \cdot \left( \mathbb{E}[\mathcal{R}] - \min(\mathcal{R}) \right)
+    \text{stable\_global\_waiting} = \bar{W}_{\text{global}} + 1.0 \cdot \text{CVaR}_{0.2}(\text{positive\_interiteration\_increases})
 \end{equation}
+calculado sobre las últimas 10 iteraciones de entrenamiento (tras 5 iteraciones de calentamiento), penalizando explícitamente las caídas abruptas en la curva de aprendizaje.
 
 \subsection{Infraestructura Computacional de Alto Rendimiento y Orquestación Distribuida}
 \label{subsec:infraestructura_hpc}
 
-Dada la elevada dimensionalidad del espacio de búsqueda y el costo computacional intrínseco de la simulación microscópica a paso fino en SUMO, la exploración hiperparamétrica y el entrenamiento final de los agentes MARL requirieron el despliegue de una infraestructura de cómputo de alto rendimiento (HPC).
+Dada la elevada dimensionalidad del espacio de búsqueda y el costo computacional de la simulación microscópica a paso fino en SUMO, la exploración y el entrenamiento final se desplegaron en los clusters de supercómputo \textbf{Toko} (Centro de Cómputo de Alto Rendimiento / CCAR - FCEFN / UNCuyo / CONICET) y \textbf{Mendieta} (CCAD - Universidad Nacional de Córdoba).
 
-Las simulaciones se ejecutaron en los clusters de supercómputo \textbf{Toko} y \textbf{Mendieta} del Centro de Cómputo de Alto Rendimiento. La orquestación y asignación de recursos fue gestionada mediante el sistema de colas de trabajos SLURM (\textit{Simple Linux Utility for Resource Management}), coordinando la ejecución paralela de múltiples instancias de simulación mediante los siguientes mecanismos:
-
+La orquestación distribuida fue gestionada mediante el sistema de colas SLURM aplicando los siguientes mecanismos de optimización y resiliencia:
 \begin{itemize}
-    \item \textbf{Asignación Dinámica de Recursos:} Cada trabajo de simulación se dimensionó asignando núcleos de procesamiento (CPU) e intervalos de memoria RAM dedicados, optimizando la ejecución de múltiples procesos concurrentes de TraCI/\texttt{libsumo} y \textit{workers} de Ray RLlib.
-    \item \textbf{Gestión Eficiente de Entrada/Salida (I/O):} La simulación continua de redes viales genera un volumen crítico de eventos temporales por segundo. Para evitar cuellos de botella en el ancho de banda del sistema de archivos distribuido compartido en red (NFS), las simulaciones y la recolección de trayectorias se ejecutaron en las unidades de almacenamiento volátil local de alta velocidad de cada nodo de cómputo. Al finalizar cada prueba episódica, un proceso de sincronización transfiere únicamente las métricas agregadas y los puntos de control (\textit{checkpoints}) consolidados.
-    \item \textbf{Escalabilidad de la Exploración:} Esta arquitectura permitió procesar cientos de miles de iteraciones de entrenamiento y evaluar de forma automatizada las distintas fases de exploración Bayesiana (Optuna TPE) y la evaluación final en semillas no vistas.
+    \item \textbf{Aislamiento de Procesos Ray en Nodo Único:} Configuración de instancias Ray de nodo único (\texttt{setup\_ray\_single\_node}) con asignación dinámica de puertos basada en el identificador de trabajo:
+    \begin{equation}
+        \text{ray\_port} = 20000 + (\text{SLURM\_JOB\_ID} \pmod{20000})
+    \end{equation}
+    y autodetección de dirección IP mediante \texttt{hostname --ip-address}, evitando colisiones de red entre múltiples trabajos concurrentes en el mismo nodo.
+    \item \textbf{Gestión de Entrada/Salida en Almacenamiento Local (\texttt{/scratch}):} Para evitar saturar el ancho de banda del sistema de archivos distribuido en red (NFS) debido a la continua telemetría microscópica de SUMO (\texttt{tripinfo.xml}, \texttt{summary.xml}), las simulaciones y la recolección de trayectorias se ejecutaron en el almacenamiento volátil local de cada nodo de cómputo (\texttt{/scratch/\$USER/ray\_tmp/}).
+    \item \textbf{Resiliencia y Persistencia ante Preempción:} Los scripts de envío incorporan trampas de señales POSIX (\texttt{trap ... EXIT USR1 TERM INT}) que ejecutan una sincronización incremental mediante \texttt{rsync} de los resultados y bases de datos SQLite de Optuna hacia el almacenamiento persistente \texttt{\$HOME/ray\_results/} antes de la finalización del trabajo o ante eventos de preempción, permitiendo la reanudación transparente mediante \texttt{Tuner.restore()}.
 \end{itemize}
 
 ---
@@ -251,9 +310,10 @@ Las simulaciones se ejecutaron en los clusters de supercómputo \textbf{Toko} y 
 \section{Diseño de Experimentos de Evaluación de Rendimiento}
 \label{sec:experimentos_evaluacion}
 
-El protocolo de evaluación final de los modelos se rigió por las siguientes condiciones:
+El protocolo de evaluación final de los modelos entrenados se rigió por los siguientes criterios de rigor estadístico:
+
 \begin{enumerate}
-    \item \textbf{Semillas No Vistas (OOD):} Evaluación sobre $N = 20$ semillas aleatorias independientes disjuntas del proceso de entrenamiento (\texttt{101, 137, 179, ..., 563}), habiéndose excluido la semilla \texttt{42} por uso previo en pruebas piloto.
-    \item \textbf{Pruebas de Hipótesis:} Comparación de distribuciones de demora $W_{\text{net}}$ mediante la prueba no paramétrica de Wilcoxon y cuantificación del tamaño del efecto mediante $\hat{A}_{12}$ de Vargha-Delaney.
-    \item \textbf{Guardias de Validación (\textit{Fail-Closed Guards}):} Descarte automático de políticas candidatas que presenten una degradación de throughput superior al $5\%$, un incremento en teletransportes o una regresión de equidad (\textit{fairness}) mayor al $10\%$ respecto al control de tiempo fijo.
+    \item \textbf{Evaluación en Semillas Fuera de Distribución (OOD):} Para verificar la capacidad de generalización y descartar sobreajuste a secuencias de demanda particulares, las políticas finales se evaluaron sobre semillas aleatorias independientes disjuntas del proceso de entrenamiento (\texttt{final\_evaluation: 300101, 300137, 300179, 300191, 300193}).
+    \item \textbf{Pruebas de Hipótesis no Paramétricas y Tamaño del Efecto:} Las comparaciones de demora acumulada $W_{\text{net}}$ entre algoritmos se evaluaron mediante la prueba de rangos con signo de Wilcoxon (con nivel de significancia $\alpha = 0.05$) y se complementaron con el estimador $\hat{A}_{12}$ de Vargha-Delaney y la Media Intercuartílica (IQM) con intervalos bootstrap del 95\% para cuantificar la magnitud estandarizada del tamaño del efecto.
+    \item \textbf{Guardias de Validación de Fallo Seguro:} Se estableció el descarte automático de aquellas políticas candidatas que presentasen una reducción de vehículos completados ($\text{throughput}$) superior al $5\%$, un incremento en teletransportaciones vehiculares por colapso de carril o una degradación en la equidad de demoras ($G_{\text{wait}}$) mayor al $10\%$ en comparación con el control de tiempo fijo.
 \end{enumerate}

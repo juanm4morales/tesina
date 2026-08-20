@@ -1,0 +1,223 @@
+\chapter{Arquitectura de Software y Patrones de Diseño}
+\label{apendice:arquitectura_software}
+
+En este apéndice se detalla la arquitectura de software del marco computacional \texttt{marlTLC}, sus especificaciones de diseño orientado a objetos, los diagramas de clases UML y la justificación de los patrones de diseño adoptados para desacoplar los componentes de simulación, aprendizaje por refuerzo y cálculo de recompensas.
+
+---
+
+\section{Diseño Orientado a Objetos del Entorno de Simulación}
+\label{sec:apendice_uml_entorno}
+
+La infraestructura de simulación se estructura siguiendo una separación estricta de responsabilidades. La clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de SUMO, el control temporal y la interacción de bajo nivel con la API \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} adapta la simulación a la interfaz estándar \texttt{MultiAgentEnv} de Ray RLlib.
+
+La Figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases UML correspondiente a las entidades del entorno y su relación con los controladores semafóricos.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\scriptsize,
+  node distance=0.8cm and 1.2cm,
+  >=Stealth,
+  umlclass/.style={
+    rectangle, draw=black!70, fill=white,
+    text width=6.2cm, inner sep=4pt,
+    rounded corners=2pt, thick
+  },
+  abstractclass/.style={
+    umlclass, fill=colEntorno!10
+  }
+]
+
+  % BaseSumoEnvironment
+  \node[abstractclass] (baseenv) {
+    \begin{center}\textbf{\textit{BaseSumoEnvironment}}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{sumocfg\_file: str}\\
+    - \texttt{delta\_time: int}\\
+    - \texttt{sim\_time: int}\\
+    - \texttt{warming\_time: int}\\
+    - \texttt{traffic\_lights: Dict[str, TrafficLight]}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{\textit{reset}(): Tuple[Dict, Dict]}\\
+    + \texttt{\textit{step}(actions: Dict): Tuple}\\
+    + \texttt{\textit{close}()}\\
+    \# \texttt{\_save\_warmup\_state()}\\
+    \# \texttt{\_load\_warmup\_state()}
+  };
+
+  % SumoRllibEnv
+  \node[umlclass, below=of baseenv] (rllibenv) {
+    \begin{center}\textbf{SumoRllibEnv}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{observation\_spaces: Dict[str, Space]}\\
+    - \texttt{action\_spaces: Dict[str, Space]}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{reset(seed, options): Tuple[Dict, Dict]}\\
+    + \texttt{step(action\_dict: Dict): Tuple[Dict, Dict, Dict, Dict, Dict]}\\
+    + \texttt{render()}\\
+    + \texttt{close()}
+  };
+
+  % TrafficLight
+  \node[umlclass, right=of baseenv] (tl) {
+    \begin{center}\textbf{TrafficLight}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{id: str}\\
+    - \texttt{current\_phase: int}\\
+    - \texttt{next\_phase: int}\\
+    - \texttt{lanes: Dict[str, Lane]}\\
+    - \texttt{reward\_function: RewardFn}\\
+    - \texttt{neighbors: Dict[str, TrafficLight]}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{update()}\\
+    + \texttt{get\_metrics(): Dict[str, float]}\\
+    + \texttt{set\_reward\_function(fn: RewardFn)}\\
+    + \texttt{apply\_action(action: int)}
+  };
+
+  % Lane
+  \node[umlclass, below=of tl] (lane) {
+    \begin{center}\textbf{Lane}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{lane\_id: str}\\
+    - \texttt{lane\_length: float}\\
+    - \texttt{last\_step\_halted: int}\\
+    - \texttt{last\_step\_acc\_waiting: float}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{update()}\\
+    + \texttt{calculate\_acc\_waiting\_time(): Tuple}
+  };
+
+  % Relaciones
+  \draw[->, thick, line width=1pt] (rllibenv) -- node[right] {\textit{hereda de}} (baseenv);
+  \draw[->, thick, line width=1pt] (baseenv) -- node[above] {1..* contiene} (tl);
+  \draw[->, thick, line width=1pt] (tl) -- node[right] {1..* gestiona} (lane);
+
+\end{tikzpicture}
+\caption{Diagrama de clases UML de la infraestructura del entorno de simulación y controladores semafóricos.}
+\label{fig:uml_entorno_agentes}
+\end{figure}
+
+---
+
+\section{Jerarquía de Funciones de Recompensa y Patrón Strategy}
+\label{sec:apendice_uml_recompensas}
+
+El cálculo de la recompensa se desacopla mediante el patrón \textbf{Strategy}, permitiendo intercambiar de forma transparente la métrica de optimización sin alterar el bucle principal de simulación.
+
+La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{compute\_reward(tl\_id)}. Las clases concretas implementan formulaciones locales basadas en demoras acumuladas (\texttt{DiffAccWaitingTimeReward}), longitud de colas (\texttt{NegativeQueueLengthReward}) o presión de red (\texttt{PressureReward}). La coordinación distribuida se logra mediante el patrón \textbf{Composite}, implementado en \texttt{NeighborhoodRelevanceReward}, el cual combina de manera convexa la señal local y la señal promedio de los semáforos adyacentes provista por \texttt{NeighborAvgReward}.
+
+La Figura \ref{fig:uml_recompensas} detalla la estructura de clases del módulo de recompensas.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\tiny,
+  node distance=0.6cm and 0.5cm,
+  >=Stealth,
+  umlclass/.style={
+    rectangle, draw=black!70, fill=white,
+    text width=4.8cm, inner sep=3pt,
+    rounded corners=2pt, thick
+  },
+  abstractclass/.style={
+    umlclass, fill=colInterfaz!10
+  }
+]
+
+  % RewardFn (Abstract)
+  \node[abstractclass] (rewardfn) {
+    \begin{center}\textbf{\textit{RewardFn}}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{name: str}\\
+    - \texttt{traffic\_lights: Dict[str, Any]}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{\textit{compute\_reward}(tl\_id: str): float}\\
+    + \texttt{attach\_traffic\_lights(tls: Dict)}\\
+    + \texttt{reset\_cache()}
+  };
+
+  % DiffAccumulatedWaitingTimeReward
+  \node[umlclass, below left=of rewardfn, xshift=-0.2cm] (diffacc) {
+    \begin{center}\textbf{DiffAccWaitingTimeNormalized}\end{center}
+    \rule{\linewidth}{0.4pt}
+    + \texttt{compute\_reward(tl\_id: str): float}
+  };
+
+  % NeighborAvgReward
+  \node[umlclass, below=of rewardfn] (neighavg) {
+    \begin{center}\textbf{NeighborAvgReward}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{base\_reward\_name: str}\\
+    - \texttt{\_base\_reward\_fn: RewardFn}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{compute\_reward(tl\_id: str): float}
+  };
+
+  % NeighborhoodRelevanceReward
+  \node[umlclass, below right=of rewardfn, xshift=0.2cm] (neighrel) {
+    \begin{center}\textbf{NeighborhoodRelevanceReward}\end{center}
+    \rule{\linewidth}{0.4pt}
+    - \texttt{neighborhood\_relevance: float ($\rho$)}\\
+    - \texttt{\_base\_reward\_fn: RewardFn}\\
+    - \texttt{\_neighbor\_reward\_fn: NeighborAvgReward}\\
+    \rule{\linewidth}{0.4pt}
+    + \texttt{compute\_reward(tl\_id: str): float}\\
+    + \texttt{compute\_components(tl\_id: str): Tuple}
+  };
+
+  % Relaciones
+  \draw[->, thick, line width=1pt] (diffacc) -- (rewardfn);
+  \draw[->, thick, line width=1pt] (neighavg) -- (rewardfn);
+  \draw[->, thick, line width=1pt] (neighrel) -- (rewardfn);
+  \draw[->, dashed, thick, line width=0.8pt] (neighrel) -- node[below, font=\tiny] {compone} (neighavg);
+
+\end{tikzpicture}
+\caption{Diagrama de clases UML de la jerarquía de funciones de recompensa (Patrones Strategy y Composite).}
+\label{fig:uml_recompensas}
+\end{figure}
+
+---
+
+\section{Patrones de Diseño Implementados}
+\label{sec:apendice_patrones_diseno}
+
+A lo largo del marco computacional \texttt{marlTLC} se aplican los siguientes patrones de diseño de software reconocidos:
+
+\begin{enumerate}
+    \item \textbf{Patrón Strategy (Estrategia):}
+    \begin{itemize}
+        \item \textit{Propósito:} Encapsular algoritmos de cálculo de recompensa y permitir su variación independiente de los controladores semafóricos.
+        \item \textit{Implementación:} Interfaz base \texttt{RewardFn} y clases derivadas (\texttt{DiffHaltedReward}, \texttt{DiffAccumulatedWaitingTimeReward}, \texttt{PressureReward}, \texttt{SpillbackPenaltyReward}).
+    \end{itemize}
+
+    \item \textbf{Patrón Factory Method y Registry (Fábrica con Registro Dinámico):}
+    \begin{itemize}
+        \item \textit{Propósito:} Instanciar dinámicamente funciones de recompensa y módulos neuronales a partir de cadenas de configuración o especificaciones compuestas (\texttt{RewardSpec}), permitiendo registrar nuevas funciones sin modificar la fábrica (Principio Abierto/Cerrado).
+        \item \textit{Implementación:} Clase \texttt{RewardFactory} y decorador \texttt{@register\_reward(name)}.
+    \end{itemize}
+
+    \item \textbf{Patrón Composite (Objeto Compuesto):}
+    \begin{itemize}
+        \item \textit{Propósito:} Construir recompensas cooperativas y multifactoriales tratando componentes individuales y combinaciones de manera uniforme.
+        \item \textit{Implementación:} \texttt{WeightedCompositeReward} y \texttt{NeighborhoodRelevanceReward}, que agregan recompensas locales y vecinales mediante combinaciones lineales o convexas.
+    \end{itemize}
+
+    \item \textbf{Patrón Protocol / Structural Subtyping (Tipado Estructural):}
+    \begin{itemize}
+        \item \textit{Propósito:} Desacoplar el proveedor de métricas vecinales del tipo concreto \texttt{TrafficLight}, facilitando la prueba unitaria con objetos simulados (\textit{mocks}) y evitando dependencias circulares.
+        \item \textit{Implementación:} Protocolo \texttt{NeighborInfoProvider} (\texttt{src/marlTLC/environments/protocols.py}) con el decorador \texttt{@runtime\_checkable}.
+    \end{itemize}
+
+    \item \textbf{Patrón Adapter (Adaptador):}
+    \begin{itemize}
+        \item \textit{Propósito:} Traducir la API procedural y basada en comandos de TraCI / \texttt{libsumo} a las interfaces orientadas a objetos y vectorizadas de \texttt{MultiAgentEnv} (Ray RLlib) y \texttt{ParallelEnv} (PettingZoo).
+        \item \textit{Implementación:} \texttt{SumoRllibEnv} y \texttt{Observation}.
+    \end{itemize}
+
+    \item \textbf{Patrón Decorator (Decorador):}
+    \begin{itemize}
+        \item \textit{Propósito:} Extender dinámicamente las capacidades de los módulos sin alterar su jerarquía de herencia.
+        \item \textit{Implementación:} Decoradores de registro \texttt{@register\_reward} y envoltura de módulos de acción en PyTorch (\texttt{ActionMaskingTorchRLModule}).
+    \end{itemize}
+\end{enumerate}
