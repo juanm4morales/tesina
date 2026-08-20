@@ -100,6 +100,8 @@
 
 \definecolor{LightGray}{gray}{0.9}
 \usepackage[spanish]{babelbib}
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+\addto\captionsspanish{\renewcommand{\listtablename}{Índice de tablas}}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -220,6 +222,9 @@ linktoc=all
 \include{5-metodologia}
 \include{6-resultados}
 \include{7-conclusiones}
+
+\appendix
+\include{8-apendice_arquitectura}
 
 \bibliographystyle{babalpha}
 \bibliography{bibliografia}
