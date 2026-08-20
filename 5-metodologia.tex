@@ -47,7 +47,7 @@ La Figura \ref{fig:flujo_metodologico_general} ilustra la secuencia metodológic
   >=Stealth,
   paso/.style={rectangle, draw=colEntorno!80!black, fill=colEntorno!10, rounded corners=5pt, thick, text width=13.5cm, align=left, inner sep=6pt}
 ]
-  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, conectividad de enlaces internos mediante parches PlainXML, sanitización con \texttt{netconvert --tls.rebuild} y calibración de flota heterogénea.};
+  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, auditoría topológica con Google Maps y Street View, reconstrucción de lógica semafórica y calibración de flota heterogénea.};
   \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del Dec-POMDP:} Especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con enmascaramiento (\textit{action masking}) y recompensa $\lambda$-mix / `neighborhood\_relevance`.};
   \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la Infraestructura de Entorno:} Abstracción en memoria compartida mediante \textit{bindings} en C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la API Multi-Agent de Ray RLlib.};
   \node[paso, below=of p3] (p4) {\textbf{4. Configuración e Integración Algorítmica:} Definición de arquitecturas neuronales en PyTorch (MLP $[128, 128]$ y $[256, 256]$) e hiperparámetros para IDQN, IPPO, MAPPO y HAPPO.};
@@ -104,11 +104,11 @@ La evaluación empírica de los algoritmos se realiza sobre cuatro escenarios de
 \subsection{Metodología de Modelado Geométrico y Sanitización Topológica}
 \label{subsec:metodologia_modelado_sumo}
 
-La construcción de las redes se rige por un protocolo riguroso de diseño y compilación en SUMO:
+La construcción de las redes de simulación se rige por un protocolo riguroso de diseño y validación en SUMO:
 \begin{enumerate}
-    \item \textbf{Diseño Geométrico y Accesos:} Definición de calzadas, cantidad de carriles por aproximación y longitudes de almacenamiento en \texttt{netedit}.
-    \item \textbf{Parches de Conectividad PlainXML (\texttt{.con.xml}):} Para preservar la reproducibilidad y mantener un historial auditable, las restricciones de giro y maniobras prohibidas se declaran explícitamente en archivos PlainXML (por ejemplo, mediante directivas \texttt{<delete from="..." to="..."/>}) en lugar de editar manualmente el archivo compilado \texttt{.net.xml}.
-    \item \textbf{Sanitización y Reconstrucción de Lógica Semafórica:} Tras aplicar modificaciones geométricas o de conexión, la red se recompila mediante \texttt{netconvert} con el parámetro obligatorio \texttt{--tls.rebuild}. Esto recalcula la correspondencia entre los enlaces físicos de cruzamiento y los índices de control (\textit{linkIndex}) de las fases semafóricas (\texttt{tlLogic}), evitando estados no asignados o desfasados.
+    \item \textbf{Diseño Geométrico y Accesos:} Definición de calzadas, cantidad de carriles por aproximación y longitudes de almacenamiento en \texttt{netedit} o a partir de la importación de datos cartográficos desde la plataforma web de OpenStreetMap.
+    \item \textbf{Auditoría y Corrección Topológica con Datos de Terreno:} Dado que las fuentes cartográficas abiertas pueden contener inconsistencias operacionales, se realiza una verificación y corrección sistemática de los sentidos de circulación de las calles, la cantidad de carriles por calzada, las conexiones de giro y las maniobras prohibidas, contrastando directamente contra imágenes satelitales y vistas de calle de Google Maps y Google Street View.
+    \item \textbf{Sanitización y Programación Semafórica:} Las configuraciones de los semáforos estáticos corresponden a los planes generados por defecto por SUMO (\texttt{netconvert --tls.rebuild}) al compilar la red. Las señalizaciones, programas de fases y tiempos de ciclo originales se mantienen inalterados como línea base canónica, recalculando automáticamente la correspondencia entre enlaces físicos e índices de control semafórico (\textit{linkIndex}) para garantizar la consistencia topológica.
 \end{enumerate}
 
 \subsection{Escenarios Sintéticos: \texorpdfstring{$3\times1$, $3\times3$ y $4\times4\_H$}{3x1, 3x3 y 4x4_H}}
@@ -138,25 +138,126 @@ Las tres topologías sintéticas cumplen funciones analíticas complementarias:
     \item \textbf{Cuadrícula Heterogénea $4\times4\_H$ (7.202 veh/h):} Dieciséis intersecciones asimétricas estructuradas con dos arterias principales de mayor capacidad. Estas arterias actúan como vías de drenaje que canalizan el tránsito de los nodos interiores hacia los extremos de la red, ofreciendo rutas alternativas y mitigando la formación de ciclos de bloqueo cerrados.
 \end{itemize}
 
-\subsection{Escenario Urbano Real: Gran Mendoza (Corredor Vicente Zapata)}
+\subsection{Escenario Urbano Real: Gran Mendoza}
 \label{subsec:escenario_mendoza}
 
-Para evaluar la transferibilidad de las políticas aprendidas hacia un entorno vial real, se construyó el escenario del Gran Mendoza a partir de datos geoespaciales de OpenStreetMap y aforos empíricos continuos.
+Para contrastar la validez y transferibilidad de las políticas aprendidas frente a condiciones de operación viales reales, se construyó el escenario del Gran Mendoza a partir de la infraestructura topológica del microcentro metropolitano y series temporales continuas de aforo vehicular captadas mediante cámaras termográficas.
 
+\subsubsection{Posición Metodológica: Escenario Restringido por Datos}
+\label{subsubsec:mendoza_posicion_metodologica}
+
+Desde una perspectiva epistemológica y de modelado en ingeniería de transporte, el escenario de Mendoza se formaliza como un \textbf{escenario sintético empíricamente restringido por datos} (\textit{data-constrained synthetic scenario}), diferenciándose conceptualmente de un gemelo digital irrestricto.
+
+La inferencia de matrices Origen-Destino (OD) completas en redes urbanas a partir de mediciones volumétricas discretas en un conjunto reducido de puntos de control constituye un \textbf{problema inverso severamente subdeterminado e intrínsecamente mal condicionado} \cite{calymayor, ite_handbook}. Para una red con $|\mathcal{Z}| = 37$ zonas de asignación de tránsito (TAZ), existen $|\mathcal{Z}|(|\mathcal{Z}|-1) = 1.332$ pares direccionales potenciales (de los cuales 520 resultan físicamente alcanzables), frente a un número acotado de enlaces instrumentados con detectores en el acceso oriental. En tales condiciones, no existe una asignación OD única que satisfaga exclusivamente las observaciones empíricas.
+
+Por consiguiente, este trabajo implementa una metodología estructurada de dos niveles:
+\begin{enumerate}
+    \item \textbf{Restricción Dinámica Empírica:} Las mediciones continuas de aforo se emplean para gobernar el perfil temporal horario de la demanda total y fijar el flujo volumétrico observado en el corredor principal de ingreso.
+    \item \textbf{Estructuración Espacial Híbrida:} La distribución espacial de los viajes se formula combinando un conocimiento previo (\textit{prior}) determinista basado en la jerarquía vial metropolitana con un remanente estocástico controlado sobre el espacio de pares alcanzables.
+\end{enumerate}
+
+\subsubsection{Adquisición, Auditoría y Preprocesamiento de Telemetría Empírica}
+\label{subsubsec:mendoza_preprocesamiento_datos}
+
+La base empírica de aforo proviene de registros continuos de sensores de conteo y clasificación vehicular (cámaras térmicas Tecnotrans / FLIR ThermICam) con resolución de 15 minutos en el período Octubre 2025 -- Abril 2026. 
+
+Si bien en fases preliminares se dispuso de información de cuatro dispositivos en el entorno del nudo de Costanera y Acceso Este, el relevamiento geoespacial determinó que las cámaras \texttt{192.168.1.167} (egreso hacia el este), \texttt{192.168.1.168} (circulación hacia el norte por Costanera) y \texttt{192.168.1.170} (circulación hacia el sur por Costanera) se emplazan entre $600\text{ m}$ y $800\text{ m}$ al este del perímetro de la red urbana modelada, midiendo flujos sobre la autopista que quedan fuera del modelo vial urbano. Por este motivo, \textbf{en la generación y calibración definitiva del escenario se utiliza exclusivamente la Cámara 169} (\texttt{192.168.1.169}), ubicada en el viaducto sobre el canal Cacique Guaymallén, la cual registra el ingreso vehicular hacia el oeste por la Avenida José Vicente Zapata hacia el microcentro.
+
+Para garantizar la integridad y calidad del dataset de la Cámara 169, se aplicó un pipeline de auditoría y saneamiento de datos estructurado en cinco etapas:
+\begin{enumerate}
+    \item \textbf{Filtrado Temporal y Estructural:} Descarte de marcas temporales corruptas (incluyendo fechas anómalas de época Unix \texttt{1970-01-01}) o fuera del rango válido $[2020\text{--}2035]$.
+    \item \textbf{Validación de Zonas y Clases Vehiculares:} Admisión estricta de zonas válidas ($\text{ZoneID} \in [1, 19]$) y clasificación física conforme a normativas de transporte: $\text{ClassID} \in \{1, 2, 3\}$, correspondiente a vehículos livianos ($l \le 5\text{ m}$), medianos ($5\text{ m} < l \le 10\text{ m}$) y pesados ($l > 10\text{ m}$).
+    \item \textbf{Deduplicación por Clave Lógica:} Purga de registros redundantes mediante la clave única $(\text{DateUTC}, \text{ZoneID}, \text{ClassID})$, aplicando la regla determinista de conservación del último snapshot (\texttt{keep='last'}).
+    \item \textbf{Alineación Temporal (\textit{Temporal Snapping}):} Reasignación de marcas de tiempo con desviaciones menores $|\Delta t| \le 5\text{ s}$ al cuarto de hora canónico más cercano y descarte de registros desalineados (\textit{off-grid}).
+    \item \textbf{Filtro de Días Hábiles Completos:} Para evitar que interrupciones en la transmisión de datos se confundan con bajas de demanda real, se seleccionaron exclusivamente días hábiles (lunes a viernes) con cobertura completa del $100\%$ de los intervalos diarios de 15 minutos (superando el umbral de guardia de $\ge 95\%$).
+\end{enumerate}
+
+Este protocolo seleccionó $33$ días hábiles completos no perturbados, arrojando en la Cámara 169 un volumen empírico diario medio de $\mu_{\text{obs}} = 25.283,85\text{ veh/día}$ con una desviación estándar interdiaria de $\sigma_{\text{obs}} = 2.316,54\text{ veh/día}$.
+
+\subsubsection{Mapeo Geoespacial, Corrección Topológica y Señalización}
+\label{subsubsec:mendoza_topologia_red}
+
+El trazado geométrico base se obtuvo a partir de la exportación de datos de OpenStreetMap y su posterior conversión a formato de red SUMO (\texttt{.net.xml}). El dominio modelado delimita el microcentro urbano de la Ciudad de Mendoza en el polígono comprendido entre Av. José Vicente Zapata / Colón (límite sur), Av. General San Martín (eje central norte-sur), Av. Manuel Belgrano (límite oeste) y Av. Las Heras (límite norte), proyectado en coordenadas UTM Zona 19S (WGS84).
+
+\paragraph{Proxy de Ingreso Este (TAZ 28):} Dado que el nudo de Costanera se ubica al este del perímetro del modelo, la Cámara 169 se proyecta como el proxy de inyección este en el primer tramo interno disponible de la calzada de ingreso: el enlace (\textit{edge}) \texttt{93904440\#0}, asignado al origen de la zona TAZ 28.
+
+\paragraph{Auditoría y Corrección Topológica con Google Maps y Street View:} Tras la conversión inicial desde OpenStreetMap, se detectaron discrepancias operacionales y geométricas respecto a la infraestructura física real. Por ello, se llevó a cabo un proceso exhaustivo de auditoría y corrección apoyado en imágenes satelitales de Google Maps y relevamiento visual mediante Google Street View:
 \begin{itemize}
-    \item \textbf{Procesamiento Topológico y Conectividad:} La geometría urbana fue importada y procesada mediante la herramienta \texttt{netconvert} y parches PlainXML (\texttt{gran\_mendoza2\_fix\_connections.con.xml} y \texttt{gran\_mendoza2\_prohibit\_turns.con.xml}, incluyendo la restricción física de giro a la izquierda desde Av. San Martín sur hacia calle Colón mediante directivas \texttt{<delete>}) para preservar rigurosamente las maniobras permitidas, giros protegidos y restricciones viales observadas en terreno.
-    \item \textbf{Calibración de Flujos Empíricos con Cámaras Termográficas:} Se utilizaron los registros continuos de aforo vehicular proporcionados por cámaras termográficas (Tecnotrans / ThermICam), focalizando la calibración sobre la Cámara 169 situada en el corredor José Vicente Zapata (sección sobre canal Cacique Guaymallén, acceso oeste a la Ciudad de Mendoza), la cual registra un promedio empírico de $25.283,85\text{ veh/día}$ en días hábiles completos.
-    \item \textbf{Matriz Origen-Destino Híbrida (v14):} La demanda vehicular se estructuró a través del contrato OD canónico v14 (volumen nominal de $260.000\text{ veh/día}$):
-    \begin{enumerate}
-        \item \textit{Componente Fijo Calibrado ($60\%$):} Distribuido en $476$ entradas en \texttt{mendoza\_od\_proportions.json} (473 pares explícitamente calibrados que incorporan la intervención de reducción de tráfico desde origen TAZ 12 Av. Perú y el incremento de recorridos sobre calle Patricias Mendocinas, más 3 ceros estructurales que bloquean pares frágiles como $21\to17$, $0\to3$ y $10\to5$).
-        \item \textit{Remanente Estocástico ($40\%$):} Distribuido aleatoriamente entre pares alcanzables mediante \texttt{random\_routes\_taz.py} utilizando la semilla congelada de remanente \texttt{104773} (seleccionada por estabilidad entre 18 candidatas).
-    \end{enumerate}
-    \item \textbf{Calibración Dinámica en Horizonte Extendido:} El escenario reproduce un horizonte continuo de 12 horas ($06:00\text{--}18:00$, semilla SUMO congelada \texttt{104729}) y una ventana proxy de 2 horas ($06:30\text{--}08:30$, $t=1800\text{--}9000$), alcanzando un estadístico de calidad de flujo $\text{GEH} < 5$ en más del $85\%$ de las mediciones de volumen en los enlaces comparables:
-    \begin{equation}
-        \text{GEH} = \sqrt{\frac{2 (M - C)^2}{M + C}}
-    \end{equation}
-    donde $M$ es el volumen modelado en la simulación y $C$ es el conteo empírico observado.
+    \item \textbf{Restricciones de Giro y Maniobras Prohibidas:} Se implementaron las restricciones de giro reglamentarias observadas en terreno, tales como la prohibición estricta de giro a la izquierda desde Av. General San Martín hacia el sur hacia Av. Colón, y se preservaron giros semaforizados permitidos (por ejemplo, desde calle Perú hacia Av. Las Heras).
+    \item \textbf{Sentidos de Circulación y Conectividad Vial:} Se corrigieron los sentidos de circulación de calzadas secundarias que figuraban de forma incorrecta como bidireccionales o invertidas en OpenStreetMap, y se restituyó la continuidad física de los cuatro carriles de ingreso de la Av. José Vicente Zapata hacia la trama interior (\texttt{93904440\#0} a \texttt{93904440\#1}).
+    \item \textbf{Cantidad de Carriles y Accesos Laterales:} Se ajustó el número real de carriles de aproximación por calzada y se habilitaron las conexiones de inserción en calles transversales de acceso (Catamarca, Buenos Aires y Leandro N. Alem).
+    \item \textbf{Configuración de Semáforos Estáticos y Señalización:} Las configuraciones de los semáforos de tiempo fijo corresponden a los programas generados por defecto por SUMO (\texttt{--tls.rebuild}) al compilar la red. Las señalizaciones, secuencias de fases y duraciones de ciclo originales no fueron alteradas ni reprogramadas manualmente, preservándose intactas como la línea base canónica sobre la cual operan los semáforos de tiempo fijo y contra la cual se evalúan los controladores adaptativos MARL.
 \end{itemize}
+
+\subsubsection{Modelado Dinámico de Demanda y Factor de Expansión Territorial}
+\label{subsubsec:mendoza_demanda_dinamica}
+
+El flujo vehicular en cada paso temporal se modela a partir del perfil horario representativo $\bar{q}_{\text{obs}, 169}(h)$ ($h \in [0, 23]$), promediado sobre los 33 días hábiles completos. El análisis de distribución temporal revela que el período diurno de 12 horas ($06:00\text{--}18:00$) concentra el $69,29\%$ del flujo diario total, mientras que la ventana matutina de hora pico ($06:30\text{--}08:30$) concentra el $12,53\%$.
+
+Para proyectar el aforo del enlace observado a la escala metropolitana completa de la red, se aplica un \textbf{Factor de Expansión Territorial Dinámico} \cite{calymayor, ite_handbook} gobernado por el volumen diario total estimado $V_{\text{diario}} = 260.000\text{ veh/día}$ (adoptado tras una exploración de sensibilidad en el rango $250.000\text{--}290.000\text{ veh/día}$):
+\begin{equation}
+    f_{\text{exp}} = \frac{V_{\text{diario}}}{\sum_{h=0}^{23} \bar{q}_{\text{obs}, 169}(h)} = \frac{260.000}{25.283,85} \approx 10,2832
+\end{equation}
+La demanda total de la red en la hora $h$ queda determinada por:
+\begin{equation}
+    Q_{\text{red}}(h) = \bar{q}_{\text{obs}, 169}(h) \cdot f_{\text{exp}}
+\end{equation}
+Adoptando una tasa de retención de detector $\text{camera\_retention} = 1,0$, reconociendo que la Cámara 169 captura el flujo de aproximación representativo del acceso oriental.
+
+\subsubsection{Estructuración Espacial de la Demanda: Contrato OD Canónico v14 (60/40)}
+\label{subsubsec:mendoza_contrato_od_v14}
+
+A partir de las 37 zonas TAZ, se computaron $520$ pares OD físicamente alcanzables mediante búsqueda en anchura (BFS) sobre el grafo de conectividad vial. La distribución de la demanda horaria $Q_{\text{red}}(h)$ se rige por el \textbf{Contrato OD Canónico v14}, formulado como una partición híbrida:
+\begin{equation}
+    p_{od} = \begin{cases}
+    p_{od}^{\text{calib}} & \text{si } (o,d) \in \mathcal{P}_{\text{exp}} \quad \text{con} \quad \sum_{(o,d) \in \mathcal{P}_{\text{exp}}} p_{od}^{\text{calib}} = 0,60 \\
+    0 & \text{si } (o,d) \in \mathcal{Z}_{\text{struct}} \\
+    \frac{0,40}{|\mathcal{P}_{\text{libre}}|} \cdot \xi_{od} & \text{si } (o,d) \in \mathcal{P}_{\text{libre}} = \mathcal{P}_{\text{reach}} \setminus (\mathcal{P}_{\text{exp}} \cup \mathcal{Z}_{\text{struct}})
+    \end{cases}
+\end{equation}
+donde $\mathcal{P}_{\text{exp}}$ es el conjunto de pares explícitos, $\mathcal{Z}_{\text{struct}}$ los ceros estructurales, $\mathcal{P}_{\text{libre}}$ los pares libres alcanzables y $\xi_{od}$ factores de asignación estocástica.
+
+\paragraph{Componente Fijo Calibrado ($60\%$):} Estructurado en $476$ entradas en \texttt{mendoza\_od\_proportions.json} (473 pares con cuotas positivas y 3 ceros directos) para reflejar la jerarquía vial observada en Mendoza:
+\begin{itemize}
+    \item \textbf{Jerarquía de Arterias Principales:} Priorización de los corredores Av. Vicente Zapata (TAZ 28), Av. General San Martín (TAZ 19/29), Av. Colón / Emilio Civit (TAZ 7), Av. Las Heras (TAZ 37/38) y Av. Manuel Belgrano (TAZ 0).
+    \item \textbf{Intervención en TAZ 12 (Av. Perú):} Reducción dirigida del tráfico de origen en $-20\%$ teórico (desvío realizado de $-0,47\%$ respecto a la cuota objetivo de $0,03657$). Esta intervención fue requerida para mitigar la sobrecarga inducida sobre calle San Lorenzo (\textit{edge} \texttt{249618899}), previniendo el colapso temprano de los giros de distribución.
+    \item \textbf{Incremento de Recorridos Pasantes en Patricias Mendocinas:} Aumento en la cuota de pares longitudinales estables ($+9,3\%$ realizado respecto a la línea base histórica) para modelar adecuadamente la función de drenaje norte-sur de dicha vía comercial.
+\end{itemize}
+
+\paragraph{Ceros Estructurales ($\mathcal{Z}_{\text{struct}}$):} Pares OD alcanzables pero topológicamente frágiles (por ejemplo, $21\to17$, $0\to3$, $10\to5$, $21\to12$, $23\to12$, $26\to12$) reciben explícitamente una probabilidad de asignación $p_{od} = 0,0$. Esto impide que el remanente aleatorio asigne vehículos a maniobras que provoquen bloqueo mutuo (\textit{gridlock}) o teletransportaciones por sobreflujo en accesos estrechos.
+
+\paragraph{Remanente Estocástico ($40\%$) y Selección de Semilla:} El remanente se distribuye entre los pares alcanzables libres mediante \texttt{random\_routes\_taz.py}. Durante el proceso de diseño del escenario, se evaluaron 18 semillas pseudoaleatorias candidatas; 10 completaron la simulación continua de 12 horas sin colisiones ni teletransportaciones. Se seleccionó la semilla de remanente \texttt{104773} por presentar la mínima desviación frente a las cuotas objetivo de calibración, fijando la semilla de simulación SUMO en \texttt{104729}. Una vez validada, la realización de demanda se congeló de forma inmutable (\texttt{mendoza\_12h.rou.xml}), asegurando que todas las comparaciones algorítmicas se efectúen sobre exactamente el mismo conjunto determinista de viajes.
+
+\paragraph{Dinámica Microscópica y Heterogeneidad de Flota:} Las inserciones se programan como procesos de Poisson con distribución exponencial de intervalos entre llegadas (\texttt{period="exp(rate)"} con $\lambda_{od} = \frac{Q_{od}}{3600}\text{ veh/s}$), asignando la distribución de flota heterogénea urbana \texttt{td\_urban\_mix} (25\% lentos, 60\% estándar y 15\% dinámicos).
+
+\subsubsection{Protocolo de Validación Operacional y Criterio GEH}
+\label{subsubsec:mendoza_validacion_operacional}
+
+El escenario canónico v14 se validó rigurosamente bajo dos horizontes temporales de evaluación, cuyas métricas de salud de red se sintetizan en la Tabla \ref{tab:metricas_validacion_mendoza}:
+\begin{enumerate}
+    \item \textbf{Escenario Base Canónico (12 Horas, $06:00\text{--}18:00$):} Horizonte experimental completo ($43.200\text{ s}$) que reproduce la evolución continua del tránsito diurno.
+    \item \textbf{Ventana Operacional Proxy (2 Horas, $06:30\text{--}08:30$):} Recorte temporal de hora pico ($t = [1800, 9000]\text{ s}$) empleado para la exploración iterativa de controladores y evaluaciones computacionales de alta demanda.
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{Métricas operacionales de validación del escenario canónico v14 de Mendoza.}
+\label{tab:metricas_validacion_mendoza}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Ventana Temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{CR} & \textbf{Inserción} & \textbf{Completitud} & \textbf{Teleports} \\ \hline
+2h ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
+12h ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
+\end{tabular}
+\end{table}
+
+\paragraph{Validación de Calidad del Flujo (Estadístico GEH):} Conforme a las recomendaciones metodológicas para la calibración de demanda en simulación microscópica \cite{sumo-doc, ite_handbook}, la fidelidad de la inyección en el corredor José Vicente Zapata (TAZ 28) frente a los aforos empíricos de la Cámara 169 se evaluó mediante el estadístico GEH:
+\begin{equation}
+    \text{GEH} = \sqrt{\frac{2 (M - C)^2}{M + C}}
+\end{equation}
+donde $M$ es el volumen modelado y $C$ el conteo empírico observado. En todos los intervalos horarios evaluados durante las 12 horas de simulación, el estadístico arrojó valores $\text{GEH} \le 0,121$ (con un valor en hora pico matutina de las 08:00 de $\text{GEH} = 0,075$), superando holgadamente el criterio estándar de aceptación internacional ($\text{GEH} < 5,0$ en más del $85\%$ de los puntos de aforo).
 
 ---
 

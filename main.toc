@@ -46,33 +46,46 @@
 \contentsline {section}{\numberline {3.3}Diseño y Calibración de Escenarios de Tránsito en SUMO}{35}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Metodología de Modelado Geométrico y Sanitización Topológica}{35}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Escenarios Sintéticos: $3\times 1$, $3\times 3$ y $4\times 4\_H$}{36}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Escenario Urbano Real: Gran Mendoza (Corredor Vicente Zapata)}{37}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{37}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{37}{subsection.3.4.1}%
-\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{38}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{38}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{39}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{39}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{39}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{39}{subsection.3.6.1}%
-\contentsline {section}{\numberline {3.7}Diseño de Experimentos de Búsqueda Hiperparamétrica (HPO)}{40}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Infraestructura Computacional de Alto Rendimiento y Orquestación Distribuida}{41}{subsection.3.7.1}%
-\contentsline {section}{\numberline {3.8}Diseño de Experimentos de Evaluación de Rendimiento}{42}{section.3.8}%
-\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{43}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{43}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{43}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{43}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{43}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{43}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{43}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{43}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{43}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{43}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{44}{chapter.5}%
-\contentsline {chapter}{\numberline {A}Arquitectura de Software y Patrones de Diseño}{45}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Diseño Orientado a Objetos del Entorno de Simulación}{45}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Jerarquía de Funciones de Recompensa y Patrón Strategy}{45}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Patrones de Diseño Implementados}{46}{section.A.3}%
+\contentsline {subsection}{\numberline {3.3.3}Escenario Urbano Real: Gran Mendoza}{37}{subsection.3.3.3}%
+\contentsline {subsubsection}{Posición Metodológica: Escenario Restringido por Datos}{37}{subsubsection*.46}%
+\contentsline {subsubsection}{Adquisición, Auditoría y Preprocesamiento de Telemetría Empírica}{37}{subsubsection*.47}%
+\contentsline {subsubsection}{Mapeo Geoespacial, Corrección Topológica y Señalización}{38}{subsubsection*.48}%
+\contentsline {paragraph}{Proxy de Ingreso Este (TAZ 28):}{38}{paragraph*.49}%
+\contentsline {paragraph}{Auditoría y Corrección Topológica con Google Maps y Street View:}{38}{paragraph*.50}%
+\contentsline {subsubsection}{Modelado Dinámico de Demanda y Factor de Expansión Territorial}{39}{subsubsection*.51}%
+\contentsline {subsubsection}{Estructuración Espacial de la Demanda: Contrato OD Canónico v14 (60/40)}{39}{subsubsection*.52}%
+\contentsline {paragraph}{Componente Fijo Calibrado ($60\%$):}{39}{paragraph*.53}%
+\contentsline {paragraph}{Ceros Estructurales ($\mathcal {Z}_{\text {struct}}$):}{40}{paragraph*.54}%
+\contentsline {paragraph}{Remanente Estocástico ($40\%$) y Selección de Semilla:}{40}{paragraph*.55}%
+\contentsline {paragraph}{Dinámica Microscópica y Heterogeneidad de Flota:}{40}{paragraph*.56}%
+\contentsline {subsubsection}{Protocolo de Validación Operacional y Criterio GEH}{40}{subsubsection*.57}%
+\contentsline {paragraph}{Validación de Calidad del Flujo (Estadístico GEH):}{41}{paragraph*.59}%
+\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{41}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{41}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{42}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{42}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{42}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{42}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{43}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{43}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.7}Diseño de Experimentos de Búsqueda Hiperparamétrica (HPO)}{44}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Infraestructura Computacional de Alto Rendimiento y Orquestación Distribuida}{45}{subsection.3.7.1}%
+\contentsline {section}{\numberline {3.8}Diseño de Experimentos de Evaluación de Rendimiento}{45}{section.3.8}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{46}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{46}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{46}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{46}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{46}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{46}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{46}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos ($3\times 1$, $3\times 3$, $4\times 4$ heterogéneo)}{46}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{46}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{46}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{47}{chapter.5}%
+\contentsline {chapter}{\numberline {A}Arquitectura de Software y Patrones de Diseño}{48}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Diseño Orientado a Objetos del Entorno de Simulación}{48}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Jerarquía de Funciones de Recompensa y Patrón Strategy}{48}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Patrones de Diseño Implementados}{49}{section.A.3}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
