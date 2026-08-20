@@ -37,7 +37,7 @@
 \contentsline {paragraph}{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}{22}{paragraph*.34}%
 \contentsline {section}{\numberline {2.4}Control de Tráfico Urbano mediante MARL}{24}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Entorno de Simulación para Control Semafórico}{24}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{24}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.2}Modelado del Problema del Control de Semáforos (Espacio de Estados, Acciones y Recompensas)}{25}{subsection.2.4.2}%
 \contentsline {subsection}{\numberline {2.4.3}Coordinación entre Intersecciones y Mitigación de Congestión}{25}{subsection.2.4.3}%
 \contentsline {chapter}{\numberline {3}Metodología}{26}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Integración de SUMO y el Agente de Aprendizaje por Refuerzo}{26}{section.3.1}%
