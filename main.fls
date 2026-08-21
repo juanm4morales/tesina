@@ -324,6 +324,10 @@ INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algori
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algorithmicx.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algpseudocode.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algpseudocode.sty
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\todonotes\todonotes.sty
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\todonotes\todonotes.sty
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\babelbib\babelbib.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\babelbib\babelbib.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\babelbib\spanish.bdf
@@ -333,8 +337,6 @@ INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\mhchem\mhchem.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\mhchem\mhchem.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\l3keys2e\l3keys2e.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\l3keys2e\l3keys2e.sty
-INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
-INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\tex\latex\amsmath\amsopn.sty
@@ -566,9 +568,6 @@ INPUT .\main.lof
 INPUT .\main.lof
 INPUT main.lof
 OUTPUT main.lof
-INPUT .\main.gls
-INPUT .\main.gls
-INPUT main.gls
 INPUT .\2-resumen.tex
 INPUT .\2-resumen.tex
 OUTPUT 2-resumen.aux
@@ -586,14 +585,14 @@ INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecss109
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecss0800.tfm
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecss0800.tfm
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecbx1440.tfm
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm1200.tfm
+INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT .\4-marco_teorico.tex
 INPUT .\4-marco_teorico.tex
 OUTPUT 4-marco_teorico.aux
 INPUT .\4-marco_teorico.tex
 INPUT .\4-marco_teorico.tex
 INPUT 4-marco_teorico.tex
-INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm1200.tfm
-INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ecrm0600.tfm
 INPUT C:\Users\carol\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm

@@ -25,44 +25,51 @@ Reallocating 'name_of_file' (item size: 1) to 13 items.
 Database file #1: bibliografia.bib
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-You've used 32 entries,
+Warning--empty language in bishop1995neural
+Warning--empty language in goodfellow2016deep
+Warning--empty language in MDPI_Infrastructures2025_RLReview
+Warning--empty language in RL_Definition_Barto
+Warning--empty language in VIDAL_OLIVERA_IEEELAT_2019
+Warning--empty language in watkins_1989
+You've used 40 entries,
             3213 wiz_defined-function locations,
-            892 strings with 13593 characters,
-and the built_in function-call counts, 18429 in all, are:
-= -- 1520
-> -- 989
-< -- 11
-+ -- 365
-- -- 361
-* -- 2285
-:= -- 2654
-add.period$ -- 72
-call.type$ -- 32
-change.case$ -- 267
-chr.to.int$ -- 32
-cite$ -- 32
-duplicate$ -- 888
-empty$ -- 1438
-format.name$ -- 665
-if$ -- 3592
-int.to.chr$ -- 1
+            940 strings with 15047 characters,
+and the built_in function-call counts, 21625 in all, are:
+= -- 1808
+> -- 1103
+< -- 15
++ -- 403
+- -- 396
+* -- 2615
+:= -- 3128
+add.period$ -- 93
+call.type$ -- 40
+change.case$ -- 307
+chr.to.int$ -- 39
+cite$ -- 46
+duplicate$ -- 1055
+empty$ -- 1727
+format.name$ -- 733
+if$ -- 4245
+int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 51
-newline$ -- 150
-num.names$ -- 96
-pop$ -- 338
+missing$ -- 65
+newline$ -- 199
+num.names$ -- 120
+pop$ -- 395
 preamble$ -- 1
-purify$ -- 301
+purify$ -- 354
 quote$ -- 0
-skip$ -- 485
+skip$ -- 579
 stack$ -- 0
-substring$ -- 651
-swap$ -- 406
-text.length$ -- 11
-text.prefix$ -- 4
+substring$ -- 770
+swap$ -- 447
+text.length$ -- 15
+text.prefix$ -- 7
 top$ -- 0
-type$ -- 236
-warning$ -- 0
-while$ -- 119
-width$ -- 39
-write$ -- 337
+type$ -- 284
+warning$ -- 6
+while$ -- 143
+width$ -- 47
+write$ -- 438
+(There were 6 warnings)
