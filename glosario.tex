@@ -18,6 +18,51 @@
     description={Subconjunto de información del estado completo del entorno que es efectivamente visible o medible por un agente individual, especialmente relevante en escenarios de observabilidad parcial}
 }
 
+\newglossaryentry{estado_global}{
+    name={$s$ (estado global)},
+    description={Representación conjunta de las variables relevantes del entorno en un instante determinado. En el modelo multi-agente puede incluir la información de todas las intersecciones y sus corrientes vehiculares}
+}
+
+\newglossaryentry{observacion_local}{
+    name={$o_i$ (observación local)},
+    description={Información disponible para el agente $i$ durante la ejecución descentralizada. Se obtiene a partir de los sensores o variables observables de la intersección que controla}
+}
+
+\newglossaryentry{accion}{
+    name={$a_i$ (acción)},
+    description={Decisión ejecutada por el agente $i$ en un paso temporal. En el control semafórico representa la fase o la modificación de fase seleccionada por el controlador}
+}
+
+\newglossaryentry{recompensa_t}{
+    name={$r_t$ (recompensa)},
+    description={Señal escalar recibida en el paso temporal $t$ después de ejecutar una acción. Se utiliza para orientar la actualización de la política o de la función de valor}
+}
+
+\newglossaryentry{gamma}{
+    name={$\gamma$ (factor de descuento)},
+    description={Parámetro en el intervalo $[0,1)$ que pondera la contribución de las recompensas futuras al retorno esperado}
+}
+
+\newglossaryentry{q_aprendizaje}{
+    name={$Q(s,a)$ (valor de acción)},
+    description={Retorno esperado de ejecutar la acción $a$ en el estado $s$ y continuar posteriormente de acuerdo con una política determinada}
+}
+
+\newglossaryentry{v_aprendizaje}{
+    name={$V(s)$ (valor de estado)},
+    description={Retorno esperado al comenzar en el estado $s$ y seguir una política determinada, promediando las acciones que dicha política selecciona}
+}
+
+\newglossaryentry{politica_parametrizada}{
+    name={$\pi_\theta$ (política parametrizada)},
+    description={Distribución de probabilidad sobre las acciones condicionada por el estado u observación y controlada por el vector de parámetros entrenables $\theta$}
+}
+
+\newglossaryentry{ventaja_estimada}{
+    name={$\hat{A}_t$ (ventaja estimada)},
+    description={Estimación de cuánto mejor o peor fue la acción observada en el paso $t$ respecto del valor esperado bajo la política vigente}
+}
+
 \newglossaryentry{recompensa}{
     name={Recompensa},
     description={Señal escalar devuelta por el entorno que evalúa cuán buena o mala fue la acción ejecutada por el agente en un estado particular. El objetivo del agente es maximizar la suma total de estas señales}

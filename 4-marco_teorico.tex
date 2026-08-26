@@ -19,9 +19,9 @@ Antes de formular el problema de control, es necesario distinguir algunos térmi
 En este contexto, se emplearán las siguientes nociones:
 
 \begin{itemize}
-    \item \textbf{Intersección, acceso y carril:} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso \cite{ite_handbook}, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{calymayor}.
+    \item \textbf{Intersección (\textit{intersection}), acceso (\textit{approach}) y carril (\textit{lane}):} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso \cite{ite_handbook}, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{calymayor}.
     \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada, por ejemplo, un giro o un movimiento directo \cite{WeiH2019ASTSCM}. Dos movimientos se consideran en conflicto o incompatibles cuando sus trayectorias se intersectan y generan puntos de conflicto en la intersección (véase la Figura \ref{fig:conflictos_interseccion}), lo que impide su servicio simultáneo por razones de seguridad \cite{fernandez}.
-    \item \textbf{Fase, ciclo e intervalo:} una fase es una configuración de señales que habilita simultáneamente un conjunto de movimientos compatibles \cite{ite_handbook}. El ciclo corresponde a la secuencia completa de fases necesaria para atender los movimientos de la intersección. Un intervalo es el período durante el cual las indicaciones semafóricas permanecen constantes \cite{calymayor}.
+    \item \textbf{Fase (\textit{phase}), ciclo (\textit{cycle}) e intervalo (\textit{interval}):} una fase es una configuración de señales que habilita simultáneamente un conjunto de movimientos compatibles \cite{ite_handbook}. El ciclo corresponde a la secuencia completa de fases necesaria para atender los movimientos de la intersección. Un intervalo es el período durante el cual las indicaciones semafóricas permanecen constantes \cite{calymayor}.
 \end{itemize}
 
 La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en una intersección de cuatro accesos. La numeración sigue de manera esquemática una convención habitual de los manuales de temporización semafórica; no representa una configuración obligatoria para el caso de estudio. La figura permite distinguir entre movimiento físico, fase semafórica y usuarios servidos por una misma indicación \cite{fhwa_signal_timing_manual}.
@@ -93,7 +93,7 @@ La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en un
         \draw[-{Stealth[length=5pt,width=4pt]}, black!38, line width=0.7pt] (4.35,3.55) -- (4.35,4.15);
         \node[font=\scriptsize\bfseries, black!45] at (4.35,3.30) {N};
     \end{tikzpicture}
-    \caption{Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite{fhwa_signal_timing_manual}.}
+    \caption[Movimientos vehiculares, fases y cruces peatonales]{Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite{fhwa_signal_timing_manual}.}
     \label{fig:movimientos_fases_interseccion}
 \end{figure}
 
@@ -149,10 +149,10 @@ En el nivel microscópico, las variables asociadas describen el movimiento del v
 
 \begin{table}[H]
 \centering
-\caption{Comparación y correspondencia de variables de tránsito en escalas macroscópica y microscópica.}
+\caption[Variables de tránsito macroscópicas y microscópicas]{Comparación y correspondencia de variables de tránsito en escalas macroscópica y microscópica.}
 \label{tab:variables_transito}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{2.3cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{5.4cm}|}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{4.9cm}|}
 \hline
 \textbf{Escala} & \textbf{Variable Principal} & \textbf{Relación / Conversión} \\ \hline
 Macroscópica & Flujo ($q$, veh/h) & $q = 3600 / h_{\text{prom}}$ \\ \cline{2-3}
@@ -471,11 +471,11 @@ Para la generación, edición y control en tiempo real de los escenarios de simu
 
 Desde la perspectiva del modelado computacional, la ejecución de una simulación microscópica en SUMO se organiza mediante archivos de configuración en formato XML \cite{sumo-doc}. En los escenarios considerados, sus componentes principales se resumen en la Tabla \ref{tab:sumo_input_files}:
 \begin{itemize}
-    \item \textbf{Archivo de red (\texttt{.net.xml}):} Define la estructura física e infraestructura de la red vial, incluyendo las coordenadas nodales, la geometría de arcos, los carriles por acceso, las conexiones de cruzamiento y la lógica de accionamiento semafórico.
-    \item \textbf{Archivo de rutas (\texttt{.rou.xml}):} Especifica las características de la flota vehicular (dimensiones, aceleración, velocidad deseada y modelo de seguimiento) junto con los itinerarios o flujos de origen a destino.
-    \item \textbf{Archivo TAZ (\texttt{.taz.xml}, \textit{Traffic Analysis Zones}):} Delimita las zonas de análisis de tráfico para asignar espacialmente las matrices de origen y destino de los desplazamientos.
-    \item \textbf{Archivo de elementos adicionales (\texttt{.add.xml}):} Incorpora dispositivos de medición (como detectores de bucle inductivo E1 y E2), paradas de transporte público o programas semafóricos personalizados.
-    \item \textbf{Archivo maestro de configuración (\texttt{.sumocfg}):} Integra las referencias a los archivos de red, rutas y adicionales, y fija los parámetros del horizonte temporal de simulación (duración del paso $\Delta t$, tiempos de inicio y fin, e indicadores de salida).
+    \item \textbf{Archivo de red} (\texttt{.net.xml}): Define la estructura física e infraestructura de la red vial, incluyendo las coordenadas nodales, la geometría de arcos, los carriles por acceso, las conexiones de cruzamiento y la lógica de accionamiento semafórico.
+    \item \textbf{Archivo de rutas} (\texttt{.rou.xml}): Especifica las características de la flota vehicular (dimensiones, aceleración, velocidad deseada y modelo de seguimiento) junto con los itinerarios o flujos de origen a destino.
+    \item \textbf{Archivo TAZ} (\texttt{.taz.xml}, \textit{Traffic Analysis Zones}): Delimita las zonas de análisis de tráfico para asignar espacialmente las matrices de origen y destino de los desplazamientos.
+    \item \textbf{Archivo de elementos adicionales} (\texttt{.add.xml}): Incorpora dispositivos de medición (como detectores de bucle inductivo E1 y E2), paradas de transporte público o programas semafóricos personalizados.
+    \item \textbf{Archivo maestro de configuración} (\texttt{.sumocfg}): Integra las referencias a los archivos de red, rutas y adicionales, y fija los parámetros del horizonte temporal de simulación (duración del paso $\Delta t$, tiempos de inicio y fin, e indicadores de salida).
 \end{itemize}
 
 \begin{table}[H]
@@ -511,7 +511,7 @@ En este marco, SUMO no solo permite reproducir la evolución microscópica de la
 
 \section{Aprendizaje por Refuerzo (RL)}
 
-Dentro del aprendizaje automático suelen distinguirse tres paradigmas principales. En el aprendizaje supervisado, el modelo se entrena a partir de ejemplos etiquetados que indican la salida esperada para cada entrada. En el aprendizaje no supervisado, en cambio, se busca descubrir estructura en datos no etiquetados, por ejemplo mediante agrupamiento o reducción de dimensionalidad. El aprendizaje por refuerzo (\textit{Reinforcement Learning}, RL) aborda un problema distinto: una entidad que toma decisiones debe aprender, mediante interacción con un entorno, qué acciones elegir para maximizar una señal de recompensa acumulada a largo plazo \cite{suttonRL}.
+El aprendizaje automático (\textit{Machine Learning}, ML) suele dividirse en tres paradigmas. En el aprendizaje supervisado (\textit{Supervised Learning}, SL), el modelo se entrena con ejemplos etiquetados que indican la salida esperada. En el aprendizaje no supervisado (\textit{Unsupervised Learning}, UL), se busca descubrir estructura en datos no etiquetados, por ejemplo mediante agrupamiento o reducción de dimensionalidad. El aprendizaje por refuerzo (\textit{Reinforcement Learning}, RL) aborda un problema distinto: una entidad aprende mediante interacción con un entorno qué acciones elegir para maximizar una recompensa acumulada \cite{suttonRL}.
 
 Esta diferencia es central. En RL no existe, en general, un supervisor que indique cuál era la acción correcta en cada situación. El agente aprende por experiencia, ensayando acciones, observando sus consecuencias y ajustando su comportamiento a partir de las recompensas obtenidas. Además, las consecuencias relevantes de una acción no siempre se manifiestan de forma inmediata: una decisión puede producir una recompensa baja en el corto plazo, pero conducir a estados favorables en el futuro. Por este motivo, el aprendizaje por refuerzo se ocupa explícitamente del problema de la recompensa diferida y de la asignación de crédito a decisiones pasadas \cite{suttonRL}.
 
@@ -523,7 +523,7 @@ Un aspecto característico de RL es el dilema entre exploración y explotación.
 
 \subsection{El Proceso de Decisión de Markov (MDP)}
 
-El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el Proceso de Decisión de Markov (\textit{Markov Decision Process}, MDP). En un MDP finito, el agente y el entorno interactúan en una secuencia de pasos temporales discretos $t = 0, 1, 2, \dots$. En cada instante $t$, el agente recibe una representación del estado del entorno $S_t \in \mathcal{S}$ y selecciona una acción $A_t \in \mathcal{A}(S_t)$. Como consecuencia de esa acción, el entorno emite una recompensa numérica $R_{t+1} \in \mathcal{R}$ y transita a un nuevo estado $S_{t+1}$ \cite{suttonRL}. Este ciclo se representa en la Figura \ref{fig:agent_env_interaction}.
+El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el Proceso de Decisión de Markov (\textit{Markov Decision Process}, MDP). En un MDP finito, el agente y el entorno interactúan en una secuencia de pasos temporales discretos $t = 0, 1, 2, \dots$. En cada instante $t$, el agente recibe una representación del estado del entorno $S_t \in \mathcal{S}$ y selecciona una acción $A_t \in \mathcal{A}(S_t)$. Como consecuencia de esa acción, el entorno emite una recompensa numérica $R_{t+1} \in \mathcal{R}$ y transita a un nuevo estado $S_{t+1}$ \cite{suttonRL,marlbook}. Este ciclo se representa en la Figura \ref{fig:agent_env_interaction}.
 
 \begin{figure}[H]
     \centering
@@ -560,7 +560,7 @@ donde $S_t \in \mathcal{S}$ representa el estado en el instante $t$, $A_t \in \m
 
 La propiedad de Markov establece que, dado el estado y la acción actuales, la distribución del próximo estado y recompensa no depende explícitamente de la historia completa de estados y acciones anteriores. En otras palabras, el estado debe contener toda la información relevante del pasado para predecir la evolución futura del proceso \cite{suttonRL}.
 
-Una suposición habitual del MDP es que el agente observa un estado suficientemente informativo del entorno. Sin embargo, en muchas aplicaciones reales el agente solo recibe observaciones parciales o ruidosas. En estos casos, el marco se generaliza a un Proceso de Decisión de Markov Parcialmente Observable (POMDP), donde el historial de observaciones puede ser necesario para inferir el estado subyacente \cite{marlbook}.
+Una suposición habitual del MDP es que el agente observa un estado suficientemente informativo del entorno. Sin embargo, en muchas aplicaciones reales el agente solo recibe observaciones parciales o ruidosas. En estos casos, el marco se generaliza a un Proceso de Decisión de Markov Parcialmente Observable (\textit{Partially Observable Markov Decision Process}, POMDP), donde el historial de observaciones puede ser necesario para inferir el estado subyacente \cite{marlbook}.
 
 Para formalizar la meta de maximizar la recompensa a largo plazo se define el retorno descontado $G_t$, que incorpora un factor $\gamma \in [0,1)$ para ponderar la importancia de las recompensas futuras \cite{suttonRL}:
 \begin{equation}
@@ -592,7 +592,61 @@ Por el contrario, los \textit{métodos basados en política} parametrizan direct
 \begin{equation}
 \theta_{t+1} = \theta_t + \alpha \nabla J(\theta_t)
 \end{equation}
-donde $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento respecto a los parámetros de la política. El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporciona la base teórica para estimar este gradiente sin derivar explícitamente la distribución de estados inducida por la política \cite{suttonRL}. En la práctica, muchos algoritmos modernos combinan ambas ideas mediante arquitecturas actor-crítico: un actor representa la política y un crítico estima valores para guiar sus actualizaciones.
+donde $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento respecto a los parámetros de la política. El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporciona la base teórica para estimar este gradiente sin derivar explícitamente la distribución de estados inducida por la política \cite{suttonRL}.
+
+Los métodos actor-crítico combinan una política parametrizada con una estimación de valor y actualizan ambos componentes de manera concurrente \cite{konda2003actorcritic,suttonRL}. El \textbf{actor} representa la política $\pi_\theta(a\mid s)$ y determina la distribución utilizada para seleccionar la acción. El \textbf{crítico} no controla el entorno: estima, por ejemplo, el valor de estado $V_\phi(s)$ y produce una señal que indica si el resultado observado fue mejor o peor que lo esperado bajo la política vigente. Los parámetros $\theta$ y $\phi$ pueden pertenecer a redes separadas o a una arquitectura con capas compartidas y cabezales distintos.
+
+En una formulación actor-crítico de un paso, después de ejecutar $A_t$ en $S_t$, el entorno devuelve la recompensa $R_{t+1}$, el estado $S_{t+1}$ y el indicador terminal $d_{t+1}$. El crítico calcula el error de diferencia temporal
+\begin{equation}
+    \delta_t = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t),
+    \label{eq:actor_critic_td}
+\end{equation}
+donde el factor $(1-d_{t+1})$ elimina el valor del estado siguiente cuando finaliza el episodio. Si $V_\phi$ aproxima correctamente a $V^\pi$, $\delta_t$ constituye una estimación de un paso de la ventaja de la acción ejecutada. Por ello, un valor positivo indica un resultado superior al esperado para ese estado y uno negativo indica lo contrario. El crítico ajusta $\phi$ para reducir el error entre $V_\phi(S_t)$ y el objetivo temporal $R_{t+1}+\gamma(1-d_{t+1})V_\phi(S_{t+1})$, mientras que el actor utiliza la misma señal para reforzar o desalentar la acción observada:
+\begin{equation}
+    \theta \leftarrow \theta + \alpha_\theta\,\delta_t\,
+    \nabla_\theta \log \pi_\theta(A_t\mid S_t).
+    \label{eq:actor_critic_update}
+\end{equation}
+Esta forma canónica permite explicar el intercambio de información entre ambos componentes, aunque los algoritmos modernos suelen sustituir $\delta_t$ por estimadores de ventaja que combinan varios pasos, como GAE, y realizan las actualizaciones sobre mini-lotes.
+
+La Figura \ref{fig:actor_critic} resume este circuito para el control semafórico. La observación del tránsito alimenta al actor y al crítico; el actor selecciona una fase, el entorno simulado produce la siguiente observación y la recompensa, y el crítico transforma esa transición en una señal de evaluación. Esta señal guía el aprendizaje, pero no se utiliza como una orden directa sobre el entorno.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.96\textwidth}{!}{%
+    \begin{tikzpicture}[
+        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=1.0cm, font=\small},
+        dato/.style={bloque, fill=colDatoPrimario!16, draw=colDatoPrimario!80!black, text width=2.5cm},
+        actor/.style={bloque, fill=colAgente!22, draw=colAgente!80!black, text width=3.0cm},
+        critico/.style={bloque, fill=catMelocoton!45, draw=catMelocoton!80!black, text width=3.0cm},
+        entorno/.style={bloque, fill=colEntorno!22, draw=colEntorno!80!black, text width=3.0cm},
+        senal/.style={bloque, fill=colInterfaz!25, draw=colInterfaz!80!black, text width=3.2cm},
+        flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
+        retorno/.style={flecha, dashed, draw=black!65},
+        etiqueta/.style={font=\scriptsize, fill=white, inner sep=1.5pt, align=center}
+    ]
+        \node[dato] (obs) at (-5.7,0) {Observación de tránsito\\$S_t$};
+        \node[actor] (actor) at (-1.7,1.55) {\textbf{Actor}\\política $\pi_\theta(a\mid S_t)$};
+        \node[critico] (critic) at (-1.7,-1.55) {\textbf{Crítico}\\valor $V_\phi(S_t)$};
+        \node[entorno] (env) at (4.1,1.55) {\textbf{Entorno}\\red vial en SUMO};
+        \node[senal] (td) at (4.1,-1.55) {Error TD / ventaja\\$\delta_t$ o $\hat A_t$};
+
+        \draw[flecha] (obs) |- (actor.west);
+        \draw[flecha] (obs) |- (critic.west);
+        \draw[flecha] (actor) -- node[etiqueta, above] {acción: fase $A_t$} (env);
+        \draw[flecha] (env.south) -- node[etiqueta, right=2pt] {$R_{t+1},S_{t+1},d_{t+1}$} (td.north);
+        \draw[flecha] (critic) -- node[etiqueta, above] {$V_\phi(S_t)$} (td);
+        \draw[retorno] (td.north west) to[out=145,in=-35]
+            node[etiqueta, pos=0.52, above left=1pt] {actualiza $\theta$} (actor.south east);
+        \draw[retorno] (td.south) -- ++(0,-0.65) -|
+            node[etiqueta, pos=0.75, below] {actualiza $\phi$} (critic.south);
+        \draw[retorno] (env.north) -- ++(0,0.85) -|
+            node[etiqueta, pos=0.25, above] {nueva observación} (obs.north);
+    \end{tikzpicture}%
+    }
+    \caption{Arquitectura actor-crítico aplicada al control semafórico. El actor selecciona una acción y el crítico evalúa la transición para construir la señal que actualiza ambos componentes. Elaboración propia a partir de \cite{konda2003actorcritic,suttonRL}.}
+    \label{fig:actor_critic}
+\end{figure}
 
 \begin{figure}[H]
     \centering
@@ -618,37 +672,149 @@ donde $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento
     \label{fig:rl_taxonomy}
 \end{figure}
 
+La Figura \ref{fig:rl_taxonomy} ubica los algoritmos evaluados dentro de las familias de métodos libres de modelo basados en valor y basados en política.
+
 \subsection{Aprendizaje Profundo y Redes Neuronales}
+
+El aprendizaje profundo (\textit{Deep Learning}) es un subcampo del aprendizaje automático centrado en el entrenamiento de redes neuronales con múltiples capas de parámetros ajustables. Estas arquitecturas permiten aprender representaciones jerárquicas y no lineales a partir de los datos, en lugar de depender exclusivamente de características fijadas de antemano \cite{bishop2024deep,goodfellow2016deep}. En este trabajo, esta capacidad se utiliza para aproximar funciones de valor y políticas de control cuando una representación tabular no resulta adecuada.
 
 \subsubsection{La Unidad Neuronal y Redes \textit{Feedforward}}
 
-En problemas de control complejos, los métodos tabulares se vuelven impracticables debido a las restricciones de memoria y cómputo que impone la maldición de la dimensionalidad \cite{suttonRL}. La aproximación de funciones soluciona esta limitación al representar funciones mediante una forma parametrizada, permitiendo que el aprendizaje en un estado se generalice a otros estados con características similares. El aprendizaje profundo (\textit{Deep Learning}) emplea redes neuronales artificiales como aproximadores de funciones continuas y no lineales \cite{marlbook}.
+En problemas de control complejos, los métodos tabulares se vuelven impracticables debido a las restricciones de memoria y cómputo asociadas con espacios de estados grandes o continuos \cite{suttonRL}. La aproximación de funciones aborda esta limitación mediante una representación parametrizada, de modo que la información aprendida en una situación pueda generalizarse a otras situaciones con características similares. Las redes neuronales constituyen una familia de aproximadores de funciones que puede utilizarse para este propósito \cite{bishop2024deep}.
 
-El componente básico de estas arquitecturas es la unidad neuronal individual. Computacionalmente, una neurona en una capa $k$ ejecuta dos operaciones secuenciales sobre el vector de características de entrada $\mathbf{x}$. Primero, calcula una combinación lineal utilizando un vector de pesos $\mathbf{w}$ y un sesgo (\textit{bias}) escalar $b$. Luego, el resultado se somete a una función de activación no lineal $g_k$:
-\begin{equation}
-    f_{k,u}(\mathbf{x}; \theta_k^u) = g_k(\mathbf{w}^\top \mathbf{x} + b)
-\end{equation}
-donde $\mathbf{x} \in \mathbb{R}^d$ es el vector de entrada, $\mathbf{w} \in \mathbb{R}^d$ representa los pesos asociativos, $b \in \mathbb{R}$ es el sesgo, y $g_k$ es una función de activación no lineal apta para la optimización mediante gradientes. La inclusión de una función no lineal es necesaria; componer múltiples capas lineales resultaría en una transformación lineal, limitando la capacidad de representación de la red \cite{marlbook}. Entre las opciones comunes destacan ReLU (Unidad Lineal Rectificada, $g(z) = \max(0, z)$), que es no diferenciable en cero pero admite subgradientes, \textit{leaky} ReLU ($g(z) = \max(\alpha z, z)$ con $\alpha \ll 1$) y Tanh (tangente hiperbólica, con salidas en $[-1, 1]$).
+El componente básico de una red neuronal es la unidad neuronal individual. Dada una entrada $\mathbf{x}$, la unidad asigna un peso a cada componente de esa entrada, suma un sesgo y transforma el resultado mediante una función de activación. La suma ponderada más el sesgo se denomina preactivación, mientras que la salida de la función de activación constituye la respuesta de la unidad \cite{goodfellow2016deep}.
 
-Las redes neuronales de propagación hacia adelante (\textit{feedforward} o perceptrones multicapa) estructuran estas unidades en secuencias de múltiples capas: una capa de entrada, capas intermedias u ocultas, y una capa de salida. La computación de una capa entera se puede vectorizar:
 \begin{equation}
-    \mathbf{h}_k = g_k(\mathbf{W}_k^\top \mathbf{x}_{k-1} + \mathbf{b}_k)
+    a_{k,u} = \mathbf{w}_{k,u}^{\top}\mathbf{x}_{k-1} + b_{k,u},
+    \qquad
+    h_{k,u} = g_k(a_{k,u})
+    \label{eq:neurona_artificial}
 \end{equation}
-donde $\mathbf{W}_k$ es la matriz de pesos de la capa $k$, $\mathbf{x}_{k-1}$ es la salida activada de la capa previa y $\mathbf{b}_k$ es el vector de sesgos. El Teorema de Aproximación Universal establece que una red con una única capa oculta suficientemente ancha puede aproximar cualquier función continua en un dominio compacto. Esto no implica que una red ancha sea equivalente, en términos de entrenamiento o generalización, a una red profunda; bajo presupuestos comparables de parámetros, una mayor profundidad puede facilitar la representación jerárquica de funciones complejas \cite{marlbook}.
+
+En la ecuación \ref{eq:neurona_artificial}, $\mathbf{x}_{k-1}$ es el vector de entrada a la capa $k$, $\mathbf{w}_{k,u}$ contiene los pesos asociados con la unidad $u$, $b_{k,u}$ es el sesgo y $g_k$ es la función de activación. La función de activación introduce la no linealidad necesaria: la composición de transformaciones exclusivamente lineales podría reducirse a una única transformación lineal, aun cuando se utilizaran varias capas \cite{goodfellow2016deep}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        >=Latex,
+        node distance=1.35cm and 1.4cm,
+        unit/.style={draw=colDatoPrimario!80!black, fill=colDatoPrimario!15, rounded corners, minimum width=1.5cm, minimum height=0.75cm, align=center},
+        operation/.style={draw=colAgente!80!black, fill=colAgente!15, rounded corners, minimum width=2.1cm, minimum height=0.85cm, align=center},
+        output/.style={draw=colInterfaz!80!black, fill=colInterfaz!25, rounded corners, minimum width=1.8cm, minimum height=0.75cm, align=center}
+    ]
+        \node[unit] (x1) {$x_1$};
+        \node[unit, below=0.25cm of x1] (x2) {$x_2$};
+        \node[unit, below=0.25cm of x2] (xd) {$\vdots$};
+        \node[unit, below=0.25cm of xd] (xdn) {$x_d$};
+        \node[operation, right=of xd] (affine) {$a=\mathbf{w}^{\top}\mathbf{x}+b$};
+        \node[operation, right=of affine] (activation) {$h=g(a)$};
+        \node[output, right=of activation] (out) {salida};
+
+        \draw[->] (x1.east) -- (affine.west);
+        \draw[->] (x2.east) -- (affine.west);
+        \draw[->] (xd.east) -- (affine.west);
+        \draw[->] (xdn.east) -- (affine.west);
+        \draw[->] (affine) -- (activation);
+        \draw[->] (activation) -- (out);
+        \node[above=0.12cm of affine, font=\small] {pesos y sesgo};
+    \end{tikzpicture}
+    \caption{Operaciones de una unidad neuronal artificial: combinación afín de las entradas y aplicación de una función de activación.}
+    \label{fig:neurona_artificial}
+\end{figure}
+
+Las funciones de activación más habituales en las capas ocultas consideradas aquí son \cite{goodfellow2016deep}:
+\begin{itemize}
+    \item \textbf{ReLU:} $g(z)=\max\{0,z\}$. Es sencilla de optimizar y conserva una derivada no nula en la región activa, aunque no es diferenciable exactamente en $z=0$; en la práctica se utiliza una derivada lateral o subgradiente.
+    \item \textbf{\textit{Leaky} ReLU:} $g(z)=\max\{0,z\}+\alpha\min\{0,z\}$, donde $\alpha$ es un valor pequeño y positivo. La pendiente en la región negativa permite que la unidad reciba gradiente aun cuando su activación sea negativa.
+    \item \textbf{Tanh:} $g(z)=\tanh(z)$, con valores de salida en $[-1,1]$. Es simétrica respecto del origen, pero puede saturarse para valores extremos y dificultar el aprendizaje basado en gradientes.
+\end{itemize}
+
+Las redes \textit{feedforward} organizan sus unidades en capas acíclicas. Cada capa recibe la salida de la anterior, aplica una transformación afín y, salvo cuando la tarea requiere una salida lineal, una función de activación. Para una red con $L$ capas parametrizadas, esta operación puede escribirse como:
+\begin{equation}
+    \mathbf{x}_k = g_k\!\left(\mathbf{W}_k^{\top}\mathbf{x}_{k-1}+\mathbf{b}_k\right),
+    \qquad k=1,\ldots,L,
+    \qquad \mathbf{x}_0=\mathbf{x}
+    \label{eq:red_feedforward}
+\end{equation}
+Aquí, $\mathbf{W}_k$ y $\mathbf{b}_k$ son los parámetros de la capa $k$, $\mathbf{x}_{k-1}$ es la salida de la capa anterior y $g_k$ se aplica componente a componente. La arquitectura suele describirse mediante una capa de entrada, una o más capas ocultas y una capa de salida, aunque el número de capas se cuenta de acuerdo con la convención adoptada para los parámetros entrenables \cite{bishop2024deep,goodfellow2016deep}. La ecuación \ref{eq:red_feedforward} resume la composición de funciones que permite construir una red profunda.
+
+La Figura \ref{fig:red_feedforward} representa esta organización para una red con dos capas ocultas. Las flechas avanzan únicamente hacia la derecha: cada unidad de una capa recibe las salidas de la capa anterior y las transforma mediante los parámetros de esa capa, sin conexiones recurrentes.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.94\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >=Stealth,
+        neurona/.style={circle, draw=colDatoPrimario!80!black, fill=colDatoPrimario!15, thick, minimum size=0.62cm, inner sep=0pt},
+        oculta/.style={circle, draw=colAgente!80!black, fill=colAgente!15, thick, minimum size=0.62cm, inner sep=0pt},
+        salida/.style={circle, draw=colInterfaz!80!black, fill=colInterfaz!25, thick, minimum size=0.62cm, inner sep=0pt},
+        conexion/.style={-{Stealth[length=4pt]}, draw=black!65, thin},
+        titulo/.style={font=\small\bfseries},
+        anotacion/.style={font=\scriptsize, align=center}
+    ]
+        % Layout: four aligned columns with left-to-right acyclic flow.
+        \node[titulo] at (0,2.35) {Entrada};
+        \node[titulo] at (3.1,2.35) {Capa oculta 1};
+        \node[titulo] at (6.2,2.35) {Capa oculta 2};
+        \node[titulo] at (9.3,2.35) {Salida};
+
+        \node[neurona] (i1) at (0,1.25) {$x_1$};
+        \node[neurona] (i2) at (0,0) {$x_2$};
+        \node[neurona] (id) at (0,-1.25) {$\vdots$};
+
+        \node[oculta] (h11) at (3.1,1.8) {$x_{1,1}$};
+        \node[oculta] (h12) at (3.1,0.6) {$x_{1,2}$};
+        \node[oculta] (h13) at (3.1,-0.6) {$\vdots$};
+        \node[oculta] (h14) at (3.1,-1.8) {$x_{1,m}$};
+
+        \node[oculta] (h21) at (6.2,1.8) {$x_{2,1}$};
+        \node[oculta] (h22) at (6.2,0.6) {$x_{2,2}$};
+        \node[oculta] (h23) at (6.2,-0.6) {$\vdots$};
+        \node[oculta] (h24) at (6.2,-1.8) {$x_{2,q}$};
+
+        \node[salida] (o1) at (9.3,0.65) {$x_{L,1}$};
+        \node[salida] (o2) at (9.3,-0.65) {$x_{L,r}$};
+
+        \foreach \source in {i1,i2,id}
+            \foreach \target in {h11,h12,h13,h14}
+                \draw[conexion] (\source) -- (\target);
+        \foreach \source in {h11,h12,h13,h14}
+            \foreach \target in {h21,h22,h23,h24}
+                \draw[conexion] (\source) -- (\target);
+        \foreach \source in {h21,h22,h23,h24}
+            \foreach \target in {o1,o2}
+                \draw[conexion] (\source) -- (\target);
+
+        \node[anotacion] at (3.1,-2.55) {$\mathbf{x}_1=g_1(\cdot)$};
+        \node[anotacion] at (6.2,-2.55) {$\mathbf{x}_2=g_2(\cdot)$};
+        \node[anotacion] at (9.3,-2.55) {$\mathbf{x}_L=g_L(\cdot)$};
+    \end{tikzpicture}%
+    }
+    \caption{Arquitectura conceptual de una red neuronal \textit{feedforward}. Cada columna representa una capa y las conexiones se dirigen desde la entrada hacia la salida; las expresiones inferiores indican la transformación afín seguida de la activación en cada capa.}
+    \label{fig:red_feedforward}
+\end{figure}
+
+El Teorema de Aproximación Universal es un resultado de existencia: bajo condiciones apropiadas, una red de dos capas parametrizadas, con una capa oculta suficientemente ancha, puede aproximar una función continua sobre un dominio compacto con una precisión arbitraria. El teorema no proporciona por sí mismo un procedimiento para encontrar los parámetros, no garantiza un entrenamiento eficiente y tampoco implica una buena generalización sobre datos no observados. La profundidad puede ofrecer representaciones jerárquicas y una mayor eficiencia representacional para ciertas familias de funciones, pero no garantiza por sí sola un menor error de prueba \cite{bishop2024deep}.
 
 \subsubsection{El Proceso de Optimización}
 
-Dado que las redes neuronales carecen de una solución de forma cerrada, sus parámetros $\theta$ se ajustan utilizando métodos de optimización iterativa. El proceso se fundamenta en tres componentes técnicos \cite{marlbook}:
+Dado un conjunto de datos y una función de pérdida diferenciable $\mathcal{L}(\theta)$, los parámetros $\theta$ se ajustan mediante un procedimiento de optimización iterativa. En términos generales, el descenso de gradiente actualiza los parámetros según:
+\begin{equation}
+    \theta_{t+1}=\theta_t-\eta\nabla_{\theta}\mathcal{L}(\theta_t),
+    \label{eq:descenso_gradiente}
+\end{equation}
+donde $\eta$ es la tasa de aprendizaje. En la práctica, el gradiente puede calcularse sobre todo el conjunto de entrenamiento, sobre una observación individual o sobre un mini-lote; el tamaño del mini-lote modifica el costo computacional y la variabilidad de la estimación, pero no constituye un equilibrio óptimo garantizado \cite{bishop2024deep}.
 
 \begin{itemize}
-    \item \textbf{Función de Pérdida (\textit{Loss Function}):} Un objetivo matemático diferenciable $\mathcal{L}(\theta)$ que cuantifica la discrepancia entre las predicciones de la red y los valores objetivo. Frecuentemente se emplea el Error Cuadrático Medio (MSE).
-    \item \textbf{Descenso de Gradiente:} El optimizador actualiza los parámetros moviéndose en la dirección del gradiente negativo $-\nabla_\theta \mathcal{L}(\theta)$, ponderado por una tasa de aprendizaje $\alpha$. En la práctica se utiliza el Descenso de Gradiente por Mini-lotes (\textit{Mini-batch Gradient Descent}), que muestrea un subconjunto aleatorio de datos para ofrecer un equilibrio óptimo entre la estabilidad del gradiente y el costo computacional. Optimizadores modernos como Adam adaptan dinámicamente las tasas de aprendizaje para acelerar la convergencia.
-    \item \textbf{Retropropagación (\textit{Backpropagation}):} Para que el descenso de gradiente sea posible en arquitecturas profundas, es necesario computar las derivadas parciales de la función de pérdida respecto a cada parámetro. El algoritmo de \textit{backpropagation} logra esto aplicando eficientemente la regla de la cadena de derivadas, propagando los gradientes desde la capa de salida hacia las capas de entrada.
+    \item \textbf{Función de pérdida (\textit{loss function}):} cuantifica la discrepancia entre las predicciones de la red y los valores objetivo. Puede adoptar formas distintas según la tarea; por ejemplo, el error cuadrático medio en regresión o la entropía cruzada en clasificación. En DQN, la pérdida se formula a partir del error de diferencia temporal presentado más adelante.
+    \item \textbf{Descenso por mini-lotes:} utiliza un subconjunto de datos para estimar el gradiente en cada actualización. El barajado de las observaciones puede reducir correlaciones debidas al orden de los datos, pero el procedimiento no garantiza por sí mismo estabilidad ni convergencia.
+    \item \textbf{Adam:} adapta la tasa de aprendizaje de cada parámetro utilizando promedios móviles del gradiente y de su magnitud al cuadrado. Su eficacia es principalmente empírica y depende de la función de pérdida, los datos y la configuración del entrenamiento; no constituye una garantía general de convergencia \cite{bishop2024deep}.
+    \item \textbf{Retropropagación (\textit{backpropagation}):} calcula eficientemente las derivadas parciales de la pérdida respecto de los pesos y sesgos mediante la regla de la cadena. No es el optimizador: proporciona los gradientes que luego utilizan el descenso de gradiente, Adam u otros métodos de actualización \cite{bishop2024deep}.
 \end{itemize}
 
 \subsection{Aprendizaje por Refuerzo Profundo (DRL)}
 
-El Aprendizaje por Refuerzo Profundo (DRL) combina los algoritmos de RL con la capacidad de generalización del aprendizaje profundo. Esta integración es fundamental cuando los espacios de estado son continuos o de alta dimensionalidad, donde es estadísticamente improbable que un agente visite el mismo estado múltiples veces. Sin embargo, el DRL exige aproximadores robustos capaces de procesar flujos de datos correlacionados temporalmente y de rastrear objetivos no estacionarios \cite{marlbook}.
+El Aprendizaje por Refuerzo Profundo (DRL) combina los algoritmos de RL con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
 
 \subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
 
@@ -673,13 +839,63 @@ La inestabilidad descrita por la Tríada Mortal se manifiesta en DQN como el ``p
     \item \textbf{Búferes de Repetición (\textit{Replay Buffers}):} Se almacenan las transiciones históricas del agente $(s, a, r, s')$. El entrenamiento se realiza extrayendo mini-lotes aleatorios de esta memoria, lo cual reduce la correlación temporal intrínseca de las trayectorias y aproxima el entrenamiento a la hipótesis de muestras independientes. Este mecanismo no constituye, por sí mismo, una garantía de convergencia con aproximadores no lineales.
 \end{itemize}
 
-La función de pérdida minimizada por DQN es:
-\begin{equation}
-\mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_j, s_{j+1}) \sim \mathcal{D}} \left[ \left( \underbrace{r_j + \gamma \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor Objetivo de TD}} - \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción Actual}} \right)^2 \right]
-\end{equation}
-donde $\mathcal{D}$ es el búfer de repetición de experiencias, $(s_j, a_j, r_j, s_{j+1})$ representa una transición muestreada, $\theta$ indica los parámetros de la red $Q$ actual y $\theta^-$ representa los parámetros congelados de la red objetivo.
+La Figura \ref{fig:arquitectura_dqn} distingue el circuito de interacción del circuito de entrenamiento. Durante la interacción, la red en línea transforma el estado del tránsito en un valor para cada fase disponible y una regla $\epsilon$-greedy selecciona la acción. La transición resultante se almacena en el búfer. Durante el entrenamiento, un mini-lote alimenta tanto la predicción de la red en línea como el cálculo del objetivo mediante la red objetivo; solo los parámetros $\theta$ se modifican en cada paso, mientras que $\theta^-$ se reemplaza periódicamente por una copia de $\theta$.
 
-El procedimiento conceptual de DQN combina la recolección de transiciones, la selección de acciones mediante una política $\epsilon$-greedy y la actualización de la red a partir de mini-lotes extraídos del búfer de experiencias. La siguiente descripción resume el algoritmo sin imponer decisiones particulares de implementación:
+\begin{figure}[H]
+    \centering
+    \resizebox{0.98\textwidth}{!}{%
+    \begin{tikzpicture}[
+        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.9cm, font=\small},
+        dato/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.0cm},
+        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.5cm},
+        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.4cm},
+        memoria/.style={bloque, fill=catMelocoton!40, draw=catMelocoton!80!black, text width=2.7cm},
+        entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.4cm},
+        flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
+        copia/.style={flecha, dashed, draw=black!60},
+        etiqueta/.style={font=\scriptsize, fill=white, inner sep=1.5pt, align=center}
+    ]
+        \node[dato] (state) at (-7.0,2.2) {Estado\\$S_t$};
+        \node[red] (online) at (-3.8,2.2) {Red en línea\\$Q(S_t,a;\theta)$};
+        \node[salida] (values) at (-0.35,2.2) {Valores de fase\\$Q_1,\ldots,Q_m$};
+        \node[salida] (select) at (3.1,2.2) {Selección\\$\epsilon$-greedy};
+        \node[entorno] (env) at (6.4,2.2) {SUMO\\ejecuta $A_t$};
+
+        \node[memoria] (buffer) at (5.3,-1.55) {Búfer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1})$};
+        \node[red] (target) at (0.45,-1.55) {Red objetivo\\$\hat Q(S_{t+1},a;\theta^-)$};
+        \node[salida] (loss) at (-4.15,-1.55) {Pérdida TD\\$(y-Q_t)^2$};
+
+        \draw[flecha] (state) -- (online);
+        \draw[flecha] (online) -- (values);
+        \draw[flecha] (values) -- (select);
+        \draw[flecha] (select) -- node[etiqueta, above] {$A_t$} (env);
+        \draw[flecha] (env.south) -- node[etiqueta, right=2pt] {transición} ++(0,-1.15) -| (buffer.north);
+        \draw[flecha] (buffer) -- node[etiqueta, above] {mini-lote} (target);
+        \draw[flecha] (target) -- node[etiqueta, above] {objetivo $y$} (loss);
+        \draw[flecha] (buffer.south) -- ++(0,-0.75) -|
+            node[etiqueta, pos=0.72, below] {$S_t,A_t$} (loss.south);
+        \draw[copia] (loss.north) -- ++(0,0.75) -|
+            node[etiqueta, pos=0.72, left] {actualiza $\theta$} (online.south west);
+        \draw[copia] (online.south east) -- ++(0,-0.75) -|
+            node[etiqueta, pos=0.28, below] {copia periódica} (target.north);
+    \end{tikzpicture}%
+    }
+    \caption{Flujo conceptual de DQN con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit{bootstrapping} del blanco TD. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite{mnih2015}.}
+    \label{fig:arquitectura_dqn}
+\end{figure}
+
+La función de pérdida minimizada por DQN, representada en el bloque inferior de la Figura \ref{fig:arquitectura_dqn}, es:
+\begin{equation}
+\mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1}) \sim \mathcal{D}}
+\left[\left(\begin{aligned}
+&\underbrace{r_{j+1} + \gamma(1-d_{j+1}) \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor objetivo de TD}} \\
+&- \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción actual}}
+\end{aligned}\right)^2\right]
+\label{eq:perdida_dqn}
+\end{equation}
+donde $\mathcal{D}$ es el búfer de repetición de experiencias, $(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1})$ representa una transición muestreada, $d_{j+1}$ vale uno cuando la transición es terminal y cero en caso contrario, $\theta$ indica los parámetros de la red $Q$ actual y $\theta^-$ representa los parámetros congelados de la red objetivo.
+
+El procedimiento conceptual de DQN combina la recolección de transiciones, la selección de acciones mediante una política $\epsilon$-greedy y la actualización de la red a partir de mini-lotes extraídos del búfer de experiencias. El Algoritmo \ref{alg:dqn} resume este ciclo sin imponer decisiones particulares de implementación:
 
 \begin{algorithm}[H]
 \caption{Deep Q-Network con repetición de experiencias}
@@ -707,25 +923,64 @@ En esta expresión, $d_{j+1}$ es un indicador que toma el valor uno cuando la tr
 
 \subsubsection{Aproximación de Políticas, Función de Ventaja y \textit{Policy Gradient}}
 
-Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en DQN), DRL permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}.
+Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en DQN), DRL permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. En un problema de acciones discretas, la red recibe el estado u observación, calcula un puntaje para cada acción y transforma esos puntajes en una distribución de probabilidad, habitualmente mediante una función \textit{softmax}. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
+
+La Figura \ref{fig:red_politica} muestra este recorrido para un controlador semafórico. A diferencia de DQN, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la fase; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente de la log-probabilidad de la acción observada.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        node distance=0.9cm and 1.05cm,
+        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.95cm, font=\small},
+        entrada/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.3cm},
+        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.5cm},
+        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.6cm},
+        accion/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.2cm},
+        ventaja/.style={bloque, fill=catMelocoton!42, draw=catMelocoton!80!black, text width=3.2cm},
+        flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
+        aprendizaje/.style={flecha, dashed, draw=black!65},
+        etiqueta/.style={font=\scriptsize, fill=white, inner sep=1.5pt, align=center}
+    ]
+        \node[entrada] (state) {Observación\\$S_t$};
+        \node[red, right=of state] (hidden) {Red neuronal\\parámetros $\theta$};
+        \node[salida, right=of hidden] (logits) {Puntajes\\$z_1,\ldots,z_m$};
+        \node[salida, right=of logits] (probs) {\textit{Softmax}\\$\pi_\theta(a\mid S_t)$};
+        \node[accion, right=of probs] (action) {Muestreo\\fase $A_t$};
+        \node[ventaja, below=1.3cm of probs] (adv) {Señal de aprendizaje\\ventaja estimada $\hat A_t$};
+
+        \draw[flecha] (state) -- (hidden);
+        \draw[flecha] (hidden) -- (logits);
+        \draw[flecha] (logits) -- (probs);
+        \draw[flecha] (probs) -- (action);
+        \draw[aprendizaje] (action.south) |- node[etiqueta, near start, right] {$\log\pi_\theta(A_t\mid S_t)$} (adv.east);
+        \draw[aprendizaje] (adv.west) -| node[etiqueta, near end, left] {actualiza $\theta$} (hidden.south);
+    \end{tikzpicture}%
+    }
+    \caption{Red de política para un espacio discreto de fases. La observación determina una distribución de acciones; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
+    \label{fig:red_politica}
+\end{figure}
 
 Para cuantificar el desempeño marginal de una acción tomada en un estado específico respecto a la expectativa promedio de la política, se define la \textbf{Función de Ventaja} (\textit{Advantage Function}) $A^\pi(s, a)$ \cite{suttonRL}:
 \begin{equation}
     A^\pi(s, a) \doteq Q^\pi(s, a) - V^\pi(s)
+    \label{eq:funcion_ventaja}
 \end{equation}
 donde $Q^\pi(s, a)$ representa el retorno esperado al tomar la acción $a$ en el estado $s$ bajo la política $\pi$, y $V^\pi(s)$ es el valor promedio de estado. Conceptualmente, la ventaja mide cuánto mejor ($A^\pi(s, a) > 0$) o peor ($A^\pi(s, a) < 0$) resulta la acción $a$ en comparación con el desempeño medio del agente en el estado $s$.
 
 En arquitecturas actor-crítico, la ventaja se estima habitualmente mediante la Estimación Generalizada de la Ventaja (\textit{Generalized Advantage Estimation}, GAE) desarrollada por Schulman et al. \cite{schulman2015high}:
 \begin{equation}
     \hat{A}_t^{\text{GAE}(\gamma, \lambda)} \doteq \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}^V
+    \label{eq:gae}
 \end{equation}
-donde $\delta_t^V = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$ representa el error de diferencia temporal (TD) estimado por la red del crítico $V$, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado GAE que equilibra el sesgo y la varianza del estimador.
+donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V(S_{t+1}) - V(S_t)$ representa el error de diferencia temporal (TD) estimado por la red del crítico $V$, $d_{t+1}$ indica si la transición es terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado GAE que equilibra el sesgo y la varianza del estimador.
 
-En lugar de minimizar un error cuadrático de predicción, la optimización paramétrica del actor se rige por el Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}), que establece la actualización de los parámetros $\theta$ ascendiendo por el gradiente del rendimiento esperado \cite{suttonRL}:
+En lugar de minimizar un error cuadrático de predicción, la optimización paramétrica del actor se rige por el Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}), que establece la actualización de los parámetros $\theta$ ascendiendo por el gradiente del rendimiento esperado \cite{suttonRL}. El operador $\hat{\mathbb{E}}_t$ denota el promedio empírico sobre las transiciones del lote recolectado en los instantes $t$:
 \begin{equation}
     \nabla_\theta J(\theta) = \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(A_t \mid S_t) \hat{A}_t \right]
+    \label{eq:gradiente_politica}
 \end{equation}
-donde $\nabla_\theta J(\theta)$ representa el gradiente del desempeño esperado, $\pi_\theta(A_t \mid S_t)$ es la probabilidad otorgada a la acción ejecutada $A_t$ en el estado $S_t$, y $\hat{A}_t$ es la ventaja estimada. Esta formulación incrementa la probabilidad de elegir acciones con ventaja positiva ($\hat{A}_t > 0$) y reduce la probabilidad de aquellas con ventaja negativa.
+donde $\nabla_\theta J(\theta)$ representa el gradiente del desempeño esperado, $\pi_\theta(A_t \mid S_t)$ es la probabilidad otorgada a la acción ejecutada $A_t$ en el estado $S_t$, y $\hat{A}_t$ es la ventaja estimada. Como ilustra la Figura \ref{fig:red_politica}, el término $\nabla_\theta\log\pi_\theta(A_t\mid S_t)$ indica cómo modificar los parámetros para cambiar la probabilidad de la acción observada, mientras que $\hat A_t$ determina el signo y la magnitud de esa modificación. Por lo tanto, la Ecuación \ref{eq:gradiente_politica} incrementa la probabilidad de elegir acciones con ventaja positiva y reduce la de aquellas con ventaja negativa.
 
 \subsubsection{\textit{Proximal Policy Optimization} (PPO) y control de las actualizaciones}
 
@@ -751,11 +1006,11 @@ En la práctica, el objetivo del actor de PPO se combina con una pérdida de val
 \begin{equation}
 J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - V_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
 \end{equation}
-donde $\phi$ representa los parámetros de la red del crítico $V_\phi$, $V_t^{\text{target}}$ son los retornos observados objetivo, $S[\pi_\theta]$ denota la entropía de la distribución de la política, y $c_1, c_2 > 0$ son coeficientes de ponderación escalar.
+donde $\phi$ representa los parámetros de la red del crítico $V_\phi$, $V_t^{\text{target}}$ es el retorno objetivo estimado para ajustar el crítico, $S[\pi_\theta]$ denota la entropía de la distribución de la política, $c_1$ pondera el error de valor y $c_2$ pondera el incentivo a conservar exploración, con $c_1, c_2 > 0$.
 
-PPO es un algoritmo predominantemente \textit{on-policy} que reutiliza de forma limitada el lote recolectado con la política vigente. En esta investigación constituye la base conceptual de IPPO, MAPPO y HAPPO; las diferencias entre estas variantes se explican en la sección multiagente.
+PPO es un algoritmo predominantemente \textit{on-policy} que reutiliza de forma limitada el lote recolectado con la política vigente. En esta investigación constituye la base conceptual de IPPO (\textit{Independent Proximal Policy Optimization}), MAPPO (\textit{Multi-Agent Proximal Policy Optimization}) y HAPPO (\textit{Heterogeneous-Agent Proximal Policy Optimization}); las diferencias entre estas variantes se explican en la sección multiagente \cite{yu2022surprising,kuba2021trust}.
 
-El siguiente pseudocódigo resume el ciclo conceptual de PPO. La recolección de trayectorias se realiza con la política vigente y el lote se reutiliza durante un número limitado de épocas; posteriormente se descarta para obtener nuevas muestras con la política actualizada:
+El Algoritmo \ref{alg:ppo} resume el ciclo conceptual de PPO. La recolección de trayectorias se realiza con la política vigente y el lote se reutiliza durante un número limitado de épocas; posteriormente se descarta para obtener nuevas muestras con la política actualizada:
 
 \begin{algorithm}[H]
 \caption{Proximal Policy Optimization (PPO)}
@@ -858,13 +1113,15 @@ donde $\Omega_i$ denota el conjunto de observaciones individuales del agente $i$
         \draw[flecha] (mix.east) -| (5.2, 0.55);
         \node[etiquetaSinFondo] at (5.2, 2.2) {acción\\conjunta $\mathbf{a}$};
     \end{tikzpicture}
-    \caption{Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf{a}$) que modifica el estado global del entorno de tráfico.}
+    \caption[Interacción agente-entorno en MARL cooperativo]{Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf{a}$) que modifica el estado global del entorno de tráfico.}
     \label{fig:marl_interaction}
 \end{figure}
 
+La Figura \ref{fig:marl_interaction} muestra cómo las acciones locales de los controladores se combinan antes de modificar el estado global de la red.
+
 \subsection{Desafíos Fundamentales en MARL}
 
-La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios multi-agente enfrenta obstáculos analíticos y computacionales significativos que no existen en el caso individual \cite{marlbook}. A medida que aumenta el número de agentes, el espacio de acciones conjunto $\boldsymbol{\mathcal{A}}$ crece de forma exponencial con el número de agentes ($|\boldsymbol{\mathcal{A}}| = \prod_{i=1}^n |\mathcal{A}_i|$), lo que se conoce como la maldición de la dimensionalidad multi-agente. Sin embargo, los desafíos teóricos más severos radican en la dinámica propia de la interacción:
+La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios multi-agente enfrenta obstáculos analíticos y computacionales significativos que no existen en el caso individual \cite{marlbook}. A medida que aumenta el número de agentes, el espacio de acciones conjunto $\boldsymbol{\mathcal{A}}$ crece de forma exponencial con el número de agentes ($|\boldsymbol{\mathcal{A}}| = \prod_{i=1}^n |\mathcal{A}_i|$), lo que introduce un crecimiento combinatorio del espacio de decisiones. Sin embargo, los desafíos teóricos más severos radican en la dinámica propia de la interacción:
 
 \begin{itemize}
     \item \textbf{No Estacionariedad:} Desde la perspectiva de un agente individual $i$, las políticas de los demás agentes actúan como parte de la dinámica de transición del entorno. Como todos los agentes aprenden y adaptan sus pesos neuronales de manera concurrente, la función de transición efectiva percibida localmente por el agente $i$:
@@ -884,7 +1141,7 @@ En el primero, los agentes se entrenan localmente utilizando métodos de agente 
 
 En la implementación empleada, esta separación se concreta mediante un crítico compartido que procesa las observaciones de los agentes durante el entrenamiento, mientras que cada actor conserva su observación local para seleccionar acciones durante la ejecución.
 
-\subsection{Aprendizaje por Refuerzo Profundo Multi-Agente (MADRL) y Algoritmos de Línea Base}
+\subsection{MADRL y líneas de base}
 
 La integración de los formalismos Dec-POMDP con la capacidad de aproximación generalizada del aprendizaje profundo ha dado origen al campo del \textit{Multi-Agent Deep Reinforcement Learning} (MADRL) \cite{maddpg}. Esta área agrupa los enfoques prevalentes para el control adaptativo de sistemas complejos a gran escala.
 
@@ -988,6 +1245,8 @@ A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostra
 \end{enumerate}
 
 
+El Algoritmo \ref{alg:mappo} resume la recolección de trayectorias, el cálculo centralizado de ventajas y la actualización de los actores locales y del crítico compartido.
+
 \begin{algorithm}[H]
 \caption{Algoritmo \textit{Multi-Agent Proximal Policy Optimization} (MAPPO)}
 \label{alg:mappo}
@@ -1011,7 +1270,7 @@ A pesar de su simplicidad conceptual, Yu et al. \cite{yu2022surprising} demostra
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Heterogeneous-Agent Proximal Policy Optimization (HAPPO)}\label{subsec:happo}
+\subsection{HAPPO}\label{subsec:happo}
 
 En sistemas de control complejos, los agentes pueden presentar asimetrías físicas y operacionales: diferencias en la configuración de actuadores, distintos espacios de acciones o demandas regionales contrapuestas. En entornos homogéneos, compartir parámetros puede mejorar la eficiencia de aprendizaje; en entornos heterogéneos, esa práctica puede limitar la especialización. Además, las actualizaciones independientes no poseen una garantía general de convergencia debido al aprendizaje simultáneo no coordinado \cite{kuba2021trust}.
 
@@ -1078,6 +1337,8 @@ En el procedimiento teórico, la actualización secuencial satisface:
 \end{equation}
 donde $J(\boldsymbol{\pi}_k)$ representa el rendimiento esperado de la política conjunta en el paso $k$. El resultado depende de las hipótesis del procedimiento analítico y no significa que HAPPO-clip elimine las oscilaciones ni que una ejecución finita con redes neuronales converja necesariamente a un equilibrio de Nash. En esta investigación, HAPPO se evalúa como una estrategia que busca mejorar la coordinación y la estabilidad frente a actualizaciones independientes.
 
+La Figura \ref{fig:happo_sequential} ilustra el orden secuencial de actualización que distingue a HAPPO de una actualización independiente simultánea. En ella, $M$ representa una señal de ventaja reponderada por los cambios de los agentes precedentes, no un cociente de probabilidad aislado.
+
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[
@@ -1108,15 +1369,17 @@ donde $J(\boldsymbol{\pi}_k)$ representa el rendimiento esperado de la política
         \draw[arr, dashed] (pi2k) -- (pi2new);
         \draw[arr, dashed] (pink) -- (pinnew);
 
-        % Condicionales secuenciales horizontales (Cociente de probabilidad M)
-        \draw[arr, colDatoPrimario, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!90!black] {Cociente de\\prob. $M_{i_2}$} (pi2new.west);
-        \draw[arr, colDatoPrimario, thick] (pi2new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!90!black] {Cociente de\\prob. $M_{i_n}$} (pinnew.west);
+        % Condicionales secuenciales horizontales (factor de ventaja M)
+        \draw[arr, colDatoPrimario, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!90!black] {Factor de ventaja\\$M_{i_2}$} (pi2new.west);
+        \draw[arr, colDatoPrimario, thick] (pi2new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!90!black] {Factor de ventaja\\$M_{i_n}$} (pinnew.west);
         
         \node[font=\Large, text=black!50] at (7.8, 1.25) {$\dots$};
     \end{tikzpicture}
-    \caption{Esquema de actualización secuencial de HAPPO. A diferencia de PPO Independiente, la actualización de cada agente está matemáticamente condicionada por el cociente de probabilidad compuesto $M_{i_m}$, que propaga los cambios efectuados por los agentes que lo precedieron en la secuencia.}
+    \caption{Esquema de actualización secuencial de HAPPO. A diferencia de PPO independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}
     \label{fig:happo_sequential}
 \end{figure}
+
+El Algoritmo \ref{alg:happo} resume la actualización secuencial de las políticas heterogéneas y la propagación recursiva del factor $M$.
 
 \begin{algorithm}[H]
 \caption{Algoritmo \textit{Heterogeneous-Agent Proximal Policy Optimization} (HAPPO)}

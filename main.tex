@@ -1,14 +1,20 @@
-\documentclass[11pt,a4paper]{report}
+\documentclass[12pt,a4paper,oneside]{book}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{afterpage}
-\usepackage{titlesec}
-\titleformat{\chapter}[display]{\vspace{-3cm}\normalfont\bfseries}{}{0pt}{\LARGE}
+\usepackage{graphicx}
+\usepackage{setspace}
+\onehalfspacing
+
+% McGill template chapter header style: Big and fat chapter enumeration
+\usepackage{fix-cm}
+\usepackage[table]{xcolor}
+\usepackage[bf,rm,medium,compact]{titlesec}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[display]{\filleft\Huge\bfseries}{\fontsize{100}{100}\selectfont\textcolor{gray75}\thechapter}{1ex}{}[]
+
 \usepackage[provide=*,spanish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{color}
-\usepackage[table]{xcolor}
-\usepackage{graphicx}
 \usepackage[export]{adjustbox}
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric}
@@ -16,7 +22,6 @@
 \pgfplotsset{compat=1.18}
 \usepackage{amssymb}
 \usepackage{url}
-\usepackage{xcolor}
 \usepackage{caption}
 \usepackage{float}
 \usepackage{listingsutf8}
@@ -50,33 +55,6 @@
 % --------------------------------------
 
 % --- Paleta Semántica por Dominio ---
-% Convenciones de uso (NO redefinir los colores, solo usar estos aliases):
-%
-% Dinámica de Tránsito:
-%   colVehiculo       -> vehículos en el simulador microscópico
-%   colConflicto      -> puntos de conflicto, corriente saturada / platoon
-%   colFlujoLibre     -> flujo libre, exponencial negativa, separaciones temporales
-%   colSeparacionEsp  -> líneas guía de separaciones espaciales (e, s)
-%   colSeparacionTmp  -> líneas guía de separaciones temporales (g, h)
-%
-% Señalización Semafórica:
-%   colSemaforoRojo    -> fase roja del semáforo
-%   colSemaforoAmarillo-> fase amarilla del semáforo
-%   colSemaforoVerde   -> fase verde del semáforo
-%
-% Arquitectura del Sistema (Metodología):
-%   colEntorno  -> simulador microscópico (SUMO)
-%   colInterfaz -> interfaz de control (TraCI)
-%   colAgente   -> política de control / agente DRL
-%
-% Series de Datos:
-%   colDatoPrimario -> serie principal de datos (p. ej. flota vehicular)
-%
-% Taxonomías y Diagramas Jerárquicos:
-%   colTaxonomiaNivelUno   -> categoría raíz o concepto general
-%   colTaxonomiaNivelDos   -> categorías intermedias
-%   colTaxonomiaNivelTres  -> subcategorías o ramas específicas
-
 \colorlet{colVehiculo}{catAzulCielo!80!black}
 \colorlet{colConflicto}{catRosaSalmon!80!black}
 \colorlet{colFlujoLibre}{catVerdeMenta!80!black}
@@ -133,13 +111,10 @@
     literate = {¬}{{$\neg$}}1
 }
 
-\DeclareCaptionFormat{listing}{#1#2#3}
-\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf},labelsep=space,labelfont=bf}
-
-%Paquete para compuestos químicos
+% Paquete para compuestos químicos
 \usepackage[version=4,arrows=pgf-filled,
 textfontname=sffamily,
-mathfontname=mathsf]{mhchem} %comando \ce{H2O} para escribir fórmulas químicas
+mathfontname=mathsf]{mhchem}
 
 \renewcommand{\lstlistingname}{Código}
 \renewcommand{\lstlistlistingname}{Índice de códigos}
@@ -180,12 +155,8 @@ mathfontname=mathsf]{mhchem} %comando \ce{H2O} para escribir fórmulas químicas
          {~}{{\textasciitilde}}1,
 }
 
-\usepackage{hyperref}
-\hypersetup{
-colorlinks,
-allcolors=black,
-linktoc=all
-}
+% Hyperlinks configuration (McGill template clean style)
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
 
 % comment commands
 \newcommand {\JM}[1]{{\color{blue} {\textbf{Juan Martín: #1}}}}
@@ -196,36 +167,59 @@ linktoc=all
 \loadglsentries{glosario.tex}
 \makeglossaries
 
+\title{Semáforos Inteligentes: Un enfoque con Aprendizaje por Refuerzo Multi Agente}
+\author{Juan Martín Morales}
+\date{\today}
+
 \begin{document}
 
+% TITLE PAGE (McGill style)
+\begin{onehalfspacing}
+\pagestyle{empty}
 \include{0-titulo}
-\afterpage{\null\thispagestyle{empty}\newpage}
+\cleardoublepage
+\end{onehalfspacing}
+
+% FRONTMATTER (Roman numbering)
+\pagenumbering{roman}
+\pagestyle{plain}
+
 \include{1-resumen}
+\cleardoublepage
+
 \include{1-agradecimientos}
+\cleardoublepage
 
 \tableofcontents
-\thispagestyle{empty}
-
-\lstlistoflistings
-\thispagestyle{empty}
+\cleardoublepage
 
 \listoffigures
-\thispagestyle{empty}
+\cleardoublepage
+
+\listoftables
+\cleardoublepage
+
+\lstlistoflistings
+\cleardoublepage
 
 \glsaddall
 \printglossary[title=Glosario,toctitle=Glosario]
-\thispagestyle{empty}
+\cleardoublepage
 
-\include{2-resumen}
+% MAIN BODY (Arabic numbering)
+\pagenumbering{arabic}
+
 \include{3-introduccion}
 \include{4-marco_teorico}
 \include{5-metodologia}
 \include{6-resultados}
 \include{7-conclusiones}
 
+% APPENDIX
 \appendix
 \include{8-apendice_arquitectura}
 
+% REFERENCES
 \bibliographystyle{babalpha}
 \bibliography{bibliografia}
 

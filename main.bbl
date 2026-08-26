@@ -77,6 +77,12 @@
   International Conference on Knowledge Discovery \& Data Mining},
   \btxpageslong {}\ 2623--2631, 2019.
 
+\bibitem [{BB24}]{bishop2024deep}
+\btxnamefont {\btxlastnamefont {Bishop}, Christopher\btxfnamespacelong M.}
+  \btxandlong {}\ \btxnamefont {Hugh \btxlastnamefont {Bishop}}\btxauthorcolon\
+  \btxtitlefont {Deep Learning: Foundations and Concepts}.
+\newblock \btxpublisherfont {Springer}, Cham, 2024.
+
 \bibitem [{CyMR18}]{calymayor}
 \btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
@@ -140,6 +146,13 @@
   Conference on Machine Learning (ICML)}, \btxpageslong {}\ 1146--1155.
   \btxpublisherfont {PMLR}, 2017.
 
+\bibitem [{GBC16}]{goodfellow2016deep}
+\btxnamefont {\btxlastnamefont {Goodfellow}, Ian}, \btxnamefont {Yoshua
+  \btxlastnamefont {Bengio}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Aaron
+  \btxlastnamefont {Courville}}\btxauthorcolon\ \btxtitlefont {Deep Learning}.
+\newblock \btxpublisherfont {MIT Press}, Cambridge, MA, 2016.
+\newblock {\latintext \btxurlfont{https://www.deeplearningbook.org/}}.
+
 \bibitem [{KCW{\etalchar{+}}22}]{kuba2021trust}
 \btxnamefont {\btxlastnamefont {Kuba}, Jakub\btxfnamespacelong Grudzien},
   \btxnamefont {Ruiqing \btxlastnamefont {Chen}}, \btxnamefont {Muning
@@ -161,6 +174,14 @@
   learning}{Approximately optimal reinforcement learning}}.
 \newblock \Btxinlong {}\ \btxtitlefont {International Conference on Machine
   Learning (ICML)}, \btxpageslong {}\ 267--274, 2002.
+
+\bibitem [{KT03}]{konda2003actorcritic}
+\btxnamefont {\btxlastnamefont {Konda}, Vijay\btxfnamespacelong R.} \btxandlong
+  {}\ \btxnamefont {John\btxfnamespacelong N. \btxlastnamefont
+  {Tsitsiklis}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {On
+  actor-critic algorithms}{On Actor-Critic Algorithms}}.
+\newblock \btxjournalfont {SIAM Journal on Control and Optimization},
+  42(4):1143--1166, 2003.
 
 \bibitem [{LJR{\etalchar{+}}20}]{li2020system}
 \btxnamefont {\btxlastnamefont {Li}, Liam}, \btxnamefont {Kevin
@@ -220,14 +241,18 @@
 \newblock \btxjournalfont {Nature}, 518(7540):529–533, 2015.
 \newblock {\latintext \btxurlfont{https://doi.org/10.1038/nature14236}}.
 
-\bibitem [{ne18}]{UN2018_CongestionCost}
-\btxnamefont {\btxlastnamefont {especificados}, Autores~no}\btxauthorcolon\
-  \btxjtitlefont {\btxifchangecase {Traffic congestion cost americans over
-  \$160 billion in lost productivity}{Traffic congestion cost Americans over
-  \$160 billion in lost productivity}}.
-\newblock \btxjournalfont {Citado en arXiv:2406.13693 (Reporte original de UN
-  2018)}, 2018.
-\newblock Fuente: [1] Costos de congestión y emisiones de CO2.
+\bibitem [{MMLK25}]{MDPI_Infrastructures2025_RLReview}
+\btxnamefont {\btxlastnamefont {Michailidis}, Panagiotis}, \btxnamefont
+  {Iakovos \btxlastnamefont {Michailidis}}, \btxnamefont
+  {Charalampos\btxfnamespacelong Rafail \btxlastnamefont
+  {Lazaridis}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Elias
+  \btxlastnamefont {Kosmatopoulos}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Traffic signal control via reinforcement learning: A
+  review on applications and innovations}{Traffic Signal Control via
+  Reinforcement Learning: A Review on Applications and Innovations}}.
+\newblock \btxjournalfont {Infrastructures}, 10(5):114, 2025.
+\newblock Fuente: [4, 5] Revisión que documenta la evolución de RL como
+  framework para TSC.
 
 \bibitem [{PW16}]{ite_handbook}
 \btxnamefont {\btxlastnamefont {Pande}, Anurag} \btxandlong {}\ \btxnamefont

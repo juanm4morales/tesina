@@ -1,16 +1,25 @@
-\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Función de Valor?\glossentry{funcion_valor}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Proceso de Decisión de Markov?\glossentry{mdp}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Densidad vehicular?\glossentry{densidad}|setentrycounter[]{page}"\glsnumberformat}{8}
-\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{8}
+\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$s$ (estado global)?\glossentry{estado_global}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$o_i$ (observación local)?\glossentry{observacion_local}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$a_i$ (acción)?\glossentry{accion}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$r_t$ (recompensa)?\glossentry{recompensa_t}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$"\gamma $ (factor de descuento)?\glossentry{gamma}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$Q(s,a)$ (valor de acción)?\glossentry{q_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$V(s)$ (valor de estado)?\glossentry{v_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$"\pi _"\theta $ (política parametrizada)?\glossentry{politica_parametrizada}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{$"\hat {A}_t$ (ventaja estimada)?\glossentry{ventaja_estimada}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Función de Valor?\glossentry{funcion_valor}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Proceso de Decisión de Markov?\glossentry{mdp}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Densidad vehicular?\glossentry{densidad}|setentrycounter[]{page}"\glsnumberformat}{x}
+\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{x}
