@@ -1,90 +1,90 @@
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.10}%
-\contentsline {section}{\numberline {1.1}Motivación}{3}{section.12}%
-\contentsline {chapter}{\numberline {2}Marco Teórico}{4}{chapter.13}%
-\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito y Simulación}{4}{section.14}%
-\contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{5}{subsection.15}%
-\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{7}{subsection.18}%
-\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{10}{subsubsection*.23}%
-\contentsline {subsubsection}{Descripción Probabilística del Flujo y Pelotones Vehiculares}{10}{subsubsection*.24}%
-\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{12}{subsection.28}%
-\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{13}{subsubsection*.29}%
-\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{13}{subsubsection*.31}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{14}{subsection.32}%
-\contentsline {subsubsection}{Modelos Microscópicos de Comportamiento Vehicular}{14}{subsubsection*.33}%
-\contentsline {subsubsection}{Componentes y Configuración de SUMO}{15}{subsubsection*.35}%
-\contentsline {subsubsection}{Métricas de Evaluación Operacional y Aprendizaje}{17}{subsubsection*.37}%
-\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{18}{section.38}%
-\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{19}{subsection.39}%
-\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{20}{subsection.43}%
-\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{23}{subsection.51}%
-\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{23}{subsubsection*.52}%
-\contentsline {subsubsection}{El Proceso de Optimización}{25}{subsubsection*.57}%
-\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{26}{subsection.59}%
-\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{26}{subsubsection*.60}%
-\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{27}{subsubsection*.61}%
-\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit {Policy Gradient}}{29}{subsubsection*.65}%
-\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO) y control de las actualizaciones}{31}{subsubsection*.70}%
-\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{32}{section.76}%
-\contentsline {subsection}{\numberline {2.3.1}Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}{33}{subsection.77}%
-\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{35}{subsection.82}%
-\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{36}{subsection.84}%
-\contentsline {subsection}{\numberline {2.3.4}MADRL y líneas de base}{36}{subsection.85}%
-\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO como Líneas de Base}{37}{subsubsection*.86}%
-\contentsline {subsection}{\numberline {2.3.5}Multi-Agent Proximal Policy Optimization (MAPPO)}{37}{subsection.88}%
-\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en MAPPO}{38}{subsubsection*.91}%
-\contentsline {subsection}{\numberline {2.3.6}HAPPO}{40}{subsection.97}%
-\contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{40}{subsubsection*.98}%
-\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{41}{subsubsection*.99}%
-\contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{41}{subsubsection*.102}%
-\contentsline {subsubsection}{Garantía de Mejora Monótona}{43}{subsubsection*.106}%
-\contentsline {chapter}{\numberline {3}Metodología y Diseño Experimental}{46}{chapter.111}%
-\contentsline {section}{\numberline {3.1}Enfoque y Diseño de Investigación}{46}{section.112}%
-\contentsline {section}{\numberline {3.2}Especificación del Ecosistema Tecnológico}{49}{section.120}%
-\contentsline {section}{\numberline {3.3}Diseño y Calibración de Escenarios de Tránsito en SUMO}{50}{section.122}%
-\contentsline {subsection}{\numberline {3.3.1}Modelado Geométrico y Sanitización Topológica}{50}{subsection.123}%
-\contentsline {subsection}{\numberline {3.3.2}Escenarios Sintéticos: $3\times 1$, $3\times 3$ y $4\times 4\_H$}{50}{subsection.127}%
-\contentsline {subsection}{\numberline {3.3.3}Escenario Urbano Real: Microcentro de la Ciudad de Mendoza}{52}{subsection.132}%
-\contentsline {subsubsection}{Posición Metodológica: Escenario Restringido por Datos}{52}{subsubsection*.133}%
-\contentsline {subsubsection}{Adquisición, Auditoría y Preprocesamiento de Telemetría Empírica}{52}{subsubsection*.136}%
-\contentsline {subsubsection}{Mapeo Geoespacial, Corrección Topológica y Señalización}{53}{subsubsection*.142}%
-\contentsline {paragraph}{Proxy de Ingreso Este (TAZ 28):}{54}{paragraph*.143}%
-\contentsline {paragraph}{Auditoría y Corrección Topológica con Google Maps y Street View:}{54}{paragraph*.144}%
-\contentsline {subsubsection}{Modelado Dinámico de Demanda y Factor de Expansión Territorial}{54}{subsubsection*.145}%
-\contentsline {subsubsection}{Estructuración Espacial de la Demanda: Contrato OD Canónico v14 (60/40)}{55}{subsubsection*.148}%
-\contentsline {paragraph}{Componente Fijo Calibrado ($60\%$):}{55}{paragraph*.150}%
-\contentsline {paragraph}{Ceros Estructurales ($\mathcal {Z}_{\text {struct}}$):}{56}{paragraph*.151}%
-\contentsline {paragraph}{Remanente Estocástico ($40\%$) y Selección de Semilla:}{56}{paragraph*.152}%
-\contentsline {paragraph}{Dinámica Microscópica y Heterogeneidad de Flota:}{56}{paragraph*.153}%
-\contentsline {subsubsection}{Protocolo de Validación Operacional y Criterio GEH}{56}{subsubsection*.154}%
-\contentsline {paragraph}{Validación de Calidad del Flujo (Estadístico GEH):}{57}{paragraph*.158}%
-\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{57}{section.160}%
-\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{57}{subsection.161}%
-\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{58}{section.165}%
-\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{58}{subsection.166}%
-\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{59}{subsection.168}%
-\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{59}{subsection.170}%
-\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{60}{section.177}%
-\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{60}{subsection.178}%
-\contentsline {section}{\numberline {3.7}Búsqueda de Hiperparámetros (HPO)}{60}{section.180}%
-\contentsline {subsection}{\numberline {3.7.1}Infraestructura de Cómputo y Orquestación}{62}{subsection.184}%
-\contentsline {section}{\numberline {3.8}Evaluación de Rendimiento}{62}{section.186}%
-\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{64}{chapter.190}%
-\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{64}{section.191}%
-\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{64}{subsection.192}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{64}{subsection.193}%
-\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{64}{subsection.194}%
-\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{64}{section.195}%
-\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{65}{subsection.196}%
-\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos: $3\times 1$, $3\times 3$, $4\times 4$ heterogéneo}{65}{subsection.197}%
-\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{65}{subsection.198}%
-\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{65}{section.199}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{66}{chapter.200}%
-\contentsline {chapter}{\numberline {A}Arquitectura de Software y Patrones de Diseño}{67}{appendix.201}%
-\contentsline {section}{\numberline {A.1}Diseño Orientado a Objetos del Entorno de Simulación}{67}{section.202}%
-\contentsline {section}{\numberline {A.2}Jerarquía de Funciones de Recompensa y Patrón Strategy}{68}{section.204}%
-\contentsline {section}{\numberline {A.3}Patrones de Diseño Implementados}{69}{section.206}%
+\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.12}%
+\contentsline {section}{\numberline {1.1}Motivación}{3}{section.14}%
+\contentsline {chapter}{\numberline {2}Marco Teórico}{4}{chapter.15}%
+\contentsline {section}{\numberline {2.1}Ingeniería de Tránsito y Simulación}{4}{section.16}%
+\contentsline {subsection}{\numberline {2.1.1}Terminología de Tránsito}{5}{subsection.17}%
+\contentsline {subsection}{\numberline {2.1.2}Fundamentos de la Dinámica Vehicular}{7}{subsection.20}%
+\contentsline {subsubsection}{Métricas de Ineficiencia Operativa}{10}{subsubsection*.25}%
+\contentsline {subsubsection}{Descripción Probabilística del Flujo y Pelotones Vehiculares}{10}{subsubsection*.26}%
+\contentsline {subsection}{\numberline {2.1.3}Sistemas de Control de Tránsito}{12}{subsection.30}%
+\contentsline {subsubsection}{Modelado de la Capacidad y el Verde Efectivo}{13}{subsubsection*.31}%
+\contentsline {subsubsection}{Clasificación de los Controladores de Semáforos}{13}{subsubsection*.33}%
+\contentsline {subsection}{\numberline {2.1.4}Simulación de Tránsito}{14}{subsection.34}%
+\contentsline {subsubsection}{Representación Microscópica de Intersecciones en SUMO}{16}{subsubsection*.37}%
+\contentsline {subsubsection}{Componentes y Configuración de SUMO}{18}{subsubsection*.39}%
+\contentsline {subsubsection}{Métricas de Evaluación Operacional}{19}{subsubsection*.41}%
+\contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{20}{section.42}%
+\contentsline {subsection}{\numberline {2.2.1}El Proceso de Decisión de Markov (MDP)}{21}{subsection.43}%
+\contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{22}{subsection.47}%
+\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{25}{subsection.55}%
+\contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{25}{subsubsection*.56}%
+\contentsline {subsubsection}{El Proceso de Optimización}{27}{subsubsection*.61}%
+\contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{28}{subsection.63}%
+\contentsline {subsubsection}{El Problema de la Tríada Mortal (\textit {Deadly Triad})}{28}{subsubsection*.64}%
+\contentsline {subsubsection}{\textit {Deep Q-Networks} (DQN)}{29}{subsubsection*.65}%
+\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit {Policy Gradient}}{31}{subsubsection*.69}%
+\contentsline {subsubsection}{\textit {Proximal Policy Optimization} (PPO) y control de las actualizaciones}{33}{subsubsection*.74}%
+\contentsline {section}{\numberline {2.3}Aprendizaje por Refuerzo Multi-Agente (MARL)}{34}{section.80}%
+\contentsline {subsection}{\numberline {2.3.1}Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}{35}{subsection.81}%
+\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{37}{subsection.86}%
+\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{39}{subsection.89}%
+\contentsline {subsection}{\numberline {2.3.4}MADRL y líneas de base}{39}{subsection.90}%
+\contentsline {subsubsection}{Aprendizaje Independiente (IL): IDQN e IPPO como Líneas de Base}{39}{subsubsection*.91}%
+\contentsline {subsection}{\numberline {2.3.5}Multi-Agent Proximal Policy Optimization (MAPPO)}{40}{subsection.93}%
+\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en MAPPO}{41}{subsubsection*.96}%
+\contentsline {subsection}{\numberline {2.3.6}HAPPO}{43}{subsection.102}%
+\contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{43}{subsubsection*.103}%
+\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{44}{subsubsection*.104}%
+\contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{44}{subsubsection*.107}%
+\contentsline {subsubsection}{Garantía de Mejora Monótona}{46}{subsubsection*.111}%
+\contentsline {chapter}{\numberline {3}Metodología y Diseño Experimental}{49}{chapter.116}%
+\contentsline {section}{\numberline {3.1}Enfoque y Diseño de Investigación}{49}{section.117}%
+\contentsline {section}{\numberline {3.2}Especificación del Ecosistema Tecnológico}{53}{section.125}%
+\contentsline {section}{\numberline {3.3}Diseño y Calibración de Escenarios de Tránsito en SUMO}{54}{section.127}%
+\contentsline {subsection}{\numberline {3.3.1}Modelado Geométrico y Sanitización Topológica}{54}{subsection.128}%
+\contentsline {subsection}{\numberline {3.3.2}Escenarios Sintéticos: $3\times 1$, $3\times 3$ y $4\times 4\_H$}{54}{subsection.132}%
+\contentsline {subsection}{\numberline {3.3.3}Escenario Urbano Real: Microcentro de la Ciudad de Mendoza}{56}{subsection.137}%
+\contentsline {subsubsection}{Posición Metodológica: Escenario Restringido por Datos}{56}{subsubsection*.138}%
+\contentsline {subsubsection}{Adquisición, Auditoría y Preprocesamiento de Telemetría Empírica}{56}{subsubsection*.141}%
+\contentsline {subsubsection}{Mapeo Geoespacial, Corrección Topológica y Señalización}{57}{subsubsection*.147}%
+\contentsline {paragraph}{Proxy de Ingreso Este (TAZ 28):}{58}{paragraph*.148}%
+\contentsline {paragraph}{Auditoría y Corrección Topológica con Google Maps y Street View:}{58}{paragraph*.149}%
+\contentsline {subsubsection}{Modelado Dinámico de Demanda y Factor de Expansión Territorial}{58}{subsubsection*.150}%
+\contentsline {subsubsection}{Estructuración Espacial de la Demanda: Contrato OD Canónico v14 (60/40)}{59}{subsubsection*.153}%
+\contentsline {paragraph}{Componente Fijo Calibrado ($60\%$):}{59}{paragraph*.155}%
+\contentsline {paragraph}{Ceros Estructurales ($\mathcal {Z}_{\text {struct}}$):}{60}{paragraph*.156}%
+\contentsline {paragraph}{Remanente Estocástico ($40\%$) y Selección de Semilla:}{60}{paragraph*.157}%
+\contentsline {paragraph}{Dinámica Microscópica y Heterogeneidad de Flota:}{60}{paragraph*.158}%
+\contentsline {subsubsection}{Protocolo de Validación Operacional y Criterio GEH}{60}{subsubsection*.159}%
+\contentsline {paragraph}{Validación de Calidad del Flujo (Estadístico \gls {acr-geh}):}{61}{paragraph*.163}%
+\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{61}{section.165}%
+\contentsline {subsection}{\numberline {3.4.1}Ciclo Episódico e Interfaz de Simulación}{61}{subsection.166}%
+\contentsline {section}{\numberline {3.5}Instanciación del Modelo Dec-POMDP}{62}{section.170}%
+\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{62}{subsection.171}%
+\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{63}{subsection.173}%
+\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{63}{subsection.175}%
+\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{64}{section.182}%
+\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{64}{subsection.183}%
+\contentsline {section}{\numberline {3.7}Búsqueda de Hiperparámetros (HPO)}{64}{section.185}%
+\contentsline {subsection}{\numberline {3.7.1}Infraestructura de Cómputo y Orquestación}{66}{subsection.189}%
+\contentsline {section}{\numberline {3.8}Evaluación de Rendimiento}{66}{section.191}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{68}{chapter.195}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{68}{section.196}%
+\contentsline {subsection}{\numberline {4.1.1}Diseño del proceso de ajuste}{68}{subsection.197}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{68}{subsection.198}%
+\contentsline {subsection}{\numberline {4.1.3}Configuración seleccionada para la evaluación final}{68}{subsection.199}%
+\contentsline {section}{\numberline {4.2}Resultados de los modelos finales}{68}{section.200}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{69}{subsection.201}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos: $3\times 1$, $3\times 3$, $4\times 4$ heterogéneo}{69}{subsection.202}%
+\contentsline {subsection}{\numberline {4.2.3}Desempeño en la red de carreteras de la Ciudad de Mendoza}{69}{subsection.203}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{69}{section.204}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{70}{chapter.205}%
+\contentsline {chapter}{\numberline {A}Arquitectura de Software y Patrones de Diseño}{71}{appendix.206}%
+\contentsline {section}{\numberline {A.1}Diseño Orientado a Objetos del Entorno de Simulación}{71}{section.207}%
+\contentsline {section}{\numberline {A.2}Jerarquía de Funciones de Recompensa y Patrón Strategy}{72}{section.209}%
+\contentsline {section}{\numberline {A.3}Patrones de Diseño Implementados}{73}{section.211}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

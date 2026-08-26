@@ -163,8 +163,9 @@ mathfontname=mathsf]{mhchem}
 \newcommand {\PJV}[1]{{\color{green} {\textbf{Pablo: #1}}}}
 \newcommand {\ACO}[1]{{\color{red} {\textbf{Caro: #1}}}}
 
-\usepackage[nonumberlist]{glossaries}
+\usepackage[acronym,nonumberlist]{glossaries}
 \loadglsentries{glosario.tex}
+\loadglsentries{glosario_abreviaturas.tex}
 \makeglossaries
 
 \title{Semáforos Inteligentes: Un enfoque con Aprendizaje por Refuerzo Multi Agente}
@@ -203,6 +204,8 @@ mathfontname=mathsf]{mhchem}
 \cleardoublepage
 
 \glsaddall
+\printglossary[type=\acronymtype,title=Glosario de Abreviaturas,toctitle=Glosario de Abreviaturas]
+\cleardoublepage
 \printglossary[title=Glosario,toctitle=Glosario]
 \cleardoublepage
 

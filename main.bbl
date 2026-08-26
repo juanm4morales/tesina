@@ -83,6 +83,13 @@
   \btxtitlefont {Deep Learning: Foundations and Concepts}.
 \newblock \btxpublisherfont {Springer}, Cham, 2024.
 
+\bibitem [{BV02}]{bowling2002multiagent}
+\btxnamefont {\btxlastnamefont {Bowling}, Michael} \btxandlong {}\ \btxnamefont
+  {Manuela \btxlastnamefont {Veloso}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Multiagent learning using a variable learning
+  rate}{Multiagent learning using a variable learning rate}}.
+\newblock \btxjournalfont {Artificial Intelligence}, 136(2):215--250, 2002.
+
 \bibitem [{CyMR18}]{calymayor}
 \btxnamefont {\btxlastnamefont {Mayor~R.}, Rafael~Cal~y}\btxauthorcolon\
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
@@ -209,6 +216,19 @@
   Abstractions for distributed reinforcement learning}}.
 \newblock \Btxinlong {}\ \btxtitlefont {International Conference on Machine
   Learning (ICML)}, \btxpageslong {}\ 3053--3062. PMLR, 2018.
+
+\bibitem [{LML{\etalchar{+}}25}]{liang2025marlreview}
+\btxnamefont {\btxlastnamefont {Liang}, Jiaxin}, \btxnamefont {Haotian
+  \btxlastnamefont {Miao}}, \btxnamefont {Kai \btxlastnamefont {Li}},
+  \btxnamefont {Jianheng \btxlastnamefont {Tan}}, \btxnamefont {Xi
+  \btxlastnamefont {Wang}}, \btxnamefont {Rui \btxlastnamefont
+  {Luo}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Yueqiu \btxlastnamefont
+  {Jiang}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {A review of
+  multi-agent reinforcement learning algorithms}{A Review of Multi-Agent
+  Reinforcement Learning Algorithms}}.
+\newblock \btxjournalfont {Electronics}, 14(4):820, 2025.
+\newblock {\latintext
+  \btxurlfont{https://doi.org/10.3390/electronics14040820}}.
 
 \bibitem [{LWT{\etalchar{+}}17}]{maddpg}
 \btxnamefont {\btxlastnamefont {Lowe}, Ryan}, \btxnamefont {Yi \btxlastnamefont
