@@ -1,6 +1,6 @@
 \chapter{Marco Teórico}\label{cap:marco_teorico}
 
-Este capítulo presenta los conceptos necesarios para plantear el control semafórico como un problema de decisión secuencial. Primero se describen las variables y los elementos de la operación del tránsito; luego se introduce su representación en un simulador microscópico; finalmente se presentan los fundamentos del aprendizaje por refuerzo (RL) y del aprendizaje por refuerzo multiagente (MARL), que permiten formular políticas de control para la red vial.
+Este capítulo presenta los conceptos necesarios para plantear el control semafórico como un problema de decisión secuencial. Primero se describen las variables y los elementos de la operación del tránsito; luego se introduce su representación en un simulador microscópico; finalmente se presentan los fundamentos del \gls{acr-rl} y del \gls{acr-marl}, que permiten formular políticas de control para la red vial.
 
 \section{Ingeniería de Tránsito y Simulación}\label{sec:ingenieria_transito}
 
@@ -352,20 +352,41 @@ Incluso en los esquemas accionados, la operación permanece sujeta a parámetros
 
 \subsection{Simulación de Tránsito}
 
-Debido a la densidad y complejidad de la red urbana moderna, la sincronización y optimización de los tiempos de semáforos no pueden resolverse adecuadamente con modelos estáticos bajo condiciones dinámicas, por lo que se recurre a aproximaciones computacionales basadas en simulación de tránsito \cite{ite_handbook}. De acuerdo con la taxonomía clásica \cite{fernandez}, estos modelos pueden organizarse en tres niveles de resolución. Los modelos macroscópicos describen el tránsito de manera agregada mediante variables como flujo, densidad y velocidad; los modelos mesoscópicos representan entidades intermedias, como grupos o pelotones de vehículos. Ambos niveles son útiles para estudiar fenómenos de red, pero no ofrecen el detalle necesario para observar cómo las decisiones semafóricas afectan, paso a paso, la formación de colas y la interacción local entre vehículos en una intersección.
+Debido a la densidad y complejidad de las redes urbanas, la sincronización y optimización de los tiempos semafóricos requiere representar la evolución del tránsito bajo condiciones variables. Los modelos analíticos y agregados resultan útiles bajo determinados supuestos, pero pueden ser limitados para describir la formación de colas y las interacciones locales durante la operación dinámica de una red \cite{ite_handbook}. De acuerdo con la taxonomía clásica \cite{fernandez}, los modelos de tránsito pueden organizarse en tres niveles de resolución. Los modelos macroscópicos describen el tránsito de manera agregada mediante variables como flujo, densidad y velocidad; los mesoscópicos representan entidades intermedias, como grupos o pelotones de vehículos; y los microscópicos modelan individualmente los vehículos, sus rutas y su evolución dentro de la red. Para el presente trabajo resulta especialmente relevante este último nivel, porque permite estudiar cómo las decisiones semafóricas afectan paso a paso la formación de colas, las detenciones y la interacción local entre vehículos.
 
-Para el presente trabajo, el nivel de mayor interés es el microscópico, ya que representa explícitamente a cada vehículo, su ruta y su movimiento dentro de la red \cite{fernandez}. SUMO (\textit{Simulation of Urban MObility}) se ubica en esta categoría: es un simulador de tránsito microscópico, multimodal y de código abierto, diseñado para representar demandas vehiculares sobre redes viales y evaluar problemas de gestión del tránsito \cite{SUMO2018_SUMO}. En SUMO, la evolución vehicular es continua en el espacio y discreta en el tiempo; además, el entorno permite modelar calles con múltiples carriles, cambios de carril, distintos tipos de vehículos, rutas individuales, semáforos y salidas de simulación a nivel de vehículo, carril, arco o detector \cite{sumo-doc}.
-Esta granularidad vuelve a la simulación microscópica especialmente adecuada para estudiar control semafórico mediante aprendizaje por refuerzo. Las decisiones sobre fases y tiempos de servicio no se evalúan mediante una fórmula cerrada de demora, sino observando sus consecuencias sobre la dinámica simulada: colas, tiempos de espera, detenciones, ocupación de carriles y propagación de congestión. Por ello, la simulación microscópica constituye el puente natural entre el problema de tránsito y su formulación computacional, al permitir que el controlador interactúe con un entorno dinámico y medible durante la ejecución.
+La simulación de tránsito constituye una representación abstracta del fenómeno real. Su objetivo no es reproducir visualmente una escena particular, sino modelar, mediante reglas de comportamiento y variables observables, los procesos que determinan la evolución de la circulación. La calidad de sus resultados depende de la representación de la red, la demanda, la flota, los modelos de comportamiento y las reglas de control utilizadas. Por ello, la simulación debe entenderse como un entorno experimental sujeto a supuestos y parametrización, cuyos resultados requieren una evaluación operacional acorde con el objetivo del estudio.
 
-\subsubsection{Modelos Microscópicos de Comportamiento Vehicular}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth]{imagenes/SIMvsREAL.png}
+    \caption{Correspondencia conceptual entre una situación real de circulación vehicular y su representación microscópica en un simulador. Elaboración propia.}
+    \label{fig:sim_vs_real}
+\end{figure}
 
-En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. En SUMO, una intersección semaforizada se estructura mediante tres componentes geométricos y lógicos principales bajo el sentido de circulación por la derecha (véase la Figura \ref{fig:sumo_intersection_elements}) \cite{sumo-doc}:
+Para el presente trabajo, el nivel de mayor interés es el microscópico, ya que representa explícitamente a cada vehículo, su ruta y su movimiento dentro de la red \cite{fernandez}. \gls{acr-sumo} se ubica en esta categoría. Es una suite libre y de código abierto iniciada en el Instituto de Sistemas de Transporte del \gls{acr-dlr}, que permite modelar sistemas de tránsito intermodales, incluidos vehículos, transporte público y peatones. También integra herramientas para importar redes, calcular rutas, visualizar y evaluar simulaciones, además de interfaces para controlar remotamente su ejecución \cite{SUMO2018_SUMO,sumo-doc}. Estas características han permitido emplearlo, entre otras aplicaciones, en la evaluación de semáforos y en el entrenamiento de planes de control. En SUMO, la evolución vehicular se actualiza en pasos temporales discretos sobre una representación espacial continua; además, el entorno permite modelar calles con múltiples carriles, cambios de carril, distintos tipos de vehículos, rutas individuales, semáforos y salidas de simulación a nivel de vehículo, carril, arco o detector \cite{SUMO2018_SUMO,sumo-doc}.
+
+La interfaz gráfica \textit{sumo-gui} permite inspeccionar visualmente la red, los vehículos y algunos valores de la simulación durante la ejecución. Esta visualización cumple una función de apoyo para la inspección del escenario y la depuración del modelo; las métricas utilizadas para la evaluación se obtienen de las salidas de simulación y de las interfaces de control \cite{sumo-doc}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth]{imagenes/SUMO_GUI_background.png}
+    \caption{Interfaz gráfica de SUMO durante la ejecución de una simulación microscópica, con visualización de la red y de variables del vehículo.}
+    \label{fig:sumo_gui}
+\end{figure}
+
+Esta granularidad vuelve a la simulación microscópica especialmente adecuada para estudiar control semafórico mediante aprendizaje por refuerzo. Las decisiones sobre fases y tiempos de servicio pueden evaluarse mediante sus consecuencias sobre la dinámica simulada: colas, tiempos de espera, detenciones, ocupación de carriles, completitud de viajes y propagación de congestión. En la formulación computacional, las variables de tránsito constituyen observaciones, las fases admisibles constituyen acciones y la evolución simulada constituye la transición del entorno. La definición operacional de estas variables y su procedimiento de cálculo se presentan en la metodología.
+
+\subsubsection{Representación Microscópica de Intersecciones en SUMO}
+
+La naturaleza microscópica de la simulación no se reduce a representar visualmente vehículos. Cada unidad modifica su velocidad y posición de acuerdo con modelos de seguimiento vehicular y cambio de carril, los parámetros de su tipo de vehículo y las restricciones de la red. De este modo, variables como la aceleración, la separación entre vehículos, la velocidad deseada y la disponibilidad de carriles intervienen en la formación y dispersión de colas. Los valores concretos utilizados para la flota y para estos parámetros pertenecen a la configuración experimental y se detallan en la metodología \cite{sumo-doc}.
+
+En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. Para el esquema de la Figura \ref{fig:sumo_intersection_elements}, que adopta circulación por la derecha, se distinguen carriles, líneas de detención, conexiones entre carriles y estados de control semafórico \cite{sumo-doc}:
 \begin{itemize}
-    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} Los carriles entrantes conducen el flujo vehicular hacia la línea de detención de la intersección por la derecha de cada acceso, mientras que los carriles salientes reciben el flujo descargado tras cruzar el nodo.
-    \item \textbf{Líneas de detención (\textit{stop lines}):} Delimitación física continua en color blanco en el límite de los carriles entrantes $L_{\text{in}}$ con el área interna de cruzamiento (\textit{junction}).
-    \item \textbf{Enlaces de conexión (\textit{links}):} Rutas internas que conectan un carril entrante específico con un carril saliente de destino. A cada enlace se le asigna un estado semafórico instantáneo ($G$ para verde prioritario, $g$ para verde permisivo, y $r$ para rojo o detención). Como se ilustra en la Figura \ref{fig:sumo_intersection_elements}, mientras los movimientos directos se encuentran habilitados en verde ($G$), el giro a la izquierda en conflicto (representado por el enlace en rojo salmón) se mantiene retenido en luz roja ($r$) para prevenir colisiones.
+    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} Los carriles entrantes conducen el flujo vehicular hacia la intersección, mientras que los carriles salientes reciben el flujo descargado tras cruzar el nodo.
+    \item \textbf{Línea de detención (\textit{stop line}):} Referencia operacional próxima al final del carril entrante, delante de la cual se detienen los vehículos cuando el movimiento no está habilitado.
+    \item \textbf{Conexiones (\textit{connections} o \textit{links}):} Relaciones que conectan un carril entrante con un carril saliente y definen los movimientos posibles a través de la intersección. Cuando están controladas por un semáforo, se asocian con un índice de enlace y con un estado de señal. En SUMO, $G$ representa verde con prioridad, $g$ verde sin prioridad y sujeto a cesión, $y$ amarillo y $r$ rojo. La figura muestra únicamente una fase conceptual en la que los movimientos directos opuestos del eje horizontal están habilitados y los movimientos transversales o conflictivos permanecen retenidos.
 \end{itemize}
-Esta representación es compatible con la formulación algorítmica del problema, donde una acción consiste en seleccionar una fase que habilita un conjunto de enlaces compatibles mientras mantiene en rojo ($r$) los movimientos en conflicto.
+Esta representación es compatible con la formulación algorítmica del problema, donde una fase define un conjunto de estados sobre los enlaces controlados. Una acción válida debe seleccionar una fase compatible con la geometría de la intersección y respetar las transiciones y restricciones de seguridad definidas por el entorno.
 
 \begin{figure}[H]
     \centering
@@ -373,16 +394,14 @@ Esta representación es compatible con la formulación algorítmica del problema
         scale=0.92,
         font=\small,
         >=Stealth,
-        % Estilos de Diseñador Gráfico Experto (Escala de Grises/Asfalto + Alto Contraste)
         roadAsphalt/.style={fill=black!75, draw=black!90, line width=1.4pt},
         laneInBg/.style={fill=colEntorno!25, draw=colEntorno!80!black, line width=1pt},
         laneOutBg/.style={fill=black!55, draw=black!40, line width=1pt},
         stopLine/.style={draw=white, line width=2.5pt},
         dashDivider/.style={draw=white, dashed, line width=1pt},
-        % Conexiones de tráfico (Links) en tonos vibrantes
         linkStraight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoVerde},
         linkLeft/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo},
-        linkRight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colInterfaz!90!black}
+        linkRight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo}
     ]
 
         % 1. BASE DE CALZADA DE ASFALTO (Tránsito por la Derecha - RHT Argentina)
@@ -430,25 +449,22 @@ Esta representación es compatible con la formulación algorítmica del problema
         \node[font=\small\bfseries, white!85, rotate=90] at (-0.65, -3.0) {$L_{\text{out}}$};
         \draw[<-, white!80, line width=1.2pt] (-0.25, -3.8) -- (-0.25, -2.2);
 
-        % 4. ENLACES INTERNOS DE CRUZAMIENTO (SUMO Links para RHT)
-        % Movimientos desde Oeste L_in (y = -0.65):
-        \draw[linkStraight] (-1.3, -0.65) -- (1.3, -0.65); % Directo a Este (Verde G)
-        \draw[linkLeft] (-1.3, -0.35) to[out=0, in=-90] (0.65, 1.3); % Giro Izquierda a Norte (Rojo r / Salmón)
-        \draw[linkRight] (-1.3, -0.95) to[out=0, in=90] (-0.65, -1.3); % Giro Derecha a Sur (Verde Menta g)
-
-        % Movimiento desde Sur L_in (x = 0.65):
-        \draw[linkStraight] (0.65, -1.3) -- (0.65, 1.3); % Directo Sur a Norte (Verde G)
+        % Conexiones representadas en una fase con prioridad para el eje horizontal.
+        \draw[linkStraight] (-1.3, -0.65) -- (1.3, -0.65);
+        \draw[linkStraight] (1.3, 0.65) -- (-1.3, 0.65);
+        \draw[linkLeft] (-1.3, -0.35) to[out=0, in=-90] (0.65, 1.3);
+        \draw[linkRight] (-1.3, -0.95) to[out=0, in=90] (-0.65, -1.3);
+        \draw[linkLeft] (-0.65, 1.3) -- (-0.65, -1.3);
+        \draw[linkLeft] (0.65, -1.3) -- (0.65, 1.3);
 
         % 5. LEYENDA ESPACIADA AL PIE (Textos ultra-cortos sin superposición)
         \begin{scope}[shift={(0, -5.4)}]
-            % Fila 1: Carriles
             \draw[draw=colEntorno!80!black, fill=colEntorno!25, line width=1pt] (-4.0, 0.4) rectangle (-3.3, 0.65);
             \node[anchor=west, font=\scriptsize] at (-3.2, 0.52) {Carril $L_{\text{in}}$};
 
             \draw[draw=black!70, fill=black!55, line width=1pt] (0.5, 0.4) rectangle (1.2, 0.65);
             \node[anchor=west, font=\scriptsize] at (1.3, 0.52) {Carril $L_{\text{out}}$};
 
-            % Fila 2: Enlaces semafóricos
             \draw[linkStraight] (-4.0, -0.1) -- (-3.3, -0.1);
             \node[anchor=west, font=\scriptsize] at (-3.2, -0.1) {Verde (\textbf{G})};
 
@@ -456,57 +472,55 @@ Esta representación es compatible con la formulación algorítmica del problema
             \node[anchor=west, font=\scriptsize] at (1.3, -0.1) {Rojo (\textbf{r})};
         \end{scope}
     \end{tikzpicture}
-    \caption{Elementos geométricos y conexiones de una intersección semaforizada en SUMO bajo sentido de circulación por la derecha (Argentina): carriles entrantes ($L_{\text{in}}$), salientes ($L_{\text{out}}$), líneas de detención y enlaces de cruzamiento (\textit{links}) en verde prioritario (\textbf{G}) y rojo retenido en conflicto (\textbf{r}).}
+    \caption{Esquema conceptual de carriles, línea de detención y conexiones de una intersección semaforizada bajo circulación por la derecha. La fase representada habilita movimientos directos opuestos del eje horizontal y retiene los movimientos conflictivos.}
     \label{fig:sumo_intersection_elements}
 \end{figure}
 
 \subsubsection{Componentes y Configuración de SUMO}
 
-Para la generación, edición y control en tiempo real de los escenarios de simulación microscópica, el entorno SUMO se complementa con un conjunto integrado de herramientas y librerías auxiliares \cite{SUMO2018_SUMO}:
+La suite SUMO reúne aplicaciones para construir redes, generar demandas, ejecutar simulaciones, visualizar sus resultados y controlar la ejecución mediante interfaces externas \cite{SUMO2018_SUMO,sumo-doc}:
 \begin{itemize}
-    \item \textbf{\textit{netedit}:} Herramienta gráfica que permite proyectar y editar la geometría y la lógica operacional de la red vial de forma interactiva. Facilita la creación y modificación bidireccional de nodos, accesos, carriles, restricciones de giro, conexiones internas (\textit{links}), sensores inductivos y programas de temporización semafórica.
-    \item \textbf{\textit{osmWebWizard}:} Herramienta automatizada con interfaz web que permite importar áreas geográficas reales desde OpenStreetMap (OSM) y transformarlas al formato nativo de SUMO, extrayendo información de la red como la topología urbana y los límites de velocidad.
-    \item \textbf{\textit{TraCI} (\textit{Traffic Control Interface}):} Protocolo de comunicación cliente-servidor mediante sockets TCP que habilita la interacción dinámica a paso discreto entre la simulación y scripts externos de control \cite{sumo-doc}. A través de TraCI, los agentes de aprendizaje por refuerzo recolectan observaciones del estado del tránsito (colas, velocidades, ocupación) e imponen decisiones sobre las fases del semáforo.
+    \item \textbf{\textit{netconvert}:} Aplicación que importa redes desde distintas fuentes y compila su representación en el formato nativo de SUMO. También permite reconstruir o ajustar elementos de la red, como las conexiones y los programas semafóricos.
+    \item \textbf{\textit{netedit}:} Editor gráfico para crear y modificar de forma interactiva nodos, calles, carriles, conexiones, restricciones de giro y elementos de control semafórico.
+    \item \textbf{\textit{osmWebWizard}:} Herramienta que automatiza la generación de un escenario a partir de un área seleccionada de OpenStreetMap. Se considera una alternativa de importación y no reemplaza el procesamiento específico realizado con \textit{netconvert}.
+    \item \textbf{\gls{acr-traci}:} Interfaz que permite consultar el estado de una simulación en ejecución y modificarlo durante el avance paso a paso, incluyendo variables de vehículos, carriles, detectores y semáforos \cite{sumo-doc}.
+    \item \textbf{\textit{libsumo}:} Implementación embebida que ofrece la interfaz de programación de SUMO sin la comunicación mediante sockets de la modalidad TraCI estándar. Esta alternativa resulta útil para integrar el simulador con controladores externos y reducir la sobrecarga de comunicación.
 \end{itemize}
 
-Desde la perspectiva del modelado computacional, la ejecución de una simulación microscópica en SUMO se organiza mediante archivos de configuración en formato XML \cite{sumo-doc}. En los escenarios considerados, sus componentes principales se resumen en la Tabla \ref{tab:sumo_input_files}:
-\begin{itemize}
-    \item \textbf{Archivo de red} (\texttt{.net.xml}): Define la estructura física e infraestructura de la red vial, incluyendo las coordenadas nodales, la geometría de arcos, los carriles por acceso, las conexiones de cruzamiento y la lógica de accionamiento semafórico.
-    \item \textbf{Archivo de rutas} (\texttt{.rou.xml}): Especifica las características de la flota vehicular (dimensiones, aceleración, velocidad deseada y modelo de seguimiento) junto con los itinerarios o flujos de origen a destino.
-    \item \textbf{Archivo TAZ} (\texttt{.taz.xml}, \textit{Traffic Analysis Zones}): Delimita las zonas de análisis de tráfico para asignar espacialmente las matrices de origen y destino de los desplazamientos.
-    \item \textbf{Archivo de elementos adicionales} (\texttt{.add.xml}): Incorpora dispositivos de medición (como detectores de bucle inductivo E1 y E2), paradas de transporte público o programas semafóricos personalizados.
-    \item \textbf{Archivo maestro de configuración} (\texttt{.sumocfg}): Integra las referencias a los archivos de red, rutas y adicionales, y fija los parámetros del horizonte temporal de simulación (duración del paso $\Delta t$, tiempos de inicio y fin, e indicadores de salida).
-\end{itemize}
+Desde la perspectiva del modelado computacional, una simulación SUMO se construye a partir de archivos \gls{acr-xml} de red, demanda, elementos adicionales y configuración \cite{sumo-doc}. Los archivos \gls{acr-taz} pueden utilizarse durante la estructuración espacial y la generación de demanda, mientras que las salidas de la simulación se solicitan mediante opciones de configuración específicas. Sus funciones generales se resumen en la Tabla \ref{tab:sumo_input_files}:
 
 \begin{table}[H]
 \centering
-\caption{Archivos de configuración empleados en los escenarios de simulación en SUMO \cite{sumo-doc}.}
+\caption{Archivos de entrada y configuración empleados en una simulación SUMO.}
 \label{tab:sumo_input_files}
 \setlength{\tabcolsep}{4pt}
 \small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{8.5cm}|}
 \hline
-\textbf{Archivo XML} & \textbf{Extensión} & \textbf{Función en el Modelo Computacional} \\ \hline
-Red Vial & \texttt{.net.xml} & Topología física, accesos, carriles, enlaces y semáforos. \\ \hline
-Rutas y Demanda & \texttt{.rou.xml} & Tipos de vehículos, modelos de seguimiento e itinerarios. \\ \hline
-Zonas TAZ & \texttt{.taz.xml} & Zonas de origen y destino para matrices de demanda. \\ \hline
-Elementos Adicionales & \texttt{.add.xml} & Sensores inductivos E1/E2, telemetría y programas auxiliares. \\ \hline
-Configuración Maestra & \texttt{.sumocfg} & Unificación de archivos, resolución temporal ($\Delta t$) y registros. \\ \hline
+\textbf{Archivo} & \textbf{Extensión} & \textbf{Función en el Modelo Computacional} \\ \hline
+Red Vial & \texttt{.net.xml} & Topología física, carriles, conexiones y lógicas semafóricas. \\ \hline
+Rutas y Demanda & \texttt{.rou.xml} & Tipos de vehículos, viajes, flujos e itinerarios. \\ \hline
+Zonas TAZ & \texttt{.taz.xml} & Zonas para estructurar espacialmente la demanda. \\ \hline
+Elementos Adicionales & \texttt{.add.xml} & Detectores, tipos de vehículo y programas auxiliares. \\ \hline
+Configuración & \texttt{.sumocfg} & Archivos de entrada, opciones de ejecución y salidas. \\ \hline
 \end{tabular}
 \end{table}
 
-\subsubsection{Métricas de Evaluación Operacional y Aprendizaje}
+\subsubsection{Métricas de Evaluación Operacional}
 
-Para evaluar rigurosamente el impacto de las estrategias de control semafórico tanto desde la perspectiva de la ingeniería de tránsito como del aprendizaje automático, este trabajo distingue cuatro tipos de indicadores para la evaluación y el diagnóstico del entrenamiento:
+La simulación microscópica produce salidas que permiten evaluar el desempeño del control desde la perspectiva de la ingeniería de tránsito. En este trabajo se consideran las siguientes categorías de indicadores:
 
 \begin{itemize}
-    \item \textbf{Emisión de gases $\text{CO}_2$:} Cuantifica el impacto ambiental y la ineficiencia energética del flujo vehicular. En SUMO, las emisiones se estiman mediante modelos microscópicos como HBEFA o PHEMlight \cite{sumo-doc}, relacionando la masa de $\text{CO}_2$ emitida en gramos con los perfiles de velocidad, aceleración y tiempo en ralentí (\textit{idling}) de cada vehículo. Una reducción de la masa total de $\text{CO}_2$ puede asociarse con una operación más fluida y una menor frecuencia de detenciones.
-    \item \textbf{Tiempo de Espera Promedio Global y por Agente:} Métrica operacional primaria en ingeniería de tránsito \cite{calymayor}. El tiempo de espera cuantifica la acumulación en segundos que un vehículo permanece detenido (velocidad $v < 0.1$ m/s) antes de cruzar la intersección. Se evalúa a nivel local por cada agente $i$ (intersección) y de forma agregada a nivel global de la red vial, permitiendo medir la reducción directa de la demora operacional.
-    \item \textbf{Recompensa Acumulada Descontada:} Métrica interna de RL/MARL definida como el retorno episódico $G_0 = \sum_{t=0}^T \gamma^t R_t$. Expresa la capacidad del agente para maximizar de forma persistente su objetivo escalar proyectado en el tiempo \cite{suttonRL}.
-    \item \textbf{Valores de pérdida (\textit{loss values}):} Indicadores de diagnóstico durante el entrenamiento en DRL/MADRL \cite{yu2022surprising}. Incluyen la pérdida de política o actor ($\mathcal{L}^{\text{CLIP}}$), la pérdida de error cuadrático medio de la función de valor del crítico ($\mathcal{L}^{\text{VF}}$) y el término de entropía de la política ($S[\pi]$). Su seguimiento permite identificar inestabilidades del gradiente y cambios en el proceso de optimización; por sí solo, no demuestra la calidad operacional del controlador.
+    \item \textbf{Demora y tiempo de espera:} Cuantifican el tiempo adicional o el tiempo detenido que experimentan los vehículos durante su recorrido. Pueden analizarse de forma agregada en la red y desagregarse por intersección, acceso o agente, siempre que se mantenga una definición operacional consistente \cite{calymayor,sumo-doc}.
+    \item \textbf{Completitud y flujo servido:} La cantidad de vehículos que completa su itinerario y su relación con la demanda generada permiten distinguir una reducción genuina de la demora de una disminución del flujo atendido.
+    \item \textbf{Equidad espacial:} La distribución de las demoras entre intersecciones permite identificar si una política mejora el desempeño global a costa de concentrar la espera en accesos o agentes particulares.
+    \item \textbf{Emisiones de $\text{CO}_2$:} SUMO estima las emisiones a partir del estado cinemático de los vehículos, su tipo y la clase de emisiones configurada \cite{sumo-doc}. La masa total debe interpretarse junto con los vehículos completados y la distancia recorrida, o expresarse mediante una medida normalizada.
+    \item \textbf{Indicadores de validez de la simulación:} Los teletransportes, los vehículos pendientes y otras incidencias de ejecución permiten detectar bloqueos o condiciones que comprometen la comparabilidad de una corrida.
 \end{itemize}
 
-En este marco, SUMO no solo permite reproducir la evolución microscópica de la red, sino también interactuar con ella mediante TraCI. La posibilidad de observar el estado del tránsito y modificar las fases semafóricas en pasos discretos convierte el control semafórico en un problema de decisión secuencial, lo que motiva la introducción del aprendizaje por refuerzo en la siguiente sección \cite{sumo-doc}.
+Las definiciones operacionales, fórmulas, unidades, ventanas de evaluación y procedimientos de agregación empleados en este trabajo se presentan en la metodología. Las recompensas y las pérdidas de optimización corresponden al entrenamiento de los algoritmos de aprendizaje y se desarrollan en las secciones dedicadas a RL y MARL.
+
+En este marco, SUMO permite observar el estado de la red y modificar las fases semafóricas durante la ejecución mediante interfaces de control. Esta capacidad convierte el control semafórico en un problema de decisión secuencial, lo que motiva la introducción del aprendizaje por refuerzo en la siguiente sección \cite{sumo-doc}.
 
 
 \section{Aprendizaje por Refuerzo (RL)}
@@ -523,7 +537,7 @@ Un aspecto característico de RL es el dilema entre exploración y explotación.
 
 \subsection{El Proceso de Decisión de Markov (MDP)}
 
-El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el Proceso de Decisión de Markov (\textit{Markov Decision Process}, MDP). En un MDP finito, el agente y el entorno interactúan en una secuencia de pasos temporales discretos $t = 0, 1, 2, \dots$. En cada instante $t$, el agente recibe una representación del estado del entorno $S_t \in \mathcal{S}$ y selecciona una acción $A_t \in \mathcal{A}(S_t)$. Como consecuencia de esa acción, el entorno emite una recompensa numérica $R_{t+1} \in \mathcal{R}$ y transita a un nuevo estado $S_{t+1}$ \cite{suttonRL,marlbook}. Este ciclo se representa en la Figura \ref{fig:agent_env_interaction}.
+El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el \gls{acr-mdp}. En un \gls{acr-mdp} finito, el agente y el entorno interactúan en una secuencia de pasos temporales discretos $t = 0, 1, 2, \dots$. En cada instante $t$, el agente recibe una representación del estado del entorno $S_t \in \mathcal{S}$ y selecciona una acción $A_t \in \mathcal{A}(S_t)$. Como consecuencia de esa acción, el entorno emite una recompensa numérica $R_{t+1} \in \mathcal{R}$ y transita a un nuevo estado $S_{t+1}$ \cite{liang2025marlreview}. Este ciclo se representa en la Figura \ref{fig:agent_env_interaction}.
 
 \begin{figure}[H]
     \centering
@@ -560,7 +574,7 @@ donde $S_t \in \mathcal{S}$ representa el estado en el instante $t$, $A_t \in \m
 
 La propiedad de Markov establece que, dado el estado y la acción actuales, la distribución del próximo estado y recompensa no depende explícitamente de la historia completa de estados y acciones anteriores. En otras palabras, el estado debe contener toda la información relevante del pasado para predecir la evolución futura del proceso \cite{suttonRL}.
 
-Una suposición habitual del MDP es que el agente observa un estado suficientemente informativo del entorno. Sin embargo, en muchas aplicaciones reales el agente solo recibe observaciones parciales o ruidosas. En estos casos, el marco se generaliza a un Proceso de Decisión de Markov Parcialmente Observable (\textit{Partially Observable Markov Decision Process}, POMDP), donde el historial de observaciones puede ser necesario para inferir el estado subyacente \cite{marlbook}.
+Una suposición habitual del \gls{acr-mdp} es que el agente observa un estado suficientemente informativo del entorno. Sin embargo, en muchas aplicaciones reales el agente solo recibe observaciones parciales o ruidosas. En estos casos, el marco se generaliza a un \gls{acr-pomdp}, donde el historial de observaciones puede ser necesario para inferir el estado subyacente \cite{marlbook}.
 
 Para formalizar la meta de maximizar la recompensa a largo plazo se define el retorno descontado $G_t$, que incorpora un factor $\gamma \in [0,1)$ para ponderar la importancia de las recompensas futuras \cite{suttonRL}:
 \begin{equation}
@@ -580,7 +594,7 @@ Para una política fija, las ecuaciones de Bellman permiten evaluar el valor esp
 \end{equation}
 Esta relación justifica el objetivo de actualización de Q-learning y, posteriormente, de DQN. La maximización sobre las acciones futuras convierte el problema de evaluación de una política en un problema de control orientado a aproximar la función de acción-valor óptima $q_*$ \cite{suttonRL}.
 
-Cuando la dinámica del entorno no se conoce completamente, estas funciones pueden estimarse a partir de la experiencia. Los métodos de Diferencia Temporal (\textit{Temporal-Difference}, TD) combinan el muestreo de transiciones reales con actualizaciones basadas en estimaciones previas, mecanismo conocido como \textit{bootstrapping}. Un ejemplo central es \textit{Q-learning}, que actualiza la función de acción-valor hacia una estimación de la función óptima $q_*(s,a)$:
+Cuando la dinámica del entorno no se conoce completamente, estas funciones pueden estimarse a partir de la experiencia. Los métodos de \gls{acr-td} combinan el muestreo de transiciones reales con actualizaciones basadas en estimaciones previas, mecanismo conocido como \textit{bootstrapping}. Un ejemplo central es \textit{Q-learning}, que actualiza la función de acción-valor hacia una estimación de la función óptima $q_*(s,a)$:
 \begin{equation}
 Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t) \right]
 \end{equation}
@@ -607,7 +621,7 @@ donde el factor $(1-d_{t+1})$ elimina el valor del estado siguiente cuando final
     \nabla_\theta \log \pi_\theta(A_t\mid S_t).
     \label{eq:actor_critic_update}
 \end{equation}
-Esta forma canónica permite explicar el intercambio de información entre ambos componentes, aunque los algoritmos modernos suelen sustituir $\delta_t$ por estimadores de ventaja que combinan varios pasos, como GAE, y realizan las actualizaciones sobre mini-lotes.
+Esta forma canónica permite explicar el intercambio de información entre ambos componentes, aunque los algoritmos modernos suelen sustituir $\delta_t$ por estimadores de ventaja que combinan varios pasos, como \gls{acr-gae}, y realizan las actualizaciones sobre mini-lotes.
 
 La Figura \ref{fig:actor_critic} resume este circuito para el control semafórico. La observación del tránsito alimenta al actor y al crítico; el actor selecciona una fase, el entorno simulado produce la siguiente observación y la recompensa, y el crítico transforma esa transición en una señal de evaluación. Esta señal guía el aprendizaje, pero no se utiliza como una orden directa sobre el entorno.
 
@@ -629,7 +643,7 @@ La Figura \ref{fig:actor_critic} resume este circuito para el control semafóric
         \node[actor] (actor) at (-1.7,1.55) {\textbf{Actor}\\política $\pi_\theta(a\mid S_t)$};
         \node[critico] (critic) at (-1.7,-1.55) {\textbf{Crítico}\\valor $V_\phi(S_t)$};
         \node[entorno] (env) at (4.1,1.55) {\textbf{Entorno}\\red vial en SUMO};
-        \node[senal] (td) at (4.1,-1.55) {Error TD / ventaja\\$\delta_t$ o $\hat A_t$};
+        \node[senal] (td) at (4.1,-1.55) {Error \gls{acr-td} / ventaja\\$\delta_t$ o $\hat A_t$};
 
         \draw[flecha] (obs) |- (actor.west);
         \draw[flecha] (obs) |- (critic.west);
@@ -814,7 +828,7 @@ donde $\eta$ es la tasa de aprendizaje. En la práctica, el gradiente puede calc
 
 \subsection{Aprendizaje por Refuerzo Profundo (DRL)}
 
-El Aprendizaje por Refuerzo Profundo (DRL) combina los algoritmos de RL con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
+El Aprendizaje por Refuerzo Profundo (\textit{Deep Reinforcement Learning}, DRL) combina los algoritmos de RL con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
 
 \subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
 
@@ -822,7 +836,7 @@ La aplicación de aproximadores de funciones al aprendizaje por refuerzo introdu
 
 \begin{itemize}
     \item \textbf{Aproximación de Funciones:} Uso de aproximadores potentes y escalables, como las redes neuronales, que extienden el aprendizaje generalizando a través del espacio de estados.
-    \item \textbf{\textit{Bootstrapping}:} La práctica de actualizar estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (como en los métodos TD), en lugar de esperar la consecución de retornos reales completos.
+    \item \textbf{\textit{Bootstrapping}:} La práctica de actualizar estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (como en los métodos \gls{acr-td}), en lugar de esperar la consecución de retornos reales completos.
     \item \textbf{Entrenamiento \textit{Off-Policy}:} Optimizar la función de valor utilizando una distribución de datos o transiciones generadas por una política de comportamiento distinta a la política objetivo que se desea evaluar o mejorar.
 \end{itemize}
 
@@ -835,7 +849,7 @@ En los métodos basados en valor, DRL sustituye la tabla clásica por una red ne
 La inestabilidad descrita por la Tríada Mortal se manifiesta en DQN como el ``problema del blanco móvil'': al generalizar, una actualización que incrementa el valor de un estado puede modificar también los valores estimados para otros estados. Además, las transiciones consecutivas presentan correlación temporal y pueden inducir sobreajuste a la experiencia reciente. Para mitigar estos efectos y estabilizar empíricamente la optimización, DQN emplea dos componentes estructurales \cite{mnih2015}:
 
 \begin{itemize}
-    \item \textbf{Redes Objetivo (\textit{Target Networks}):} Se emplea una red neuronal secundaria separada cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular los valores objetivo en el error TD, amortiguando las oscilaciones y estabilizando el blanco de aprendizaje.
+    \item \textbf{Redes Objetivo (\textit{Target Networks}):} Se emplea una red neuronal secundaria separada cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular los valores objetivo en el error \gls{acr-td}, amortiguando las oscilaciones y estabilizando el blanco de aprendizaje.
     \item \textbf{Búferes de Repetición (\textit{Replay Buffers}):} Se almacenan las transiciones históricas del agente $(s, a, r, s')$. El entrenamiento se realiza extrayendo mini-lotes aleatorios de esta memoria, lo cual reduce la correlación temporal intrínseca de las trayectorias y aproxima el entrenamiento a la hipótesis de muestras independientes. Este mecanismo no constituye, por sí mismo, una garantía de convergencia con aproximadores no lineales.
 \end{itemize}
 
@@ -863,7 +877,7 @@ La Figura \ref{fig:arquitectura_dqn} distingue el circuito de interacción del c
 
         \node[memoria] (buffer) at (5.3,-1.55) {Búfer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1})$};
         \node[red] (target) at (0.45,-1.55) {Red objetivo\\$\hat Q(S_{t+1},a;\theta^-)$};
-        \node[salida] (loss) at (-4.15,-1.55) {Pérdida TD\\$(y-Q_t)^2$};
+        \node[salida] (loss) at (-4.15,-1.55) {Pérdida \gls{acr-td}\\$(y-Q_t)^2$};
 
         \draw[flecha] (state) -- (online);
         \draw[flecha] (online) -- (values);
@@ -880,7 +894,7 @@ La Figura \ref{fig:arquitectura_dqn} distingue el circuito de interacción del c
             node[etiqueta, pos=0.28, below] {copia periódica} (target.north);
     \end{tikzpicture}%
     }
-    \caption{Flujo conceptual de DQN con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit{bootstrapping} del blanco TD. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite{mnih2015}.}
+    \caption{Flujo conceptual de DQN con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit{bootstrapping} del blanco \gls{acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite{mnih2015}.}
     \label{fig:arquitectura_dqn}
 \end{figure}
 
@@ -888,7 +902,7 @@ La función de pérdida minimizada por DQN, representada en el bloque inferior d
 \begin{equation}
 \mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1}) \sim \mathcal{D}}
 \left[\left(\begin{aligned}
-&\underbrace{r_{j+1} + \gamma(1-d_{j+1}) \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor objetivo de TD}} \\
+&\underbrace{r_{j+1} + \gamma(1-d_{j+1}) \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor objetivo de \gls{acr-td}}} \\
 &- \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción actual}}
 \end{aligned}\right)^2\right]
 \label{eq:perdida_dqn}
@@ -973,7 +987,7 @@ En arquitecturas actor-crítico, la ventaja se estima habitualmente mediante la 
     \hat{A}_t^{\text{GAE}(\gamma, \lambda)} \doteq \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}^V
     \label{eq:gae}
 \end{equation}
-donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V(S_{t+1}) - V(S_t)$ representa el error de diferencia temporal (TD) estimado por la red del crítico $V$, $d_{t+1}$ indica si la transición es terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado GAE que equilibra el sesgo y la varianza del estimador.
+donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V(S_{t+1}) - V(S_t)$ representa el error de \gls{acr-td} estimado por la red del crítico $V$, $d_{t+1}$ indica si la transición es terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado \gls{acr-gae} que equilibra el sesgo y la varianza del estimador.
 
 En lugar de minimizar un error cuadrático de predicción, la optimización paramétrica del actor se rige por el Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}), que establece la actualización de los parámetros $\theta$ ascendiendo por el gradiente del rendimiento esperado \cite{suttonRL}. El operador $\hat{\mathbb{E}}_t$ denota el promedio empírico sobre las transiciones del lote recolectado en los instantes $t$:
 \begin{equation}
@@ -1035,13 +1049,15 @@ El Algoritmo \ref{alg:ppo} resume el ciclo conceptual de PPO. La recolección de
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (MARL)}
 
-El aprendizaje por refuerzo multi-agente (\textit{Multi-Agent Reinforcement Learning}, MARL) generaliza los principios del RL hacia sistemas donde múltiples entidades aprenden e interactúan simultáneamente en un entorno compartido \cite{marlbook}. A diferencia del caso individual, las acciones de cada agente modifican el estado global del sistema, lo que induce una dinámica no estacionaria desde la perspectiva local de cualquier participante. En el contexto de sistemas dinámicos cooperativos, múltiples controladores coordinan sus decisiones para optimizar un objetivo común.
+El \gls{acr-marl} generaliza los principios del RL hacia sistemas donde múltiples entidades aprenden e interactúan simultáneamente en un entorno compartido \cite{marlbook}. A diferencia del caso individual, las acciones de cada agente modifican el estado global del sistema, lo que induce una dinámica no estacionaria desde la perspectiva local de cualquier participante. En el contexto de sistemas dinámicos cooperativos, múltiples controladores coordinan sus decisiones para optimizar un objetivo común.
+
+Liang et al. \cite{liang2025marlreview} proponen una clasificación operativa de los problemas multi-agente según la relación entre sus funciones de recompensa: completamente cooperativos, cuando los agentes comparten el objetivo; completamente competitivos, cuando la mejora de uno implica el deterioro de otro; y mixtos, cuando coexisten intereses alineados y contrapuestos. Esta distinción es relevante porque separa la estructura de incentivos del algoritmo utilizado. El presente trabajo se ubica en la primera categoría: las intersecciones actúan como agentes independientes durante la ejecución, pero las políticas se entrenan para reducir una señal de demora compartida en la red.
 
 En una intersección aislada, el control puede analizarse mediante un único agente. Sin embargo, en una red vial la fase seleccionada en una intersección modifica las corrientes que llegan a otras, por lo que los controladores quedan acoplados por la dinámica del tránsito. Esta dependencia espacial motiva la extensión del aprendizaje por refuerzo hacia un escenario multi-agente.
 
 \subsection{Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y Dec-POMDP}
 
-La formalización matemática de los entornos multi-agente requiere extender el MDP individual incorporando nociones de la Teoría de Juegos. El modelo matemático fundamental para representar decisiones secuenciales con múltiples participantes es el Juego Estocástico o Juego Markoviano (\textit{Stochastic Game} o \textit{Markov Game}), introducido por Shapley \cite{shapley1953stochastic} y adaptado al aprendizaje por refuerzo por Albrecht et al. \cite{marlbook}.
+La formalización matemática de los entornos multi-agente requiere extender el \gls{acr-mdp} individual incorporando nociones de la Teoría de Juegos. Liang et al. \cite{liang2025marlreview} destacan que, cuando las acciones de los agentes modifican conjuntamente los estados y recompensas, el modelo individual deja de describir adecuadamente la interacción; por ello, el modelo matemático fundamental para representar decisiones secuenciales con múltiples participantes es el Juego Estocástico o Juego Markoviano (\textit{Stochastic Game} o \textit{Markov Game}), introducido por Shapley \cite{shapley1953stochastic} y adaptado al aprendizaje por refuerzo por Albrecht et al. \cite{marlbook}.
 
 Un Juego Estocástico para $n$ agentes se define mediante la tupla:
 \begin{equation}
@@ -1057,7 +1073,7 @@ En la teoría de juegos, el \textbf{Equilibrio de Nash} es un concepto de soluci
 \end{equation}
 donde $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ es la combinación de políticas individuales en equilibrio, $\pi_i$ representa cualquier política alternativa ejecutable por el agente $i$, $\Pi_i$ denota el espacio de políticas válidas del agente $i$, y $\boldsymbol{\pi}_{-i}^* = (\pi_1^*, \dots, \pi_{i-1}^*, \pi_{i+1}^*, \dots, \pi_n^*)$ es el vector de políticas fijas de los demás agentes. En un problema cooperativo de recompensa común, este concepto describe estabilidad, pero no garantiza por sí mismo que la política conjunta maximice el retorno global. Por esa razón, el objetivo operativo de este trabajo se formula como la maximización del retorno conjunto, mientras que el equilibrio de Nash se utiliza como concepto de análisis de convergencia.
 
-En escenarios reales de control distribuido, ningún agente dispone de visibilidad completa del estado global del sistema. Cada participante recopila información únicamente de sus sensores locales. Por consiguiente, los entornos cooperativos multi-agente con observabilidad parcial se formalizan matemáticamente mediante el marco de los Procesos de Decisión de Markov Parcialmente Observables Descentralizados (Dec-POMDP) \cite{decpomdp-survey}.
+En escenarios reales de control distribuido, ningún agente dispone de visibilidad completa del estado global del sistema. Cada participante recopila información únicamente de sus sensores locales. Por consiguiente, los entornos cooperativos multi-agente con observabilidad parcial se formalizan matemáticamente mediante el marco de los \gls{acr-decpomdp} \cite{decpomdp-survey}.
 
 Un Dec-POMDP para $n$ agentes se define como una tupla:
 \begin{equation}
@@ -1127,15 +1143,27 @@ La aplicación práctica de métodos de aprendizaje por refuerzo en escenarios m
     \item \textbf{No Estacionariedad:} Desde la perspectiva de un agente individual $i$, las políticas de los demás agentes actúan como parte de la dinámica de transición del entorno. Como todos los agentes aprenden y adaptan sus pesos neuronales de manera concurrente, la función de transición efectiva percibida localmente por el agente $i$:
     \begin{equation}
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
+        \label{eq:no_estacionariedad}
     \end{equation}
-    cambia a lo largo del entrenamiento. Aquí $\mathbf{a}_{-i}$ representa las acciones conjuntas del resto de los agentes y $\boldsymbol{\pi}_{-i}$ sus respectivas políticas. Aunque el sistema global puede continuar describiéndose mediante un juego markoviano, la dinámica percibida por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su observación. En consecuencia, las condiciones de convergencia de los algoritmos de agente único dejan de ser suficientes \cite{foerster2017}.
+    cambia a lo largo del entrenamiento. Aquí $\mathbf{a}_{-i}$ representa las acciones conjuntas del resto de los agentes y $\boldsymbol{\pi}_{-i}$ sus respectivas políticas. Aunque el sistema global puede continuar describiéndose mediante un juego markoviano, la dinámica percibida por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su observación. En consecuencia, las condiciones de convergencia de los algoritmos de agente único dejan de ser suficientes \cite{foerster2017,liang2025marlreview}.
+
+    Este fenómeno fue formalizado por Bowling y Veloso \cite{bowling2002multiagent} como el problema del \textit{blanco móvil} (\textit{moving target}): una política que es óptima frente a los demás participantes en un momento dado deja de serlo cuando estos se adaptan. En juegos matriciales como Piedra, Papel o Tijera, el aprendizaje independiente con tasas de actualización fijas provoca oscilaciones continuas en torno al equilibrio sin converger. Como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}, al aplicar algoritmos como WoLF-PHC (\textit{Win or Learn Fast Policy Hill-Climbing}), las trayectorias de ambos agentes amortiguan sus oscilaciones y espiralan hacia la política convergida en el equilibrio de Nash ($\bigstar = (1/3, 1/3, 1/3)$).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
+    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución de las políticas de dos agentes con el algoritmo WoLF-PHC en el juego de Piedra, Papel o Tijera. La diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. Cada punto en el símplex representa una distribución sobre las tres acciones disponibles; las trayectorias muestran el avance de las políticas durante el entrenamiento y las estrellas ($\bigstar$) señalan las políticas convergidas en el equilibrio de Nash. Adaptado de \cite{bowling2002multiagent,marlbook}.}
+    \label{fig:no_estacionariedad_papel_piedra}
+\end{figure}
+
+    En el control semafórico urbano, este fenómeno se manifiesta de forma directa: cuando un semáforo modifica sus tiempos de verde para desahogar un acceso, altera de inmediato los arribos y colas de las intersecciones adyacentes aguas abajo. Si cada controlador se entrena de manera independiente asumiendo un entorno estacionario, las políticas tienden a sobreajustarse o responder de forma reactiva y descoordinada.
     \item \textbf{Observabilidad Parcial:} Dado el modelo Dec-POMDP inherente, la falta de telemetría global restringe la visión de cada agente a variables locales. Esta información incompleta aumenta la incertidumbre de las estimaciones y dificulta el aprendizaje preciso de las funciones de valor.
     \item \textbf{Asignación de Crédito Multi-Agente (\textit{Credit Assignment}):} En juegos de recompensa común, resulta complejo discernir analíticamente la contribución o el demérito marginal que la acción de un agente aislado produjo sobre el desempeño sistémico global. Una decisión local subóptima podría recibir un refuerzo positivo si el resto del sistema operó de manera sumamente eficiente, sesgando las actualizaciones de la política \cite{marlbook}.
 \end{itemize}
 
 \subsection{Paradigmas de Entrenamiento y Ejecución}
 
-Para abordar estas patologías en escenarios Dec-POMDP, la literatura clasifica los algoritmos en función de cómo fluye la información durante el proceso de optimización. Se distinguen fundamentalmente dos enfoques: el Aprendizaje Independiente (\textit{Independent Learning}, IL) y el Entrenamiento Centralizado con Ejecución Descentralizada (\textit{Centralized Training with Decentralized Execution}, CTDE) \cite{ctde_survey}.
+Para abordar estos desafíos en escenarios \gls{acr-decpomdp}, la literatura clasifica los algoritmos en función de cómo fluye la información durante el proceso de optimización. Se distinguen fundamentalmente dos enfoques: el Aprendizaje Independiente (\textit{Independent Learning}, IL) y el \gls{acr-ctde} \cite{ctde_survey}.
 
 En el primero, los agentes se entrenan localmente utilizando métodos de agente único, tratando empíricamente al resto de los agentes como parte de la dinámica del entorno. En el segundo, durante el entrenamiento, los algoritmos pueden explotar información global privilegiada (historiales conjuntos o concatenación de observaciones) para guiar y estabilizar la optimización de las funciones de valor. Durante la ejecución, el componente centralizado no participa en la selección de acciones y los actores utilizan únicamente sus observaciones locales. Esta separación entre información disponible durante el entrenamiento y durante la ejecución constituye la característica central de CTDE.
 

@@ -1,7 +1,7 @@
 \chapter{Metodología y Diseño Experimental}
 \label{capitulo:metodologia}
 
-En este capítulo se detalla el marco metodológico de la investigación, la operacionalización de las variables, el modelado físico y calibración de los escenarios de simulación, la arquitectura computacional del entorno distribuido y los protocolos experimentales adoptados para contrastar las hipótesis planteadas. El estudio se encuadra dentro de un enfoque cuantitativo, aplicado y experimental puro de medidas repetidas, donde la simulación microscópica de tránsito constituye el laboratorio controlado para evaluar el desempeño, la coordinación espacial y la robustez de las arquitecturas de Aprendizaje por Refuerzo Multi-Agente (MARL).
+En este capítulo se detalla el marco metodológico de la investigación, la operacionalización de las variables, el modelado físico y calibración de los escenarios de simulación, la arquitectura computacional del entorno distribuido y los protocolos experimentales adoptados para contrastar las hipótesis planteadas. El estudio se encuadra dentro de un enfoque cuantitativo, aplicado y experimental puro de medidas repetidas, donde la simulación microscópica de tránsito constituye el laboratorio controlado para evaluar el desempeño, la coordinación espacial y la robustez de las arquitecturas de \gls{acr-marl}.
 
 ---
 
@@ -10,7 +10,7 @@ En este capítulo se detalla el marco metodológico de la investigación, la ope
 
 Este trabajo adopta un \textbf{diseño experimental cuantitativo de medidas repetidas}. Se manipulan sistemáticamente variables independientes (familias algorítmicas, grado de cooperación vecinal $\rho$ y topologías de demanda vial) en entornos computacionales controlados para medir sus efectos sobre variables dependientes primarias vinculadas al desempeño operacional del tránsito, la equidad del servicio y la sostenibilidad ambiental.
 
-La utilización de la simulación microscópica como plataforma experimental primaria responde a tres fundamentos científicos. El simulador utilizado es SUMO \cite{SUMO2018_SUMO}:
+La utilización de la simulación microscópica como plataforma experimental primaria responde a tres fundamentos científicos. El simulador utilizado es \gls{acr-sumo} \cite{SUMO2018_SUMO}:
 \begin{enumerate}
     \item \textbf{Seguridad y Viabilidad Operacional:} Evaluar algoritmos estocásticos de aprendizaje en tiempo real sobre una red urbana física real implica un riesgo inaceptable para la seguridad vial y la fluidez del tránsito vehicular.
     \item \textbf{Aislamiento de Variables Exógenas:} La simulación permite neutralizar perturbaciones estocásticas no controladas (condiciones meteorológicas adversas, siniestros viales o fluctuaciones exógenas fuera del modelo), garantizando la validez interna del estudio.
@@ -48,12 +48,12 @@ La Figura \ref{fig:flujo_metodologico_general} ilustra la secuencia metodológic
   paso/.style={rectangle, draw=colEntorno!80!black, fill=colEntorno!10, rounded corners=5pt, thick, text width=13.5cm, align=left, inner sep=6pt}
 ]
   \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, auditoría topológica con Google Maps y Street View, reconstrucción de lógica semafórica y calibración de flota heterogénea.};
-  \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del Dec-POMDP:} Especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con enmascaramiento (\textit{action masking}) y recompensa $\lambda$-mix / `neighborhood\_relevance`.};
-  \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la Infraestructura de Entorno:} Abstracción en memoria compartida mediante \textit{bindings} en C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la API Multi-Agent de Ray RLlib.};
-  \node[paso, below=of p3] (p4) {\textbf{4. Configuración e Integración Algorítmica:} Definición de arquitecturas neuronales en PyTorch (MLP $[128, 128]$ y $[256, 256]$) e hiperparámetros para IDQN, IPPO, MAPPO y HAPPO.};
-  \node[paso, below=of p4] (p5) {\textbf{5. Optimización Hiperparamétrica Multietapa (HPO):} Muestreo Bayesiano (Optuna TPE), poda asíncrona (ASHA) y función objetivo física de Retorno Robusto al Riesgo (CVaR).};
-  \node[paso, below=of p5] (p6) {\textbf{6. Orquestación y Ejecución Distribuida en HPC:} Despliegue mediante SLURM en los clusters Toko y Mendieta con almacenamiento local en nodo (\texttt{/scratch}) y aislamiento de puertos Ray.};
-  \node[paso, below=of p6] (p7) {\textbf{7. Protocolo de Evaluación Estadística y Confirmación:} Confirmación pareada en 10 semillas, evaluación en semillas fuera de distribución (OOD), pruebas no paramétricas de Wilcoxon, $\hat{A}_{12}$ de Vargha-Delaney y guardias de validación de fallo seguro.};
+  \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del \gls{acr-decpomdp}:} Especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con enmascaramiento (\textit{action masking}) y recompensa $\lambda$-mix / `neighborhood\_relevance`.};
+  \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la Infraestructura de Entorno:} Abstracción en memoria compartida mediante \textit{bindings} en C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la \gls{acr-api} Multi-Agent de Ray RLlib.};
+  \node[paso, below=of p3] (p4) {\textbf{4. Configuración e Integración Algorítmica:} Definición de arquitecturas neuronales en PyTorch (\gls{acr-mlp} $[128, 128]$ y $[256, 256]$) e hiperparámetros para IDQN, IPPO, MAPPO y HAPPO.};
+  \node[paso, below=of p4] (p5) {\textbf{5. Optimización Hiperparamétrica Multietapa (\gls{acr-hpo}):} Muestreo Bayesiano (Optuna \gls{acr-tpe}), poda asíncrona (\gls{acr-asha}) y función objetivo física de Retorno Robusto al Riesgo (\gls{acr-cvar}).};
+  \node[paso, below=of p5] (p6) {\textbf{6. Orquestación y Ejecución Distribuida en \gls{acr-hpc}:} Despliegue mediante \gls{acr-slurm} en los clusters Toko y Mendieta con almacenamiento local en nodo (\texttt{/scratch}) y aislamiento de puertos Ray.};
+  \node[paso, below=of p6] (p7) {\textbf{7. Protocolo de Evaluación Estadística y Confirmación:} Confirmación pareada en 10 semillas, evaluación en semillas \gls{acr-ood}, pruebas no paramétricas de Wilcoxon, $\hat{A}_{12}$ de Vargha-Delaney y guardias de validación de fallo seguro.};
 
   \draw[->, line width=1.2pt, colEntorno!80!black] (p1) -- (p2);
   \draw[->, line width=1.2pt, colEntorno!80!black] (p2) -- (p3);
@@ -124,7 +124,7 @@ Todas las redes sintéticas comparten reglas operacionales estandarizadas:
         \item \texttt{FASTVEHTYPE} ($15\%$): Conductores dinámicos con mayor aceleración desde reposo ($a = 3.1\text{ m/s}^2, d = 5.0\text{ m/s}^2, v_{\max} = 19.44\text{ m/s} = 70\text{ km/h}$, acotado a $50\text{ km/h}$ por el límite del carril).
     \end{enumerate}
     Parámetros compartidos: longitud $4.5\text{ m}$, brecha mínima de seguridad (\textit{minGap}) $2.5\text{ m}$ e imperfección del conductor de Krauss $\sigma = 0.5$.
-    \item \textbf{Generación de Demanda por Zonas (TAZ) y Arribos Estocásticos:} Las rutas se generan mediante la herramienta \texttt{random\_routes\_taz.py} a partir de matrices de zonas de asignación de tránsito (TAZ). Los intervalos entre llegadas vehiculares se modelan como procesos de Poisson con distribución exponencial:
+    \item \textbf{Generación de Demanda por Zonas (\gls{acr-taz}) y Arribos Estocásticos:} Las rutas se generan mediante la herramienta \texttt{random\_routes\_taz.py} a partir de matrices de zonas de asignación de tránsito (\gls{acr-taz}). Los intervalos entre llegadas vehiculares se modelan como procesos de Poisson con distribución exponencial:
     \begin{equation}
         \text{period} = \text{exp}(\lambda_{\text{arr}}) \quad \text{con} \quad \lambda_{\text{arr}} = \frac{\text{flow}}{3600}\text{ veh/s}
     \end{equation}
@@ -148,7 +148,7 @@ Para contrastar la validez y transferibilidad de las políticas aprendidas frent
 
 Desde una perspectiva epistemológica y de modelado en ingeniería de transporte, el escenario de Mendoza se formaliza como un \textbf{escenario sintético empíricamente restringido por datos} (\textit{data-constrained synthetic scenario}), diferenciándose conceptualmente de un gemelo digital irrestricto.
 
-La inferencia de matrices Origen-Destino (OD) completas en redes urbanas a partir de mediciones volumétricas discretas en un conjunto reducido de puntos de control constituye un \textbf{problema inverso severamente subdeterminado e intrínsecamente mal condicionado} \cite{calymayor, ite_handbook}. Para una red con $|\mathcal{Z}| = 37$ zonas de asignación de tránsito (TAZ), existen $|\mathcal{Z}|(|\mathcal{Z}|-1) = 1.332$ pares direccionales potenciales (de los cuales 520 resultan físicamente alcanzables), frente a un número acotado de enlaces instrumentados con detectores en el acceso oriental. En tales condiciones, no existe una asignación OD única que satisfaga exclusivamente las observaciones empíricas.
+La inferencia de matrices \gls{acr-od} completas en redes urbanas a partir de mediciones volumétricas discretas en un conjunto reducido de puntos de control constituye un \textbf{problema inverso severamente subdeterminado e intrínsecamente mal condicionado} \cite{calymayor, ite_handbook}. Para una red con $|\mathcal{Z}| = 37$ zonas de asignación de tránsito (\gls{acr-taz}), existen $|\mathcal{Z}|(|\mathcal{Z}|-1) = 1.332$ pares direccionales potenciales (de los cuales 520 resultan físicamente alcanzables), frente a un número acotado de enlaces instrumentados con detectores en el acceso oriental. En tales condiciones, no existe una asignación \gls{acr-od} única que satisfaga exclusivamente las observaciones empíricas.
 
 Por consiguiente, este trabajo implementa una metodología estructurada de dos niveles:
 \begin{enumerate}
@@ -207,7 +207,7 @@ Adoptando una tasa de retención de detector $\text{camera\_retention} = 1,0$, r
 \subsubsection{Estructuración Espacial de la Demanda: Contrato OD Canónico v14 (60/40)}
 \label{subsubsec:mendoza_contrato_od_v14}
 
-A partir de las 37 zonas TAZ, se computaron $520$ pares OD físicamente alcanzables mediante búsqueda en anchura (BFS) sobre el grafo de conectividad vial. La distribución de la demanda horaria $Q_{\text{red}}(h)$ se rige por el \textbf{Contrato OD Canónico v14}, formulado como una partición híbrida:
+A partir de las 37 zonas \gls{acr-taz}, se computaron $520$ pares \gls{acr-od} físicamente alcanzables mediante \gls{acr-bfs} sobre el grafo de conectividad vial. La distribución de la demanda horaria $Q_{\text{red}}(h)$ se rige por el \textbf{Contrato OD Canónico v14}, formulado como una partición híbrida:
 \begin{equation}
     p_{od} = \begin{cases}
     p_{od}^{\text{calib}} & \text{si } (o,d) \in \mathcal{P}_{\text{exp}} \quad \text{con} \quad \sum_{(o,d) \in \mathcal{P}_{\text{exp}}} p_{od}^{\text{calib}} = 0,60 \\
@@ -255,7 +255,7 @@ El escenario canónico v14 se validó rigurosamente bajo dos horizontes temporal
 \end{adjustbox}
 \end{table}
 
-\paragraph{Validación de Calidad del Flujo (Estadístico GEH):} Conforme a las recomendaciones metodológicas para la calibración de demanda en simulación microscópica \cite{sumo-doc, ite_handbook}, la fidelidad de la inyección en el corredor José Vicente Zapata (TAZ 28) frente a los aforos empíricos de la Cámara 169 se evaluó mediante el estadístico GEH:
+\paragraph{Validación de Calidad del Flujo (Estadístico \gls{acr-geh}):} Conforme a las recomendaciones metodológicas para la calibración de demanda en simulación microscópica \cite{sumo-doc, ite_handbook}, la fidelidad de la inyección en el corredor José Vicente Zapata (\gls{acr-taz} 28) frente a los aforos empíricos de la Cámara 169 se evaluó mediante el estadístico \gls{acr-geh}:
 \begin{equation}
     \text{GEH} = \sqrt{\frac{2 (M - C)^2}{M + C}}
 \end{equation}
