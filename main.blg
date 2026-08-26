@@ -4,7 +4,6 @@ The top-level auxiliary file: main.aux
 A level-1 auxiliary file: 0-titulo.aux
 A level-1 auxiliary file: 1-resumen.aux
 A level-1 auxiliary file: 1-agradecimientos.aux
-A level-1 auxiliary file: 2-resumen.aux
 A level-1 auxiliary file: 3-introduccion.aux
 A level-1 auxiliary file: 4-marco_teorico.aux
 A level-1 auxiliary file: 5-metodologia.aux
@@ -15,44 +14,44 @@ The style file: babalpha.bst
 Database file #1: bibliografia.bib
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 32 entries,
+You've used 35 entries,
             3213 wiz_defined-function locations,
-            889 strings with 14067 characters,
-and the built_in function-call counts, 20015 in all, are:
-= -- 1664
-> -- 1041
-< -- 19
-+ -- 385
-- -- 380
-* -- 2429
-:= -- 2795
-add.period$ -- 77
-call.type$ -- 32
-change.case$ -- 279
-chr.to.int$ -- 32
-cite$ -- 32
-duplicate$ -- 1011
-empty$ -- 1582
-format.name$ -- 702
-if$ -- 3985
+            905 strings with 14535 characters,
+and the built_in function-call counts, 21597 in all, are:
+= -- 1800
+> -- 1127
+< -- 18
++ -- 416
+- -- 411
+* -- 2614
+:= -- 3029
+add.period$ -- 84
+call.type$ -- 35
+change.case$ -- 299
+chr.to.int$ -- 35
+cite$ -- 35
+duplicate$ -- 1084
+empty$ -- 1712
+format.name$ -- 757
+if$ -- 4299
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 45
-newline$ -- 152
-num.names$ -- 96
-pop$ -- 370
+missing$ -- 51
+newline$ -- 165
+num.names$ -- 105
+pop$ -- 396
 preamble$ -- 1
-purify$ -- 313
+purify$ -- 338
 quote$ -- 0
-skip$ -- 570
+skip$ -- 612
 stack$ -- 0
-substring$ -- 748
-swap$ -- 502
-text.length$ -- 19
+substring$ -- 809
+swap$ -- 528
+text.length$ -- 18
 text.prefix$ -- 4
 top$ -- 0
-type$ -- 236
+type$ -- 252
 warning$ -- 0
-while$ -- 127
-width$ -- 38
-write$ -- 348
+while$ -- 140
+width$ -- 41
+write$ -- 381

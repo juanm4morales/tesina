@@ -111,6 +111,7 @@ La Figura \ref{fig:uml_recompensas} detalla la estructura de clases del módulo 
 
 \begin{figure}[H]
 \centering
+\resizebox{0.98\textwidth}{!}{%
 \begin{tikzpicture}[
   font=\tiny,
   node distance=0.6cm and 0.5cm,
@@ -172,7 +173,8 @@ La Figura \ref{fig:uml_recompensas} detalla la estructura de clases del módulo 
   \draw[->, thick, line width=1pt] (neighrel) -- (rewardfn);
   \draw[->, dashed, thick, line width=0.8pt] (neighrel) -- node[below, font=\tiny] {compone} (neighavg);
 
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{Diagrama de clases UML de la jerarquía de funciones de recompensa (Patrones Strategy y Composite).}
 \label{fig:uml_recompensas}
 \end{figure}
@@ -187,26 +189,26 @@ A lo largo del marco computacional \texttt{marlTLC} se aplican los siguientes pa
 \begin{enumerate}
     \item \textbf{Patrón Strategy (Estrategia):}
     \begin{itemize}
-        \item \textit{Propósito:} Encapsular algoritmos de cálculo de recompensa y permitir su variación independiente de los controladores semafóricos.
-        \item \textit{Implementación:} Interfaz base \texttt{RewardFn} y clases derivadas (\texttt{DiffHaltedReward}, \texttt{DiffAccumulatedWaitingTimeReward}, \texttt{PressureReward}, \texttt{SpillbackPenaltyReward}).
+        \item \textit{Propósito:} Encapsular algoritmos de recompensa e intercambiarlos sin modificar los controladores semafóricos.
+        \item \textit{Implementación:} Interfaz base \texttt{RewardFn} y clases concretas de recompensa.
     \end{itemize}
 
     \item \textbf{Patrón Factory Method y Registry (Fábrica con Registro Dinámico):}
     \begin{itemize}
         \item \textit{Propósito:} Instanciar dinámicamente funciones de recompensa y módulos neuronales a partir de cadenas de configuración o especificaciones compuestas (\texttt{RewardSpec}), permitiendo registrar nuevas funciones sin modificar la fábrica (Principio Abierto/Cerrado).
-        \item \textit{Implementación:} Clase \texttt{RewardFactory} y decorador \texttt{@register\_reward(name)}.
+        \item \textit{Implementación:} Clase \texttt{RewardFactory} y decorador \texttt{@register\_reward}.
     \end{itemize}
 
     \item \textbf{Patrón Composite (Objeto Compuesto):}
     \begin{itemize}
-        \item \textit{Propósito:} Construir recompensas cooperativas y multifactoriales tratando componentes individuales y combinaciones de manera uniforme.
-        \item \textit{Implementación:} \texttt{WeightedCompositeReward} y \texttt{NeighborhoodRelevanceReward}, que agregan recompensas locales y vecinales mediante combinaciones lineales o convexas.
+        \item \textit{Propósito:} Combinar recompensas locales y vecinales con una interfaz uniforme.
+        \item \textit{Implementación:} Clases de recompensa compuesta que agregan señales locales y vecinales.
     \end{itemize}
 
     \item \textbf{Patrón Protocol / Structural Subtyping (Tipado Estructural):}
     \begin{itemize}
         \item \textit{Propósito:} Desacoplar el proveedor de métricas vecinales del tipo concreto \texttt{TrafficLight}, facilitando la prueba unitaria con objetos simulados (\textit{mocks}) y evitando dependencias circulares.
-        \item \textit{Implementación:} Protocolo \texttt{NeighborInfoProvider} (\texttt{src/marlTLC/environments/protocols.py}) con el decorador \texttt{@runtime\_checkable}.
+        \item \textit{Implementación:} Protocolo \texttt{NeighborInfoProvider} del entorno, con el decorador \texttt{@runtime\_checkable}.
     \end{itemize}
 
     \item \textbf{Patrón Adapter (Adaptador):}

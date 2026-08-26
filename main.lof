@@ -1,26 +1,31 @@
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Evolución de la flota vehicular circulante en Argentina (1990--2025). Datos: AFAC.}}{2}{figure.caption.10}%
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Evolución de la flota vehicular circulante en Argentina (1990--2025). Datos: AFAC.}}{1}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Convención esquemática de movimientos vehiculares, fases y cruces peatonales concurrentes en una intersección de cuatro accesos, adaptada conceptualmente del manual de temporización semafórica de FHWA \cite {fhwa_signal_timing_manual}.}}{5}{figure.caption.11}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{6}{figure.caption.12}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{7}{figure.caption.14}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{9}{figure.caption.17}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{10}{figure.caption.19}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Elementos geométricos y conexiones de una intersección semaforizada en SUMO bajo sentido de circulación por la derecha (Argentina): carriles entrantes ($L_{\text {in}}$), salientes ($L_{\text {out}}$), líneas de detención y enlaces de cruzamiento (\textit {links}) en verde prioritario (\textbf {G}) y rojo retenido en conflicto (\textbf {r}).}}{12}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{15}{figure.caption.26}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Relación entre las familias de algoritmos utilizadas en esta investigación. Los cuatro métodos evaluados son libres de modelo y se derivan de las líneas DQN y PPO.}}{17}{figure.caption.27}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción Agente-Entorno en un esquema MARL cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf {a}$) que modifica el estado global del entorno de tráfico.}}{23}{figure.caption.34}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{25}{figure.caption.36}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de actualización secuencial de HAPPO. A diferencia de PPO Independiente, la actualización de cada agente está matemáticamente condicionada por el cociente de probabilidad compuesto $M_{i_m}$, que propaga los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{30}{figure.caption.42}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Movimientos vehiculares, fases y cruces peatonales}}{6}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{6}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{9}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{12}{figure.caption.27}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{13}{figure.caption.30}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Elementos geométricos y conexiones de una intersección semaforizada en SUMO bajo sentido de circulación por la derecha (Argentina): carriles entrantes ($L_{\text {in}}$), salientes ($L_{\text {out}}$), líneas de detención y enlaces de cruzamiento (\textit {links}) en verde prioritario (\textbf {G}) y rojo retenido en conflicto (\textbf {r}).}}{15}{figure.caption.34}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{19}{figure.caption.40}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Arquitectura actor-crítico aplicada al control semafórico. El actor selecciona una acción y el crítico evalúa la transición para construir la señal que actualiza ambos componentes. Elaboración propia a partir de \cite {konda2003actorcritic,suttonRL}.}}{22}{figure.caption.49}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Relación entre las familias de algoritmos utilizadas en esta investigación. Los cuatro métodos evaluados son libres de modelo y se derivan de las líneas DQN y PPO.}}{23}{figure.caption.50}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Operaciones de una unidad neuronal artificial: combinación afín de las entradas y aplicación de una función de activación.}}{24}{figure.caption.54}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Arquitectura conceptual de una red neuronal \textit {feedforward}. Cada columna representa una capa y las conexiones se dirigen desde la entrada hacia la salida; las expresiones inferiores indican la transformación afín seguida de la activación en cada capa.}}{25}{figure.caption.56}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Flujo conceptual de DQN con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del blanco TD. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{28}{figure.caption.62}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Red de política para un espacio discreto de fases. La observación determina una distribución de acciones; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite {suttonRL,konda2003actorcritic}.}}{30}{figure.caption.66}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{35}{figure.caption.81}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (CTDE). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{37}{figure.caption.87}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Esquema de actualización secuencial de HAPPO. A diferencia de PPO independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{43}{figure.caption.108}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico secuencial de la investigación experimental.}}{34}{figure.caption.44}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico secuencial de la investigación experimental.}}{48}{figure.caption.119}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases UML de la infraestructura del entorno de simulación y controladores semafóricos.}}{48}{figure.caption.60}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Diagrama de clases UML de la jerarquía de funciones de recompensa (Patrones Strategy y Composite).}}{49}{figure.caption.61}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases UML de la infraestructura del entorno de simulación y controladores semafóricos.}}{68}{figure.caption.203}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Diagrama de clases UML de la jerarquía de funciones de recompensa (Patrones Strategy y Composite).}}{69}{figure.caption.205}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
