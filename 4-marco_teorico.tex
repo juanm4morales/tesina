@@ -894,9 +894,9 @@ Una vez obtenida la salida y evaluada la pérdida, el recorrido de la retropropa
 
 En un problema supervisado el objetivo puede ser una etiqueta o un valor conocido; en \acrshort{acr-rl}, en cambio, el objetivo se construye a partir de las recompensas y transiciones producidas por la interacción con el entorno. La red aprende a aproximar ese objetivo, pero no define por sí misma qué comportamiento debe considerarse bueno.
 
-\subsection[Aprendizaje por Refuerzo Profundo (DRL)]{Aprendizaje por Refuerzo Profundo (\gls{acr-drl})}
+\subsection[Aprendizaje por Refuerzo Profundo (DRL)]{Aprendizaje por Refuerzo Profundo (\acrshort{acr-drl})}
 
-El \gls{acr-drl} combina algoritmos de \acrshort{acr-rl} con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
+El \acrshort{acr-drl} combina algoritmos de \acrshort{acr-rl} con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
 
 \subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
 
@@ -1089,7 +1089,7 @@ Para limitar el riesgo de actualizaciones demasiado grandes, Kakade y Langford \
     J(\pi_{k+1}) \ge J(\pi_k)
     \label{eq:garantia_trpo}
 \end{equation}
-La ecuación \eqref{eq:garantia_trpo} corresponde al procedimiento teórico de \acrshort{acr-trpo} y depende de sus supuestos; en ella, $J(\pi_k)$ representa el desempeño esperado de la política en la iteración $k$. La \acrshort{acr-trpo} implementa esta idea mediante una restricción explícita sobre la divergencia de Kullback--Leibler (\gls{acr-kl}). Por su parte, la \gls{acr-ppo} \cite{schulman2017ppo} utiliza un objetivo sustituto recortado (\gls{acr-clip}) computable con métodos de primer orden. El recorte limita el incentivo a realizar cambios excesivos para las muestras consideradas, pero no constituye una región de confianza, no impone una cota sobre el cambio total de la política y no garantiza una mejora monótona en cada actualización.
+La ecuación \eqref{eq:garantia_trpo} corresponde al procedimiento teórico de \acrshort{acr-trpo} y depende de sus supuestos; en ella, $J(\pi_k)$ representa el desempeño esperado de la política en la iteración $k$. La \acrshort{acr-trpo} implementa esta idea mediante una restricción explícita sobre la divergencia de Kullback--Leibler (\acrshort{acr-kl}). Por su parte, la \gls{acr-ppo} \cite{schulman2017ppo} utiliza un objetivo sustituto recortado (\acrshort{acr-clip}) computable con métodos de primer orden. El recorte limita el incentivo a realizar cambios excesivos para las muestras consideradas, pero no constituye una región de confianza, no impone una cota sobre el cambio total de la política y no garantiza una mejora monótona en cada actualización.
 
 Dada la razón de probabilidad entre la política actual y la anterior:
 \begin{equation}

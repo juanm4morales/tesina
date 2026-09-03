@@ -657,7 +657,6 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsi0800.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
@@ -670,6 +669,7 @@ INPUT ./imagenes/non_stationary_papel_piedra.jpeg
 INPUT ./imagenes/non_stationary_papel_piedra.jpeg
 INPUT ./imagenes/non_stationary_papel_piedra.jpeg
 INPUT ./imagenes/non_stationary_papel_piedra.jpeg
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm
 INPUT ./5-metodologia.tex
 INPUT ./5-metodologia.tex
 OUTPUT 5-metodologia.aux
