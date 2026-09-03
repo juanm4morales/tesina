@@ -4,7 +4,7 @@
 \glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$s$ (estado global)?\glossentry{estado_global}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$o_i$ (observación local)?\glossentry{observacion_local}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{$a_i$ (acción)?\glossentry{accion}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$a_i, A_t$ (acción)?\glossentry{accion}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$r_t$ (recompensa)?\glossentry{recompensa_t}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\gamma $ (factor de descuento)?\glossentry{gamma}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$Q(s,a)$ (valor de acción)?\glossentry{q_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{ix}
@@ -32,6 +32,10 @@
 \glossaryentry{$V_t^{"\text {target}}$ (valor objetivo)?\glossentry{valor_objetivo_vt}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$S["\pi _"\theta ]$ (entropía de la política)?\glossentry{entropia_politica}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\hat {A}_t$ (ventaja estimada)?\glossentry{ventaja_estimada}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$W_{"\text {net}}$ (demora acumulada global)?\glossentry{demora_wnet}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$"\rho _{"\mathrm {coop}}$ (ponderación cooperativa)?\glossentry{rho_coop}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$M_{i_{1:m}}$ (factor de reponderación HAPPO)?\glossentry{factor_m_happo}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$G_{"\text {wait}}$ (coeficiente de Gini de esperas)?\glossentry{gini_wait}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{ix}
