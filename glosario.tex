@@ -29,8 +29,8 @@
 }
 
 \newglossaryentry{accion}{
-    name={$a_i$ (acción)},
-    description={Decisión ejecutada por el agente $i$ en un paso temporal. En el control semafórico representa la fase o la modificación de fase seleccionada por el controlador}
+    name={$a_i, A_t$ (acción)},
+    description={Decisión ejecutada por un agente. En formulaciones temporales, $A_t$ denota la variable aleatoria de acción en el paso $t$; en entornos multiagente, $a_i$ representa la acción local del agente $i$ y $\mathbf{a} = (a_1, \dots, a_n)$ la acción conjunta. En el control semafórico corresponde a la fase asignada a la intersección}
 }
 
 \newglossaryentry{recompensa_t}{
@@ -70,7 +70,7 @@
 
 \newglossaryentry{tasa_aprendizaje_alpha}{
     name={$\alpha$ (tasa de aprendizaje)},
-    description={Paso de actualización que regula cuánto se modifican las estimaciones de valor o los parámetros en cada iteración de aprendizaje}
+    description={Paso de actualización que regula la magnitud del ajuste de los parámetros o valores en cada iteración de aprendizaje. En arquitecturas actor--crítico se especializa mediante subíndices, tales como $\alpha_\theta$ para la red del actor y $\alpha_\phi$ (o $\eta$) para el crítico}
 }
 
 \newglossaryentry{tasa_aprendizaje_eta}{
@@ -165,7 +165,27 @@
 
 \newglossaryentry{ventaja_estimada}{
     name={$\hat{A}_t$ (ventaja estimada)},
-    description={Estimación de cuánto mejor o peor fue la acción observada en el paso $t$ respecto del valor esperado bajo la política vigente}
+    description={Estimación del valor de la función de ventaja en el paso temporal $t$ (habitualmente calculada mediante GAE), que cuantifica cuánto supera o desmejora el rendimiento de la acción ejecutada respecto del valor basal esperado del estado}
+}
+
+\newglossaryentry{demora_wnet}{
+    name={$W_{\text{net}}$ (demora acumulada global)},
+    description={Métrica operacional agregada que cuantifica la suma de los tiempos de espera de todos los vehículos detenidos en la red durante la ventana de evaluación, expresada en vehículo$\cdot$segundo ($\text{veh}\,\text{s}$)}
+}
+
+\newglossaryentry{rho_coop}{
+    name={$\rho_{\mathrm{coop}}$ (ponderación cooperativa)},
+    description={Coeficiente en el intervalo $[0, 0.95]$ que pondera la combinación convexa entre la señal de recompensa local de una intersección y el promedio de su vecindario topológico}
+}
+
+\newglossaryentry{factor_m_happo}{
+    name={$M_{i_{1:m}}$ (factor de reponderación HAPPO)},
+    description={Factor acumulativo de razones de probabilidad que repondera la ventaja conjunta en la actualización secuencial de HAPPO para reflejar los cambios de política de los agentes predecesores}
+}
+
+\newglossaryentry{gini_wait}{
+    name={$G_{\text{wait}}$ (coeficiente de Gini de esperas)},
+    description={Índice adimensional entre 0 y 1 que cuantifica el grado de desigualdad en la distribución espacial de los tiempos de espera medios entre las intersecciones semaforizadas de la red}
 }
 
 \newglossaryentry{recompensa}{

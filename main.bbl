@@ -198,14 +198,6 @@
 \newblock \btxjournalfont {Engineering Applications of Artificial
   Intelligence}, 114:105019, 2022.
 
-\bibitem [{{Hug}nd}]{huggingface_two_methods}
-\btxnamefont {\btxlastnamefont {{Hugging Face}}}\btxauthorcolon\ \btxtitlefont
-  {\btxifchangecase {Two main approaches for solving rl problems}{Two Main
-  Approaches for Solving RL Problems}}.
-\newblock \url{https://huggingface.co/learn/deep-rl-course/unit1/two-methods},
-  n.d.
-\newblock Hugging Face Deep Reinforcement Learning Course.
-
 \bibitem [{KCW{\etalchar{+}}22}]{kuba2021trust}
 \btxnamefont {\btxlastnamefont {Kuba}, Jakub\btxfnamespacelong Grudzien},
   \btxnamefont {Ruiqing \btxlastnamefont {Chen}}, \btxnamefont {Muning

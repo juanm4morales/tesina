@@ -19,7 +19,7 @@
 \contentsline {section}{\numberline {2.2}Aprendizaje por Refuerzo (RL)}{23}{section.42}%
 \contentsline {subsection}{\numberline {2.2.1}Procesos de Decisión de Markov (MDP)}{24}{subsection.43}%
 \contentsline {subsection}{\numberline {2.2.2}Métodos Basados en Valor y Basados en Política}{25}{subsection.47}%
-\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{29}{subsection.56}%
+\contentsline {subsection}{\numberline {2.2.3}Aprendizaje Profundo y Redes Neuronales}{30}{subsection.56}%
 \contentsline {subsubsection}{La Unidad Neuronal y Redes \textit {Feedforward}}{30}{subsubsection*.57}%
 \contentsline {subsubsection}{El Proceso de Optimización}{32}{subsubsection*.62}%
 \contentsline {subsection}{\numberline {2.2.4}Aprendizaje por Refuerzo Profundo (DRL)}{33}{subsection.64}%
