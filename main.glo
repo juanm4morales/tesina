@@ -69,16 +69,15 @@
 \glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{47}
 \glossaryentry{$s$ (estado global)?\glossentry{estado_global}|setentrycounter[]{page}"\glsnumberformat}{48}
 \glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{48}
-\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{48}
 \glossaryentry{$o_i$ (observación local)?\glossentry{observacion_local}|setentrycounter[]{page}"\glsnumberformat}{48}
 \glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{48}
-\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{56}
-\glossaryentry{telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{67}
-\glossaryentry{marco de trabajo ("\textit {framework})?\glossentry{framework}|setentrycounter[]{page}"\glsnumberformat}{67}
-\glossaryentry{"\textit {binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{67}
-\glossaryentry{serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{67}
-\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{77}
-\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{77}
-\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{77}
-\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{77}
-\glossaryentry{"\textit {bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{83}
+\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{57}
+\glossaryentry{telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{68}
+\glossaryentry{marco de trabajo ("\textit {framework})?\glossentry{framework}|setentrycounter[]{page}"\glsnumberformat}{68}
+\glossaryentry{"\textit {binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{68}
+\glossaryentry{serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{68}
+\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{78}
+\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{78}
+\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{78}
+\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{78}
+\glossaryentry{"\textit {bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{84}
