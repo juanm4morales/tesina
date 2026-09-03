@@ -9,7 +9,7 @@ Para estructurar la exposición, el desarrollo se organiza en tres secciones pri
     \item \textbf{Aprendizaje por Refuerzo Multi-Agente (la sección \ref{sec:marl}):} Extiende la formulación a sistemas distribuidos mediante juegos estocásticos y Procesos de Decisión de Markov Parcialmente Observables Descentralizados (\textit{Decentralized Partially Observable Markov Decision Processes}, \acrshort{acr-decpomdp}). Se analizan los desafíos de no estacionariedad y asignación de crédito, los paradigmas de entrenamiento y ejecución (con énfasis en entrenamiento centralizado con ejecución descentralizada), y las arquitecturas cooperativas \acrshort{acr-mappo} y \acrshort{acr-happo}, detallando el lema de descomposición de la ventaja y las garantías teóricas de mejora monótona.
 \end{itemize}
 
-El capítulo concluye en la subsección \ref{subsec:antecedentes_marl_tsc} con una revisión de la literatura reciente en control semafórico multiagente (2023--2026), clasificando los antecedentes según esquemas de coordinación, representación del estado y tratamiento de la heterogeneidad, a partir de lo cual se fundamenta el posicionamiento conceptual y la contribución del presente trabajo.
+El capítulo concluye en la subsección \ref{subsec:antecedentes_marl_tsc} con una revisión de la literatura reciente en control semafórico multiagente (2022--2026), clasificando los antecedentes según esquemas de coordinación, representación del estado y tratamiento de la heterogeneidad, a partir de lo cual se fundamenta el posicionamiento conceptual y la contribución del presente trabajo.
 
 \section{Ingeniería de Tránsito y Simulación}\label{sec:ingenieria_transito}
 
@@ -885,9 +885,9 @@ El \acrshort{acr-drl} combina algoritmos de \acrshort{acr-rl} con aproximadores 
 
 La integración de aproximadores no lineales con aprendizaje por refuerzo puede inducir inestabilidad numérica o divergencia en las estimaciones si no se controlan las condiciones de actualización. Sutton y Barto \cite{suttonRL} formalizan este fenómeno mediante la denominada Tríada Mortal (\textit{Deadly Triad}), originada por la concurrencia de tres elementos:
 \begin{itemize}
-    \item \textbf{Aproximación de funciones no lineal:} El empleo de redes profundas para generalizar a través de estados continuos o de alta dimensionalidad.
-    \item \textbf{Bootstrapping:} La actualización de estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (métodos \gls{acr-td}), prescindiendo de retornos empíricos completos.
-    \item \textbf{Entrenamiento \textit{off-policy}:} El aprendizaje sustentado en una distribución de datos generada por una política de comportamiento distinta de la política objetivo.
+    \item \textbf{Aproximación de funciones no lineal:} el empleo de redes profundas para generalizar a través de estados continuos o de alta dimensionalidad.
+    \item \textbf{Bootstrapping:} la actualización de estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (métodos \gls{acr-td}), prescindiendo de retornos empíricos completos.
+    \item \textbf{Entrenamiento \textit{off-policy}:} el aprendizaje sustentado en una distribución de datos generada por una política de comportamiento distinta de la política objetivo.
 \end{itemize}
 Aunque prescindir del \textit{bootstrapping} o de la aproximación de funciones comprometería la eficiencia muestral o la escalabilidad ante redes viales complejas, los algoritmos profundos modernos introducen mecanismos arquitectónicos específicos para amortiguar esta inestabilidad \cite{suttonRL}.
 
@@ -897,8 +897,8 @@ En los métodos basados en valor, \acrshort{acr-dqn} sustituye la tabla de estad
 
 Para mitigar la inestabilidad de la Tríada Mortal —en particular el problema del blanco móvil, donde actualizar el valor de un estado altera impredeciblemente las estimaciones de estados adyacentes—, \acrshort{acr-dqn} incorpora dos componentes estructurales \cite{mnih2015}:
 \begin{itemize}
-    \item \textbf{Redes objetivo (\textit{Target Networks}):} Una red secundaria idéntica cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular el término de \textit{bootstrapping} del blanco \gls{acr-td}, desacoplando la estimación en curso del objetivo de aprendizaje y amortiguando oscilaciones.
-    \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} Almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un búfer $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
+    \item \textbf{Redes objetivo (\textit{Target Networks}):} una red secundaria idéntica cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular el término de \textit{bootstrapping} del blanco \gls{acr-td}, desacoplando la estimación en curso del objetivo de aprendizaje y amortiguando oscilaciones.
+    \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un búfer $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
 \end{itemize}
 
 Durante la interacción con SUMO, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar; la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los \textit{minibatches} muestreados del búfer contra el blanco fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
@@ -1045,7 +1045,7 @@ Para estimar la ventaja sin incurrir en la alta varianza del retorno Monte Carlo
     \hat{A}_t^{\text{GAE}(\gamma, \lambda)} \doteq \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}^V
     \label{eq:gae}
 \end{equation}
-donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t)$ es el error temporal del crítico parametrizado por $\phi$, $d_{t+1}$ es el indicador terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el parámetro de suavizado exponencial. El hiperparámetro $\lambda$ interpola continuamente entre dos regímenes canónicos: $\lambda = 0$ reduce la ventaja a la estimación de un paso $\delta_t^V$ (mínima varianza, sesgo condicionado por la precisión del crítico), mientras que $\lambda = 1$ converge al estimador empírico insesgado de Monte Carlo (máxima varianza).
+donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t)$ es el error temporal del crítico parametrizado por $\phi$, $d_{t+1}$ es el indicador terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el parámetro de suavizado exponencial. El hiperparámetro $\lambda$ interpola estimaciones de ventaja de distintos horizontes. Para $\lambda = 0$, se obtiene el residuo TD de un paso $\delta_t^V$, que suele reducir la varianza a costa de depender de la precisión del crítico y, por tanto, puede introducir sesgo. Para $\lambda = 1$, con el retorno completo, se recupera el estimador Monte Carlo descontado menos el valor del estado; este es $\gamma$-justo incluso con un crítico aproximado, aunque normalmente presenta mayor varianza. En trayectorias truncadas, el \textit{bootstrap} y la aproximación del crítico pueden modificar este compromiso.
 
 El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) \cite{suttonRL} fundamenta analíticamente la optimización directa de los parámetros de la política maximizando el retorno esperado $J(\theta)$. Empleando la función de ventaja como línea de base para mitigar la varianza, el gradiente se aproxima mediante la esperanza muestral sobre un lote de transiciones recolectadas:
 \begin{equation}
@@ -1058,12 +1058,12 @@ donde $\pi_\theta(A_t \mid S_t)$ denota la probabilidad asignada a la fase $A_t$
 
 Los métodos clásicos de gradiente de política exhiben una elevada sensibilidad a la magnitud de la tasa de paso: una actualización excesiva en el espacio de parámetros puede degradar abruptamente el rendimiento de la política, desplazándola a regiones del espacio de estados donde la recolección de trayectorias queda irreparablemente sesgada.
 
-Para acotar el tamaño de paso en el espacio de distribuciones de probabilidad, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (\gls{acr-trpo} \cite{schulman2015trust}) formularon métodos de región de confianza. En el marco analítico de \acrshort{acr-trpo}, restringir la divergencia de Kullback--Leibler (\acrshort{acr-kl}) entre políticas sucesivas permite garantizar una mejora monótona en el rendimiento esperado:
+Para acotar el tamaño de paso en el espacio de distribuciones de probabilidad, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (\gls{acr-trpo} \cite{schulman2015trust}) formularon métodos de región de confianza. En el análisis teórico de \acrshort{acr-trpo}, bajo los supuestos del modelo y una actualización que respete la región de confianza basada en la divergencia de Kullback--Leibler (\acrshort{acr-kl}), la maximización exacta de la cota sustituta produce una política con retorno esperado no decreciente:
 \begin{equation}
     J(\pi_{k+1}) \ge J(\pi_k)
     \label{eq:garantia_trpo}
 \end{equation}
-Sin embargo, resolver la optimización cuadrática con restricciones de \acrshort{acr-trpo} en redes neuronales profundas resulta computacionalmente oneroso. Como alternativa de primer orden, \acrshort{acr-ppo} \cite{schulman2017ppo} aproxima este control de paso reemplazando la restricción formal por un objetivo sustituto recortado (\acrshort{acr-clip}).
+El algoritmo práctico de \acrshort{acr-trpo} aproxima este procedimiento mediante ventajas estimadas, una divergencia KL promedio y optimización numérica. Sin embargo, resolver la optimización cuadrática con restricciones de \acrshort{acr-trpo} en redes neuronales profundas resulta computacionalmente oneroso. Como alternativa de primer orden, \acrshort{acr-ppo} \cite{schulman2017ppo} reemplaza la restricción formal por un objetivo sustituto recortado (\acrshort{acr-clip}) que busca limitar actualizaciones excesivas, sin transferir automáticamente la garantía teórica de \acrshort{acr-trpo}.
 
 Definiendo la razón de probabilidad entre la política actual y la previa:
 \begin{equation}
@@ -1202,19 +1202,19 @@ La Figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente 
 La transición desde el aprendizaje individual hacia el dominio multiagente introduce desafíos teóricos y computacionales específicos \cite{marlbook}:
 
 \begin{itemize}
-    \item \textbf{Explosión combinatoria del espacio de acciones conjuntas:} Si cada controlador $i$ dispone de un conjunto de acciones locales $\mathcal{A}_i$, la cardinalidad del espacio de acciones conjuntas escala exponencialmente con el número de intersecciones:
+    \item \textbf{Explosión combinatoria del espacio de acciones conjuntas:} Si cada controlador $i$ dispone de un conjunto de acciones locales $\mathcal{A}_i$, la cardinalidad del espacio de acciones conjuntas es:
     \begin{equation}
-        \left|\boldsymbol{\mathcal{A}}\right| = \prod_{i=1}^{n} \left|\mathcal{A}_i\right| = \mathcal{O}(|\mathcal{A}|^n).
+        \left|\boldsymbol{\mathcal{A}}\right| = \prod_{i=1}^{n} \left|\mathcal{A}_i\right|.
         \label{eq:espacio_acciones_conjunto}
     \end{equation}
-    Para una red de escala urbana, evaluar o enumerar exhaustivamente $\boldsymbol{\mathcal{A}}$ resulta computacionalmente intratable, lo que exige diseñar políticas de decisión localmente descentralizadas.
+    Cuando todos los controladores poseen $A$ acciones, esta cardinalidad es $A^n$ y, por tanto, crece exponencialmente con el número de agentes. Para una red de escala urbana, evaluar o enumerar exhaustivamente $\boldsymbol{\mathcal{A}}$ deja de ser una alternativa viable, lo que motiva el diseño de enfoques escalables, como políticas de decisión localmente descentralizadas.
     
     \item \textbf{No estacionariedad y el problema del blanco móvil:} Desde la perspectiva local del agente $i$, la función de transición ambiental percibida:
     \begin{equation}
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
         \label{eq:no_estacionariedad}
     \end{equation}
-    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, esta mutabilidad induce el problema del blanco móvil (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede tornarse deficiente en cuanto estos ajustan sus parámetros. Esta violación de la propiedad de Markov anula las garantías clásicas de convergencia de los métodos concebidos para MDPs estáticos \cite{foerster2017,liang2025marlreview}.
+    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, esta mutabilidad induce el problema del blanco móvil (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede tornarse deficiente en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica efectiva percibida por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en MDPs estacionarios dejan de ser suficientes \cite{foerster2017,liang2025marlreview}.
     
     En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \gls{acr-wolf-phc} (\textit{Win or Learn Fast Policy Hill-Climbing}) modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para evacuar un pelotón, alterando abruptamente los arribos en los cruces receptores; si los agentes aprenden sin coordinación, corren el riesgo de generar oscilaciones destructivas en las colas de la red.
 
@@ -1236,7 +1236,7 @@ Para mitigar la no estacionariedad respetando la observabilidad parcial de los c
 
 \begin{itemize}
     \item \textbf{Aprendizaje Independiente (\acrshort{acr-il}, \textit{Independent Learning}):} Cada controlador se optimiza de forma totalmente descentralizada tratando a los demás agentes como componentes estocásticos del entorno. Aunque computacionalmente simple y altamente escalable, es susceptible a la inestabilidad por no estacionariedad.
-    \item \textbf{Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort{acr-ctde}):} Durante la etapa de entrenamiento en el simulador, se aprovecha información global privilegiada (estados conjuntos o concatenaciones de observaciones) para coordinar la evaluación y reducir la varianza de las estimaciones; durante la etapa de ejecución en tiempo real, el módulo centralizado se desacopla por completo y cada agente opera autónomamente con su política local. La Figura \ref{fig:ctde_architecture} ilustra esta arquitectura bifásica.
+    \item \textbf{Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort{acr-ctde}):} Durante la etapa de entrenamiento en el simulador, se aprovecha información global privilegiada (estados conjuntos o concatenaciones de observaciones) para coordinar la evaluación y reducir la varianza de las estimaciones; durante la etapa de ejecución, el componente centralizado se desacopla y cada agente opera con su política local. La Figura \ref{fig:ctde_architecture} ilustra esta separación entre etapas.
 \end{itemize}
 
 \subsection[MADRL y líneas de base]{\gls{acr-madrl} y líneas de base}
@@ -1303,7 +1303,7 @@ La Figura \ref{fig:ctde_architecture} resume esta partición operativa entre amb
 
 \subsection[MAPPO]{Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo})}\label{subsec:mappo}
 
-Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto multiagente bajo el paradigma \acrshort{acr-ctde}, Yu et al. \cite{yu2022surprising} desarrollaron \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo}). En lugar de rediseñar el estimador base, MAPPO preserva la simplicidad computacional de PPO mediante la factorización explícita entre políticas descentralizadas y evaluación centralizada:
+Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto multiagente bajo el paradigma \acrshort{acr-ctde}, Yu et al. \cite{yu2022surprising} estudiaron una configuración de \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo}) basada en PPO y un crítico centralizado. En lugar de rediseñar el estimador base, MAPPO preserva la simplicidad computacional de PPO mediante la factorización explícita entre políticas descentralizadas y evaluación centralizada:
 \begin{itemize}
     \item \textbf{Actores descentralizados ($\pi_{\theta_i}(a_i \mid o_i)$):} Cada controlador $i$ procesa exclusivamente su vector de observación local $o_i$ para seleccionar su fase semafórica $a_i$. En intersecciones con geometrías idénticas puede compartirse parámetros entre actores, aunque esto no constituye una restricción conceptual.
     \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, una red de valor evalúa el estado global $s$ de la red vial, permitiendo computar ventajas conjuntas $\hat{A}_t(s_t, \mathbf{a}_t)$ vía \acrshort{acr-gae} que reducen la varianza inducida por la no estacionariedad \cite{yu2022surprising}.
@@ -1322,11 +1322,11 @@ donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\t
 
 \subsubsection{Factores Críticos de Diseño y Optimización en \acrshort{acr-mappo}}
 
-Yu et al. \cite{yu2022surprising} identificaron que la eficacia empírica de \acrshort{acr-mappo} depende rigurosamente de decisiones de ingeniería algorítmica:
+Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de implementación e hiperparámetros que afectan el rendimiento de \acrshort{acr-mappo}:
 \begin{enumerate}
-    \item \textbf{Normalización de retornos:} Escalar y centrar los retornos acumulados estabiliza la regresión del crítico ante variaciones dinámicas del volumen de tráfico.
-    \item \textbf{Estructuración del estado global del crítico:} La entrada $s$ del crítico puede adoptar diversas representaciones: concatenación directa de observaciones ($CL: s = (o_1, \dots, o_n)$), estado global extraído directamente del simulador ($EP$), o estados aumentados específicos por agente ($AS_i = EP \cup o_i$), combinados opcionalmente con filtrado de redundancias ($FP$).
-    \item \textbf{Reutilización restringida de datos y recorte:} Limitar el número de \textit{epochs} ($K$) y calibrar el tamaño de los \textit{minibatches} previene que la política sufra sobreajuste o desfasajes excesivos respecto al lote recién recolectado.
+    \item \textbf{Normalización de retornos:} En los experimentos de Yu et al., normalizar los objetivos de valor puede favorecer el ajuste del crítico cuando cambia la escala de las recompensas.
+    \item \textbf{Estructuración del estado global del crítico:} En ese estudio, la entrada $s$ se evaluó con distintas representaciones: concatenación directa de observaciones ($CL: s = (o_1, \dots, o_n)$), estado global extraído directamente del simulador ($EP$), o estados aumentados específicos por agente ($AS_i = EP \cup o_i$), combinados opcionalmente con filtrado de redundancias ($FP$).
+    \item \textbf{Reutilización de datos:} La cantidad de \textit{epochs} ($K$) y la división en \textit{minibatches} regulan la reutilización del lote. Yu et al. observaron que una reutilización excesiva puede deteriorar el rendimiento, especialmente en tareas difíciles.
 \end{enumerate}
 
 El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-mappo} bajo el paradigma CTDE.
@@ -1426,12 +1426,12 @@ y se propaga recursivamente hacia los agentes pendientes mediante:
 
 \subsubsection{Garantía de Mejora Monótona}
 
-Bajo restricciones teóricas de región de confianza basadas en la divergencia KL, el procedimiento secuencial garantiza analíticamente una mejora monótona en el retorno conjunto \cite{kuba2021trust}:
+Bajo los supuestos del modelo cooperativo y restricciones teóricas de región de confianza basadas en la divergencia KL, el procedimiento secuencial de actualización garantiza analíticamente una mejora monótona en el retorno conjunto \cite{kuba2021trust}:
 \begin{equation}
     J(\boldsymbol{\pi}_{k+1}) \ge J(\boldsymbol{\pi}_k).
     \label{eq:garantia_happo}
 \end{equation}
-En la práctica computacional, \acrshort{acr-happo} sustituye la cota KL por el objetivo recortado CLIP de primer orden, haciendo la optimización viable en redes profundas a cambio de relajar la estrictez de la garantía teórica. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
+En la práctica computacional, \acrshort{acr-happo} puede sustituir la restricción KL por un objetivo recortado \acrshort{acr-clip} de primer orden para hacer viable la optimización con redes profundas. Esta sustitución constituye una aproximación al esquema de región de confianza: la garantía teórica demostrada para la variante con restricción KL no se transfiere automáticamente a la variante con recorte. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
 
 \begin{figure}[H]
     \centering
