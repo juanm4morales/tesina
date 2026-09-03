@@ -636,7 +636,7 @@ Cuando la dinámica del entorno no se conoce completamente, estas funciones pued
     Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t) \right]
     \label{eq:q_learning}
 \end{equation}
-En esta ecuación, $Q(S_t, A_t)$ es la estimación del valor de la acción $A_t$ en el estado $S_t$, $\alpha \in (0, 1]$ representa la tasa de aprendizaje (\textit{learning rate}), $R_{t+1}$ es la recompensa observada, $\gamma$ es el factor de descuento, y $\max_a Q(S_{t+1}, a)$ estima el valor máximo alcanzable en el siguiente estado $S_{t+1}$. La ecuación \eqref{eq:q_learning} muestra cómo una nueva observación de tránsito corrige el valor asignado a la fase ejecutada.
+En esta ecuación, $Q(S_t, A_t)$ es la estimación del valor de la acción $A_t$ en el estado $S_t$, $\alpha \in (0, 1]$ representa la tasa de aprendizaje (\textit{learning rate}), $R_{t+1}$ es la recompensa observada, $\gamma$ es el factor de descuento, y $\max_a Q(S_{t+1}, a)$ estima el valor máximo alcanzable en el siguiente estado $S_{t+1}$. La ecuación \eqref{eq:q_learning} muestra cómo una nueva observación de tránsito corrige el valor asignado a la acción ejecutada.
 
 Q-learning es un método \textit{off-policy}: la política que genera las transiciones puede diferir de la política cuyo valor óptimo se estima. En cambio, los métodos de gradiente de política utilizan, en principio, muestras generadas por la política que se está optimizando y se consideran \textit{on-policy}. Esta distinción resulta central para comparar \gls{acr-idqn} con \gls{acr-ippo}, \gls{acr-mappo} y \gls{acr-happo}, especialmente en entornos multiagente donde las políticas de los demás agentes cambian durante el entrenamiento.
 
@@ -645,7 +645,7 @@ Por el contrario, los métodos basados en política parametrizan directamente la
     \theta_{t+1} = \theta_t + \alpha \nabla J(\theta_t)
     \label{eq:ascenso_gradiente}
 \end{equation}
-La ecuación \eqref{eq:ascenso_gradiente} incrementa los parámetros en la dirección del gradiente del rendimiento. En esta ecuación, $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento respecto a los parámetros de la política y $\alpha>0$ es la tasa de paso que determina el tamaño de la actualización. El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporciona la base teórica para estimar este gradiente sin derivar explícitamente la distribución de estados inducida por la política \cite{suttonRL}. En este trabajo, el ascenso modifica la política para aumentar la probabilidad de fases que producen mejores recompensas de demora.
+La ecuación \eqref{eq:ascenso_gradiente} incrementa los parámetros en la dirección del gradiente del rendimiento. En esta ecuación, $\nabla J(\theta_t)$ representa el gradiente de la función de rendimiento respecto a los parámetros de la política y $\alpha>0$ es la tasa de paso que determina el tamaño de la actualización. El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) proporciona la base teórica para estimar este gradiente sin derivar explícitamente la distribución de estados inducida por la política \cite{suttonRL}. En este trabajo, el ascenso modifica la política para aumentar la probabilidad de acciones que producen mejores recompensas de demora.
 
 Los métodos actor-crítico combinan una política parametrizada con una estimación de valor y actualizan ambos componentes de manera concurrente \cite{konda2003actorcritic,suttonRL}. El \textbf{actor} representa la política $\pi_\theta(a\mid s)$ y determina la distribución utilizada para seleccionar la acción. El \textbf{crítico} no controla el entorno: estima, por ejemplo, el valor de estado $V_\phi(s)$ y produce una señal que indica si el resultado observado fue mejor o peor que lo esperado bajo la política vigente. Los parámetros $\theta$ y $\phi$ pueden pertenecer a redes separadas o a una arquitectura con capas compartidas y cabezales distintos.
 
@@ -662,7 +662,7 @@ La ecuación \eqref{eq:actor_critic_td} define el error temporal que utiliza el 
 \end{equation}
 La actualización del actor queda expresada en \eqref{eq:actor_critic_update}, donde $\alpha_\theta>0$ es su tasa de aprendizaje y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ indica cómo cambia la log-probabilidad de la acción ejecutada al modificar los parámetros. Multiplicar este término por $\delta_t$ aumenta, en promedio, la probabilidad de acciones con resultados mejores que los previstos y la reduce cuando ocurre lo contrario. Esta forma canónica permite explicar el intercambio de información entre ambos componentes, aunque los algoritmos modernos suelen sustituir $\delta_t$ por estimadores de ventaja que combinan varios pasos, como \gls{acr-gae}, y realizan las actualizaciones sobre \textit{minibatches}.
 
-La Figura \ref{fig:actor_critic} representa el ciclo completo de aprendizaje. La observación $S_t$ ingresa al \gls{actor}, que aplica la política $\pi_\theta$ y selecciona la fase $A_t$; el \gls{entorno} devuelve la recompensa $R_{t+1}$, el estado siguiente $S_{t+1}$ y el indicador terminal $d_{t+1}$. El \gls{critico} recibe la información de la transición y estima los valores $V_\phi(S_t)$ y $V_\phi(S_{t+1})$, con los que calcula el error temporal $\delta_t$ o una ventaja $\hat A_t$. Las flechas continuas representan la interacción con el entorno y las discontinuas el flujo de aprendizaje que ajusta los parámetros del actor; de este modo, la figura distingue la decisión operativa de la evaluación utilizada para entrenarla.
+La Figura \ref{fig:actor_critic} representa el ciclo completo de aprendizaje. La observación $S_t$ ingresa al \gls{actor}, que aplica la política $\pi_\theta$ y selecciona la acción $A_t$ (que en este dominio determina la fase semafórica a activar); el \gls{entorno} devuelve la recompensa $R_{t+1}$, el estado siguiente $S_{t+1}$ y el indicador terminal $d_{t+1}$. El \gls{critico} recibe la información de la transición y estima los valores $V_\phi(S_t)$ y $V_\phi(S_{t+1})$, con los que calcula el error temporal $\delta_t$ o una ventaja $\hat A_t$. Las flechas continuas representan la interacción con el entorno y las discontinuas el flujo de aprendizaje que ajusta los parámetros del actor; de este modo, la figura distingue la decisión operativa de la evaluación utilizada para entrenarla.
 
 \begin{figure}[H]
     \centering
@@ -687,7 +687,7 @@ La Figura \ref{fig:actor_critic} representa el ciclo completo de aprendizaje. La
         \node[critico] (critic) at (2.45,-1.35) {\textbf{Crítico}\\$V_\phi(S_t)$ y $V_\phi(S_{t+1})$};
 
         \draw[flujo] (obs.east) -- (actor.west);
-        \draw[flujo] (actor.east) -- node[etiqueta, above] {fase $A_t$} (env.west);
+        \draw[flujo] (actor.east) -- node[etiqueta, above] {acción $A_t$} (env.west);
         \draw[flujo] (env.east) -- (transition.west);
         \draw[flujo] (obs.south) -- ++(0,-3.55) coordinate (statepath) -| (critic.south);
         \node[etiqueta, above] at ($(statepath)!0.72!(statepath -| critic.south)$) {$S_t$};
@@ -1017,12 +1017,12 @@ El procedimiento conceptual de \acrshort{acr-dqn} combina la recolección de tra
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-El algoritmo se lee en dos ciclos. El ciclo interno alterna una decisión en el entorno y una actualización de la red a partir de experiencias almacenadas; el externo reinicia el entorno al comienzo de cada episodio. Su entrada operacional es el vector $s_t$ con las condiciones de tránsito de la intersección, y la acción $a_t$ es una fase admisible. La recompensa $r_{t+1}$ evalúa el efecto de esa fase sobre demoras o colas, y $d_{t+1}$ detiene el episodio cuando finaliza la ejecución o se alcanza una condición terminal. La salida del entrenamiento no es una secuencia fija de fases, sino el conjunto de parámetros $\theta$ que permite estimar sus valores en nuevas observaciones. La capacidad $N$, el horizonte $T$, el tamaño de los \textit{minibatches}, $\epsilon_{\mathrm{exp}}$ y la frecuencia de copia de la red objetivo son decisiones de implementación, por lo que sus valores se especifican en la metodología y no forman parte de la definición del algoritmo.
+El algoritmo se lee en dos ciclos. El ciclo interno alterna una decisión en el entorno y una actualización de la red a partir de experiencias almacenadas; el externo reinicia el entorno al comienzo de cada episodio. Su entrada operacional es el vector $s_t$ con las condiciones de tránsito de la intersección, y la acción $a_t$ es una acción admisible (que representa una fase semafórica). La recompensa $r_{t+1}$ evalúa el efecto de esa decisión sobre demoras o colas, y $d_{t+1}$ detiene el episodio cuando finaliza la ejecución o se alcanza una condición terminal. La salida del entrenamiento no es una secuencia fija de fases, sino el conjunto de parámetros $\theta$ que permite estimar sus valores en nuevas observaciones. La capacidad $N$, el horizonte $T$, el tamaño de los \textit{minibatches}, $\epsilon_{\mathrm{exp}}$ y la frecuencia de copia de la red objetivo son decisiones de implementación, por lo que sus valores se especifican en la metodología y no forman parte de la definición del algoritmo.
 \subsubsection{Aproximación de Políticas, Función de Ventaja y \textit{Policy Gradient}}
 
-Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. En un problema de acciones discretas, la red recibe el estado u observación, calcula un puntaje para cada acción y transforma esos puntajes en una distribución de probabilidad, habitualmente mediante una función \textit{softmax}. En este trabajo, esas acciones son fases semafóricas: las observaciones de tránsito ingresan a la red y sus salidas representan probabilidades sobre las fases admisibles. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
+Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. En un problema de acciones discretas, la red recibe el estado u observación, calcula un puntaje para cada acción y transforma esos puntajes en una distribución de probabilidad, habitualmente mediante una función \textit{softmax}. En este trabajo, las acciones del agente corresponden a las fases semafóricas admisibles: las observaciones de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
 
-La Figura \ref{fig:red_politica} muestra este recorrido para un controlador semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la fase; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente de la log-probabilidad de la acción observada.
+La Figura \ref{fig:red_politica} muestra este recorrido para un controlador semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la acción; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente de la log-probabilidad de la acción observada.
 
 \begin{figure}[H]
     \centering
@@ -1044,7 +1044,7 @@ La Figura \ref{fig:red_politica} muestra este recorrido para un controlador sema
         \node[red, right=of state] (hidden) {Red neuronal\\parámetros $\theta$};
         \node[salida, right=of hidden] (logits) {Puntajes\\$z_1,\ldots,z_m$};
         \node[salida, right=of logits] (probs) {\textit{Softmax}\\$\pi_\theta(a\mid S_t)$};
-        \node[accion, right=of probs] (action) {Muestreo\\fase $A_t$};
+        \node[accion, right=of probs] (action) {Muestreo\\acción $A_t$};
         \node[ventaja, below=1.3cm of probs] (adv) {Ventaja\\$\hat A_t$};
 
         \draw[flecha] (state) -- (hidden);
@@ -1055,11 +1055,11 @@ La Figura \ref{fig:red_politica} muestra este recorrido para un controlador sema
         \draw[aprendizaje] (adv.west) -| node[etiqueta, near end, left] {actualiza $\theta$} (hidden.south);
     \end{tikzpicture}%
     }
-    \caption{Red de política para un espacio discreto de fases. La observación determina una distribución de acciones; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
+    \caption{Red de política para un espacio discreto de acciones. La observación determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
     \label{fig:red_politica}
 \end{figure}
 
-Para entender la actualización de \acrshort{acr-ppo} conviene distinguir dos estimaciones. El valor de estado $V^\pi(s)$ resume qué retorno se espera, en promedio, desde una situación; el valor de acción $Q^\pi(s,a)$ considera además la acción concreta. La diferencia entre ambos indica si una fase resultó mejor o peor que lo habitual en esa observación. Esa diferencia se denomina \textbf{Función de Ventaja} (\textit{Advantage Function}) y se define mediante la ecuación \eqref{eq:funcion_ventaja} \cite{suttonRL}:
+Para entender la actualización de \acrshort{acr-ppo} conviene distinguir dos estimaciones. El valor de estado $V^\pi(s)$ resume qué retorno se espera, en promedio, desde una situación; el valor de acción $Q^\pi(s,a)$ considera además la acción concreta. La diferencia entre ambos indica si una acción resultó mejor o peor que lo habitual en esa observación. Esa diferencia se denomina \textbf{Función de Ventaja} (\textit{Advantage Function}) y se define mediante la ecuación \eqref{eq:funcion_ventaja} \cite{suttonRL}:
 \begin{equation}
     A^\pi(s, a) \doteq Q^\pi(s, a) - V^\pi(s)
     \label{eq:funcion_ventaja}
@@ -1071,14 +1071,14 @@ En arquitecturas actor-crítico, la ventaja no suele calcularse esperando siempr
     \hat{A}_t^{\text{GAE}(\gamma, \lambda)} \doteq \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}^V
     \label{eq:gae}
 \end{equation}
-En esta ecuación, $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t)$ representa el error de \gls{acr-td} estimado por la red del crítico $V_\phi$, $d_{t+1}$ indica si la transición es terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado \gls{acr-gae}. El índice $l$ cuenta cuántos pasos posteriores se incorporan. La suma infinita expresa el caso conceptual; en una ejecución finita se corta al terminar la trayectoria o al finalizar el segmento recolectado. Los errores posteriores se atenúan mediante $(\gamma\lambda)^l$: variar $\lambda$ modifica el compromiso entre sesgo y varianza, sin garantizar por sí solo una mejora en ambos. La expresión utiliza explícitamente el mismo crítico parametrizado que interviene en el objetivo de valor y permite incorporar el efecto acumulado de una fase sobre las condiciones posteriores del tránsito.
+En esta ecuación, $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t)$ representa el error de \gls{acr-td} estimado por la red del crítico $V_\phi$, $d_{t+1}$ indica si la transición es terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el hiperparámetro de suavizado \gls{acr-gae}. El índice $l$ cuenta cuántos pasos posteriores se incorporan. La suma infinita expresa el caso conceptual; en una ejecución finita se corta al terminar la trayectoria o al finalizar el segmento recolectado. Los errores posteriores se atenúan mediante $(\gamma\lambda)^l$: variar $\lambda$ modifica el compromiso entre sesgo y varianza, sin garantizar por sí solo una mejora en ambos. La expresión utiliza explícitamente el mismo crítico parametrizado que interviene en el objetivo de valor y permite incorporar el efecto acumulado de una acción sobre las condiciones posteriores del tránsito.
 
 En lugar de minimizar un error cuadrático de predicción del actor, la optimización paramétrica de la política usa la ventaja para decidir hacia dónde cambiar sus parámetros. El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) expresa este principio mediante el gradiente del rendimiento esperado \cite{suttonRL}. El operador $\hat{\mathbb{E}}_t$ denota el promedio empírico sobre las transiciones del lote recolectado en los instantes $t$:
 \begin{equation}
     \nabla_\theta J(\theta) \approx \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(A_t \mid S_t) \hat{A}_t \right]
     \label{eq:gradiente_politica}
 \end{equation}
-En esta expresión, $\nabla_\theta J(\theta)$ representa el gradiente del desempeño esperado, $\pi_\theta(A_t \mid S_t)$ es la probabilidad otorgada a la acción ejecutada $A_t$ en el estado $S_t$, y $\hat{A}_t$ es la ventaja estimada. La esperanza empírica de la ecuación \eqref{eq:gradiente_politica} es un estimador muestral del gradiente, no una igualdad exacta del teorema para una muestra finita. Como ilustra la Figura \ref{fig:red_politica}, el término $\nabla_\theta\log\pi_\theta(A_t\mid S_t)$ indica cómo modificar los parámetros para cambiar la probabilidad de la acción observada, mientras que $\hat A_t$ determina el signo y la magnitud de esa modificación. En promedio, el estimador aumenta la probabilidad de elegir fases con ventaja positiva y reduce la de aquellas con ventaja negativa.
+En esta expresión, $\nabla_\theta J(\theta)$ representa el gradiente del desempeño esperado, $\pi_\theta(A_t \mid S_t)$ es la probabilidad otorgada a la acción ejecutada $A_t$ en el estado $S_t$, y $\hat{A}_t$ es la ventaja estimada. La esperanza empírica de la ecuación \eqref{eq:gradiente_politica} es un estimador muestral del gradiente, no una igualdad exacta del teorema para una muestra finita. Como ilustra la Figura \ref{fig:red_politica}, el término $\nabla_\theta\log\pi_\theta(A_t\mid S_t)$ indica cómo modificar los parámetros para cambiar la probabilidad de la acción observada, mientras que $\hat A_t$ determina el signo y la magnitud de esa modificación. En promedio, el estimador aumenta la probabilidad de elegir acciones con ventaja positiva y reduce la de aquellas con ventaja negativa.
 
 \subsubsection[Proximal Policy Optimization (PPO)]{\textit{Proximal Policy Optimization} (\acrshort{acr-ppo}) y control de las actualizaciones}
 
@@ -1236,12 +1236,18 @@ La Figura \ref{fig:marl_interaction} representa esta factorización: cada agente
 
 La Figura \ref{fig:marl_interaction} muestra cómo las acciones locales de los controladores se combinan antes de modificar el estado global de la red. En particular, cada política transforma su observación $o_i$ en una acción $a_i$; el operador central reúne esas acciones en $\mathbf{a}$, que es la entrada conjunta del entorno. Las etiquetas $r_i$ representan la misma recompensa común observada desde cada canal y no objetivos independientes.
 
-\subsection[Desafíos Fundamentales en MARL]{Desafíos Fundamentales en \acrshort{acr-marl}}
+\subsection{Desafíos del Aprendizaje Multi-Agente}
 
-La aplicación práctica del aprendizaje por refuerzo en escenarios multiagente enfrenta dificultades analíticas y computacionales que no aparecen en el caso individual \cite{marlbook}. A medida que aumenta el número de agentes, el espacio de acciones conjunto $\boldsymbol{\mathcal{A}}$ crece de forma exponencial ($|\boldsymbol{\mathcal{A}}| = \prod_{i=1}^n |\mathcal{A}_i|$). Además, la interacción entre las políticas introduce dificultades propias del aprendizaje multiagente:
+En el aprendizaje multi-agente surgen dificultades que no se presentan en el caso de agente único \cite{marlbook}. Una de ellas es la escalabilidad del espacio de acciones conjuntas. Si cada agente $i$ dispone de un espacio local $\mathcal{A}_i$, el número de combinaciones posibles queda dado por:
+\begin{equation}
+    \left|\boldsymbol{\mathcal{A}}\right| = \prod_{i=1}^{n} \left|\mathcal{A}_i\right|,
+    \label{eq:espacio_acciones_conjunto}
+\end{equation}
+donde $\boldsymbol{\mathcal{A}}$ es el espacio de acciones conjuntas, $\mathcal{A}_i$ es el espacio de acciones del agente $i$ y $n$ es el número total de agentes. La ecuación \eqref{eq:espacio_acciones_conjunto} muestra que cada agente agrega un factor multiplicativo al número de combinaciones. Por tanto, aunque los espacios locales mantengan un tamaño fijo, un método que represente o evalúe explícitamente todas las acciones conjuntas enfrenta un crecimiento combinatorio a medida que aumenta el número de agentes. Esta observación describe el tamaño del espacio de búsqueda; no implica que todo método centralizado enumere explícitamente sus combinaciones ni constituye, por sí sola, un resultado experimental.
 
+Además, la interacción entre las políticas introduce dificultades propias del aprendizaje multi-agente:
 \begin{itemize}
-    \item \textbf{No estacionariedad:} desde la perspectiva de un agente individual $i$, las políticas de los demás agentes actúan como parte de la dinámica de transición del entorno. Como todos los agentes aprenden y adaptan sus pesos neuronales de manera concurrente, la función de transición efectiva percibida localmente por el agente $i$:
+    \item \textbf{No estacionariedad del entorno:} en un entorno multi-agente, la función de transición percibida por el agente $i$,
     \begin{equation}
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
         \label{eq:no_estacionariedad}
@@ -1270,7 +1276,7 @@ Para abordar estos desafíos en escenarios \gls{acr-decpomdp}, la literatura cla
 
 En el primero, los agentes se entrenan localmente utilizando métodos de agente único, tratando empíricamente al resto de los agentes como parte de la dinámica del entorno. En el segundo, durante el entrenamiento, los algoritmos pueden explotar información global privilegiada (historiales conjuntos o concatenación de observaciones) para guiar y estabilizar la optimización de las funciones de valor. Durante la ejecución, el componente centralizado no participa en la selección de acciones y los actores utilizan únicamente sus observaciones locales. Esta separación entre información disponible durante el entrenamiento y durante la ejecución constituye la característica central de \acrshort{acr-ctde}.
 
-En esta investigación, el paradigma \acrshort{acr-ctde} se entiende conceptualmente como una separación entre dos disponibilidades de información: durante el entrenamiento puede utilizarse el \gls{estado_global} o información conjunta para orientar la evaluación y la coordinación; durante la ejecución, cada \gls{actor} selecciona una \gls{fase} únicamente a partir de su \gls{observacion_local}. La Figura \ref{fig:ctde_architecture} resume esta división, sin fijar una arquitectura concreta de \gls{critico} ni detalles de implementación. En esta figura, los números 1 y 2 indican etapas del uso del modelo; el término \emph{etapa} no debe confundirse con una fase semafórica.
+En esta investigación, el paradigma \acrshort{acr-ctde} se entiende conceptualmente como una separación entre dos disponibilidades de información: durante el entrenamiento puede utilizarse el \gls{estado_global} o información conjunta para orientar la evaluación y la coordinación; durante la ejecución, cada \gls{actor} selecciona una acción $a_i$ (correspondiente a una fase semafórica) únicamente a partir de su \gls{observacion_local}. La Figura \ref{fig:ctde_architecture} resume esta división, sin fijar una arquitectura concreta de \gls{critico} ni detalles de implementación. En esta figura, los números 1 y 2 indican etapas del uso del modelo; el término \emph{etapa} no debe confundirse con una fase semafórica.
 
 \subsection[MADRL y líneas de base]{\gls{acr-madrl} y líneas de base}
 
@@ -1338,11 +1344,11 @@ La Figura \ref{fig:ctde_architecture} ilustra esta separación entre entrenamien
     \label{fig:ctde_architecture}
 \end{figure}
 
-La mitad izquierda de la Figura \ref{fig:ctde_architecture} representa el entrenamiento: las observaciones locales $o_1,\ldots,o_n$ alimentan a los actores, mientras que el estado global $s$ se reserva para el crítico centralizado $V_\phi(s)$. Las flechas discontinuas indican que sus estimaciones de valor o ventaja orientan la actualización de las políticas. La mitad derecha representa la ejecución: el crítico y el estado global desaparecen del circuito, y cada actor transforma su observación local $o_i$ en una acción $a_i$. Esta separación permite entrenar con información adicional sin exigir comunicación global para seleccionar las fases semafóricas durante la operación.
+La mitad izquierda de la Figura \ref{fig:ctde_architecture} representa el entrenamiento: las observaciones locales $o_1,\ldots,o_n$ alimentan a los actores, mientras que el estado global $s$ se reserva para el crítico centralizado $V_\phi(s)$. Las flechas discontinuas indican que sus estimaciones de valor o ventaja orientan la actualización de las políticas. La mitad derecha representa la ejecución: el crítico y el estado global desaparecen del circuito, y cada actor transforma su observación local $o_i$ en una acción $a_i$. Esta separación permite entrenar con información adicional sin exigir comunicación global para seleccionar las acciones durante la operación.
 
 \subsection[MAPPO]{Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo})}\label{subsec:mappo}
 
-En una red cooperativa, cada política local debe decidir con observaciones de su propia intersección, aunque la calidad de esa decisión dependa también de los efectos sobre la red. \acrshort{acr-mappo} aborda esta necesidad mediante el entrenamiento de políticas locales con información global disponible durante el entrenamiento, mientras conserva la selección descentralizada de fases durante la ejecución.
+En una red cooperativa, cada política local debe decidir con observaciones de su propia intersección, aunque la calidad de esa decisión dependa también de los efectos sobre la red. \acrshort{acr-mappo} aborda esta necesidad mediante el entrenamiento de políticas locales con información global disponible durante el entrenamiento, mientras conserva la selección descentralizada de acciones durante la ejecución.
 
 Para estudiar cómo una configuración de \acrshort{acr-ppo} puede funcionar en tareas cooperativas, Yu et al. \cite{yu2022surprising} evaluaron empíricamente la variante conocida como \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo}), adaptando \acrshort{acr-ppo} al entorno multiagente bajo el paradigma \acrshort{acr-ctde} (véase la Figura \ref{fig:ctde_architecture}). Su contribución principal fue sistematizar prácticas de implementación y evaluar su efecto, no proponer desde cero un algoritmo independiente de \acrshort{acr-ppo}.
 
@@ -1357,14 +1363,14 @@ En la formulación práctica de \acrshort{acr-mappo}, el objetivo del actor se e
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n} \sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t(s_t, \mathbf{a}_t), \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t(s_t, \mathbf{a}_t) \right) \right]
     \label{eq:objetivo_mappo}
 \end{equation}
-donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ es la razón de probabilidad individual del agente $i$, $n$ es el número total de agentes, $\hat{A}_t$ es la ventaja utilizada por la implementación y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. En entornos con recompensa común, esta ventaja puede calcularse utilizando un crítico centralizado; la forma exacta depende de la definición del estado y de la implementación. La ecuación \eqref{eq:objetivo_mappo} conecta las observaciones locales y las fases individuales con la señal compartida de demora que orienta la coordinación.
+donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ es la razón de probabilidad individual del agente $i$, $n$ es el número total de agentes, $\hat{A}_t$ es la ventaja utilizada por la implementación y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. En entornos con recompensa común, esta ventaja puede calcularse utilizando un crítico centralizado; la forma exacta depende de la definición del estado y de la implementación. La ecuación \eqref{eq:objetivo_mappo} conecta las observaciones locales y las acciones individuales con la señal compartida de demora que orienta la coordinación.
 
 Por su parte, el crítico centralizado se actualiza minimizando el error cuadrático medio respecto al retorno objetivo descontado normalizado:
 \begin{equation}
     \mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right]
     \label{eq:perdida_valor_mappo}
 \end{equation}
-donde $\phi$ son los parámetros del crítico centralizado y $R_t^{\text{target}}$ representa el retorno empírico objetivo. La ecuación \eqref{eq:perdida_valor_mappo} ajusta el crítico con información global disponible solo durante el entrenamiento.
+La ecuación \eqref{eq:perdida_valor_mappo} ajusta los parámetros $\phi$ del crítico para aproximar el retorno conjunto observado. En esta ecuación, $R_t^{\text{target}}$ representa el objetivo de retorno calculado a partir de las recompensas compartidas y de los valores predichos por el propio crítico.
 
 \subsubsection{Factores Críticos de Diseño y Optimización en \acrshort{acr-mappo}}
 
@@ -1411,7 +1417,7 @@ El Algoritmo \ref{alg:mappo} resume la recolección de trayectorias, el cálculo
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-En este algoritmo, la información global se concentra en el cálculo del crítico y de la ventaja durante el entrenamiento. Cada actor, en cambio, conserva una política que recibe su propia observación; por ello puede seleccionar una fase sin requerir el estado global cuando se ejecuta el controlador. El vaciado de $\mathcal{D}$ al final de cada iteración evita tratar este conjunto como una memoria histórica y mantiene el carácter predominantemente \textit{on-policy} del procedimiento.
+En este algoritmo, la información global se concentra en el cálculo del crítico y de la ventaja durante el entrenamiento. Cada actor, en cambio, conserva una política que recibe su propia observación; por ello puede seleccionar una acción sin requerir el estado global cuando se ejecuta el controlador. El vaciado de $\mathcal{D}$ al final de cada iteración evita tratar este conjunto como una memoria histórica y mantiene el carácter predominantemente \textit{on-policy} del procedimiento.
 
 En términos operativos, la entrada de cada iteración es un conjunto de \textit{rollouts}, es decir, secuencias de transiciones obtenidas al interactuar con el entorno bajo la política conjunta vigente. En cada instante, el agente $i$ recibe su observación local $o_t^i$, selecciona la acción $a_t^i$ y, junto con las demás acciones, produce una transición con recompensa común $r_t$, siguiente estado y siguientes observaciones. Cada \textit{rollout} conserva también el estado global $s_t$ disponible para el crítico, las acciones conjuntas y la información necesaria para evaluar las probabilidades de las políticas antiguas. A partir de estas transiciones, el crítico calcula los retornos objetivo y \acrshort{acr-gae} estima $\hat{A}_t$; después, los \textit{minibatches} se utilizan para actualizar las políticas locales mediante la razón $r_t^i$ y el objetivo recortado de la ecuación \eqref{eq:objetivo_mappo}, mientras $\phi$ se ajusta con la pérdida de valor de la ecuación \eqref{eq:perdida_valor_mappo}. La salida de la iteración son los nuevos parámetros de los actores y del crítico, junto con un nuevo conjunto de \textit{rollouts} que reemplaza al anterior.
 

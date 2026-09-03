@@ -312,12 +312,12 @@ En esta formulación:
 El espacio de acciones $\mathcal{A}_i = \{0, 1, \dots, K_i - 1\}$ representa el conjunto de fases verdes seleccionables por la intersección $i$. En cruces con geometrías asimétricas o restricciones de maniobra, la capa personalizada \texttt{ActionMaskingTorchRLModule} aplica un enmascaramiento dinámico sobre los \glspl{logit} $z_i(a)$ antes del cómputo de la distribución \gls{softmax}. Los \glspl{logit} son puntuaciones reales sin normalizar producidas por la red; la función \gls{softmax} las transforma en probabilidades cuya suma es uno:
     \begin{equation}
     \text{logit}_i(a) = \begin{cases} 
-    z_i(a) & \text{si la fase } a \text{ es válida y cumple } t_{\text{verde}} \ge \text{min\_green\_time} \\
+    z_i(a) & \text{si la acción } a \text{ es válida y cumple } t_{\text{verde}} \ge \text{min\_green\_time} \\
     -10^9 & \text{en caso contrario}
     \end{cases}
     \label{eq:action_mask}
     \end{equation}
-donde $a\in\mathcal{A}_i$ es una fase candidata, $z_i(a)$ es el valor producido por la red de política antes del enmascaramiento y $t_{\text{verde}}$ es el tiempo transcurrido desde el inicio del verde actual. La ecuación \eqref{eq:action_mask} modifica cada valor antes de aplicar \textit{softmax}. El valor $-10^9$ es una aproximación numérica a $-\infty$: al aplicar la función \textit{softmax}, la probabilidad resultante es prácticamente cero, aunque no se trata de una probabilidad exactamente nula en aritmética de precisión finita. Así, el enmascaramiento impide seleccionar fases incompatibles con las restricciones operacionales.
+donde $a\in\mathcal{A}_i$ es una acción candidata (correspondiente a una fase semafórica), $z_i(a)$ es el valor producido por la red de política antes del enmascaramiento y $t_{\text{verde}}$ es el tiempo transcurrido desde el inicio del verde actual. La ecuación \eqref{eq:action_mask} modifica cada valor antes de aplicar \textit{softmax}. El valor $-10^9$ es una aproximación numérica a $-\infty$: al aplicar la función \textit{softmax}, la probabilidad resultante es prácticamente cero, aunque no se trata de una probabilidad exactamente nula en aritmética de precisión finita. Así, el enmascaramiento impide seleccionar acciones incompatibles con las restricciones operacionales.
 
 \subsection{Función de Recompensa Compuesta y Coordinación Vecinal}
 \label{subsec:recompensa_coordinacion}

@@ -192,8 +192,8 @@
 \citation{konda2003actorcritic}
 \citation{suttonRL}
 \@writefile{toc}{\contentsline {subsubsection}{Aproximación de Políticas, Función de Ventaja y \textit  {Policy Gradient}}{38}{subsubsection*.73}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2.15}{\ignorespaces Red de política para un espacio discreto de fases. La observación determina una distribución de acciones; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite  {suttonRL,konda2003actorcritic}.}}{38}{figure.caption.74}\protected@file@percent }
-\newlabel{fig:red_politica}{{2.15}{38}{Red de política para un espacio discreto de fases. La observación determina una distribución de acciones; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite {suttonRL,konda2003actorcritic}}{figure.caption.74}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.15}{\ignorespaces Red de política para un espacio discreto de acciones. La observación determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite  {suttonRL,konda2003actorcritic}.}}{38}{figure.caption.74}\protected@file@percent }
+\newlabel{fig:red_politica}{{2.15}{38}{Red de política para un espacio discreto de acciones. La observación determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite {suttonRL,konda2003actorcritic}}{figure.caption.74}{}}
 \citation{schulman2015high}
 \citation{suttonRL}
 \newlabel{eq:funcion_ventaja}{{2.16}{39}{Aproximación de Políticas, Función de Ventaja y \textit {Policy Gradient}}{equation.75}{}}
@@ -224,91 +224,92 @@
 \newlabel{eq:equilibrio_nash}{{2.24}{44}{Fundamentos teóricos: juegos estocásticos, equilibrio de Nash y Dec-POMDP}{equation.87}{}}
 \newlabel{eq:dec_pomdp}{{2.25}{44}{Fundamentos teóricos: juegos estocásticos, equilibrio de Nash y Dec-POMDP}{equation.88}{}}
 \citation{marlbook}
-\citation{foerster2017}
-\citation{liang2025marlreview}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.16}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{45}{figure.caption.89}\protected@file@percent }
 \newlabel{fig:marl_interaction}{{2.16}{45}{Interacción agente-entorno en MARL cooperativo}{figure.caption.89}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Desafíos Fundamentales en MARL}{45}{subsection.90}\protected@file@percent }
-\newlabel{eq:no_estacionariedad}{{2.26}{45}{Desafíos Fundamentales en MARL}{equation.91}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Desafíos del Aprendizaje Multi-Agente}{45}{subsection.90}\protected@file@percent }
+\newlabel{eq:espacio_acciones_conjunto}{{2.26}{45}{Desafíos del Aprendizaje Multi-Agente}{equation.91}{}}
+\citation{foerster2017}
+\citation{liang2025marlreview}
 \citation{bowling2002multiagent}
 \citation{bowling2002multiagent}
 \citation{marlbook}
 \citation{bowling2002multiagent}
 \citation{marlbook}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.17}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{46}{figure.caption.92}\protected@file@percent }
-\newlabel{fig:no_estacionariedad_papel_piedra}{{2.17}{46}{Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}{figure.caption.92}{}}
+\newlabel{eq:no_estacionariedad}{{2.27}{46}{Desafíos del Aprendizaje Multi-Agente}{equation.92}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.17}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{47}{figure.caption.93}\protected@file@percent }
+\newlabel{fig:no_estacionariedad_papel_piedra}{{2.17}{47}{Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}{figure.caption.93}{}}
 \citation{marlbook}
 \citation{ctde_survey}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{47}{subsection.93}\protected@file@percent }
 \citation{maddpg}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Paradigmas de Entrenamiento y Ejecución}{48}{subsection.94}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}MADRL y líneas de base}{48}{subsection.95}\protected@file@percent }
 \citation{tampuu2017multiagent}
 \citation{foerster2017}
 \citation{de2020independent}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}MADRL y líneas de base}{48}{subsection.94}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Aprendizaje Independiente (\acrshort {acr-il}): \acrshort {acr-idqn} e \acrshort {acr-ippo} como Líneas de Base}{48}{subsubsection*.95}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Aprendizaje Independiente (\acrshort {acr-il}): \acrshort {acr-idqn} e \acrshort {acr-ippo} como Líneas de Base}{49}{subsubsection*.96}\protected@file@percent }
 \citation{yu2022surprising}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.18}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{49}{figure.caption.96}\protected@file@percent }
-\newlabel{fig:ctde_architecture}{{2.18}{49}{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales}{figure.caption.96}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}MAPPO}{49}{subsection.97}\protected@file@percent }
-\newlabel{subsec:mappo}{{2.3.5}{49}{MAPPO}{subsection.97}{}}
-\citation{yu2022surprising}
-\newlabel{eq:objetivo_mappo}{{2.27}{50}{MAPPO}{equation.98}{}}
-\newlabel{eq:perdida_valor_mappo}{{2.28}{50}{MAPPO}{equation.99}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.18}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{50}{figure.caption.97}\protected@file@percent }
+\newlabel{fig:ctde_architecture}{{2.18}{50}{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales}{figure.caption.97}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}MAPPO}{50}{subsection.98}\protected@file@percent }
+\newlabel{subsec:mappo}{{2.3.5}{50}{MAPPO}{subsection.98}{}}
 \citation{yu2022surprising}
 \citation{yu2022surprising}
 \citation{yu2022surprising}
-\@writefile{toc}{\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en \acrshort {acr-mappo}}{51}{subsubsection*.100}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Algoritmo \textit  {Multi-Agent Proximal Policy Optimization} (\acrshort {acr-mappo})}}{52}{algorithm.105}\protected@file@percent }
-\newlabel{alg:mappo}{{3}{52}{Algoritmo \textit {Multi-Agent Proximal Policy Optimization} (\acrshort {acr-mappo})}{algorithm.105}{}}
+\citation{yu2022surprising}
+\newlabel{eq:objetivo_mappo}{{2.28}{51}{MAPPO}{equation.99}{}}
+\newlabel{eq:perdida_valor_mappo}{{2.29}{51}{MAPPO}{equation.100}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Factores Críticos de Diseño y Optimización en \acrshort {acr-mappo}}{51}{subsubsection*.101}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Algoritmo \textit  {Multi-Agent Proximal Policy Optimization} (\acrshort {acr-mappo})}}{53}{algorithm.106}\protected@file@percent }
+\newlabel{alg:mappo}{{3}{53}{Algoritmo \textit {Multi-Agent Proximal Policy Optimization} (\acrshort {acr-mappo})}{algorithm.106}{}}
 \citation{kuba2021trust}
 \citation{kuba2021trust}
 \citation{zhong2024heterogeneous}
 \citation{kuba2021trust}
 \citation{zhong2024heterogeneous}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.6}HAPPO}{53}{subsection.106}\protected@file@percent }
-\newlabel{subsec:happo}{{2.3.6}{53}{HAPPO}{subsection.106}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{53}{subsubsection*.107}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.6}HAPPO}{54}{subsection.107}\protected@file@percent }
+\newlabel{subsec:happo}{{2.3.6}{54}{HAPPO}{subsection.107}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{54}{subsubsection*.108}\protected@file@percent }
 \citation{kuba2021trust}
 \citation{vdn}
 \citation{qmix}
 \citation{kuba2021trust}
-\@writefile{toc}{\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{54}{subsubsection*.108}\protected@file@percent }
-\newlabel{eq:happo_descomposicion_ventaja}{{2.29}{54}{Lema de Descomposición de la Ventaja Multi-Agente}{equation.109}{}}
-\newlabel{eq:happo_ventaja_marginal}{{2.30}{54}{Lema de Descomposición de la Ventaja Multi-Agente}{equation.110}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{54}{subsubsection*.111}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{55}{subsubsection*.109}\protected@file@percent }
+\newlabel{eq:happo_descomposicion_ventaja}{{2.30}{55}{Lema de Descomposición de la Ventaja Multi-Agente}{equation.110}{}}
+\newlabel{eq:happo_ventaja_marginal}{{2.31}{55}{Lema de Descomposición de la Ventaja Multi-Agente}{equation.111}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{55}{subsubsection*.112}\protected@file@percent }
 \citation{kuba2021trust}
-\newlabel{eq:happo_factor_m}{{2.31}{55}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.112}{}}
-\newlabel{eq:happo_objetivo_clip}{{2.32}{55}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.113}{}}
+\newlabel{eq:happo_factor_m}{{2.32}{56}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.113}{}}
+\newlabel{eq:happo_objetivo_clip}{{2.33}{56}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.114}{}}
 \citation{kuba2021trust}
-\newlabel{eq:happo_actualizacion_recursiva}{{2.33}{56}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.114}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Garantía de Mejora Monótona}{56}{subsubsection*.115}\protected@file@percent }
-\newlabel{eq:garantia_happo}{{2.34}{56}{Garantía de Mejora Monótona}{equation.116}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.19}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{56}{figure.caption.117}\protected@file@percent }
-\newlabel{fig:happo_sequential}{{2.19}{56}{Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia}{figure.caption.117}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Algoritmo \textit  {Heterogeneous-Agent Proximal Policy Optimization} (\acrshort {acr-happo})}}{57}{algorithm.118}\protected@file@percent }
-\newlabel{alg:happo}{{4}{57}{Algoritmo \textit {Heterogeneous-Agent Proximal Policy Optimization} (\acrshort {acr-happo})}{algorithm.118}{}}
+\newlabel{eq:happo_actualizacion_recursiva}{{2.34}{57}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{equation.115}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Garantía de Mejora Monótona}{57}{subsubsection*.116}\protected@file@percent }
+\newlabel{eq:garantia_happo}{{2.35}{57}{Garantía de Mejora Monótona}{equation.117}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.19}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{57}{figure.caption.118}\protected@file@percent }
+\newlabel{fig:happo_sequential}{{2.19}{57}{Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia}{figure.caption.118}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Algoritmo \textit  {Heterogeneous-Agent Proximal Policy Optimization} (\acrshort {acr-happo})}}{58}{algorithm.119}\protected@file@percent }
+\newlabel{alg:happo}{{4}{58}{Algoritmo \textit {Heterogeneous-Agent Proximal Policy Optimization} (\acrshort {acr-happo})}{algorithm.119}{}}
 \citation{Ault2022_MARL_Limitations}
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multi-agente cooperativos.}}{59}{table.caption.119}\protected@file@percent }
-\newlabel{tab:marl_ppo_comparison}{{2.3}{59}{Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multi-agente cooperativos}{table.caption.119}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.7}Antecedentes recientes del control semafórico multiagente}{59}{subsection.120}\protected@file@percent }
-\newlabel{subsec:estado_arte_marl_tsc}{{2.3.7}{59}{Antecedentes recientes del control semafórico multiagente}{subsection.120}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multi-agente cooperativos.}}{60}{table.caption.120}\protected@file@percent }
+\newlabel{tab:marl_ppo_comparison}{{2.3}{60}{Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multi-agente cooperativos}{table.caption.120}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.7}Antecedentes recientes del control semafórico multiagente}{60}{subsection.121}\protected@file@percent }
+\newlabel{subsec:estado_arte_marl_tsc}{{2.3.7}{60}{Antecedentes recientes del control semafórico multiagente}{subsection.121}{}}
 \citation{wu2022distributed}
 \citation{haddad2022cooperative}
 \citation{fang2023nacrl}
 \citation{kolat2023cooperative}
-\@writefile{toc}{\contentsline {subsubsection}{Coordinación y entrenamiento}{60}{subsubsection*.121}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Representación del estado}{60}{subsubsection*.122}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Coordinación y entrenamiento}{61}{subsubsection*.122}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Representación del estado}{61}{subsubsection*.123}\protected@file@percent }
 \citation{yang2023hierarchical}
 \citation{chen2024coevo}
 \citation{deng2026roadpartition}
 \citation{ren2024twolayer}
 \citation{liu2025vfmappo}
-\@writefile{toc}{\contentsline {subsubsection}{Heterogeneidad y equidad}{61}{subsubsection*.123}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Heterogeneidad y equidad}{62}{subsubsection*.124}\protected@file@percent }
 \citation{lu2025hapsppo}
-\@writefile{toc}{\contentsline {subsubsection}{Posicionamiento del presente trabajo}{62}{subsubsection*.124}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Posicionamiento del presente trabajo}{63}{subsubsection*.125}\protected@file@percent }
 \@setckpt{4-marco_teorico}{
-\setcounter{page}{63}
-\setcounter{equation}{34}
+\setcounter{page}{64}
+\setcounter{equation}{35}
 \setcounter{enumi}{4}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
