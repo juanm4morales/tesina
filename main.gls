@@ -1,27 +1,85 @@
 \glossarysection[\glossarytoctitle]{\glossarytitle}\glossarypreamble
 \begin{theglossary}\glossaryheader
 \glsgroupheading{glssymbols}\relax \glsresetentrylist %
+\glossentry{retorno_gt}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{q_aprendizaje}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{entropia_politica}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{v_aprendizaje}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{valor_objetivo_vt}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{tasa_aprendizaje_alpha}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{error_td_delta}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{epsilon_recorte}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{epsilon_exploracion}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{tasa_aprendizaje_eta}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{gamma}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{ventaja_estimada}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{lambda_gae}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{funcion_perdida_theta}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{parametros_critico_phi}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{politica_parametrizada}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{parametros_politica_theta}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{accion}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
-\glossentry{observacion_local}{\glossaryentrynumbers{\relax 
+\glossentry{coeficiente_valor_c1}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{coeficiente_entropia_c2}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}}}%
+\glossentry{observacion_local}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{48}}}%
 \glossentry{recompensa_t}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{estado_global}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{48}}}%
+\glossentry{binding}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{67}}}%
+\glossentry{bootstrap}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{83}}}%
+\glossentry{epoca_entrenamiento}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{37}}}%
+\glossentry{logit}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{77}}}%
+\glossentry{mini_lote}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{37}}}%
+\glossentry{replay_buffer}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{37}}}%
+\glossentry{rollout}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{36}}}%
+\glossentry{softmax}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{77}}}%
+\glossentry{teleport}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{A}\relax \glsresetentrylist %
 \glossentry{actor}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}%
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{27}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{48}}}%
 \glossentry{agente}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{C}\relax \glsresetentrylist %
@@ -30,33 +88,64 @@
 \glossentry{cola}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%
 \glossentry{critico}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{27}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{48}}}\glsgroupskip
 \glsgroupheading{D}\relax \glsresetentrylist %
 \glossentry{densidad}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{E}\relax \glsresetentrylist %
 \glossentry{entorno}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}%
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{27}}}%
+\glossentry{episodio_aprendizaje}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{36}}}%
 \glossentry{estado}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{F}\relax \glsresetentrylist %
 \glossentry{fase}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}%
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{7\delimN 8}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{20}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{48}}}%
 \glossentry{flujo}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}%
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{13}}}%
 \glossentry{funcion_valor}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
+\glsgroupheading{I}\relax \glsresetentrylist %
+\glossentry{iteracion_entrenamiento}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{36}}}\glsgroupskip
+\glsgroupheading{M}\relax \glsresetentrylist %
+\glossentry{framework}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{67}}}\glsgroupskip
 \glsgroupheading{O}\relax \glsresetentrylist %
 \glossentry{observacion}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{P}\relax \glsresetentrylist %
 \glossentry{politica}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{x}}}%
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{47}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{56}}}%
 \glossentry{mdp}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
 \glsgroupheading{R}\relax \glsresetentrylist %
 \glossentry{recompensa}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}\glsgroupskip
+\glsgroupheading{S}\relax \glsresetentrylist %
+\glossentry{serializacion}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{67}}}\glsgroupskip
+\glsgroupheading{T}\relax \glsresetentrylist %
+\glossentry{telemetria}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{67}}}%
+\glossentry{transicion_aprendizaje}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{x}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{36}}}\glsgroupskip
 \glsgroupheading{V}\relax \glsresetentrylist %
 \glossentry{ventaja}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{x}}}%

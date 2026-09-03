@@ -58,6 +58,111 @@
     description={Distribución de probabilidad sobre las acciones condicionada por el estado u observación y controlada por el vector de parámetros entrenables $\theta$}
 }
 
+\newglossaryentry{parametros_politica_theta}{
+    name={$\theta$ (parámetros de la política)},
+    description={Vector de parámetros entrenables que determina la distribución de acciones de la política del actor}
+}
+
+\newglossaryentry{parametros_critico_phi}{
+    name={$\phi$ (parámetros del crítico)},
+    description={Vector de parámetros entrenables de la red que estima la función de valor del crítico}
+}
+
+\newglossaryentry{tasa_aprendizaje_alpha}{
+    name={$\alpha$ (tasa de aprendizaje)},
+    description={Paso de actualización que regula cuánto se modifican las estimaciones de valor o los parámetros en cada iteración de aprendizaje}
+}
+
+\newglossaryentry{tasa_aprendizaje_eta}{
+    name={$\eta$ (tasa del optimizador)},
+    description={Tamaño de paso empleado por el optimizador en la actualización de parámetros mediante descenso de gradiente}
+}
+
+\newglossaryentry{epsilon_exploracion}{
+    name={$\epsilon_{\mathrm{exp}}$ (exploración)},
+    description={Probabilidad o coeficiente que controla la selección de acciones exploratorias frente a las acciones favorecidas por la política o la función de valor}
+}
+
+\newglossaryentry{epsilon_recorte}{
+    name={$\epsilon_{\mathrm{clip}}$ (margen de recorte)},
+    description={Hiperparámetro de PPO que delimita el intervalo utilizado para recortar la razón entre la probabilidad nueva y la anterior de una acción}
+}
+
+\newglossaryentry{transicion_aprendizaje}{
+    name={Transición},
+    description={Registro de un paso de interacción que contiene el estado u observación actual, la acción ejecutada, la recompensa recibida, el estado siguiente y, cuando corresponde, un indicador de terminación}
+}
+
+\newglossaryentry{episodio_aprendizaje}{
+    name={Episodio},
+    description={Secuencia de interacción que comienza al reiniciar el entorno y termina cuando se alcanza una condición terminal o el horizonte máximo definido}
+}
+
+\newglossaryentry{iteracion_entrenamiento}{
+    name={Iteración de entrenamiento},
+    description={Ciclo completo en el que se recolectan datos con una política y se realizan una o más actualizaciones de sus parámetros}
+}
+
+\newglossaryentry{epoca_entrenamiento}{
+    name={\textit{epoch} de entrenamiento},
+    description={Recorrido de optimización sobre el conjunto de datos recolectado para una iteración; una iteración puede reutilizar ese conjunto durante varios \textit{epochs}}
+}
+
+\newglossaryentry{mini_lote}{
+    name={\textit{minibatch}},
+    description={Subconjunto de las muestras disponibles utilizado para calcular una actualización de los parámetros del modelo}
+}
+
+\newglossaryentry{rollout}{
+    name={\textit{rollout}},
+    description={Secuencia ordenada de transiciones obtenida mientras uno o más agentes interactúan con el entorno bajo una política determinada}
+}
+
+\newglossaryentry{replay_buffer}{
+    name={\textit{replay buffer}},
+    description={Memoria que conserva transiciones de experiencias anteriores para volver a muestrearlas durante el entrenamiento de un método basado en valor}
+}
+
+\newglossaryentry{lambda_gae}{
+    name={$\lambda$ (suavizado de la ventaja)},
+    description={Hiperparámetro que pondera errores de diferencia temporal de distintos horizontes al estimar la ventaja y equilibra sesgo y varianza}
+}
+
+\newglossaryentry{error_td_delta}{
+    name={$\delta_t$ (error de diferencia temporal)},
+    description={Diferencia entre la recompensa más el valor descontado del estado siguiente y la estimación de valor del estado actual}
+}
+
+\newglossaryentry{coeficiente_valor_c1}{
+    name={$c_1$ (coeficiente de valor)},
+    description={Peso asignado al término de pérdida de la función de valor en el objetivo combinado de PPO}
+}
+
+\newglossaryentry{coeficiente_entropia_c2}{
+    name={$c_2$ (coeficiente de entropía)},
+    description={Peso asignado al término de entropía que incentiva la exploración en el objetivo combinado de PPO}
+}
+
+\newglossaryentry{funcion_perdida_theta}{
+    name={$\mathcal{L}(\theta)$ (función de pérdida)},
+    description={Función escalar que cuantifica el error del modelo y que se minimiza para ajustar los parámetros $\theta$}
+}
+
+\newglossaryentry{retorno_gt}{
+    name={$G_t$ (retorno)},
+    description={Suma acumulada, usualmente descontada, de las recompensas futuras a partir del instante $t$}
+}
+
+\newglossaryentry{valor_objetivo_vt}{
+    name={$V_t^{\text{target}}$ (valor objetivo)},
+    description={Estimación de retorno utilizada como referencia para ajustar la predicción de valor del crítico en el instante $t$}
+}
+
+\newglossaryentry{entropia_politica}{
+    name={$S[\pi_\theta]$ (entropía de la política)},
+    description={Medida de la dispersión de la distribución de acciones de la política; su inclusión en el objetivo favorece la exploración}
+}
+
 \newglossaryentry{ventaja_estimada}{
     name={$\hat{A}_t$ (ventaja estimada)},
     description={Estimación de cuánto mejor o peor fue la acción observada en el paso $t$ respecto del valor esperado bajo la política vigente}
@@ -100,7 +205,7 @@
 
 \newglossaryentry{fase}{
     name={Fase (Ingeniería de Tránsito)},
-    description={Estado temporal de un controlador semafórico que habilita el derecho de paso exclusivo a una o más corrientes vehiculares incompatibles para que crucen una intersección de forma segura}
+    description={Estado temporal de un controlador semafórico que habilita el derecho de paso a uno o más movimientos o corrientes vehiculares compatibles entre sí para que crucen una intersección de forma segura}
 }
 
 \newglossaryentry{ciclo}{
@@ -121,4 +226,44 @@
 \newglossaryentry{cola}{
     name={Cola vehicular},
     description={Fila de vehículos que se detienen o avanzan muy lentamente debido a una restricción en la capacidad de la vía, tal como la luz roja de un semáforo}
+}
+
+\newglossaryentry{telemetria}{
+    name={telemetría},
+    description={Conjunto de mediciones que el simulador registra durante la ejecución, como velocidades, posiciones, detenciones y tiempos de espera}
+}
+
+\newglossaryentry{framework}{
+    name={marco de trabajo (\textit{framework})},
+    description={Conjunto reutilizable de interfaces, componentes y reglas que facilita la construcción y la integración de un sistema de software}
+}
+
+\newglossaryentry{binding}{
+    name={\textit{binding}},
+    description={Mecanismo que conecta una biblioteca escrita en un lenguaje de programación con otro lenguaje para poder utilizar sus funciones}
+}
+
+\newglossaryentry{teleport}{
+    name={\textit{teleport}},
+    description={Mecanismo específico de SUMO que retira temporalmente un vehículo bloqueado y lo reinserta posteriormente para evitar que la simulación quede detenida}
+}
+
+\newglossaryentry{serializacion}{
+    name={serialización},
+    description={Conversión de un objeto o mensaje a una representación que puede almacenarse o transmitirse y luego reconstruirse}
+}
+
+\newglossaryentry{logit}{
+    name={\textit{logit}},
+    description={Puntuación real sin normalizar que una red de política produce para una acción antes de convertirla en probabilidad}
+}
+
+\newglossaryentry{softmax}{
+    name={\textit{softmax}},
+    description={Función que transforma un conjunto de puntuaciones reales en probabilidades no negativas cuya suma es uno}
+}
+
+\newglossaryentry{bootstrap}{
+    name={\textit{bootstrap}},
+    description={Procedimiento de remuestreo con reemplazo utilizado para aproximar la incertidumbre de un estimador a partir de las observaciones disponibles}
 }
