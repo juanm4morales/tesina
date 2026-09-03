@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{ALBBW{\etalchar{+}}18}
+\begin{thebibliography}{dWGM{\etalchar{+}}20}
   \providebibliographyfont{name}{}%
   \providebibliographyfont{lastname}{}%
   \providebibliographyfont{title}{\emph}%
@@ -23,21 +23,6 @@
 \newblock \btxpublisherfont {MIT Press}, 2024.
 \newblock {\latintext \btxurlfont{https://www.marl-book.com/}}, Consultado en
   2025.
-
-\bibitem [{ALBBW{\etalchar{+}}18}]{SUMO2018_SUMO}
-\btxnamefont {\btxlastnamefont {Alvarez~Lopez}, Pablo}, \btxnamefont {Michael
-  \btxlastnamefont {Behrisch}}, \btxnamefont {Laura \btxlastnamefont
-  {Bieker-Walz}}, \btxnamefont {Jakob \btxlastnamefont {Erdmann}}, \btxnamefont
-  {Yun\btxfnamespacelong Pang \btxlastnamefont {Fl{\"o}tter{\"o}d}},
-  \btxnamefont {Robert \btxlastnamefont {Hilbrich}}, \btxnamefont {Leonhard
-  \btxlastnamefont {L{\"u}cken}}, \btxnamefont {Johannes \btxlastnamefont
-  {Rummel}}, \btxnamefont {Peter \btxlastnamefont {Wagner}}\btxandcomma {}
-  \btxandlong {}\ \btxnamefont {Evamarie \btxlastnamefont
-  {Wie{\ss}ner}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Microscopic
-  traffic simulation using sumo}{Microscopic Traffic Simulation using SUMO}}.
-\newblock \Btxinlong {}\ \btxtitlefont {2018 21st International Conference on
-  Intelligent Transportation Systems (ITSC)}, \btxpageslong {}\ 2575--2582.
-  \btxpublisherfont {IEEE}, 2018.
 
 \bibitem [{AOS20}]{decpomdp-survey}
 \btxnamefont {\btxlastnamefont {Amato}, Christopher}, \btxnamefont
@@ -127,19 +112,12 @@
   \btxtitlefont {Ingeniería de tránsito: Fundamentos y aplicaciones}.
 \newblock \btxpublisherfont {Alfaomega}, \btxeditionnumlong {9na}{}, 2018.
 
-\bibitem [{{DLR}25}]{sumo-doc}
+\bibitem [{{DLR}26}]{SUMO2026_SUMO}
 \btxnamefont {\btxlastnamefont {{DLR -- Institute of Transportation
   Systems}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Sumo user
-  documentation}{SUMO User Documentation}}, 2025.
-\newblock {\latintext \btxurlfont{https://sumo.dlr.de/docs/}}, Consultado en
-  2025.
-
-\bibitem [{{DLR}26}]{sumo-gui-doc}
-\btxnamefont {\btxlastnamefont {{DLR -- Institute of Transportation
-  Systems}}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {sumo-gui -- sumo
-  documentation}{sumo-gui -- SUMO Documentation}}, 2026.
-\newblock {\latintext \btxurlfont{https://sumo.dlr.de/docs/sumo-gui.html}},
-  Documentación web consultada en 2026.
+  documentation}{SUMO User Documentation}}, 2026.
+\newblock {\latintext \btxurlfont{https://sumo.dlr.de/docs/}}, Documentación
+  web consultada en 2026.
 
 \bibitem [{DLSZ26}]{deng2026roadpartition}
 \btxnamefont {\btxlastnamefont {Deng}, Maojiang}, \btxnamefont {Shoufeng

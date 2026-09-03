@@ -8,7 +8,7 @@ Este capítulo describe el diseño experimental, la operacionalización de las v
 
 Este trabajo adopta un \textbf{diseño experimental cuantitativo de medidas repetidas}. Se manipulan sistemáticamente las familias algorítmicas, el grado de cooperación vecinal $\rho_{\mathrm{coop}}$ y las topologías de demanda vial. Sus efectos se miden sobre variables dependientes vinculadas con el desempeño operacional del tránsito, la equidad del servicio y las emisiones.
 
-La simulación microscópica se utiliza como plataforma experimental por tres razones. El simulador utilizado es \acrshort{acr-sumo} \cite{SUMO2018_SUMO}:
+La simulación microscópica se utiliza como plataforma experimental por tres razones. El simulador utilizado es \acrshort{acr-sumo} \cite{SUMO2026_SUMO}:
 \begin{enumerate}
     \item \textbf{Seguridad y viabilidad operacional:} evaluar algoritmos estocásticos de aprendizaje en tiempo real sobre una red urbana real implicaría riesgos para la seguridad vial y la fluidez del tránsito.
     \item \textbf{Aislamiento de variables exógenas:} la simulación permite controlar perturbaciones que no forman parte del modelo, como condiciones meteorológicas, siniestros viales o fluctuaciones externas.
@@ -35,7 +35,7 @@ Para evaluar rigurosamente el impacto de las políticas aprendidas, se formaliza
         \label{eq:gini_espera}
     \end{equation}
     La ecuación \eqref{eq:gini_espera} se calcula después de ordenar los tiempos de espera medios. En ella, $\bar{w}_{(1)} \le \bar{w}_{(2)} \le \dots \le \bar{w}_{(N)}$ son los tiempos de espera medios ordenados de cada controlador y $N$ es el total de intersecciones. Esta métrica se complementa con la desviación estándar inter-intersección ($\sigma_{\text{wait}}$) para evaluar si las políticas aprendidas distribuyen equitativamente el servicio o si sacrifican accesos secundarios en favor de arterias dominantes.
-    \item \textbf{Emisiones de \acrshort{acr-co2}:} masa total de dióxido de carbono emitida en gramos. Se calcula a partir de los perfiles instantáneos de aceleración y velocidad mediante los modelos microscópicos integrados en \acrshort{acr-sumo} (\gls{acr-phemlight}/\gls{acr-hbefa} \cite{sumo-doc}).
+    \item \textbf{Emisiones de \acrshort{acr-co2}:} masa total de dióxido de carbono emitida en gramos. Se calcula a partir de los perfiles instantáneos de aceleración y velocidad mediante los modelos microscópicos integrados en \acrshort{acr-sumo} (\gls{acr-phemlight}/\gls{acr-hbefa} \cite{SUMO2026_SUMO}).
 \end{itemize}
 
 La Figura \ref{fig:flujo_metodologico_general} resume las siete etapas de la investigación. En este contexto, \emph{etapa} designa una parte del procedimiento metodológico y no una fase del ciclo semafórico.
@@ -116,7 +116,7 @@ La construcción de las redes de simulación sigue un procedimiento de diseño y
 Todas las redes sintéticas comparten las siguientes reglas operacionales:
 \begin{itemize}
     \item \textbf{Límite de velocidad:} $13.89\text{ m/s}$ ($50\text{ km/h}$) en todas las arterias urbanas.
-    \item \textbf{Flota vehicular heterogénea:} se definieron tres clases de vehículos en el archivo \texttt{urban\_vehicle\_mix.add.xml}, a partir de los modelos cinemáticos disponibles en el simulador \cite{sumo-doc}:
+    \item \textbf{Flota vehicular heterogénea:} se definieron tres clases de vehículos en el archivo \texttt{urban\_vehicle\_mix.add.xml}, a partir de los modelos cinemáticos disponibles en el simulador \cite{SUMO2026_SUMO}:
     \begin{enumerate}
         \item \texttt{SLOWVEHTYPE} ($25\%$): Conductores cautelosos o vehículos pesados con menor aceleración ($a = 1.9\text{ m/s}^2, d = 4.0\text{ m/s}^2, v_{\max} = 8.33\text{ m/s} = 30\text{ km/h}$).
         \item \texttt{MEDVEHTYPE} ($60\%$): Vehículo de pasajeros promedio representativo. Parámetros: $a = 2.6\text{ m/s}^2$, $d = 4.5\text{ m/s}^2$ y $v_{\max} = 13.89\text{ m/s} = 50\text{ km/h}$.
@@ -259,7 +259,7 @@ El escenario canónico v14 se validó bajo dos horizontes temporales. Sus métri
 \end{adjustbox}
 \end{table}
 
-\paragraph{Validación de calidad del flujo (estadístico \acrshort{acr-geh}):} conforme a las recomendaciones para la calibración de demanda en simulación microscópica \cite{sumo-doc, ite_handbook}, la fidelidad de la inyección en el corredor José Vicente Zapata (\acrshort{acr-taz} 28) respecto de los aforos de la Cámara 169 se evaluó mediante el estadístico \acrshort{acr-geh}:
+\paragraph{Validación de calidad del flujo (estadístico \acrshort{acr-geh}):} conforme a las recomendaciones para la calibración de demanda en simulación microscópica \cite{SUMO2026_SUMO, ite_handbook}, la fidelidad de la inyección en el corredor José Vicente Zapata (\acrshort{acr-taz} 28) respecto de los aforos de la Cámara 169 se evaluó mediante el estadístico \acrshort{acr-geh}:
 \begin{equation}
     \text{GEH} = \sqrt{\frac{2 (V_{\mathrm{mod}} - V_{\mathrm{obs}})^2}{V_{\mathrm{mod}} + V_{\mathrm{obs}}}}
     \label{eq:geh}

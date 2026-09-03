@@ -1,12 +1,12 @@
 \chapter{Arquitectura de Software y Patrones de Diseño}
 \label{apendice:arquitectura_software}
 
-En este apéndice se detalla la arquitectura de software del marco computacional \texttt{marlTLC}, sus especificaciones de diseño orientado a objetos, los diagramas de clases \acrshort{acr-uml} y la justificación de los patrones de diseño adoptados para desacoplar los componentes de simulación, aprendizaje por refuerzo y cálculo de recompensas.
+En este apéndice se documenta la especificación arquitectónica del marco computacional \texttt{marlTLC}, su organización orientada a objetos, los diagramas de clases \acrshort{acr-uml} y los patrones de diseño previstos para desacoplar los componentes de simulación, aprendizaje por refuerzo y cálculo de recompensas. El repositorio que acompaña a este documento no contiene el código fuente completo del marco; por ello, las clases, métodos y relaciones que se presentan deben interpretarse como una especificación de diseño y no como una auditoría de archivos ejecutables.
 
 \section{Diseño Orientado a Objetos del Entorno de Simulación}
 \label{sec:apendice_uml_entorno}
 
-La infraestructura de simulación separa las responsabilidades de sus componentes. La clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de \acrshort{acr-sumo}, el control temporal y la interacción de bajo nivel con la \acrshort{acr-api} \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} adapta la simulación a la interfaz estándar \texttt{MultiAgentEnv} de Ray RLlib.
+El diseño del entorno separa las responsabilidades de sus componentes. En la especificación, la clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de \acrshort{acr-sumo}, el control temporal y la interacción de bajo nivel con la \acrshort{acr-api} \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} se define como el adaptador de la simulación a la interfaz \texttt{MultiAgentEnv} de Ray RLlib.
 
 La Figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{acr-uml} correspondiente a las entidades del entorno y su relación con los controladores semafóricos. Un diagrama de clases representa los tipos de objetos que componen un programa. Cada recuadro se divide en tres partes: el nombre de la clase, sus atributos o datos almacenados y sus métodos u operaciones. El signo ``$-$'' indica un miembro de uso interno o privado; ``$+$'', uno público; y ``\#'', uno protegido, destinado a la propia clase y a sus derivadas. El texto situado después de los dos puntos indica el tipo de dato esperado. Los nombres en cursiva corresponden a clases u operaciones abstractas: definen una interfaz que debe concretarse en otra clase. Una flecha con la leyenda ``hereda de'' apunta desde la clase especializada hacia la clase general, mientras que la multiplicidad $1..*$ significa ``uno o más'' objetos relacionados.
 
@@ -96,14 +96,14 @@ La Figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{
 \label{fig:uml_entorno_agentes}
 \end{figure}
 
-La Figura \ref{fig:uml_entorno_agentes} se organiza desde la abstracción general hacia las entidades de la red. En la columna izquierda, \texttt{BaseSumoEnvironment} concentra el archivo de configuración, los parámetros temporales, los controladores y las operaciones generales de reinicio, avance y cierre. Debajo, \texttt{SumoRllibEnv} especializa esa clase para recibir un diccionario de acciones de los agentes y devolver las observaciones, recompensas y estados requeridos por Ray RLlib. A la derecha, cada objeto \texttt{TrafficLight} conserva su fase actual, la siguiente fase, sus carriles, su función de recompensa y sus vecinos; además, actualiza métricas y aplica las acciones. Finalmente, cada \texttt{Lane} almacena la longitud y las medidas recientes de detención y espera. Las flechas muestran que la interfaz de aprendizaje no opera directamente sobre datos aislados: accede a ellos mediante el entorno, los controladores y sus carriles.
+La Figura \ref{fig:uml_entorno_agentes} se organiza desde la abstracción general hacia las entidades de la red. En la columna izquierda, \texttt{BaseSumoEnvironment} concentra el archivo de configuración, los parámetros temporales, los controladores y las operaciones generales de reinicio, avance y cierre. Debajo, \texttt{SumoRllibEnv} especializa esa clase para recibir un diccionario de acciones de los agentes y devolver las observaciones, recompensas y estados definidos por la interfaz de Ray RLlib. A la derecha, el diseño asigna a \texttt{TrafficLight} la fase actual, la siguiente fase, sus carriles, su función de recompensa y sus vecinos; también le asigna la actualización de métricas y la aplicación de acciones. Finalmente, \texttt{Lane} representa la longitud y las medidas recientes de detención y espera. Las flechas muestran las dependencias previstas entre la interfaz de aprendizaje, el entorno, los controladores y sus carriles.
 
 \section{Jerarquía de Funciones de Recompensa y Patrón Strategy}
 \label{sec:apendice_uml_recompensas}
 
-El cálculo de la recompensa se desacopla mediante el patrón \textbf{Strategy}. Así, la métrica de optimización puede cambiarse sin modificar el bucle principal de simulación.
+En la especificación, el cálculo de la recompensa se desacopla mediante el patrón \textbf{Strategy}. Esta organización permite sustituir la métrica de optimización sin modificar el bucle principal de simulación.
 
-La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{compute\_reward(tl\_id)}. Las clases concretas implementan formulaciones locales basadas en demoras acumuladas (\texttt{DiffAccWaitingTimeReward}), longitud de colas (\texttt{NegativeQueueLengthReward}) o presión de red (\texttt{PressureReward}). La coordinación distribuida se logra mediante el patrón \textbf{Composite}, implementado en \texttt{NeighborhoodRelevanceReward}, el cual combina de manera convexa la señal local y la señal promedio de los semáforos adyacentes provista por \texttt{NeighborAvgReward}.
+La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{compute\_reward(tl\_id)}. En el diseño se contemplan formulaciones locales basadas en tres señales: demora acumulada, longitud de cola y presión de red. La coordinación distribuida se representa mediante el patrón \textbf{Composite}: una clase de recompensa compuesta combina la señal local y la señal promedio de los semáforos adyacentes.
 
 La Figura \ref{fig:uml_recompensas} detalla las clases que intervienen directamente en la recompensa cooperativa. Las demás estrategias locales registradas en el sistema no se dibujan para conservar la legibilidad. Se mantienen las convenciones explicadas para la Figura \ref{fig:uml_entorno_agentes}; en este segundo diagrama, la flecha discontinua rotulada ``compone'' indica que una clase utiliza otra como parte de su cálculo, no que herede sus atributos y métodos.
 
@@ -174,51 +174,51 @@ La Figura \ref{fig:uml_recompensas} detalla las clases que intervienen directame
 
 \end{tikzpicture}%
 }
-\caption{Jerarquía \acrshort{acr-uml} del módulo de recompensas. Las tres clases inferiores implementan la interfaz abstracta \texttt{RewardFn}; \texttt{NeighborhoodRelevanceReward} también compone un objeto \texttt{NeighborAvgReward} para combinar la recompensa local con la información de los controladores vecinos.}
+\caption[Especificación UML del módulo de recompensas.]{Especificación \acrshort{acr-uml} del módulo de recompensas. Las clases inferiores se definen como realizaciones de \texttt{RewardFn}; la clase compuesta incorpora la señal promedio de los controladores vecinos.}
 \label{fig:uml_recompensas}
 \end{figure}
 
-La Figura \ref{fig:uml_recompensas} sitúa a \texttt{RewardFn} en la parte superior porque define la operación común \texttt{compute\_reward}, que recibe el identificador de un controlador semafórico y devuelve un valor numérico. Las tres flechas ascendentes indican que las clases inferiores proporcionan implementaciones concretas de esa operación. \texttt{DiffAccWaitingTimeNormalized} calcula una señal local normalizada a partir de la variación del tiempo de espera acumulado, mientras que \texttt{NeighborAvgReward} promedia la señal base de los controladores vecinos. \texttt{NeighborhoodRelevanceReward} conserva ambas funciones y las combina según $\rho_{\mathrm{coop}}$, el peso de cooperación vecinal. La flecha discontinua entre las dos últimas clases muestra esa relación de composición. Así, el entorno puede cambiar el cálculo de recompensa sin modificar el bucle que avanza la simulación.
+La Figura \ref{fig:uml_recompensas} sitúa a \texttt{RewardFn} en la parte superior porque define la operación común \texttt{compute\_reward}, que recibe el identificador de un controlador semafórico y devuelve un valor numérico. Las tres flechas ascendentes indican que las clases inferiores se especializan para proporcionar variantes de esa operación. \texttt{DiffAccWaitingTimeNormalized} representa una señal local normalizada a partir de la variación del tiempo de espera acumulado, mientras que \texttt{NeighborAvgReward} promedia la señal base de los controladores vecinos. \texttt{NeighborhoodRelevanceReward} conserva ambas funciones y las combina según $\rho_{\mathrm{coop}}$, el peso de cooperación vecinal. La flecha discontinua entre las dos últimas clases muestra esa relación de composición. Esta separación permite cambiar la formulación de la recompensa sin modificar el bucle que avanza la simulación.
 
 \section{Patrones de Diseño Implementados}
 \label{sec:apendice_patrones_diseno}
 
-A lo largo del marco computacional \texttt{marlTLC} se aplican los siguientes patrones de diseño:
+A continuación se resumen los patrones contemplados en la especificación de \texttt{marlTLC}. La lista describe responsabilidades y relaciones de diseño; no certifica la presencia de una implementación ejecutable de cada componente en el repositorio.
 
 \begin{enumerate}
     \item \textbf{Patrón Strategy (Estrategia):}
     \begin{itemize}
         \item \textbf{Propósito:} encapsular los algoritmos de recompensa para intercambiarlos sin modificar los controladores semafóricos.
-        \item \textbf{Implementación:} interfaz base \texttt{RewardFn} y clases concretas de recompensa.
+        \item \textbf{Rol en el diseño:} interfaz base \texttt{RewardFn} y variantes concretas de recompensa.
     \end{itemize}
 
     \item \textbf{Patrón Factory Method y Registry (Fábrica con Registro Dinámico):}
     \begin{itemize}
         \item \textbf{Propósito:} instanciar funciones de recompensa y módulos neuronales a partir de cadenas de configuración o especificaciones compuestas (\texttt{RewardSpec}). También permite registrar nuevas funciones sin modificar la fábrica, de acuerdo con el principio abierto/cerrado.
-        \item \textbf{Implementación:} clase \texttt{RewardFactory} y decorador \texttt{@register\_reward}.
+        \item \textbf{Rol en el diseño:} registro mediante \texttt{RewardFactory} y \texttt{@register\_reward}, que identifica el mecanismo previsto para asociar nombres de configuración con funciones de recompensa.
     \end{itemize}
 
     \item \textbf{Patrón Composite (Objeto Compuesto):}
     \begin{itemize}
         \item \textbf{Propósito:} combinar recompensas locales y vecinales mediante una interfaz uniforme.
-        \item \textbf{Implementación:} clases de recompensa compuesta que agregan señales locales y vecinales.
+        \item \textbf{Rol en el diseño:} clases de recompensa compuesta que agregan señales locales y vecinales.
     \end{itemize}
 
     \item \textbf{Patrón Protocol / Structural Subtyping (Tipado Estructural):}
     \begin{itemize}
         \item \textbf{Propósito:} desacoplar el proveedor de métricas vecinales del tipo concreto \texttt{TrafficLight}, facilitando las pruebas unitarias con objetos simulados (\textit{mocks}) y evitando dependencias circulares.
-        \item \textbf{Implementación:} protocolo \texttt{NeighborInfoProvider} del entorno, con el decorador \texttt{@runtime\_checkable}.
+        \item \textbf{Rol en el diseño:} protocolo \texttt{NeighborInfoProvider} para describir la información vecinal requerida sin depender de una clase concreta. El detalle del decorador de comprobación en tiempo de ejecución no forma parte de la evidencia disponible en este repositorio.
     \end{itemize}
 
     \item \textbf{Patrón Adapter (Adaptador):}
     \begin{itemize}
-        \item \textbf{Propósito:} traducir la \acrshort{acr-api} procedural y basada en comandos de \acrshort{acr-traci} / \texttt{libsumo} a las interfaces orientadas a objetos y vectorizadas de \texttt{MultiAgentEnv} (Ray RLlib) y \texttt{ParallelEnv} (PettingZoo).
-        \item \textbf{Implementación:} \texttt{SumoRllibEnv} y \texttt{Observation}.
+        \item \textbf{Propósito:} traducir la \acrshort{acr-api} procedural y basada en comandos de \acrshort{acr-traci} / \texttt{libsumo} a la interfaz orientada a objetos de \texttt{MultiAgentEnv} (Ray RLlib).
+        \item \textbf{Rol en el diseño:} \texttt{SumoRllibEnv} como punto de adaptación entre el simulador y la interfaz de aprendizaje.
     \end{itemize}
 
     \item \textbf{Patrón Decorator (Decorador):}
     \begin{itemize}
         \item \textbf{Propósito:} extender dinámicamente las capacidades de los módulos sin alterar su jerarquía de herencia.
-        \item \textbf{Implementación:} decoradores de registro \texttt{@register\_reward} y envoltura de módulos de acción en PyTorch (\texttt{ActionMaskingTorchRLModule}).
+        \item \textbf{Rol en el diseño:} decoradores de registro y una envoltura para los módulos de acción en PyTorch; los nombres concretos de esas piezas se mantienen como identificadores de la especificación.
     \end{itemize}
 \end{enumerate}
