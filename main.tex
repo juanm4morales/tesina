@@ -80,6 +80,15 @@
 \usepackage[spanish]{babelbib}
 \addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
 \addto\captionsspanish{\renewcommand{\listtablename}{Índice de tablas}}
+\addto\captionsspanish{\floatname{algorithm}{Algoritmo}}
+\algrenewcommand\algorithmicfor{\textbf{para}}
+\algrenewcommand\algorithmicforall{\textbf{para todo}}
+\algrenewcommand\algorithmicdo{\textbf{hacer}}
+\algrenewcommand\algorithmicif{\textbf{si}}
+\algrenewcommand\algorithmicthen{\textbf{entonces}}
+\algrenewcommand\algorithmicelse{\textbf{si no}}
+\algrenewcommand\algorithmicend{\textbf{fin}}
+\algrenewcommand\algorithmicreturn{\textbf{devolver}}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -117,7 +126,6 @@ textfontname=sffamily,
 mathfontname=mathsf]{mhchem}
 
 \renewcommand{\lstlistingname}{Código}
-\renewcommand{\lstlistlistingname}{Índice de códigos}
 
 \usepackage[many]{tcolorbox}  
 \newtcolorbox{boxB}{
@@ -200,11 +208,8 @@ mathfontname=mathsf]{mhchem}
 \listoftables
 \cleardoublepage
 
-\lstlistoflistings
-\cleardoublepage
-
 \glsaddall
-\printglossary[type=\acronymtype,title=Glosario de Abreviaturas,toctitle=Glosario de Abreviaturas]
+\printglossary[type=\acronymtype,title=Siglas,toctitle=Siglas]
 \cleardoublepage
 \printglossary[title=Glosario,toctitle=Glosario]
 \cleardoublepage
