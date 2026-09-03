@@ -85,6 +85,7 @@ corresponda:
 - actor-crítico (*actor--critic*);
 - diferencia temporal (*temporal difference*, TD);
 - descenso por gradiente y retropropagación;
+- entrada/salida (*Input/Output*, E/S);
 - tasa de aprendizaje, función de activación, función de pérdida y gradiente de política.
 
 En tránsito se mantendrán las formas españolas establecidas por el proyecto:

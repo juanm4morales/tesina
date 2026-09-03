@@ -89,7 +89,7 @@ Simulador de Tránsito & \acrshort{acr-sumo} 1.20+ / \acrshort{acr-traci} & Simu
 Marco de trabajo \acrshort{acr-marl} (\textit{framework}) & Ray RLlib 2.x \cite{liang2018rllib} & Abstracción de entornos multi-agente (\texttt{MultiAgentEnv}, \texttt{RLModuleSpec}, \texttt{LearnerGroup}). \\ \hline
 Aprendizaje Profundo & PyTorch 2.x & Modelado neuronal y optimización (Actor-Crítico \acrshort{acr-mlp}, \textit{action masking}). \\ \hline
 Optimización Automática & Optuna 3.x \cite{akiba2019optuna} & Muestreo Bayesiano \acrshort{acr-tpe} y poda asíncrona de pruebas (\acrshort{acr-asha} \cite{li2020system}). \\ \hline
-Infraestructura \acrshort{acr-hpc} & Clústeres Toko y Mendieta & Cómputo distribuido multinúcleo gestionado vía \acrshort{acr-slurm} con \acrshort{acr-io} local (\texttt{/scratch}). \\ \hline
+Infraestructura \acrshort{acr-hpc} & Clústeres Toko y Mendieta & Cómputo distribuido multinúcleo gestionado vía \acrshort{acr-slurm} con \gls{acr-es} local (\texttt{/scratch}). \\ \hline
 \end{tabular}
 \end{table}
 
@@ -421,7 +421,7 @@ La ejecución distribuida se gestionó mediante el sistema de colas \acrshort{ac
         \label{eq:puerto_ray}
     \end{equation}
     La ecuación \eqref{eq:puerto_ray} transforma el identificador del trabajo en un puerto dentro de un intervalo acotado. En ella, \texttt{SLURM\_JOB\_ID} es el identificador entero del trabajo y $\pmod{20000}$ devuelve su resto al dividirlo por $20.000$. Por tanto, el puerto calculado pertenece al intervalo entero $[20000,39999]$; la fórmula reduce la probabilidad de colisión entre trabajos concurrentes, pero no constituye una reserva de puertos del sistema. Se utiliza junto con la autodetección de dirección IP mediante \texttt{hostname --ip-address}.
-    \item \textbf{Gestión de entrada y salida en almacenamiento local} (\texttt{/scratch}): para evitar saturar el sistema de archivos distribuido en red (\gls{acr-nfs}) con la telemetría microscópica de \acrshort{acr-sumo} (\texttt{tripinfo.xml}, \texttt{summary.xml}), las simulaciones y la recolección de trayectorias se ejecutaron en el almacenamiento local de cada nodo (\texttt{/scratch/\$USER/ray\_tmp/}).
+    \item \textbf{Gestión de E/S en almacenamiento local} (\texttt{/scratch}): para evitar saturar el sistema de archivos distribuido en red (\gls{acr-nfs}) con la telemetría microscópica de \acrshort{acr-sumo} (\texttt{tripinfo.xml}, \texttt{summary.xml}), las simulaciones y la recolección de trayectorias se ejecutaron en el almacenamiento local de cada nodo (\texttt{/scratch/\$USER/ray\_tmp/}).
     \item \textbf{Persistencia ante preempción:} los scripts de envío incorporan trampas de señales \acrshort{acr-posix} (\texttt{trap ... EXIT USR1 TERM INT}).\\
     Estas trampas sincronizan mediante \texttt{rsync} los resultados y las bases de datos SQLite de Optuna con el almacenamiento persistente del usuario (\texttt{\$HOME}), en el directorio \path{ray\_results/}. Esto permite reanudar los trabajos mediante \texttt{Tuner.restore()}.
 \end{itemize}
