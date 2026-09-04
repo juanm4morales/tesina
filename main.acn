@@ -194,8 +194,8 @@
 \glossaryentry{GAE?\glossentry{acr-gae}|setentrycounter[]{page}"\glsnumberformat}{38}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{38}
 \glossaryentry{TRPO?\glossentry{acr-trpo}|setentrycounter[]{page}"\glsnumberformat}{38}
-\glossaryentry{TRPO?\glossentry{acr-trpo}|setentrycounter[]{page}"\glsnumberformat}{38}
-\glossaryentry{KL?\glossentry{acr-kl}|setentrycounter[]{page}"\glsnumberformat}{38}
+\glossaryentry{TRPO?\glossentry{acr-trpo}|setentrycounter[]{page}"\glsnumberformat}{39}
+\glossaryentry{KL?\glossentry{acr-kl}|setentrycounter[]{page}"\glsnumberformat}{39}
 \glossaryentry{TRPO?\glossentry{acr-trpo}|setentrycounter[]{page}"\glsnumberformat}{39}
 \glossaryentry{TRPO?\glossentry{acr-trpo}|setentrycounter[]{page}"\glsnumberformat}{39}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{39}
@@ -210,7 +210,6 @@
 \glossaryentry{Dec-POMDP?\glossentry{acr-decpomdp}|setentrycounter[]{page}"\glsnumberformat}{41}
 \glossaryentry{MDP?\glossentry{acr-mdp}|setentrycounter[]{page}"\glsnumberformat}{41}
 \glossaryentry{Dec-POMDP?\glossentry{acr-decpomdp}|setentrycounter[]{page}"\glsnumberformat}{41}
-\glossaryentry{Dec-POMDP?\glossentry{acr-decpomdp}|setentrycounter[]{page}"\glsnumberformat}{42}
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{42}
 \glossaryentry{MARL?\glossentry{acr-marl}|setentrycounter[]{page}"\glsnumberformat}{42}
 \glossaryentry{WoLF-PHC?\glossentry{acr-wolf-phc}|setentrycounter[]{page}"\glsnumberformat}{43}
@@ -233,6 +232,7 @@
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{46}
 \glossaryentry{CTDE?\glossentry{acr-ctde}|setentrycounter[]{page}"\glsnumberformat}{46}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{46}
+\glossaryentry{GAE?\glossentry{acr-gae}|setentrycounter[]{page}"\glsnumberformat}{47}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{47}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{47}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{47}
@@ -259,7 +259,7 @@
 \glossaryentry{CLIP?\glossentry{acr-clip}|setentrycounter[]{page}"\glsnumberformat}{51}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{51}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{51}
-\glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{51}
+\glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{52}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{52}
 \glossaryentry{GAE?\glossentry{acr-gae}|setentrycounter[]{page}"\glsnumberformat}{52}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{52}
