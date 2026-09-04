@@ -19,17 +19,19 @@
 \glossaryentry{Transición?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{"\textit {epoch} de entrenamiento?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{"\textit {minibatch}?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{"\textit {rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{"\textit {replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {batch} (lote)?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {buffer} (memoria intermedia)?\glossentry{buffer_datos}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {rollout} (despliegue)?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{"\textit {replay buffer} (memoria de repetición)?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\lambda $ (suavizado de la ventaja)?\glossentry{lambda_gae}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\delta _t$ (error de diferencia temporal)?\glossentry{error_td_delta}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$c_1$ (coeficiente de valor)?\glossentry{coeficiente_valor_c1}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$c_2$ (coeficiente de entropía)?\glossentry{coeficiente_entropia_c2}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\mathcal {L}("\theta )$ (función de pérdida)?\glossentry{funcion_perdida_theta}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$G_t$ (retorno)?\glossentry{retorno_gt}|setentrycounter[]{page}"\glsnumberformat}{ix}
-\glossaryentry{$V_t^{"\text {target}}$ (valor objetivo)?\glossentry{valor_objetivo_vt}|setentrycounter[]{page}"\glsnumberformat}{ix}
+\glossaryentry{$R_t^{"\text {target}}$ (retorno objetivo)?\glossentry{valor_objetivo_vt}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$S["\pi _"\theta ]$ (entropía de la política)?\glossentry{entropia_politica}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$"\hat {A}_t$ (ventaja estimada)?\glossentry{ventaja_estimada}|setentrycounter[]{page}"\glsnumberformat}{ix}
 \glossaryentry{$W_{"\text {net}}$ (demora acumulada global)?\glossentry{demora_wnet}|setentrycounter[]{page}"\glsnumberformat}{ix}
@@ -62,17 +64,17 @@
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{20}
 \glossaryentry{Transición?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{"\textit {rollout} (despliegue)?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {epoch} de entrenamiento?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {minibatch}?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{36}
-\glossaryentry{telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{61}
-\glossaryentry{marco de trabajo ("\textit {framework})?\glossentry{framework}|setentrycounter[]{page}"\glsnumberformat}{61}
-\glossaryentry{"\textit {binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{61}
-\glossaryentry{serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{61}
-\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{71}
-\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{71}
-\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{71}
-\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{71}
-\glossaryentry{"\textit {bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{77}
+\glossaryentry{"\textit {epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{"\textit {minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{"\textit {replay buffer} (memoria de repetición)?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{36}
+\glossaryentry{telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{62}
+\glossaryentry{marco de trabajo ("\textit {framework})?\glossentry{framework}|setentrycounter[]{page}"\glsnumberformat}{62}
+\glossaryentry{"\textit {binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{62}
+\glossaryentry{serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{62}
+\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{72}
+\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{72}
+\glossaryentry{"\textit {logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{72}
+\glossaryentry{"\textit {softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{72}
+\glossaryentry{"\textit {bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{78}

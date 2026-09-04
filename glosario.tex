@@ -103,24 +103,34 @@
     description={Ciclo completo en el que se recolectan datos con una política y se realizan una o más actualizaciones de sus parámetros}
 }
 
+\newglossaryentry{batch_entrenamiento}{
+    name={\textit{batch} (lote)},
+    description={Conjunto de transiciones recolectadas por una política durante la interacción con el entorno, empleado para optimizar parámetros en una iteración}
+}
+
+\newglossaryentry{buffer_datos}{
+    name={\textit{buffer} (memoria intermedia)},
+    description={Estructura que retiene temporalmente transiciones o experiencias para su posterior procesamiento o remuestreo en algoritmos de aprendizaje}
+}
+
 \newglossaryentry{epoca_entrenamiento}{
-    name={\textit{epoch} de entrenamiento},
-    description={Recorrido de optimización sobre el conjunto de datos recolectado para una iteración; una iteración puede reutilizar ese conjunto durante varios \textit{epochs}}
+    name={\textit{epoch} (época)},
+    description={Recorrido completo de optimización sobre el conjunto de datos recolectado para una iteración; puede reutilizarse durante varios \textit{epochs}}
 }
 
 \newglossaryentry{mini_lote}{
-    name={\textit{minibatch}},
-    description={Subconjunto de las muestras disponibles utilizado para calcular una actualización de los parámetros del modelo}
+    name={\textit{minibatch} (minilote)},
+    description={Subconjunto de muestras extraído de un \textit{batch} o \textit{buffer} para calcular una actualización de parámetros}
 }
 
 \newglossaryentry{rollout}{
-    name={\textit{rollout}},
-    description={Secuencia ordenada de transiciones obtenida mientras uno o más agentes interactúan con el entorno bajo una política determinada}
+    name={\textit{rollout} (despliegue)},
+    description={Secuencia ordenada de transiciones generada mientras una política interactúa con el entorno}
 }
 
 \newglossaryentry{replay_buffer}{
-    name={\textit{replay buffer}},
-    description={Memoria que conserva transiciones de experiencias anteriores para volver a muestrearlas durante el entrenamiento de un método basado en valor}
+    name={\textit{replay buffer} (memoria de repetición)},
+    description={Estructura que almacena experiencias previas para remuestrearlas durante el entrenamiento de un método basado en valor}
 }
 
 \newglossaryentry{lambda_gae}{
@@ -154,7 +164,7 @@
 }
 
 \newglossaryentry{valor_objetivo_vt}{
-    name={$V_t^{\text{target}}$ (valor objetivo)},
+    name={$R_t^{\text{target}}$ (retorno objetivo)},
     description={Estimación de retorno utilizada como referencia para ajustar la predicción de valor del crítico en el instante $t$}
 }
 
