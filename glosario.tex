@@ -89,7 +89,7 @@
 }
 
 \newglossaryentry{transicion_aprendizaje}{
-    name={Transición},
+    name={Transición (Aprendizaje por Refuerzo)},
     description={Registro de un paso de interacción que contiene el estado u observación actual, la acción ejecutada, la recompensa recibida, el estado siguiente y, cuando corresponde, un indicador de terminación}
 }
 
@@ -104,32 +104,32 @@
 }
 
 \newglossaryentry{batch_entrenamiento}{
-    name={\textit{batch} (lote)},
-    description={Conjunto de transiciones recolectadas por una política durante la interacción con el entorno, empleado para optimizar parámetros en una iteración}
+    name={\textit{Batch} (lote)},
+    description={Conjunto de muestras o transiciones procesadas conjuntamente durante una operación de entrenamiento.}
 }
 
 \newglossaryentry{buffer_datos}{
-    name={\textit{buffer} (memoria intermedia)},
-    description={Estructura que retiene temporalmente transiciones o experiencias para su posterior procesamiento o remuestreo en algoritmos de aprendizaje}
+    name={\textit{Buffer}},
+    description={Estructura que almacena temporalmente datos para su posterior procesamiento o remuestreo en algoritmos de aprendizaje}
 }
 
 \newglossaryentry{epoca_entrenamiento}{
-    name={\textit{epoch} (época)},
+    name={\textit{Epoch} (época)},
     description={Recorrido completo de optimización sobre el conjunto de datos recolectado para una iteración; puede reutilizarse durante varios \textit{epochs}}
 }
 
 \newglossaryentry{mini_lote}{
-    name={\textit{minibatch} (minilote)},
-    description={Subconjunto de muestras extraído de un \textit{batch} o \textit{buffer} para calcular una actualización de parámetros}
+    name={\textit{Minibatch} (minilote)},
+    description={Subconjunto reducido de muestras extraído de un \textit{batch} utilizado para estimar el gradiente y actualizar los parámetros de un modelo durante el entrenamiento}
 }
 
 \newglossaryentry{rollout}{
-    name={\textit{rollout} (despliegue)},
+    name={\textit{Rollout}},
     description={Secuencia ordenada de transiciones generada mientras una política interactúa con el entorno}
 }
 
 \newglossaryentry{replay_buffer}{
-    name={\textit{replay buffer} (memoria de repetición)},
+    name={\textit{Replay buffer}},
     description={Estructura que almacena experiencias previas para remuestrearlas durante el entrenamiento de un método basado en valor}
 }
 
@@ -261,41 +261,41 @@
 }
 
 \newglossaryentry{telemetria}{
-    name={telemetría},
+    name={Telemetría},
     description={Conjunto de mediciones que el simulador registra durante la ejecución, como velocidades, posiciones, detenciones y tiempos de espera}
 }
 
 \newglossaryentry{framework}{
-    name={marco de trabajo (\textit{framework})},
+    name={Marco de trabajo (\textit{framework})},
     description={Conjunto reutilizable de interfaces, componentes y reglas que facilita la construcción y la integración de un sistema de software}
 }
 
 \newglossaryentry{binding}{
-    name={\textit{binding}},
+    name={\textit{Binding}},
     description={Mecanismo que conecta una biblioteca escrita en un lenguaje de programación con otro lenguaje para poder utilizar sus funciones}
 }
 
 \newglossaryentry{teleport}{
-    name={\textit{teleport}},
+    name={\textit{Teleport} (SUMO)},
     description={Mecanismo específico de SUMO que retira temporalmente un vehículo bloqueado y lo reinserta posteriormente para evitar que la simulación quede detenida}
 }
 
 \newglossaryentry{serializacion}{
-    name={serialización},
+    name={Serialización},
     description={Conversión de un objeto o mensaje a una representación que puede almacenarse o transmitirse y luego reconstruirse}
 }
 
 \newglossaryentry{logit}{
-    name={\textit{logit}},
+    name={\textit{Logit}},
     description={Puntuación real sin normalizar que una red de política produce para una acción antes de convertirla en probabilidad}
 }
 
 \newglossaryentry{softmax}{
-    name={\textit{softmax}},
+    name={\textit{Softmax}},
     description={Función que transforma un conjunto de puntuaciones reales en probabilidades no negativas cuya suma es uno}
 }
 
 \newglossaryentry{bootstrap}{
-    name={\textit{bootstrap}},
+    name={\textit{Bootstrap}},
     description={Procedimiento de remuestreo con reemplazo utilizado para aproximar la incertidumbre de un estimador a partir de las observaciones disponibles}
 }

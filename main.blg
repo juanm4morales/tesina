@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99e (TeX Live 2026/Arch Linux)
+This is BibTeX, Version 0.99e (TeX Live 2026)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 A level-1 auxiliary file: 0-titulo.aux
@@ -12,8 +12,8 @@ A level-1 auxiliary file: 7-conclusiones.aux
 A level-1 auxiliary file: 8-apendice_arquitectura.aux
 The style file: babalpha.bst
 Database file #1: bibliografia.bib
-Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 You've used 48 entries,
             3213 wiz_defined-function locations,
             981 strings with 17413 characters,
