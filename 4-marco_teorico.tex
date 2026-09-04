@@ -724,11 +724,11 @@ La figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y ento
         \draw[flujo] (transition.north) -- ++(0,0.78) -| node[etiqueta, pos=0.48, above] {$S_{t+1}$} (obs.north);
     \end{tikzpicture}%
     }
-    \caption{Arquitectura actor-crítico aplicada al control semafórico. El actor selecciona una acción y el crítico evalúa la transición para construir la señal que actualiza ambos componentes. Elaboración propia a partir de \cite{konda2003actorcritic,suttonRL}.}
+    \caption[Arquitectura actor-crítico aplicada al control semafórico]{Arquitectura actor-crítico aplicada al control semafórico en la formulación de un MDP. El actor selecciona una acción y el crítico evalúa la transición para construir la señal que actualiza ambos componentes. Elaboración propia a partir de \cite{konda2003actorcritic,suttonRL}.}
     \label{fig:actor_critic}
 \end{figure}
 
-En síntesis, la observación resume las condiciones de tránsito disponibles para el agente, la acción corresponde a la selección de una fase, la recompensa refleja la consecuencia operativa inmediata y el valor estima su impacto a largo plazo. Cuando el espacio de estados es continuo o de gran escala, como ocurre en las redes viales urbanas, las funciones de valor y las políticas requieren aproximadores de alta capacidad representacional. A continuación se introducen las redes neuronales artificiales como el modelo adoptado para este fin, preservando intactos los fundamentos de \acrshort{acr-rl} expuestos hasta aquí.
+En síntesis, el estado resume las condiciones de tránsito disponibles para el agente, la acción corresponde a la selección de una fase, la recompensa refleja la consecuencia operativa inmediata y el valor estima su impacto a largo plazo. Cuando el espacio de estados es continuo o de gran escala, como ocurre en las redes viales urbanas, las funciones de valor y las políticas requieren aproximadores de alta capacidad representacional. A continuación se introducen las redes neuronales artificiales como el modelo adoptado para este fin, preservando intactos los fundamentos de \acrshort{acr-rl} expuestos hasta aquí.
 
 \subsection{Aprendizaje Profundo y Redes Neuronales}
 
@@ -994,7 +994,12 @@ El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, 
 En esta formulación, el agente desacopla la recolección de experiencias en el simulador de la optimización paramétrica de la red. La memoria $\mathcal{D}$ rompe la correlación temporal de las observaciones de tráfico, mientras que la red objetivo estabiliza el blanco de Bellman mediante la sincronización periódica de $\theta^-$. La especificación detallada de los hiperparámetros operacionales (capacidad $N$, horizonte $T$, tasa de aprendizaje y cronograma de exploración) se desarrolla en el Capítulo \ref{capitulo:metodologia}.
 \subsubsection{Aproximación de Políticas, Función de Ventaja y \textit{Policy Gradient}}
 
-Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. En un problema de acciones discretas, la red recibe el estado u observación, calcula un puntaje para cada acción y transforma esos puntajes en una distribución de probabilidad, habitualmente mediante una función \textit{softmax}. En este trabajo, las acciones del agente corresponden a las fases semafóricas admisibles: las observaciones de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
+Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Bajo la formulación MDP, en un problema de acciones discretas la red recibe el estado $s$, calcula un vector de puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \textit{softmax} \cite{suttonRL,bishop2024deep}:
+\begin{equation}
+    \pi_\theta(a_i \mid s) = \frac{e^{z_i}}{\sum_{j=1}^m e^{z_j}}
+    \label{eq:softmax_policy}
+\end{equation}
+la cual garantiza valores estrictamente positivos que suman la unidad. En este ejemplo, las acciones corresponden a las fases semafóricas admisibles: las variables del estado de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. Las políticas basadas en observaciones locales se formalizan posteriormente mediante Dec-POMDP. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
 
 La Figura \ref{fig:red_politica} muestra este recorrido para un controlador semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la acción; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente de la log-probabilidad de la acción observada.
 
@@ -1029,7 +1034,7 @@ La Figura \ref{fig:red_politica} muestra este recorrido para un controlador sema
         \draw[aprendizaje] (adv.west) -| node[etiqueta, near end, left] {actualiza $\theta$} (hidden.south);
     \end{tikzpicture}%
     }
-    \caption{Red de política para un espacio discreto de acciones. La observación determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
+    \caption[Red de política para un espacio discreto de acciones]{Red de política para un espacio discreto de acciones en la formulación de un MDP. El estado determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
     \label{fig:red_politica}
 \end{figure}
 
@@ -1058,7 +1063,7 @@ donde $\pi_\theta(A_t \mid S_t)$ denota la probabilidad asignada a la fase $A_t$
 
 Los métodos clásicos de gradiente de política exhiben una elevada sensibilidad a la magnitud de la tasa de paso: una actualización excesiva en el espacio de parámetros puede degradar abruptamente el rendimiento de la política, desplazándola a regiones del espacio de estados donde la recolección de trayectorias queda irreparablemente sesgada.
 
-Para acotar el tamaño de paso en el espacio de distribuciones de probabilidad, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (\gls{acr-trpo} \cite{schulman2015trust}) formularon métodos de región de confianza. En el análisis teórico de \acrshort{acr-trpo}, bajo los supuestos del modelo y una actualización que respete la región de confianza basada en la divergencia de Kullback--Leibler (\acrshort{acr-kl}), la maximización exacta de la cota sustituta produce una política con retorno esperado no decreciente:
+Para acotar el tamaño de paso en el espacio de distribuciones de probabilidad, Kakade y Langford \cite{kakade2002approximately} y Schulman et al. (\gls{acr-trpo} \cite{schulman2015trust}) formularon métodos de región de confianza. En el análisis teórico de \acrshort{acr-trpo}, bajo los supuestos del modelo y una actualización que respete la región de confianza basada en la divergencia de Kullback--Leibler (\acrshort{acr-kl}, una medida probabilística que cuantifica la discrepancia estadística entre la nueva política y la previa \cite{goodfellow2016deep,schulman2015trust}), la maximización exacta de la cota sustituta produce una política con retorno esperado no decreciente:
 \begin{equation}
     J(\pi_{k+1}) \ge J(\pi_k)
     \label{eq:garantia_trpo}
@@ -1082,7 +1087,7 @@ En la arquitectura actor-crítico práctica, este objetivo de política se integ
     J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - V_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
     \label{eq:objetivo_combinado_ppo}
 \end{equation}
-donde $\phi$ son los parámetros del crítico, $V_t^{\text{target}}$ es el retorno objetivo estimado (calculado como $\hat{A}_t + V_\phi(s_t)$), $S[\pi_\theta](s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes que ponderan la precisión del valor y la exploración estocástica, respectivamente.
+donde $\phi$ son los parámetros del crítico, $V_t^{\text{target}}$ es el retorno objetivo estimado (calculado como $\hat{A}_t + V_\phi(s_t)$), $S[\pi_\theta](s_t) \doteq -\sum_a \pi_\theta(a \mid s_t) \log \pi_\theta(a \mid s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes de ponderación \cite{schulman2017ppo}. La inclusión del término entrópico favorece la exploración activa al penalizar distribuciones excesivamente concentradas, impidiendo que la política colapse prematuramente hacia un comportamiento determinista antes de examinar adecuadamente las distintas fases.
 
 \acrshort{acr-ppo} opera de forma predominantemente \textit{on-policy}: recolecta un lote de trayectorias con la política vigente $\pi_{\theta_{\text{old}}}$, ejecuta un número acotado de \textit{epochs} de optimización sobre \textit{minibatches}, y descarta inmediatamente el lote para evitar sesgos por desfasaje distribucional. El algoritmo \ref{alg:ppo} formaliza este ciclo de entrenamiento:
 
@@ -1108,7 +1113,7 @@ donde $\phi$ son los parámetros del crítico, $V_t^{\text{target}}$ es el retor
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-Fijar temporalmente $\theta_{\mathrm{old}}$ permite reutilizar el lote de transiciones durante $K$ \textit{epochs} con una referencia estable. El mecanismo de recorte busca acotar desviaciones bruscas en la política, aunque demasiadas pasadas sobre las mismas muestras pueden deteriorar la aproximación. Luego de estas actualizaciones, $\theta_{\mathrm{old}}$ adopta los nuevos parámetros y el lote se descarta para recolectar nuevas experiencias. En la red semafórica, el controlador opera de forma autónoma evaluando únicamente su actor local $\pi_\theta$, sentando las bases para las extensiones multiagente analizadas a continuación.
+En PPO, $\theta_{\mathrm{old}}$ representa la política recolectora y permanece fijo al calcular las razones de probabilidad. El lote se reutiliza durante un número acotado de \textit{epochs}; el recorte reduce el incentivo para que las razones superen el intervalo $[1-\epsilon_{\mathrm{clip}},1+\epsilon_{\mathrm{clip}}]$, pero no impone una restricción estricta ni garantiza una mejora monótona \cite{schulman2017ppo}. Después de la optimización, $\theta_{\mathrm{old}}$ se actualiza con $\theta$ y se recolectan nuevas experiencias. Durante la ejecución en la red semafórica, el crítico se desacopla y el controlador evalúa únicamente su actor local $\pi_\theta$.
 
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (\acrshort{acr-marl})}\label{sec:marl}
@@ -1140,9 +1145,9 @@ En redes urbanas reales, los controladores carecen de telemetría instantánea y
     \langle \mathcal{N}, \mathcal{S}, \{ \mathcal{A}_i \}_{i=1}^n, P, R, \{ \Omega_i \}_{i=1}^n, O, \gamma \rangle
     \label{eq:dec_pomdp}
 \end{equation}
-donde $\Omega_i$ es el conjunto de observaciones locales accesibles al agente $i$, y $O(o_1, \dots, o_n \mid s', \mathbf{a}) = \Pr\{\mathbf{o} = (o_1, \dots, o_n) \mid s', \mathbf{a}\}$ es la función de emisión estocástica de observaciones. En este marco, cada controlador aprende una política local descentralizada $\pi_i(a_i \mid o_i)$ basada en su observación actual $o_i$. Aunque la formulación general de un \gls{acr-decpomdp} puede requerir un historial completo para mitigar la observabilidad parcial, en este trabajo se adoptan políticas reactivas sobre las mediciones locales de cada intersección, de modo que la política conjunta $\boldsymbol{\pi} = (\pi_1, \dots, \pi_n)$ maximice el rendimiento de la red (Figura \ref{fig:marl_interaction}).
+donde $\Omega_i$ es el conjunto de observaciones locales accesibles al agente $i$, y $O(o_1, \dots, o_n \mid s', \mathbf{a}) = \Pr\{\mathbf{o} = (o_1, \dots, o_n) \mid s', \mathbf{a}\}$ es la función de emisión estocástica de observaciones \cite{decpomdp-survey}. El estado global $s$ es una variable del modelo que no tiene por qué ser accesible a cada agente; en general, una política descentralizada puede depender del historial local de observaciones y acciones $\tau_i$ y expresarse como $\pi_i(a_i \mid \tau_i)$. En este trabajo, cada controlador adopta una política reactiva basada en la observación actual $\pi_i(a_i \mid o_i)$, sin identificar $o_i$ con $s$ (figura \ref{fig:marl_interaction}).
 
-La Figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente procesa su observación local $o_i$ y emite una fase $a_i$. La concurrencia de estas decisiones conforma la acción conjunta $\mathbf{a}$, la cual perturba el estado global del simulador de tráfico y devuelve a cada controlador su nueva observación y su retroalimentación individual $r_i$.
+La figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente procesa su observación local $o_i$ y emite una fase $a_i$. La concurrencia de estas decisiones conforma la acción conjunta $\mathbf{a}$, la cual perturba el estado global del simulador de tráfico y devuelve a cada controlador su nueva observación y su retroalimentación individual $r_i$.
 
 \begin{figure}[H]
     \centering
@@ -1306,7 +1311,7 @@ La Figura \ref{fig:ctde_architecture} resume esta partición operativa entre amb
 Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto multiagente bajo el paradigma \acrshort{acr-ctde}, Yu et al. \cite{yu2022surprising} estudiaron una configuración de \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo}) basada en PPO y un crítico centralizado. En lugar de rediseñar el estimador base, MAPPO preserva la simplicidad computacional de PPO mediante la factorización explícita entre políticas descentralizadas y evaluación centralizada:
 \begin{itemize}
     \item \textbf{Actores descentralizados ($\pi_{\theta_i}(a_i \mid o_i)$):} Cada controlador $i$ procesa exclusivamente su vector de observación local $o_i$ para seleccionar su fase semafórica $a_i$. En intersecciones con geometrías idénticas puede compartirse parámetros entre actores, aunque esto no constituye una restricción conceptual.
-    \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, una red de valor evalúa el estado global $s$ de la red vial. Esto permite estimar ventajas conjuntas con menor varianza al observar el sistema completo, facilitando el aprendizaje de los controladores locales \cite{yu2022surprising}.
+    \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, el crítico puede utilizar información global que no está disponible para los actores. Una representación global adecuada puede facilitar la estimación del valor, y una línea de base más precisa puede contribuir a reducir la varianza, sin garantía automática \cite{yu2022surprising}.
 \end{itemize}
 
 El objetivo de optimización de los actores promedia los términos individuales de recorte PPO sobre los $n$ agentes:
@@ -1314,7 +1319,7 @@ El objetivo de optimización de los actores promedia los términos individuales 
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n} \sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t(s_t, \mathbf{a}_t), \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t(s_t, \mathbf{a}_t) \right) \right]
     \label{eq:objetivo_mappo}
 \end{equation}
-donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. Paralelamente, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$:
+donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. Paralelamente, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$, estimado empíricamente sobre el lote de transiciones mediante la suma de la ventaja \acrshort{acr-gae} y el valor de estado previo $\hat{A}_t(s_t, \mathbf{a}_t) + V_\phi(s_t)$ \cite{yu2022surprising,schulman2015high}:
 \begin{equation}
     \mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right].
     \label{eq:perdida_valor_mappo}
@@ -1373,9 +1378,9 @@ Una distinción central entre \acrshort{acr-mappo} y \acrshort{acr-happo} radica
 
 \subsubsection{Lema de Descomposición de la Ventaja Multi-Agente}
 
-La actualización simultánea de todos los controladores puede generar inestabilidad porque las políticas de los agentes se modifican al mismo tiempo, alterando la dinámica de transición percibida por cada uno. \acrshort{acr-happo} aborda este problema mediante una actualización secuencial: en cada iteración se optimiza un agente por vez, condicionando cada paso a los cambios ya efectuados por los precedentes. Para sustentar este esquema, la ventaja conjunta de la red debe poder descomponerse en contribuciones marginales ordenadas.
+La actualización simultánea de todos los controladores puede generar inestabilidad porque el cambio concurrente de las políticas altera tanto las distribuciones de acción como la distribución conjunta de las trayectorias. \acrshort{acr-happo} aborda este problema mediante una actualización secuencial: en cada iteración se optimiza un agente por vez, condicionando cada paso a los cambios ya efectuados por los precedentes. Para sustentar este esquema, la ventaja conjunta de la red debe poder descomponerse en contribuciones marginales ordenadas \cite{kuba2021trust}.
 
-Esta descomposición se formaliza mediante el Lema de Descomposición de la Ventaja Multi-Agente formulado por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
+Esta descomposición se formaliza en el Lema de Descomposición de la Ventaja Multi-Agente propuesto por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
 \begin{equation}
     A^{\boldsymbol{\pi}}(s, \mathbf{a}) = \sum_{m=1}^n A_{i_m}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})
     \label{eq:happo_descomposicion_ventaja}
@@ -1386,19 +1391,20 @@ donde la ventaja marginal del agente $i_m$ se define como:
     \label{eq:happo_ventaja_marginal}
 \end{equation}
 En la ecuación \eqref{eq:happo_ventaja_marginal}, $Q_{i_{1:m}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})$ evalúa el retorno esperado fijando las acciones de los primeros $m$ agentes de la secuencia, mientras que las decisiones de los agentes subsecuentes ($\mathbf{a}_{i_{m+1:n}}$) se marginalizan por esperanza bajo la política vigente.
+Sus garantías se circunscriben a actualizaciones que satisfacen los supuestos teóricos correspondientes \cite{kuba2021trust}.
 
 La relevancia de este lema radica en que es una identidad exacta para cualquier juego cooperativo sin imponer restricciones de aditividad o monotonía sobre la función de valor, superando las limitaciones estructurales de arquitecturas como \gls{acr-vdn} \cite{vdn} o \gls{acr-qmix} \cite{qmix}.
 
 \subsubsection{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}
 
-Para explotar analíticamente esta descomposición sin incurrir en la inestabilidad del entrenamiento simultáneo, \acrshort{acr-happo} actualiza las políticas de los agentes de manera secuencial dentro de cada iteración $k$. En cada ciclo se sortea una permutación aleatoria $i_{1:n} \in \text{Sym}(n)$ para evitar sesgos sistemáticos de prioridad \cite{kuba2021trust}.
+Para explotar analíticamente esta descomposición sin incurrir en la inestabilidad del entrenamiento simultáneo, \acrshort{acr-happo} actualiza las políticas de los agentes de manera secuencial dentro de cada iteración $k$. En cada ciclo se sortea una permutación aleatoria $i_{1:n} \in \text{Sym}(n)$ (donde $\text{Sym}(n)$ representa el conjunto de todas las permutaciones posibles de los $n$ agentes) para evitar sesgos sistemáticos de prioridad en la secuencia de optimización \cite{kuba2021trust}.
 
 Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan aún sus parámetros previos $\theta_k^{i_j}$. Para guiar al agente $i_m$ absorbiendo la alteración en la distribución conjunta inducida por sus predecesores, Kuba et al. \cite{kuba2021trust} demostraron que no se requiere entrenar un crítico separado por cada subgrupo; la ventaja marginal puede computarse reponderando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ mediante la productoria acumulada de las razones de probabilidad de los agentes ya actualizados:
 \begin{equation}
     M_{i_{1:m}}(s_t, \mathbf{a}_t) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})}{\pi_{\theta_k^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)
     \label{eq:happo_factor_m}
 \end{equation}
-donde $\pi_{\theta_{k+1}^{i_j}}^{i_j}$ es la política recién optimizada del agente $i_j$ y $\pi_{\theta_k^{i_j}}^{i_j}$ es su versión previa. Para el primer agente ($m=1$), la productoria es vacía y $M_{i_1}(s_t, \mathbf{a}_t) \equiv A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)$. El factor $M_{i_{1:m}}$ actúa como un estimador de importancia que ajusta la ventaja conjunta al nuevo perfil de comportamiento sin requerir simulaciones adicionales en el entorno.
+donde $\pi_{\theta_{k+1}^{i_j}}^{i_j}$ es la política recién optimizada del agente $i_j$ y $\pi_{\theta_k^{i_j}}^{i_j}$ es su versión previa. Para el primer agente ($m=1$), la productoria es vacía y $M_{i_1}(s_t, \mathbf{a}_t) \equiv A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)$. El factor $M_{i_{1:m}}$ actúa como un estimador de importancia que ajusta la ventaja conjunta al nuevo perfil de comportamiento sin requerir simulaciones adicionales en el entorno \cite{kuba2021trust}.
 
 Así, la política del agente $i_m$ se optimiza maximizando el objetivo sustituto recortado ponderado por $M_{i_{1:m}}$:
 \begin{equation}
@@ -1503,7 +1509,7 @@ El algoritmo \ref{alg:happo} formaliza la secuencia completa de optimización de
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-El procedimiento secuencial de HAPPO desacopla el entrenamiento de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la fase de ejecución, cada agente evalúa únicamente su red local $\pi_{\theta^i}$, garantizando una toma de decisiones descentralizada y sin requerir comunicación entre los controladores durante la ejecución.
+El procedimiento de HAPPO organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre controladores para inferir su acción \cite{kuba2021trust}.
 
 Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{acr-ppo} en escenarios \acrshort{acr-marl}, la Tabla \ref{tab:marl_ppo_comparison} sintetiza sus principales propiedades operativas, arquitectónicas y teóricas.
 

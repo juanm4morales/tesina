@@ -14,22 +14,22 @@
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{24}{figure.caption.44}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Esquema de un método basado en valor}}{26}{figure.caption.48}%
 \contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de un método basado en política}}{28}{figure.caption.51}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Arquitectura actor-crítico aplicada al control semafórico. El actor selecciona una acción y el crítico evalúa la transición para construir la señal que actualiza ambos componentes. Elaboración propia a partir de \cite {konda2003actorcritic,suttonRL}.}}{29}{figure.caption.55}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Arquitectura actor-crítico aplicada al control semafórico}}{29}{figure.caption.55}%
 \contentsline {figure}{\numberline {2.13}{\ignorespaces Operaciones de una unidad neuronal artificial: suma ponderada de las entradas, incorporación del sesgo y aplicación de una función de activación.}}{31}{figure.caption.58}%
 \contentsline {figure}{\numberline {2.14}{\ignorespaces Arquitectura conceptual de una red neuronal \textit {feedforward} con dos capas ocultas.}}{32}{figure.caption.61}%
 \contentsline {figure}{\numberline {2.15}{\ignorespaces Flujo conceptual de \acrshort {acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del blanco \gls {acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{35}{figure.caption.67}%
-\contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones. La observación determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente de la log-probabilidad de la acción seleccionada \cite {suttonRL,konda2003actorcritic}.}}{37}{figure.caption.71}%
-\contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{42}{figure.caption.86}%
-\contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{44}{figure.caption.90}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{46}{figure.caption.93}%
-\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.114}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones}}{37}{figure.caption.72}%
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{42}{figure.caption.87}%
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{44}{figure.caption.91}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{46}{figure.caption.94}%
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{60}{figure.caption.130}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{60}{figure.caption.131}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{82}{figure.caption.216}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{83}{figure.caption.218}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{82}{figure.caption.217}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{83}{figure.caption.219}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
