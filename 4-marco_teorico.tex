@@ -631,7 +631,7 @@ Los algoritmos de \acrshort{acr-rl} pueden agruparse, a grandes rasgos, en méto
 
 Esta clasificación distingue dos formas de obtener una regla de decisión. Los métodos basados en política aprenden directamente una función que relaciona cada estado con una acción o con una distribución de probabilidad sobre las acciones. En cambio, los métodos basados en valor aprenden indirectamente la regla de decisión: estiman la conveniencia de los estados o de los pares estado--acción y, a partir de esas estimaciones, determinan qué alternativa conviene ejecutar \cite{suttonRL}. En el control semafórico, las alternativas corresponden a las distintas fases admisibles de una intersección.
 
-La figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$; si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la etapa W y de selección.
+La figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$; si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
 
 \begin{figure}[H]
     \centering
@@ -687,7 +687,7 @@ En la ecuación \eqref{eq:actor_critic_td}, el factor $(1-d_{t+1})$ anula la con
     \nabla_\theta \log \pi_\theta(A_t\mid S_t).
     \label{eq:actor_critic_update}
 \end{equation}
-En la regla \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de aprendizaje del actor y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ representa la dirección que incrementa la probabilidad de la acción elegida. Ponderar este gradiente por $\delta_t$ refuerza sistemáticamente las fases que superan la expectativa de demora y penaliza aquellas con resultados adversos. Aunque los algoritmos avanzados sustituyen $\delta_t$ por estimadores de ventaja multipaso como \gls{acr-gae} y procesan lotes de transiciones en cada actualización, esta formulación elemental expone con nitidez la sinergia entre ambos componentes.
+En la regla \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de aprendizaje del actor y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ representa la dirección que incrementa la probabilidad de la acción elegida. Ponderar este gradiente por $\delta_t$ refuerza sistemáticamente las fases que superan la expectativa de demora y penaliza aquellas con resultados adversos. Aunque los algoritmos avanzados sustituyen $\delta_t$ por estimadores de ventaja multipaso como \gls{acr-gae} y procesan \textit{batches} de transiciones en cada actualización, esta formulación elemental expone con nitidez la sinergia entre ambos componentes.
 
 La figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y entorno, así como el circuito de evaluación mediante el cual el crítico genera la señal de retroalimentación compartida.
 
@@ -744,7 +744,7 @@ En problemas de control con espacios de estados continuos o de gran escala, los 
 
 La unidad neuronal artificial constituye el bloque computacional básico de estas arquitecturas \cite{bishop2024deep,goodfellow2016deep}. Esta procesa un vector de entradas ponderándolo mediante un vector de pesos, añade un término de sesgo y aplica una función de activación no lineal para producir una respuesta escalar. En el ámbito semafórico, las entradas corresponden típicamente a variables observables del tránsito (como tiempos de espera acumulados o longitudes de cola por carril), mientras que los pesos modulan la contribución relativa de cada acceso hacia la decisión final.
 
-La Figura \ref{fig:neurona_artificial} ilustra este procesamiento: la transformación afín $a = \mathbf{w}^{\top}\mathbf{x} + b$ integra las entradas $\mathbf{x} = (x_1, \dots, x_n)$ con los pesos $\mathbf{w}$ y el sesgo $b$, antes de que la activación $y = g(a)$ genere la salida. Sin la introducción de estas no linealidades $g(\cdot)$, una red multicapa se reduciría a una transformación afín simple, imposibilitando la captura de patrones de congestión complejos.
+La Figura \ref{fig:neurona_artificial} ilustra este procesamiento: la transformación afín $z = \mathbf{w}^{\top}\mathbf{x} + b$ integra las entradas $\mathbf{x} = (x_1, \dots, x_n)$ con los pesos $\mathbf{w}$ y el sesgo $b$, antes de que la activación $y = g(z)$ genere la salida. Sin la introducción de estas no linealidades $g(\cdot)$, una red multicapa se reduciría a una transformación afín simple, imposibilitando la captura de patrones de congestión complejos.
 
 \begin{figure}[H]
     \centering
@@ -772,7 +772,7 @@ La Figura \ref{fig:neurona_artificial} ilustra este procesamiento: la transforma
         \node[peso] at (1.25,0.66) {$w_2$};
         \node[peso] at (1.25,-0.78) {$w_n$};
         \node[peso, anchor=west] at (4.62,-1.18) {sesgo};
-        \draw[flujo] (sum.east) -- node[font=\scriptsize\sffamily, above=3pt] {$a$} (act.west);
+        \draw[flujo] (sum.east) -- node[font=\scriptsize\sffamily, above=3pt] {$z$} (act.west);
         \draw[flujo] (act.east) -- (out.west);
         \node[font=\scriptsize\sffamily, text=black!65, align=center] at (4.15,1.45) {suma ponderada\\$+$ sesgo};
         \node[font=\scriptsize\sffamily, text=black!65, align=center] at (7.05,1.35) {función de\\activación};
@@ -898,10 +898,10 @@ En los métodos basados en valor, \acrshort{acr-dqn} sustituye la tabla de estad
 Para mitigar la inestabilidad de la Tríada Mortal —en particular el problema del blanco móvil, donde actualizar el valor de un estado altera impredeciblemente las estimaciones de estados adyacentes—, \acrshort{acr-dqn} incorpora dos componentes estructurales \cite{mnih2015}:
 \begin{itemize}
     \item \textbf{Redes objetivo (\textit{Target Networks}):} una red secundaria idéntica cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular el término de \textit{bootstrapping} del blanco \gls{acr-td}, desacoplando la estimación en curso del objetivo de aprendizaje y amortiguando oscilaciones.
-    \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un búfer $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
+    \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un \textit{buffer} $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
 \end{itemize}
 
-Durante la interacción con SUMO, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar; la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los \textit{minibatches} muestreados del búfer contra el blanco fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
+Durante la interacción con SUMO, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar; la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los \textit{minibatches} muestreados del \textit{buffer} contra el blanco fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
 
 \begin{figure}[H]
     \centering
@@ -924,7 +924,7 @@ Durante la interacción con SUMO, la red en línea evalúa la observación de tr
         \node[salida] (select) at (3.1,2.2) {Selección\\$\epsilon_{\mathrm{exp}}$-greedy};
         \node[entorno] (env) at (6.4,2.2) {\acrshort{acr-sumo}\\ejecuta $A_t$};
 
-        \node[memoria] (buffer) at (5.3,-1.55) {Búfer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1})$};
+        \node[memoria] (buffer) at (5.3,-1.55) {Buffer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1})$};
         \node[red] (target) at (0.45,-1.55) {Red objetivo\\$\hat Q(S_{t+1},a;\theta^-)$};
         \node[salida] (loss) at (-4.15,-1.55) {Pérdida \gls{acr-td}\\$(y-Q_t)^2$};
 
@@ -958,7 +958,7 @@ La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bl
 \end{equation}
 En la ecuación \eqref{eq:perdida_dqn}, la esperanza se evalúa empíricamente promediando sobre un \textit{minibatch} de transiciones $(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1})$ extraídas de $\mathcal{D}$. La función de pérdida minimiza la discrepancia cuadrática entre la estimación actual $Q(s_j, a_j; \theta)$ y el blanco temporal compuesto por la recompensa inmediata observada y la cota superior del valor futuro proyectado por la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$. El factor $(1-d_{j+1})$ anula la contribución del estado siguiente cuando la transición es terminal ($d_{j+1}=1$), mientras que $a'$ recorre las fases semafóricas admisibles.
 
-Los cuatro bloques numerados como algoritmos en este capítulo son pseudocódigos: descripciones ordenadas e independientes de un lenguaje de programación, no fragmentos ejecutables. En ellos, una \gls{transicion_aprendizaje} registra lo ocurrido en un paso; un \gls{episodio_aprendizaje} agrupa pasos desde el reinicio hasta la terminación; y un \gls{rollout} es la secuencia de transiciones recolectada con una política. Una \gls{iteracion_entrenamiento} comprende la recolección de datos y su optimización, mientras que una \gls{epoca_entrenamiento} es una reutilización completa de esos datos dentro de la misma iteración. Cada actualización puede calcularse sobre un \gls{mini_lote}, es decir, un subconjunto de las muestras. Las líneas ``Entrada'' y ``Salida'' indican, respectivamente, qué información necesita el procedimiento y qué componentes entrenados produce; las líneas indentadas pertenecen al ciclo inmediatamente superior. En lo sucesivo se conservan los términos ingleses \textit{epoch} y \textit{minibatch}, habituales en la literatura, junto con esta definición en español.
+Los cuatro bloques numerados como algoritmos en este capítulo son pseudocódigos: descripciones ordenadas e independientes de un lenguaje de programación, no fragmentos ejecutables. En ellos, una \gls{transicion_aprendizaje} registra lo ocurrido en un paso; un \gls{episodio_aprendizaje} agrupa pasos desde el reinicio hasta la terminación; y un \gls{rollout} es la secuencia de transiciones recolectada con una política. Una \gls{iteracion_entrenamiento} comprende la recolección de datos y su optimización, mientras que una \gls{epoca_entrenamiento} es una reutilización completa de esos datos dentro de la misma iteración. Cada actualización puede calcularse sobre un \gls{mini_lote}, es decir, un subconjunto de las muestras. Las líneas ``Entrada'' y ``Salida'' indican, respectivamente, qué información necesita el procedimiento y qué componentes entrenados produce; las líneas indentadas pertenecen al ciclo inmediatamente superior. En lo sucesivo se conservan los términos ingleses \textit{batch}, \textit{minibatch}, \textit{buffer} y \textit{epoch}, habituales en la literatura, junto con esta definición en español.
 
 El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de \textit{minibatches} muestreados del \gls{replay_buffer}. El algoritmo \ref{alg:dqn} formaliza el flujo computacional de este proceso:
 
@@ -968,7 +968,7 @@ El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, 
 \begin{algorithmic}[1]
 \Statex \textbf{Entrada:} entorno, fases admisibles, capacidad $N$, horizonte $T$ en pasos de decisión, $\gamma$ y $\epsilon_{\mathrm{exp}}$
 \Statex \textbf{Salida:} parámetros entrenados $\theta$ de la red de acción-valor
-\State Inicializar el búfer de experiencias $\mathcal{D}$ con capacidad $N$
+\State Inicializar el \textit{buffer} de experiencias $\mathcal{D}$ con capacidad $N$
 \State Inicializar la red de acción-valor $Q(s,a;\theta)$ con parámetros aleatorios
 \State Inicializar la red objetivo $\hat{Q}(s,a;\theta^-)$ con $\theta^- \leftarrow \theta$
 \For{episodio $= 1, 2, \dots$}
@@ -1052,7 +1052,7 @@ Para estimar la ventaja sin incurrir en la alta varianza del retorno Monte Carlo
 \end{equation}
 donde $\delta_t^V = R_{t+1} + \gamma(1-d_{t+1})V_\phi(S_{t+1}) - V_\phi(S_t)$ es el error temporal del crítico parametrizado por $\phi$, $d_{t+1}$ es el indicador terminal, $\gamma \in [0, 1)$ es el factor de descuento y $\lambda \in [0, 1]$ es el parámetro de suavizado exponencial. El hiperparámetro $\lambda$ interpola estimaciones de ventaja de distintos horizontes. Para $\lambda = 0$, se obtiene el residuo TD de un paso $\delta_t^V$, que suele reducir la varianza a costa de depender de la precisión del crítico y, por tanto, puede introducir sesgo. Para $\lambda = 1$, con el retorno completo, se recupera el estimador Monte Carlo descontado menos el valor del estado; este es $\gamma$-justo incluso con un crítico aproximado, aunque normalmente presenta mayor varianza. En trayectorias truncadas, el \textit{bootstrap} y la aproximación del crítico pueden modificar este compromiso.
 
-El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) \cite{suttonRL} fundamenta analíticamente la optimización directa de los parámetros de la política maximizando el retorno esperado $J(\theta)$. Empleando la función de ventaja como línea de base para mitigar la varianza, el gradiente se aproxima mediante la esperanza muestral sobre un lote de transiciones recolectadas:
+El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) \cite{suttonRL} fundamenta analíticamente la optimización directa de los parámetros de la política maximizando el retorno esperado $J(\theta)$. Empleando la función de ventaja como línea de base para mitigar la varianza, el gradiente se aproxima mediante la esperanza muestral sobre un \textit{batch} de transiciones recolectadas:
 \begin{equation}
     \nabla_\theta J(\theta) \approx \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(A_t \mid S_t) \hat{A}_t \right]
     \label{eq:gradiente_politica}
@@ -1075,7 +1075,7 @@ Definiendo la razón de probabilidad entre la política actual y la previa:
     r_t(\theta) \doteq \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}
     \label{eq:razon_ppo}
 \end{equation}
-donde $\pi_{\theta_{\text{old}}}$ representa la política que recolectó el lote de transiciones, \acrshort{acr-ppo} maximiza el objetivo recortado:
+donde $\pi_{\theta_{\text{old}}}$ representa la política que recolectó el \textit{batch} de transiciones, \acrshort{acr-ppo} maximiza el objetivo recortado:
 \begin{equation}
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \min\left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t \right) \right]
     \label{eq:objetivo_clip_ppo}
@@ -1084,12 +1084,12 @@ En la ecuación \eqref{eq:objetivo_clip_ppo}, $\epsilon_{\mathrm{clip}} > 0$ del
 
 En la arquitectura actor-crítico práctica, este objetivo de política se integra de forma conjunta con la regresión del crítico y un término de regularización entrópica:
 \begin{equation}
-    J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - V_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
+    J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
     \label{eq:objetivo_combinado_ppo}
 \end{equation}
-donde $\phi$ son los parámetros del crítico, $V_t^{\text{target}}$ es el retorno objetivo estimado (calculado como $\hat{A}_t + V_\phi(s_t)$), $S[\pi_\theta](s_t) \doteq -\sum_a \pi_\theta(a \mid s_t) \log \pi_\theta(a \mid s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes de ponderación \cite{schulman2017ppo}. La inclusión del término entrópico favorece la exploración activa al penalizar distribuciones excesivamente concentradas, impidiendo que la política colapse prematuramente hacia un comportamiento determinista antes de examinar adecuadamente las distintas fases.
+donde $\phi$ son los parámetros del crítico, $R_t^{\text{target}}$ es el retorno objetivo estimado (calculado como $\hat{A}_t + V_\phi(s_t)$), $S[\pi_\theta](s_t) \doteq -\sum_a \pi_\theta(a \mid s_t) \log \pi_\theta(a \mid s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes de ponderación \cite{schulman2017ppo}. La inclusión del término entrópico favorece la exploración activa al penalizar distribuciones excesivamente concentradas, impidiendo que la política colapse prematuramente hacia un comportamiento determinista antes de examinar adecuadamente las distintas fases.
 
-\acrshort{acr-ppo} opera de forma predominantemente \textit{on-policy}: recolecta un lote de trayectorias con la política vigente $\pi_{\theta_{\text{old}}}$, ejecuta un número acotado de \textit{epochs} de optimización sobre \textit{minibatches}, y descarta inmediatamente el lote para evitar sesgos por desfasaje distribucional. El algoritmo \ref{alg:ppo} formaliza este ciclo de entrenamiento:
+\acrshort{acr-ppo} opera de forma predominantemente \textit{on-policy}: recolecta un \textit{batch} de trayectorias con la política vigente $\pi_{\theta_{\text{old}}}$, ejecuta un número acotado de \textit{epochs} de optimización sobre \textit{minibatches}, y descarta inmediatamente el \textit{batch} para evitar sesgos por desfasaje distribucional. El algoritmo \ref{alg:ppo} formaliza este ciclo de entrenamiento:
 
 \begin{algorithm}[H]
 \caption{Proximal Policy Optimization (\acrshort{acr-ppo})}
@@ -1113,7 +1113,7 @@ donde $\phi$ son los parámetros del crítico, $V_t^{\text{target}}$ es el retor
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-En PPO, $\theta_{\mathrm{old}}$ representa la política recolectora y permanece fijo al calcular las razones de probabilidad. El lote se reutiliza durante un número acotado de \textit{epochs}; el recorte reduce el incentivo para que las razones superen el intervalo $[1-\epsilon_{\mathrm{clip}},1+\epsilon_{\mathrm{clip}}]$, pero no impone una restricción estricta ni garantiza una mejora monótona \cite{schulman2017ppo}. Después de la optimización, $\theta_{\mathrm{old}}$ se actualiza con $\theta$ y se recolectan nuevas experiencias. Durante la ejecución en la red semafórica, el crítico se desacopla y el controlador evalúa únicamente su actor local $\pi_\theta$.
+En PPO, $\theta_{\mathrm{old}}$ representa la política recolectora y permanece fijo al calcular las razones de probabilidad. El \textit{batch} se reutiliza durante un número acotado de \textit{epochs}; el recorte reduce el incentivo para que las razones superen el intervalo $[1-\epsilon_{\mathrm{clip}},1+\epsilon_{\mathrm{clip}}]$, pero no impone una restricción estricta ni garantiza una mejora monótona \cite{schulman2017ppo}. Después de la optimización, $\theta_{\mathrm{old}}$ se actualiza con $\theta$ y se recolectan nuevas experiencias. Durante la ejecución en la red semafórica, el crítico se desacopla y el controlador evalúa únicamente su actor local $\pi_\theta$.
 
 
 \section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (\acrshort{acr-marl})}\label{sec:marl}
@@ -1250,7 +1250,7 @@ La convergencia entre \acrshort{acr-decpomdp} y redes profundas sustenta el camp
 
 \begin{itemize}
     \item \textbf{\acrshort{acr-idqn} (Línea de base basada en valor):} Extensión de \acrshort{acr-dqn} donde cada intersección mantiene su propia red $Q_i(o_i, a_i)$ \cite{tampuu2017multiagent}. Al operar \textit{off-policy} con un \textit{replay buffer}, almacena transiciones generadas bajo políticas que ya mutaron, lo que exacerba el desfasaje temporal de las experiencias y acentúa la no estacionariedad \cite{foerster2017}.
-    \item \textbf{\acrshort{acr-ippo} (Línea de base basada en política):} Instancia un optimizador \acrshort{acr-ppo} independiente por agente \cite{de2020independent}. Dado su régimen \textit{on-policy}, descarta el lote tras cada iteración, mitigando la acumulación de datos obsoletos. Aunque no elimina el acoplamiento no estacionario, su mecanismo de recorte ofrece una referencia competitiva frente a los métodos coordinados.
+    \item \textbf{\acrshort{acr-ippo} (Línea de base basada en política):} Instancia un optimizador \acrshort{acr-ppo} independiente por agente \cite{de2020independent}. Dado su régimen \textit{on-policy}, descarta el \textit{batch} tras cada iteración, mitigando la acumulación de datos obsoletos. Aunque no elimina el acoplamiento no estacionario, su mecanismo de recorte ofrece una referencia competitiva frente a los métodos coordinados.
 \end{itemize}
 
 La Figura \ref{fig:ctde_architecture} resume esta partición operativa entre ambas etapas.
@@ -1319,7 +1319,7 @@ El objetivo de optimización de los actores promedia los términos individuales 
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n} \sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t(s_t, \mathbf{a}_t), \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t(s_t, \mathbf{a}_t) \right) \right]
     \label{eq:objetivo_mappo}
 \end{equation}
-donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. Paralelamente, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$, estimado empíricamente sobre el lote de transiciones mediante la suma de la ventaja \acrshort{acr-gae} y el valor de estado previo $\hat{A}_t(s_t, \mathbf{a}_t) + V_\phi(s_t)$ \cite{yu2022surprising,schulman2015high}:
+donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. Paralelamente, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$, estimado empíricamente sobre el \textit{batch} de transiciones mediante la suma de la ventaja \acrshort{acr-gae} y el valor de estado previo $\hat{A}_t(s_t, \mathbf{a}_t) + V_\phi(s_t)$ \cite{yu2022surprising,schulman2015high}:
 \begin{equation}
     \mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right].
     \label{eq:perdida_valor_mappo}
@@ -1331,7 +1331,7 @@ Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de
 \begin{enumerate}
     \item \textbf{Normalización de retornos:} En los experimentos de Yu et al., normalizar los objetivos de valor puede favorecer el ajuste del crítico cuando cambia la escala de las recompensas.
     \item \textbf{Estructuración del estado global del crítico:} En ese estudio, la entrada $s$ se evaluó con distintas representaciones: concatenación directa de observaciones ($CL: s = (o_1, \dots, o_n)$), estado global extraído directamente del simulador ($EP$), o estados aumentados específicos por agente ($AS_i = EP \cup o_i$), combinados opcionalmente con filtrado de redundancias ($FP$).
-    \item \textbf{Reutilización de datos:} La cantidad de \textit{epochs} ($K$) y la división en \textit{minibatches} regulan la reutilización del lote. Yu et al. observaron que una reutilización excesiva puede deteriorar el rendimiento, especialmente en tareas difíciles.
+    \item \textbf{Reutilización de datos:} La cantidad de \textit{epochs} ($K$) y la división en \textit{minibatches} regulan la reutilización del \textit{batch}. Yu et al. observaron que una reutilización excesiva puede deteriorar el rendimiento, especialmente en tareas difíciles.
 \end{enumerate}
 
 El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-mappo} bajo el paradigma CTDE.
@@ -1343,7 +1343,7 @@ El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-
 \Statex \textbf{Entrada:} entorno multiagente, $n$ agentes, horizonte de recolección, \textit{epochs} $K$, $\gamma$, $\lambda_{\mathrm{GAE}}$ y $\epsilon_{\mathrm{clip}}$
 \Statex \textbf{Salida:} parámetros entrenados de los actores $\theta$ y del crítico centralizado $\phi$
 \State Inicializar los parámetros de la política (actor) $\theta$ y del valor (crítico) $\phi$
-\State Inicializar el búfer de datos $\mathcal{D} \leftarrow \emptyset$
+\State Inicializar el \textit{buffer} de datos $\mathcal{D} \leftarrow \emptyset$
 \For{iteración $= 1, 2, \dots$}
     \State Recolectar trayectorias \textit{on-policy} para todos los agentes utilizando la política conjunta $\boldsymbol{\pi}_\theta$
     \State Calcular las ventajas conjuntas $\hat{A}_t(s_t, \mathbf{a}_t)$ mediante \acrshort{acr-gae} a partir del crítico centralizado $V_\phi(s_t)$
@@ -1352,15 +1352,15 @@ El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-
     \For{\textit{epoch} $= 1$ hasta $K$}
         \State Muestrear \textit{minibatches} de datos desde $\mathcal{D}$
         \State Actualizar la política maximizando el objetivo de recorte \acrshort{acr-ppo} por agente:
-        \Statex $\mathcal{L}^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n}\sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t, \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t \right) \right]$
+        \Statex $L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n}\sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t, \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t \right) \right]$
         \State Actualizar el crítico $\phi$ minimizando el error cuadrático medio del valor:
         \Statex $\mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right]$
     \EndFor
-    \State Vaciar el búfer de datos $\mathcal{D} \leftarrow \emptyset$
+    \State Vaciar el \textit{buffer} de datos $\mathcal{D} \leftarrow \emptyset$
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-Durante el entrenamiento, el crítico centralizado $V_\phi(s)$ procesa el estado global de la red vial para calcular ventajas conjuntas mediante \acrshort{acr-gae}, guiando la optimización paralela de los actores locales $\pi_{\theta_i}$ con el objetivo recortado. Al finalizar cada iteración, el búfer $\mathcal{D}$ se descarta por completo para preservar el régimen \textit{on-policy} del método. En la etapa de ejecución, el crítico se desacopla y cada controlador actúa con autonomía computacional a partir de su vector local $o_t^i$. Los hiperparámetros de entrenamiento y la arquitectura de las redes se detallan en el Capítulo \ref{capitulo:metodologia}.
+Durante el entrenamiento, el crítico centralizado $V_\phi(s)$ procesa el estado global de la red vial para calcular ventajas conjuntas mediante \acrshort{acr-gae}, guiando la optimización paralela de los actores locales $\pi_{\theta_i}$ con el objetivo recortado. Al finalizar cada iteración, el \textit{buffer} $\mathcal{D}$ se descarta por completo para preservar el régimen \textit{on-policy} del método. En la etapa de ejecución, el crítico se desacopla y cada controlador actúa con autonomía computacional a partir de su vector local $o_t^i$. Los hiperparámetros de entrenamiento y la arquitectura de las redes se detallan en el Capítulo \ref{capitulo:metodologia}.
 
 \subsection[HAPPO]{\textit{Heterogeneous-Agent Proximal Policy Optimization}\\(\acrshort{acr-happo})}\label{subsec:happo}
 
@@ -1373,7 +1373,7 @@ Kuba et al. y Zhong et al. \cite{kuba2021trust,zhong2024heterogeneous} propusier
 Una distinción central entre \acrshort{acr-mappo} y \acrshort{acr-happo} radica en la homogeneidad de las políticas y en el orden de actualización:
 \begin{itemize}
     \item \textbf{Compartición de parámetros:} En \acrshort{acr-mappo} se utiliza habitualmente cuando los agentes poseen espacios de observación y acción compatibles. Todos los agentes pueden compartir los mismos pesos $\theta_1 = \dots = \theta_n = \theta$, aunque la formulación de \acrshort{acr-mappo} también puede implementarse sin esta restricción.
-    \item \textbf{Políticas heterogéneas y actualización secuencial:} \acrshort{acr-happo} permite que cada agente mantenga una política independiente $\pi_{\theta^i}(a_i \mid o_i)$ y actualiza los actores siguiendo una permutación. El lote de trayectorias de la iteración actual se reutiliza de forma limitada; esto no equivale a un búfer histórico de \textit{experience sharing} como el empleado por algoritmos específicos de compartición de experiencia.
+    \item \textbf{Políticas heterogéneas y actualización secuencial:} \acrshort{acr-happo} permite que cada agente mantenga una política independiente $\pi_{\theta^i}(a_i \mid o_i)$ y actualiza los actores siguiendo una permutación. El \textit{batch} de trayectorias de la iteración actual se reutiliza de forma limitada; esto no equivale a un \textit{buffer} histórico de \textit{experience sharing} como el empleado por algoritmos específicos de compartición de experiencia.
 \end{itemize}
 
 \subsubsection{Lema de Descomposición de la Ventaja Multi-Agente}
@@ -1393,7 +1393,7 @@ donde la ventaja marginal del agente $i_m$ se define como:
 En la ecuación \eqref{eq:happo_ventaja_marginal}, $Q_{i_{1:m}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})$ evalúa el retorno esperado fijando las acciones de los primeros $m$ agentes de la secuencia, mientras que las decisiones de los agentes subsecuentes ($\mathbf{a}_{i_{m+1:n}}$) se marginalizan por esperanza bajo la política vigente.
 Sus garantías se circunscriben a actualizaciones que satisfacen los supuestos teóricos correspondientes \cite{kuba2021trust}.
 
-La relevancia de este lema radica en que es una identidad exacta para cualquier juego cooperativo sin imponer restricciones de aditividad o monotonía sobre la función de valor, superando las limitaciones estructurales de arquitecturas como \gls{acr-vdn} \cite{vdn} o \gls{acr-qmix} \cite{qmix}.
+La relevancia de este lema radica en que es una identidad exacta para cualquier juego cooperativo sin imponer restricciones de aditividad o de monotonía sobre la función de valor en la red de mezclado (a diferencia de las condiciones de factorización IGM de arquitecturas como \gls{acr-vdn} \cite{vdn} o \gls{acr-qmix} \cite{qmix}).
 
 \subsubsection{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}
 
@@ -1404,7 +1404,7 @@ Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuenci
     M_{i_{1:m}}(s_t, \mathbf{a}_t) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})}{\pi_{\theta_k^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)
     \label{eq:happo_factor_m}
 \end{equation}
-donde $\pi_{\theta_{k+1}^{i_j}}^{i_j}$ es la política recién optimizada del agente $i_j$ y $\pi_{\theta_k^{i_j}}^{i_j}$ es su versión previa. Para el primer agente ($m=1$), la productoria es vacía y $M_{i_1}(s_t, \mathbf{a}_t) \equiv A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)$. El factor $M_{i_{1:m}}$ actúa como un estimador de importancia que ajusta la ventaja conjunta al nuevo perfil de comportamiento sin requerir simulaciones adicionales en el entorno \cite{kuba2021trust}.
+donde $\pi_{\theta_{k+1}^{i_j}}^{i_j}$ es la política recién optimizada del agente $i_j$ y $\pi_{\theta_k^{i_j}}^{i_j}$ es su versión previa. Para el primer agente ($m=1$), la productoria es vacía y $M_{i_1}(s_t, \mathbf{a}_t) \equiv A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)$. En la formulación algorítmica práctica, el término acumulado $M_{i_{1:m}}$ se mantiene en una variable de memoria $M_{i_m}$ por cada agente, la cual se actualiza recursivamente conforme avanzan las optimizaciones precedentes. El factor $M_{i_{1:m}}$ actúa como un estimador de importancia que ajusta la ventaja conjunta al nuevo perfil de comportamiento sin requerir simulaciones adicionales en el entorno \cite{kuba2021trust}.
 
 Así, la política del agente $i_m$ se optimiza maximizando el objetivo sustituto recortado ponderado por $M_{i_{1:m}}$:
 \begin{equation}
@@ -1417,11 +1417,11 @@ Así, la política del agente $i_m$ se optimiza maximizando el objetivo sustitut
     \end{aligned}
     \label{eq:happo_objetivo_clip}
 \end{equation}
-donde $r_t^{i_m}(\theta^{i_m}) = \frac{\pi_{\theta^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ representa la razón de probabilidad individual del agente.
+donde $r_t^{i_m}(\theta^{i_m}) = \frac{\pi_{\theta^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ representa la razón de probabilidad individual del agente.
 
 Concluida la optimización de $\theta^{i_m}$, se computa la razón post-optimización:
 \begin{equation}
-    \rho_{\text{post}}^{i_m} \doteq \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}
+    \rho_{\text{post}}^{i_m} \doteq \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}
     \label{eq:happo_rho_post}
 \end{equation}
 y se propaga recursivamente hacia los agentes pendientes mediante:
@@ -1432,12 +1432,12 @@ y se propaga recursivamente hacia los agentes pendientes mediante:
 
 \subsubsection{Garantía de Mejora Monótona}
 
-Bajo los supuestos del modelo cooperativo y restricciones teóricas de región de confianza basadas en la divergencia KL, el procedimiento secuencial de actualización garantiza analíticamente una mejora monótona en el retorno conjunto \cite{kuba2021trust}:
+El principio de mejora monótona en aprendizaje por refuerzo formaliza que la secuencia de retornos esperados de la política conjunta no disminuye entre ciclos sucesivos de entrenamiento, comportándose como una función monótonamente no decreciente respecto de la iteración $k$:
 \begin{equation}
     J(\boldsymbol{\pi}_{k+1}) \ge J(\boldsymbol{\pi}_k).
     \label{eq:garantia_happo}
 \end{equation}
-En la práctica computacional, \acrshort{acr-happo} puede sustituir la restricción KL por un objetivo recortado \acrshort{acr-clip} de primer orden para hacer viable la optimización con redes profundas. Esta sustitución constituye una aproximación al esquema de región de confianza: la garantía teórica demostrada para la variante con restricción KL no se transfiere automáticamente a la variante con recorte. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
+Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron analíticamente esta propiedad para el algoritmo \gls{acr-hatrpo} (\textit{Heterogeneous-Agent Trust Region Policy Optimization}) bajo los supuestos del juego markoviano cooperativo y una actualización restringida por la divergencia KL. En la práctica computacional, resolver las restricciones cuadráticas de HATRPO en redes neuronales profundas resulta computacionalmente restrictivo. Por ello, \acrshort{acr-happo} sustituye la cota formal de divergencia KL por el objetivo sustituto recortado \acrshort{acr-clip} de primer orden de la ecuación \eqref{eq:happo_objetivo_clip}. Esta sustitución constituye una aproximación pragmática: al igual que ocurre con PPO frente a TRPO en el caso de agente único, la garantía matemática demostrada para HATRPO no se transfiere automáticamente a la variante con recorte \acrshort{acr-happo}, aun cuando esta última exhibe un comportamiento empírico sumamente robusto \cite{kuba2021trust,zhong2024heterogeneous}. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
 
 \begin{figure}[H]
     \centering
@@ -1509,7 +1509,7 @@ El algoritmo \ref{alg:happo} formaliza la secuencia completa de optimización de
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-El procedimiento de HAPPO organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre controladores para inferir su acción \cite{kuba2021trust}.
+El procedimiento de HAPPO organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el \textit{batch} de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre controladores para inferir su acción \cite{kuba2021trust}.
 
 Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{acr-ppo} en escenarios \acrshort{acr-marl}, la Tabla \ref{tab:marl_ppo_comparison} sintetiza sus principales propiedades operativas, arquitectónicas y teóricas.
 

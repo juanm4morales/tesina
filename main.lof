@@ -22,14 +22,14 @@
 \contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{42}{figure.caption.87}%
 \contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{44}{figure.caption.91}%
 \contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{46}{figure.caption.94}%
-\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{52}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{60}{figure.caption.131}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{61}{figure.caption.131}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{82}{figure.caption.217}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{83}{figure.caption.219}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{83}{figure.caption.217}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{84}{figure.caption.219}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
