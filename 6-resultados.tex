@@ -27,6 +27,24 @@ La exposición se organiza según el tipo de escenario analizado.
 
 \subsection{Desempeño en la red de carreteras de la Ciudad de Mendoza} 
 
+Antes de evaluar los controladores, se verificó la operación del escenario canónico v14 de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La tabla \ref{tab:metricas_validacion_mendoza} presenta los conteos y las tasas obtenidas con el controlador de tiempo fijo; estos valores caracterizan la condición inicial del escenario y no el desempeño de las políticas aprendidas.
+
+\begin{table}[H]
+\centering
+\caption{Métricas operacionales del escenario canónico v14 de la Ciudad de Mendoza bajo control de tiempo fijo.}
+\label{tab:metricas_validacion_mendoza}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Completitud} & \textit{teleport} \\ \hline
+2 h ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
+12 h ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
 \section{Discusión e interpretación de resultados}
 
 En esta sección se integran los resultados presentados y se discuten sus principales implicancias en relación con los objetivos del trabajo.
