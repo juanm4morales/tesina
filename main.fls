@@ -1,7 +1,7 @@
 PWD /home/juanm4/Documentos/tesina
 INPUT /usr/share/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT main.tex
+INPUT /home/juanm4/Documentos/tesina/main.tex
 OUTPUT main.log
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
@@ -633,11 +633,11 @@ INPUT ./imagenes/SIMvsREAL.png
 INPUT ./imagenes/SIMvsREAL.png
 INPUT ./imagenes/SIMvsREAL.png
 INPUT ./imagenes/SIMvsREAL.png
-INPUT ./imagenes/SUMO_GUI_background.png
-INPUT ./imagenes/SUMO_GUI_background.png
-INPUT ./imagenes/SUMO_GUI_background.png
-INPUT ./imagenes/SUMO_GUI_background.png
-INPUT ./imagenes/SUMO_GUI_background.png
+INPUT ./imagenes/SUMO_GUI_vehSpeed.png
+INPUT ./imagenes/SUMO_GUI_vehSpeed.png
+INPUT ./imagenes/SUMO_GUI_vehSpeed.png
+INPUT ./imagenes/SUMO_GUI_vehSpeed.png
+INPUT ./imagenes/SUMO_GUI_vehSpeed.png
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0500.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx1000.tfm
