@@ -38,12 +38,12 @@
 \contentsline {subsubsection}{Compartición de Parámetros y Políticas Heterogéneas}{49}{subsubsection*.104}%
 \contentsline {subsubsection}{Lema de Descomposición de la Ventaja Multi-Agente}{49}{subsubsection*.105}%
 \contentsline {subsubsection}{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}{50}{subsubsection*.108}%
-\contentsline {subsubsection}{Garantía de Mejora Monótona}{51}{subsubsection*.113}%
+\contentsline {subsubsection}{Garantía de Mejora Monótona}{52}{subsubsection*.113}%
 \contentsline {subsection}{\numberline {2.3.7}Antecedentes recientes del control semafórico multiagente}{54}{subsection.118}%
 \contentsline {subsubsection}{Coordinación y entrenamiento}{55}{subsubsection*.119}%
 \contentsline {subsubsection}{Representación del estado}{56}{subsubsection*.120}%
-\contentsline {subsubsection}{Heterogeneidad y equidad}{56}{subsubsection*.121}%
-\contentsline {subsubsection}{Posicionamiento del presente trabajo}{57}{subsubsection*.122}%
+\contentsline {subsubsection}{Heterogeneidad y equidad}{57}{subsubsection*.121}%
+\contentsline {subsubsection}{Posicionamiento del presente trabajo}{58}{subsubsection*.122}%
 \contentsline {chapter}{\numberline {3}Metodología y Diseño Experimental}{59}{chapter.123}%
 \contentsline {section}{\numberline {3.1}Enfoque y Diseño de Investigación}{59}{section.124}%
 \contentsline {section}{\numberline {3.2}Especificación del Ecosistema Tecnológico}{63}{section.132}%
