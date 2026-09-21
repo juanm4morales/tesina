@@ -60,9 +60,9 @@ En este contexto, el objetivo general de este trabajo es desarrollar y evaluar u
 
 \section{Motivación}\label{sec:motivacion}
 
-La motivación principal de este trabajo radica en la marcada asimetría entre una demanda vehicular en constante crecimiento y una infraestructura vial que permanece estática. Dado que ensanchar avenidas o modificar físicamente el trazado urbano en un sector denso como el microcentro de la Ciudad de Mendoza es económica y estructuralmente inviable, la alternativa más sostenible es la optimización lógica de los recursos existentes.
+La motivación de este trabajo se centra en estudiar cómo coordinar controladores que aprenden en una misma red vial. Las soluciones de control adaptativo basadas en aprendizaje por refuerzo permiten ajustar las decisiones a las condiciones observadas \cite{MDPI_Infrastructures2025_RLReview}. En una red de múltiples intersecciones, interesa examinar cómo esa adaptación puede incorporar los efectos de las decisiones locales sobre los cruces vecinos.
 
-El desarrollo de soluciones basadas en software permite dotar de adaptabilidad a la red semafórica actual. De este modo, un sistema de control adaptativo puede ajustar sus decisiones a las condiciones observadas y contribuir a reducir las demoras mediante una gestión más eficiente de la infraestructura existente \cite{MDPI_Infrastructures2025_RLReview}.
+Las diferencias de demanda, geometría y fases disponibles entre intersecciones motivan, además, el estudio de políticas que puedan adaptarse a esas condiciones. La comparación de \acrshort{acr-mappo} y \acrshort{acr-happo} con los esquemas independientes \acrshort{acr-ippo} e \acrshort{acr-idqn} permite examinar distintas formas de aprendizaje y coordinación bajo una misma formulación del problema.
 
 
 \section{Organización del Documento}\label{sec:organizacion_documento}
@@ -71,7 +71,7 @@ El presente trabajo se estructura de la siguiente manera:
 
 \begin{itemize}
     \item \textbf{Capítulo 1 -- Introducción:} contextualiza la problemática de la congestión vehicular urbana, define los objetivos del proyecto y expone las motivaciones que impulsan esta investigación.
-    \item \textbf{Capítulo 2 -- Marco Teórico:} formaliza los conceptos fundamentales de la ingeniería de tránsito, la teoría de procesos de decisión de Markov, las redes neuronales profundas y los paradigmas de aprendizaje por refuerzo multi-agente.
+    \item \textbf{Capítulo 2 -- Marco Teórico:} presenta los conceptos fundamentales de la ingeniería de tránsito, la teoría de procesos de decisión de Markov, las redes neuronales profundas y los paradigmas de aprendizaje por refuerzo multi-agente.
     \item \textbf{Capítulo 3 -- Metodología:} detalla el diseño metodológico y experimental, la calibración de la demanda vial mediante el estadístico \gls{acr-geh}, el modelado del microcentro de la Ciudad de Mendoza en \gls{acr-sumo} y la formulación algorítmica de los controladores.
     \item \textbf{Capítulo 4 -- Resultados:} presenta la evaluación empírica y comparativa de los algoritmos de control sobre redes sintéticas y el escenario urbano restringido por datos.
     \item \textbf{Capítulo 5 -- Conclusiones:} sintetiza los hallazgos principales, discute las limitaciones del modelo y propone direcciones de investigación futuras.
