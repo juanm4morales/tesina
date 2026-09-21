@@ -1109,7 +1109,7 @@ donde $\phi$ son los parámetros del crítico, $R_t^{\text{target}}$ es el retor
 En PPO, $\theta_{\mathrm{old}}$ representa la política recolectora y permanece fijo al calcular las razones de probabilidad. El \textit{batch} se reutiliza durante un número acotado de \textit{epochs}; el recorte reduce el incentivo para que las razones superen el intervalo $[1-\epsilon_{\mathrm{clip}},1+\epsilon_{\mathrm{clip}}]$, pero no impone una restricción estricta ni garantiza una mejora monótona \cite{schulman2017ppo}. Después de la optimización, $\theta_{\mathrm{old}}$ se actualiza con $\theta$ y se recolectan nuevas experiencias. Durante la ejecución en la red semafórica, el crítico se desacopla y el controlador evalúa únicamente su actor local $\pi_\theta$.
 
 
-\section[Aprendizaje por Refuerzo Multi-Agente (MARL)]{Aprendizaje por Refuerzo \\ Multi-Agente (\acrshort{acr-marl})}\label{sec:marl}
+\section[Aprendizaje por Refuerzo Multiagente (MARL)]{Aprendizaje por Refuerzo \\ Multiagente (\acrshort{acr-marl})}\label{sec:marl}
 
 El \gls{acr-marl} generaliza el marco de \acrshort{acr-rl} hacia sistemas donde múltiples entidades autónomas interactúan y aprenden en un entorno compartido \cite{marlbook}. En el control de redes semafóricas, la hipótesis de agente aislado deja de sostenerse: la fase habilitada en un cruce regula el flujo vehicular emitido hacia los accesos de las intersecciones adyacentes, acoplando espacialmente las dinámicas de congestión de toda la red. Cada controlador influye directamente en las tasas de arribo y longitudes de cola de sus vecinos, lo que demanda esquemas de coordinación capaces de optimizar el flujo global.
 
@@ -1195,7 +1195,7 @@ La figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente 
     \label{fig:marl_interaction}
 \end{figure}
 
-\subsection{Desafíos del Aprendizaje Multi-Agente}
+\subsection{Desafíos del Aprendizaje Multiagente}
 
 La transición desde el aprendizaje individual hacia el dominio multiagente introduce desafíos teóricos y computacionales específicos \cite{marlbook}:
 
@@ -1371,11 +1371,11 @@ Una distinción central entre \acrshort{acr-mappo} y \acrshort{acr-happo} radica
     \item \textbf{Políticas heterogéneas y actualización secuencial:} \acrshort{acr-happo} permite que cada agente mantenga una política independiente $\pi_{\theta^i}(a_i \mid o_i)$ y actualiza los actores siguiendo una permutación. El \textit{batch} de trayectorias de la iteración actual se reutiliza de forma limitada; esto no equivale a un \textit{buffer} histórico de \textit{experience sharing} como el empleado por algoritmos específicos de compartición de experiencia.
 \end{itemize}
 
-\subsubsection{Lema de Descomposición de la Ventaja Multi-Agente}
+\subsubsection{Lema de Descomposición de la Ventaja Multiagente}
 
 La actualización simultánea de todos los controladores puede generar inestabilidad porque el cambio concurrente de las políticas altera tanto las distribuciones de acción como la distribución conjunta de las trayectorias. \acrshort{acr-happo} aborda este problema mediante una actualización secuencial: en cada iteración se optimiza un agente por vez, condicionando cada paso a los cambios ya efectuados por los precedentes. Para sustentar este esquema, la ventaja conjunta de la red debe poder descomponerse en contribuciones marginales ordenadas \cite{kuba2021trust}.
 
-Esta descomposición se formaliza en el Lema de Descomposición de la Ventaja Multi-Agente propuesto por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
+Esta descomposición se formaliza en el Lema de Descomposición de la Ventaja Multiagente propuesto por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
 \begin{equation}
     A^{\boldsymbol{\pi}}(s, \mathbf{a}) = \sum_{m=1}^n A_{i_m}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})
     \label{eq:happo_descomposicion_ventaja}
@@ -1517,7 +1517,7 @@ Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{a
 
 \begin{table}[H]
 \centering
-\caption{Comparación sintética de familias algorítmicas \acrshort{acr-ppo} en entornos multi-agente cooperativos.}
+\caption{Comparación sintética de familias algorítmicas \acrshort{acr-ppo} en entornos multiagente cooperativos.}
 \label{tab:marl_ppo_comparison}
 \setlength{\tabcolsep}{4pt}
 \small
