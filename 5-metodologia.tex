@@ -39,7 +39,7 @@ Para evaluar las políticas se emplean métricas físicas extraídas de la telem
     \item \textbf{Pérdida temporal ($\overline{\ell}$):} promedio de \texttt{timeLoss} por vehículo insertado, que cuantifica el tiempo perdido respecto de la velocidad ideal del vehículo. Se registra como métrica secundaria porque incluye desaceleraciones y conflictos de circulación que no siempre se reflejan en la espera.
 \end{itemize}
 
-El archivo \texttt{TripInfo} solo incluye viajes finalizados cuando se escribe durante la ejecución; por eso el entorno activa \texttt{--tripinfo-output.write-unfinished} y cierra la conexión al terminar el episodio. Las métricas se calculan entonces sobre todos los registros válidos cuyo atributo de partida pertenece a la ventana, incluidos los viajes que aún no llegaron a destino. La documentación de SUMO define de forma independiente \texttt{waitingTime} y \texttt{timeLoss}; no se los intercambia en el análisis.
+El archivo \texttt{TripInfo} solo incluye viajes finalizados cuando se escribe durante la ejecución; por ello, el entorno activa \texttt{--tripinfo-output.write-unfinished} y cierra la conexión al terminar el episodio. Las métricas se calculan entonces sobre todos los registros válidos cuyo atributo de partida pertenece a la ventana, incluidos los viajes que aún no llegaron a destino. La documentación de SUMO define de forma independiente \texttt{waitingTime} y \texttt{timeLoss}; no se los intercambia en el análisis.
 
 La Figura \ref{fig:flujo_metodologico_general} resume las siete etapas de la investigación. En este contexto, \emph{etapa} designa una parte del procedimiento metodológico y no una fase del ciclo semafórico.
 
@@ -158,7 +158,7 @@ Las tres topologías sintéticas cumplen funciones analíticas complementarias:
 \subsection{Escenario urbano de la Ciudad de Mendoza}
 \label{subsec:escenario_mendoza}
 
-Para estudiar el comportamiento de los controladores en una red urbana de mayor escala, se construyó un escenario del microcentro de la Ciudad de Mendoza a partir de su infraestructura topológica y de una serie temporal parcial de aforo vehicular captada mediante una cámara termográfica. La red representa la geometría urbana, pero su demanda completa se aproxima mediante supuestos espaciales y un volumen nominal; por eso el escenario no se presenta como una validación del tránsito total de la ciudad. El diseño experimental prevé un ajuste de hiperparámetros, entrenamiento y evaluación propios para cada uno de los cuatro algoritmos en este escenario; no se transfieren pesos ni configuraciones finales desde las redes sintéticas.
+Para estudiar el comportamiento de los controladores en una red urbana de mayor escala, se construyó un escenario del microcentro de la Ciudad de Mendoza a partir de su infraestructura topológica y de una serie temporal parcial de aforo vehicular captada mediante una cámara termográfica. La red representa la geometría urbana, pero su demanda completa se aproxima mediante supuestos espaciales y un volumen nominal; por ello, el escenario no se presenta como una validación del tránsito total de la ciudad. El diseño experimental prevé un ajuste de hiperparámetros, entrenamiento y evaluación propios para cada uno de los cuatro algoritmos en este escenario; no se transfieren pesos ni configuraciones finales desde las redes sintéticas.
 
 \subsubsection{Posición Metodológica: Escenario Restringido por Datos}
 \label{subsubsec:mendoza_posicion_metodologica}
