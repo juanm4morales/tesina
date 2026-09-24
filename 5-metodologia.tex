@@ -1,9 +1,9 @@
-\chapter{Metodología y Diseño Experimental}
+\chapter{Metodología y diseño experimental}
 \label{capitulo:metodologia}
 
 Este capítulo describe el diseño experimental, la operacionalización de las variables, la construcción de los escenarios de simulación y la arquitectura computacional utilizada. También presenta los protocolos de entrenamiento y evaluación empleados para comparar \acrshort{acr-mappo} y \acrshort{acr-happo} con las líneas de base \acrshort{acr-ippo} e \acrshort{acr-idqn}. El estudio adopta un enfoque cuantitativo y un diseño comparativo con replicaciones independientes y comparaciones pareadas por semilla: cada ejecución de entrenamiento produce una política y cada política se evalúa bajo semillas y condiciones de demanda previamente definidas. La simulación microscópica del tránsito funciona como un entorno controlado; el escenario de la Ciudad de Mendoza se interpreta como una construcción sintética restringida por datos parciales, no como un gemelo digital completo.
 
-\section{Enfoque y Diseño de Investigación}
+\section{Enfoque y diseño de investigación}
 \label{sec:enfoque_diseno}
 
 Este trabajo adopta un \textbf{diseño experimental cuantitativo comparativo con replicaciones independientes y comparaciones pareadas por semilla}. Los factores principales son la familia algorítmica, la arquitectura de la red neuronal, el grado de cooperación vecinal $\rho_{\mathrm{coop}}$ y el escenario de tránsito. Las políticas se comparan dentro de cada escenario y, de forma complementaria, se estudia cómo cambia su comportamiento al aumentar la escala o modificar la topología. Dado que también cambian la demanda y el número de agentes, las comparaciones entre escenarios se expresan mediante métricas absolutas y mediante variaciones relativas respecto del controlador de tiempo fijo del mismo escenario.
@@ -51,7 +51,7 @@ La figura \ref{fig:flujo_metodologico_general} resume las siete etapas de la inv
   >=Stealth,
   paso/.style={rectangle, draw=colEntorno!80!black, fill=colEntorno!10, rounded corners=5pt, thick, text width=13.5cm, align=left, inner sep=6pt}
 ]
-  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} Edición geométrica en \texttt{netedit}, auditoría topológica con Google Maps y Street View, reconstrucción de lógica semafórica y calibración de flota heterogénea.};
+  \node[paso] (p1) {\textbf{1. Modelado Físico y Topológico de Redes:} edición geométrica en \texttt{netedit}, auditoría topológica con Google Maps y Street View, reconstrucción de lógica semafórica y calibración de flota heterogénea.};
   \node[paso, below=of p1] (p2) {\textbf{2. Operacionalización del \acrshort{acr-decpomdp}:} especificación del vector de observaciones con codificación logarítmica (\texttt{Encoder}), espacio de acciones con enmascaramiento (\textit{action masking}) y recompensa local-vecinal $\rho_{\mathrm{coop}}$ (\texttt{neighborhood\_relevance}).};
   \node[paso, below=of p2] (p3) {\textbf{3. Desarrollo de la infraestructura del entorno:} abstracción en memoria compartida mediante \textit{bindings} en C++ (\texttt{libsumo}) e implementación de la interfaz \texttt{SumoRllibEnv} compatible con la \gls{acr-api} multiagente de Ray RLlib.};
   \node[paso, below=of p3] (p4) {\textbf{4. Configuración e integración algorítmica:} definición de arquitecturas neuronales en PyTorch (\gls{acr-mlp} $[128, 128]$ y $[256, 256]$) e hiperparámetros para \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo}.};
@@ -72,7 +72,7 @@ La figura \ref{fig:flujo_metodologico_general} resume las siete etapas de la inv
 
 La figura \ref{fig:flujo_metodologico_general} comienza con la construcción física y topológica de las redes que sirven como escenarios experimentales. Sobre esos escenarios se define el problema de decisión: qué observa cada agente, qué acciones puede ejecutar y qué recompensa recibe. La tercera etapa implementa esas definiciones en el entorno de simulación, y la cuarta incorpora los algoritmos y sus redes neuronales. Una vez que el sistema puede entrenarse, la quinta etapa busca configuraciones de hiperparámetros. La sexta distribuye las ejecuciones en la infraestructura de cómputo, y la séptima compara las políticas mediante métricas físicas y análisis de variabilidad. Las flechas verticales expresan la dependencia metodológica y no representan ejecución simultánea.
 
-\section{Especificación del Ecosistema Tecnológico}
+\section{Especificación del ecosistema tecnológico}
 \label{sec:stack_tecnologico}
 
 Para garantizar la reproducibilidad científica, la tabla \ref{tab:stack_tecnologico} detalla las librerías, marcos de trabajo y plataformas de cómputo sobre las cuales se desarrolló y ejecutó el entorno \texttt{marlTLC}. En esta sección, la \gls{telemetria} es el conjunto de mediciones que el simulador registra durante la ejecución; un \gls{framework} proporciona interfaces y componentes reutilizables para construir el sistema; un \gls{binding} conecta una biblioteca escrita en un lenguaje con otro, y la \gls{serializacion} convierte un objeto o mensaje en una representación que puede almacenarse o transmitirse. Los procesos denominados \textit{env runners} generan trayectorias al interactuar con el entorno y los \textit{learners} actualizan los parámetros de las redes a partir de esas trayectorias. Estas definiciones permiten interpretar la tabla sin suponer familiaridad previa con la infraestructura de software.
@@ -98,12 +98,12 @@ Infraestructura \acrshort{acr-hpc} & Clústeres Toko y Mendieta & Cómputo distr
 
 Estas capas se integran de la siguiente manera. Python coordina la ejecución y Ray RLlib gestiona los procesos concurrentes de recolección de trayectorias (\textit{env runners}). PyTorch calcula las derivadas y optimiza las redes neuronales en los módulos de aprendizaje (\textit{learners}). \texttt{SumoRllibEnv} encapsula la lógica episódica y \texttt{libsumo} ejecuta los cálculos de cinemática vehicular en la memoria del proceso, sin comunicación por red ni serialización \gls{acr-tcp}.
 
-\section[Diseño y Calibración de Escenarios de Tránsito en SUMO]{Diseño y Calibración de Escenarios de Tránsito en \acrshort{acr-sumo}}
+\section[Diseño y calibración de escenarios de tránsito en SUMO]{Diseño y calibración de escenarios de tránsito en \acrshort{acr-sumo}}
 \label{sec:diseno_escenarios}
 
 La evaluación empírica se realiza sobre cuatro escenarios de red en \acrshort{acr-sumo}. Las redes se construyen con la herramienta gráfica \texttt{netedit}, los utilitarios de conversión \texttt{netconvert} y scripts de generación en Python. En conjunto, los escenarios representan distintas complejidades topológicas y condiciones de flujo.
 
-\subsection{Modelado Geométrico y Sanitización Topológica}
+\subsection{Modelado geométrico y sanitización topológica}
 \label{subsec:metodologia_modelado_sumo}
 
 La construcción de las redes de simulación sigue un procedimiento de diseño y validación en \acrshort{acr-sumo}:
@@ -113,7 +113,7 @@ La construcción de las redes de simulación sigue un procedimiento de diseño y
     \item \textbf{Configuración semafórica:} las configuraciones de los semáforos estáticos corresponden a los planes generados por defecto por \acrshort{acr-sumo} (\texttt{netconvert --tls.rebuild}) al compilar la red. Los programas de fases y los tiempos de ciclo originales se mantienen sin cambios. La correspondencia entre los enlaces físicos y los índices de control semafórico (\textit{linkIndex}) se recalcula para conservar la consistencia topológica.
 \end{enumerate}
 
-\subsection{Escenarios Sintéticos: \texorpdfstring{$3\times1$, $3\times3$ y $4\times4\_H$}{3x1, 3x3 y 4x4-H}}
+\subsection{Escenarios sintéticos: \texorpdfstring{$3\times1$, $3\times3$ y $4\times4\_H$}{3x1, 3x3 y 4x4-H}}
 \label{subsec:escenarios_sinteticos}
 
 Todas las redes sintéticas comparten las siguientes reglas operacionales:
@@ -130,7 +130,7 @@ Todas las redes sintéticas comparten las siguientes reglas operacionales:
     \item \textbf{Calibración por bisección:} los flujos totales de los tres escenarios sintéticos se ajustaron mediante bisección bajo control semafórico de tiempo fijo, con el objetivo de obtener una tasa de completitud sobre los vehículos insertados (\acrshort{acr-ci}) próxima a $0,70$. El horizonte de referencia fue de $4200\text{ s}$, compuesto por $600\text{ s}$ de calentamiento y $3600\text{ s}$ de control.
 \end{itemize}
 
-La Tabla \ref{tab:escenarios_sinteticos} resume las características verificadas y los flujos nominales obtenidos para los tres escenarios sintéticos.
+La tabla \ref{tab:escenarios_sinteticos} resume las características verificadas y los flujos nominales obtenidos para los tres escenarios sintéticos.
 
 \begin{table}[H]
 \centering
@@ -162,7 +162,7 @@ Las tres topologías sintéticas cumplen funciones analíticas complementarias:
 
 Para estudiar el comportamiento de los controladores en una red urbana de mayor escala, se construyó un escenario del microcentro de la Ciudad de Mendoza a partir de su infraestructura topológica y de una serie temporal parcial de aforo vehicular captada mediante una cámara termográfica. La red representa la geometría urbana, pero su demanda completa se aproxima mediante supuestos espaciales y un volumen nominal; por eso el escenario no se presenta como una validación del tránsito total de la ciudad. El diseño experimental prevé un ajuste de hiperparámetros, entrenamiento y evaluación propios para cada uno de los cuatro algoritmos en este escenario; no se transfieren pesos ni configuraciones finales desde las redes sintéticas.
 
-\subsubsection{Posición Metodológica: Escenario Restringido por Datos}
+\subsubsection{Posición metodológica: escenario restringido por datos}
 \label{subsubsec:mendoza_posicion_metodologica}
 
 El escenario de Mendoza se considera un \textbf{escenario sintético restringido por datos} (\textit{data-constrained synthetic scenario}), y no un gemelo digital completo.
@@ -175,7 +175,7 @@ Por consiguiente, este trabajo utiliza dos criterios para construir la demanda:
     \item \textbf{Estructuración espacial híbrida:} la distribución espacial de los viajes combina un conocimiento previo (\textit{prior}) determinista, basado en la jerarquía vial, con un remanente estocástico controlado sobre los pares alcanzables.
 \end{enumerate}
 
-\subsubsection{Adquisición, Auditoría y Preprocesamiento de Telemetría Empírica}
+\subsubsection{Adquisición, auditoría y preprocesamiento de telemetría empírica}
 \label{subsubsec:mendoza_preprocesamiento_datos}
 
 La base empírica de aforo proviene de registros continuos de sensores de conteo y clasificación vehicular, correspondientes a cámaras térmicas Tecnotrans / \gls{acr-flir} ThermICam. Los registros tienen una resolución de 15 minutos y corresponden al período octubre de 2025 -- abril de 2026.
@@ -193,7 +193,7 @@ Para controlar la calidad de los datos de la Cámara 169, se aplicó un procedim
 
 Este protocolo seleccionó $33$ días hábiles completos no perturbados, arrojando en la Cámara 169 un volumen empírico diario medio de $\mu_{\text{obs}} = 25.283,85\text{ veh/día}$ con una desviación estándar interdiaria de $\sigma_{\text{obs}} = 2.316,54\text{ veh/día}$.
 
-\subsubsection{Mapeo Geoespacial, Corrección Topológica y Señalización}
+\subsubsection{Mapeo geoespacial, corrección topológica y señalización}
 \label{subsubsec:mendoza_topologia_red}
 
 El trazado geométrico base se obtuvo mediante la exportación de datos de \acrshort{acr-osm} y su conversión al formato de red de \acrshort{acr-sumo} (\texttt{.net.xml}). El dominio modelado delimita el microcentro de la Ciudad de Mendoza entre Av. José Vicente Zapata / Colón al sur, Av. General San Martín como eje central norte-sur, Av. Manuel Belgrano al oeste y Av. Las Heras al norte. La red se proyecta en coordenadas \gls{acr-utm} Zona 19S (\gls{acr-wgs84}).
@@ -252,7 +252,7 @@ A partir de las 37 zonas \acrshort{acr-taz}, se calcularon $520$ pares \acrshort
 
 \paragraph{Dinámica microscópica y heterogeneidad de flota:} las inserciones se programan como procesos de Poisson. Para cada par origen-destino, si $Q_{od}$ es el flujo en vehículos por hora, la tasa de arribos es $\lambda_{od} = \frac{Q_{od}}{3600}\text{ veh/s}$ y cada intervalo se obtiene como $H_{od} = -\ln(U)/\lambda_{od}$, con $U \sim \mathcal{U}(0,1)$. Así, el intervalo tiene unidad de segundos y valor esperado $\mathbb{E}[H_{od}] = 1/\lambda_{od} = 3600/Q_{od}\text{ s}$. En el archivo de rutas, \texttt{period="exp(rate)"} designa este muestreo exponencial; no significa calcular $e^{\lambda_{od}}$. La distribución de flota urbana heterogénea \texttt{td\_urban\_mix} está compuesta por 25\% de vehículos lentos, 60\% estándar y 15\% dinámicos.
 
-\subsubsection{Protocolo de Validación Operacional y Criterio \acrshort{acr-geh}}
+\subsubsection{Protocolo de validación operacional y criterio \acrshort{acr-geh}}
 \label{subsubsec:mendoza_validacion_operacional}
 
 La validación operacional se definió sobre dos horizontes temporales:
@@ -270,12 +270,12 @@ En ambos horizontes se registran los vehículos cargados, insertados y completad
 \end{equation}
 donde $V_{\mathrm{mod}}$ es el volumen horario modelado y $V_{\mathrm{obs}}$ el conteo horario empírico observado, ambos expresados en vehículos por hora. La ecuación \eqref{eq:geh} resume la discrepancia entre ambos volúmenes en una magnitud adimensional. En este trabajo, el estadístico se interpreta como una comprobación de consistencia entre el flujo solicitado en el acceso representado por la cámara y el aforo observado, no como evidencia de que la matriz \acrshort{acr-od} completa sea verdadera: los flujos del corredor se construyeron a partir de ese mismo aforo, por lo que la comparación verifica la implementación del perfil horario, no la demanda total. Al informar este cálculo se declaran el archivo de rutas, la ventana temporal y la hipótesis de retención; las versiones anteriores del escenario se documentan como antecedentes de construcción y no se combinan con la evaluación del escenario canónico.
 
-\section{Arquitectura de Integración Entorno-Agentes}
+\section{Arquitectura de integración entorno-agentes}
 \label{sec:arquitectura_entorno_agentes}
 
 El marco computacional \texttt{marlTLC} integra el simulador \acrshort{acr-sumo} con la librería Ray RLlib a través de la interfaz personalizada \texttt{SumoRllibEnv}. La especificación detallada de las clases y patrones de diseño orientados a objetos que sustentan esta arquitectura se expone en el Apéndice \ref{apendice:arquitectura_software}.
 
-\subsection{Ciclo Episódico e Interfaz de Simulación}
+\subsection{Ciclo episódico e interfaz de simulación}
 \label{subsec:ciclo_episodico}
 
 Para mejorar la recolección de muestras durante el entrenamiento distribuido, las simulaciones se ejecutan sin interfaz gráfica. En los trabajos por lote se activa la variable de entorno \path{LIBSUMO_AS_TRACI=1}, con lo que Python utiliza el \textit{binding} nativo \texttt{libsumo}; cuando la variable no está presente, el mismo código puede utilizar una conexión TraCI estándar. La primera opción evita la comunicación por sockets entre procesos del simulador y el entorno, mientras que ambas exponen la misma interfaz de control.
@@ -289,7 +289,7 @@ El ciclo de vida episódico opera bajo el siguiente protocolo de inicialización
     \item \textbf{Paso de decisión y transiciones semafóricas:} las decisiones se ejecutan en pasos de $\Delta t = 5.0\text{ s}$. Cuando un agente cambia la fase activa, el entorno intercala una fase amarilla de $\text{yellow\_time} = 4\text{ s}$ y exige un tiempo mínimo de verde de $\text{min\_green\_time} = 5\text{ s}$ antes de habilitar la nueva transición.
 \end{enumerate}
 
-\section[Instanciación del modelo Dec-POMDP]{Instanciación del Modelo \acrshort{acr-decpomdp}}
+\section[Instanciación del modelo Dec-POMDP]{Instanciación del modelo \acrshort{acr-decpomdp}}
 \label{sec:instanciacion_dec_pomdp}
 
 La interacción distribuida entre las intersecciones semaforizadas se formaliza como un juego parcialmente observable con observaciones locales. La notación de \acrshort{acr-decpomdp} del marco teórico se utiliza para describir la información disponible y la acción conjunta. En la implementación, cada controlador recibe una recompensa individual compuesta; la coordinación se induce mediante el componente vecinal de esa señal y el crítico centralizado durante el entrenamiento de MAPPO y HAPPO, no mediante la suma de todas las recompensas en un escalar global. La formulación difiere así del Dec-POMDP cooperativo canónico en la señal de retorno: el objetivo que optimiza cada actor es su retorno individual local-vecinal. Las comparaciones entre familias algorítmicas miden, en consecuencia, el desempeño de procedimientos completos de aprendizaje y coordinación, y no aíslan causalmente cada componente.
@@ -342,7 +342,7 @@ La observación ubica primero el índice de fase y luego los valores codificados
     \label{fig:mezcla_log_lineal}
 \end{figure}
 
-\subsection{Espacio de Acciones y Enmascaramiento Dinámico}
+\subsection{Espacio de acciones y enmascaramiento dinámico}
 \label{subsec:acciones_masking}
 
 El espacio de acciones $\mathcal{A}_i = \{0, 1, \dots, K_i - 1\}$ representa el conjunto de fases verdes seleccionables por la intersección $i$. Los valores $m_i$ y $K_i$ difieren entre intersecciones según la geometría del cruce y las restricciones de maniobra, y cada agente dispone de un módulo de política propio sin compartición de parámetros; en ese sentido el conjunto de agentes es heterogéneo y la evaluación de \acrshort{acr-happo} se realiza sobre los espacios de observación y acción efectivos de cada escenario. En cruces con geometrías asimétricas o restricciones de maniobra, el entorno construye el conjunto de acciones admisibles y la capa personalizada \texttt{ActionMaskingTorchRLModule} aplica un enmascaramiento dinámico sobre los \glspl{logit} $z_i(a)$ antes del cómputo de la distribución \gls{softmax}. Los \glspl{logit} son puntuaciones reales sin normalizar producidas por la red; la función \gls{softmax} las transforma en probabilidades cuya suma es uno:
@@ -355,7 +355,7 @@ El espacio de acciones $\mathcal{A}_i = \{0, 1, \dots, K_i - 1\}$ representa el 
     \end{equation}
 donde $\mathcal{A}^{\mathrm{adm}}_i(t)\subseteq\mathcal{A}_i$ es el conjunto de acciones admisibles en el instante $t$, $m_i(a,t)$ es la máscara binaria correspondiente y $z_i(a)$ es la puntuación producida por la política. El entorno define $\mathcal{A}^{\mathrm{adm}}_i(t)=\{a_i^{\mathrm{actual}}\}$ durante una transición amarilla o mientras el tiempo de la fase corriente sea menor que $\max(t_{\min},t_{\mathrm{yellow}})$. Una vez satisfecha esa condición, quedan habilitadas las fases compatibles con la configuración del cruce. El término $\log m_i(a,t)$ vale $0$ para acciones admisibles y se limita a un entero negativo de magnitud máxima en aritmética de precisión finita para las inadmisibles, de modo que su contribución es despreciable tras la normalización. En IPPO, MAPPO y HAPPO la suma se aplica a los \textit{logits}; en IDQN se aplica a los valores $Q$ y también a la acción siguiente utilizada para el objetivo temporal, tanto en la red principal como en la red objetivo. La máscara evita acciones incompatibles, pero no reemplaza la lógica de transición amarilla del entorno, que se ejecuta después de aceptar un cambio de fase.
 
-\subsection{Función de Recompensa Compuesta y Coordinación Vecinal}
+\subsection{Función de recompensa compuesta y coordinación vecinal}
 \label{subsec:recompensa_coordinacion}
 
 La función de recompensa representa el compromiso entre el desempeño operacional local y la cooperación distribuida. El código permite evaluar varias señales de tránsito; la selección de una señal no se interpreta como una superioridad universal, sino como una decisión experimental que se mantiene fija al comparar algoritmos dentro de un escenario. La tabla \ref{tab:alternativas_recompensa} resume las alternativas implementadas.
@@ -401,18 +401,18 @@ La tabla documenta las señales implementadas en el entorno; la disponibilidad d
     Si el vecindario es vacío, $|\mathcal{N}(i)|=0$, la implementación omite el promedio de la ecuación \eqref{eq:recompensa_vecinal} y define $R_i^{(t)}=L_i^{(t)}$. En \acrshort{acr-ippo} e \acrshort{acr-idqn}, $\rho_{\mathrm{coop}} = 0$ opera de forma fija como ancla puramente local descentralizada, garantizando que los agentes independientes no reciban retroalimentación de desempeño ajena. En \acrshort{acr-mappo} y \acrshort{acr-happo}, $\rho_{\mathrm{coop}} > 0$ modula la cooperación vecinal. En cada paso, el entorno forma el vector de recompensas $\mathbf{r}_t=(R_1^{(t)},\dots,R_N^{(t)})$ y entrega cada componente individual al módulo correspondiente; no se agregan sus componentes en una recompensa escalar global.
 \end{enumerate}
 
-\section{Implementación Algorítmica e Hiperparámetros}
+\section{Implementación algorítmica e hiperparámetros}
 \label{sec:implementacion_algoritmos}
 
 Los cuatro algoritmos evaluados se integran en la \gls{acr-api} de Ray RLlib mediante el módulo de fábrica \texttt{algo\_factory.py}. \acrshort{acr-mappo} y \acrshort{acr-happo} utilizan \textit{learners} propios sobre PyTorch, mientras que \acrshort{acr-ippo} e \acrshort{acr-idqn} reutilizan las implementaciones de PPO y DQN de RLlib junto con módulos propios para el enmascaramiento de acciones.
 
-\subsection{Mecanismos de Aprendizaje Independiente y Centralizado}
+\subsection{Mecanismos de aprendizaje independiente y centralizado}
 \label{subsec:mecanismos_algoritmos}
 
 \begin{itemize}
     \item \textbf{\acrshort{acr-idqn} e \acrshort{acr-ippo} (Aprendizaje Independiente):} Cada intersección aprende una política local $\pi_{\theta_i}(a_i | o_i)$ tratando a los demás controladores como parte del entorno no estacionario. En \acrshort{acr-ippo}, cada agente cuenta con su propia red de valor local $V_{\phi_i}(o_i)$.
-    \item \textbf{\acrshort{acr-mappo} (\acrshort{acr-ppo} Multi-Agente Centralizado \cite{yu2022surprising}):} Emplea el paradigma \acrshort{acr-ctde}. Durante la ejecución, cada actor selecciona acciones de forma descentralizada a partir de su observación local $o_i$. Durante el entrenamiento, el módulo \texttt{SharedCriticTorchRLModule} actúa como un crítico centralizado compartido multi-salida: recibe el vector de observaciones locales concatenadas $s = (o_1, o_2, \dots, o_N)$, que aporta contexto conjunto al crítico sin equivaler al estado Markoviano completo de la simulación, y produce $\mathbf{V}_{\phi}(s)=(V_{\phi,1}(s),\dots,V_{\phi,N}(s))$. Las recompensas, valores, objetivos y ventajas de \acrshort{acr-gae} ($\lambda_{\text{GAE}}$) se calculan por agente.
-    \item \textbf{\acrshort{acr-happo} (\acrshort{acr-ppo} para Agentes Heterogéneos \cite{kuba2021trust}):} Su marco teórico canónico se apoya en el \textbf{Lema de Descomposición de Ventajas Multiagente}, cuya formulación utiliza una ventaja conjunta. La implementación de este trabajo constituye una adaptación: no aplica directamente ese lema, sino que inicializa los factores de actualización con ventajas individuales estandarizadas obtenidas mediante \acrshort{acr-gae} y los repondera secuencialmente. El crítico centralizado proporciona estimaciones de valor durante el entrenamiento, mientras que la reponderación secuencial descrita corresponde a la actualización de los actores; no se atribuye a esta secuencia una actualización secuencial del crítico. En cada \textit{epoch} de entrenamiento, los agentes se actualizan secuencialmente, sobre el lote completo y según un orden $(i_1, i_2, \ldots, i_N)$ re-sorteado, donde $N$ es el número total de agentes y $i_m$ es el agente ubicado en la posición $m$ de ese orden; cada actor recibe un único paso de gradiente por \textit{epoch}. Si $\overline{|A|}_i$ denota la media del valor absoluto de la ventaja individual ya estandarizada del agente $i$ en la muestra ---el conector de entrenamiento normaliza las ventajas por módulo antes de la actualización---, el hiperparámetro $p_{\text{greedy}}$ determina cómo se construye el orden: $0.0$ produce un orden aleatorio; $1.0$, un orden codicioso según $\overline{|A|}_i$; y un valor en $(0,1)$, un orden semi-codicioso que combina ambos criterios. Sea $\pi_{b}^{(i_m)}$ la política que recolectó la muestra y $\pi_{+}^{(i_m)}$ el actor de $i_m$ después de su actualización dentro del \textit{epoch} corriente. Para una observación $o$ y una acción $a$ de la muestra, la razón que se propaga a los agentes restantes es:
+    \item \textbf{\acrshort{acr-mappo} (\acrshort{acr-ppo} multiagente con crítico centralizado \cite{yu2022surprising}):} Emplea el paradigma \acrshort{acr-ctde}. Durante la ejecución, cada actor selecciona acciones de forma descentralizada a partir de su observación local $o_i$. Durante el entrenamiento, el módulo \texttt{SharedCriticTorchRLModule} actúa como un crítico centralizado compartido multi-salida: recibe el vector de observaciones locales concatenadas $s = (o_1, o_2, \dots, o_N)$, que aporta contexto conjunto al crítico sin equivaler al estado Markoviano completo de la simulación, y produce $\mathbf{V}_{\phi}(s)=(V_{\phi,1}(s),\dots,V_{\phi,N}(s))$. Las recompensas, valores, objetivos y ventajas de \acrshort{acr-gae} ($\lambda_{\text{GAE}}$) se calculan por agente.
+    \item \textbf{\acrshort{acr-happo} (\acrshort{acr-ppo} para Agentes Heterogéneos \cite{kuba2021trust}):} Su marco teórico canónico se apoya en el \textbf{lema de descomposición de ventajas multiagente}, cuya formulación utiliza una ventaja conjunta. La implementación de este trabajo constituye una adaptación: no aplica directamente ese lema, sino que inicializa los factores de actualización con ventajas individuales estandarizadas obtenidas mediante \acrshort{acr-gae} y los repondera secuencialmente. El crítico centralizado proporciona estimaciones de valor durante el entrenamiento, mientras que la reponderación secuencial descrita corresponde a la actualización de los actores; no se atribuye a esta secuencia una actualización secuencial del crítico. En cada \textit{epoch} de entrenamiento, los agentes se actualizan secuencialmente, sobre el lote completo y según un orden $(i_1, i_2, \ldots, i_N)$ re-sorteado, donde $N$ es el número total de agentes y $i_m$ es el agente ubicado en la posición $m$ de ese orden; cada actor recibe un único paso de gradiente por \textit{epoch}. Si $\overline{|A|}_i$ denota la media del valor absoluto de la ventaja individual ya estandarizada del agente $i$ en la muestra ---el conector de entrenamiento normaliza las ventajas por módulo antes de la actualización---, el hiperparámetro $p_{\text{greedy}}$ determina cómo se construye el orden: $0.0$ produce un orden aleatorio; $1.0$, un orden \textit{greedy} según $\overline{|A|}_i$; y un valor en $(0,1)$, un orden \textit{semi-greedy} que combina ambos criterios. Sea $\pi_{b}^{(i_m)}$ la política que recolectó la muestra y $\pi_{+}^{(i_m)}$ el actor de $i_m$ después de su actualización dentro del \textit{epoch} corriente. Para una observación $o$ y una acción $a$ de la muestra, la razón que se propaga a los agentes restantes es:
     \begin{equation}
         \rho_{\text{post}}^{(i_m)} = \frac{\pi_{+}^{(i_m)}(a|o)}{\pi_{b}^{(i_m)}(a|o)}
         \label{eq:happo_ratio_post_metodologia}
@@ -431,7 +431,7 @@ La reponderación secuencial de ventajas individuales ofrece una forma de consid
 
 En los cuatro algoritmos, el entrenamiento consume observaciones del tránsito, fases ejecutadas, recompensas y observaciones siguientes para ajustar los parámetros de las redes. \acrshort{acr-idqn} conserva transiciones anteriores en un \textit{replay buffer} de episodios priorizado y multiagente; las variantes de \acrshort{acr-ppo} recolectan un \textit{rollout} con la política vigente y lo reutilizan durante una cantidad acotada de \textit{epochs}. Cada \textit{epoch} recorre el conjunto recolectado; en \acrshort{acr-ippo} y \acrshort{acr-mappo} el lote se subdivide en \textit{minibatches} y cada uno produce una actualización, mientras que en \acrshort{acr-happo} el lote no se subdivide y cada actor realiza un único paso de gradiente completo por \textit{epoch}. El optimizador, los búferes y los críticos pertenecen al proceso de aprendizaje: durante la ejecución del control, cada intersección solo necesita su observación local y la red entrenada que asigna valores o probabilidades a las fases admisibles. Por tanto, la salida del entrenamiento es una política parametrizada, no un plan semafórico fijo.
 
-\section[Búsqueda de Hiperparámetros (HPO)]{Búsqueda de Hiperparámetros (\acrshort{acr-hpo})}
+\section[Búsqueda de hiperparámetros (HPO)]{Búsqueda de hiperparámetros (\acrshort{acr-hpo})}
 \label{sec:experimentos_hiperparametros}
 
 La búsqueda de hiperparámetros se ejecutó con Optuna \cite{akiba2019optuna}, Ray Tune y el algoritmo de poda asíncrona \gls{acr-asha} \cite{li2020system} para las combinaciones sintéticas de algoritmo, escenario y arquitectura. La Ciudad de Mendoza se definió como un estudio separado, cuya búsqueda se inicia después del cierre de los estudios y la confirmación sintéticos. La receta sintética no se transfiere automáticamente: sus resultados pueden utilizarse, a lo sumo, para acotar el espacio de exploración de Mendoza.
@@ -488,7 +488,7 @@ Las arquitecturas \texttt{h128} y \texttt{h256} se exploran en estudios independ
 
 La receta congelada conserva todos los parámetros que determinan la interacción —\texttt{reward\_key}, \texttt{lane\_metric}, $M_{\mathrm{lane}}$ y $\gamma$— junto con los hiperparámetros de optimización seleccionados. No se modifican al evaluar las semillas reservadas del escenario correspondiente. Para Mendoza se definió una selección de recetas propia para MAPPO, HAPPO, IPPO e IDQN, sin transferencia automática desde las redes sintéticas; la limitación del aforo se trata como una restricción de validez externa y no como una razón para excluir el ajuste del controlador. La política de cada evaluación reservada proviene del reentrenamiento de la receta congelada y sus métricas no alimentan ninguna nueva decisión de ajuste.
 
-\subsection{Infraestructura de Cómputo y Orquestación}
+\subsection{Infraestructura de cómputo y orquestación}
 \label{subsec:infraestructura_hpc}
 
 Dado el tamaño del espacio de búsqueda y el costo computacional de la simulación microscópica en \acrshort{acr-sumo}, la exploración y el entrenamiento final se desplegaron en los clústeres de cómputo \textbf{Toko} (\gls{acr-ccar} - \gls{acr-fcefn} / UNCuyo / \gls{acr-conicet}) y \textbf{Mendieta} (\gls{acr-ccad} - Universidad Nacional de Córdoba).
@@ -506,7 +506,7 @@ La ejecución distribuida se gestionó mediante el sistema de colas \acrshort{ac
     Estas trampas sincronizan mediante \texttt{rsync} los resultados y las bases de datos SQLite de Optuna con el almacenamiento persistente del usuario (\texttt{\$HOME}), en el directorio \path{ray\_results/}. Esto permite reanudar los trabajos mediante \texttt{Tuner.restore()}.
 \end{itemize}
 
-\section{Evaluación de Rendimiento}
+\section{Evaluación de rendimiento}
 \label{sec:experimentos_evaluacion}
 
 La evaluación de los modelos con hiperparámetros congelados se definió por escenario y bajo tres niveles de comparación. Cada entrenamiento independiente produce una política asociada a una semilla de entrenamiento; sus episodios de evaluación se agregan primero dentro de esa ejecución. Luego se comparan las ejecuciones independientes, que constituyen la unidad experimental.
