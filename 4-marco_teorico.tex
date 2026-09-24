@@ -1,10 +1,10 @@
-\chapter{Marco Teórico}\label{cap:marco_teorico}
+\chapter{Marco teórico}\label{cap:marco_teorico}
 
 Este capítulo presenta los fundamentos teóricos del trabajo y vincula la ingeniería de tránsito con el aprendizaje por refuerzo para la toma de decisiones secuenciales en redes viales. Estos conceptos permiten modelar una red semafórica como un entorno estocástico y formular políticas de control adaptativo con agentes homogéneos y heterogéneos.
 
 Primero se introducen los conceptos de ingeniería de tránsito y simulación (sección \ref{sec:ingenieria_transito}). Luego se desarrollan los fundamentos del aprendizaje por refuerzo y su integración con redes neuronales (sección \ref{sec:rl}), seguidos de su extensión al caso multiagente y de los algoritmos \acrshort{acr-mappo} y \acrshort{acr-happo} (sección \ref{sec:marl}). Finalmente, se revisan los antecedentes recientes de control semafórico multiagente según sus esquemas de coordinación, representación del estado y tratamiento de la heterogeneidad (subsección \ref{subsec:antecedentes_marl_tsc}).
 
-\section{Ingeniería de Tránsito y Simulación}\label{sec:ingenieria_transito}
+\section{Ingeniería de tránsito y simulación}\label{sec:ingenieria_transito}
 
 La ingeniería de tránsito es una rama de la ingeniería de transporte, tradicionalmente vinculada con la ingeniería civil. Se ocupa de la planificación, el diseño geométrico y la operación segura y eficiente del tránsito en calles, carreteras y redes viales, de acuerdo con manuales especializados como el \textit{Traffic Engineering Handbook} \cite{ite_handbook} y con la literatura clásica del área \cite{calymayor}. En este trabajo, sus conceptos se abordan desde la perspectiva del modelado computacional y la gestión adaptativa. Permiten describir el funcionamiento físico de la red, caracterizar la oferta y la demanda de circulación e identificar las variables sobre las que puede intervenir el sistema de control.
 
@@ -14,7 +14,7 @@ La operación de una red vial puede analizarse a partir de la relación entre la
 
 Estas magnitudes cumplen una función doble en el modelo computacional: pueden formar parte de las observaciones y de la señal de recompensa de los agentes, y también se utilizan para evaluar el desempeño del controlador. Su definición permite vincular la descripción física del tránsito con la formulación posterior del problema de aprendizaje.
 
-\subsection{Terminología de Tránsito}
+\subsection{Terminología de tránsito}
 
 Antes de formular el problema de control, es necesario distinguir algunos términos operativos que se utilizarán a lo largo del capítulo. En particular, se diferencian los movimientos que realizan los vehículos, las fases que habilitan esos movimientos y los intervalos durante los cuales se mantienen las indicaciones semafóricas \cite{fhwa_signal_timing_manual}.
 
@@ -130,7 +130,7 @@ En arterias urbanas, el tránsito se desarrolla bajo condiciones de flujo interr
 
 El semáforo es uno de los dispositivos de control de tránsito utilizados para regular la circulación en intersecciones. Su función es asignar la prioridad de paso en forma alternada entre corrientes vehiculares incompatibles, evitando que distintos movimientos intenten ocupar simultáneamente el mismo espacio de cruce \cite{fernandez}. Desde el punto de vista del modelado algorítmico, esta capacidad de modificar la prioridad de paso convierte al semáforo en el actuador mediante el cual un sistema de control puede intervenir sobre la operación de la intersección y afectar, directa o indirectamente, las demoras y colas observadas en la red.
 
-\subsection{Fundamentos de la Dinámica Vehicular}\label{subsec:fundamentos_dinamica_vehicular}
+\subsection{Fundamentos de la dinámica vehicular}\label{subsec:fundamentos_dinamica_vehicular}
 
 Para modelar y optimizar la operación de una red vial, es necesario caracterizar físicamente el movimiento de los vehículos. La ingeniería de tránsito estudia este fenómeno a partir de las características fundamentales de la corriente de tránsito, que permiten describir las condiciones de operación de una vía o intersección mediante magnitudes observables como el flujo, la velocidad y la densidad \cite{ite_handbook}. Cal y Mayor distingue estas magnitudes entre variables principales, que describen el comportamiento agregado del flujo vehicular, y variables asociadas, que expresan relaciones temporales y espaciales entre vehículos consecutivos \cite{calymayor}.
 
@@ -147,7 +147,7 @@ En el nivel macroscópico, las variables principales de la corriente de tránsit
 En el nivel microscópico, las variables asociadas describen el movimiento del vehículo individual y la separación entre vehículos consecutivos (véase la figura \ref{fig:variables_microscopicas}):
 \begin{itemize}
     \item \textbf{Velocidad puntual ($v_i$):} Es la velocidad instantánea a la que un vehículo individual ($i$) atraviesa una sección transversal específica de la vía.
-    \item \textbf{Intervalo temporal ($h$):} Es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos, por ejemplo, los parachoques delanteros \cite{calymayor}. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
+    \item \textbf{Intervalo temporal ($h$):} Es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos, por ejemplo, los paragolpes delanteros \cite{calymayor}. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
     \item \textbf{Espaciamiento simple ($s$):} Es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante de tiempo \cite{calymayor}. El espaciamiento promedio en metros ($s_{\text{prom}}$) se relaciona de forma inversa con la densidad de la corriente de tránsito como $s_{\text{prom}} = 1000/k$.
 \end{itemize}
 
@@ -167,7 +167,7 @@ Macroscópica & Flujo ($q$, veh/h) & $q = 3600 / h_{\text{prom}}$ \\ \cline{2-3}
  & Velocidad media temporal ($v_t$, km/h) & $v_t = v_s + \frac{\sigma_s^2}{v_s}$ (Relación de Wardrop) \\ \hline
 Microscópica & Velocidad puntual ($v_i$, km/h) & Variable individual de cada vehículo \\ \cline{2-3}
  & Intervalo temporal ($h$, s) & Tiempo entre pasos de vehículos sucesivos \\ \cline{2-3}
- & Espaciamiento simple ($s$, m) & Distancia espacial entre parachoques homólogos \\ \hline
+ & Espaciamiento simple ($s$, m) & Distancia espacial entre paragolpes homólogos \\ \hline
 \end{tabular}
 \end{table}
 
@@ -231,14 +231,14 @@ Estas variables macroscópicas se relacionan de manera directa a través de la e
     q = k \cdot v_s
     \label{eq:flujo_fundamental}
 \end{equation}
-donde $q$ es la tasa de flujo, $k$ es la densidad y $v_s$ es la velocidad media espacial. La ecuación \eqref{eq:flujo_fundamental} utiliza la velocidad media espacial, ya que relaciona el flujo y la cantidad de vehículos presentes en un tramo. La velocidad media temporal ($v_t$) es la media aritmética de las velocidades observadas en un punto durante un intervalo, mientras que $v_s$ es la media armónica de las velocidades observadas en un tramo. Cuando existe variabilidad entre las velocidades, ambas magnitudes pueden diferir. La relación entre ellas se expresa mediante la relación de Wardrop \cite{fernandez}:
+donde $q$ es la tasa de flujo, $k$ es la densidad y $v_s$ es la velocidad media espacial. La ecuación \eqref{eq:flujo_fundamental} utiliza la velocidad media espacial, ya que relaciona el flujo y la cantidad de vehículos presentes en un tramo. La velocidad media temporal ($v_t$) es la media aritmética de las velocidades observadas en un punto durante un intervalo, mientras que $v_s$, asociada al promedio de las velocidades de una muestra espacial tomada sobre un tramo, se estima en la práctica como media armónica de las velocidades puntuales medidas en una sección durante un intervalo. Cuando existe variabilidad entre las velocidades, ambas magnitudes pueden diferir. La relación entre ellas se expresa mediante la relación de Wardrop \cite{fernandez}:
 \begin{equation}
     v_t = v_s + \frac{\sigma_s^2}{v_s}
     \label{eq:relacion_wardrop}
 \end{equation}
 donde $\sigma_s^2$ representa la varianza de la distribución de las velocidades de los vehículos en el espacio. La ecuación \eqref{eq:relacion_wardrop} muestra que, dado que la varianza es no negativa ($\sigma_s^2 \ge 0$), se cumple $v_t \ge v_s$, con igualdad únicamente cuando todos los vehículos circulan a la misma velocidad. En una intersección semaforizada, una indicación roja puede reducir localmente la velocidad media y aumentar la acumulación de vehículos en los accesos. Estos efectos se manifiestan en la formación de colas y en el incremento de las demoras \cite{calymayor}.
 
-\subsubsection{Métricas de Ineficiencia Operativa}
+\subsubsection{Métricas de ineficiencia operativa}
 
 La interrupción del flujo causada por semáforos o saturación genera efectos adversos que los sistemas de control buscan mitigar. Siguiendo la terminología de la ingeniería de tránsito, las principales manifestaciones medibles de esta ineficiencia son las demoras, las colas y las detenciones \cite{fernandez}:
 \begin{itemize}
@@ -249,7 +249,7 @@ La interrupción del flujo causada por semáforos o saturación genera efectos a
 
 Estas magnitudes permiten describir el desempeño operacional de una intersección y de la red. En la formulación computacional, también pueden utilizarse para construir observaciones, señales de recompensa o criterios de evaluación del controlador.
 
-\subsubsection{Descripción Probabilística del Flujo y Pelotones Vehiculares}
+\subsubsection{Descripción probabilística del flujo y pelotones vehiculares}
 
 En el modelado de tránsito, las llegadas vehiculares no siempre pueden representarse adecuadamente como una secuencia determinista y constante. Para flujos vehiculares bajos y medios, y cuando las llegadas no están fuertemente condicionadas por semáforos previos, es habitual aproximar el número de vehículos que llega a una sección durante un intervalo de tiempo mediante un proceso de Poisson \cite{calymayor}.
 
@@ -308,7 +308,7 @@ En este trabajo, la limitación de esos modelos analíticos motiva el uso de sim
 
 La figura \ref{fig:distribucion_intervalos} se interpreta comparando la forma de ambas curvas. El eje horizontal representa el intervalo $h$ entre vehículos y el eje vertical la densidad de probabilidad $f(h)$, es decir, la concentración relativa de intervalos alrededor de cada valor. En el modelo exponencial, la densidad disminuye desde el origen y asigna mayor frecuencia relativa a los intervalos breves. En la representación con pelotones, la densidad comienza después de $h_{\min}$ y alcanza un máximo alejado del origen, lo que ilustra que el arribo de un vehículo queda condicionado por la separación y la coordinación con los que lo preceden. La comparación permite reconocer por qué el supuesto de arribos independientes puede resultar insuficiente en una red semaforizada.
 
-\subsection{Sistemas de Control de Tránsito}
+\subsection{Sistemas de control de tránsito}
 
 Para ordenar los movimientos en conflicto y regular el paso en las intersecciones urbanas se utilizan sistemas de control de tránsito \cite{ite_handbook}. El semáforo asigna el derecho de paso de manera alternada mediante indicaciones luminosas rojas, amarillas y verdes \cite{calymayor}.
 
@@ -320,7 +320,7 @@ En relación con los giros izquierdos, los manuales de temporización distinguen
 
 Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecutarse de manera instantánea, sino que deben respetar intervalos de cambio y despeje ($t_{\text{amarillo}} + t_{\text{rojo\_todo}}$) \cite{ite_handbook}. En esta investigación, esos tiempos se consideran restricciones operativas de seguridad previamente definidas en la configuración del simulador y del sistema semafórico. En consecuencia, su determinación no forma parte del proceso de decisión del agente, cuyo control se limita a la selección o extensión de fases dentro de un esquema temporal compatible con dichas restricciones.
 
-\subsubsection{Modelado de la Capacidad y el Verde Efectivo}
+\subsubsection{Modelado de la capacidad y el verde efectivo}
 
 Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite{fernandez}. En la figura \ref{fig:verde_efectivo}, $q_{\max}$ representa la tasa de descarga de saturación, $g$ el intervalo de verde efectivo, y $l_1$ y $l_2$ las pérdidas inicial y final de servicio, respectivamente; el tiempo se expresa en s y la tasa de flujo en veh/h. La barra inferior distingue los intervalos de rojo, verde y amarillo, mientras que la curva superior muestra cómo la descarga alcanza y abandona el régimen de saturación. La descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control. La figura es conceptual: estos parámetros no se estiman en este trabajo. En su lugar, los efectos se representan mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
 
@@ -337,8 +337,8 @@ Desde el punto de vista operativo, la capacidad de descarga de un acceso semafor
     \filldraw[fill=colSemaforoAmarillo, draw=none] (8,-0.4) rectangle (9,0); % Amarillo
     \filldraw[fill=colSemaforoRojo, draw=none] (9,-0.4) rectangle (10,0); % Rojo
 
-    \node at (4.75, -0.65) {Tiempo de verde efectivo ($g$)};
-    \draw[<->] (1.8, -0.2) -- (8.7, -0.2);
+    \node at (5.4, -0.65) {Tiempo de verde efectivo ($g$)};
+    \draw[<->] (2.3, -0.2) -- (8.5, -0.2);
 
     % Curva de flujo
     \draw[color=colDatoPrimario, ultra thick] 
@@ -364,17 +364,17 @@ Desde el punto de vista operativo, la capacidad de descarga de un acceso semafor
 
 La figura \ref{fig:verde_efectivo} debe leerse como una relación temporal: las pérdidas $l_1$ y $l_2$ reducen el intervalo en que la fase puede descargar vehículos a la tasa $q_{\max}$. Por tanto, el verde efectivo $g$ no equivale necesariamente al verde nominal programado en el controlador.
 
-\subsubsection{Clasificación de los Controladores de Semáforos}
+\subsubsection{Clasificación de los controladores de semáforos}
 
 De acuerdo con su mecanismo operativo y su grado de respuesta a la demanda vehicular, los controladores de semáforos se clasifican clásicamente en control de tiempo fijo y control accionado por el tránsito \cite{ite_handbook}. En el primero, los planes de señales se repiten de manera preprogramada a partir de datos históricos y no cambian en respuesta a la demanda instantánea. En el segundo, la intersección utiliza detectores en los accesos para variar dinámicamente el inicio o la duración de las fases según la demanda observada en tiempo real.
 
 Incluso en los esquemas accionados, la operación permanece sujeta a parámetros límite de seguridad y funcionamiento, como el verde mínimo ($g_{\min}$) y el verde máximo ($g_{\max}$) \cite{ite_handbook}. Estos parámetros restringen cuánto puede sostenerse o finalizarse una fase y, en este trabajo, forman parte de las condiciones operativas dentro de las cuales el controlador toma decisiones.
 
-\subsection{Simulación de Tránsito}
+\subsection{Simulación de tránsito}
 
 Debido a la densidad y complejidad de las redes urbanas, la sincronización y optimización de los tiempos semafóricos requiere representar la evolución del tránsito bajo condiciones variables. Los modelos analíticos y agregados resultan útiles bajo determinados supuestos, pero pueden ser limitados para describir la formación de colas y las interacciones locales durante la operación dinámica de una red \cite{ite_handbook}. De acuerdo con la taxonomía clásica \cite{fernandez}, los modelos de tránsito pueden organizarse en tres niveles de resolución. Los modelos macroscópicos describen el tránsito de manera agregada mediante variables como flujo, densidad y velocidad; los mesoscópicos representan entidades intermedias, como grupos o pelotones de vehículos; y los microscópicos modelan individualmente los vehículos, sus rutas y su evolución dentro de la red. Para el presente trabajo resulta especialmente relevante este último nivel, porque permite estudiar cómo las decisiones semafóricas afectan paso a paso la formación de colas, las detenciones y la interacción local entre vehículos.
 
-La simulación de tránsito constituye una representación abstracta del fenómeno real. Su objetivo no es reproducir visualmente una escena particular, sino modelar los procesos que determinan la evolución de la circulación mediante reglas de comportamiento y variables observables. La calidad de los resultados depende de la representación de la red, la demanda, la flota, los modelos de comportamiento y las reglas de control. Por ello, la simulación debe entenderse como un entorno experimental sujeto a supuestos y parámetros, cuyos resultados requieren una evaluación operacional acorde con el objetivo del estudio. La correspondencia entre el fenómeno y su representación se resume en la figura \ref{fig:sim_vs_real}: el tránsito observado aporta el fenómeno de referencia y el simulador representa sus vehículos, red y reglas dinámicas para permitir experimentos controlados.
+La simulación de tránsito constituye una representación abstracta del fenómeno real. Su objetivo no es reproducir visualmente una escena particular, sino modelar los procesos que determinan la evolución de la circulación mediante reglas de comportamiento y variables observables. La calidad de los resultados depende de la representación de la red, la demanda, la flota, los modelos de comportamiento y las reglas de control. Por ello, la simulación debe entenderse como un entorno experimental sujeto a supuestos y parámetros, cuyos resultados requieren una evaluación operacional acorde con el objetivo del estudio. La correspondencia entre el fenómeno y su representación se resume en la figura \ref{fig:sim_vs_real}: el tránsito real constituye la referencia y el simulador representa sus vehículos, red y reglas dinámicas para permitir experimentos controlados.
 
 \begin{figure}[H]
     \centering
@@ -402,7 +402,7 @@ La figura \ref{fig:sumo_gui} reúne cuatro zonas de inspección. A la izquierda 
 
 Esta granularidad vuelve a la simulación microscópica especialmente adecuada para estudiar control semafórico mediante aprendizaje por refuerzo. Las decisiones sobre fases y tiempos de servicio pueden evaluarse mediante sus consecuencias sobre la dinámica simulada: colas, tiempos de espera, detenciones, ocupación de carriles, completitud de viajes y propagación de congestión. En la formulación computacional, las variables de tránsito constituyen observaciones, las fases admisibles constituyen acciones y la evolución simulada constituye la transición del entorno. La definición operacional de estas variables y su procedimiento de cálculo se presentan en la metodología.
 
-\subsubsection[Representación Microscópica de Intersecciones en SUMO]{Representación Microscópica de Intersecciones en \acrshort{acr-sumo}}
+\subsubsection[Representación microscópica de intersecciones en SUMO]{Representación microscópica de intersecciones en \acrshort{acr-sumo}}
 
 La naturaleza microscópica de la simulación no se reduce a representar visualmente vehículos. Cada unidad modifica su velocidad y posición de acuerdo con modelos de seguimiento vehicular y cambio de carril, los parámetros de su tipo de vehículo y las restricciones de la red. De este modo, variables como la aceleración, la separación entre vehículos, la velocidad deseada y la disponibilidad de carriles intervienen en la formación y dispersión de colas. Los valores concretos utilizados para la flota y para estos parámetros pertenecen a la configuración experimental y se detallan en la metodología \cite{SUMO2026_SUMO}.
 
@@ -506,7 +506,7 @@ La figura \ref{fig:sumo_intersection_elements} ilustra esos carriles, líneas de
 
 La figura \ref{fig:sumo_intersection_elements} se lee desde los carriles de aproximación hacia el centro de la intersección. Las flechas blancas indican el sentido de circulación de $L_{\text{in}}$ y $L_{\text{out}}$, y las líneas blancas continuas situadas antes del área de cruce representan las líneas de detención. Dentro de la intersección, las flechas verdes corresponden a conexiones habilitadas con prioridad y las rojas a conexiones retenidas. Por consiguiente, una \gls{fase} no modifica la geometría ni el sentido de los carriles: determina qué conexiones pueden utilizarse durante ese intervalo de control.
 
-\subsubsection[Componentes y Configuración de SUMO]{Componentes y Configuración de \acrshort{acr-sumo}}
+\subsubsection[Componentes y configuración de SUMO]{Componentes y configuración de \acrshort{acr-sumo}}
 
 La suite \acrshort{acr-sumo} reúne aplicaciones para construir redes, generar demandas, ejecutar simulaciones, visualizar sus resultados y controlar la ejecución mediante interfaces externas \cite{SUMO2026_SUMO}:
 \begin{itemize}
@@ -536,7 +536,7 @@ Configuración & \texttt{.sumocfg} & Archivos de entrada, opciones de ejecución
 \end{tabular}
 \end{table}
 
-\subsubsection{Métricas de Evaluación Operacional}
+\subsubsection{Métricas de evaluación operacional}
 
 La simulación microscópica produce salidas que permiten evaluar el desempeño del control desde la perspectiva de la ingeniería de tránsito. En este trabajo se consideran las siguientes categorías de indicadores:
 
@@ -553,7 +553,7 @@ Las definiciones operacionales, fórmulas, unidades, ventanas de evaluación y p
 En este marco, \acrshort{acr-sumo} permite observar el estado de la red y modificar las fases semafóricas durante la ejecución mediante interfaces de control. Esta capacidad convierte el control semafórico en un problema de decisión secuencial, lo que motiva la introducción del aprendizaje por refuerzo en la siguiente sección \cite{SUMO2026_SUMO}.
 
 
-\section[Aprendizaje por Refuerzo (RL)]{Aprendizaje por Refuerzo (\acrshort{acr-rl})}\label{sec:rl}
+\section[Aprendizaje por refuerzo (RL)]{Aprendizaje por refuerzo (\acrshort{acr-rl})}\label{sec:rl}
 
 El \gls{acr-ml} suele dividirse en tres paradigmas. En el \gls{acr-sl}, el modelo se entrena con ejemplos etiquetados que indican la salida esperada. En el \gls{acr-ul}, se busca descubrir estructura en datos no etiquetados, por ejemplo mediante agrupamiento o reducción de dimensionalidad. El Aprendizaje por Refuerzo (\textit{Reinforcement Learning}) (\acrshort{acr-rl}) aborda un problema distinto: una entidad aprende mediante interacción con un entorno qué acciones elegir para maximizar una recompensa acumulada \cite{suttonRL}.
 
@@ -563,11 +563,11 @@ La formulación básica distingue entre el agente (\textit{agent}), que aprende 
 
 En el control semafórico, el controlador de una intersección puede interpretarse como el agente y la red vial simulada en \acrshort{acr-sumo} como el entorno. La selección de una fase constituye la acción, mientras que la evolución posterior del tránsito produce nuevas observaciones y una señal de recompensa que orienta el aprendizaje \cite{SUMO2026_SUMO}.
 
-Como ejemplo conductor, considérese un par de intersecciones vecinas. El agente observa localmente las colas y demoras de su intersección, selecciona una fase y modifica la corriente de vehículos que llegará a la siguiente. Esa consecuencia aguas abajo puede cambiar sus arribos y colas, y se refleja en una recompensa asociada al desempeño de la red. El retorno permite acumular esos efectos a lo largo de varias decisiones, en lugar de evaluar una fase solo por su consecuencia inmediata.
+Para fijar ideas, considérese un par de intersecciones vecinas. El agente observa localmente las colas y demoras de su intersección, selecciona una fase y modifica la corriente de vehículos que llegará a la siguiente. Esa consecuencia aguas abajo puede cambiar sus arribos y colas, y se refleja en una recompensa asociada al desempeño de la red. El retorno permite acumular esos efectos a lo largo de varias decisiones, en lugar de evaluar una fase solo por su consecuencia inmediata.
 
 Un aspecto característico de \acrshort{acr-rl} es el dilema entre exploración y explotación. El agente debe explotar acciones que, según su experiencia, producen buenos resultados, pero también debe explorar alternativas menos conocidas que podrían conducir a políticas superiores. Si explora demasiado, desperdicia oportunidades de obtener recompensa; si explota demasiado pronto, puede converger a comportamientos subóptimos. Este equilibrio es especialmente relevante en problemas de control, donde las acciones modifican la experiencia futura disponible para el aprendizaje \cite{suttonRL}.
 
-\subsection[Procesos de Decisión de Markov (MDP)]{Procesos de Decisión de Markov (\acrshort{acr-mdp})}
+\subsection[Procesos de decisión de Markov (MDP)]{Procesos de decisión de Markov (\acrshort{acr-mdp})}
 
 El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el \gls{acr-mdp}. En un \gls{acr-mdp} finito, el agente y el entorno interactúan en pasos temporales discretos $t = 0, 1, 2, \dots$: en cada instante, el agente recibe $S_t \in \mathcal{S}$, selecciona $A_t \in \mathcal{A}(S_t)$ y el entorno emite $R_{t+1} \in \mathcal{R}$ y transita a $S_{t+1}$ \cite{liang2025marlreview}. La notación se ilustra en la figura \ref{fig:agent_env_interaction}.
 
@@ -618,7 +618,7 @@ G_t \doteq R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots = \sum_{k=0}^{\in
 \end{equation}
 En esta formulación, el retorno $G_t$ acumula las recompensas futuras ponderadas por el factor de descuento $\gamma \in [0,1)$. Un valor de $\gamma$ cercano a cero privilegia la optimización a muy corto plazo, mientras que valores próximos a uno confieren mayor peso a las consecuencias remotas \cite{marlbook}. En el control semafórico, esta acumulación temporal resulta indispensable para que el agente aprenda a prevenir condiciones de bloqueo o saturación en ciclos futuros, en lugar de limitarse a disipar la cola inmediata a expensas de la red.
 
-\subsection{Métodos Basados en Valor y Basados en Política}
+\subsection{Métodos basados en valor y basados en política}
 
 Los algoritmos de \acrshort{acr-rl} pueden agruparse, a grandes rasgos, en métodos basados en valor y métodos basados en política. Esta distinción no agota la taxonomía del campo, pero permite introducir las familias de algoritmos más relevantes para este trabajo.
 
@@ -629,7 +629,7 @@ La figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.98\textwidth]{imagenes/metodo_valor_2.png}
-    \caption[Esquema de un método basado en valor]{Esquema de un método basado en valor. A partir del estado observado $s$, la función de valor estima el retorno esperado de los pares estado--acción $Q(s,a)$. Las estimaciones para las acciones disponibles se comparan y se selecciona la alternativa con mayor valor esperado para ejecutarla en el entorno. La exploración puede incorporarse mediante estrategias como la selección $\varepsilon$-codiciosa \cite{suttonRL}.}
+    \caption[Esquema de un método basado en valor]{Esquema de un método basado en valor. A partir del estado observado $s$, la función de valor estima el retorno esperado de los pares estado--acción $Q(s,a)$. Las estimaciones para las acciones disponibles se comparan y se selecciona la alternativa con mayor valor esperado para ejecutarla en el entorno. La exploración puede incorporarse mediante estrategias como la selección $\varepsilon$-greedy \cite{suttonRL}.}
     \label{fig:metodo_basado_valor}
 \end{figure}
 
@@ -640,9 +640,9 @@ Cuando el propósito es identificar la política óptima en lugar de evaluar una
     q_*(s,a) = \mathbb{E}\left[R_{t+1} + \gamma \max_{a'} q_*(S_{t+1},a') \mid S_t=s,A_t=a\right].
     \label{eq:bellman_optimalidad}
 \end{equation}
-En la ecuación \eqref{eq:bellman_optimalidad}, la esperanza $\mathbb{E}$ promedia las transiciones estocásticas del entorno y la maximización sobre las fases admisibles $a'$ formaliza el principio de optimalidad. En el ámbito semafórico, esta relación sintetiza el compromiso entre la recompensa inmediata obtenida por la fase activa y la calidad del estado vehicular resultante para las decisiones subsiguientes \cite{suttonRL}.
+En la ecuación \eqref{eq:bellman_optimalidad}, la esperanza $\mathbb{E}$ promedia las transiciones estocásticas del entorno y la maximización sobre las fases admisibles $a'$ formaliza el principio de optimalidad. En el ámbito semafórico, esta relación expresa el compromiso entre la recompensa inmediata obtenida por la fase activa y la calidad del estado vehicular resultante para las decisiones subsiguientes \cite{suttonRL}.
 
-En ausencia de un modelo analítico de transición, los métodos de \gls{acr-td} aproximan estas funciones a partir de la experiencia mediante \textit{bootstrapping}. Un método canónico es \textit{Q-learning}, cuya regla de actualización converge hacia la función óptima $q_*(s,a)$ en el caso tabular, bajo el supuesto de que todos los pares estado--acción continúen explorándose y que la tasa de aprendizaje decrezca adecuadamente a lo largo del tiempo \cite{suttonRL}:
+En ausencia de un modelo analítico de transición, los métodos de \gls{acr-td} aproximan estas funciones a partir de la experiencia mediante \textit{bootstrapping}. Un método canónico es Q-learning, cuya regla de actualización converge hacia la función óptima $q_*(s,a)$ en el caso tabular, bajo el supuesto de que todos los pares estado--acción continúen explorándose y que la tasa de aprendizaje decrezca adecuadamente a lo largo del tiempo \cite{suttonRL}:
 \begin{equation}
     Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t) \right]
     \label{eq:q_learning}
@@ -680,7 +680,7 @@ En la ecuación \eqref{eq:actor_critic_td}, el factor $(1-d_{t+1})$ anula la con
     \nabla_\theta \log \pi_\theta(A_t\mid S_t).
     \label{eq:actor_critic_update}
 \end{equation}
-En la regla \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de aprendizaje del actor y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ representa la dirección que incrementa la probabilidad de la acción elegida. Ponderar este gradiente por $\delta_t$ refuerza sistemáticamente las fases que superan la expectativa de demora y penaliza aquellas con resultados adversos. Aunque los algoritmos avanzados sustituyen $\delta_t$ por estimadores de ventaja multipaso como \gls{acr-gae} y procesan \textit{batches} de transiciones en cada actualización, esta formulación elemental expone con nitidez la sinergia entre ambos componentes.
+En la regla \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de aprendizaje del actor y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ representa la dirección que incrementa la probabilidad de la acción elegida. Ponderar este gradiente por $\delta_t$ refuerza sistemáticamente las fases que superan la expectativa de demora y penaliza aquellas con resultados adversos. Aunque los algoritmos avanzados sustituyen $\delta_t$ por estimadores de ventaja multipaso como \gls{acr-gae} y procesan \textit{batches} de transiciones en cada actualización, esta formulación elemental hace explícita la interacción entre ambos componentes.
 
 La figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y entorno, así como el circuito de evaluación mediante el cual el crítico genera la señal de retroalimentación compartida.
 
@@ -723,7 +723,7 @@ La figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y ento
 
 En síntesis, el estado resume las condiciones de tránsito disponibles para el agente, la acción corresponde a la selección de una fase, la recompensa refleja la consecuencia operativa inmediata y el valor estima su impacto a largo plazo. Cuando el espacio de estados es continuo o de gran escala, como ocurre en las redes viales urbanas, las funciones de valor y las políticas requieren aproximadores de alta capacidad representacional. A continuación se introducen las redes neuronales artificiales como el modelo adoptado para este fin, preservando intactos los fundamentos de \acrshort{acr-rl} expuestos hasta aquí.
 
-\subsection{Aprendizaje Profundo y Redes Neuronales}
+\subsection{Aprendizaje profundo y redes neuronales}
 
 Para estructurar este desarrollo, se expone en primer término la unidad neuronal básica y su composición en redes multicapa; luego se aborda su optimización mediante retropropagación y descenso de gradiente; finalmente, se analiza su integración en \acrshort{acr-rl} a través de \acrshort{acr-dqn} y \acrshort{acr-ppo}. Cabe destacar que la red neuronal actúa como un aproximador de funciones de alta capacidad, mientras que la dirección del aprendizaje proviene exclusivamente de las señales de recompensa generadas por la interacción con el entorno \cite{suttonRL}.
 
@@ -731,7 +731,7 @@ El aprendizaje profundo (\textit{Deep Learning}) se enfoca en el entrenamiento d
 
 Aunque la denominación ``neuronal'' proviene de una analogía simplificada con modelos biológicos iniciales, una red artificial constituye un modelo matemático determinista cuyos parámetros se optimizan a partir de datos y gradientes de pérdida \cite{goodfellow2016deep}.
 
-\subsubsection{La Unidad Neuronal y Redes \textit{Feedforward}}
+\subsubsection{La unidad neuronal y redes \textit{feedforward}}
 
 En problemas de control con espacios de estados continuos o de gran escala, los métodos tabulares resultan impracticables \cite{suttonRL}. La aproximación de funciones resuelve esta limitación mediante representaciones parametrizadas, lo que permite generalizar lo aprendido a situaciones similares no observadas. Para este fin se emplean redes neuronales artificiales \cite{bishop2024deep}.
 
@@ -857,7 +857,7 @@ La figura \ref{fig:red_feedforward} esquematiza esta composición con dos capas 
 
 El Teorema de Aproximación Universal es un resultado de existencia: bajo condiciones apropiadas, una red de dos capas parametrizadas, con una capa oculta suficientemente ancha, puede aproximar una función continua sobre un dominio compacto con una precisión arbitraria. El teorema no proporciona por sí mismo un procedimiento para encontrar los parámetros, no garantiza un entrenamiento eficiente, una buena generalización ni un buen desempeño práctico sobre datos no observados. La profundidad puede ofrecer representaciones jerárquicas y una mayor eficiencia representacional para ciertas familias de funciones, pero agregar capas o neuronas no garantiza por sí solo un menor error de prueba \cite{bishop2024deep}.
 
-\subsubsection{El Proceso de Optimización}
+\subsubsection{El proceso de optimización}
 
 Durante el entrenamiento, la red procesa las observaciones mediante propagación hacia adelante y contrasta su respuesta frente a un objetivo mediante una función de pérdida escalar diferenciable $\mathcal{L}(\theta)$. El algoritmo de retropropagación (\textit{backpropagation}) calcula analíticamente las derivadas parciales de dicha pérdida respecto de cada peso y sesgo aplicando de forma sistemática la regla de la cadena \cite{bishop2024deep}.
 
@@ -868,15 +868,15 @@ Con estos gradientes, los parámetros se actualizan iterativamente en sentido op
 \end{equation}
 donde $\theta$ reúne los parámetros entrenables de la red, $\nabla_{\theta}\mathcal{L}(\theta_t)$ representa el gradiente de la función de pérdida y $\eta>0$ es la tasa de aprendizaje. En la práctica, calcular este gradiente sobre todo el volumen de experiencias resulta inviable, mientras que computarlo sobre transiciones aisladas induce una varianza excesiva. Por ello, la optimización se ejecuta habitualmente sobre subconjuntos estocásticos denominados \textit{minibatches} y se complementa con algoritmos adaptativos como Adam, el cual modula individualmente la tasa de paso de cada parámetro mediante estimaciones móviles de primer y segundo momento del gradiente \cite{bishop2024deep}.
 
-A diferencia del aprendizaje supervisado convencional —donde la pérdida compara la salida con una etiqueta externa fija—, en \acrshort{acr-rl} el objetivo se deriva de las recompensas y transiciones producidas por la interacción con el simulador, evolucionando a medida que la política refina su comportamiento.
+A diferencia del aprendizaje supervisado convencional —donde la pérdida compara la salida con una etiqueta externa fija—, en \acrshort{acr-rl} el objetivo se deriva de las recompensas y transiciones producidas por la interacción con el simulador, y cambia a medida que la política mejora su comportamiento.
 
-\subsection[Aprendizaje por Refuerzo Profundo (DRL)]{Aprendizaje por Refuerzo Profundo (\acrshort{acr-drl})}
+\subsection[Aprendizaje por refuerzo profundo (DRL)]{Aprendizaje por refuerzo profundo (\acrshort{acr-drl})}
 
 El \acrshort{acr-drl} combina algoritmos de \acrshort{acr-rl} con aproximadores neuronales. En el control semafórico, las observaciones del tránsito, como colas, ocupación o velocidades, pueden alimentar la red; sus salidas pueden representar valores de acción o parámetros de una política; y las recompensas asociadas con demoras, detenciones y colas orientan la función de pérdida del algoritmo de aprendizaje. Esta integración resulta útil cuando el espacio de estados es continuo o de alta dimensionalidad, aunque exige mecanismos de estabilización y una evaluación cuidadosa de la eficiencia de las muestras \cite{marlbook}.
 
-\subsubsection{El Problema de la Tríada Mortal (\textit{Deadly Triad})}
+\subsubsection{El problema de la tríada mortal (\textit{deadly triad})}
 
-La integración de aproximadores no lineales con aprendizaje por refuerzo puede inducir inestabilidad numérica o divergencia en las estimaciones si no se controlan las condiciones de actualización. Sutton y Barto \cite{suttonRL} describen este fenómeno mediante la denominada Tríada Mortal (\textit{Deadly Triad}), originada por la concurrencia de tres elementos:
+La integración de aproximadores no lineales con aprendizaje por refuerzo puede inducir inestabilidad numérica o divergencia en las estimaciones si no se controlan las condiciones de actualización. Sutton y Barto \cite{suttonRL} describen este fenómeno mediante la denominada tríada mortal (\textit{deadly triad}), originada por la concurrencia de tres elementos:
 \begin{itemize}
     \item \textbf{Aproximación de funciones no lineal:} el empleo de redes profundas para generalizar a través de estados continuos o de alta dimensionalidad.
     \item \textbf{Bootstrapping:} la actualización de estimaciones de valor apoyándose en otras estimaciones aprendidas previamente (métodos \gls{acr-td}), prescindiendo de retornos empíricos completos.
@@ -884,11 +884,11 @@ La integración de aproximadores no lineales con aprendizaje por refuerzo puede 
 \end{itemize}
 Aunque prescindir del \textit{bootstrapping} o de la aproximación de funciones comprometería la eficiencia muestral o la escalabilidad ante redes viales complejas, los algoritmos profundos modernos introducen mecanismos arquitectónicos específicos para amortiguar esta inestabilidad \cite{suttonRL}.
 
-\subsubsection[Deep Q-Network (DQN)]{\textit{Deep Q-Network} (\acrshort{acr-dqn}): aproximación neuronal de valores de acción}
+\subsubsection[Deep Q-Network (DQN)]{Deep Q-Network (\acrshort{acr-dqn}): aproximación neuronal de valores de acción}
 
 En los métodos basados en valor, \acrshort{acr-dqn} sustituye la tabla de estados y acciones por una red neuronal $Q(s, a; \theta)$ parametrizada por $\theta$ \cite{mnih2015}. Ante una observación de tránsito, la red genera una estimación del valor $Q$ para cada fase admisible. La función de acción-valor óptima $q_*(s,a)$ representa el máximo retorno esperado al seleccionar la mejor secuencia de decisiones futuras, objetivo que \acrshort{acr-dqn} persigue aproximar a partir de las recompensas del entorno.
 
-Para mitigar la inestabilidad de la Tríada Mortal —en particular el problema del blanco móvil, donde actualizar el valor de un estado altera impredeciblemente las estimaciones de estados adyacentes—, \acrshort{acr-dqn} incorpora dos componentes estructurales \cite{mnih2015}:
+Para mitigar la inestabilidad de la tríada mortal —en particular el problema del blanco móvil, donde actualizar el valor de un estado altera impredeciblemente las estimaciones de estados adyacentes—, \acrshort{acr-dqn} incorpora dos componentes estructurales \cite{mnih2015}:
 \begin{itemize}
     \item \textbf{Redes objetivo (\textit{Target Networks}):} una red secundaria idéntica cuyos parámetros $\theta^-$ se congelan temporalmente. Esta red se utiliza exclusivamente para calcular el término de \textit{bootstrapping} del blanco \gls{acr-td}, desacoplando la estimación en curso del objetivo de aprendizaje y amortiguando oscilaciones.
     \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un \textit{buffer} $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
@@ -949,11 +949,11 @@ La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bl
 \end{aligned}\right)^2\right]
 \label{eq:perdida_dqn}
 \end{equation}
-En la ecuación \eqref{eq:perdida_dqn}, la esperanza se evalúa empíricamente promediando sobre un \textit{minibatch} de transiciones $(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1})$ extraídas de $\mathcal{D}$. La función de pérdida minimiza la discrepancia cuadrática entre la estimación actual $Q(s_j, a_j; \theta)$ y el blanco temporal compuesto por la recompensa inmediata observada y la cota superior del valor futuro proyectado por la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$. El factor $(1-d_{j+1})$ anula la contribución del estado siguiente cuando la transición es terminal ($d_{j+1}=1$), mientras que $a'$ recorre las fases semafóricas admisibles.
+En la ecuación \eqref{eq:perdida_dqn}, la esperanza se evalúa empíricamente promediando sobre un \textit{minibatch} de transiciones $(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1})$ extraídas de $\mathcal{D}$. La función de pérdida minimiza la discrepancia cuadrática entre la estimación actual $Q(s_j, a_j; \theta)$ y el blanco temporal compuesto por la recompensa inmediata observada y la mayor estimación del valor futuro sobre las fases admisibles, calculada por la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$. El factor $(1-d_{j+1})$ anula la contribución del estado siguiente cuando la transición es terminal ($d_{j+1}=1$), mientras que $a'$ recorre las fases semafóricas admisibles.
 
 Los cuatro bloques numerados como algoritmos en este capítulo son pseudocódigos: descripciones ordenadas e independientes de un lenguaje de programación, no fragmentos ejecutables. En ellos, una \gls{transicion_aprendizaje} registra lo ocurrido en un paso; un \gls{episodio_aprendizaje} agrupa pasos desde el reinicio hasta la terminación; y un \gls{rollout} es la secuencia de transiciones recolectada con una política. Una \gls{iteracion_entrenamiento} comprende la recolección de datos y su optimización, mientras que una \gls{epoca_entrenamiento} es una reutilización completa de esos datos dentro de la misma iteración. Cada actualización puede calcularse sobre un \gls{mini_lote}, es decir, un subconjunto de las muestras. Las líneas ``Entrada'' y ``Salida'' indican, respectivamente, qué información necesita el procedimiento y qué componentes entrenados produce; las líneas indentadas pertenecen al ciclo inmediatamente superior. En lo sucesivo se conservan los términos ingleses \textit{batch}, \textit{minibatch}, \textit{buffer} y \textit{epoch}, habituales en la literatura, junto con esta definición en español.
 
-El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de \textit{minibatches} muestreados del \gls{replay_buffer}. El algoritmo \ref{alg:dqn} resume este procedimiento:
+El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de \textit{minibatches} muestreados del \gls{replay_buffer}. El algoritmo \ref{alg:dqn} especifica este procedimiento:
 
 \begin{algorithm}[H]
 \caption{Deep Q-Network con repetición de experiencias}
@@ -985,7 +985,7 @@ El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, 
 \end{algorithmic}
 \end{algorithm}
 En esta formulación, el agente desacopla la recolección de experiencias en el simulador de la optimización paramétrica de la red. La memoria $\mathcal{D}$ rompe la correlación temporal de las observaciones de tráfico, mientras que la red objetivo estabiliza el blanco de Bellman mediante la sincronización periódica de $\theta^-$. La especificación detallada de los hiperparámetros operacionales (capacidad $N$, horizonte $T$, tasa de aprendizaje y cronograma de exploración) se desarrolla en el capítulo \ref{capitulo:metodologia}.
-\subsubsection{Aproximación de Políticas, Función de Ventaja y \textit{Policy Gradient}}
+\subsubsection{Aproximación de políticas, función de ventaja y \textit{Policy Gradient}}
 
 Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Bajo la formulación MDP, en un problema de acciones discretas la red recibe el estado $s$, calcula un vector de puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \textit{softmax} \cite{suttonRL,bishop2024deep}:
 \begin{equation}
@@ -1052,7 +1052,7 @@ El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) \cite{s
 \end{equation}
 donde $\pi_\theta(A_t \mid S_t)$ denota la probabilidad asignada a la fase $A_t$ bajo los parámetros $\theta$, y $\hat{A}_t$ es la ventaja estimada mediante \acrshort{acr-gae}. Como esquematiza la figura \ref{fig:red_politica}, la dirección del vector gradiente escala proporcionalmente a $\hat{A}_t$, incrementando la probabilidad de ocurrencia de aquellas fases que superan el desempeño esperado y desincentivando aquellas que provocan demoras excesivas.
 
-\subsubsection[Proximal Policy Optimization (PPO)]{\textit{Proximal Policy Optimization} (\acrshort{acr-ppo}) y control de las actualizaciones}
+\subsubsection[Proximal Policy Optimization (PPO)]{Proximal Policy Optimization (\acrshort{acr-ppo}) y control de las actualizaciones}
 
 Los métodos clásicos de gradiente de política exhiben una elevada sensibilidad a la magnitud de la tasa de paso: una actualización excesiva en el espacio de parámetros puede degradar abruptamente el rendimiento de la política, desplazándola a regiones del espacio de estados donde la recolección de trayectorias queda irreparablemente sesgada.
 
@@ -1109,13 +1109,13 @@ donde $\phi$ son los parámetros del crítico, $R_t^{\text{target}}$ es el retor
 En PPO, $\theta_{\mathrm{old}}$ representa la política recolectora y permanece fijo al calcular las razones de probabilidad. El \textit{batch} se reutiliza durante un número acotado de \textit{epochs}; el recorte reduce el incentivo para que las razones superen el intervalo $[1-\epsilon_{\mathrm{clip}},1+\epsilon_{\mathrm{clip}}]$, pero no impone una restricción estricta ni garantiza una mejora monótona \cite{schulman2017ppo}. Después de la optimización, $\theta_{\mathrm{old}}$ se actualiza con $\theta$ y se recolectan nuevas experiencias. Durante la ejecución en la red semafórica, el crítico se desacopla y el controlador evalúa únicamente su actor local $\pi_\theta$.
 
 
-\section[Aprendizaje por Refuerzo Multiagente (MARL)]{Aprendizaje por Refuerzo \\ Multiagente (\acrshort{acr-marl})}\label{sec:marl}
+\section[Aprendizaje por refuerzo multiagente (MARL)]{Aprendizaje por refuerzo \\ multiagente (\acrshort{acr-marl})}\label{sec:marl}
 
-El \gls{acr-marl} generaliza el marco de \acrshort{acr-rl} hacia sistemas donde múltiples entidades autónomas interactúan y aprenden en un entorno compartido \cite{marlbook}. En el control de redes semafóricas, la hipótesis de agente aislado deja de sostenerse: la fase habilitada en un cruce regula el flujo vehicular emitido hacia los accesos de las intersecciones adyacentes, acoplando espacialmente las dinámicas de congestión de toda la red. Cada controlador influye directamente en las tasas de arribo y longitudes de cola de sus vecinos, lo que demanda esquemas de coordinación capaces de optimizar el flujo global.
+El \gls{acr-marl} generaliza el marco de \acrshort{acr-rl} hacia sistemas donde múltiples agentes autónomos interactúan y aprenden en un entorno compartido \cite{marlbook}. En el control de redes semafóricas, la hipótesis de agente aislado deja de sostenerse: la fase habilitada en un cruce regula el flujo vehicular emitido hacia los accesos de las intersecciones adyacentes, acoplando espacialmente las dinámicas de congestión de toda la red. Cada controlador influye directamente en las tasas de arribo y longitudes de cola de sus vecinos, lo que demanda esquemas de coordinación capaces de optimizar el flujo global.
 
-Liang et al. \cite{liang2025marlreview} categorizan los problemas multiagente según la estructura de sus recompensas en completamente competitivos, mixtos o completamente cooperativos. El presente trabajo se posiciona en el régimen cooperativo de control distribuido: los controladores persiguen mitigar la demora global de la red vial. No obstante, para preservar la asignabilidad del crédito y evitar el parasitismo estocástico propio de una recompensa global idéntica, cada agente recibe una señal individual compuesta que pondera el desempeño de su propia intersección junto con el estado de sus nodos inmediatamente adyacentes (sección \ref{subsec:recompensa_coordinacion}).
+Liang et al. \cite{liang2025marlreview} categorizan los problemas multiagente según la estructura de sus recompensas en completamente competitivos, mixtos o completamente cooperativos. El presente trabajo se posiciona en el régimen cooperativo de control distribuido: los controladores persiguen mitigar la demora global de la red vial. No obstante, para preservar la asignabilidad del crédito y evitar que un agente se beneficie del desempeño ajeno sin contribuir, comportamiento esperable bajo una recompensa global idéntica, cada agente recibe una señal individual compuesta que pondera el desempeño de su propia intersección junto con el estado de sus nodos inmediatamente adyacentes (sección \ref{subsec:recompensa_coordinacion}).
 
-\subsection[Fundamentos teóricos: juegos estocásticos, equilibrio de Nash y Dec-POMDP]{Fundamentos Teóricos: Juegos Estocásticos, Equilibrio de Nash y \acrshort{acr-decpomdp}}
+\subsection[Fundamentos teóricos: juegos estocásticos, equilibrio de Nash y Dec-POMDP]{Fundamentos teóricos: juegos estocásticos, equilibrio de Nash y \acrshort{acr-decpomdp}}
 
 La extensión matemática del \gls{acr-mdp} ante múltiples actores decisores se formaliza mediante los Juegos Estocásticos o Juegos Markovianos (\textit{Stochastic Games}), introducidos originalmente por Shapley \cite{shapley1953stochastic} y adaptados al aprendizaje por refuerzo contemporáneo por Albrecht et al. \cite{marlbook}.
 
@@ -1131,9 +1131,9 @@ En el análisis de estabilidad de estos sistemas, el equilibrio de Nash describe
     J(\pi_i, \boldsymbol{\pi}_{-i}^*) \le J(\pi_i^*, \boldsymbol{\pi}_{-i}^*), \quad \forall \pi_i \in \Pi_i, \quad \forall i \in \mathcal{N}
     \label{eq:equilibrio_nash}
 \end{equation}
-donde $\boldsymbol{\pi}_{-i}^*$ representa el perfil de políticas conjuntas de todos los agentes excepto el agente $i$, y $\Pi_i$ es el espacio de políticas admisibles. Aunque en sistemas estrictamente cooperativos este equilibrio caracteriza puntos de estabilidad mutua, no garantiza por sí mismo la optimalidad global de Pareto.
+donde $J(\cdot)$ denota el retorno esperado del agente $i$ bajo el perfil de políticas indicado, $\boldsymbol{\pi}_{-i}^*$ representa el perfil de políticas conjuntas de todos los agentes excepto el agente $i$, y $\Pi_i$ es el espacio de políticas admisibles. Aunque en sistemas estrictamente cooperativos este equilibrio caracteriza puntos de estabilidad mutua, no garantiza por sí mismo la optimalidad global de Pareto.
 
-En redes urbanas reales, los controladores carecen de telemetría instantánea y global sobre todo el trazado vial. Cada intersección opera sujeta a observabilidad parcial, percibiendo únicamente el estado de sus detectores locales. Esta restricción operacional se modela formalmente mediante un \gls{acr-decpomdp} (\textit{Decentralized Partially Observable Markov Decision Process}) \cite{decpomdp-survey}, definido por la tupla:
+En redes urbanas reales, los controladores carecen de información instantánea y global sobre todo el trazado vial. Cada intersección opera sujeta a observabilidad parcial, percibiendo únicamente el estado de sus detectores locales. Esta restricción operacional se modela formalmente mediante un \gls{acr-decpomdp} (\textit{Decentralized Partially Observable Markov Decision Process}) \cite{decpomdp-survey}, definido por la tupla:
 \begin{equation}
     \langle \mathcal{N}, \mathcal{S}, \{ \mathcal{A}_i \}_{i=1}^n, P, R, \{ \Omega_i \}_{i=1}^n, O, \gamma \rangle
     \label{eq:dec_pomdp}
@@ -1191,11 +1191,11 @@ La figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente 
         \draw[flecha] (mix.east) -| (5.2, 0.55);
         \node[etiquetaSinFondo] at (5.2, 2.2) {acción\\conjunta $\mathbf{a}$};
     \end{tikzpicture}
-    \caption[Interacción agente-entorno en MARL cooperativo]{Interacción Agente-Entorno en un esquema \acrshort{acr-marl} cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf{a}$) que modifica el estado global del entorno de tráfico.}
+    \caption[Interacción agente-entorno en MARL cooperativo]{Interacción agente-entorno en un esquema \acrshort{acr-marl} cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf{a}$) que modifica el estado global del entorno de tráfico.}
     \label{fig:marl_interaction}
 \end{figure}
 
-\subsection{Desafíos del Aprendizaje Multiagente}
+\subsection{Desafíos del aprendizaje multiagente}
 
 La transición desde el aprendizaje individual hacia el dominio multiagente introduce desafíos teóricos y computacionales específicos \cite{marlbook}:
 
@@ -1216,6 +1216,11 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
     
     En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \gls{acr-wolf-phc} (\textit{Win or Learn Fast Policy Hill-Climbing}) modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para evacuar un pelotón, alterando abruptamente los arribos en los cruces receptores; si los agentes aprenden sin coordinación, corren el riesgo de generar oscilaciones destructivas en las colas de la red.
 
+    \item \textbf{Observabilidad parcial:} Bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia exclusivamente en detectores locales, desconociendo el estado global de la red vial y las decisiones simultáneas de cruces lejanos, lo cual incrementa el sesgo y la incertidumbre en las estimaciones de valor.
+
+    \item \textbf{Asignación de crédito multiagente (\textit{Credit Assignment}):} Cuando múltiples agentes actúan en paralelo, determinar la contribución marginal de cada decisión local sobre el desempeño del sistema resulta complejo \cite{marlbook}. Una acción local desfavorable puede quedar enmascarada si el resto de los semáforos operó de forma eficiente, o viceversa. El diseño de recompensas individuales compuestas (sección \ref{subsec:recompensa_coordinacion}) aborda este desafío aislando la contribución de la intersección y su vecindario inmediato.
+\end{itemize}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.65\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
@@ -1223,18 +1228,13 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
     \label{fig:no_estacionariedad_papel_piedra}
 \end{figure}
 
-    \item \textbf{Observabilidad parcial:} Bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia exclusivamente en detectores locales, desconociendo el estado global de la red vial y las decisiones simultáneas de cruces lejanos, lo cual incrementa el sesgo y la incertidumbre en las estimaciones de valor.
-    
-    \item \textbf{Asignación de crédito multiagente (\textit{Credit Assignment}):} Cuando múltiples agentes actúan en paralelo, determinar la contribución marginal de cada decisión local sobre el desempeño del sistema resulta complejo \cite{marlbook}. Una acción local desfavorable puede quedar enmascarada si el resto de los semáforos operó de forma eficiente, o viceversa. El diseño de recompensas individuales compuestas (sección \ref{subsec:recompensa_coordinacion}) aborda este desafío aislando la contribución de la intersección y su vecindario inmediato.
-\end{itemize}
+\subsection{Paradigmas de entrenamiento y ejecución}
 
-\subsection{Paradigmas de Entrenamiento y Ejecución}
-
-Para mitigar la no estacionariedad respetando la observabilidad parcial de los controladores en despliegue, la literatura distingue dos paradigmas fundamentales según el flujo de telemetría durante la optimización \cite{ctde_survey}:
+Para mitigar la no estacionariedad respetando la observabilidad parcial de los controladores en despliegue, la literatura distingue dos paradigmas fundamentales según la información disponible durante la optimización \cite{ctde_survey}:
 
 \begin{itemize}
     \item \textbf{Aprendizaje Independiente (\acrshort{acr-il}, \textit{Independent Learning}):} Cada controlador se optimiza de forma totalmente descentralizada tratando a los demás agentes como componentes estocásticos del entorno. Aunque computacionalmente simple y altamente escalable, es susceptible a la inestabilidad por no estacionariedad.
-    \item \textbf{Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort{acr-ctde}):} Durante la etapa de entrenamiento en el simulador, se aprovecha información global privilegiada (estados conjuntos o concatenaciones de observaciones) para coordinar la evaluación y reducir la varianza de las estimaciones; durante la etapa de ejecución, el componente centralizado se desacopla y cada agente opera con su política local. La figura \ref{fig:ctde_architecture} ilustra esta separación entre etapas.
+    \item \textbf{Entrenamiento centralizado con ejecución descentralizada (\textit{Centralized Training with Decentralized Execution}, \acrshort{acr-ctde}):} Durante la etapa de entrenamiento en el simulador, se aprovecha información global privilegiada (estados conjuntos o concatenaciones de observaciones) para coordinar la evaluación y reducir la varianza de las estimaciones; durante la etapa de ejecución, el componente centralizado se desacopla y cada agente opera con su política local. La figura \ref{fig:ctde_architecture} ilustra esta separación entre etapas.
 \end{itemize}
 
 \subsection[MADRL y líneas de base]{\gls{acr-madrl} y líneas de base}
@@ -1265,8 +1265,8 @@ La figura \ref{fig:ctde_architecture} resume esta partición operativa entre amb
         % Estado Global
         \node[box, fill=colEntorno!25, draw=colEntorno!80!black, minimum width=4cm] (estado) at (-0.5, 3.2) {Estado Global ($s$)};
         
-        % Crítico Centralizado
-        \node[critic] (critico) at (-0.5, 1.5) {Crítico Centralizado\\$V_\phi(s)$};
+        % Crítico centralizado
+        \node[critic] (critico) at (-0.5, 1.5) {Crítico centralizado\\$V_\phi(s)$};
         
         % Actores
         \node[actor] (actor1) at (-2.5, -0.2) {Actor 1\\$\pi_{\theta_1}$};
@@ -1295,13 +1295,13 @@ La figura \ref{fig:ctde_architecture} resume esta partición operativa entre amb
         \draw[arr] (actor1_ex) -- node[left, lbl] {$a_1$} (5.0, 3.2);
         \draw[arr] (actor2_ex) -- node[right, lbl] {$a_n$} (8.0, 3.2);
     \end{tikzpicture}
-    \caption{Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort{acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}
+    \caption{Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort{acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}
     \label{fig:ctde_architecture}
 \end{figure}
 
 \subsection[MAPPO]{Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo})}\label{subsec:mappo}
 
-Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto multiagente bajo el paradigma \acrshort{acr-ctde}, Yu et al. \cite{yu2022surprising} estudiaron una configuración de \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo}) basada en PPO y un crítico centralizado. En lugar de rediseñar el estimador base, MAPPO preserva la simplicidad computacional de PPO mediante la factorización explícita entre políticas descentralizadas y evaluación centralizada:
+Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto multiagente bajo el paradigma \acrshort{acr-ctde}, Yu et al. \cite{yu2022surprising} estudiaron una configuración de Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo}) basada en PPO y un crítico centralizado. En lugar de rediseñar el estimador base, MAPPO preserva la simplicidad computacional de PPO mediante la factorización explícita entre políticas descentralizadas y evaluación centralizada:
 \begin{itemize}
     \item \textbf{Actores descentralizados ($\pi_{\theta_i}(a_i \mid o_i)$):} Cada controlador $i$ procesa exclusivamente su vector de observación local $o_i$ para seleccionar su fase semafórica $a_i$. En intersecciones con geometrías idénticas puede compartirse parámetros entre actores, aunque esto no constituye una restricción conceptual.
     \item \textbf{Crítico centralizado ($V_\phi(s)$):} Durante el entrenamiento, el crítico puede utilizar información global que no está disponible para los actores. Una representación global adecuada puede facilitar la estimación del valor, y una línea de base más precisa puede contribuir a reducir la varianza, sin garantía automática \cite{yu2022surprising}.
@@ -1318,7 +1318,7 @@ donde $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\t
     \label{eq:perdida_valor_mappo}
 \end{equation}
 
-\subsubsection{Factores Críticos de Diseño y Optimización en \acrshort{acr-mappo}}
+\subsubsection{Factores críticos de diseño y optimización en \acrshort{acr-mappo}}
 
 Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de implementación e hiperparámetros que afectan el rendimiento de \acrshort{acr-mappo}:
 \begin{enumerate}
@@ -1330,7 +1330,7 @@ Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de
 El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-mappo} bajo el paradigma CTDE.
 
 \begin{algorithm}[H]
-\caption{Algoritmo \textit{Multi-Agent Proximal Policy Optimization} (\acrshort{acr-mappo})}
+\caption{Algoritmo Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo})}
 \label{alg:mappo}
 \begin{algorithmic}[1]
 \Statex \textbf{Entrada:} entorno multiagente, $n$ agentes, horizonte de recolección, \textit{epochs} $K$, $\gamma$, $\lambda_{\mathrm{GAE}}$ y $\epsilon_{\mathrm{clip}}$
@@ -1357,13 +1357,13 @@ Durante el entrenamiento, el crítico centralizado $V_\phi(s)$ procesa el estado
 
 La formulación anterior presenta la variante teórica con una ventaja conjunta. En la implementación de este trabajo, el crítico centralizado produce una salida por agente y los objetivos de \acrshort{acr-gae} se calculan por agente a partir de la recompensa individual compuesta descrita en la sección \ref{subsec:recompensa_coordinacion}; por tanto, la ecuación resume el paradigma CTDE y no debe leerse como una identidad exacta del código ejecutado.
 
-\subsection[HAPPO]{\textit{Heterogeneous-Agent Proximal Policy Optimization}\\(\acrshort{acr-happo})}\label{subsec:happo}
+\subsection[HAPPO]{Heterogeneous-Agent Proximal Policy Optimization\\(\acrshort{acr-happo})}\label{subsec:happo}
 
 En sistemas de control complejos, los agentes pueden presentar asimetrías físicas y operacionales: diferencias en la configuración de actuadores, distintos espacios de acciones o demandas regionales contrapuestas. En entornos homogéneos, compartir parámetros puede mejorar la eficiencia de aprendizaje; en entornos heterogéneos, esa práctica puede limitar la especialización. Además, las actualizaciones independientes no poseen una garantía general de convergencia debido al aprendizaje simultáneo no coordinado \cite{kuba2021trust}.
 
 Kuba et al. y Zhong et al. \cite{kuba2021trust,zhong2024heterogeneous} propusieron algoritmos de aprendizaje por refuerzo multiagente para políticas heterogéneas, sin exigir que todos los agentes compartan parámetros. Esta línea se denomina aprendizaje por refuerzo con agentes heterogéneos (\textit{Heterogeneous-Agent Reinforcement Learning}, \acrshort{acr-harl}). Cada agente $i$ puede mantener su propia arquitectura y parámetros $\theta^i$, adaptados a su espacio de acciones local $\mathcal{A}_i$. En esta línea, \gls{acr-hatrpo} y \acrshort{acr-happo} emplean una actualización secuencial de los agentes. Los resultados teóricos de mejora monótona y convergencia se refieren al procedimiento de región de confianza bajo supuestos explícitos; la variante práctica \acrshort{acr-happo} sustituye la restricción \acrshort{acr-kl} por un objetivo recortado y debe interpretarse como una aproximación \cite{kuba2021trust,zhong2024heterogeneous}.
 
-\subsubsection{Compartición de Parámetros y Políticas Heterogéneas}
+\subsubsection{Compartición de parámetros y políticas heterogéneas}
 
 Una distinción central entre \acrshort{acr-mappo} y \acrshort{acr-happo} radica en la homogeneidad de las políticas y en el orden de actualización:
 \begin{itemize}
@@ -1371,11 +1371,11 @@ Una distinción central entre \acrshort{acr-mappo} y \acrshort{acr-happo} radica
     \item \textbf{Políticas heterogéneas y actualización secuencial:} \acrshort{acr-happo} permite que cada agente mantenga una política independiente $\pi_{\theta^i}(a_i \mid o_i)$ y actualiza los actores siguiendo una permutación. El \textit{batch} de trayectorias de la iteración actual se reutiliza de forma limitada; esto no equivale a un \textit{buffer} histórico de \textit{experience sharing} como el empleado por algoritmos específicos de compartición de experiencia.
 \end{itemize}
 
-\subsubsection{Lema de Descomposición de la Ventaja Multiagente}
+\subsubsection{Lema de descomposición de la ventaja multiagente}
 
 La actualización simultánea de todos los controladores puede generar inestabilidad porque el cambio concurrente de las políticas altera tanto las distribuciones de acción como la distribución conjunta de las trayectorias. \acrshort{acr-happo} aborda este problema mediante una actualización secuencial: en cada iteración se optimiza un agente por vez, condicionando cada paso a los cambios ya efectuados por los precedentes. Para sustentar este esquema, la ventaja conjunta de la red debe poder descomponerse en contribuciones marginales ordenadas \cite{kuba2021trust}.
 
-Esta descomposición se formaliza en el Lema de Descomposición de la Ventaja Multiagente propuesto por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
+Esta descomposición se formaliza en el lema de descomposición de la ventaja multiagente propuesto por Kuba et al. \cite{kuba2021trust}. En cualquier juego markoviano cooperativo, para una política conjunta $\boldsymbol{\pi}$ y un orden arbitrario de los agentes $i_{1:n} = (i_1, \dots, i_n)$, la ventaja conjunta de la red se descompone exactamente como la suma de las ventajas marginales de cada agente, condicionadas por las decisiones de los que lo preceden en la secuencia:
 \begin{equation}
     A^{\boldsymbol{\pi}}(s, \mathbf{a}) = \sum_{m=1}^n A_{i_m}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})
     \label{eq:happo_descomposicion_ventaja}
@@ -1387,17 +1387,17 @@ donde la ventaja marginal del agente $i_m$ se define como:
 \end{equation}
 En la ecuación \eqref{eq:happo_ventaja_marginal}, $Q_{i_{1:m}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})$ evalúa el retorno esperado fijando las acciones de los primeros $m$ agentes de la secuencia, mientras que las decisiones de los agentes subsecuentes ($\mathbf{a}_{i_{m+1:n}}$) se marginalizan por esperanza bajo la política vigente.
 
-La deducción matemática canónica de este lema asume un juego markoviano estrictamente cooperativo con un retorno escalar compartido $R(s, \mathbf{a})$ para toda la red. En sistemas espaciales distribuidos de gran escala, como el control semafórico urbano, asignar una recompensa global idéntica a todas las intersecciones induce un severo problema de asignación de crédito multiagente e incrementa fuertemente la varianza de las estimaciones \cite{Chu2019}. Por este motivo, los modelos de tráfico descomponen la señal en recompensas locales y de vecindario inmediato.
+La deducción matemática canónica de este lema asume un juego markoviano estrictamente cooperativo con un retorno escalar compartido $R(s, \mathbf{a})$ para toda la red. En sistemas espaciales distribuidos de gran escala, como el control semafórico urbano, asignar una recompensa global idéntica a todas las intersecciones dificulta la asignación de crédito, extremo que Chu et al. respaldan con evidencia empírica en redes extensas \cite{Chu2019}, y encarece la estimación de las ventajas \cite{marlbook}. Por este motivo, los modelos de tráfico descomponen la señal en recompensas locales y de vecindario inmediato.
 
-Bajo retornos desacoplados, la identidad aditiva de la ecuación \eqref{eq:happo_descomposicion_ventaja} no se traduce en una equivalencia algebraica directa entre un único valor global y los retornos individuales; no obstante, el principio de optimización secuencial por bloques (tipo Gauss-Seidel) retiene su potencia operativa para desacoplar el aprendizaje concurrente \cite{marlbook,wang2023order}.
+Bajo retornos desacoplados, la identidad aditiva de la ecuación \eqref{eq:happo_descomposicion_ventaja} no se traduce en una equivalencia algebraica directa entre un único valor global y los retornos individuales; no obstante, el principio de optimización secuencial por bloques (tipo Gauss-Seidel) conserva su utilidad práctica para desacoplar el aprendizaje concurrente \cite{marlbook,wang2023order}.
 
 La relevancia teórica de este lema radica en que es una identidad analítica exacta para cualquier juego cooperativo sin imponer restricciones de aditividad o de monotonía sobre la función de valor en la red de mezclado (a diferencia de las condiciones de factorización IGM de arquitecturas como \gls{acr-vdn} \cite{vdn} o \gls{acr-qmix} \cite{qmix}).
 
-\subsubsection{Esquema de Actualización Secuencial y Factor de Razón Compuesto $M$}
+\subsubsection{Esquema de actualización secuencial y factor de razón compuesto $M$}
 
 Para explotar analíticamente esta descomposición sin incurrir en la inestabilidad del entrenamiento simultáneo, \acrshort{acr-happo} actualiza las políticas de los agentes de manera secuencial dentro de cada iteración $k$. En cada ciclo se sortea una permutación de los agentes $i_{1:n} \in \text{Sym}(n)$ (donde $\text{Sym}(n)$ representa el conjunto de todas las permutaciones posibles de los $n$ agentes) para evitar sesgos sistemáticos de prioridad en la secuencia de optimización \cite{kuba2021trust,wang2023order}.
 
-Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan aún sus parámetros previos $\theta_k^{i_j}$. Para guiar al agente $i_m$ absorbiendo la alteración en la distribución conjunta inducida por sus predecesores, Kuba et al. \cite{kuba2021trust} demostraron que no se requiere entrenar un crítico separado por cada subgrupo; la ventaja marginal puede computarse reponderando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ mediante la productoria acumulada de las razones de probabilidad de los agentes ya actualizados:
+Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan aún sus parámetros previos $\theta_k^{i_j}$. Para guiar al agente $i_m$ teniendo en cuenta la alteración de la distribución conjunta producida por los agentes ya actualizados, Kuba et al. \cite{kuba2021trust} demostraron que no se requiere entrenar un crítico separado por cada subgrupo; la ventaja marginal puede computarse reponderando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ mediante la productoria acumulada de las razones de probabilidad de los agentes ya actualizados:
 \begin{equation}
     M_{i_{1:m}}(s_t, \mathbf{a}_t) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})}{\pi_{\theta_k^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)
     \label{eq:happo_factor_m}
@@ -1428,7 +1428,7 @@ y se propaga recursivamente hacia los agentes pendientes mediante:
     \label{eq:happo_actualizacion_recursiva}
 \end{equation}
 
-\subsubsection{Garantía de Mejora Monótona}
+\subsubsection{Garantía de mejora monótona}
 
 El principio de mejora monótona en aprendizaje por refuerzo formaliza que la secuencia de retornos esperados de la política conjunta no disminuye entre ciclos sucesivos de entrenamiento, comportándose como una función monótonamente no decreciente respecto de la iteración $k$:
 \begin{equation}
@@ -1437,7 +1437,7 @@ El principio de mejora monótona en aprendizaje por refuerzo formaliza que la se
 \end{equation}
 Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron analíticamente esta propiedad para el algoritmo \gls{acr-hatrpo} (\textit{Heterogeneous-Agent Trust Region Policy Optimization}) bajo los supuestos del juego markoviano cooperativo con recompensa compartida y una actualización restringida por la divergencia KL. En la práctica computacional, resolver las restricciones cuadráticas de HATRPO en redes neuronales profundas resulta computacionalmente restrictivo. Por ello, \acrshort{acr-happo} sustituye la cota formal de divergencia KL por el objetivo sustituto recortado \acrshort{acr-clip} de primer orden de la ecuación \eqref{eq:happo_objetivo_clip}.
 
-Esta sustitución constituye una aproximación pragmática: al igual que ocurre con PPO frente a TRPO en el caso de agente único, la garantía matemática demostrada para HATRPO no se transfiere automáticamente a la variante con recorte \acrshort{acr-happo}, aun cuando esta última exhibe un comportamiento empírico sumamente robusto \cite{kuba2021trust,zhong2024heterogeneous}. Además, en redes urbanas con señales de recompensa local-vecinales, el procedimiento no garantiza una convergencia monótona analítica sobre una función objetivo global única; en cambio, opera como un mecanismo ordenado de optimización por bloques que atenúa la no estacionariedad y las colisiones de gradiente entre políticas concurrentes \cite{wang2023order,zhong2024heterogeneous}. La figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
+Esta sustitución constituye una aproximación pragmática: al igual que ocurre con PPO frente a TRPO en el caso de agente único, la garantía matemática demostrada para HATRPO no se transfiere automáticamente a la variante con recorte \acrshort{acr-happo}, aun cuando esta última exhibe un comportamiento empírico notablemente robusto \cite{kuba2021trust,zhong2024heterogeneous}. Además, en redes urbanas con señales de recompensa local-vecinales, el procedimiento no garantiza una convergencia monótona analítica sobre una función objetivo global única; en cambio, opera como un mecanismo ordenado de optimización por bloques que atenúa la no estacionariedad y las colisiones de gradiente entre políticas concurrentes \cite{wang2023order,zhong2024heterogeneous}. La figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
 
 \begin{figure}[H]
     \centering
@@ -1483,7 +1483,7 @@ Esta sustitución constituye una aproximación pragmática: al igual que ocurre 
 El algoritmo \ref{alg:happo} presenta la secuencia completa de optimización de \acrshort{acr-happo}.
 
 \begin{algorithm}[H]
-\caption{Algoritmo \textit{Heterogeneous-Agent Proximal Policy Optimization} (\acrshort{acr-happo})}
+\caption{Algoritmo Heterogeneous-Agent Proximal Policy Optimization (\acrshort{acr-happo})}
 \label{alg:happo}
 \begin{algorithmic}[1]
 \Statex \textbf{Entrada:} entorno multiagente, conjunto $\mathcal{N}$ de $n$ agentes, horizonte de recolección, $\gamma$, $\lambda_{\mathrm{GAE}}$ y $\epsilon_{\mathrm{clip}}$
@@ -1524,13 +1524,13 @@ Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{a
 \begin{tabular}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{3.1cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{2.8cm}|}
 \hline
 \textbf{Eje de análisis} & \textbf{\acrshort{acr-ppo} de agente único} & \textbf{\acrshort{acr-ippo} independiente} & \textbf{\acrshort{acr-mappo} / \acrshort{acr-ctde}} & \textbf{\acrshort{acr-happo} / \acrshort{acr-harl}} \\ \hline
-\textbf{Paradigma} & Agente Único & \acrshort{acr-il} (Descentralizado) & \acrshort{acr-ctde} (Centralizado/Desc.) & \acrshort{acr-ctde} / \acrshort{acr-harl} \\ \hline
-\textbf{Actores} & Único $\pi_\theta(a \mid s)$ & $n$ políticas locales & Actores locales; puede compartir parámetros & $n$ políticas heterogéneas \\ \hline
-\textbf{Arquitectura del Crítico} & Único $V_\phi(s)$ & $n$ Críticos locales $V_{\phi_i}(o_i)$ & Un Crítico Centralizado $V_\phi(s)$ & Un Crítico Centralizado $V_\phi(s)$ \\ \hline
-\textbf{Optimización} & \acrshort{acr-ppo} estándar & \acrshort{acr-ppo} local simultáneo & \acrshort{acr-ppo} local con crítico global & Actualización secuencial $i_{1:n}$ \\ \hline
-\textbf{Señal de Ventaja} & Ventaja local $\hat{A}(s, a)$ & Ventaja local $\hat{A}_i(o_i, a_i)$ & Ventaja conjunta $\hat{A}(s, \mathbf{a})$ & Factor compuesto $M_{i_{1:m}}(s, \mathbf{a})$ \\ \hline
+ \textbf{Paradigma} & agente único & \acrshort{acr-il} (descentralizado) & \acrshort{acr-ctde} (centralizado/desc.) & \acrshort{acr-ctde}; familia \acrshort{acr-harl} \\ \hline
+ \textbf{Actores} & único $\pi_\theta(a \mid s)$ & $n$ políticas locales & actores locales; puede compartir parámetros & $n$ políticas heterogéneas \\ \hline
+ \textbf{Arquitectura del crítico} & único $V_\phi(s)$ & $n$ críticos locales $V_{\phi_i}(o_i)$ & un crítico centralizado $V_\phi(s)$ & un crítico centralizado $V_\phi(s)$ \\ \hline
+ \textbf{Optimización} & \acrshort{acr-ppo} estándar & \acrshort{acr-ppo} local simultáneo & \acrshort{acr-ppo} local con crítico global & actualización secuencial $i_{1:n}$ \\ \hline
+ \textbf{Señal de ventaja} & ventaja local $\hat{A}(s, a)$ & ventaja local $\hat{A}_i(o_i, a_i)$ & ventaja conjunta $\hat{A}(s, \mathbf{a})$ & factor compuesto $M_{i_{1:m}}(s, \mathbf{a})$ \\ \hline
 \textbf{Mejora monótona} & No estricta para \acrshort{acr-ppo} & Sin garantía general & Sin garantía estricta & Teórica bajo supuestos; \acrshort{acr-happo}-clip es aproximado \\ \hline
-\textbf{Tipo de agente} & No aplica & Depende de la implementación & Compatible; compartir parámetros es opcional & Diseñada para agentes heterogéneos \\ \hline
+\textbf{Tipo de agente} & No aplica & Depende de la implementación & Pensado para agentes homogéneos; la compartición de parámetros es opcional & Pensado para agentes heterogéneos \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1542,19 +1542,19 @@ El control coordinado de múltiples intersecciones mediante aprendizaje por refu
 
 \subsubsection{Coordinación y entrenamiento}
 
-En la consolidación del control semafórico coordinado mediante aprendizaje profundo, diversos trabajos establecieron hitos fundamentales para abordar la asignación de crédito y la no estacionariedad en redes viales:
+En la consolidación del control semafórico coordinado mediante aprendizaje profundo, varios trabajos abordaron de manera temprana la asignación de crédito y la no estacionariedad en redes viales:
 \begin{itemize}
     \item \textbf{Control actor-crítico con descuento espacial (MA2C):} Chu et al. \cite{Chu2019} propusieron una arquitectura de ventaja actor-crítico multiagente donde cada intersección incorpora a su función de valor y recompensa la información de sus vecinos inmediatos atenuada por un factor de descuento espacial. Este trabajo fundamentó conceptualmente y evidenció de manera empírica que una recompensa de equipo global en redes extensas induce severos problemas de asignación de crédito, mientras que las recompensas regionalmente estructuradas permiten coordinar corredores sin requerir estados globales inmanejables.
-    \item \textbf{Coordinación basada en presión vehicular (PressLight):} Wei et al. \cite{presslight2019} fundamentaron su función de recompensa en el principio de \textit{Max-Pressure} de la ingeniería de transporte, cuya propiedad teórica de estabilidad de red se traslada al aprendizaje por refuerzo al optimizar la diferencia de vehículos detenidos entre los carriles de entrada y salida, coordinando de manera implícita las intersecciones adyacentes sin necesidad de comunicación explícita.
+    \item \textbf{Coordinación basada en presión vehicular (PressLight):} Wei et al. \cite{presslight2019} fundamentaron su función de recompensa en el principio de \textit{Max-Pressure} de la ingeniería de transporte, que en la teoría de control de redes garantiza estabilidad de cola bajo supuestos específicos de un esquema de servicio discreto. PressLight incorpora ese principio como recompensa de aprendizaje por refuerzo al maximizar la diferencia de vehículos detenidos entre corrientes entrantes y salientes. Esa incorporación no hereda la garantía formal de estabilidad y coordina de manera implícita las intersecciones adyacentes sin necesidad de comunicación explícita.
     \item \textbf{Atención en grafos para cooperación a nivel de red (CoLight):} Wei et al. \cite{colight2019} introdujeron redes de atención en grafos para permitir que los agentes semafóricos intercambien dinámicamente representaciones de sus estados con cruces vecinos, adaptando la influencia de cada intersección adyacente según las condiciones variables de congestión.
     \item \textbf{Límites del aprendizaje independiente en redes viales:} Ault y Sharon \cite{Ault2022_MARL_Limitations} analizaron las limitaciones de los enfoques independientes frente a formulaciones cooperativas en redes de múltiples intersecciones, evidenciando un deterioro progresivo en el desempeño y en la fluidez del tránsito a medida que la demanda se incrementa debido a la falta de coordinación y a la no estacionariedad del entorno.
 \end{itemize}
 
-A partir de estas bases fundacionales, diversas investigaciones recientes han explorado mecanismos alternativos de optimización y distribución de cómputo. Wu et al. \cite{wu2022distributed} estudian el control de redes de gran escala mediante agentes distribuidos de aprendizaje por refuerzo profundo y una arquitectura de cómputo distribuido. Proponen dos variantes, Nash-A2C y Nash-A3C, que incorporan un equilibrio de Nash en el aprendizaje por refuerzo y se despliegan en una arquitectura distribuida para simulación y control. En sus experimentos reportan reducciones del tiempo de congestión y del retraso de red frente a controladores de referencia. Este antecedente es pertinente como referencia de escalabilidad, pero no es equivalente a la formulación de este trabajo: aquí la ejecución también es local por intersección, mientras que la coordinación se estudia mediante la señal individual compuesta local-vecinal y el entrenamiento centralizado, sin introducir una capa de cómputo fog ni un equilibrio de Nash.
+A partir de estas bases fundacionales, diversas investigaciones recientes han explorado mecanismos alternativos de optimización y distribución de cómputo. Wu et al. \cite{wu2022distributed} estudian el control de redes de gran escala mediante agentes distribuidos de aprendizaje por refuerzo profundo y una arquitectura de cómputo distribuido. Proponen dos variantes, Nash-A2C y Nash-A3C, que incorporan un equilibrio de Nash en el aprendizaje por refuerzo y se despliegan en una arquitectura distribuida para simulación y control. En sus experimentos reportan reducciones del tiempo de congestión y de la demora total de red frente a controladores de referencia. Este antecedente es pertinente como referencia de escalabilidad, pero no es equivalente a la formulación de este trabajo: aquí la ejecución también es local por intersección, mientras que la coordinación se estudia mediante la señal individual compuesta local-vecinal y el entrenamiento centralizado, sin introducir una capa de cómputo fog ni un equilibrio de Nash.
 
 En una formulación cooperativa basada en \acrshort{acr-dqn}, Haddad et al. \cite{haddad2022cooperative} incorporan a la función de aprendizaje de cada intersección información sobre los estados, acciones y recompensas de sus vecinos. El estudio informa mejoras en tiempo de espera, longitud de cola y emisiones de dióxido de carbono frente a controladores de referencia. Esta evidencia respalda la necesidad de considerar el efecto de las decisiones vecinas, pero su mecanismo de coordinación es una transferencia explícita de información hacia la pérdida de DQN. En el presente trabajo, \acrshort{acr-ippo} e \acrshort{acr-idqn} implementan el paradigma de aprendizaje independiente puro y reciben una señal de recompensa estrictamente local ($R_i = L_i$, $\rho_{\mathrm{coop}} = 0$); \acrshort{acr-mappo} y \acrshort{acr-happo} incorporan la coordinación vecinal en la recompensa ($\rho_{\mathrm{coop}} > 0$) y un crítico centralizado durante el entrenamiento. Estas alternativas no son equivalentes al mecanismo propuesto por Haddad et al., sino procedimientos de coordinación distintos que se comparan bajo una misma representación y escenario.
 
-Fang et al. \cite{fang2023nacrl} proponen un método de coordinación de red que formula el control semafórico como un problema multiobjetivo: combina eficiencia, seguridad y coordinación espacial entre intersecciones mediante un esquema de entrenamiento centralizado y ejecución descentralizada. Además de reportar resultados en redes sintéticas y arterias reales, el trabajo destaca que las dependencias espacio-temporales entre agentes deben representarse explícitamente. Su propuesta ofrece un contraste con la señal individual compuesta y la representación interpretable utilizadas en este trabajo, que no incorporan una optimización multiobjetivo ni una representación latente basada en atención.
+Fang et al. \cite{fang2023nacrl} proponen un método de coordinación de red que formula el control semafórico como un problema multiobjetivo: combina eficiencia, seguridad y coordinación espacial entre intersecciones mediante un esquema de entrenamiento centralizado con ejecución descentralizada. Además de reportar resultados en redes sintéticas y arterias reales, el trabajo destaca que las dependencias espacio-temporales entre agentes deben representarse explícitamente. Su propuesta ofrece un contraste con la señal individual compuesta y la representación interpretable utilizadas en este trabajo, que no incorporan una optimización multiobjetivo ni una representación latente basada en atención.
 
 \subsubsection{Representación del estado}
 
@@ -1568,7 +1568,7 @@ En el caso de una representación basada en celdas, Deng et al. \cite{deng2026ro
 
 Ren et al. \cite{ren2024twolayer} abordan la coordinación bajo demandas heterogéneas mediante un esquema de dos capas. Cada agente combina su ventaja local con la de las intersecciones vecinas a través de un factor de cooperación adaptable, que luego se ajusta según el rendimiento global de la red. El método considera la demora y las emisiones vehiculares, y coordina los objetivos locales y globales mediante ese factor adaptable. Este antecedente permite contrastar la coordinación adaptativa de las señales de aprendizaje con la heterogeneidad de políticas considerada por \acrshort{acr-happo}, aunque no emplea su procedimiento de actualización secuencial.
 
-En la coordinación mediante entrenamiento centralizado, Liu et al. \cite{liu2025vfmappo} formulan el control semafórico como un juego parcialmente observable con restricciones y proponen \acrshort{acr-vf}-\acrshort{acr-mappo}. En este método, la equidad se expresa mediante una cota sobre el tiempo máximo de espera de los vehículos, mientras que un crítico centralizado con atención espaciotemporal estima tanto la eficiencia de la red como el cumplimiento de la restricción. Esta formulación resulta especialmente pertinente para el presente trabajo porque vincula el paradigma de entrenamiento centralizado y ejecución descentralizada con una variable temporal de operación. No obstante, el tiempo de espera se incorpora como restricción de optimización y no mediante una codificación no lineal de la observación.
+En la coordinación mediante entrenamiento centralizado, Liu et al. \cite{liu2025vfmappo} formulan el control semafórico como un juego parcialmente observable con restricciones y proponen \acrshort{acr-vf}-\acrshort{acr-mappo}. En este método, la equidad se expresa mediante una cota sobre el tiempo máximo de espera de los vehículos, mientras que un crítico centralizado con atención espaciotemporal estima tanto la eficiencia de la red como el cumplimiento de la restricción. Esta formulación resulta especialmente pertinente para el presente trabajo porque vincula con una variable temporal de operación el paradigma de entrenamiento centralizado con ejecución descentralizada. No obstante, el tiempo de espera se incorpora como restricción de optimización y no mediante una codificación no lineal de la observación.
 
 En el tratamiento de agentes heterogéneos, otro enfoque es HAPS-\acrshort{acr-ppo}, presentado por Lu et al. \cite{lu2025hapsppo}. El método completa con relleno las observaciones de distinta dimensión y agrupa a los agentes según sus espacios de acción, asignando cabezales de política específicos a cada grupo. Esto permite coordinar intersecciones con geometrías y conjuntos de fases diferentes. A pesar de la similitud entre las siglas, HAPS-\acrshort{acr-ppo} no corresponde a \acrshort{acr-happo}, ya que no emplea la actualización secuencial ni la descomposición de la ventaja explicadas en la sección \ref{subsec:happo}.
 
@@ -1576,7 +1576,7 @@ En el tratamiento de agentes heterogéneos, otro enfoque es HAPS-\acrshort{acr-p
 
 La selección analizada sugiere que el desempeño del control semafórico multiagente depende de tres decisiones relacionadas: el algoritmo utilizado para aprender y coordinar las políticas, la representación de las condiciones de operación y el tratamiento de intersecciones con demandas, geometrías o espacios de acción diferentes. Los enfoques basados en \acrshort{acr-dqn} proporcionan una referencia para el aprendizaje por valor. Los modelos de grafos construyen representaciones latentes de las relaciones espaciales, mientras que las variantes de \acrshort{acr-mappo} incorporan información global durante el entrenamiento. Los esquemas de cooperación adaptable o con múltiples cabezales atienden distintas formas de heterogeneidad. La codificación por carril y la discretización de variables de tránsito también cuentan con antecedentes en control semafórico \cite{genders2018representations}; aquí se emplean para representar la espera acumulada por carril mediante la transformación especificada en la metodología.
 
-Entre los antecedentes considerados, HeteroLight aborda la heterogeneidad de los controladores semafóricos \cite{heterolight2024}, mientras que MATLight emplea aprendizaje multiagente heterogéneo y un Transformer para procesar secuencias \cite{matlight2024}. Son mecanismos distintos de la adaptación HAPPO implementada aquí: no se los presenta como equivalentes ni como evidencia de que HAPPO sea superior. En las fuentes consultadas hasta septiembre de 2026 no se localizó una evaluación conjunta de \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} bajo una misma formulación, ni una aplicación directa del HAPPO original al control de fases semafóricas urbanas. Esta observación delimita la búsqueda realizada y no permite concluir que tales estudios no existan.
+Entre los antecedentes considerados, HeteroLight aborda la heterogeneidad mediante una arquitectura de parámetros compartidos con módulos que extraen características generales y específicas de cada intersección \cite{heterolight2024}, mientras que MATLight se apoya en un marco de aprendizaje especular para agentes heterogéneos (\textit{heterogeneous-agent mirror learning}) y emplea un Transformer para procesar secuencias de estados \cite{matlight2024}. Son mecanismos distintos de la adaptación HAPPO implementada aquí: no se los presenta como equivalentes ni como evidencia de que HAPPO sea superior. En las fuentes consultadas hasta septiembre de 2026 no se localizó una evaluación conjunta de \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} bajo una misma formulación, ni una aplicación directa del HAPPO original al control de fases semafóricas urbanas. Esta observación delimita la búsqueda realizada y no permite concluir que tales estudios no existan.
 
 En particular, este trabajo explora una codificación híbrida logarítmica-lineal del tiempo de espera acumulado por carril. Al asignar valores continuos a un conjunto finito de intervalos, la cuantización agrupa esperas dentro de una misma categoría y limita los valores representables; la saturación también reúne los valores que alcanzan la cota. En aprendizaje por refuerzo, una abstracción de estados puede simplificar el problema y conservar comportamiento cercano al óptimo cuando los estados agrupados son suficientemente similares, bajo las condiciones teóricas correspondientes \cite{abel2016approxabstraction}. Ese resultado no constituye una garantía para esta codificación: aquí se transforman observaciones locales en un problema parcialmente observable y no se demuestra que los valores agrupados sean equivalentes para la política óptima. La resolución no uniforme del codificador asigna más niveles a esperas bajas, lo que permite distinguirlas con mayor detalle; es una hipótesis de diseño, pues la cuantización también puede descartar distinciones relevantes, en particular cerca de los umbrales entre intervalos. Su efecto se examina como parte del sistema completo, sin una ablación que lo aísle frente a otras representaciones. Esta propuesta se diferencia de las observaciones agregadas utilizadas por los enfoques \acrshort{acr-dqn}, de las proyecciones latentes basadas en grafos y de la partición espacial de Deng et al. \cite{deng2026roadpartition}, que divide los accesos y no codifica la espera acumulada por carril.
 

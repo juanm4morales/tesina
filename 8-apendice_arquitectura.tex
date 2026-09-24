@@ -1,9 +1,9 @@
-\chapter{Arquitectura de Software y Patrones de Diseño}
+\chapter{Arquitectura de software y patrones de diseño}
 \label{apendice:arquitectura_software}
 
 En este apéndice se documenta la especificación arquitectónica del marco computacional \texttt{marlTLC}, su organización orientada a objetos, los diagramas de clases \acrshort{acr-uml} y los patrones de diseño previstos para desacoplar los componentes de simulación, aprendizaje por refuerzo y cálculo de recompensas. El repositorio que acompaña a este documento no contiene el código fuente completo del marco; por ello, las clases, métodos y relaciones que se presentan deben interpretarse como una especificación de diseño y no como una auditoría de archivos ejecutables.
 
-\section{Diseño Orientado a Objetos del Entorno de Simulación}
+\section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
 
 El diseño del entorno separa las responsabilidades de sus componentes. En la especificación, la clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de \acrshort{acr-sumo}, el control temporal y la interacción de bajo nivel con la \acrshort{acr-api} \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} se define como el adaptador de la simulación a la interfaz \texttt{MultiAgentEnv} de Ray RLlib.
@@ -98,7 +98,7 @@ La figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{
 
 La figura \ref{fig:uml_entorno_agentes} se organiza desde la abstracción general hacia las entidades de la red. En la columna izquierda, \texttt{BaseSumoEnvironment} concentra el archivo de configuración, los parámetros temporales, los controladores y las operaciones generales de reinicio, avance y cierre. Debajo, \texttt{SumoRllibEnv} especializa esa clase para recibir un diccionario de acciones de los agentes y devolver las observaciones, recompensas y estados definidos por la interfaz de Ray RLlib. A la derecha, el diseño asigna a \texttt{TrafficLight} la fase actual, la siguiente fase, sus carriles, su función de recompensa y sus vecinos; también le asigna la actualización de métricas y la aplicación de acciones. Finalmente, \texttt{Lane} representa la longitud y las medidas recientes de detención y espera. Las flechas muestran las dependencias previstas entre la interfaz de aprendizaje, el entorno, los controladores y sus carriles.
 
-\section{Jerarquía de Funciones de Recompensa y Patrón Strategy}
+\section{Jerarquía de funciones de recompensa y patrón Strategy}
 \label{sec:apendice_uml_recompensas}
 
 En la especificación, el cálculo de la recompensa se desacopla mediante el patrón \textbf{Strategy}. Esta organización permite sustituir la métrica de optimización sin modificar el bucle principal de simulación.
@@ -180,7 +180,7 @@ La figura \ref{fig:uml_recompensas} detalla las clases que intervienen directame
 
 La figura \ref{fig:uml_recompensas} sitúa a \texttt{RewardFn} en la parte superior porque define la operación común \texttt{compute\_reward}, que recibe el identificador de un controlador semafórico y devuelve un valor numérico. Las tres flechas ascendentes indican que las clases inferiores se especializan para proporcionar variantes de esa operación. \texttt{DiffAccWaitingTimeNormalized} representa una señal local normalizada a partir de la variación del tiempo de espera acumulado, mientras que \texttt{NeighborAvgReward} promedia la señal base de los controladores vecinos. \texttt{NeighborhoodRelevanceReward} conserva ambas funciones y las combina según $\rho_{\mathrm{coop}}$, el peso de cooperación vecinal. La flecha discontinua entre las dos últimas clases muestra esa relación de composición. Esta separación permite cambiar la formulación de la recompensa sin modificar el bucle que avanza la simulación.
 
-\section{Patrones de Diseño Implementados}
+\section{Patrones de diseño implementados}
 \label{sec:apendice_patrones_diseno}
 
 A continuación se resumen los patrones contemplados en la especificación de \texttt{marlTLC}. La lista describe responsabilidades y relaciones de diseño; no certifica la presencia de una implementación ejecutable de cada componente en el repositorio.
