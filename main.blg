@@ -14,44 +14,44 @@ The style file: babalpha.bst
 Database file #1: bibliografia.bib
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-You've used 53 entries,
+You've used 57 entries,
             3213 wiz_defined-function locations,
-            1005 strings with 18708 characters,
-and the built_in function-call counts, 32765 in all, are:
-= -- 2710
-> -- 1745
-< -- 23
-+ -- 649
-- -- 642
-* -- 4093
-:= -- 4645
-add.period$ -- 122
-call.type$ -- 53
-change.case$ -- 462
-chr.to.int$ -- 53
-cite$ -- 53
-duplicate$ -- 1600
-empty$ -- 2561
-format.name$ -- 1178
-if$ -- 6434
+            1028 strings with 19709 characters,
+and the built_in function-call counts, 35414 in all, are:
+= -- 2967
+> -- 1845
+< -- 27
++ -- 685
+- -- 678
+* -- 4359
+:= -- 4992
+add.period$ -- 131
+call.type$ -- 57
+change.case$ -- 490
+chr.to.int$ -- 57
+cite$ -- 57
+duplicate$ -- 1739
+empty$ -- 2786
+format.name$ -- 1242
+if$ -- 7008
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 80
-newline$ -- 240
-num.names$ -- 159
-pop$ -- 560
+missing$ -- 85
+newline$ -- 256
+num.names$ -- 171
+pop$ -- 599
 preamble$ -- 1
-purify$ -- 519
+purify$ -- 551
 quote$ -- 0
-skip$ -- 873
+skip$ -- 976
 stack$ -- 0
-substring$ -- 1274
-swap$ -- 764
-text.length$ -- 23
+substring$ -- 1441
+swap$ -- 836
+text.length$ -- 27
 text.prefix$ -- 7
 top$ -- 0
-type$ -- 396
+type$ -- 428
 warning$ -- 0
-while$ -- 217
-width$ -- 60
-write$ -- 568
+while$ -- 240
+width$ -- 65
+write$ -- 610

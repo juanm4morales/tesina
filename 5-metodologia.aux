@@ -53,14 +53,14 @@
 \newlabel{subsubsec:mendoza_contrato_od_v14}{{3.3.3}{70}{Estructuración espacial de la demanda (60/40)}{subsubsection*.160}{}}
 \newlabel{eq:contrato_od_v14}{{3.6}{70}{Estructuración espacial de la demanda (60/40)}{equation.161}{}}
 \@writefile{toc}{\contentsline {paragraph}{Componente fijo calibrado ($60\%$):}{70}{paragraph*.162}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Ceros estructurales ($\mathcal  {Z}_{\text  {struct}}$):}{70}{paragraph*.163}\protected@file@percent }
-\citation{SUMO2026_SUMO}
-\citation{ite_handbook}
+\@writefile{toc}{\contentsline {paragraph}{Ceros estructurales ($\mathcal  {Z}_{\text  {struct}}$):}{71}{paragraph*.163}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Remanente estocástico ($40\%$) y selección de semilla:}{71}{paragraph*.164}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Dinámica microscópica y heterogeneidad de flota:}{71}{paragraph*.165}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Protocolo de Validación Operacional y Criterio \acrshort {acr-geh}}{71}{subsubsection*.166}\protected@file@percent }
 \newlabel{subsubsec:mendoza_validacion_operacional}{{3.3.3}{71}{Protocolo de Validación Operacional y Criterio \acrshort {acr-geh}}{subsubsection*.166}{}}
-\@writefile{toc}{\contentsline {paragraph}{Validación de calidad del flujo (estadístico \acrshort {acr-geh}):}{71}{paragraph*.169}\protected@file@percent }
+\citation{SUMO2026_SUMO}
+\citation{ite_handbook}
+\@writefile{toc}{\contentsline {paragraph}{Validación de calidad del flujo (estadístico \acrshort {acr-geh}):}{72}{paragraph*.169}\protected@file@percent }
 \newlabel{eq:geh}{{3.7}{72}{Validación de calidad del flujo (estadístico \acrshort {acr-geh}):}{equation.170}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Arquitectura de Integración Entorno-Agentes}{72}{section.171}\protected@file@percent }
 \newlabel{sec:arquitectura_entorno_agentes}{{3.4}{72}{Arquitectura de Integración Entorno-Agentes}{section.171}{}}
@@ -68,52 +68,53 @@
 \newlabel{subsec:ciclo_episodico}{{3.4.1}{72}{Ciclo Episódico e Interfaz de Simulación}{subsection.172}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Instanciación del modelo Dec-POMDP}{73}{section.176}\protected@file@percent }
 \newlabel{sec:instanciacion_dec_pomdp}{{3.5}{73}{Instanciación del modelo Dec-POMDP}{section.176}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Espacio de Observaciones y Codificación Logarítmica}{74}{subsection.177}\protected@file@percent }
-\newlabel{subsec:observaciones_encoder}{{3.5.1}{74}{Espacio de Observaciones y Codificación Logarítmica}{subsection.177}{}}
-\newlabel{eq:observacion_local_metodologia}{{3.8}{74}{Espacio de Observaciones y Codificación Logarítmica}{equation.178}{}}
-\newlabel{eq:encoder_log_lineal}{{3.9}{74}{Espacio de Observaciones y Codificación Logarítmica}{equation.179}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen.}}{75}{figure.caption.180}\protected@file@percent }
-\newlabel{fig:codificacion_carriles}{{3.2}{75}{Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen}{figure.caption.180}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt  {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento.}}{76}{figure.caption.181}\protected@file@percent }
-\newlabel{fig:mezcla_log_lineal}{{3.3}{76}{Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento}{figure.caption.181}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{76}{subsection.182}\protected@file@percent }
-\newlabel{subsec:acciones_masking}{{3.5.2}{76}{Espacio de Acciones y Enmascaramiento Dinámico}{subsection.182}{}}
-\newlabel{eq:action_mask}{{3.10}{76}{Espacio de Acciones y Enmascaramiento Dinámico}{equation.183}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{77}{subsection.184}\protected@file@percent }
-\newlabel{subsec:recompensa_coordinacion}{{3.5.3}{77}{Función de Recompensa Compuesta y Coordinación Vecinal}{subsection.184}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Señales de recompensa disponibles en el entorno.}}{77}{table.caption.185}\protected@file@percent }
-\newlabel{tab:alternativas_recompensa}{{3.3}{77}{Señales de recompensa disponibles en el entorno}{table.caption.185}{}}
-\newlabel{eq:recompensa_local}{{3.11}{78}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.187}{}}
-\newlabel{eq:recompensa_vecinal}{{3.12}{78}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.189}{}}
-\newlabel{eq:recompensa_compuesta}{{3.13}{78}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.191}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{78}{section.192}\protected@file@percent }
-\newlabel{sec:implementacion_algoritmos}{{3.6}{78}{Implementación Algorítmica e Hiperparámetros}{section.192}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Observaciones y codificación logarítmico-lineal}{74}{subsection.177}\protected@file@percent }
+\newlabel{subsec:observaciones_encoder}{{3.5.1}{74}{Observaciones y codificación logarítmico-lineal}{subsection.177}{}}
+\newlabel{eq:observacion_local_metodologia}{{3.8}{74}{Observaciones y codificación logarítmico-lineal}{equation.178}{}}
+\newlabel{eq:encoder_mezcla_convexa}{{3.9}{74}{Observaciones y codificación logarítmico-lineal}{equation.179}{}}
+\newlabel{eq:encoder_log_lineal}{{3.10}{75}{Observaciones y codificación logarítmico-lineal}{equation.180}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen.}}{76}{figure.caption.181}\protected@file@percent }
+\newlabel{fig:codificacion_carriles}{{3.2}{76}{Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen}{figure.caption.181}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt  {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento.}}{76}{figure.caption.182}\protected@file@percent }
+\newlabel{fig:mezcla_log_lineal}{{3.3}{76}{Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento}{figure.caption.182}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Espacio de Acciones y Enmascaramiento Dinámico}{76}{subsection.183}\protected@file@percent }
+\newlabel{subsec:acciones_masking}{{3.5.2}{76}{Espacio de Acciones y Enmascaramiento Dinámico}{subsection.183}{}}
+\newlabel{eq:action_mask}{{3.11}{77}{Espacio de Acciones y Enmascaramiento Dinámico}{equation.184}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Función de Recompensa Compuesta y Coordinación Vecinal}{77}{subsection.185}\protected@file@percent }
+\newlabel{subsec:recompensa_coordinacion}{{3.5.3}{77}{Función de Recompensa Compuesta y Coordinación Vecinal}{subsection.185}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Señales de recompensa disponibles en el entorno.}}{78}{table.caption.186}\protected@file@percent }
+\newlabel{tab:alternativas_recompensa}{{3.3}{78}{Señales de recompensa disponibles en el entorno}{table.caption.186}{}}
 \citation{yu2022surprising}
+\newlabel{eq:recompensa_local}{{3.12}{79}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.188}{}}
+\newlabel{eq:recompensa_vecinal}{{3.13}{79}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.190}{}}
+\newlabel{eq:recompensa_compuesta}{{3.14}{79}{Función de Recompensa Compuesta y Coordinación Vecinal}{equation.192}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Implementación Algorítmica e Hiperparámetros}{79}{section.193}\protected@file@percent }
+\newlabel{sec:implementacion_algoritmos}{{3.6}{79}{Implementación Algorítmica e Hiperparámetros}{section.193}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{79}{subsection.194}\protected@file@percent }
+\newlabel{subsec:mecanismos_algoritmos}{{3.6.1}{79}{Mecanismos de Aprendizaje Independiente y Centralizado}{subsection.194}{}}
 \citation{kuba2021trust}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Mecanismos de Aprendizaje Independiente y Centralizado}{79}{subsection.193}\protected@file@percent }
-\newlabel{subsec:mecanismos_algoritmos}{{3.6.1}{79}{Mecanismos de Aprendizaje Independiente y Centralizado}{subsection.193}{}}
-\newlabel{eq:happo_ratio_post_metodologia}{{3.14}{79}{Mecanismos de Aprendizaje Independiente y Centralizado}{equation.194}{}}
+\newlabel{eq:happo_ratio_post_metodologia}{{3.15}{80}{Mecanismos de Aprendizaje Independiente y Centralizado}{equation.195}{}}
+\newlabel{eq:happo_factor_acumulado_metodologia}{{3.16}{80}{Mecanismos de Aprendizaje Independiente y Centralizado}{equation.196}{}}
 \citation{akiba2019optuna}
 \citation{li2020system}
-\newlabel{eq:happo_factor_acumulado_metodologia}{{3.15}{80}{Mecanismos de Aprendizaje Independiente y Centralizado}{equation.195}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.7}Búsqueda de Hiperparámetros (HPO)}{80}{section.196}\protected@file@percent }
-\newlabel{sec:experimentos_hiperparametros}{{3.7}{80}{Búsqueda de Hiperparámetros (HPO)}{section.196}{}}
-\newlabel{eq:incremento_espera_iteracion}{{3.16}{82}{Búsqueda de Hiperparámetros (HPO)}{equation.199}{}}
-\newlabel{eq:cvar_incrementos_espera}{{3.17}{83}{Búsqueda de Hiperparámetros (HPO)}{equation.200}{}}
-\newlabel{eq:objetivo_estable_espera}{{3.18}{83}{Búsqueda de Hiperparámetros (HPO)}{equation.201}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}Selección y congelamiento de las configuraciones finales}{83}{subsection.202}\protected@file@percent }
-\newlabel{subsec:seleccion_configuraciones_finales}{{3.7.1}{83}{Selección y congelamiento de las configuraciones finales}{subsection.202}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.2}Infraestructura de Cómputo y Orquestación}{84}{subsection.203}\protected@file@percent }
-\newlabel{subsec:infraestructura_hpc}{{3.7.2}{84}{Infraestructura de Cómputo y Orquestación}{subsection.203}{}}
-\newlabel{eq:puerto_ray}{{3.19}{84}{Infraestructura de Cómputo y Orquestación}{equation.204}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.8}Evaluación de Rendimiento}{85}{section.205}\protected@file@percent }
-\newlabel{sec:experimentos_evaluacion}{{3.8}{85}{Evaluación de Rendimiento}{section.205}{}}
-\newlabel{eq:diferencia_relativa_controlador}{{3.20}{85}{Evaluación de Rendimiento}{equation.206}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Métricas utilizadas para presentar y controlar la evaluación final.}}{87}{table.caption.207}\protected@file@percent }
-\newlabel{tab:metricas_evaluacion}{{3.4}{87}{Métricas utilizadas para presentar y controlar la evaluación final}{table.caption.207}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.7}Búsqueda de Hiperparámetros (HPO)}{81}{section.197}\protected@file@percent }
+\newlabel{sec:experimentos_hiperparametros}{{3.7}{81}{Búsqueda de Hiperparámetros (HPO)}{section.197}{}}
+\newlabel{eq:incremento_espera_iteracion}{{3.17}{83}{Búsqueda de Hiperparámetros (HPO)}{equation.200}{}}
+\newlabel{eq:cvar_incrementos_espera}{{3.18}{84}{Búsqueda de Hiperparámetros (HPO)}{equation.201}{}}
+\newlabel{eq:objetivo_estable_espera}{{3.19}{84}{Búsqueda de Hiperparámetros (HPO)}{equation.202}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}Selección y congelamiento de las configuraciones finales}{84}{subsection.203}\protected@file@percent }
+\newlabel{subsec:seleccion_configuraciones_finales}{{3.7.1}{84}{Selección y congelamiento de las configuraciones finales}{subsection.203}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.2}Infraestructura de Cómputo y Orquestación}{85}{subsection.204}\protected@file@percent }
+\newlabel{subsec:infraestructura_hpc}{{3.7.2}{85}{Infraestructura de Cómputo y Orquestación}{subsection.204}{}}
+\newlabel{eq:puerto_ray}{{3.20}{85}{Infraestructura de Cómputo y Orquestación}{equation.205}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}Evaluación de Rendimiento}{86}{section.206}\protected@file@percent }
+\newlabel{sec:experimentos_evaluacion}{{3.8}{86}{Evaluación de Rendimiento}{section.206}{}}
+\newlabel{eq:diferencia_relativa_controlador}{{3.21}{87}{Evaluación de Rendimiento}{equation.207}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.4}{\ignorespaces Métricas utilizadas para presentar y controlar la evaluación final.}}{88}{table.caption.208}\protected@file@percent }
+\newlabel{tab:metricas_evaluacion}{{3.4}{88}{Métricas utilizadas para presentar y controlar la evaluación final}{table.caption.208}{}}
 \@setckpt{5-metodologia}{
-\setcounter{page}{89}
-\setcounter{equation}{20}
+\setcounter{page}{90}
+\setcounter{equation}{21}
 \setcounter{enumi}{2}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}

@@ -24,6 +24,18 @@
 \newblock {\latintext \btxurlfont{https://www.marl-book.com/}}, Consultado en
   2025.
 
+\bibitem [{AHL16}]{abel2016approxabstraction}
+\btxnamefont {\btxlastnamefont {Abel}, David}, \btxnamefont
+  {D.\btxfnamespacelong Ellis \btxlastnamefont {Hershkowitz}}\btxandcomma {}
+  \btxandlong {}\ \btxnamefont {Michael\btxfnamespacelong L. \btxlastnamefont
+  {Littman}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase {Near optimal
+  behavior via approximate state abstraction}{Near Optimal Behavior via
+  Approximate State Abstraction}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 33rd International
+  Conference on Machine Learning}, \btxvolumelong {}~\btxvolumefont {48}
+  \btxofserieslong {}\ \btxtitlefont {Proceedings of Machine Learning
+  Research}, \btxpageslong {}\ 2915--2923. \btxpublisherfont {PMLR}, 2016.
+
 \bibitem [{AOS20}]{decpomdp-survey}
 \btxnamefont {\btxlastnamefont {Amato}, Christopher}, \btxnamefont
   {Frans\btxfnamespacelong A. \btxlastnamefont {Oliehoek}}\btxandcomma {}
@@ -197,6 +209,14 @@
   \btxlastnamefont {Courville}}\btxauthorcolon\ \btxtitlefont {Deep Learning}.
 \newblock \btxpublisherfont {MIT Press}, Cambridge, MA, 2016.
 \newblock {\latintext \btxurlfont{https://www.deeplearningbook.org/}}.
+
+\bibitem [{GR18}]{genders2018representations}
+\btxnamefont {\btxlastnamefont {Genders}, Wade} \btxandlong {}\ \btxnamefont
+  {Saiedeh \btxlastnamefont {Razavi}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Evaluating reinforcement learning state representations
+  for adaptive traffic signal control}{Evaluating Reinforcement Learning State
+  Representations for Adaptive Traffic Signal Control}}.
+\newblock \btxjournalfont {Procedia Computer Science}, 130:26--33, 2018.
 
 \bibitem [{HHA22}]{haddad2022cooperative}
 \btxnamefont {\btxlastnamefont {Haddad}, Tarek\btxfnamespacelong Amine},
@@ -579,6 +599,18 @@
 \newblock {\latintext
   \btxurlfont{https://www.jmlr.org/papers/v25/23-0488.html}}.
 
+\bibitem [{ZLFS24}]{heterolight2024}
+\btxnamefont {\btxlastnamefont {Zhang}, Yifeng}, \btxnamefont {Peizhuo
+  \btxlastnamefont {Li}}, \btxnamefont {Mingfeng \btxlastnamefont
+  {Fan}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Guillaume
+  \btxlastnamefont {Sartoretti}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {{HeteroLight}: A general and efficient learning approach
+  for heterogeneous traffic signal control}{{HeteroLight}: A General and
+  Efficient Learning Approach for Heterogeneous Traffic Signal Control}}.
+\newblock \Btxinlong {}\ \btxtitlefont {2024 IEEE/RSJ International Conference
+  on Intelligent Robots and Systems (IROS)}, \btxpageslong {}\ 1010--1017,
+  2024.
+
 \bibitem [{ZLYZ23}]{ctde_survey}
 \btxnamefont {\btxlastnamefont {Zhou}, Mengdi}, \btxnamefont {Xiaoteng
   \btxlastnamefont {Li}}, \btxnamefont {Yaodong \btxlastnamefont
@@ -588,5 +620,17 @@
   learning}{A Survey on Centralized Training for Decentralized Execution in
   Multi-Agent Reinforcement Learning}}.
 \newblock \btxjournalfont {Artificial Intelligence Review}, 2023.
+
+\bibitem [{ZWL24}]{matlight2024}
+\btxnamefont {\btxlastnamefont {Zhang}, Haipeng}, \btxnamefont {Zhiwen
+  \btxlastnamefont {Wang}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Na
+  \btxlastnamefont {Li}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase
+  {{MATLight}: Traffic signal coordinated control algorithm based on
+  heterogeneous-agent mirror learning with transformer}{{MATLight}: Traffic
+  Signal Coordinated Control Algorithm Based on Heterogeneous-Agent Mirror
+  Learning With Transformer}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 23rd International
+  Conference on Autonomous Agents and Multiagent Systems (AAMAS)},
+  \btxpageslong {}\ 2582--2584, 2024.
 
 \end{thebibliography}

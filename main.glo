@@ -62,18 +62,18 @@
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{8}
 \glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{13}
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{20}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {Rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{34}
+\glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{34}
+\glossaryentry{"\textit {Rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{34}
 \glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{35}
-\glossaryentry{"\textit {Replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{36}
+\glossaryentry{"\textit {Replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{Telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{Marco de trabajo ("\textit {framework})?\glossentry{framework}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{"\textit {Binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{Serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{76}
-\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{76}
-\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{76}
-\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{76}
+\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{77}
+\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{77}
+\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{77}

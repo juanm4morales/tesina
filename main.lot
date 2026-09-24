@@ -2,16 +2,16 @@
 \babel@toc {spanish}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Variables de tránsito macroscópicas y microscópicas}}{11}{table.caption.21}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Archivos de entrada y configuración empleados en una simulación de \acrshort {acr-sumo}.}}{22}{table.caption.40}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multi-agente cooperativos.}}{54}{table.caption.117}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Variables de tránsito macroscópicas y microscópicas}}{10}{table.caption.21}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Archivos de entrada y configuración empleados en una simulación de \acrshort {acr-sumo}.}}{21}{table.caption.40}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multiagente cooperativos.}}{53}{table.caption.117}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Especificación de las tecnologías y herramientas utilizadas en la investigación.}}{64}{table.caption.133}%
 \contentsline {table}{\numberline {3.2}{\ignorespaces Características verificadas de los escenarios sintéticos.}}{66}{table.caption.143}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Señales de recompensa disponibles en el entorno.}}{77}{table.caption.185}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Métricas utilizadas para presentar y controlar la evaluación final.}}{87}{table.caption.207}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Señales de recompensa disponibles en el entorno.}}{78}{table.caption.186}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Métricas utilizadas para presentar y controlar la evaluación final.}}{88}{table.caption.208}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario canónico v14 de la Ciudad de Mendoza bajo control de tiempo fijo.}}{90}{table.caption.217}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario canónico v14 de la Ciudad de Mendoza bajo control de tiempo fijo.}}{91}{table.caption.218}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {spanish}{}\relax 
