@@ -3,35 +3,35 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Evolución de la flota vehicular circulante estimada en Argentina entre 1990 y 2025, expresada en millones de vehículos. La línea y los marcadores representan los valores anuales disponibles; el área sombreada facilita la lectura de su magnitud. Elaboración propia a partir de reportes de \acrshort {acr-afac}.}}{1}{figure.caption.12}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Movimientos vehiculares, fases y cruces peatonales}}{8}{figure.caption.18}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{9}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Movimientos vehiculares, fases y cruces peatonales}}{7}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{8}{figure.caption.19}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{11}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{14}{figure.caption.29}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{16}{figure.caption.32}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Correspondencia entre la circulación real y su representación en SUMO}}{17}{figure.caption.35}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{13}{figure.caption.29}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{15}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Correspondencia entre la circulación real y su representación en SUMO}}{16}{figure.caption.35}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Interfaz sumo-gui durante una simulación microscópica}}{18}{figure.caption.36}%
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Esquema conceptual de carriles, línea de detención y conexiones de una intersección semaforizada bajo circulación por la derecha. La fase representada habilita movimientos directos opuestos del eje horizontal y retiene los movimientos conflictivos.}}{20}{figure.caption.38}%
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{24}{figure.caption.44}%
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Esquema de un método basado en valor}}{26}{figure.caption.48}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de un método basado en política}}{28}{figure.caption.51}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Esquema de un método basado en política}}{27}{figure.caption.51}%
 \contentsline {figure}{\numberline {2.12}{\ignorespaces Arquitectura actor-crítico aplicada al control semafórico}}{29}{figure.caption.55}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Operaciones de una unidad neuronal artificial: suma ponderada de las entradas, incorporación del sesgo y aplicación de una función de activación.}}{31}{figure.caption.58}%
-\contentsline {figure}{\numberline {2.14}{\ignorespaces Arquitectura conceptual de una red neuronal \textit {feedforward} con dos capas ocultas.}}{32}{figure.caption.61}%
-\contentsline {figure}{\numberline {2.15}{\ignorespaces Flujo conceptual de \acrshort {acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del blanco \gls {acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{35}{figure.caption.67}%
-\contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones}}{37}{figure.caption.72}%
-\contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{42}{figure.caption.87}%
-\contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{44}{figure.caption.91}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{46}{figure.caption.94}%
-\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{52}{figure.caption.115}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Operaciones de una unidad neuronal artificial: suma ponderada de las entradas, incorporación del sesgo y aplicación de una función de activación.}}{30}{figure.caption.58}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Arquitectura conceptual de una red neuronal \textit {feedforward} con dos capas ocultas.}}{31}{figure.caption.61}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Flujo conceptual de \acrshort {acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del blanco \gls {acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{34}{figure.caption.67}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones}}{36}{figure.caption.72}%
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{41}{figure.caption.87}%
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{43}{figure.caption.91}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de Entrenamiento Centralizado y Ejecución Descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{45}{figure.caption.94}%
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{62}{figure.caption.131}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen.}}{75}{figure.caption.180}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento.}}{76}{figure.caption.181}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen.}}{76}{figure.caption.181}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento.}}{76}{figure.caption.182}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{93}{figure.caption.222}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{94}{figure.caption.224}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{94}{figure.caption.223}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{95}{figure.caption.225}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
