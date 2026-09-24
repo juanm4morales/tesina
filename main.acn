@@ -1,4 +1,5 @@
 \glossaryentry{MARL?\glossentry{acr-marl}|setentrycounter[]{page}"\glsnumberformat}{i}
+\glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{i}
 \glossaryentry{MARL?\glossentry{acr-marl}|setentrycounter[]{page}"\glsnumberformat}{ii}
 \glossaryentry{AFAC?\glossentry{acr-afac}|setentrycounter[]{page}"\glsnumberformat}{vi}
 \glossaryentry{DQN?\glossentry{acr-dqn}|setentrycounter[]{page}"\glsnumberformat}{vii}
@@ -106,6 +107,7 @@
 \glossaryentry{IDQN?\glossentry{acr-idqn}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{3}
+\glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{IPPO?\glossentry{acr-ippo}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{IDQN?\glossentry{acr-idqn}|setentrycounter[]{page}"\glsnumberformat}{3}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{4}
@@ -120,7 +122,7 @@
 \glossaryentry{FHWA?\glossentry{acr-fhwa}|setentrycounter[]{page}"\glsnumberformat}{7}
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{13}
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{16}
-\glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{16}
+\glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{17}
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{17}
 \glossaryentry{DLR?\glossentry{acr-dlr}|setentrycounter[]{page}"\glsnumberformat}{17}
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{17}
@@ -219,8 +221,8 @@
 \glossaryentry{SUMO?\glossentry{acr-sumo}|setentrycounter[]{page}"\glsnumberformat}{41}
 \glossaryentry{MARL?\glossentry{acr-marl}|setentrycounter[]{page}"\glsnumberformat}{41}
 \glossaryentry{WoLF-PHC?\glossentry{acr-wolf-phc}|setentrycounter[]{page}"\glsnumberformat}{42}
+\glossaryentry{Dec-POMDP?\glossentry{acr-decpomdp}|setentrycounter[]{page}"\glsnumberformat}{42}
 \glossaryentry{WoLF-PHC?\glossentry{acr-wolf-phc}|setentrycounter[]{page}"\glsnumberformat}{43}
-\glossaryentry{Dec-POMDP?\glossentry{acr-decpomdp}|setentrycounter[]{page}"\glsnumberformat}{43}
 \glossaryentry{IL?\glossentry{acr-il}|setentrycounter[]{page}"\glsnumberformat}{43}
 \glossaryentry{CTDE?\glossentry{acr-ctde}|setentrycounter[]{page}"\glsnumberformat}{44}
 \glossaryentry{MADRL?\glossentry{acr-madrl}|setentrycounter[]{page}"\glsnumberformat}{44}
@@ -295,11 +297,11 @@
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{55}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{55}
 \glossaryentry{DQN?\glossentry{acr-dqn}|setentrycounter[]{page}"\glsnumberformat}{55}
-\glossaryentry{IDQN?\glossentry{acr-idqn}|setentrycounter[]{page}"\glsnumberformat}{55}
+\glossaryentry{IDQN?\glossentry{acr-idqn}|setentrycounter[]{page}"\glsnumberformat}{56}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{56}
 \glossaryentry{VF?\glossentry{acr-vf}|setentrycounter[]{page}"\glsnumberformat}{56}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{56}
-\glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{56}
+\glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{57}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{57}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{57}
 \glossaryentry{DQN?\glossentry{acr-dqn}|setentrycounter[]{page}"\glsnumberformat}{57}
@@ -408,7 +410,7 @@
 \glossaryentry{IPPO?\glossentry{acr-ippo}|setentrycounter[]{page}"\glsnumberformat}{79}
 \glossaryentry{MAPPO?\glossentry{acr-mappo}|setentrycounter[]{page}"\glsnumberformat}{79}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{79}
-\glossaryentry{CTDE?\glossentry{acr-ctde}|setentrycounter[]{page}"\glsnumberformat}{79}
+\glossaryentry{CTDE?\glossentry{acr-ctde}|setentrycounter[]{page}"\glsnumberformat}{80}
 \glossaryentry{GAE?\glossentry{acr-gae}|setentrycounter[]{page}"\glsnumberformat}{80}
 \glossaryentry{HAPPO?\glossentry{acr-happo}|setentrycounter[]{page}"\glsnumberformat}{80}
 \glossaryentry{PPO?\glossentry{acr-ppo}|setentrycounter[]{page}"\glsnumberformat}{80}
