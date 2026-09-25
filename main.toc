@@ -43,7 +43,7 @@
 \contentsline {subsubsection}{Coordinación y entrenamiento}{54}{subsubsection*.119}%
 \contentsline {subsubsection}{Representación del estado}{55}{subsubsection*.120}%
 \contentsline {subsubsection}{Heterogeneidad y equidad}{56}{subsubsection*.121}%
-\contentsline {subsubsection}{Posicionamiento del presente trabajo}{57}{subsubsection*.122}%
+\contentsline {subsubsection}{Posicionamiento del proyecto}{57}{subsubsection*.122}%
 \contentsline {chapter}{\numberline {3}Metodología y diseño experimental}{59}{chapter.123}%
 \contentsline {section}{\numberline {3.1}Enfoque y diseño de investigación}{59}{section.124}%
 \contentsline {section}{\numberline {3.2}Especificación del ecosistema tecnológico}{63}{section.132}%
