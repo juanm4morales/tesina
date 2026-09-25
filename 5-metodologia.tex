@@ -273,7 +273,7 @@ donde $V_{\mathrm{mod}}$ es el volumen horario modelado y $V_{\mathrm{obs}}$ el 
 \section{Arquitectura de integración entorno-agentes}
 \label{sec:arquitectura_entorno_agentes}
 
-El marco computacional \texttt{marlTLC} integra el simulador \acrshort{acr-sumo} con la librería Ray RLlib a través de la interfaz personalizada \texttt{SumoRllibEnv}. La especificación detallada de las clases y patrones de diseño orientados a objetos que sustentan esta arquitectura se expone en el Apéndice \ref{apendice:arquitectura_software}.
+El framework \texttt{marlTLC} integra el simulador \acrshort{acr-sumo} con la librería Ray RLlib a través de la interfaz personalizada \texttt{SumoRllibEnv}. La especificación detallada de las clases y patrones de diseño orientados a objetos que sustentan esta arquitectura se expone en el Apéndice \ref{apendice:arquitectura_software}.
 
 \subsection{Ciclo episódico e interfaz de simulación}
 \label{subsec:ciclo_episodico}
@@ -289,8 +289,8 @@ El ciclo de vida episódico opera bajo el siguiente protocolo de inicialización
     \item \textbf{Paso de decisión y transiciones semafóricas:} las decisiones se ejecutan en pasos de $\Delta t = 5.0\text{ s}$. Cuando un agente cambia la fase activa, el entorno intercala una fase amarilla de $\text{yellow\_time} = 4\text{ s}$ y exige un tiempo mínimo de verde de $\text{min\_green\_time} = 5\text{ s}$ antes de habilitar la nueva transición.
 \end{enumerate}
 
-\section[Instanciación del modelo Dec-POMDP]{Instanciación del modelo \acrshort{acr-decpomdp}}
-\label{sec:instanciacion_dec_pomdp}
+\section[Formulación del modelo Dec-POMDP]{Formulación del modelo \acrshort{acr-decpomdp}}
+\label{sec:formulacion_dec_pomdp}
 
 La interacción distribuida entre las intersecciones semaforizadas se formaliza como un juego parcialmente observable con observaciones locales. La notación de \acrshort{acr-decpomdp} del marco teórico se utiliza para describir la información disponible y la acción conjunta. En la implementación, cada controlador recibe una recompensa individual compuesta; la coordinación se induce mediante el componente vecinal de esa señal y el crítico centralizado durante el entrenamiento de MAPPO y HAPPO, no mediante la suma de todas las recompensas en un escalar global. La formulación difiere así del Dec-POMDP cooperativo canónico en la señal de retorno: el objetivo que optimiza cada actor es su retorno individual local-vecinal. Las comparaciones entre familias algorítmicas miden, en consecuencia, el desempeño de procedimientos completos de aprendizaje y coordinación, y no aíslan causalmente cada componente.
 

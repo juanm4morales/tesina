@@ -1,7 +1,7 @@
 PWD /home/juanm4/Documentos/tesina
 INPUT /usr/share/texmf-dist/web2c/texmf.cnf
-INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/juanm4/Documentos/tesina/main.tex
+INPUT /home/juanm4/.texlive/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT main.tex
 OUTPUT main.log
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
@@ -57,6 +57,9 @@ INPUT /usr/share/texmf-dist/tex/generic/babel/locale/es/babel-spanish.tex
 INPUT /usr/share/texmf-dist/tex/generic/babel/locale/es/babel-spanish.tex
 INPUT /usr/share/texmf-dist/tex/generic/babel/locale/es/babel-spanish.tex
 INPUT /usr/share/texmf-dist/tex/generic/babel/locale/es/babel-es.ini
+INPUT /home/juanm4/texmf/tex/generic/babel-spanish/spanish.ldf
+INPUT /home/juanm4/texmf/tex/generic/babel-spanish/spanish.ldf
+INPUT /home/juanm4/texmf/tex/generic/babel-spanish/spanish.ldf
 INPUT /usr/share/texmf-dist/tex/latex/base/fontenc.sty
 INPUT /usr/share/texmf-dist/tex/latex/base/fontenc.sty
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm
@@ -606,8 +609,6 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
-INPUT /usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./4-marco_teorico.tex
 INPUT ./4-marco_teorico.tex
 OUTPUT 4-marco_teorico.aux

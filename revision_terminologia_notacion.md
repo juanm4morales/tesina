@@ -57,7 +57,7 @@ primera aparición, y se explicarán en español:
 | *parameter sharing* | Uso de los mismos parámetros de aprendizaje por varios agentes. |
 | *feature pruning* | Eliminación selectiva de variables o características de una representación. |
 | *gridlock* | Bloqueo mutuo de la red que impide el avance de los vehículos. |
-| *spillback* | Propagación de una cola hacia tramos o intersecciones aguas arriba. |
+| *spillback* | Propagación de una cola hacia tramos o intersecciones precedentes. |
 | *teleport* | Mecanismo específico de SUMO para retirar y reinsertar un vehículo bloqueado. |
 | *epoch* | Recorrido completo de optimización sobre los datos recolectados durante una iteración. |
 | *minibatch* | Subconjunto de muestras utilizado para calcular una actualización de los parámetros. |

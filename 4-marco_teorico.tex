@@ -8,7 +8,7 @@ Primero se introducen los conceptos de ingeniería de tránsito y simulación (s
 
 La ingeniería de tránsito es una rama de la ingeniería de transporte, tradicionalmente vinculada con la ingeniería civil. Se ocupa de la planificación, el diseño geométrico y la operación segura y eficiente del tránsito en calles, carreteras y redes viales, de acuerdo con manuales especializados como el \textit{Traffic Engineering Handbook} \cite{ite_handbook} y con la literatura clásica del área \cite{calymayor}. En este trabajo, sus conceptos se abordan desde la perspectiva del modelado computacional y la gestión adaptativa. Permiten describir el funcionamiento físico de la red, caracterizar la oferta y la demanda de circulación e identificar las variables sobre las que puede intervenir el sistema de control.
 
-Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad física vial mediante la construcción de nuevas obras o el ensanche de calzadas \cite{ite_handbook}. Sin embargo, el crecimiento sostenido del parque automotor evidenció que la ampliación de la infraestructura no constituye una solución definitiva al problema de la congestión. En áreas urbanas consolidadas, además, modificar el trazado vial resulta costoso y geométricamente inviable \cite{calymayor}. Por ello, la práctica contemporánea complementa la infraestructura física con estrategias de control dinámico del tránsito, priorizando la optimización de los recursos existentes mediante dispositivos de control semafórico.
+Históricamente, la práctica de la ingeniería de tránsito puso un fuerte énfasis en proveer y ampliar la capacidad física vial mediante la construcción de nuevas obras o el ensanche de calzadas \cite{ite_handbook}. Sin embargo, el crecimiento sostenido del parque automotor evidenció que la ampliación de la infraestructura no constituye una solución definitiva al problema de la congestión. En áreas urbanas consolidadas, además, modificar el trazado vial resulta costoso y estructuralmente inviable \cite{calymayor}. Por ello, la práctica contemporánea complementa la infraestructura física con estrategias de control dinámico del tránsito, priorizando la optimización de los recursos existentes mediante dispositivos de control semafórico.
 
 La operación de una red vial puede analizarse a partir de la relación entre la demanda vehicular y la capacidad disponible. La demanda vehicular ($D$) corresponde a la cantidad de vehículos que requieren desplazarse por un determinado sistema vial en un lapso dado, mientras que la oferta vial o capacidad ($c$) representa la cantidad máxima de vehículos que pueden circular por dicho espacio físico bajo determinadas condiciones de operación \cite{calymayor}. Cuando la demanda se aproxima a la capacidad, el tránsito se vuelve inestable; cuando la supera ($D > c$), se presentan condiciones de sobresaturación o flujo forzado, caracterizadas por detenciones frecuentes y grandes demoras. En este sentido, la congestión no se entiende solo como una percepción general de mal funcionamiento, sino como un fenómeno con manifestaciones físicas medibles: demoras, colas y detenciones \cite{fernandez}.
 
@@ -136,19 +136,19 @@ Para modelar y optimizar la operación de una red vial, es necesario caracteriza
 
 A nivel macroscópico, la corriente de tránsito se representa mediante variables agregadas como la tasa de flujo, la densidad y los promedios de velocidad. A nivel microscópico, se analizan magnitudes propias de vehículos individuales e interacciones entre pares consecutivos, como la velocidad puntual, el intervalo y el espaciamiento \cite{calymayor}. Esta separación entre escalas es fundamental para el modelado computacional: las variables macroscópicas resumen el estado operacional de los accesos de la red, mientras que las variables microscópicas describen el comportamiento de cada vehículo dentro del simulador \cite{fernandez}. La correspondencia y las relaciones de conversión entre las variables de ambas escalas se resumen en la tabla \ref{tab:variables_transito}.
 
-En el nivel macroscópico, las variables principales de la corriente de tránsito son:
+En el nivel macroscópico, las variables principales de la corriente de tránsito son \cite{calymayor}:
 \begin{itemize}
-    \item \textbf{Flujo o tasa de flujo ($q$):} Representa la cantidad de vehículos que atraviesan una sección transversal de la vía por unidad de tiempo. Si el período de observación es menor a una hora, se proyecta como una tasa horaria equivalente en vehículos por hora (veh/h), calculada como $q = N/T$, donde $N$ es el número de vehículos observados y $T$ es la duración del intervalo de medición expresado en horas \cite{calymayor}.
-    \item \textbf{Densidad o concentración ($k$):} Indica el número de vehículos que ocupan simultáneamente una longitud específica de vía, expresada en vehículos por kilómetro (veh/km), calculada como $k = N/d$, donde $d$ representa la longitud del tramo de vía analizado \cite{calymayor}. En la práctica, se suele estimar indirectamente a través del porcentaje de ocupación temporal registrado por detectores inductivos \cite{ite_handbook}.
-    \item \textbf{Velocidad media espacial ($v_s$):} Es la velocidad media de los vehículos que ocupan un tramo de vía en un instante determinado. Corresponde al promedio armónico de las velocidades puntuales de los vehículos individuales y representa la magnitud de velocidad consistente con la dinámica del flujo espacial \cite{calymayor}.
-    \item \textbf{Velocidad media temporal ($v_t$):} Representa el promedio aritmético de las velocidades de los vehículos que cruzan una sección transversal fija de la vía durante un período de tiempo determinado \cite{calymayor}.
+    \item \textbf{Flujo o tasa de flujo ($q$):} Representa la cantidad de vehículos que atraviesan una sección transversal de la vía por unidad de tiempo. Si el período de observación es menor a una hora, se proyecta como una tasa horaria equivalente en vehículos por hora (veh/h), calculada como $q = N/T$, donde $N$ es el número de vehículos observados y $T$ es la duración del intervalo de medición expresado en horas.
+    \item \textbf{Densidad o concentración ($k$):} Indica el número de vehículos que ocupan simultáneamente una longitud específica de vía, expresada en vehículos por kilómetro (veh/km), calculada como $k = N/d$, donde $d$ representa la longitud del tramo de vía analizado. En la práctica, se suele estimar indirectamente a través del porcentaje de ocupación temporal registrado por detectores inductivos \cite{ite_handbook}.
+    \item \textbf{Velocidad media espacial ($v_s$):} Es la velocidad media de los vehículos que ocupan un tramo de vía en un instante determinado. Corresponde al promedio armónico de las velocidades puntuales de los vehículos individuales y representa la magnitud de velocidad consistente con la dinámica del flujo espacial.
+    \item \textbf{Velocidad media temporal ($v_t$):} Representa el promedio aritmético de las velocidades de los vehículos que cruzan una sección transversal fija de la vía durante un período de tiempo determinado.
 \end{itemize}
 
-En el nivel microscópico, las variables asociadas describen el movimiento del vehículo individual y la separación entre vehículos consecutivos (véase la figura \ref{fig:variables_microscopicas}):
+En el nivel microscópico, las variables asociadas son \cite{calymayor}:
 \begin{itemize}
     \item \textbf{Velocidad puntual ($v_i$):} Es la velocidad instantánea a la que un vehículo individual ($i$) atraviesa una sección transversal específica de la vía.
-    \item \textbf{Intervalo temporal ($h$):} Es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos, por ejemplo, los paragolpes delanteros \cite{calymayor}. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
-    \item \textbf{Espaciamiento simple ($s$):} Es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante de tiempo \cite{calymayor}. El espaciamiento promedio en metros ($s_{\text{prom}}$) se relaciona de forma inversa con la densidad de la corriente de tránsito como $s_{\text{prom}} = 1000/k$.
+    \item \textbf{Intervalo temporal ($h$):} Es el tiempo transcurrido entre el paso de dos vehículos consecutivos por una sección fija de la calzada, medido respecto a puntos homólogos, por ejemplo, los paragolpes delanteros. El intervalo promedio en segundos ($h_{\text{prom}}$) se relaciona con la tasa de flujo como $h_{\text{prom}} = 3600/q$.
+    \item \textbf{Espaciamiento simple ($s$):} Es la distancia física entre puntos homólogos de dos vehículos consecutivos en un instante de tiempo. El espaciamiento promedio en metros ($s_{\text{prom}}$) se relaciona de forma inversa con la densidad de la corriente de tránsito como $s_{\text{prom}} = 1000/k$.
 \end{itemize}
 
 La figura \ref{fig:variables_microscopicas} complementa estas definiciones con las magnitudes que se miden en el espacio y en el tiempo. El largo del vehículo $l$ y la separación libre $e$ son distancias, expresadas en metros (m); el espaciamiento $s$ es la distancia entre puntos homólogos de vehículos consecutivos, también en m. El avance temporal $\beta$ es el tiempo asociado al recorrido del largo del vehículo a la velocidad $v$, la brecha temporal $g$ es el tiempo entre el paso del vehículo precedente y el siguiente respecto de puntos de referencia distintos, y el intervalo temporal $h$ es el tiempo entre pasos de puntos homólogos; $\beta$, $g$ y $h$ se expresan en segundos (s). Las cotas inferiores representan relaciones espaciales y las superiores relaciones temporales; no son dos vehículos distintos ni dos mediciones independientes. En este trabajo, estas magnitudes sirven para vincular la descripción individual de los vehículos con las variables agregadas del flujo.
@@ -243,13 +243,13 @@ donde $\sigma_s^2$ representa la varianza de la distribución de las velocidades
 La interrupción del flujo causada por semáforos o saturación genera efectos adversos que los sistemas de control buscan mitigar. Siguiendo la terminología de la ingeniería de tránsito, las principales manifestaciones medibles de esta ineficiencia son las demoras, las colas y las detenciones \cite{fernandez}:
 \begin{itemize}
     \item \textbf{Demoras:} Representan el tiempo adicional que un vehículo debe invertir para atravesar una intersección respecto del tiempo que le tomaría circular a velocidad de flujo libre. En intersecciones semaforizadas, una parte de esa demora aparece por la espera normal durante la luz roja. Otras demoras se producen cuando las llegadas de vehículos varían, cuando la demanda se acerca o supera la capacidad de la intersección, o cuando quedan colas sin disiparse al finalizar el verde, de modo que algunos vehículos deben esperar más de un ciclo para cruzar.
-    \item \textbf{Colas:} Corresponden al número de vehículos acumulados detrás de una línea de detención a la espera de ser servidos. Esta medida espacial es especialmente relevante porque, cuando la cola supera la longitud del arco de aproximación, puede bloquear la intersección aguas arriba y propagar la congestión al resto de la red.
+    \item \textbf{Colas:} Corresponden al número de vehículos acumulados detrás de una línea de detención a la espera de traspasarla. Esta medida espacial es especialmente relevante porque, cuando la cola supera la longitud del arco de aproximación, puede bloquear la intersección precedente y propagar la congestión al resto de la red.
     \item \textbf{Detenciones:} Cuantifican la cantidad de veces que un vehículo debe reducir su velocidad hasta cero durante el recorrido. Una alta frecuencia de detenciones deteriora la continuidad operativa del flujo y suele asociarse con mayores procesos de aceleración y desaceleración.
 \end{itemize}
 
 Estas magnitudes permiten describir el desempeño operacional de una intersección y de la red. En la formulación computacional, también pueden utilizarse para construir observaciones, señales de recompensa o criterios de evaluación del controlador.
 
-\subsubsection{Descripción probabilística del flujo y pelotones vehiculares}
+\subsubsection{Descripción probabilística del flujo y agrupamientos vehiculares}
 
 En el modelado de tránsito, las llegadas vehiculares no siempre pueden representarse adecuadamente como una secuencia determinista y constante. Para flujos vehiculares bajos y medios, y cuando las llegadas no están fuertemente condicionadas por semáforos previos, es habitual aproximar el número de vehículos que llega a una sección durante un intervalo de tiempo mediante un proceso de Poisson \cite{calymayor}.
 
@@ -265,9 +265,9 @@ donde $X \in \mathbb{N}_0$ es la variable aleatoria discreta que representa el n
 \end{equation}
 donde $h$ es el intervalo temporal en segundos, $q$ es el flujo en veh/h, y $t$ es el umbral de tiempo analizado. La ecuación \eqref{eq:intervalo_exponencial} expresa la probabilidad de que el intervalo supere dicho umbral.
 
-Esta representación probabilística supone independencia entre arribos sucesivos y resulta adecuada para flujos bajos o moderados en condiciones de flujo libre, sin influencia de semáforos cercanos aguas arriba \cite{calymayor}. El supuesto pierde validez en condiciones de congestión o en redes urbanas semaforizadas. En estos casos, los semáforos interrumpen el \gls{flujo} y agrupan los vehículos en pelotones (\textit{platoons}), lo que introduce dependencia espacio-temporal entre arribos consecutivos. La figura \ref{fig:distribucion_intervalos} compara conceptualmente los intervalos temporales resultantes bajo ambas condiciones. En ella, $h_{\min}$ representa un umbral mínimo conceptual para el intervalo mostrado en la curva con pelotones; no es una estimación obtenida de datos de este trabajo. Las curvas y ese umbral tienen, por lo tanto, función ilustrativa y no constituyen una distribución empírica particular.
+Esta representación probabilística supone independencia entre arribos sucesivos y resulta adecuada para flujos bajos o moderados en condiciones de flujo libre, sin influencia de semáforos cercanos en intersecciones precedentes \cite{calymayor}. El supuesto pierde validez en condiciones de congestión o en redes urbanas semaforizadas. En estos casos, los semáforos interrumpen el \gls{flujo} agrupando los vehículos, lo que introduce dependencia espacio-temporal entre arribos consecutivos. La figura \ref{fig:distribucion_intervalos} compara conceptualmente los intervalos temporales resultantes bajo ambas condiciones. En ella, $h_{\min}$ representa un umbral mínimo conceptual para el intervalo mostrado en la curva con agrupamientos vehiculares; no es una estimación obtenida de datos de este trabajo. Las curvas y ese umbral tienen, por lo tanto, función ilustrativa y no constituyen una distribución empírica particular.
 
-En este trabajo, la limitación de esos modelos analíticos motiva el uso de simulación microscópica para estudiar el control semafórico bajo condiciones variables. En \acrshort{acr-sumo}, la formación, dispersión e interacción de los pelotones emergen de la dinámica simulada de los vehículos y de sus cambios de carril. El uso de distintos perfiles de demanda y semillas de simulación permite evaluar el comportamiento del controlador frente a variaciones en las condiciones de operación.
+En este trabajo, la limitación de esos modelos analíticos motiva el uso de simulación microscópica para estudiar el control semafórico bajo condiciones variables. En \acrshort{acr-sumo}, la formación, dispersión e interacción de los agrupamientos vehiculares emergen de la dinámica simulada de los vehículos y de sus cambios de carril. El uso de distintos perfiles de demanda y semillas de simulación permite evaluar el comportamiento del controlador frente a variaciones en las condiciones de operación.
 
 \begin{figure}[H]
 \centering
@@ -290,23 +290,23 @@ En este trabajo, la limitación de esos modelos analíticos motiva el uso de sim
     {exp(-x)};
   \addlegendentry{Exponencial negativa (flujo libre)}
 
-  %% Curva 2: Gamma desplazada (flujo con pelotones)
+  %% Curva 2: Gamma desplazada (flujo con agrupamientos vehiculares)
   \addplot[color=colConflicto, dashed, domain=0:0.799, samples=5]
     {0};
   \addplot[color=colConflicto, dashed, domain=0.8:5.5, samples=120]
     {4*(x-0.8)*exp(-2*(x-0.8))};
-  \addlegendentry{Flujo con pelotones (red coordinada)}
+  \addlegendentry{Flujo con agrupamientos vehiculares (red coordinada)}
 
   %% Línea vertical en h_min
   \draw[dotted, thick, gray] (axis cs:0.8,0) -- (axis cs:0.8,0.55)
     node[above, font=\footnotesize, black] {$h_{\min}$};
 \end{axis}
 \end{tikzpicture}
-\caption{Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}
+\caption{Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de agrupamientos vehiculares. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}
 \label{fig:distribucion_intervalos}
 \end{figure}
 
-La figura \ref{fig:distribucion_intervalos} se interpreta comparando la forma de ambas curvas. El eje horizontal representa el intervalo $h$ entre vehículos y el eje vertical la densidad de probabilidad $f(h)$, es decir, la concentración relativa de intervalos alrededor de cada valor. En el modelo exponencial, la densidad disminuye desde el origen y asigna mayor frecuencia relativa a los intervalos breves. En la representación con pelotones, la densidad comienza después de $h_{\min}$ y alcanza un máximo alejado del origen, lo que ilustra que el arribo de un vehículo queda condicionado por la separación y la coordinación con los que lo preceden. La comparación permite reconocer por qué el supuesto de arribos independientes puede resultar insuficiente en una red semaforizada.
+La figura \ref{fig:distribucion_intervalos} se interpreta comparando la forma de ambas curvas. El eje horizontal representa el intervalo $h$ entre vehículos y el eje vertical la densidad de probabilidad $f(h)$, es decir, la concentración relativa de intervalos alrededor de cada valor. En el modelo exponencial, la densidad disminuye desde el origen y asigna mayor frecuencia relativa a los intervalos breves. En la representación con agrupamientos vehiculares, la densidad comienza después de $h_{\min}$ y alcanza un máximo alejado del origen, lo que ilustra que el arribo de un vehículo queda condicionado por la separación y la coordinación con los que lo preceden. La comparación permite reconocer por qué el supuesto de arribos independientes puede resultar insuficiente en una red semaforizada.
 
 \subsection{Sistemas de control de tránsito}
 
@@ -372,7 +372,7 @@ Incluso en los esquemas accionados, la operación permanece sujeta a parámetros
 
 \subsection{Simulación de tránsito}
 
-Debido a la densidad y complejidad de las redes urbanas, la sincronización y optimización de los tiempos semafóricos requiere representar la evolución del tránsito bajo condiciones variables. Los modelos analíticos y agregados resultan útiles bajo determinados supuestos, pero pueden ser limitados para describir la formación de colas y las interacciones locales durante la operación dinámica de una red \cite{ite_handbook}. De acuerdo con la taxonomía clásica \cite{fernandez}, los modelos de tránsito pueden organizarse en tres niveles de resolución. Los modelos macroscópicos describen el tránsito de manera agregada mediante variables como flujo, densidad y velocidad; los mesoscópicos representan entidades intermedias, como grupos o pelotones de vehículos; y los microscópicos modelan individualmente los vehículos, sus rutas y su evolución dentro de la red. Para el presente trabajo resulta especialmente relevante este último nivel, porque permite estudiar cómo las decisiones semafóricas afectan paso a paso la formación de colas, las detenciones y la interacción local entre vehículos.
+Debido a la densidad y complejidad de las redes urbanas, la sincronización y optimización de los tiempos semafóricos requiere representar la evolución del tránsito bajo condiciones variables. Los modelos analíticos y agregados resultan útiles bajo determinados supuestos, pero pueden ser limitados para describir la formación de colas y las interacciones locales durante la operación dinámica de una red \cite{ite_handbook}. De acuerdo con la taxonomía clásica \cite{fernandez}, los modelos de tránsito pueden organizarse en tres niveles de resolución. Los modelos macroscópicos describen el tránsito de manera agregada mediante variables como flujo, densidad y velocidad; los mesoscópicos representan entidades intermedias, como agrupamientos vehiculares; y los microscópicos modelan individualmente los vehículos, sus rutas y su evolución dentro de la red. Para el presente trabajo resulta especialmente relevante este último nivel, porque permite estudiar cómo las decisiones semafóricas afectan paso a paso la formación de colas, las detenciones y la interacción local entre vehículos.
 
 La simulación de tránsito constituye una representación abstracta del fenómeno real. Su objetivo no es reproducir visualmente una escena particular, sino modelar los procesos que determinan la evolución de la circulación mediante reglas de comportamiento y variables observables. La calidad de los resultados depende de la representación de la red, la demanda, la flota, los modelos de comportamiento y las reglas de control. Por ello, la simulación debe entenderse como un entorno experimental sujeto a supuestos y parámetros, cuyos resultados requieren una evaluación operacional acorde con el objetivo del estudio. La correspondencia entre el fenómeno y su representación se resume en la figura \ref{fig:sim_vs_real}: el tránsito real constituye la referencia y el simulador representa sus vehículos, red y reglas dinámicas para permitir experimentos controlados.
 
@@ -406,15 +406,12 @@ Esta granularidad vuelve a la simulación microscópica especialmente adecuada p
 
 La naturaleza microscópica de la simulación no se reduce a representar visualmente vehículos. Cada unidad modifica su velocidad y posición de acuerdo con modelos de seguimiento vehicular y cambio de carril, los parámetros de su tipo de vehículo y las restricciones de la red. De este modo, variables como la aceleración, la separación entre vehículos, la velocidad deseada y la disponibilidad de carriles intervienen en la formación y dispersión de colas. Los valores concretos utilizados para la flota y para estos parámetros pertenecen a la configuración experimental y se detallan en la metodología \cite{SUMO2026_SUMO}.
 
-En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. Para el esquema conceptual de la figura \ref{fig:sumo_intersection_elements}, que adopta circulación por la derecha, se distinguen carriles, líneas de detención, conexiones entre carriles y estados de control semafórico \cite{SUMO2026_SUMO}. La fase representada es solo una ilustración de cómo pueden habilitarse movimientos directos opuestos; la ausencia visual de los estados $g$ e $y$ no implica que no existan en la lógica de \acrshort{acr-sumo} ni que se excluyan de otras fases o transiciones:
+En este contexto, el simulador de tránsito constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. La figura \ref{fig:sumo_intersection_elements} esquematiza la representación microscópica de una intersección con circulación por la derecha \cite{SUMO2026_SUMO}, en la que se distinguen carriles, líneas de detención y conexiones:
 \begin{itemize}
-    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} Los carriles entrantes conducen el flujo vehicular hacia la intersección, mientras que los carriles salientes reciben el flujo descargado tras cruzar el nodo.
-    \item \textbf{Línea de detención (\textit{stop line}):} Referencia operacional próxima al final del carril entrante, delante de la cual se detienen los vehículos cuando el movimiento no está habilitado.
-    \item \textbf{Conexiones (\textit{connections} o \textit{links}):} Relaciones que conectan un carril entrante con un carril saliente y definen los movimientos posibles a través de la intersección. Cuando están controladas por un semáforo, se asocian con un índice de enlace y con un estado de señal. En \acrshort{acr-sumo}, $G$ representa verde con prioridad, $g$ verde sin prioridad y sujeto a cesión, $y$ amarillo y $r$ rojo. La figura muestra únicamente una fase conceptual en la que los movimientos directos opuestos del eje horizontal están habilitados y los movimientos transversales o conflictivos permanecen retenidos.
+    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} Los carriles entrantes conducen el flujo vehicular hacia la intersección y los salientes reciben la descarga tras cruzar el nodo, indicados mediante flechas que señalan el sentido de circulación.
+    \item \textbf{Línea de detención (\textit{stop line}):} Líneas blancas continuas próximas al final de cada carril entrante, delante de las cuales se detienen los vehículos cuando la fase no habilita su movimiento.
+    \item \textbf{Conexiones (\textit{links}):} Relaciones que conectan un carril entrante con uno saliente a través del área de cruce. En \acrshort{acr-sumo}, cada enlace controlado se asocia con un índice y con un estado de señal ($G$ para verde prioritario, $g$ para verde con cesión de paso, $y$ para amarillo y $r$ para rojo). En la fase conceptual ilustrada, las flechas verdes corresponden a los movimientos directos opuestos habilitados del eje horizontal, mientras que las flechas rojas señalan las conexiones retenidas.
 \end{itemize}
-Esta representación es compatible con la formulación algorítmica del problema, donde una fase define un conjunto de estados sobre los enlaces controlados. Una acción válida debe seleccionar una fase compatible con la geometría de la intersección y respetar las transiciones y restricciones de seguridad definidas por el entorno.
-
-La figura \ref{fig:sumo_intersection_elements} ilustra esos carriles, líneas de detención y conexiones en una fase conceptual; su función es relacionar la geometría de la red con las acciones semafóricas del modelo, no representar un programa experimental completo.
 
 \begin{figure}[H]
     \centering
@@ -504,7 +501,7 @@ La figura \ref{fig:sumo_intersection_elements} ilustra esos carriles, líneas de
     \label{fig:sumo_intersection_elements}
 \end{figure}
 
-La figura \ref{fig:sumo_intersection_elements} se lee desde los carriles de aproximación hacia el centro de la intersección. Las flechas blancas indican el sentido de circulación de $L_{\text{in}}$ y $L_{\text{out}}$, y las líneas blancas continuas situadas antes del área de cruce representan las líneas de detención. Dentro de la intersección, las flechas verdes corresponden a conexiones habilitadas con prioridad y las rojas a conexiones retenidas. Por consiguiente, una \gls{fase} no modifica la geometría ni el sentido de los carriles: determina qué conexiones pueden utilizarse durante ese intervalo de control.
+Por consiguiente, una \gls{fase} no modifica la geometría ni el sentido de los carriles, sino que determina qué conexiones pueden utilizarse durante cada intervalo de control. Esta representación resulta directamente compatible con la formulación algorítmica del problema, donde una acción válida debe seleccionar una fase compatible con la geometría de la intersección y respetar las transiciones y restricciones de seguridad definidas por el entorno.
 
 \subsubsection[Componentes y configuración de SUMO]{Componentes y configuración de \acrshort{acr-sumo}}
 
@@ -605,7 +602,7 @@ La dinámica del entorno queda definida por la función $p(s', r \mid s, a)$, qu
     p(s', r \mid s, a) \doteq \Pr\{S_{t+1} = s', R_{t+1} = r \mid S_t = s, A_t = a\}
     \label{eq:dinamica_mdp}
 \end{equation}
-En esta formulación, $S_t \in \mathcal{S}$ y $A_t \in \mathcal{A}$ denotan el estado y la acción en el instante $t$, mientras que $S_{t+1} \in \mathcal{S}$ y $R_{t+1} \in \mathbb{R}$ representan el estado sucesor y la recompensa escalar devueltos por el entorno. Si bien conceptualmente el estado compendia toda la información necesaria para determinar la dinámica, en el control semafórico el agente suele disponer de observaciones locales de tránsito que constituyen una representación parcial de dicho estado.
+En esta formulación, $S_t \in \mathcal{S}$ y $A_t \in \mathcal{A}$ denotan el estado y la acción en el instante $t$, mientras que $S_{t+1} \in \mathcal{S}$ y $R_{t+1} \in \mathbb{R}$ representan el estado sucesor y la recompensa escalar devueltos por el entorno. Si bien conceptualmente el estado comprende toda la información necesaria para determinar la dinámica, en el control semafórico el agente suele disponer de observaciones locales de tránsito que constituyen una representación parcial de dicho estado.
 
 El proceso satisface la propiedad de Markov si la distribución condicional del próximo estado y recompensa depende exclusivamente del estado y la acción presentes, resultando condicionalmente independiente del historial de transiciones previas \cite{suttonRL}.
 
@@ -855,7 +852,7 @@ La figura \ref{fig:red_feedforward} esquematiza esta composición con dos capas 
     \label{fig:red_feedforward}
 \end{figure}
 
-El Teorema de Aproximación Universal es un resultado de existencia: bajo condiciones apropiadas, una red de dos capas parametrizadas, con una capa oculta suficientemente ancha, puede aproximar una función continua sobre un dominio compacto con una precisión arbitraria. El teorema no proporciona por sí mismo un procedimiento para encontrar los parámetros, no garantiza un entrenamiento eficiente, una buena generalización ni un buen desempeño práctico sobre datos no observados. La profundidad puede ofrecer representaciones jerárquicas y una mayor eficiencia representacional para ciertas familias de funciones, pero agregar capas o neuronas no garantiza por sí solo un menor error de prueba \cite{bishop2024deep}.
+El Teorema de Aproximación Universal es un resultado de existencia: bajo condiciones apropiadas, una red de dos capas parametrizadas, con una capa oculta suficientemente ancha, puede aproximar una función continua sobre un dominio compacto con una precisión arbitraria. El teorema no proporciona por sí mismo un procedimiento para encontrar los parámetros, no garantiza un entrenamiento eficiente, una buena generalización ni un buen desempeño práctico sobre datos no observados. La profundidad puede ofrecer representaciones jerárquicas y una mayor eficiencia expresiva para ciertas familias de funciones, pero agregar capas o neuronas no garantiza por sí solo un menor error de prueba \cite{bishop2024deep}.
 
 \subsubsection{El proceso de optimización}
 
@@ -1157,39 +1154,45 @@ La figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente 
         mixer/.style={circle, draw=black!90, thick, inner sep=0pt, minimum size=0.45cm}
     ]
         % Entorno
-        \node[bloqueEntorno] (entorno) at (0, 0) {\textbf{Entorno (Simulador \acrshort{acr-sumo})}\\La acción conjunta $\mathbf{a}$ modifica el estado global $s$};
+        \node[bloqueEntorno] (entorno) at (0, 0) {\textbf{Entorno (Simulador \acrshort{acr-sumo})}\\La acci\'{o}n conjunta $\mathbf{a}$ modifica el estado global $s$};
 
-        % Agentes (Apilados verticalmente de forma compacta)
-        \node[bloqueAgn] (agenten) at (0, 1.8) {\textbf{Agente $n$}\\$\pi_n(a_n \mid o_n)$};
-        \node[font=\large, text=black!70] (dots) at (0, 2.8) {$\vdots$};
-        \node[bloqueAg2] (agente2) at (0, 3.7) {\textbf{Agente 2}\\$\pi_2(a_2 \mid o_2)$};
-        \node[bloqueAg1] (agente1) at (0, 5.2) {\textbf{Agente 1}\\$\pi_1(a_1 \mid o_1)$};
-        
-        % OBSERVACIONES (Salen del entorno y suben por la izquierda)
-        \draw[flecha] (-4.8, 0.55) |- (agente1.west);
-        \node[etiquetaSinFondo] at (-4.8, 4.3) {$o_1, r_1$};
-        
-        \draw[flecha] (-3.4, 0.55) |- (agente2.west);
-        \node[etiquetaSinFondo] at (-3.4, 2.9) {$o_2, r_2$};
+        % Agentes apilados verticalmente con mayor respiro
+        \node[bloqueAg1] (agente1) at (0, 5.6) {\textbf{Agente 1}\\$\pi_1(a_1 \mid o_1)$};
+        \node[bloqueAg2] (agente2) at (0, 3.9) {\textbf{Agente 2}\\$\pi_2(a_2 \mid o_2)$};
+        \node[font=\large, text=black!70] (dots) at (0, 2.85) {$\vdots$};
+        \node[bloqueAgn] (agenten) at (0, 1.9) {\textbf{Agente $n$}\\$\pi_n(a_n \mid o_n)$};
 
-        \draw[flecha] (-2.0, 0.55) |- (agenten.west);
-        \node[etiquetaSinFondo] at (-2.0, 1.2) {$o_n, r_n$};
+        % Nodo mezclador de acciones
+        \node[mixer] (mix) at (4.2, 3.9) {$\times$};
 
-        % ACCIONES (Salen de los agentes por la derecha hacia el mezclador)
-        \node[mixer] (mix) at (3.8, 3.7) {$\times$};
-        
+        % Observaciones: salidas ancladas a la parte superior del entorno
+        \coordinate (obs1base) at ($(entorno.north west)+(0.55,0)$);
+        \coordinate (obs2base) at ($(entorno.north west)+(1.95,0)$);
+        \coordinate (obsnbase) at ($(entorno.north west)+(3.35,0)$);
+
+        \draw[flecha] (obs1base) |- (agente1.west);
+        \draw[flecha] (obs2base) |- (agente2.west);
+        \draw[flecha] (obsnbase) |- (agenten.west);
+
+        % Etiquetas de observaciones a la izquierda de cada l\'{i}nea vertical
+        \path let \p1=(agente1.west), \p2=(obs1base) in node[etiquetaSinFondo, anchor=east] at ($(\x2,{(\y1+\y2)/2})+(-0.18,0)$) {$o_1, r_1$};
+        \path let \p1=(agente2.west), \p2=(obs2base) in node[etiquetaSinFondo, anchor=east] at ($(\x2,{(\y1+\y2)/2})+(-0.18,0)$) {$o_2, r_2$};
+        \path let \p1=(agenten.west), \p2=(obsnbase) in node[etiquetaSinFondo, anchor=east] at ($(\x2,{(\y1+\y2)/2})+(-0.18,0)$) {$o_n, r_n$};
+
+        % Acciones desde cada agente hacia el mezclador
         \draw[flecha] (agente1.east) -| (mix.north);
-        \node[etiquetaSinFondo] at (2.6, 5.2) {acción $a_1$};
-
         \draw[flecha] (agente2.east) -- (mix.west);
-        \node[etiquetaSinFondo] at (2.6, 3.7) {acción $a_2$};
-
         \draw[flecha] (agenten.east) -| (mix.south);
-        \node[etiquetaSinFondo] at (2.6, 1.8) {acción $a_n$};
 
-        % Acción conjunta al entorno
-        \draw[flecha] (mix.east) -| (5.2, 0.55);
-        \node[etiquetaSinFondo] at (5.2, 2.2) {acción\\conjunta $\mathbf{a}$};
+        % Etiquetas de acciones desplazadas arriba/abajo de las l\'{i}neas horizontales
+        \path let \p1=(agente1.east), \p2=(mix.north) in node[etiquetaSinFondo, anchor=south] at ($({(\x1+\x2)/2},\y1)+(0,0.14)$) {acci\'{o}n $a_1$};
+        \path let \p1=(agente2.east), \p2=(mix.west) in node[etiquetaSinFondo, anchor=south] at ($({(\x1+\x2)/2},\y1)+(0,0.14)$) {acci\'{o}n $a_2$};
+        \path let \p1=(agenten.east), \p2=(mix.south) in node[etiquetaSinFondo, anchor=north] at ($({(\x1+\x2)/2},\y1)+(0,-0.14)$) {acci\'{o}n $a_n$};
+
+        % Acci\'{o}n conjunta desde el mezclador hasta el entorno
+        \coordinate (accConjuntaBase) at ($(entorno.north east)+(-0.7,0)$);
+        \draw[flecha] (mix.east) -| (accConjuntaBase);
+        \path let \p1=(accConjuntaBase), \p2=(mix.east) in node[etiquetaSinFondo, anchor=west, align=left] at ($(\x1,{(\y1+\y2)/2})+(0.22,0)$) {acci\'{o}n\\conjunta $\mathbf{a}$};
     \end{tikzpicture}
     \caption[Interacción agente-entorno en MARL cooperativo]{Interacción agente-entorno en un esquema \acrshort{acr-marl} cooperativo. Cada semáforo emite una acción local ($a_i$) formando una acción conjunta ($\mathbf{a}$) que modifica el estado global del entorno de tráfico.}
     \label{fig:marl_interaction}
@@ -1214,7 +1217,7 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
     \end{equation}
     varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, esta mutabilidad induce el problema del blanco móvil (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede tornarse deficiente en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica efectiva percibida por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en MDPs estacionarios dejan de ser suficientes \cite{foerster2017,liang2025marlreview}.
     
-    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \gls{acr-wolf-phc} (\textit{Win or Learn Fast Policy Hill-Climbing}) modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para evacuar un pelotón, alterando abruptamente los arribos en los cruces receptores; si los agentes aprenden sin coordinación, corren el riesgo de generar oscilaciones destructivas en las colas de la red.
+    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \gls{acr-wolf-phc} (\textit{Win or Learn Fast Policy Hill-Climbing}) modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para evacuar un agrupamiento vehicular, alterando abruptamente los arribos en los cruces receptores; si los agentes aprenden sin coordinación, corren el riesgo de generar oscilaciones destructivas en las colas de la red.
 
     \item \textbf{Observabilidad parcial:} Bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia exclusivamente en detectores locales, desconociendo el estado global de la red vial y las decisiones simultáneas de cruces lejanos, lo cual incrementa el sesgo y la incertidumbre en las estimaciones de valor.
 
@@ -1361,7 +1364,7 @@ La formulación anterior presenta la variante teórica con una ventaja conjunta.
 
 En sistemas de control complejos, los agentes pueden presentar asimetrías físicas y operacionales: diferencias en la configuración de actuadores, distintos espacios de acciones o demandas regionales contrapuestas. En entornos homogéneos, compartir parámetros puede mejorar la eficiencia de aprendizaje; en entornos heterogéneos, esa práctica puede limitar la especialización. Además, las actualizaciones independientes no poseen una garantía general de convergencia debido al aprendizaje simultáneo no coordinado \cite{kuba2021trust}.
 
-Kuba et al. y Zhong et al. \cite{kuba2021trust,zhong2024heterogeneous} propusieron algoritmos de aprendizaje por refuerzo multiagente para políticas heterogéneas, sin exigir que todos los agentes compartan parámetros. Esta línea se denomina aprendizaje por refuerzo con agentes heterogéneos (\textit{Heterogeneous-Agent Reinforcement Learning}, \acrshort{acr-harl}). Cada agente $i$ puede mantener su propia arquitectura y parámetros $\theta^i$, adaptados a su espacio de acciones local $\mathcal{A}_i$. En esta línea, \gls{acr-hatrpo} y \acrshort{acr-happo} emplean una actualización secuencial de los agentes. Los resultados teóricos de mejora monótona y convergencia se refieren al procedimiento de región de confianza bajo supuestos explícitos; la variante práctica \acrshort{acr-happo} sustituye la restricción \acrshort{acr-kl} por un objetivo recortado y debe interpretarse como una aproximación \cite{kuba2021trust,zhong2024heterogeneous}.
+Kuba et al. y Zhong et al. propusieron algoritmos de aprendizaje por refuerzo multiagente para políticas heterogéneas, sin exigir que todos los agentes compartan parámetros. Esta línea se denomina aprendizaje por refuerzo con agentes heterogéneos (\textit{Heterogeneous-Agent Reinforcement Learning}, \acrshort{acr-harl}). Cada agente $i$ puede mantener su propia arquitectura y parámetros $\theta^i$, adaptados a su espacio de acciones local $\mathcal{A}_i$. En esta línea, \gls{acr-hatrpo} y \acrshort{acr-happo} emplean una actualización secuencial de los agentes. Los resultados teóricos de mejora monótona y convergencia se refieren al procedimiento de región de confianza bajo supuestos explícitos; la variante práctica \acrshort{acr-happo} sustituye la restricción \acrshort{acr-kl} por un objetivo recortado y debe interpretarse como una aproximación \cite{kuba2021trust,zhong2024heterogeneous}.
 
 \subsubsection{Compartición de parámetros y políticas heterogéneas}
 
@@ -1435,7 +1438,7 @@ El principio de mejora monótona en aprendizaje por refuerzo formaliza que la se
     J(\boldsymbol{\pi}_{k+1}) \ge J(\boldsymbol{\pi}_k).
     \label{eq:garantia_happo}
 \end{equation}
-Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron analíticamente esta propiedad para el algoritmo \gls{acr-hatrpo} (\textit{Heterogeneous-Agent Trust Region Policy Optimization}) bajo los supuestos del juego markoviano cooperativo con recompensa compartida y una actualización restringida por la divergencia KL. En la práctica computacional, resolver las restricciones cuadráticas de HATRPO en redes neuronales profundas resulta computacionalmente restrictivo. Por ello, \acrshort{acr-happo} sustituye la cota formal de divergencia KL por el objetivo sustituto recortado \acrshort{acr-clip} de primer orden de la ecuación \eqref{eq:happo_objetivo_clip}.
+Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron analíticamente esta propiedad para el algoritmo \gls{acr-hatrpo} (\textit{Heterogeneous-Agent Trust Region Policy Optimization}) bajo los supuestos del juego markoviano cooperativo con recompensa compartida y una actualización restringida por la divergencia KL. Computacionalmente, resolver las restricciones cuadráticas de HATRPO en redes neuronales profundas resulta restrictivo. Por ello, \acrshort{acr-happo} sustituye la cota formal de divergencia KL por el objetivo sustituto recortado \acrshort{acr-clip} de primer orden de la ecuación \eqref{eq:happo_objetivo_clip}.
 
 Esta sustitución constituye una aproximación pragmática: al igual que ocurre con PPO frente a TRPO en el caso de agente único, la garantía matemática demostrada para HATRPO no se transfiere automáticamente a la variante con recorte \acrshort{acr-happo}, aun cuando esta última exhibe un comportamiento empírico notablemente robusto \cite{kuba2021trust,zhong2024heterogeneous}. Además, en redes urbanas con señales de recompensa local-vecinales, el procedimiento no garantiza una convergencia monótona analítica sobre una función objetivo global única; en cambio, opera como un mecanismo ordenado de optimización por bloques que atenúa la no estacionariedad y las colisiones de gradiente entre políticas concurrentes \cite{wang2023order,zhong2024heterogeneous}. La figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
 
@@ -1511,7 +1514,7 @@ El algoritmo \ref{alg:happo} presenta la secuencia completa de optimización de 
 \end{algorithm}
 El procedimiento de HAPPO organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el \textit{batch} de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre controladores para inferir su acción \cite{kuba2021trust}.
 
-En la instanciación para control semafórico de este trabajo, la secuencia conserva esta estructura de permutación y actualización sucesiva, pero inicializa los factores $M_{i_m}$ con las ventajas individuales $\hat{A}_i(s, \mathbf{a})$ calculadas mediante el crítico centralizado multi-salida a partir de las señales de recompensa compuestas (sección \ref{subsec:recompensa_coordinacion}), propagándolos mediante la razón $\rho_{\text{post}}^{i_m}$ tras optimizar a cada actor. Esta formulación explicita la adaptación práctica frente a la demostración teórica canónica —concebida para una recompensa escalar global compartida—, operando como un procedimiento de coordinación distribuida y estabilización frente a la no estacionariedad del entorno de simulación.
+En la adaptación para control semafórico de este trabajo, la secuencia conserva esta estructura de permutación y actualización sucesiva, pero inicializa los factores $M_{i_m}$ con las ventajas individuales $\hat{A}_i(s, \mathbf{a})$ calculadas mediante el crítico centralizado multi-salida a partir de las señales de recompensa compuestas (sección \ref{subsec:recompensa_coordinacion}), propagándolos mediante la razón $\rho_{\text{post}}^{i_m}$ tras optimizar a cada actor. Esta formulación explicita la adaptación práctica frente a la demostración teórica canónica —concebida para una recompensa escalar global compartida—, operando como un procedimiento de coordinación distribuida y estabilización frente a la no estacionariedad del entorno de simulación.
 
 Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{acr-ppo} en escenarios \acrshort{acr-marl}, la tabla \ref{tab:marl_ppo_comparison} sintetiza sus principales propiedades operativas, arquitectónicas y teóricas.
 
@@ -1536,7 +1539,7 @@ Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{a
 
 \subsection{Antecedentes recientes del control semafórico multiagente}\label{subsec:antecedentes_marl_tsc}
 
-Para orientar la comparación, los antecedentes seleccionados se organizan según tres ejes: coordinación y entrenamiento, representación de las observaciones, y tratamiento de la heterogeneidad o la equidad entre intersecciones. Se priorizan trabajos directamente relacionados con la formulación y las variables de este trabajo.
+Para orientar la comparación, los antecedentes seleccionados se organizan según tres ejes: coordinación y entrenamiento, representación de las observaciones, y tratamiento de la heterogeneidad o la equidad entre intersecciones. Se priorizan investigaciones directamente relacionadas con la formulación de este trabajo.
 
 El control coordinado de múltiples intersecciones mediante aprendizaje por refuerzo constituye un área de investigación activa. Entre los enfoques iniciales se encuentran aquellos que asignaban un agente a cada semáforo y utilizaban información local sobre colas, fases o vehículos detenidos. Sin embargo, la optimización aislada de cada intersección no contempla que una acción modifica el flujo recibido por los cruces vecinos. Por este motivo, la literatura evolucionó hacia formulaciones cooperativas que incorporan mecanismos de coordinación espacial, representaciones estructuradas del estado y esquemas de entrenamiento centralizado \cite{marlbook,liang2025marlreview}.
 
@@ -1570,7 +1573,7 @@ Ren et al. \cite{ren2024twolayer} abordan la coordinación bajo demandas heterog
 
 En la coordinación mediante entrenamiento centralizado, Liu et al. \cite{liu2025vfmappo} formulan el control semafórico como un juego parcialmente observable con restricciones y proponen \acrshort{acr-vf}-\acrshort{acr-mappo}. En este método, la equidad se expresa mediante una cota sobre el tiempo máximo de espera de los vehículos, mientras que un crítico centralizado con atención espaciotemporal estima tanto la eficiencia de la red como el cumplimiento de la restricción. Esta formulación resulta especialmente pertinente para el presente trabajo porque vincula con una variable temporal de operación el paradigma de entrenamiento centralizado con ejecución descentralizada. No obstante, el tiempo de espera se incorpora como restricción de optimización y no mediante una codificación no lineal de la observación.
 
-En el tratamiento de agentes heterogéneos, otro enfoque es HAPS-\acrshort{acr-ppo}, presentado por Lu et al. \cite{lu2025hapsppo}. El método completa con relleno las observaciones de distinta dimensión y agrupa a los agentes según sus espacios de acción, asignando cabezales de política específicos a cada grupo. Esto permite coordinar intersecciones con geometrías y conjuntos de fases diferentes. A pesar de la similitud entre las siglas, HAPS-\acrshort{acr-ppo} no corresponde a \acrshort{acr-happo}, ya que no emplea la actualización secuencial ni la descomposición de la ventaja explicadas en la sección \ref{subsec:happo}.
+En el tratamiento de agentes heterogéneos, otro enfoque es HAPS-\acrshort{acr-ppo}, presentado por Lu et al. \cite{lu2025hapsppo}. El método completa con relleno las observaciones de distinta dimensión y agrupa a los agentes según sus espacios de acción, asignando cabezales de política específicos a cada grupo. Esto permite coordinar intersecciones con geometrías y conjuntos de fases diferentes.
 
 \subsubsection{Posicionamiento del presente trabajo}
 
@@ -1580,4 +1583,4 @@ Entre los antecedentes considerados, HeteroLight aborda la heterogeneidad median
 
 En particular, este trabajo explora una codificación híbrida logarítmica-lineal del tiempo de espera acumulado por carril. Al asignar valores continuos a un conjunto finito de intervalos, la cuantización agrupa esperas dentro de una misma categoría y limita los valores representables; la saturación también reúne los valores que alcanzan la cota. En aprendizaje por refuerzo, una abstracción de estados puede simplificar el problema y conservar comportamiento cercano al óptimo cuando los estados agrupados son suficientemente similares, bajo las condiciones teóricas correspondientes \cite{abel2016approxabstraction}. Ese resultado no constituye una garantía para esta codificación: aquí se transforman observaciones locales en un problema parcialmente observable y no se demuestra que los valores agrupados sean equivalentes para la política óptima. La resolución no uniforme del codificador asigna más niveles a esperas bajas, lo que permite distinguirlas con mayor detalle; es una hipótesis de diseño, pues la cuantización también puede descartar distinciones relevantes, en particular cerca de los umbrales entre intervalos. Su efecto se examina como parte del sistema completo, sin una ablación que lo aísle frente a otras representaciones. Esta propuesta se diferencia de las observaciones agregadas utilizadas por los enfoques \acrshort{acr-dqn}, de las proyecciones latentes basadas en grafos y de la partición espacial de Deng et al. \cite{deng2026roadpartition}, que divide los accesos y no codifica la espera acumulada por carril.
 
-A su vez, la evaluación bajo \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} examina el desempeño de cuatro procedimientos completos de aprendizaje y coordinación, cada uno con su receta ajustada, sobre una misma representación de observación. En MAPPO se utiliza un crítico centralizado compartido de múltiples salidas, condicionado por la concatenación de observaciones locales, con valores y ventajas calculados por agente. En HAPPO, las ventajas individuales estimadas mediante GAE se reponderan en las actualizaciones secuenciales de los actores; esta adaptación no aplica directamente el lema canónico de descomposición de ventajas. Los críticos estiman valores durante el entrenamiento en ambos procedimientos, pero no se atribuye al crítico la diferencia entre ellos ni se postula una actualización secuencial del crítico. La comparación estima diferencias entre procedimientos integrados y no aísla el efecto causal de un componente individual ---como el crítico centralizado o la actualización secuencial---, lo cual requeriría ablaciones con el resto de los factores constantes. De este modo, la solución puede contrastarse con los antecedentes recientes en términos de representación, paradigma de entrenamiento y capacidad para tratar agentes heterogéneos. El capítulo \ref{capitulo:metodologia} describe cómo se concreta esta propuesta en el diseño experimental.
+A su vez, la evaluación bajo \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} examina el desempeño de cuatro procedimientos completos de aprendizaje y coordinación, cada uno con su receta ajustada, sobre una misma representación de observación. En MAPPO se utiliza un crítico centralizado compartido de múltiples salidas, condicionado por la concatenación de observaciones locales, con valores y ventajas calculados por agente. En HAPPO, las ventajas individuales estimadas mediante GAE se reponderan en las actualizaciones secuenciales de los actores; esta adaptación no aplica directamente el lema canónico de descomposición de ventajas. Los críticos estiman valores durante el entrenamiento en ambos procedimientos, pero no se atribuye al crítico la diferencia entre ellos ni se postula una actualización secuencial del crítico. Dado que la comparación se basa en procedimientos integrados, no es posible aislar el efecto directo de un solo elemento, como la actualización secuencial o el crítico centralizado. Determinar dicho impacto requeriría una retirada de componentes, evaluando el sistema sin esa pieza específica mientras los demás factores permanecen constantes. De este modo, la solución puede contrastarse con los antecedentes recientes en términos de representación, paradigma de entrenamiento y capacidad para tratar agentes heterogéneos. El capítulo \ref{capitulo:metodologia} describe cómo se concreta esta propuesta en el diseño experimental.

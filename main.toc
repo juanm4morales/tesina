@@ -8,11 +8,11 @@
 \contentsline {subsection}{\numberline {2.1.1}Terminología de tránsito}{6}{subsection.17}%
 \contentsline {subsection}{\numberline {2.1.2}Fundamentos de la dinámica vehicular}{8}{subsection.20}%
 \contentsline {subsubsection}{Métricas de ineficiencia operativa}{11}{subsubsection*.25}%
-\contentsline {subsubsection}{Descripción probabilística del flujo y pelotones vehiculares}{12}{subsubsection*.26}%
+\contentsline {subsubsection}{Descripción probabilística del flujo y agrupamientos vehiculares}{12}{subsubsection*.26}%
 \contentsline {subsection}{\numberline {2.1.3}Sistemas de control de tránsito}{14}{subsection.30}%
 \contentsline {subsubsection}{Modelado de la capacidad y el verde efectivo}{14}{subsubsection*.31}%
 \contentsline {subsubsection}{Clasificación de los controladores de semáforos}{15}{subsubsection*.33}%
-\contentsline {subsection}{\numberline {2.1.4}Simulación de tránsito}{15}{subsection.34}%
+\contentsline {subsection}{\numberline {2.1.4}Simulación de tránsito}{16}{subsection.34}%
 \contentsline {subsubsection}{Representación microscópica de intersecciones en SUMO}{19}{subsubsection*.37}%
 \contentsline {subsubsection}{Componentes y configuración de SUMO}{20}{subsubsection*.39}%
 \contentsline {subsubsection}{Métricas de evaluación operacional}{21}{subsubsection*.41}%
@@ -59,14 +59,14 @@
 \contentsline {subsubsection}{Perfil temporal y factor de expansión territorial}{69}{subsubsection*.157}%
 \contentsline {subsubsection}{Estructuración espacial de la demanda (60/40)}{70}{subsubsection*.160}%
 \contentsline {paragraph}{Componente fijo calibrado ($60\%$):}{70}{paragraph*.162}%
-\contentsline {paragraph}{Ceros estructurales ($\mathcal {Z}_{\text {struct}}$):}{71}{paragraph*.163}%
+\contentsline {paragraph}{Ceros estructurales ($\mathcal {Z}_{\text {struct}}$):}{70}{paragraph*.163}%
 \contentsline {paragraph}{Remanente estocástico ($40\%$) y selección de semilla:}{71}{paragraph*.164}%
 \contentsline {paragraph}{Dinámica microscópica y heterogeneidad de flota:}{71}{paragraph*.165}%
 \contentsline {subsubsection}{Protocolo de validación operacional y criterio \acrshort {acr-geh}}{71}{subsubsection*.166}%
 \contentsline {paragraph}{Validación de calidad del flujo (estadístico \acrshort {acr-geh}):}{72}{paragraph*.169}%
 \contentsline {section}{\numberline {3.4}Arquitectura de integración entorno-agentes}{72}{section.171}%
 \contentsline {subsection}{\numberline {3.4.1}Ciclo episódico e interfaz de simulación}{72}{subsection.172}%
-\contentsline {section}{\numberline {3.5}Instanciación del modelo Dec-POMDP}{73}{section.176}%
+\contentsline {section}{\numberline {3.5}Formulación del modelo Dec-POMDP}{73}{section.176}%
 \contentsline {subsection}{\numberline {3.5.1}Observaciones y codificación logarítmico-lineal}{74}{subsection.177}%
 \contentsline {subsection}{\numberline {3.5.2}Espacio de acciones y enmascaramiento dinámico}{76}{subsection.183}%
 \contentsline {subsection}{\numberline {3.5.3}Función de recompensa compuesta y coordinación vecinal}{77}{subsection.185}%
