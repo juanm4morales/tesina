@@ -6,9 +6,9 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Movimientos vehiculares, fases y cruces peatonales}}{7}{figure.caption.18}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Representación esquemática de movimientos vehiculares y puntos de conflicto en una intersección semaforizada.}}{8}{figure.caption.19}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}}{11}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de pelotones. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{13}{figure.caption.29}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparación esquemática de distribuciones de intervalos temporales entre vehículos en flujo libre y en una corriente con formación de agrupamientos vehiculares. Las curvas representan situaciones conceptuales y no una distribución empírica particular.}}{13}{figure.caption.29}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Distribución temporal de la tasa de descarga y pérdidas asociadas durante un intervalo de verde en una aproximación semaforizada.}}{15}{figure.caption.32}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Correspondencia entre la circulación real y su representación en SUMO}}{16}{figure.caption.35}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Correspondencia entre la circulación real y su representación en SUMO}}{17}{figure.caption.35}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Interfaz sumo-gui durante una simulación microscópica}}{18}{figure.caption.36}%
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Esquema conceptual de carriles, línea de detención y conexiones de una intersección semaforizada bajo circulación por la derecha. La fase representada habilita movimientos directos opuestos del eje horizontal y retiene los movimientos conflictivos.}}{20}{figure.caption.38}%
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Interacción agente-entorno en un proceso de decisión de Markov \cite {suttonRL}.}}{24}{figure.caption.44}%

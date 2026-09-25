@@ -12,7 +12,7 @@
 \newcommand{\hsp}{\hspace{20pt}}
 \titleformat{\chapter}[display]{\filleft\Huge\bfseries}{\fontsize{100}{100}\selectfont\textcolor{gray75}\thechapter}{1ex}{}[]
 
-\usepackage[provide=*,spanish]{babel}
+\usepackage[spanish,es-tabla,es-noquoting,es-nodecimaldot]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[export]{adjustbox}
@@ -172,6 +172,30 @@ mathfontname=mathsf]{mhchem}
 \loadglsentries{glosario.tex}
 \loadglsentries{glosario_abreviaturas.tex}
 \makeglossaries
+
+% Excepciones de separación silábica
+\hyphenation{
+    ca-rac-te-ri-za-da
+    ca-rac-te-ri-za-das
+    ca-rac-te-ri-za-do
+    ca-rac-te-ri-za-dos
+    ca-rac-te-ri-zar
+    ca-rac-te-rís-ti-ca
+    ca-rac-te-rís-ti-cas
+    pro-ba-bi-li-dad
+    pro-ba-bi-li-da-des
+    pro-ba-bi-lís-ti-co
+    pro-ba-bi-lís-ti-ca
+    pro-ba-bi-lís-ti-cos
+    pro-ba-bi-lís-ti-cas
+    ope-ra-cio-nal
+    ope-ra-cio-na-les
+    he-te-ro-ge-nei-dad
+    ve-hi-cu-lar
+    ve-hi-cu-la-res
+    ve-hí-cu-lo
+    ve-hí-cu-los
+}
 
 \title{Semáforos Inteligentes: Un enfoque con aprendizaje por refuerzo multiagente}
 \author{Juan Martín Morales}
