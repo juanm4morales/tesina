@@ -6,14 +6,24 @@
 \contentsline {table}{\numberline {2.2}{\ignorespaces Archivos de entrada y configuración empleados en una simulación de \acrshort {acr-sumo}.}}{21}{table.caption.40}%
 \contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multiagente cooperativos.}}{53}{table.caption.117}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Especificación de las tecnologías y herramientas utilizadas en la investigación.}}{64}{table.caption.133}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Características verificadas de los escenarios sintéticos.}}{66}{table.caption.143}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Señales de recompensa disponibles en el entorno.}}{78}{table.caption.186}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Métricas utilizadas para presentar y controlar la evaluación final.}}{88}{table.caption.208}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Escenarios y procedimientos del trabajo.}}{60}{table.caption.125}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Duraciones de los programas semafóricos de referencia en las redes sintéticas (segundos).}}{61}{table.caption.128}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Características de las redes sintéticas y flujo.}}{63}{table.caption.134}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Herramientas y responsabilidades en el sistema experimental.}}{69}{table.caption.155}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Períodos de calentamiento y control de las campañas.}}{76}{table.caption.176}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Variantes examinadas en el cribado exploratorio.}}{80}{table.caption.184}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario canónico v14 de la Ciudad de Mendoza bajo control de tiempo fijo.}}{91}{table.caption.218}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario urbano de la Ciudad de Mendoza con los programas semafóricos de la red.}}{87}{table.caption.205}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {A.1}{\ignorespaces Duraciones nominales de las fases en el archivo de red de Mendoza, en segundos.}}{94}{table.caption.221}%
+\contentsline {table}{\numberline {A.2}{\ignorespaces Semillas por escenario sintético en la fase 1.}}{95}{table.caption.225}%
+\contentsline {table}{\numberline {A.3}{\ignorespaces Arquitecturas y semillas asignadas a las doce combinaciones de algoritmo y escenario de las redes sintéticas en fase 2. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de TPE no son réplicas de entrenamiento.}}{96}{table.caption.227}%
+\contentsline {table}{\numberline {A.4}{\ignorespaces Dominios de búsqueda de HAPPO por escenario y arquitectura.}}{97}{table.caption.229}%
+\contentsline {table}{\numberline {A.5}{\ignorespaces Dominios de búsqueda de IDQN por escenario y arquitectura.}}{97}{table.caption.230}%
+\contentsline {table}{\numberline {A.6}{\ignorespaces Dominios de búsqueda de IPPO y MAPPO.}}{98}{table.caption.231}%
+\contentsline {table}{\numberline {A.7}{\ignorespaces Señales de recompensa por procedimiento documentado.}}{101}{table.caption.236}%
+\contentsline {table}{\numberline {A.8}{\ignorespaces Hiperparámetros fijos de aprendizaje de MAPPO.}}{101}{table.caption.238}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

@@ -17,21 +17,25 @@
 \contentsline {figure}{\numberline {2.12}{\ignorespaces Arquitectura actor-crítico aplicada al control semafórico}}{29}{figure.caption.55}%
 \contentsline {figure}{\numberline {2.13}{\ignorespaces Operaciones de una unidad neuronal artificial: suma ponderada de las entradas, incorporación del sesgo y aplicación de una función de activación.}}{30}{figure.caption.58}%
 \contentsline {figure}{\numberline {2.14}{\ignorespaces Arquitectura conceptual de una red neuronal \textit {feedforward} con dos capas ocultas.}}{31}{figure.caption.61}%
-\contentsline {figure}{\numberline {2.15}{\ignorespaces Flujo conceptual de \acrshort {acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del blanco \gls {acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{34}{figure.caption.67}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Flujo conceptual de \acrshort {acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit {bootstrapping} del valor objetivo \gls {acr-td}. Elaboración propia a partir del algoritmo descrito por Mnih et al. \cite {mnih2015}.}}{34}{figure.caption.67}%
 \contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones}}{36}{figure.caption.72}%
 \contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{41}{figure.caption.87}%
 \contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{43}{figure.caption.91}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{45}{figure.caption.94}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{44}{figure.caption.94}%
 \contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Flujo metodológico de la investigación experimental. Los siete recuadros representan, de arriba hacia abajo, las etapas de modelado de redes, formulación del problema, desarrollo del entorno, integración algorítmica, optimización de hiperparámetros, ejecución distribuida y evaluación estadística; las flechas indican la dependencia secuencial entre ellas.}}{62}{figure.caption.131}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Codificación por carril empleada para construir la observación local. Cada entrada de espera se transforma y conserva su correspondencia espacial con el carril de origen.}}{76}{figure.caption.181}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo de la mezcla logarítmica-lineal utilizada por \texttt {Encoder}. La curva se interpreta como una transformación de la espera acumulada, no como una trayectoria de entrenamiento.}}{76}{figure.caption.182}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Geometría de las tres redes sintéticas. Los puntos marcan intersecciones semaforizadas; cada panel usa una escala propia.}}{63}{figure.caption.133}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Red parcial del microcentro de Mendoza. Los extremos grises conectan con la red circundante; el tramo azul marca el ingreso estimado con el conteo de la cámara 169, que registra el flujo hacia el oeste por Av. José Vicente Zapata.}}{65}{figure.caption.138}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Flujo entre la simulación, el entorno y el aprendizaje. El estado de SUMO y los parámetros de las políticas se almacenan por separado.}}{69}{figure.caption.153}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces La observación conserva la fase activa y codifica la espera de cada carril en niveles discretos.}}{72}{figure.caption.161}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Información de los algoritmos durante el entrenamiento y la ejecución. El crítico compartido de MAPPO y HAPPO no interviene al ejecutar.}}{74}{figure.caption.172}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Búsqueda en dos fases: la primera orienta la reducción de dominios de la segunda.}}{77}{figure.caption.179}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{94}{figure.caption.223}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{95}{figure.caption.225}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{90}{figure.caption.210}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{91}{figure.caption.212}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo de codificación de observaciones.}}{100}{figure.caption.235}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
