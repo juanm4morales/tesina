@@ -24,18 +24,18 @@
 \contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{44}{figure.caption.94}%
 \contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Geometría de las tres redes sintéticas. Los puntos marcan intersecciones semaforizadas; cada panel usa una escala propia.}}{63}{figure.caption.133}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Red parcial del microcentro de Mendoza. Los extremos grises conectan con la red circundante; el tramo azul marca el ingreso estimado con el conteo de la cámara 169, que registra el flujo hacia el oeste por Av. José Vicente Zapata.}}{65}{figure.caption.138}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Flujo entre la simulación, el entorno y el aprendizaje. El estado de SUMO y los parámetros de las políticas se almacenan por separado.}}{69}{figure.caption.153}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces La observación conserva la fase activa y codifica la espera de cada carril en niveles discretos.}}{72}{figure.caption.161}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Información de los algoritmos durante el entrenamiento y la ejecución. El crítico compartido de MAPPO y HAPPO no interviene al ejecutar.}}{74}{figure.caption.172}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Búsqueda en dos fases: la primera orienta la reducción de dominios de la segunda.}}{77}{figure.caption.179}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Geometría de las tres redes de tráfico sintéticas. Los puntos marcan intersecciones semaforizadas; cada panel usa una escala propia.}}{63}{figure.caption.131}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Red de tráfico parcial del microcentro de Mendoza. Los extremos grises conectan con la red de tráfico circundante; el tramo azul identifica el ingreso representado por el registro de la cámara 169, que observa el flujo hacia el oeste por Av. José Vicente Zapata.}}{65}{figure.caption.136}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Flujo entre la simulación, el entorno y el aprendizaje. El estado de SUMO y los parámetros de las políticas se almacenan por separado.}}{69}{figure.caption.148}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces La observación conserva la fase activa y codifica la espera de cada carril en niveles discretos.}}{72}{figure.caption.156}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Información de los algoritmos durante el entrenamiento y la ejecución. Cada algoritmo y agente tiene su propia política; el crítico centralizado de MAPPO y HAPPO no interviene al ejecutar. En C, el actor recibe además la espera media por carril codificada de cada vecino directo.}}{75}{figure.caption.164}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Búsqueda en dos fases: la primera orienta la reducción de dominios de la segunda.}}{78}{figure.caption.172}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{90}{figure.caption.210}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{91}{figure.caption.212}%
-\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo de codificación de observaciones.}}{100}{figure.caption.235}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{94}{figure.caption.205}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{95}{figure.caption.207}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo de codificación de observaciones.}}{107}{figure.caption.231}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

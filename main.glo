@@ -1,68 +1,69 @@
-\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$s$ (estado global)?\glossentry{estado_global}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$o_i$ (observación local)?\glossentry{observacion_local}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$a_i, A_t$ (acción)?\glossentry{accion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$r_t$ (recompensa)?\glossentry{recompensa_t}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\gamma $ (factor de descuento)?\glossentry{gamma}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$Q(s,a)$ (valor de acción)?\glossentry{q_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$V(s)$ (valor de estado)?\glossentry{v_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\pi _"\theta $ (política parametrizada)?\glossentry{politica_parametrizada}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\theta $ (parámetros de la política)?\glossentry{parametros_politica_theta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\phi $ (parámetros del crítico)?\glossentry{parametros_critico_phi}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\alpha $ (tasa de aprendizaje)?\glossentry{tasa_aprendizaje_alpha}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\eta $ (tasa del optimizador)?\glossentry{tasa_aprendizaje_eta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\epsilon _{"\mathrm {exp}}$ (exploración)?\glossentry{epsilon_exploracion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\epsilon _{"\mathrm {clip}}$ (margen de recorte)?\glossentry{epsilon_recorte}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Lote ("\textit {batch})?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Buffer}?\glossentry{buffer_datos}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\lambda $ (suavizado de la ventaja)?\glossentry{lambda_gae}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\delta _t$ (error de diferencia temporal)?\glossentry{error_td_delta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$c_1$ (coeficiente de valor)?\glossentry{coeficiente_valor_c1}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$c_2$ (coeficiente de entropía)?\glossentry{coeficiente_entropia_c2}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\mathcal {L}("\theta )$ (función de pérdida)?\glossentry{funcion_perdida_theta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$G_t$ (retorno)?\glossentry{retorno_gt}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$R_t^{"\text {target}}$ (retorno objetivo)?\glossentry{valor_objetivo_vt}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$S["\pi _"\theta ]$ (entropía de la política)?\glossentry{entropia_politica}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\hat {A}_t$ (ventaja estimada)?\glossentry{ventaja_estimada}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$W_{"\text {net}}$ (demora acumulada global)?\glossentry{demora_wnet}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$"\rho _{"\mathrm {coop}}$ (ponderación cooperativa)?\glossentry{rho_coop}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$M_{i_{1:m}}$ (factor de reponderación HAPPO)?\glossentry{factor_m_happo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$G_{"\text {wait}}$ (coeficiente de Gini de esperas)?\glossentry{gini_wait}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Función de Valor?\glossentry{funcion_valor}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Proceso de Decisión de Markov?\glossentry{mdp}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Densidad vehicular?\glossentry{densidad}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Teleport} (SUMO)?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{"\textit {Bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Memoria temporal de espera?\glossentry{memoriaespera}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Par de políticas?\glossentry{parpoliticas}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$a$ (aceleración vehicular)?\glossentry{aceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$d$ (desaceleración vehicular)?\glossentry{desaceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
-\glossaryentry{$v_{"\max }$ (velocidad máxima vehicular)?\glossentry{velocidad_maxima_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {x}}
+\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$s$ (estado global)?\glossentry{estado_global}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$o_i$ (observación local)?\glossentry{observacion_local}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$a_i, A_t$ (acción)?\glossentry{accion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$r_t$ (recompensa)?\glossentry{recompensa_t}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\gamma $ (factor de descuento)?\glossentry{gamma}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$Q(s,a)$ (valor de acción)?\glossentry{q_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$V(s)$ (valor de estado)?\glossentry{v_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\pi _"\theta $ (política parametrizada)?\glossentry{politica_parametrizada}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\theta $ (parámetros de la política)?\glossentry{parametros_politica_theta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\phi $ (parámetros del crítico)?\glossentry{parametros_critico_phi}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\alpha $ (tasa de aprendizaje)?\glossentry{tasa_aprendizaje_alpha}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\eta $ (tasa del optimizador)?\glossentry{tasa_aprendizaje_eta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\epsilon _{"\mathrm {exp}}$ (exploración)?\glossentry{epsilon_exploracion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\epsilon _{"\mathrm {clip}}$ (margen de recorte)?\glossentry{epsilon_recorte}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Lote ("\textit {batch})?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Buffer}?\glossentry{buffer_datos}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\lambda $ (suavizado de la ventaja)?\glossentry{lambda_gae}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\delta _t$ (error de diferencia temporal)?\glossentry{error_td_delta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$c_1$ (coeficiente de valor)?\glossentry{coeficiente_valor_c1}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$c_2$ (coeficiente de entropía)?\glossentry{coeficiente_entropia_c2}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\mathcal {L}("\theta )$ (función de pérdida)?\glossentry{funcion_perdida_theta}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$G_t$ (retorno)?\glossentry{retorno_gt}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$R_t^{"\text {target}}$ (retorno objetivo)?\glossentry{valor_objetivo_vt}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$S["\pi _"\theta ]$ (entropía de la política)?\glossentry{entropia_politica}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\hat {A}_t$ (ventaja estimada)?\glossentry{ventaja_estimada}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$W_{"\text {net}}$ (demora acumulada global)?\glossentry{demora_wnet}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$"\rho _{"\mathrm {coop}}$ (ponderación cooperativa)?\glossentry{rho_coop}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$M_{i_{1:m}}$ (factor de reponderación HAPPO)?\glossentry{factor_m_happo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$G_{"\text {wait}}$ (coeficiente de Gini de esperas)?\glossentry{gini_wait}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Función de Valor?\glossentry{funcion_valor}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Proceso de Decisión de Markov?\glossentry{mdp}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Densidad vehicular?\glossentry{densidad}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Telemetría?\glossentry{telemetria}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Binding}?\glossentry{binding}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Serialización?\glossentry{serializacion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Softmax}?\glossentry{softmax}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{"\textit {Bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Memoria temporal de espera?\glossentry{memoriaespera}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Par de políticas?\glossentry{parpoliticas}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$a$ (aceleración vehicular)?\glossentry{aceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$d$ (desaceleración vehicular)?\glossentry{desaceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
+\glossaryentry{$v_{"\max }$ (velocidad máxima vehicular)?\glossentry{velocidad_maxima_vehicular}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xi}}
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{7}
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{8}
 \glossaryentry{Flujo vehicular?\glossentry{flujo}|setentrycounter[]{page}"\glsnumberformat}{13}
@@ -79,4 +80,6 @@
 \glossaryentry{$a$ (aceleración vehicular)?\glossentry{aceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{61}
 \glossaryentry{$d$ (desaceleración vehicular)?\glossentry{desaceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{61}
 \glossaryentry{$v_{"\max }$ (velocidad máxima vehicular)?\glossentry{velocidad_maxima_vehicular}|setentrycounter[]{page}"\glsnumberformat}{61}
-\glossaryentry{"\textit {Teleport} (SUMO)?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{67}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{78}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{87}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{104}

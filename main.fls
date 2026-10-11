@@ -1,7 +1,7 @@
 PWD /home/juanm4/Documentos/tesina
 INPUT /usr/share/texmf-dist/web2c/texmf.cnf
 INPUT /home/juanm4/.texlive/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /home/juanm4/Documentos/tesina/main.tex
+INPUT main.tex
 OUTPUT main.log
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/share/texmf-dist/tex/latex/base/book.cls
@@ -255,6 +255,8 @@ INPUT /usr/share/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT /usr/share/texmf-dist/tex/latex/amsfonts/amssymb.sty
 INPUT /usr/share/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/share/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+INPUT /usr/share/texmf-dist/tex/latex/xurl/xurl.sty
+INPUT /usr/share/texmf-dist/tex/latex/xurl/xurl.sty
 INPUT /usr/share/texmf-dist/tex/latex/url/url.sty
 INPUT /usr/share/texmf-dist/tex/latex/url/url.sty
 INPUT /usr/share/texmf-dist/tex/latex/caption/caption.sty
@@ -577,6 +579,7 @@ OUTPUT main.lof
 INPUT ./main.lot
 INPUT ./main.lot
 INPUT main.lot
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 OUTPUT main.lot
 INPUT ./main.acr
 INPUT ./main.acr
@@ -606,7 +609,6 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT ./4-marco_teorico.tex
 INPUT ./4-marco_teorico.tex
 OUTPUT 4-marco_teorico.aux
@@ -698,8 +700,6 @@ INPUT ./imagenes/metodologia_v2_integracion.tex
 INPUT ./imagenes/metodologia_v2_integracion.tex
 INPUT imagenes/metodologia_v2_integracion.tex
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm0800.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm0600.tfm
 INPUT /usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./imagenes/metodologia_observaciones.tex
 INPUT ./imagenes/metodologia_observaciones.tex
@@ -723,7 +723,6 @@ OUTPUT 6-resultados.aux
 INPUT ./6-resultados.tex
 INPUT ./6-resultados.tex
 INPUT 6-resultados.tex
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1000.tfm
 INPUT ./7-conclusiones.tex
 INPUT ./7-conclusiones.tex
 OUTPUT 7-conclusiones.aux
@@ -756,6 +755,7 @@ INPUT ./imagenes/metodologia_v2_componentes_encoder.pdf
 INPUT ./imagenes/metodologia_v2_componentes_encoder.pdf
 INPUT ./imagenes/metodologia_v2_componentes_encoder.pdf
 INPUT ./imagenes/metodologia_v2_componentes_encoder.pdf
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1000.tfm
 INPUT ./main.bbl
 INPUT ./main.bbl
 INPUT main.bbl

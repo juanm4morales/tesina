@@ -45,7 +45,7 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{aceleracion_vehicular}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{62}}}%
+		\setentrycounter[]{page}\glsnumberformat{61}}}%
 \glossentry{accion}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{coeficiente_valor_c1}{\glossaryentrynumbers{\relax 
@@ -54,7 +54,7 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{desaceleracion_vehicular}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{62}}}%
+		\setentrycounter[]{page}\glsnumberformat{61}}}%
 \glossentry{observacion_local}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{recompensa_t}{\glossaryentrynumbers{\relax 
@@ -63,7 +63,7 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{velocidad_maxima_vehicular}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{62}}}%
+		\setentrycounter[]{page}\glsnumberformat{61}}}%
 \glossentry{binding}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{bootstrap}{\glossaryentrynumbers{\relax 
@@ -86,9 +86,11 @@
 		\setentrycounter[]{page}\glsnumberformat{34}}}%
 \glossentry{softmax}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
-\glossentry{teleport}{\glossaryentrynumbers{\relax 
+\glossentry{checkpoint}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{68}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{78}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{87}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{104}}}\glsgroupskip
 \glsgroupheading{A}\relax \glsresetentrylist %
 \glossentry{actor}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
@@ -154,6 +156,8 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}\glsgroupskip
 \glsgroupheading{T}\relax \glsresetentrylist %
 \glossentry{telemetria}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
+\glossentry{teleport}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}}}%
 \glossentry{transicion_aprendizaje}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xi}\delimN 
