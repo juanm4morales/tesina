@@ -1,47 +1,58 @@
 \begingroup
 \setstretch{1}
-\hyphenpenalty=10000
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
 \begin{tikzpicture}[
   font=\sffamily\small,
-  >=Stealth,
-  frame/.style={draw=black!28,rounded corners=4pt,inner sep=9pt},
-  local/.style={draw=colEntorno!80!black,fill=colEntorno!13,rounded corners=3pt,
-  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
-  central/.style={draw=colInterfaz!75!black,fill=colInterfaz!19,rounded corners=3pt,
-  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
+  node distance=8mm and 9mm,
+  frame/.style={draw=black!28,rounded corners=4pt,inner sep=6pt},
+  local/.style={draw=colEntorno!80!black,fill=colEntorno!16,rounded corners=3pt,
+    text width=4.2cm,align=center,inner sep=4pt},
+  joint/.style={draw=colInterfaz!75!black,fill=colInterfaz!19,rounded corners=3pt,
+    text width=4.2cm,align=center,inner sep=4pt},
   actor/.style={draw=colAgente!75!black,fill=colAgente!15,rounded corners=3pt,
-  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
-  flow/.style={-{Stealth[length=2.1mm]},line width=.8pt,draw=black!70}
+    text width=4.2cm,align=center,inner sep=4pt},
+  learn/.style={draw=colInterfaz!75!black,fill=colInterfaz!10,rounded corners=3pt,
+    text width=4.2cm,align=center,inner sep=4pt},
+  action/.style={draw=colDatoPrimario!85!black,fill=colEntorno!9,rounded corners=3pt,
+    text width=8.4cm,align=center,inner sep=4pt},
+  flow/.style={-{Stealth[length=2mm]},line width=.75pt,draw=black!72},
+  feedback/.style={-{Stealth[length=1.8mm]},dashed,line width=.7pt,draw=colInterfaz!75!black}
 ]
-\node[font=\bfseries] at (-3.45,.55) {Aprendizaje independiente};
-\node[font=\bfseries] at (3.45,.55) {Entrenamiento centralizado};
-\node[frame,minimum width=6.75cm,minimum height=4.95cm] at (-3.45,-2.45) {};
-\node[frame,minimum width=6.75cm,minimum height=4.95cm] at (3.45,-2.45) {};
+% La ejecución usa información local; la experiencia conjunta se reserva al entrenamiento.
+\node[font=\bfseries] (execTitle) {Ejecución descentralizada};
+\node[local,below=7mm of execTitle] (obs) {Observación del agente $o_i$ y máscara de acciones};
+\node[actor,right=of obs] (policy) {Actor PPO o selector basado en $Q$\\(IDQN no usa actor PPO)};
+\node[action,below=of policy] (act) {Selección de fase $a_i$};
+\draw[flow] (obs) -- (policy);
+\draw[flow] (policy) -- (act);
+\node[font=\footnotesize,align=center,text=black!75,below=6mm of act] (note) {A: observación local; C: observación local y vecinal (MAPPO)};
+\node[font=\bfseries,below=8mm of note] (trainTitle) {Entrenamiento};
 
-\node[local] (ilinput) at (-3.45,-.8)
-  {Observación local};
-\node[local] (ilmodel) at (-3.45,-2.45)
-  {IPPO / IDQN};
-\node[actor] (ilpolicy) at (-3.45,-4.1)
-  {Módulos por agente};
-\draw[flow] (ilinput) -- (ilmodel);
-\draw[flow] (ilmodel) -- (ilpolicy);
+\node[font=\bfseries,anchor=north] (ipTitle) at ([xshift=-2.5cm,yshift=-7mm]trainTitle.south) {IPPO};
+\node[font=\bfseries,anchor=north] (idTitle) at ([xshift=2.5cm,yshift=-7mm]trainTitle.south) {IDQN};
+\node[local,below=5mm of ipTitle] (ipExp) {Experiencia local};
+\node[learn,below=of ipExp] (ipLearn) {Crítico local y ventajas; actualización PPO del actor};
+\node[local,below=5mm of idTitle] (idExp) {Experiencia local};
+\node[learn,below=of idExp] (idLearn) {Valores $Q$, búfer priorizado y red objetivo};
+\draw[flow] (ipExp) -- (ipLearn);
+\draw[flow] (idExp) -- (idLearn);
+\draw[frame] ([xshift=-5mm,yshift=5mm]ipTitle.north west) rectangle ([xshift=5mm,yshift=-5mm]ipLearn.south east);
+\draw[frame] ([xshift=-5mm,yshift=5mm]idTitle.north west) rectangle ([xshift=5mm,yshift=-5mm]idLearn.south east);
 
-\node[central] (joint) at (3.45,-.8)
-  {Observación conjunta};
-\node[central] (critic) at (3.45,-2.45)
-  {Crítico compartido};
-\node[actor] (ctdepolicy) at (3.45,-4.1)
-  {Actores de MAPPO / HAPPO};
-\draw[flow] (joint) -- (critic);
-\draw[flow] (critic) -- (ctdepolicy);
-
-\draw[dashed,black!40] (-7.1,-5.15) -- (7.1,-5.15);
-\node[font=\bfseries] at (0,-5.55) {Ejecución descentralizada};
-\node[draw=colDatoPrimario!85!black,fill=colEntorno!9,rounded corners=3pt,
-  text width=12.6cm,minimum height=.85cm,align=center,inner sep=5pt] (exec) at (0,-6.4)
-  {Selección de fase};
-\draw[flow] (ilpolicy.south) -- (ilpolicy.south |- exec.north);
-\draw[flow] (ctdepolicy.south) -- (ctdepolicy.south |- exec.north);
+\node[font=\bfseries,anchor=north] (mapTitle) at ([xshift=-2.5cm,yshift=-10mm]ipLearn.south) {MAPPO};
+\node[font=\bfseries,anchor=north] (hapTitle) at ([xshift=2.5cm,yshift=-10mm]idLearn.south) {HAPPO};
+\node[joint,below=5mm of mapTitle] (mapExp) {Experiencia conjunta\\(no equivale al estado global completo)};
+\node[learn,below=of mapExp] (mapCritic) {Crítico centralizado: estima $V_i$ por agente};
+\node[learn,below=of mapCritic] (mapUpdate) {Actualización PPO de cada actor};
+\node[joint,below=5mm of hapTitle] (hapExp) {Experiencia conjunta\\(no equivale al estado global completo)};
+\node[learn,below=of hapExp] (hapCritic) {Crítico centralizado: estima $V_i$ por agente};
+\node[learn,below=of hapCritic] (hapUpdate) {Actualiza el crítico y luego los actores en secuencia};
+\draw[flow] (mapExp) -- (mapCritic);
+\draw[feedback] (mapCritic) -- node[right,font=\footnotesize,inner sep=2pt] {ventajas} (mapUpdate);
+\draw[flow] (hapExp) -- (hapCritic);
+\draw[feedback] (hapCritic) -- node[right,font=\footnotesize,inner sep=2pt] {factores} (hapUpdate);
+\draw[frame] ([xshift=-5mm,yshift=5mm]mapTitle.north west) rectangle ([xshift=5mm,yshift=-5mm]mapUpdate.south east);
+\draw[frame] ([xshift=-5mm,yshift=5mm]hapTitle.north west) rectangle ([xshift=5mm,yshift=-5mm]hapUpdate.south east);
 \end{tikzpicture}
 \endgroup

@@ -24,7 +24,7 @@ La comparación A/C se presenta por separado de la selección de configuraciones
 
 \subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
 
-Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La tabla \ref{tab:metricas_validacion_mendoza} presenta conteos y tasas obtenidos con los programas semafóricos de la red; caracterizan su operación, no el desempeño de políticas aprendidas. La fila de dos horas corresponde a \texttt{mendoza\_0630\_0830.sumocfg}, que comienza en $t=1800$ (06:30) y no incluye el calentamiento de 300 segundos de la configuración MARL \texttt{mendoza\_marl\_2h.sumocfg}, que comienza en $t=1500$ (06:25).
+Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La Tabla \ref{tab:metricas_validacion_mendoza} presenta conteos y tasas de las corridas con programas semafóricos; caracterizan su operación, no el desempeño de políticas aprendidas. La fila de dos horas corresponde al intervalo de control de 06:30 a 08:30, sin calentamiento. La configuración MARL \path{mendoza_marl_2h.sumocfg} comienza a las 06:25 e incluye 300 segundos de calentamiento, pero su existencia no acredita una campaña MARL ejecutada. Las fuentes y límites de procedencia se detallan en la sección \ref{sec:procedencia_mendoza}.
 
 \begin{table}[H]
 \centering
@@ -35,12 +35,16 @@ Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
-        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Finalización} & \textit{teleport} \\ \hline
+        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Finalización} & \textbf{Teletransportes} \\ \hline
 2 horas ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
 12 horas ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
 \end{tabular}
 \end{adjustbox}
 \end{table}
+
+Los registros primarios, sus ventanas y la versión de SUMO se documentan en el apéndice \ref{sec:procedencia_mendoza}; los campos de carga, inserción y estadísticas sustentan los conteos de la tabla.
+
+Los logs revisados no contienen un contador explícito de teletransportes: los ceros de la tabla están informados en la documentación del escenario, no extraídos de un contador primario conservado. Tampoco se conservaron los archivos de rutas originales para confirmar que el archivo congelado descrito en el apéndice fuera exactamente la entrada consumida por estas dos corridas; los conteos describen las operaciones registradas y no validan por sí solos la construcción completa de la demanda.
 
 \section{Discusión e interpretación de resultados}
 

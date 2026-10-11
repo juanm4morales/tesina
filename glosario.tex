@@ -142,6 +142,13 @@
     description={Estructura que almacena experiencias previas para remuestrearlas durante el entrenamiento de un método basado en valor}
 }
 
+\newglossaryentry{checkpoint}{
+    name={\textit{checkpoint}},
+    text={\textit{checkpoint}},
+    plural={\textit{checkpoints}},
+    description={Archivo que guarda los parámetros del modelo y, si está implementado, el estado del entrenamiento en una iteración intermedia o final. Puede utilizarse para reanudar o evaluar desde ese punto; su existencia no demuestra que el ensayo esté completo ni que sus resultados sean admisibles}
+}
+
 \newglossaryentry{lambda_gae}{
     name={$\lambda$ (suavizado de la ventaja)},
     description={Hiperparámetro que pondera errores de diferencia temporal de distintos horizontes al estimar la ventaja y equilibra sesgo y varianza}
@@ -287,9 +294,10 @@
 }
 
 \newglossaryentry{teleport}{
-    name={\textit{Teleport} (SUMO)},
-    text={\textit{teleport}},
-    description={Mecanismo específico de SUMO que retira temporalmente un vehículo bloqueado y lo reinserta posteriormente para evitar que la simulación quede detenida}
+    name={Teletransporte de SUMO},
+    text={teletransporte},
+    plural={teletransportes},
+    description={Mecanismo de SUMO, denominado originalmente \textit{teleport}, que retira temporalmente un vehículo bloqueado y lo reinserta para evitar que la simulación se detenga}
 }
 
 \newglossaryentry{serializacion}{
