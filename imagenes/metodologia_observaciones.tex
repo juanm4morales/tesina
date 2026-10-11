@@ -1,0 +1,12 @@
+\begingroup
+\setstretch{1}
+\hyphenpenalty=10000
+\begin{tikzpicture}[font=\sffamily\small,>=Stealth,
+ box/.style={draw=colEntorno!80!black,fill=colEntorno!15,rounded corners,text width=3.5cm,align=center,inner sep=4pt},arrow/.style={->,thick}]
+\node[box] (local) at (0,0) {$p_i,\ w_{i,l}$};
+\node[box] (enc) at (4.6,0) {$p_i,\ e(w_{i,l})$};
+\node[box,fill=colAgente!18] (actor) at (9.2,0) {Actor de $i$};
+\draw[arrow] (local)--(enc);
+\draw[arrow] (enc)--(actor);
+\end{tikzpicture}
+\endgroup

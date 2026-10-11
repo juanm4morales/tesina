@@ -1,0 +1,47 @@
+\begingroup
+\setstretch{1}
+\hyphenpenalty=10000
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  >=Stealth,
+  frame/.style={draw=black!28,rounded corners=4pt,inner sep=9pt},
+  local/.style={draw=colEntorno!80!black,fill=colEntorno!13,rounded corners=3pt,
+  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
+  central/.style={draw=colInterfaz!75!black,fill=colInterfaz!19,rounded corners=3pt,
+  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
+  actor/.style={draw=colAgente!75!black,fill=colAgente!15,rounded corners=3pt,
+  text width=5.85cm,minimum height=1.0cm,align=center,inner sep=5pt},
+  flow/.style={-{Stealth[length=2.1mm]},line width=.8pt,draw=black!70}
+]
+\node[font=\bfseries] at (-3.45,.55) {Aprendizaje independiente};
+\node[font=\bfseries] at (3.45,.55) {Entrenamiento centralizado};
+\node[frame,minimum width=6.75cm,minimum height=4.95cm] at (-3.45,-2.45) {};
+\node[frame,minimum width=6.75cm,minimum height=4.95cm] at (3.45,-2.45) {};
+
+\node[local] (ilinput) at (-3.45,-.8)
+  {Observación local};
+\node[local] (ilmodel) at (-3.45,-2.45)
+  {IPPO / IDQN};
+\node[actor] (ilpolicy) at (-3.45,-4.1)
+  {Módulos por agente};
+\draw[flow] (ilinput) -- (ilmodel);
+\draw[flow] (ilmodel) -- (ilpolicy);
+
+\node[central] (joint) at (3.45,-.8)
+  {Observación conjunta};
+\node[central] (critic) at (3.45,-2.45)
+  {Crítico compartido};
+\node[actor] (ctdepolicy) at (3.45,-4.1)
+  {Actores de MAPPO / HAPPO};
+\draw[flow] (joint) -- (critic);
+\draw[flow] (critic) -- (ctdepolicy);
+
+\draw[dashed,black!40] (-7.1,-5.15) -- (7.1,-5.15);
+\node[font=\bfseries] at (0,-5.55) {Ejecución descentralizada};
+\node[draw=colDatoPrimario!85!black,fill=colEntorno!9,rounded corners=3pt,
+  text width=12.6cm,minimum height=.85cm,align=center,inner sep=5pt] (exec) at (0,-6.4)
+  {Selección de fase};
+\draw[flow] (ilpolicy.south) -- (ilpolicy.south |- exec.north);
+\draw[flow] (ctdepolicy.south) -- (ctdepolicy.south |- exec.north);
+\end{tikzpicture}
+\endgroup

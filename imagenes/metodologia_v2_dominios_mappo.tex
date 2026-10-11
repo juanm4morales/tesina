@@ -1,0 +1,49 @@
+\begingroup\footnotesize\setstretch{1.05}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.8cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{}}
+\hline
+\rowcolor{catAzulCielo!25}
+\multicolumn{4}{l}{\textbf{IPPO}}\\
+\hline
+\rowcolor{catAzulCielo!25}
+Parámetro & \shortstack{$3\times1$\\(h256)} & \shortstack{$3\times3$\\(h128)} & \shortstack{$4\times4_{\mathrm{H}}$\\(h128)} \\
+\hline
+\texttt{clip\_\allowbreak{}param}\,\textsc{U} & $[0{,}1;\allowbreak\,0{,}22]$ & $[0{,}1;\allowbreak\,0{,}22]$ & $[0{,}15327;\allowbreak\,0{,}19443]$ \\
+\texttt{encoder\_\allowbreak{}intervals}\,\textsc{R} & $[4;\,65)$ & $[4;\,65)$ & $[4;\,65)$ \\
+\texttt{entropy\_\allowbreak{}coeff}\,\textsc{U} & $[0{,}0038889;\allowbreak\,0{,}0095621]$ & $[0{,}00067906;\allowbreak\,0{,}0074136]$ & $[0{,}0036258;\allowbreak\,0{,}01]$ \\
+\texttt{grad\_\allowbreak{}clip}\,\textsc{LU} & $[0{,}25;\allowbreak\,5]$ & $[0{,}25;\allowbreak\,5]$ & $[0{,}42722;\allowbreak\,1{,}5143]$ \\
+\texttt{kl\_\allowbreak{}coeff}\,\textsc{LU} & $[0{,}055016;\allowbreak\,0{,}21664]$ & $[0{,}05;\allowbreak\,0{,}2904]$ & $[0{,}05;\allowbreak\,0{,}5]$ \\
+\texttt{kl\_\allowbreak{}target}\,\textsc{LU} & $[0{,}005;\allowbreak\,0{,}03]$ & $[0{,}005;\allowbreak\,0{,}03]$ & $[0{,}005;\allowbreak\,0{,}03]$ \\
+\texttt{lambda\_\allowbreak{}gae}\,\textsc{U} & $[0{,}88;\allowbreak\,0{,}99]$ & $[0{,}89174;\allowbreak\,0{,}96008]$ & $[0{,}88;\allowbreak\,0{,}99]$ \\
+\texttt{lr}\,\textsc{LU} & $[3\times10^{-5};\allowbreak\,1\times10^{-3}]$ & $[1{,}136\times10^{-4};\allowbreak\,9{,}113\times10^{-4}]$ & $[1{,}322\times10^{-4};\allowbreak\,4{,}772\times10^{-4}]$ \\
+\texttt{minibatch\_\allowbreak{}size}\,\textsc{C} & $\{128;\,512\}$ & $\{128;\,512\}$ & $\{128;\,512\}$ \\
+\texttt{num\_\allowbreak{}epochs}\,\textsc{R} & $[5;\,16)$ & $[5;\,16)$ & $[5;\,16)$ \\
+\texttt{train\_\allowbreak{}batch\_\allowbreak{}episodes}\,\textsc{R} & $[2;\,13)$ & $[2;\,13)$ & $[2;\,13)$ \\
+\texttt{vf\_\allowbreak{}clip\_\allowbreak{}param}\,\textsc{LU} & $[5;\allowbreak\,20]$ & $[5;\allowbreak\,20]$ & $[5;\allowbreak\,20]$ \\
+\hline
+\end{tabular}
+\endgroup
+\par\medskip
+\begingroup\footnotesize\setstretch{1.05}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.8cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{}}
+\hline
+\rowcolor{catAzulCielo!25}
+\multicolumn{4}{l}{\textbf{MAPPO}}\\
+\hline
+\rowcolor{catAzulCielo!25}
+Parámetro & \shortstack{$3\times1$\\(h128)} & \shortstack{$3\times3$\\(h128)} & \shortstack{$4\times4_{\mathrm{H}}$\\(h128)} \\
+\hline
+\texttt{clip\_\allowbreak{}param}\,\textsc{U} & $[0{,}1;\allowbreak\,0{,}22]$ & $[0{,}1;\allowbreak\,0{,}22]$ & $[0{,}1;\allowbreak\,0{,}22]$ \\
+\texttt{encoder\_\allowbreak{}intervals}\,\textsc{R} & $[4;\,65)$ & $[8;\,45)$ & $[4;\,65)$ \\
+\texttt{entropy\_\allowbreak{}coeff}\,\textsc{U} & $[0{,}00015809;\allowbreak\,0{,}0062478]$ & $[0;\allowbreak\,0{,}01]$ & $[0{,}0021511;\allowbreak\,0{,}0080125]$ \\
+\texttt{grad\_\allowbreak{}clip}\,\textsc{LU} & $[0{,}28422;\allowbreak\,0{,}80645]$ & $[0{,}25;\allowbreak\,5]$ & $[1{,}1032;\allowbreak\,5]$ \\
+\texttt{kl\_\allowbreak{}coeff}\,\textsc{LU} & $[0{,}05;\allowbreak\,0{,}13242]$ & $[0{,}05;\allowbreak\,0{,}5]$ & $[0{,}14905;\allowbreak\,0{,}38494]$ \\
+\texttt{kl\_\allowbreak{}target}\,\textsc{LU} & $[0{,}005;\allowbreak\,0{,}03]$ & $[0{,}01384;\allowbreak\,0{,}028938]$ & $[0{,}005;\allowbreak\,0{,}01363]$ \\
+\texttt{lambda\_\allowbreak{}gae}\,\textsc{U} & $[0{,}88703;\allowbreak\,0{,}92246]$ & $[0{,}88;\allowbreak\,0{,}99]$ & $[0{,}88;\allowbreak\,0{,}99]$ \\
+\texttt{lr}\,\textsc{LU} & $[4{,}285\times10^{-5};\allowbreak\,1{,}695\times10^{-4}]$ & $[1{,}947\times10^{-4};\allowbreak\,1\times10^{-3}]$ & $[3\times10^{-5};\allowbreak\,1\times10^{-3}]$ \\
+\texttt{minibatch\_\allowbreak{}size}\,\textsc{C} & $\{256;\,512\}$ & $\{128;\,512\}$ & \shortstack{$\{128;\,256;$\\$512\}$} \\
+\texttt{num\_\allowbreak{}epochs}\,\textsc{R} & $[5;\,16)$ & $[6;\,13)$ & $[5;\,16)$ \\
+\texttt{train\_\allowbreak{}batch\_\allowbreak{}episodes}\,\textsc{R} & $[2;\,13)$ & $[2;\,13)$ & $[2;\,13)$ \\
+\texttt{vf\_\allowbreak{}clip\_\allowbreak{}param}\,\textsc{LU} & $[5;\allowbreak\,20]$ & $[5;\allowbreak\,20]$ & $[5;\allowbreak\,20]$ \\
+\hline
+\end{tabular}
+\endgroup

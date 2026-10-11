@@ -1,0 +1,17 @@
+\begingroup
+\setstretch{1}
+\hyphenpenalty=10000
+\begin{tikzpicture}[font=\sffamily\small,>=Stealth,
+ box/.style={draw=colEntorno!80!black,fill=colEntorno!15,rounded corners,text width=4.0cm,minimum height=1.05cm,align=center,inner sep=5pt},arrow/.style={->,thick}]
+\node[box] (seed) at (0,0) {Semilla de entrenamiento $s$\\\footnotesize mismo valor en ambas condiciones};
+\node[box,fill=colInterfaz!20] (a) at (-3,-2.5) {Política A\\\footnotesize local; \textit{checkpoint} iteración 40};
+\node[box,fill=colAgente!18] (c) at (3,-2.5) {Política C\\\footnotesize vecinal; \textit{checkpoint} iteración 40};
+\node[box] (eva) at (-3,-4.5) {5 evaluaciones SUMO\\\footnotesize semillas 71001--71005};
+\node[box] (evc) at (3,-4.5) {5 evaluaciones SUMO\\\footnotesize mismas semillas de tráfico};
+\node[box,fill=white] (means) at (0,-6.4) {Promedios $\bar w_{s,A}$ y $\bar w_{s,C}$\\\footnotesize una diferencia por par};
+\node[box,fill=colInterfaz!20,text width=9.2cm] (boot) at (0,-8.4) {24 pares por escenario: remuestreo de pares completos\\\footnotesize 20.000 réplicas; intervalos 95\% y 98,33\%};
+\draw[arrow] (seed)--(a);\draw[arrow] (seed)--(c);
+\draw[arrow] (a)--(eva);\draw[arrow] (c)--(evc);
+\draw[arrow] (eva)--(means);\draw[arrow] (evc)--(means);\draw[arrow] (means)--(boot);
+\end{tikzpicture}
+\endgroup

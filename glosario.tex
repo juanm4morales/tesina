@@ -107,8 +107,8 @@
 }
 
 \newglossaryentry{batch_entrenamiento}{
-    name={\textit{Batch} (lote)},
-    text={\textit{batch}},
+    name={Lote (\textit{batch})},
+    text={lote},
     description={Conjunto de muestras o transiciones procesadas conjuntamente durante una operación de entrenamiento.}
 }
 
@@ -127,7 +127,7 @@
 \newglossaryentry{mini_lote}{
     name={\textit{Minibatch} (minilote)},
     text={\textit{minibatch}},
-    description={Subconjunto reducido de muestras extraído de un \textit{batch} utilizado para estimar el gradiente y actualizar los parámetros de un modelo durante el entrenamiento}
+    description={Subconjunto reducido de muestras extraído de un lote utilizado para estimar el gradiente y actualizar los parámetros de un modelo durante el entrenamiento}
 }
 
 \newglossaryentry{rollout}{
@@ -189,12 +189,12 @@
 
 \newglossaryentry{demora_wnet}{
     name={$W_{\text{net}}$ (demora acumulada global)},
-    description={Métrica operacional agregada que cuantifica la suma de los tiempos de espera de todos los vehículos detenidos en la red durante la ventana de evaluación, expresada en vehículo$\cdot$segundo ($\text{veh}\,\text{s}$)}
+    description={Métrica agregada que suma los segundos de espera de los vehículos detenidos en la red durante la ventana de evaluación}
 }
 
 \newglossaryentry{rho_coop}{
     name={$\rho_{\mathrm{coop}}$ (ponderación cooperativa)},
-    description={Coeficiente en el intervalo $[0, 0.95]$ que pondera la combinación convexa entre la señal de recompensa local de una intersección y el promedio de su vecindario topológico}
+    description={Coeficiente en $[0,1)$ que pondera la combinación entre la recompensa local de una intersección y la señal promedio de sus vecinos topológicos; los dominios de búsqueda pueden restringirlo a un intervalo menor}
 }
 
 \newglossaryentry{factor_m_happo}{
@@ -204,7 +204,7 @@
 
 \newglossaryentry{gini_wait}{
     name={$G_{\text{wait}}$ (coeficiente de Gini de esperas)},
-    description={Índice adimensional entre 0 y 1 que cuantifica el grado de desigualdad en la distribución espacial de los tiempos de espera medios entre las intersecciones semaforizadas de la red}
+    description={Índice adimensional entre 0 y 1 que cuantifica la desigualdad entre las medias temporales de espera por intersección; no describe la distribución entre vehículos}
 }
 
 \newglossaryentry{recompensa}{
@@ -280,12 +280,6 @@
     description={Conjunto de mediciones que el simulador registra durante la ejecución, como velocidades, posiciones, detenciones y tiempos de espera}
 }
 
-\newglossaryentry{framework}{
-    name={Marco de trabajo (\textit{framework})},
-    text={\textit{framework}},
-    description={Conjunto reutilizable de interfaces, componentes y reglas que facilita la construcción y la integración de un sistema de software}
-}
-
 \newglossaryentry{binding}{
     name={\textit{Binding}},
     text={\textit{binding}},
@@ -320,4 +314,33 @@
 \newglossaryentry{bootstrap}{
     name={\textit{Bootstrap}},
     description={Procedimiento de remuestreo con reemplazo utilizado para aproximar la incertidumbre de un estimador a partir de las observaciones disponibles}
+}
+
+\newglossaryentry{memoriaespera}{
+ name={Memoria temporal de espera},
+ text={memoria temporal de espera},
+ description={Intervalo finito sobre el cual SUMO acumula la espera consultada mediante TraCI; se distingue de la espera total registrada por viaje en TripInfo}
+}
+\newglossaryentry{parpoliticas}{
+ name={Par de políticas},
+ text={par de políticas},
+ description={Unidad experimental compuesta por dos políticas entrenadas con la misma semilla y evaluadas con el mismo conjunto de semillas de simulación}
+}
+
+
+\newglossaryentry{semilla}{
+ name={Semilla}, text={semilla},
+ description={Número que inicializa un generador de números pseudoaleatorios. Permite repetir su secuencia cuando se conservan el procedimiento y la configuración; usar la misma semilla no garantiza resultados idénticos si se modifican las decisiones del agente o el entorno}
+}
+\newglossaryentry{aceleracion_vehicular}{
+ name={$a$ (aceleración vehicular)}, text={aceleración},
+ description={Parámetro de aumento de velocidad del tipo de vehículo en SUMO, expresado en metros por segundo cuadrado. En las ecuaciones de aprendizaje, la letra $a$ puede representar una acción; son usos distintos que se distinguen por el contexto}
+}
+\newglossaryentry{desaceleracion_vehicular}{
+ name={$d$ (desaceleración vehicular)}, text={desaceleración},
+ description={Parámetro de frenado del tipo de vehículo en SUMO, expresado como una magnitud positiva en metros por segundo cuadrado}
+}
+\newglossaryentry{velocidad_maxima_vehicular}{
+ name={$v_{\max}$ (velocidad máxima vehicular)}, text={velocidad máxima},
+ description={Velocidad máxima configurada para un tipo de vehículo, expresada en metros por segundo; el límite de la vía también restringe la velocidad permitida}
 }

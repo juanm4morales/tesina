@@ -1,0 +1,43 @@
+\begingroup
+\setstretch{1}
+\hyphenpenalty=10000
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  >=Stealth,
+  stage/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners=3pt,
+    text width=3.35cm,minimum height=1.15cm,align=center,inner sep=6pt},
+  learning/.style={stage,fill=colInterfaz!18,draw=colInterfaz!70!black},
+  check/.style={stage,fill=catLilaSuave!18,draw=catLilaSuave!80!black},
+  output/.style={stage,fill=colAgente!14,draw=colAgente!75!black},
+  flow/.style={-{Stealth[length=2.2mm]},line width=.8pt,draw=black!70}
+]
+\node[stage,text width=12.4cm] (setup) at (0,0)
+  {Preparación de escenarios};
+\node[stage,text width=7.2cm] (environment) at (-2.5,-2)
+  {Entorno multiagente};
+\node[check,text width=3.85cm] (urban) at (4.5,-2)
+  {Verificación del\\escenario de Mendoza};
+
+\node[learning] (hpo) at (-4.5,-4.2)
+  {Búsqueda de hiperparámetros};
+\node[learning] (ac) at (-.5,-4.2)
+  {Comparación A/C};
+
+\node[output] (hporesult) at (-4.5,-6.2)
+  {Evaluación de configuraciones};
+\node[output] (acresult) at (-.5,-6.2)
+  {Evaluación por pares};
+
+% Dependencias de preparación; la comprobación urbana no sucede a las evaluaciones.
+\coordinate (prepared) at (0,-1);
+\draw[line width=.8pt,draw=black!70] (setup.south) -- (prepared);
+\draw[flow] (prepared) -| (environment.north);
+\draw[flow] (prepared) -| (urban.north);
+\coordinate (branch) at (-2.5,-3.1);
+\draw[line width=.8pt,draw=black!70] (environment.south) -- (branch);
+\draw[flow] (branch) -| (hpo.north);
+\draw[flow] (branch) -| (ac.north);
+\draw[flow] (hpo.south) -- (hporesult.north);
+\draw[flow] (ac.south) -- (acresult.north);
+\end{tikzpicture}
+\endgroup

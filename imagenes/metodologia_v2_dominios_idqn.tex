@@ -1,0 +1,18 @@
+\begingroup\footnotesize\setstretch{1.05}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.8cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{}}
+\hline
+\rowcolor{catAzulCielo!25}
+Parámetro & \shortstack{$3\times1$\\(h256)} & \shortstack{$3\times3$\\(h128)} & \shortstack{$4\times4_{\mathrm{H}}$\\(h256)} \\
+\hline
+\texttt{encoder\_\allowbreak{}intervals}\,\textsc{R} & $[10;\,62)$ & $[7;\,33)$ & $[4;\,65)$ \\
+\texttt{epsilon\_\allowbreak{}final}\,\textsc{U} & $[0{,}02;\allowbreak\,0{,}047523]$ & $[0{,}023555;\allowbreak\,0{,}066094]$ & $[0{,}02;\allowbreak\,0{,}1]$ \\
+\texttt{epsilon\_\allowbreak{}timesteps}\,\textsc{C} & $\{10\,000;\,20\,000\}$ & $\{10\,000;\,20\,000\}$ & $\{10\,000;\,20\,000\}$ \\
+\texttt{grad\_\allowbreak{}clip}\,\textsc{C} & \shortstack{$\{0{,}5;\,1;$\\$2;\,5;$\\$10\}$} & \shortstack{$\{0{,}5;\,1;$\\$2\}$} & \shortstack{$\{1;\,2;$\\$5;\,10\}$} \\
+\texttt{lr}\,\textsc{LU} & $[9{,}879\times10^{-5};\allowbreak\,1\times10^{-3}]$ & $[1\times10^{-5};\allowbreak\,1\times10^{-3}]$ & $[8{,}135\times10^{-5};\allowbreak\,7{,}889\times10^{-4}]$ \\
+\texttt{n\_\allowbreak{}step}\,\textsc{C} & $\{3;\,5\}$ & $\{1;\,3\}$ & \shortstack{$\{1;\,3;$\\$5\}$} \\
+\begin{tabular}[t]{@{}l@{}}\texttt{num\_steps\_}\\\texttt{sampled\_before\_}\\\texttt{learning\_starts}\\\textsc{C}\end{tabular} & \shortstack{$\{1\,000;\,2\,000;$\\$5\,000\}$} & \shortstack{$\{1\,000;\,2\,000;$\\$5\,000\}$} & \shortstack{$\{1\,000;\,2\,000;$\\$5\,000\}$} \\
+\begin{tabular}[t]{@{}l@{}}\texttt{target\_network\_}\\\texttt{update\_freq}\\\textsc{C}\end{tabular} & \shortstack{$\{500;\,1\,000;$\\$2\,000;\,5\,000\}$} & \shortstack{$\{500;\,2\,000;$\\$5\,000\}$} & \shortstack{$\{500;\,1\,000;$\\$2\,000\}$} \\
+\begin{tabular}[t]{@{}l@{}}\texttt{train\_batch\_}\\\texttt{size\_per\_}\\\texttt{learner}\\\textsc{C}\end{tabular} & \shortstack{$\{64;\,128;$\\$256\}$} & $\{256;\,512\}$ & \shortstack{$\{64;\,128;$\\$256\}$} \\
+\hline
+\end{tabular}
+\endgroup

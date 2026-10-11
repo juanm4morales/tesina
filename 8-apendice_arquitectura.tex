@@ -1,14 +1,14 @@
-\chapter{Arquitectura de software y patrones de diseño}
+\chapter{Arquitectura de software y reproducción experimental}
 \label{apendice:arquitectura_software}
 
-En este apéndice se documenta la especificación arquitectónica del framework \texttt{marlTLC}, su organización orientada a objetos, los diagramas de clases \acrshort{acr-uml} y los patrones de diseño previstos para desacoplar los componentes de simulación, aprendizaje por refuerzo y cálculo de recompensas. El repositorio que acompaña a este documento no contiene el código fuente completo del framework; por ello, las clases, métodos y relaciones que se presentan deben interpretarse como una especificación de diseño y no como una auditoría de archivos ejecutables.
+Este apéndice describe el diseño orientado a objetos del paquete de software \texttt{marlTLC} mediante diagramas de clases \acrshort{acr-uml} y presenta los patrones previstos para separar la simulación, el aprendizaje por refuerzo y el cálculo de recompensas. Los diagramas representan el diseño inicial y no una correspondencia exhaustiva entre clases y archivos ejecutables. Los apartados finales reúnen parámetros, dominios y semillas necesarios para reproducir los procedimientos descritos.
 
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
 
-El diseño del entorno separa las responsabilidades de sus componentes. En la especificación, la clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de \acrshort{acr-sumo}, el control temporal y la interacción de bajo nivel con la \acrshort{acr-api} \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} se define como el adaptador de la simulación a la interfaz \texttt{MultiAgentEnv} de Ray RLlib.
+El diseño del entorno separa las responsabilidades de sus componentes. En la especificación, la clase abstracta \texttt{BaseSumoEnvironment} encapsula la inicialización de \acrshort{acr-sumo}, el control temporal y la interacción de bajo nivel con la \acrshort{acr-api} \texttt{libsumo} / \texttt{traci}. A partir de ella, \texttt{SumoRllibEnv} se define como adaptador de la simulación a la interfaz \texttt{MultiAgentEnv} de Ray RLlib.
 
-La figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{acr-uml} correspondiente a las entidades del entorno y su relación con los controladores semafóricos. Un diagrama de clases representa los tipos de objetos que componen un programa. Cada recuadro se divide en tres partes: el nombre de la clase, sus atributos o datos almacenados y sus métodos u operaciones. El signo ``$-$'' indica un miembro de uso interno o privado; ``$+$'', uno público; y ``\#'', uno protegido, destinado a la propia clase y a sus derivadas. El texto situado después de los dos puntos indica el tipo de dato esperado. Los nombres en cursiva corresponden a clases u operaciones abstractas: definen una interfaz que debe concretarse en otra clase. Una flecha con la leyenda ``hereda de'' apunta desde la clase especializada hacia la clase general, mientras que la multiplicidad $1..*$ significa ``uno o más'' objetos relacionados.
+La figura \ref{fig:uml_entorno_agentes} presenta las entidades del entorno y sus relaciones con los agentes semafóricos. En un diagrama de clases, cada recuadro contiene el nombre de la clase, sus atributos y sus operaciones. El signo ``$-$'' identifica miembros privados, ``$+$'' públicos y ``\#'' protegidos, disponibles en la clase y sus derivadas. El texto después de los dos puntos indica el tipo de dato. La cursiva señala una clase u operación abstracta, que debe concretarse en otra clase. La flecha ``hereda de'' apunta desde la clase especializada hacia la general; la multiplicidad $1..*$ indica ``uno o más'' objetos relacionados.
 
 \begin{figure}[H]
 \centering
@@ -36,9 +36,9 @@ La figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{
     - \texttt{warming\_time: int}\\
     - \texttt{traffic\_lights: Dict[str, TrafficLight]}\\
     \rule{\linewidth}{0.4pt}
-    + \texttt{\textit{reset}(): Tuple[Dict, Dict]}\\
-    + \texttt{\textit{step}(actions: Dict): Tuple}\\
-    + \texttt{\textit{close}()}\\
+    + \texttt{reset(): Tuple[Dict, Dict]}\\
+    + \texttt{step(actions: Dict): Tuple}\\
+    + \texttt{close()}\\
     \# \texttt{\_save\_warmup\_state()}\\
     \# \texttt{\_load\_warmup\_state()}
   };
@@ -92,20 +92,20 @@ La figura \ref{fig:uml_entorno_agentes} ilustra el diagrama de clases \acrshort{
   \draw[->, thick, line width=1pt] (tl) -- node[right] {1..* gestiona} (lane);
 
 \end{tikzpicture}
-\caption[Diagrama de clases del entorno de simulación y de sus relaciones principales.]{Diagrama de clases \acrshort{acr-uml} del entorno. \texttt{SumoRllibEnv} hereda la interfaz de \texttt{BaseSumoEnvironment}; el entorno contiene uno o más objetos \texttt{TrafficLight}, y cada controlador semafórico gestiona uno o más objetos \texttt{Lane}. En cada clase se muestran sus principales atributos y métodos.}
+\caption[Diagrama de clases del entorno de simulación y de sus relaciones principales.]{Diagrama de clases \acrshort{acr-uml} del entorno. \texttt{SumoRllibEnv} adapta la clase abstracta \texttt{BaseSumoEnvironment}; el entorno contiene uno o más objetos \texttt{TrafficLight}, y cada uno gestiona objetos \texttt{Lane}. En cada clase se muestran sus principales atributos y métodos.}
 \label{fig:uml_entorno_agentes}
 \end{figure}
 
-La figura \ref{fig:uml_entorno_agentes} se organiza desde la abstracción general hacia las entidades de la red. En la columna izquierda, \texttt{BaseSumoEnvironment} concentra el archivo de configuración, los parámetros temporales, los controladores y las operaciones generales de reinicio, avance y cierre. Debajo, \texttt{SumoRllibEnv} especializa esa clase para recibir un diccionario de acciones de los agentes y devolver las observaciones, recompensas y estados definidos por la interfaz de Ray RLlib. A la derecha, el diseño asigna a \texttt{TrafficLight} la fase actual, la siguiente fase, sus carriles, su función de recompensa y sus vecinos; también le asigna la actualización de métricas y la aplicación de acciones. Finalmente, \texttt{Lane} representa la longitud y las medidas recientes de detención y espera. Las flechas muestran las dependencias previstas entre la interfaz de aprendizaje, el entorno, los controladores y sus carriles.
+La figura \ref{fig:uml_entorno_agentes} se organiza desde la abstracción general hacia las entidades de la red. En la columna izquierda, \texttt{BaseSumo}\allowbreak\hspace{0pt}\texttt{Environment} concentra el archivo de configuración, los parámetros temporales, los semáforos y las operaciones generales de reinicio, avance y cierre. Debajo, \texttt{SumoRllib}\allowbreak\hspace{0pt}\texttt{Env} especializa esa clase para recibir un diccionario de acciones de los agentes y devolver las observaciones, recompensas y estados definidos por la interfaz de Ray RLlib. A la derecha, el diseño asigna a \texttt{TrafficLight} la fase actual, la siguiente fase, sus carriles, su función de recompensa y sus vecinos; también le asigna la actualización de métricas y la aplicación de acciones. Finalmente, \texttt{Lane} representa la longitud y las medidas recientes de detención y espera. Las flechas muestran las dependencias previstas entre la interfaz de aprendizaje, el entorno, los semáforos y sus carriles.
 
-\section{Jerarquía de funciones de recompensa y patrón Strategy}
+\section[Jerarquía de funciones de recompensa y patrón Strategy]{Jerarquía de funciones de recompensa y patrón \textit{Strategy}}
 \label{sec:apendice_uml_recompensas}
 
-En la especificación, el cálculo de la recompensa se desacopla mediante el patrón \textbf{Strategy}. Esta organización permite sustituir la métrica de optimización sin modificar el bucle principal de simulación.
+En la especificación, el cálculo de la recompensa se desacopla mediante el patrón \textbf{\textit{Strategy}}. Esta organización permite sustituir la métrica de optimización sin modificar el bucle principal de simulación.
 
-La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{compute\_reward(tl\_id)}. En el diseño se contemplan formulaciones locales basadas en tres señales: demora acumulada, longitud de cola y presión de red. La coordinación distribuida se representa mediante el patrón \textbf{Composite}: una clase de recompensa compuesta combina la señal local y la señal promedio de los semáforos adyacentes.
+La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{compute\_reward(}\allowbreak\hspace{0pt}\texttt{tl\_id)}. En el diseño se contemplan formulaciones locales basadas en tres señales: demora acumulada, longitud de cola y presión de red. La coordinación distribuida se representa mediante el patrón \textbf{\textit{Composite}}: una clase de recompensa compuesta combina la señal local y la señal promedio de los semáforos adyacentes.
 
-La figura \ref{fig:uml_recompensas} detalla las clases que intervienen directamente en la recompensa cooperativa. Las demás estrategias locales registradas en el sistema no se dibujan para conservar la legibilidad. Se mantienen las convenciones explicadas para la figura \ref{fig:uml_entorno_agentes}; en este segundo diagrama, la flecha discontinua rotulada ``compone'' indica que una clase utiliza otra como parte de su cálculo, no que herede sus atributos y métodos.
+La figura \ref{fig:uml_recompensas} detalla las clases que intervienen en la recompensa cooperativa. Las demás estrategias locales no se dibujan para conservar la legibilidad. Se mantienen las convenciones de la figura \ref{fig:uml_entorno_agentes}; en este segundo diagrama, la flecha discontinua ``compone'' indica que una clase usa otra en su cálculo, no que herede sus atributos y métodos.
 
 \begin{figure}[H]
 \centering
@@ -174,51 +174,256 @@ La figura \ref{fig:uml_recompensas} detalla las clases que intervienen directame
 
 \end{tikzpicture}%
 }
-\caption[Especificación UML del módulo de recompensas.]{Especificación \acrshort{acr-uml} del módulo de recompensas. Las clases inferiores se definen como realizaciones de \texttt{RewardFn}; la clase compuesta incorpora la señal promedio de los controladores vecinos.}
+\caption[Especificación UML del módulo de recompensas.]{Especificación \acrshort{acr-uml} del módulo de recompensas. Las clases inferiores realizan la interfaz \texttt{RewardFn}; la clase compuesta incorpora la señal promedio de los agentes vecinos.}
 \label{fig:uml_recompensas}
 \end{figure}
 
-La figura \ref{fig:uml_recompensas} sitúa a \texttt{RewardFn} en la parte superior porque define la operación común \texttt{compute\_reward}, que recibe el identificador de un controlador semafórico y devuelve un valor numérico. Las tres flechas ascendentes indican que las clases inferiores se especializan para proporcionar variantes de esa operación. \texttt{DiffAccWaitingTimeNormalized} representa una señal local normalizada a partir de la variación del tiempo de espera acumulado, mientras que \texttt{NeighborAvgReward} promedia la señal base de los controladores vecinos. \texttt{NeighborhoodRelevanceReward} conserva ambas funciones y las combina según $\rho_{\mathrm{coop}}$, el peso de cooperación vecinal. La flecha discontinua entre las dos últimas clases muestra esa relación de composición. Esta separación permite cambiar la formulación de la recompensa sin modificar el bucle que avanza la simulación.
+La figura \ref{fig:uml_recompensas} sitúa la clase abstracta \texttt{RewardFn} en la parte superior; esta define la operación abstracta \texttt{compute\_reward}, que recibe un identificador de semáforo y devuelve un valor numérico. Las flechas indican las clases que implementan variantes de esa operación. \texttt{DiffAccWaitingTimeNormalized} representa una señal local normalizada a partir de la variación de la espera acumulada; \texttt{NeighborAvgReward} promedia la señal base de los vecinos; y \texttt{NeighborhoodRelevanceReward} combina ambas según $\rho_{\mathrm{coop}}$. La flecha discontinua indica la composición entre las dos últimas clases. Esta separación permite sustituir la formulación de la recompensa sin cambiar el bucle de simulación.
 
-\section{Patrones de diseño implementados}
+\section{Patrones de diseño de la arquitectura}
 \label{sec:apendice_patrones_diseno}
 
 A continuación se resumen los patrones contemplados en la especificación de \texttt{marlTLC}. La lista describe responsabilidades y relaciones de diseño; no certifica la presencia de una implementación ejecutable de cada componente en el repositorio.
 
 \begin{enumerate}
-    \item \textbf{Patrón Strategy (Estrategia):}
+    \item \textbf{Patrón de estrategia (\textit{Strategy}):}
     \begin{itemize}
-        \item \textbf{Propósito:} encapsular los algoritmos de recompensa para intercambiarlos sin modificar los controladores semafóricos.
+        \item \textbf{Propósito:} encapsular los algoritmos de recompensa para intercambiarlos sin modificar el módulo que aplica las señales.
         \item \textbf{Rol en el diseño:} interfaz base \texttt{RewardFn} y variantes concretas de recompensa.
     \end{itemize}
 
-    \item \textbf{Patrón Factory Method y Registry (Fábrica con Registro Dinámico):}
+    \item \textbf{Método de fábrica y registro (\textit{Factory Method} y \textit{Registry}):}
     \begin{itemize}
         \item \textbf{Propósito:} instanciar funciones de recompensa y módulos neuronales a partir de cadenas de configuración o especificaciones compuestas (\texttt{RewardSpec}). También permite registrar nuevas funciones sin modificar la fábrica, de acuerdo con el principio abierto/cerrado.
         \item \textbf{Rol en el diseño:} registro mediante \texttt{RewardFactory} y \texttt{@register\_reward}, que identifica el mecanismo previsto para asociar nombres de configuración con funciones de recompensa.
     \end{itemize}
 
-    \item \textbf{Patrón Composite (Objeto Compuesto):}
+    \item \textbf{Patrón de objeto compuesto (\textit{Composite}):}
     \begin{itemize}
         \item \textbf{Propósito:} combinar recompensas locales y vecinales mediante una interfaz uniforme.
         \item \textbf{Rol en el diseño:} clases de recompensa compuesta que agregan señales locales y vecinales.
     \end{itemize}
 
-    \item \textbf{Patrón Protocol / Structural Subtyping (Tipado Estructural):}
+    \item \textbf{Protocolos y tipado estructural (\textit{Protocol} / \textit{Structural Subtyping}):}
     \begin{itemize}
         \item \textbf{Propósito:} desacoplar el proveedor de métricas vecinales del tipo concreto \texttt{TrafficLight}, facilitando las pruebas unitarias con objetos simulados (\textit{mocks}) y evitando dependencias circulares.
         \item \textbf{Rol en el diseño:} protocolo \texttt{NeighborInfoProvider} para describir la información vecinal requerida sin depender de una clase concreta. El detalle del decorador de comprobación en tiempo de ejecución no forma parte de la evidencia disponible en este repositorio.
     \end{itemize}
 
-    \item \textbf{Patrón Adapter (Adaptador):}
+    \item \textbf{Patrón de adaptador (\textit{Adapter}):}
     \begin{itemize}
-        \item \textbf{Propósito:} traducir la \acrshort{acr-api} procedural y basada en comandos de \acrshort{acr-traci} / \texttt{libsumo} a la interfaz orientada a objetos de \texttt{MultiAgentEnv} (Ray RLlib).
+        \item \textbf{Propósito:} adaptar la \acrshort{acr-api} procedural y basada en comandos de \acrshort{acr-traci} / \texttt{libsumo} a la interfaz orientada a objetos de \texttt{MultiAgentEnv} (Ray RLlib).
         \item \textbf{Rol en el diseño:} \texttt{SumoRllibEnv} como punto de adaptación entre el simulador y la interfaz de aprendizaje.
     \end{itemize}
 
-    \item \textbf{Patrón Decorator (Decorador):}
+    \item \textbf{Patrón de decorador (\textit{Decorator}):}
     \begin{itemize}
         \item \textbf{Propósito:} extender dinámicamente las capacidades de los módulos sin alterar su jerarquía de herencia.
         \item \textbf{Rol en el diseño:} decoradores de registro y una envoltura para los módulos de acción en PyTorch; los nombres concretos de esas piezas se mantienen como identificadores de la especificación.
     \end{itemize}
 \end{enumerate}
+
+
+
+\section{Parámetros de SUMO y programas semafóricos de referencia}
+\label{sec:parametros_sumo}
+
+Los archivos de red contienen las secuencias de señales utilizadas antes de aplicar las decisiones de los agentes. En las redes sintéticas, todos los programas son de tiempo fijo y tienen un ciclo de 90 segundos; sus duraciones aparecen en la Tabla \ref{tab:tiempos_semaforicos_base}.
+
+La red de Mendoza contiene 73 programas: 17 de tiempo fijo y 56 accionados, es decir, que responden a la detección de vehículos. La tabla \ref{tab:tiempos_mendoza_base} agrupa las secuencias de duraciones nominales del archivo \texttt{gran\_mendoza2\_fixed.net.xml}. Cada fila reúne programas con la misma secuencia de duraciones, aunque sus movimientos habilitados pueden diferir.
+
+\begin{table}[H]\centering\small
+\caption{Duraciones nominales de las fases en el archivo de red de Mendoza, en segundos.}
+\label{tab:tiempos_mendoza_base}
+\begin{tabular}{ll>{\raggedright\arraybackslash}p{8.6cm}}\hline
+Tipo & Cantidad & Secuencia de duraciones \\\hline
+Accionado & 1 & $33,\ 6,\ 6,\ 6,\ 33,\ 6$ \\
+Accionado & 5 & $39,\ 6,\ 39,\ 6$ \\
+Accionado & 19 & $40,\ 5,\ 40,\ 5$ \\
+Accionado & 5 & $41,\ 4,\ 41,\ 4$ \\
+Accionado & 24 & $42,\ 3,\ 42,\ 3$ \\
+Accionado & 1 & $81,\ 4,\ 5$ \\
+Accionado & 1 & $82,\ 3,\ 5$ \\
+Fijo & 1 & $24,\ 3,\ 24,\ 3,\ 6,\ 3,\ 24,\ 3$ \\
+Fijo & 2 & $39,\ 6,\ 39,\ 6$ \\
+Fijo & 3 & $40,\ 5,\ 40,\ 5$ \\
+Fijo & 1 & $41,\ 4,\ 41,\ 4$ \\
+Fijo & 8 & $42,\ 3,\ 42,\ 3$ \\
+Fijo & 2 & $82,\ 3,\ 5$ \\
+\hline
+\end{tabular}\end{table}
+
+En los programas accionados, la duración efectiva puede variar. Los atributos \textit{minDur} y \textit{maxDur} establecen los límites de cada verde: los mínimos registrados son 5, 7, 10 o 13 segundos según la fase, y el máximo es de 50 segundos. Por eso, sumar las duraciones nominales de la tabla no permite afirmar que todos los ciclos ejecutados duren lo mismo.
+
+\subsection{Identificadores del escenario urbano de Mendoza}
+
+En la figura \ref{fig:dominio_mendoza}, el acceso de Avenida José Vicente Zapata se representa mediante el tramo interno \texttt{93904440\#0}, ubicado en la TAZ 28. La continuidad de los carriles de ingreso se restablece entre los tramos \texttt{93904440\#0} y \texttt{93904440\#1}. La configuración MARL de la hora pico parte de la demanda generada con el perfil de doce horas, cuyo origen es 06:00. La simulación comienza en $t=1500$ segundos (06:25), incluye 300 segundos de calentamiento y controla entre $t=1800$ y $t=9000$ (06:30--08:30). Se utiliza \path{nets/Mendoza/mendoza_marl_2h.sumocfg}; la configuración estática \texttt{mendoza\_0630\_0830.sumocfg} no incluye el calentamiento.
+
+La comprobación estática de doce horas controla desde $t=0$ hasta $t=43200$ (06:00--18:00). La comprobación estática de dos horas comienza en $t=1800$ y controla hasta $t=9000$, sin calentamiento previo; ambas utilizan la misma demanda de doce horas que la configuración MARL. Mendoza forma parte del diseño de búsqueda para los cuatro algoritmos, pero los dominios y presupuestos detallados en este apéndice corresponden a las combinaciones sintéticas documentadas y no se atribuyen a la búsqueda urbana.
+
+El parámetro \texttt{waiting\_time\_memory} determina cuántos segundos de historia conserva SUMO al consultar la espera acumulada de un vehículo. En los experimentos de aprendizaje se fija en 1000 segundos. Esta ventana afecta la observación del agente, mientras que el atributo \texttt{waitingTime} de TripInfo acumula la espera durante el viaje \cite{SUMO2026_TraCIVehicle,SUMO2026_TripInfo}. En Mendoza, la fracción \texttt{camera\_retention} se fija en 1 para conservar todo el conteo como referencia de ingreso; no es una proporción medida.
+
+En los episodios de aprendizaje, el entorno guarda el estado de SUMO al terminar el calentamiento y lo carga al reiniciar el episodio; también puede pasar una semilla al iniciar SUMO. Guardar y cargar ese estado vehicular no demuestra por sí solo que se restaure toda fuente de aleatoriedad. En el código de inicialización y restauración consultado no aparece una opción explícita para guardar el estado de los generadores aleatorios; por eso, aquí no se afirma que el reinicio reproduzca todas las fuentes estocásticas.
+
+
+\section{Especificaciones para reproducir los experimentos}
+\label{sec:apendice_reproduccion}
+
+Los parámetros, dominios y semillas se contrastaron con las configuraciones experimentales y los archivos de ejecución del paquete \texttt{marl-tlc}. En este apéndice, fase 1 y fase 2 designan etapas de búsqueda de hiperparámetros.
+
+\subsection{Semillas de fase 1 en las redes sintéticas}
+
+La tabla \ref{tab:semillas_fase1} reúne las semillas observadas en las configuraciones serializadas de fase 1 y las asociadas a los perfiles canónicos de generación de rutas. La semilla de entrenamiento inicializa el aprendizaje y la simulación SUMO durante el entrenamiento; la de evaluación controla SUMO en las evaluaciones diagnósticas.
+
+\begin{table}[H]\centering\small
+\caption{Semillas por escenario sintético en la fase 1.}\label{tab:semillas_fase1}
+\begin{tabular}{lrrr}\hline
+Escenario & \shortstack{Aprendizaje y\\SUMO de entrenamiento} & \shortstack{SUMO de\\evaluación} & Perfil de rutas \\\hline
+$3\times1$ & 101 & 100101 & 1333938385 \\
+$3\times3$ & 137 & 100137 & 810840844 \\
+$4\times4\_H$ & 179 & 100179 & 1871007461 \\\hline
+\end{tabular}\end{table}
+
+El código de fase 1 define 7001 como semilla TPE por defecto, independiente de las semillas de entrenamiento. El consolidado histórico no registra la semilla TPE por estudio; por tanto, no permite confirmar que ese valor se aplicara a todas las ejecuciones.
+
+\subsection{Arquitecturas y semillas de la búsqueda informada}
+
+\begin{table}[H]
+\centering
+\caption{Arquitecturas y semillas asignadas a las doce combinaciones de algoritmo y escenario de las redes sintéticas en fase 2. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de TPE no son réplicas de entrenamiento.}
+\label{tab:busquedas_v2}
+\small
+\begin{tabular}{llrrrr}
+\hline
+Algoritmo & Escenario & Arquitectura & \shortstack{Semilla de\\entrenamiento} & \shortstack{Semilla de\\evaluación} & Semilla TPE \\
+\hline
+IPPO & $3\times1$ & h256 & 910001 & 920001 & 930001 \\
+IPPO & $3\times3$ & h128 & 910002 & 920003 & 930002 \\
+IPPO & $4\times4\_H$ & h128 & 910003 & 920004 & 930003 \\
+MAPPO & $3\times1$ & h128 & 910004 & 920001 & 930004 \\
+MAPPO & $3\times3$ & h128 & 910005 & 920003 & 930005 \\
+MAPPO & $4\times4\_H$ & h128 & 910006 & 920004 & 930006 \\
+HAPPO & $3\times1$ & h256 & 910007 & 920001 & 930007 \\
+HAPPO & $3\times3$ & h256 & 910008 & 920003 & 930008 \\
+HAPPO & $4\times4\_H$ & h128 & 910009 & 920004 & 930009 \\
+IDQN & $3\times1$ & h256 & 910010 & 920001 & 930010 \\
+IDQN & $3\times3$ & h128 & 910011 & 920003 & 930011 \\
+IDQN & $4\times4\_H$ & h256 & 910012 & 920004 & 930012 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+Las arquitecturas h128 y h256 contienen dos capas ocultas de 128 y 256 unidades, respectivamente. La arquitectura asignada a cada una de las doce combinaciones se consigna en la tabla. Son preferencias de búsqueda derivadas de la fase 1, no evidencia de superioridad bajo la recompensa local de fase 2. Las semillas TPE controlan las propuestas; las semillas SUMO, la simulación. Ninguna sustituye una réplica de entrenamiento.
+
+\subsection{Dominios completos y parámetros efectivos}
+
+Las tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios v3, uno por combinación de algoritmo, escenario sintético y arquitectura asignada para fase 2. Sus valores se redondean para facilitar la lectura; los límites exactos figuran en \path{experiments/marl_experiments/tuning/phase2_refined/informed_domains_rho0_v3.json}. La red de Mendoza forma parte del diseño HPO, pero no de estas doce combinaciones sintéticas; no se le atribuyen los valores de presupuesto o semillas de este manifiesto. Las distribuciones U y LU indican muestreo continuo uniforme y loguniforme; R indica dominio entero con límite superior exclusivo y C, selección categórica. Para U y LU, los corchetes representan límites del dominio. En las columnas, cada dominio corresponde a la combinación indicada.
+
+% Dominios expresados como [inferior, superior], excepto randint: [inferior, superior exclusivo).
+\begin{table}[H]\centering\caption{Dominios de búsqueda de HAPPO por escenario y arquitectura.}\label{tab:dominios_happo_v2}
+\input{imagenes/metodologia_v2_dominios_happo.tex}
+\end{table}
+
+\begin{table}[H]\centering\caption{Dominios de búsqueda de IDQN por escenario y arquitectura.}\label{tab:dominios_idqn_v2}
+\input{imagenes/metodologia_v2_dominios_idqn.tex}
+\end{table}
+
+\begin{table}[H]\centering\caption{Dominios de búsqueda de IPPO y MAPPO.}\label{tab:dominios_mappo_v2}
+\input{imagenes/metodologia_v2_dominios_mappo.tex}
+\end{table}
+
+Para cada algoritmo, escenario y arquitectura, los dominios se derivan de los ensayos de fase 1 ordenados por su objetivo. El vector inicial combina la mediana de los parámetros numéricos y la moda de los categóricos entre los cinco mejores; puede no coincidir con una configuración histórica y se entrena desde cero. No se incorporan al optimizador puntuaciones, checkpoints ni bases Optuna de fase 1.
+
+En parámetros numéricos se parte del intervalo de los diez mejores ensayos, se amplía cada extremo en un 10\% del ancho del dominio original y se limita a sus fronteras. Los parámetros loguniformes se tratan en escala logarítmica. Se conserva el dominio original si los veinte mejores ensayos cubren al menos el 70\% de su ancho o si los diez mejores alcanzan uno de sus extremos. Los límites enteros se redondean hacia afuera, con extremo superior exclusivo. En parámetros categóricos se consideran las alternativas de los veinte mejores; si solo aparece una, se añade una alternativa vecina del dominio original.
+
+El asterisco de \texttt{minibatch\_size} en la tabla \ref{tab:dominios_happo_v2} indica que el parámetro se registra, pero HAPPO procesa el lote completo por actor. En PPO, \texttt{encoder\_intervals} fija los niveles del codificador, \texttt{clip\_param} limita la razón de probabilidades del actor y \texttt{entropy\_coeff} pondera la entropía. \texttt{kl\_coeff} pondera la penalización KL y \texttt{kl\_target} es el objetivo hacia el que se adapta ese coeficiente en HAPPO. \texttt{num\_epochs} indica los recorridos de optimización del lote; \texttt{minibatch\_size} fija el tamaño de sus subdivisiones cuando se usan.
+
+Para PPO, el código multiplica \texttt{train\_batch\_episodes} por los pasos de control del episodio ($3600/5=720$) para calcular el tamaño del lote por componente de aprendizaje; ese cálculo no incluye un factor adicional por el número de procesos de simulación. En IDQN, \texttt{num\_steps\_}\allowbreak\hspace{0pt}\texttt{sampled\_before\_}\allowbreak\hspace{0pt}\texttt{learning\_starts} fija los pasos muestreados antes de iniciar el aprendizaje; \texttt{target\_network\_}\allowbreak\hspace{0pt}\texttt{update\_freq} fija el intervalo de actualización de la red objetivo; \texttt{train\_batch\_size\_}\allowbreak\hspace{0pt}\texttt{per\_learner} es el tamaño del lote de transiciones; \texttt{n\_step}, el horizonte del valor objetivo temporal; \texttt{epsilon\_final}, el nivel final de exploración; y \texttt{epsilon\_timesteps}, el horizonte de su programación. $c_v=\texttt{vf\_clip\_param}$ es la cota superior de la pérdida cuadrática de valor, no un recorte PPO convencional de predicciones.
+
+
+\section{Detalles del aprendizaje y de la codificación}
+\label{sec:apendice_detalles_aprendizaje}
+
+En los módulos de aprendizaje propios de MAPPO y HAPPO, primero se promedia el error cuadrático entre los $N$ agentes para cada muestra, luego se limita al intervalo $[0,c_v]$ y finalmente se promedia sobre las $B$ muestras válidas del lote:
+\begin{equation}
+ \ell_b=\frac{1}{N}\sum_{i=1}^{N}(V_{b,i}-y_{b,i})^2,
+ \qquad
+ \mathcal{L}_V=\frac{1}{B}\sum_{b=1}^{B}\min\{c_v,\max(0,\ell_b)\}.
+ \label{eq:perdida_valor_marl_tlc}
+\end{equation}
+Aquí $V_{b,i}$ es la predicción del crítico para el agente $i$ en la muestra $b$, $y_{b,i}$ su valor objetivo, $N$ el número de agentes, $B$ el número de muestras no enmascaradas del lote y $c_v=\texttt{vf\_clip\_param}$ la cota superior configurada. Este recorte del error cuadrático no es el \textit{value clipping} convencional de PPO, que compara predicciones de valor recortadas y no recortadas; tampoco se afirma con qué frecuencia se activa.
+
+IDQN reutiliza transiciones de un búfer de experiencia priorizado y aprende valores para las acciones; no tiene un actor PPO, y la selección se realiza entre acciones permitidas. Los métodos tipo PPO recolectan un lote de trayectorias. En IPPO y MAPPO, un \textit{minibatch} es una subdivisión del lote que produce una actualización; HAPPO procesa el lote completo por actor. Los críticos y optimizadores son componentes de entrenamiento, mientras que en PPO la ejecución de cada actor depende de su observación y de la máscara vigente.
+
+
+La Figura \ref{fig:mezcla_log_lineal} separa las contribuciones del codificador utilizado en la sección \ref{subsec:observaciones_encoder}. Permite comprobar la equivalencia algebraica, sin atribuir al ejemplo un resultado de control.
+
+Para $0\leq x_{\mathrm{num}}<M_{\mathrm{num}}$, la mezcla escalada de la sección \ref{subsec:observaciones_encoder} se expresa en la forma implementada por el código:
+\begin{equation}
+    e(x) = \operatorname{ceil}\left( F \cdot \log_2\left( \frac{x_{\mathrm{num}}}{M_{\mathrm{num}} \cdot L} + 1 \right) + L^2 \cdot x_{\mathrm{num}} \right),
+    \label{eq:encoder_log_lineal}
+\end{equation}
+donde $F=(1-L)(I-1)/\log_2(1/L+1)$. Para $x_{\mathrm{num}}\geq M_{\mathrm{num}}$, el codificador devuelve directamente $I-1$. Esta expresión es algebraicamente equivalente a la ecuación \eqref{eq:encoder_mezcla_convexa}; aquí se conserva para documentar la operación computacional.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\textwidth]{imagenes/metodologia_v2_componentes_encoder.pdf}
+    \caption[Ejemplo de codificación de observaciones.]{Ejemplo ilustrativo con $I=22$ y umbral $M_{\mathrm{num}}=1136$ calibrado para el escenario $3\times3$; $I=22$ no corresponde a la configuración de la comparación A/C.}
+    \label{fig:mezcla_log_lineal}
+\end{figure}
+
+La tabla \ref{tab:alternativas_recompensa} resume las configuraciones de recompensa documentadas para las búsquedas y las dos condiciones de la comparación A/C. La fila de fase 1 describe el programa de búsqueda examinado, no verifica individualmente todos sus ensayos históricos. La fase 2 sintética documentada usa solo la señal local; en A/C, C combina la señal local con la media vecinal normalizada por carriles.
+
+\begin{table}[H]\centering\small
+\caption{Señales de recompensa por procedimiento documentado.}
+\label{tab:alternativas_recompensa}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{8.7cm}}\hline
+Procedimiento & Observación & Señal de aprendizaje \\\hline
+HPO, fase 1 & Local & Diferencia de espera acumulada local mezclada con el promedio simple de las diferencias locales vecinales, sin dividir por carriles; el peso vecinal se explora. \\
+HPO, fase 2 sintética & Local & Diferencia de espera acumulada local, con $\rho_{\mathrm{coop}}=0$. \\
+A/C, condición A & Local & Diferencia de espera acumulada entre pasos consecutivos en la propia intersección: $R_i=L_i$. \\
+A/C, condición C & Vecinal & Combinación de la diferencia local, con peso 0,9, y la media de las diferencias vecinales divididas por carriles, con peso 0,1, según la ecuación \eqref{eq:recompensa_brazo_c}. \\\hline
+\end{tabular}\end{table}
+
+
+\subsection{Configuración fija de la comparación multiescenario}
+\label{subsec:receta_ac_apendice}
+
+La tabla \ref{tab:receta_ac} conserva los hiperparámetros de MAPPO h128 seleccionados en un ensayo histórico de $4\times4\_H$ y aplicados sin cambios entre las tres redes. El ensayo \texttt{49cfbba0} está registrado en \path{rho_screening_recipes/mappo_4x4_H_h128.json} e incorporado a los manifiestos de campaña. Los valores continuos se muestran redondeados; la fuente conserva precisión completa.
+
+\begin{table}[H]\centering\small
+\caption[Hiperparámetros fijos de aprendizaje de MAPPO.]{Hiperparámetros fijos de aprendizaje de la comparación A/C.}\label{tab:receta_ac}
+\begin{tabular}{>{\raggedright\arraybackslash}p{7cm}r}\hline
+Parámetro & Valor \\\hline
+Arquitectura & dos capas de 128 unidades \\
+Tasa de aprendizaje (\texttt{lr}) & $4,95235885\times10^{-5}$ \\
+Recorte del actor (\texttt{clip\_param}) & 0,20148266 \\
+GAE (\texttt{lambda\_gae}) & 0,90059980 \\
+Coeficiente de entropía & 0,00483113 \\
+Recorte del gradiente & 1,48846291 \\
+Coeficiente KL & 0,24180060 \\
+Objetivo KL & 0,01053851 \\
+Cota de pérdida de valor & 10,11299284 \\
+\textit{Epochs} por iteración & 8 \\
+Episodios por lote & 3 \\
+Tamaño de \textit{minibatch} & 128 \\
+Niveles del codificador ($I$) & 17 \\
+Descuento ($\gamma$) & 0,99 \\\hline
+\end{tabular}\end{table}
+
+La comparación fija el peso de la recompensa vecinal en cero para A y en 0,1 para C; también asigna observación local o vecinal y normaliza por carriles, según la condición. Los umbrales del codificador corresponden a cada escenario. Los tres episodios de cada lote representan $3\times(3600/5)=2160$ pasos de entorno por componente de aprendizaje. El número de procesos de simulación no multiplica este tamaño de lote.
+
+Los manifiestos de la comparación registran SUMO 1.26.0, Ray 2.54.1 y PyTorch 2.10.0 con CUDA 12.8. Estas versiones corresponden a esa campaña y no se atribuyen automáticamente a las búsquedas históricas. Los archivos \texttt{manifest.json} de cada par conservan su configuración y versiones efectivas.
+
+La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a protocolos distintos.
+
+\subsection{Calibraciones y semillas de cooperación}
+
+El umbral local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo umbrales 9660, 5329 y 4652 en esas redes. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Los umbrales corresponden a señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
+
+La comparación en las tres redes utiliza las semillas 61001--61024 para el entrenamiento y 71001--71005 para la evaluación. Las semillas de evaluación son comunes a las dos variantes y se mantienen separadas de las de entrenamiento.
+
+\subsection{Archivos utilizados para las figuras}
+
+Las figuras de topología se generaron a partir de las redes sintéticas y urbanas utilizadas en los experimentos. En la Figura \ref{fig:dominio_mendoza}, el punto de conteo se representa de forma esquemática y no indica sus coordenadas exactas.

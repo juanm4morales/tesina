@@ -1,46 +1,43 @@
 \chapter{Análisis y discusión de resultados}
 \label{capitulo:resultados}
-En este capítulo se presentan y analizan los resultados de las ejecuciones de entrenamiento y evaluación de los algoritmos estudiados.
-Con el objetivo de distinguir con claridad las etapas metodológicas del entrenamiento de los agentes, la sección se organiza en tres partes.
+Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, comparación pareada A/C de MAPPO y comprobación operacional de Mendoza. La búsqueda y la comparación corresponden a unidades experimentales distintas; sus métricas y criterios de selección se interpretan por separado.
 
-En primer lugar, se reportan los resultados del proceso de ajuste de hiperparámetros. En segundo lugar, se evalúan los modelos finales seleccionados en los escenarios planteados, desde redes sintéticas hasta el escenario ubicado en Ciudad de Mendoza. Finalmente, se desarrolla una discusión integradora de los hallazgos, sus implicancias y las principales limitaciones del estudio.
+La comprobación de Mendoza corresponde a la red urbana con los programas semafóricos incluidos en ella. Sus conteos y tasas describen esa operación y no se interpretan como una evaluación de políticas aprendidas.
 
+\section{Resultados del ajuste de hiperparámetros}
 
-\section{Resultados del ajuste de hiperparámetros} 
+La presentación de HPO distingue la exploración amplia de fase 1 de los dominios informados para fase 2. Las configuraciones candidatas y su selección se interpretan mediante los criterios especificados en la metodología, sin confundir el objetivo de búsqueda con la evaluación física.
 
-En esta sección se resume el proceso de ajuste de hiperparámetros y se justifica la configuración utilizada en la evaluación posterior de los modelos.
+\subsection{Estado de la consolidación y de las búsquedas}
 
-\subsection{Diseño del proceso de ajuste}
+\subsection{Resultados del ajuste y análisis de sensibilidad}
 
-\subsection{Resultados del ajuste y análisis de sensibilidad} 
+\subsection{Selección de configuraciones de HPO}
 
-\subsection{Configuración seleccionada para la evaluación final}  
+\section{Evaluación de políticas y comprobación de escenarios}
 
-\section{Resultados de los modelos finales} 
+La comparación A/C se presenta por separado de la selección de configuraciones mediante HPO. El análisis conserva los pares de entrenamiento y presenta por separado la red $3\times3$, excluida del análisis principal después de observar sus resultados, como se describe en la sección \ref{subsec:cooperacion_multiescenario}.
 
-Esta sección reúne los resultados obtenidos con los modelos finales una vez fijada la configuración experimental.
-La exposición se organiza según el tipo de escenario analizado. 
-
-\subsection{Criterios de evaluación y métricas de comparación} 
+\subsection{Criterios de evaluación y métricas de comparación}
 
 \subsection{Desempeño en escenarios sintéticos: \texorpdfstring{$3\times1$, $3\times3$, $4\times4$ heterogéneo}{3x1, 3x3, 4x4 heterogéneo}}
 
-\subsection{Desempeño en la red de carreteras de la Ciudad de Mendoza} 
+\subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
 
-Antes de evaluar los controladores, se verificó la operación del escenario canónico v14 de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La tabla \ref{tab:metricas_validacion_mendoza} presenta los conteos y las tasas obtenidas con el controlador de tiempo fijo; estos valores caracterizan la condición inicial del escenario y no el desempeño de las políticas aprendidas.
+Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La tabla \ref{tab:metricas_validacion_mendoza} presenta conteos y tasas obtenidos con los programas semafóricos de la red; caracterizan su operación, no el desempeño de políticas aprendidas. La fila de dos horas corresponde a \texttt{mendoza\_0630\_0830.sumocfg}, que comienza en $t=1800$ (06:30) y no incluye el calentamiento de 300 segundos de la configuración MARL \texttt{mendoza\_marl\_2h.sumocfg}, que comienza en $t=1500$ (06:25).
 
 \begin{table}[H]
 \centering
-\caption{Métricas operacionales del escenario canónico v14 de la Ciudad de Mendoza bajo control de tiempo fijo.}
+\caption{Métricas operacionales del escenario urbano de la Ciudad de Mendoza con los programas semafóricos de la red.}
 \label{tab:metricas_validacion_mendoza}
 \setlength{\tabcolsep}{4pt}
 \small
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
-        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Completitud} & \textit{teleport} \\ \hline
-2 h ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
-12 h ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
+        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Finalización} & \textit{teleport} \\ \hline
+2 horas ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
+12 horas ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
 \end{tabular}
 \end{adjustbox}
 \end{table}

@@ -1,0 +1,11 @@
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[font=\sffamily\small,>=Stealth,
+box/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners,text width=3.8cm,minimum height=1.15cm,align=center,inner sep=6pt},
+arrow/.style={->,thick}]
+\node[box] (p1) at (0,0) {Fase 1\\Búsqueda amplia};
+\node[box] (dom) at (5,0) {Reducción de dominios};
+\node[box] (p2) at (10,0) {Fase 2\\Búsqueda acotada};
+\draw[arrow] (p1)--(dom);\draw[arrow] (dom)--(p2);
+\end{tikzpicture}
+\endgroup
