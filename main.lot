@@ -6,26 +6,32 @@
 \contentsline {table}{\numberline {2.2}{\ignorespaces Archivos de entrada y configuración empleados en una simulación de \acrshort {acr-sumo}.}}{21}{table.caption.40}%
 \contentsline {table}{\numberline {2.3}{\ignorespaces Comparación sintética de familias algorítmicas \acrshort {acr-ppo} en entornos multiagente cooperativos.}}{53}{table.caption.117}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Escenarios y procedimientos del trabajo.}}{60}{table.caption.125}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Duraciones de los programas semafóricos de referencia en las redes de tráfico sintéticas (segundos).}}{61}{table.caption.128}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Perfiles de vehículos de las redes de tráfico sintéticas.}}{62}{table.caption.130}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Características de las redes de tráfico sintéticas y flujo.}}{63}{table.caption.132}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Herramientas y responsabilidades en el sistema experimental.}}{69}{table.caption.150}%
-\contentsline {table}{\numberline {3.6}{\ignorespaces Períodos de calentamiento y control documentados o previstos.}}{77}{table.caption.168}%
-\contentsline {table}{\numberline {3.7}{\ignorespaces Variantes examinadas en el cribado exploratorio.}}{82}{table.caption.179}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Escenarios y procedimientos del trabajo.}}{61}{table.caption.125}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Duraciones de los programas semafóricos de referencia en las redes de tráfico sintéticas (segundos).}}{62}{table.caption.129}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Perfiles de vehículos de las redes de tráfico sintéticas.}}{63}{table.caption.131}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Topología, control y demanda de las redes sintéticas. Se excluyen los tramos y carriles internos de los cruces.}}{64}{table.caption.135}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Observaciones y recompensas de las búsquedas y de la comparación multiescenario.}}{79}{table.caption.166}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Períodos de calentamiento y control documentados o previstos.}}{82}{table.caption.172}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Variantes examinadas en el cribado exploratorio.}}{87}{table.caption.182}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario urbano de la Ciudad de Mendoza con los programas semafóricos de la red.}}{90}{table.caption.200}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Métricas operacionales del escenario urbano de la Ciudad de Mendoza con los programas semafóricos de la red.}}{96}{table.caption.206}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1}{\ignorespaces Duraciones nominales de las fases en el archivo de red de Mendoza, en segundos.}}{98}{table.caption.216}%
-\contentsline {table}{\numberline {A.2}{\ignorespaces Resumen de dos versiones documentadas del perfil de demanda de Mendoza.}}{99}{table.caption.218}%
-\contentsline {table}{\numberline {A.3}{\ignorespaces Semillas por escenario sintético en la fase 1.}}{100}{table.caption.221}%
-\contentsline {table}{\numberline {A.4}{\ignorespaces Arquitecturas y semillas previstas en el protocolo refinado para las doce combinaciones sintéticas. La tabla describe el plan, no acredita ejecuciones. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de TPE no son réplicas de entrenamiento.}}{101}{table.caption.223}%
-\contentsline {table}{\numberline {A.5}{\ignorespaces Dominios declarados en el protocolo \texttt {phase2\_refined} para HAPPO por escenario y arquitectura.}}{102}{table.caption.225}%
-\contentsline {table}{\numberline {A.6}{\ignorespaces Dominios declarados en el protocolo \texttt {phase2\_refined} para IDQN por escenario y arquitectura.}}{103}{table.caption.226}%
-\contentsline {table}{\numberline {A.7}{\ignorespaces Dominios declarados en el protocolo \texttt {phase2\_refined} para IPPO y MAPPO.}}{104}{table.caption.227}%
-\contentsline {table}{\numberline {A.8}{\ignorespaces Recompensas de fase 1 (búsqueda documentada), del protocolo refinado (especificación) y de la comparación A/C.}}{107}{table.caption.232}%
-\contentsline {table}{\numberline {A.9}{\ignorespaces Hiperparámetros fijos de aprendizaje de MAPPO.}}{108}{table.caption.234}%
+\contentsline {table}{\numberline {A.1}{\ignorespaces Herramientas y responsabilidades en el sistema experimental.}}{100}{table.caption.211}%
+\contentsline {table}{\numberline {A.2}{\ignorespaces Duraciones nominales de las fases en el archivo de red de Mendoza, en segundos.}}{104}{table.caption.223}%
+\contentsline {table}{\numberline {A.3}{\ignorespaces Resumen de dos versiones documentadas del perfil de demanda de Mendoza.}}{105}{table.caption.225}%
+\contentsline {table}{\numberline {A.4}{\ignorespaces Archivos que sustentan la procedencia del escenario urbano de Mendoza.}}{106}{table.caption.226}%
+\contentsline {table}{\numberline {A.5}{\ignorespaces Espacio inicial de fase 1 para MAPPO, IPPO y HAPPO. Las excepciones por algoritmo se indican en las filas.}}{109}{table.caption.231}%
+\contentsline {table}{\numberline {A.6}{\ignorespaces Espacio inicial de fase 1 para IDQN. Los contadores se expresan en pasos según la interfaz del algoritmo.}}{110}{table.caption.232}%
+\contentsline {table}{\numberline {A.7}{\ignorespaces Factores de estudio y valores fijos de la fase 1 sintética.}}{110}{table.caption.233}%
+\contentsline {table}{\numberline {A.8}{\ignorespaces Correspondencia entre los parámetros de búsqueda y sus claves de configuración.}}{111}{table.caption.234}%
+\contentsline {table}{\numberline {A.9}{\ignorespaces Semillas por escenario sintético en la fase 1.}}{112}{table.caption.236}%
+\contentsline {table}{\numberline {A.10}{\ignorespaces Arquitecturas y semillas previstas en el protocolo refinado para las doce combinaciones sintéticas. La tabla describe el plan, no acredita ejecuciones. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de \acrshort {acr-tpe} no son réplicas de entrenamiento.}}{113}{table.caption.238}%
+\contentsline {table}{\numberline {A.11}{\ignorespaces Dominios declarados en el protocolo \texttt {phase2\_refined} para \acrshort {acr-happo} por escenario y arquitectura.}}{114}{table.caption.240}%
+\contentsline {table}{\numberline {A.12}{\ignorespaces Dominios declarados en el protocolo \texttt {phase2\_refined} para \acrshort {acr-idqn} por escenario y arquitectura.}}{115}{table.caption.241}%
+\contentsline {table}{\numberline {A.13}{\ignorespaces Dominios declarados en el protocolo refinado para \acrshort {acr-ippo} por escenario y arquitectura.}}{116}{table.caption.242}%
+\contentsline {table}{\numberline {A.14}{\ignorespaces Dominios declarados en el protocolo refinado para \acrshort {acr-mappo} por escenario y arquitectura.}}{117}{table.caption.243}%
+\contentsline {table}{\numberline {A.15}{\ignorespaces Hiperparámetros fijos de aprendizaje de MAPPO.}}{121}{table.caption.249}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
