@@ -46,71 +46,77 @@
 \contentsline {subsubsection}{Posicionamiento del proyecto}{57}{subsubsection*.122}%
 \contentsline {chapter}{\numberline {3}Metodología}{59}{chapter.123}%
 \contentsline {section}{\numberline {3.1}Diseño experimental}{59}{section.124}%
-\contentsline {section}{\numberline {3.2}Escenarios de simulación}{62}{section.127}%
-\contentsline {subsection}{\numberline {3.2.1}Preparación de las redes de tráfico}{62}{subsection.128}%
+\contentsline {section}{\numberline {3.2}Escenarios de simulación}{61}{section.127}%
+\contentsline {subsection}{\numberline {3.2.1}Preparación de las redes de tráfico}{61}{subsection.128}%
 \contentsline {subsection}{\numberline {3.2.2}Redes de tráfico sintéticas}{62}{subsection.130}%
-\contentsline {subsection}{\numberline {3.2.3}Red de tráfico de la Ciudad de Mendoza}{67}{subsection.136}%
-\contentsline {subsubsection}{Fuentes de datos y preprocesamiento de los conteos}{67}{subsubsection*.137}%
-\contentsline {subsubsection}{Representación y revisión de la red de tráfico}{68}{subsubsection*.138}%
-\contentsline {subsubsection}{Construcción de la demanda}{70}{subsubsection*.140}%
-\contentsline {subsubsection}{Distribución origen--destino y generación de rutas}{70}{subsubsection*.143}%
-\contentsline {paragraph}{Llegadas y flota.}{72}{paragraph*.146}%
-\contentsline {subsubsection}{Comprobación operacional y contraste con los conteos}{73}{subsubsection*.148}%
-\contentsline {paragraph}{Contraste con el conteo observado.}{73}{paragraph*.149}%
-\contentsline {section}{\numberline {3.3}Sistema de control multiagente}{73}{section.151}%
-\contentsline {subsection}{\numberline {3.3.1}Entorno de simulación}{74}{subsection.153}%
-\contentsline {subsection}{\numberline {3.3.2}Observación, acciones y recompensas}{75}{subsection.154}%
-\contentsline {subsubsection}{Observaciones y codificación de la espera}{75}{subsubsection*.155}%
-\contentsline {subsubsection}{Acciones permitidas y cambios de fase}{77}{subsubsection*.160}%
-\contentsline {subsubsection}{Recompensas locales y vecinales}{78}{subsubsection*.162}%
-\contentsline {subsection}{\numberline {3.3.3}Agentes y algoritmos de aprendizaje}{79}{subsection.167}%
-\contentsline {subsubsection}{Actualización de los actores y del crítico}{80}{subsubsection*.169}%
-\contentsline {section}{\numberline {3.4}Entrenamiento y búsqueda de hiperparámetros}{81}{section.170}%
-\contentsline {subsection}{\numberline {3.4.1}Condiciones de simulación y semillas}{81}{subsection.171}%
-\contentsline {subsection}{\numberline {3.4.2}Función objetivo de la búsqueda}{82}{subsection.173}%
-\contentsline {subsection}{\numberline {3.4.3}Seguimiento diagnóstico del entrenamiento}{83}{subsection.175}%
-\contentsline {subsection}{\numberline {3.4.4}Fase 1: búsqueda amplia}{83}{subsection.176}%
-\contentsline {subsection}{\numberline {3.4.5}Fase 2: protocolo de búsqueda con dominios reducidos}{84}{subsection.177}%
-\contentsline {subsection}{\numberline {3.4.6}Criterios de selección de configuraciones}{85}{subsection.179}%
-\contentsline {section}{\numberline {3.5}Comparación de variantes locales y vecinales de MAPPO}{86}{section.180}%
-\contentsline {subsection}{\numberline {3.5.1}Cribado exploratorio de formulaciones}{86}{subsection.181}%
-\contentsline {subsection}{\numberline {3.5.2}Entrenamiento de las variantes en las tres redes sintéticas}{88}{subsection.183}%
-\contentsline {section}{\numberline {3.6}Evaluación y análisis de políticas}{88}{section.184}%
-\contentsline {subsection}{\numberline {3.6.1}Métricas de desempeño y vehículos evaluados}{88}{subsection.185}%
-\contentsline {subsection}{\numberline {3.6.2}Evaluación de configuraciones seleccionadas}{90}{subsection.189}%
-\contentsline {subsection}{\numberline {3.6.3}Evaluación de variantes de MAPPO}{91}{subsection.190}%
-\contentsline {subsection}{\numberline {3.6.4}Análisis por pares y criterio de decisión}{91}{subsection.191}%
-\contentsline {section}{\numberline {3.7}Reproducibilidad y alcance}{93}{section.194}%
-\contentsline {subsection}{\numberline {3.7.1}Entorno de cómputo y envío de trabajos}{93}{subsection.195}%
-\contentsline {subsection}{\numberline {3.7.2}Limitaciones del diseño y alcance de la inferencia}{93}{subsection.196}%
-\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{95}{chapter.197}%
-\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{95}{section.198}%
-\contentsline {subsection}{\numberline {4.1.1}Estado de la consolidación y de las búsquedas}{96}{subsection.199}%
-\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{96}{subsection.200}%
-\contentsline {subsection}{\numberline {4.1.3}Selección de configuraciones de HPO}{96}{subsection.201}%
-\contentsline {section}{\numberline {4.2}Evaluación de políticas y comprobación de escenarios}{96}{section.202}%
-\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{96}{subsection.203}%
-\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos: $3\times 1$, $3\times 3$, $4\times 4$ heterogéneo}{96}{subsection.204}%
-\contentsline {subsection}{\numberline {4.2.3}Comprobación operacional del escenario de la Ciudad de Mendoza}{96}{subsection.205}%
-\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{97}{section.207}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{98}{chapter.208}%
-\contentsline {chapter}{\numberline {A}Arquitectura de software y reproducción experimental}{99}{appendix.209}%
-\contentsline {section}{\numberline {A.1}Diseño orientado a objetos del entorno de simulación}{99}{section.210}%
-\contentsline {section}{\numberline {A.2}Jerarquía de funciones de recompensa y patrón Strategy}{101}{section.213}%
-\contentsline {section}{\numberline {A.3}Patrones de diseño de la arquitectura}{103}{section.215}%
-\contentsline {section}{\numberline {A.4}Parámetros de SUMO y programas semafóricos de referencia}{104}{section.222}%
-\contentsline {subsection}{\numberline {A.4.1}Identificadores y procedencia del escenario urbano de Mendoza}{105}{subsection.224}%
-\contentsline {section}{\numberline {A.5}Especificaciones para reproducir los experimentos}{107}{section.227}%
-\contentsline {subsection}{\numberline {A.5.1}Infraestructura y almacenamiento de las ejecuciones}{107}{subsection.228}%
-\contentsline {subsection}{\numberline {A.5.2}Comprobaciones preliminares}{108}{subsection.229}%
-\contentsline {subsection}{\numberline {A.5.3}Espacio de búsqueda inicial de fase 1}{108}{subsection.230}%
-\contentsline {subsection}{\numberline {A.5.4}Semillas de fase 1 en las redes sintéticas}{111}{subsection.235}%
-\contentsline {subsection}{\numberline {A.5.5}Arquitecturas y semillas del protocolo refinado}{112}{subsection.237}%
-\contentsline {subsection}{\numberline {A.5.6}Dominios declarados y significado de los parámetros}{113}{subsection.239}%
-\contentsline {section}{\numberline {A.6}Detalles del aprendizaje y de la codificación}{119}{section.244}%
-\contentsline {subsection}{\numberline {A.6.1}Configuración fija de la comparación multiescenario}{121}{subsection.248}%
-\contentsline {subsection}{\numberline {A.6.2}Calibraciones y semillas de cooperación}{121}{subsection.250}%
-\contentsline {subsection}{\numberline {A.6.3}Preparación de las figuras de escenarios}{122}{subsection.251}%
+\contentsline {subsection}{\numberline {3.2.3}Red de tráfico de la Ciudad de Mendoza}{66}{subsection.136}%
+\contentsline {subsubsection}{Fuentes de datos y preprocesamiento de los conteos}{66}{subsubsection*.137}%
+\contentsline {subsubsection}{Representación y revisión de la red de tráfico}{67}{subsubsection*.138}%
+\contentsline {subsubsection}{Construcción de la demanda}{69}{subsubsection*.140}%
+\contentsline {subsubsection}{Distribución origen--destino y generación de rutas}{69}{subsubsection*.143}%
+\contentsline {paragraph}{Llegadas y flota.}{71}{paragraph*.145}%
+\contentsline {subsubsection}{Comprobación operacional y contraste con los conteos}{71}{subsubsection*.146}%
+\contentsline {paragraph}{Contraste con el conteo observado.}{71}{paragraph*.147}%
+\contentsline {section}{\numberline {3.3}Sistema de control multiagente}{72}{section.148}%
+\contentsline {subsection}{\numberline {3.3.1}Entorno de simulación}{72}{subsection.150}%
+\contentsline {subsection}{\numberline {3.3.2}Observación, acciones y recompensas}{73}{subsection.151}%
+\contentsline {subsubsection}{Observaciones y codificación de la espera}{73}{subsubsection*.152}%
+\contentsline {subsubsection}{Acciones permitidas y cambios de fase}{74}{subsubsection*.155}%
+\contentsline {subsubsection}{Recompensas locales y vecinales}{75}{subsubsection*.156}%
+\contentsline {subsection}{\numberline {3.3.3}Agentes y algoritmos de aprendizaje}{76}{subsection.161}%
+\contentsline {subsubsection}{Actualización de los actores y del crítico}{77}{subsubsection*.163}%
+\contentsline {section}{\numberline {3.4}Entrenamiento y búsqueda de hiperparámetros}{78}{section.164}%
+\contentsline {subsection}{\numberline {3.4.1}Condiciones de simulación y semillas}{78}{subsection.165}%
+\contentsline {subsection}{\numberline {3.4.2}Función objetivo de la búsqueda}{79}{subsection.167}%
+\contentsline {subsection}{\numberline {3.4.3}Seguimiento diagnóstico del entrenamiento}{79}{subsection.169}%
+\contentsline {subsection}{\numberline {3.4.4}Fase 1: búsqueda amplia}{80}{subsection.170}%
+\contentsline {subsection}{\numberline {3.4.5}Fase 2: protocolo de búsqueda con dominios reducidos}{81}{subsection.171}%
+\contentsline {subsection}{\numberline {3.4.6}Criterios de selección de configuraciones}{81}{subsection.173}%
+\contentsline {section}{\numberline {3.5}Comparación de variantes locales y vecinales de MAPPO}{82}{section.174}%
+\contentsline {subsection}{\numberline {3.5.1}Prueba preliminar de formulaciones}{82}{subsection.175}%
+\contentsline {subsection}{\numberline {3.5.2}Entrenamiento de las variantes en las tres redes sintéticas}{83}{subsection.177}%
+\contentsline {section}{\numberline {3.6}Evaluación y análisis de políticas}{84}{section.178}%
+\contentsline {subsection}{\numberline {3.6.1}Métricas de desempeño y vehículos evaluados}{84}{subsection.179}%
+\contentsline {subsection}{\numberline {3.6.2}Evaluación de configuraciones seleccionadas}{85}{subsection.183}%
+\contentsline {subsection}{\numberline {3.6.3}Evaluación de variantes de MAPPO}{86}{subsection.184}%
+\contentsline {subsection}{\numberline {3.6.4}Análisis por pares y criterio de decisión}{86}{subsection.185}%
+\contentsline {section}{\numberline {3.7}Reproducibilidad y alcance}{88}{section.188}%
+\contentsline {subsection}{\numberline {3.7.1}Entorno de cómputo y envío de trabajos}{88}{subsection.189}%
+\contentsline {subsection}{\numberline {3.7.2}Limitaciones del diseño y alcance de la inferencia}{88}{subsection.190}%
+\contentsline {chapter}{\numberline {4}Análisis y discusión de resultados}{89}{chapter.191}%
+\contentsline {section}{\numberline {4.1}Resultados del ajuste de hiperparámetros}{89}{section.192}%
+\contentsline {subsection}{\numberline {4.1.1}Estado de la consolidación y de las búsquedas}{90}{subsection.193}%
+\contentsline {subsection}{\numberline {4.1.2}Resultados del ajuste y análisis de sensibilidad}{90}{subsection.194}%
+\contentsline {subsection}{\numberline {4.1.3}Selección de configuraciones de HPO}{90}{subsection.195}%
+\contentsline {section}{\numberline {4.2}Evaluación de políticas y comprobación de escenarios}{90}{section.196}%
+\contentsline {subsection}{\numberline {4.2.1}Criterios de evaluación y métricas de comparación}{90}{subsection.197}%
+\contentsline {subsection}{\numberline {4.2.2}Desempeño en escenarios sintéticos: $3\times 1$, $3\times 3$, $4\times 4$ heterogéneo}{90}{subsection.198}%
+\contentsline {subsection}{\numberline {4.2.3}Comprobación operacional del escenario de la Ciudad de Mendoza}{90}{subsection.199}%
+\contentsline {section}{\numberline {4.3}Discusión e interpretación de resultados}{91}{section.201}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{92}{chapter.202}%
+\contentsline {chapter}{\numberline {A}Arquitectura de software y reproducción experimental}{93}{appendix.203}%
+\contentsline {section}{\numberline {A.1}Diseño orientado a objetos del entorno de simulación}{93}{section.204}%
+\contentsline {section}{\numberline {A.2}Jerarquía de funciones de recompensa y patrón Strategy}{95}{section.207}%
+\contentsline {section}{\numberline {A.3}Patrones de diseño de la arquitectura}{97}{section.209}%
+\contentsline {section}{\numberline {A.4}Parámetros de SUMO y programas semafóricos de referencia}{98}{section.216}%
+\contentsline {subsection}{\numberline {A.4.1}Identificadores y procedencia del escenario urbano de Mendoza}{99}{subsection.218}%
+\contentsline {subsubsection}{Detalle de preprocesamiento y generación de la demanda}{101}{subsubsection*.221}%
+\contentsline {section}{\numberline {A.5}Especificaciones para reproducir los experimentos}{102}{section.225}%
+\contentsline {subsection}{\numberline {A.5.1}Infraestructura y almacenamiento de las ejecuciones}{102}{subsection.226}%
+\contentsline {subsection}{\numberline {A.5.2}Comprobaciones preliminares}{103}{subsection.227}%
+\contentsline {subsection}{\numberline {A.5.3}Detalles de las redes sintéticas}{103}{subsection.228}%
+\contentsline {subsection}{\numberline {A.5.4}Espacio de búsqueda inicial de fase 1}{104}{subsection.229}%
+\contentsline {subsection}{\numberline {A.5.5}Semillas de fase 1 en las redes sintéticas}{107}{subsection.234}%
+\contentsline {subsection}{\numberline {A.5.6}Arquitecturas y semillas del protocolo refinado}{108}{subsection.236}%
+\contentsline {subsubsection}{Admisibilidad y selección de candidatos}{109}{subsubsection*.238}%
+\contentsline {subsection}{\numberline {A.5.7}Dominios declarados y significado de los parámetros}{110}{subsection.239}%
+\contentsline {subsection}{\numberline {A.5.8}Métricas y análisis por pares de A/C}{116}{subsection.244}%
+\contentsline {section}{\numberline {A.6}Detalles del aprendizaje y de la codificación}{116}{section.245}%
+\contentsline {subsection}{\numberline {A.6.1}Desarrollo algebraico del codificador}{117}{subsection.247}%
+\contentsline {subsection}{\numberline {A.6.2}Aplicación de la máscara de acciones}{118}{subsection.252}%
+\contentsline {subsection}{\numberline {A.6.3}Configuración fija de la comparación multiescenario}{119}{subsection.254}%
+\contentsline {subsection}{\numberline {A.6.4}Calibraciones y semillas de cooperación}{120}{subsection.256}%
+\contentsline {subsection}{\numberline {A.6.5}Preparación de las figuras de escenarios}{121}{subsection.257}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

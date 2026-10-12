@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.9.24)  12 OCT 2026 13:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.9.24)  12 OCT 2026 17:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1696,7 +1696,7 @@ Package hyperref Info: Link coloring OFF on input line 206.
 \openout2 = `0-titulo.aux'.
 
  (./0-titulo.tex
-<imagenes/UNCUYO-FI.png, id=320, 1462.46375pt x 245.91875pt>
+<imagenes/UNCUYO-FI.png, id=336, 1462.46375pt x 245.91875pt>
 File: imagenes/UNCUYO-FI.png Graphic file (type png)
 <use imagenes/UNCUYO-FI.png>
 Package pdftex.def Info: imagenes/UNCUYO-FI.png  used on input line 11.
@@ -1749,14 +1749,14 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ] [5]
-LaTeX Info: Redefining \. on input line 114.
-LaTeX Info: Redefining \% on input line 114.
-LaTeX Info: Redefining \. on input line 115.
-LaTeX Info: Redefining \% on input line 115.
-LaTeX Info: Redefining \. on input line 116.
-LaTeX Info: Redefining \% on input line 116.
-LaTeX Info: Redefining \. on input line 117.
-LaTeX Info: Redefining \% on input line 117.
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
+LaTeX Info: Redefining \. on input line 121.
+LaTeX Info: Redefining \% on input line 121.
+LaTeX Info: Redefining \. on input line 122.
+LaTeX Info: Redefining \% on input line 122.
+LaTeX Info: Redefining \. on input line 123.
+LaTeX Info: Redefining \% on input line 123.
 )
 \tf@toc=\write8
 \openout8 = `main.toc'.
@@ -1835,13 +1835,13 @@ Cap\'{\i }tulo 2.
 
 
 ] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15]
-<imagenes/SIMvsREAL.png, id=1148, 1927.2pt x 1043.9pt>
+<imagenes/SIMvsREAL.png, id=1167, 1927.2pt x 1043.9pt>
 File: imagenes/SIMvsREAL.png Graphic file (type png)
 <use imagenes/SIMvsREAL.png>
 Package pdftex.def Info: imagenes/SIMvsREAL.png  used on input line 381.
 (pdftex.def)             Requested size: 446.13727pt x 241.65295pt.
  [16]
-<imagenes/SUMO_GUI_vehSpeed.png, id=1170, 1927.2pt x 1084.05pt>
+<imagenes/SUMO_GUI_vehSpeed.png, id=1189, 1927.2pt x 1084.05pt>
 File: imagenes/SUMO_GUI_vehSpeed.png Graphic file (type png)
 <use imagenes/SUMO_GUI_vehSpeed.png>
 Package pdftex.def Info: imagenes/SUMO_GUI_vehSpeed.png  used on input line 396
@@ -1850,13 +1850,13 @@ Package pdftex.def Info: imagenes/SUMO_GUI_vehSpeed.png  used on input line 396
  [17 <./imagenes/SIMvsREAL.png>] [18 <./imagenes/SUMO_GUI_vehSpeed.png (PNG cop
 y)>] [19] [20] [21]
 [22] [23] [24]
-<imagenes/metodo_valor_2.png, id=1287, 1833.85126pt x 864.22874pt>
+<imagenes/metodo_valor_2.png, id=1306, 1833.85126pt x 864.22874pt>
 File: imagenes/metodo_valor_2.png Graphic file (type png)
 <use imagenes/metodo_valor_2.png>
 Package pdftex.def Info: imagenes/metodo_valor_2.png  used on input line 627.
 (pdftex.def)             Requested size: 446.13727pt x 210.24117pt.
  [25] [26 <./imagenes/metodo_valor_2.png (PNG copy)>]
-<imagenes/metodo_politica_2.png, id=1311, 1872.9975pt x 846.16125pt>
+<imagenes/metodo_politica_2.png, id=1330, 1872.9975pt x 846.16125pt>
 File: imagenes/metodo_politica_2.png Graphic file (type png)
 <use imagenes/metodo_politica_2.png>
 Package pdftex.def Info: imagenes/metodo_politica_2.png  used on input line 654
@@ -1874,7 +1874,7 @@ LaTeX Font Info:    Font shape `T1/cmss/m/it' in size <10.95> not available
 (Font)              Font shape `T1/cmss/m/sl' tried instead on input line 1025.
 
  [36] [37] [38] [39] [40] [41] [42]
-<imagenes/non_stationary_papel_piedra.jpeg, id=1596, 545.8794pt x 454.8192pt>
+<imagenes/non_stationary_papel_piedra.jpeg, id=1615, 545.8794pt x 454.8192pt>
 File: imagenes/non_stationary_papel_piedra.jpeg Graphic file (type jpg)
 <use imagenes/non_stationary_papel_piedra.jpeg>
 Package pdftex.def Info: imagenes/non_stationary_papel_piedra.jpeg  used on inp
@@ -1892,69 +1892,69 @@ Cap\'{\i }tulo 3.
 
 
 
-] [60] (./imagenes/metodologia_v2_flujo.tex) [61] [62]
-<imagenes/escenario_3x1_sumo.png, id=1964, 1874.00125pt x 935.495pt>
+] (./imagenes/metodologia_v2_flujo.tex) [60] [61] [62]
+<imagenes/escenario_3x1_sumo.png, id=1978, 1874.00125pt x 935.495pt>
 File: imagenes/escenario_3x1_sumo.png Graphic file (type png)
 <use imagenes/escenario_3x1_sumo.png>
-Package pdftex.def Info: imagenes/escenario_3x1_sumo.png  used on input line 91
+Package pdftex.def Info: imagenes/escenario_3x1_sumo.png  used on input line 85
 .
 (pdftex.def)             Requested size: 455.24411pt x 233.33714pt.
-<imagenes/escenario_3x3_sumo.png, id=1969, 1675.25874pt x 935.495pt>
+<imagenes/escenario_3x3_sumo.png, id=1983, 1675.25874pt x 935.495pt>
 File: imagenes/escenario_3x3_sumo.png Graphic file (type png)
 <use imagenes/escenario_3x3_sumo.png>
-Package pdftex.def Info: imagenes/escenario_3x3_sumo.png  used on input line 98
+Package pdftex.def Info: imagenes/escenario_3x3_sumo.png  used on input line 92
 .
 (pdftex.def)             Requested size: 455.24411pt x 447.79964pt.
-<imagenes/escenario_4x4_h_sumo.png, id=1973, 1675.25874pt x 935.495pt>
+<imagenes/escenario_4x4_h_sumo.png, id=1987, 1675.25874pt x 935.495pt>
 File: imagenes/escenario_4x4_h_sumo.png Graphic file (type png)
 <use imagenes/escenario_4x4_h_sumo.png>
 Package pdftex.def Info: imagenes/escenario_4x4_h_sumo.png  used on input line 
-105.
+99.
 (pdftex.def)             Requested size: 455.24411pt x 449.34195pt.
- [63] [64 <./imagenes/escenario_3x1_sumo.png>] [65 <./imagenes/escenario_3x3_su
-mo.png>] [66 <./imagenes/escenario_4x4_h_sumo.png>] [67]
-<imagenes/escenario_mendoza_sumo.png, id=2019, 1675.25874pt x 870.25125pt>
+ [63 <./imagenes/escenario_3x1_sumo.png>] [64 <./imagenes/escenario_3x3_sumo.pn
+g>] [65 <./imagenes/escenario_4x4_h_sumo.png>] [66]
+<imagenes/escenario_mendoza_sumo.png, id=2031, 1675.25874pt x 870.25125pt>
 File: imagenes/escenario_mendoza_sumo.png Graphic file (type png)
 <use imagenes/escenario_mendoza_sumo.png>
 Package pdftex.def Info: imagenes/escenario_mendoza_sumo.png  used on input lin
-e 174.
+e 164.
 (pdftex.def)             Requested size: 455.24411pt x 410.27965pt.
- [68] [69 <./imagenes/escenario_mendoza_sumo.png>]
-<imagenes/escenario_mendoza_taz_sumo.png, id=2040, 1675.25874pt x 870.25125pt>
+ [67] [68 <./imagenes/escenario_mendoza_sumo.png>]
+<imagenes/escenario_mendoza_taz_sumo.png, id=2054, 1675.25874pt x 870.25125pt>
 File: imagenes/escenario_mendoza_taz_sumo.png Graphic file (type png)
 <use imagenes/escenario_mendoza_taz_sumo.png>
 Package pdftex.def Info: imagenes/escenario_mendoza_taz_sumo.png  used on input
- line 207.
+ line 193.
 (pdftex.def)             Requested size: 455.24411pt x 405.23364pt.
- [70] [71 <./imagenes/escenario_mendoza_taz_sumo.png>] [72] [73]
-(./imagenes/metodologia_v2_integracion.tex) [74] [75]
+[69] [70 <./imagenes/escenario_mendoza_taz_sumo.png>] [71]
+(./imagenes/metodologia_v2_integracion.tex) [72] [73]
 (./imagenes/metodologia_observaciones.tex)
-<imagenes/metodologia_v2_encoder.pdf, id=2129, 402.01492pt x 222.23326pt>
+<imagenes/metodologia_v2_encoder.pdf, id=2126, 402.01492pt x 222.23326pt>
 File: imagenes/metodologia_v2_encoder.pdf Graphic file (type pdf)
 <use imagenes/metodologia_v2_encoder.pdf>
 Package pdftex.def Info: imagenes/metodologia_v2_encoder.pdf  used on input lin
-e 317.
+e 269.
 (pdftex.def)             Requested size: 364.19667pt x 201.33394pt.
- [76] [77 <./imagenes/metodologia_v2_encoder.pdf>] [78] (./imagenes/metodologia
-_controladores.tex) [79] [80]
-[81] [82] [83] [84] (./imagenes/metodologia_v2_protocolo.tex) [85] [86]
-[87] [88] [89] [90] [91] (./imagenes/metodologia_analisis_pareado.tex) [92]
-[93]) [94]
+ [74 <./imagenes/metodologia_v2_encoder.pdf>] [75] (./imagenes/metodologia_cont
+roladores.tex) [76] [77] [78]
+[79] [80] (./imagenes/metodologia_v2_protocolo.tex) [81] [82] [83] [84]
+[85] [86] (./imagenes/metodologia_analisis_pareado.tex) [87]) [88]
 \openout2 = `6-resultados.aux'.
 
- (./6-resultados.tex
+
+(./6-resultados.tex
 Cap\'{\i }tulo 4.
-[95
+[89
 
 
 
 
-] [96]) [97]
+] [90]) [91]
 \openout2 = `7-conclusiones.aux'.
 
  (./7-conclusiones.tex
 Cap\'{\i }tulo 5.
-) [98
+) [92
 
 
 
@@ -1964,7 +1964,7 @@ Cap\'{\i }tulo 5.
 
  (./8-apendice_arquitectura.tex
 Ap\'{e}ndice A.
-[99
+[93
 
 
 
@@ -1972,33 +1972,33 @@ Ap\'{e}ndice A.
 ]
 LaTeX Font Info:    Font shape `T1/cmss/bx/it' in size <8> not available
 (Font)              Font shape `T1/cmss/bx/sl' tried instead on input line 46.
- [100] [101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111]
-[112] [113] (./imagenes/metodologia_v2_dominios_happo.tex) [114
+ [94] [95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106]
+[107] [108] [109] [110] (./imagenes/metodologia_v2_dominios_happo.tex) [111
 
 ]
-(./imagenes/metodologia_v2_dominios_idqn.tex) [115
-
-
-]
-(./imagenes/metodologia_v2_dominios_ippo.tex) [116
+(./imagenes/metodologia_v2_dominios_idqn.tex) [112
 
 
 ]
-(./imagenes/metodologia_v2_dominios_mappo.tex) [117
+(./imagenes/metodologia_v2_dominios_ippo.tex) [113
 
 
-] [118
+]
+(./imagenes/metodologia_v2_dominios_mappo.tex) [114
 
-] [119]
-<imagenes/metodologia_v2_componentes_encoder.pdf, id=2734, 407.39905pt x 241.84
+
+] [115
+
+] [116] [117]
+<imagenes/metodologia_v2_componentes_encoder.pdf, id=2721, 407.39905pt x 241.84
 554pt>
 File: imagenes/metodologia_v2_componentes_encoder.pdf Graphic file (type pdf)
 <use imagenes/metodologia_v2_componentes_encoder.pdf>
 Package pdftex.def Info: imagenes/metodologia_v2_componentes_encoder.pdf  used 
-on input line 613.
+on input line 699.
 (pdftex.def)             Requested size: 355.08984pt x 210.80244pt.
- [120 <./imagenes/metodologia_v2_componentes_encoder.pdf>] [121]) [122] (./main
-.bbl
+ [118 <./imagenes/metodologia_v2_componentes_encoder.pdf>] [119] [120]) [121]
+(./main.bbl
 babelbib: Using the BibTeX style's default font for `name'.
 babelbib: Using the BibTeX style's default font for `lastname'.
 babelbib: Using the BibTeX style's default font for `title'.
@@ -2100,7 +2100,7 @@ LaTeX Info: Redefining \lsc on input line 92.
 LaTeX Info: Redefining \. on input line 92.
 LaTeX Info: Redefining \% on input line 92.
 LaTeX Info: Redefining \dotlessi on input line 92.
-[123
+[122
 
 
 
@@ -2170,7 +2170,7 @@ LaTeX Info: Redefining \lsc on input line 188.
 LaTeX Info: Redefining \. on input line 188.
 LaTeX Info: Redefining \% on input line 188.
 LaTeX Info: Redefining \dotlessi on input line 188.
- [124]
+ [123]
 LaTeX Info: Redefining \sptext on input line 211.
 LaTeX Info: Redefining \lsc on input line 211.
 LaTeX Info: Redefining \. on input line 211.
@@ -2236,7 +2236,7 @@ LaTeX Info: Redefining \lsc on input line 278.
 LaTeX Info: Redefining \. on input line 278.
 LaTeX Info: Redefining \% on input line 278.
 LaTeX Info: Redefining \dotlessi on input line 278.
- [125]
+ [124]
 LaTeX Info: Redefining \sptext on input line 291.
 LaTeX Info: Redefining \lsc on input line 291.
 LaTeX Info: Redefining \. on input line 291.
@@ -2327,7 +2327,7 @@ LaTeX Info: Redefining \lsc on input line 386.
 LaTeX Info: Redefining \. on input line 386.
 LaTeX Info: Redefining \% on input line 386.
 LaTeX Info: Redefining \dotlessi on input line 386.
- [126]
+ [125]
 LaTeX Info: Redefining \sptext on input line 393.
 LaTeX Info: Redefining \lsc on input line 393.
 LaTeX Info: Redefining \. on input line 393.
@@ -2398,7 +2398,7 @@ LaTeX Info: Redefining \lsc on input line 489.
 LaTeX Info: Redefining \. on input line 489.
 LaTeX Info: Redefining \% on input line 489.
 LaTeX Info: Redefining \dotlessi on input line 489.
- [127]
+ [126]
 LaTeX Info: Redefining \sptext on input line 493.
 LaTeX Info: Redefining \lsc on input line 493.
 LaTeX Info: Redefining \. on input line 493.
@@ -2484,7 +2484,7 @@ LaTeX Info: Redefining \lsc on input line 591.
 LaTeX Info: Redefining \. on input line 591.
 LaTeX Info: Redefining \% on input line 591.
 LaTeX Info: Redefining \dotlessi on input line 591.
- [128]
+ [127]
 LaTeX Info: Redefining \sptext on input line 605.
 LaTeX Info: Redefining \lsc on input line 605.
 LaTeX Info: Redefining \. on input line 605.
@@ -2560,12 +2560,12 @@ LaTeX Info: Redefining \lsc on input line 703.
 LaTeX Info: Redefining \. on input line 703.
 LaTeX Info: Redefining \% on input line 703.
 LaTeX Info: Redefining \dotlessi on input line 703.
- [129]
+ [128]
 LaTeX Info: Redefining \. on input line 705.
 LaTeX Info: Redefining \% on input line 705.
 LaTeX Info: Redefining \. on input line 705.
 LaTeX Info: Redefining \% on input line 705.
-) [130] (./main.aux (./0-titulo.aux)
+) [129] (./main.aux (./0-titulo.aux)
 LaTeX Info: Redefining \. on input line 18.
 LaTeX Info: Redefining \% on input line 18.
 LaTeX Info: Redefining \. on input line 19.
@@ -2588,13 +2588,13 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 38E4EAC539220FC7F3B0899221EC15FD;20509.
+(rerunfilecheck)             Checksum: 349C40D08903BC4E1F1F473AB18B16D8;21508.
  ) 
 Here is how much of TeX's memory you used:
- 60191 strings out of 469495
- 1367983 string characters out of 5470121
- 1977178 words of memory out of 5000000
- 87264 multiletter control sequences out of 15000+600000
+ 60175 strings out of 469495
+ 1367381 string characters out of 5470121
+ 1977051 words of memory out of 5000000
+ 87244 multiletter control sequences out of 15000+600000
  674362 words of font info for 144 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
  84i,22n,117p,2501b,2253s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2639,10 +2639,10 @@ ype1/public/cm-super/sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-
 super/sftt0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.
 pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/share
 /texmf-dist/fonts/type1/public/cm-super/sfxc1000.pfb>
-Output written on main.pdf (154 pages, 5712024 bytes).
+Output written on main.pdf (153 pages, 5708235 bytes).
 PDF statistics:
- 3204 PDF objects out of 3580 (max. 8388607)
- 2831 compressed objects within 29 object streams
- 632 named destinations out of 1000 (max. 500000)
- 732 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3198 PDF objects out of 3580 (max. 8388607)
+ 2826 compressed objects within 29 object streams
+ 636 named destinations out of 1000 (max. 500000)
+ 764 words of extra memory for PDF output out of 10000 (max. 10000000)
 

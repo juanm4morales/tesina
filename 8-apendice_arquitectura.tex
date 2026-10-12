@@ -294,7 +294,7 @@ Flujo horario asociado (vehículos/h) & 16\,744 & 14\,986 \\
 Factor de expansión (redondeado) & 11,4698 & 10,3274 \\\hline
 \end{tabular}\end{table}
 
-El resumen histórico de 33 días, identificado en la Tabla \ref{tab:archivos_procedencia_mendoza}, no corresponde al perfil de 32 días del registro de generación. Su factor de expansión registrado, redondeado a ocho decimales, es 11,46977289. La documentación canónica especifica 60\% de asignación fija y 40\% aleatoria: 473 pares fijos, 44 aleatorios y tres ceros entre 520 pares conectados de 39 zonas (1482 pares \acrshort{acr-od} posibles). En cambio, el log de generación de la entrada evaluada consigna 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica conserva parámetros de versiones anteriores y advierte que no debe regenerarse a ciegas la entrada canónica con ellos. Por estas diferencias y por la falta de los archivos originales, la transformación desde el registro de generación hasta las rutas consumidas no puede reconstruirse por completo.
+El resumen histórico identificado en la Tabla \ref{tab:archivos_procedencia_mendoza} corresponde a una versión distinta de la entrada de generación; su factor de expansión registrado es 11,46977289. El log de generación consigna 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica advierte que sus parámetros no deben aplicarse a ciegas para regenerar la entrada canónica. Como no se conservaron la matriz ni las rutas originales, la transformación desde ese registro hasta las rutas consumidas no puede reconstruirse por completo. La regla canónica y sus 520 pares conectables se detallan en la subsección \ref{subsec:procedimiento_demanda_mendoza}.
 
 Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado, cuyo hash completo se consigna después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14\,986,32 vehículos por hora. El registro de generación informa 14\,986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
 
@@ -327,7 +327,43 @@ El hash SHA-256 de la ruta congelada es:\par\noindent\texttt{e7380990}\allowbrea
 
 La ruta registrada para la entrada evaluada original no se conservó, por lo que no puede afirmarse que el archivo congelado produjera las corridas. El informe de candidatos y la documentación canónica registran cero \glspl{teleport}, sin que los logs primarios incluyan un contador explícito para confirmarlo.
 
-El parámetro \texttt{waiting\_time\_memory} determina cuántos segundos de historia conserva \acrshort{acr-sumo} al consultar la espera acumulada de un vehículo. En los experimentos de aprendizaje se fija en 1000 segundos. Esta ventana afecta la observación del agente, mientras que el atributo \texttt{waitingTime} de TripInfo acumula la espera durante el viaje \cite{SUMO2026_TraCIVehicle,SUMO2026_TripInfo}. El registro de generación asociado a \texttt{s104773} informa \texttt{camera\_retention}=1; este parámetro no es una proporción medida de vehículos que llegan al área modelada.
+\subsubsection{Detalle de preprocesamiento y generación de la demanda}
+\label{subsec:procedimiento_demanda_mendoza}
+
+El preprocesamiento de los conteos descartó fechas no interpretables, valores negativos, identificadores \texttt{ZoneID} fuera del rango 1--19 y códigos \texttt{ClassID} distintos de 1, 2 y 3. \texttt{ZoneID} identifica una región virtual configurada en la cámara. \texttt{ClassID} clasifica los vehículos por longitud: hasta 5 metros, más de 5 y hasta 10 metros, y más de 10 metros. Los tiempos se redondearon al intervalo de 15 minutos más cercano y los valores se agregaron por cámara, intervalo, zona y clase.
+
+La suma de las longitudes de carril es 66,3 km; cuenta cada carril por separado y no equivale a la extensión geográfica del área. Las longitudes de carril varían aproximadamente entre 11 y 276 m, con una media cercana a 120 m; los límites viales de velocidad registrados van de 10 a 100 km/h. Los agentes controlan de 3 a 10 carriles entrantes. De los 73 agentes descritos en el cuerpo, 67 tienen dos acciones, cuatro tienen una, uno tiene tres y uno tiene cuatro. El grado de vecindad varía entre dos y cuatro, con una media de 3,23.
+
+El registro de generación asociado a la semilla 104773 consigna el factor de expansión 10,327359932077748 y \texttt{camera\_retention}=1. Este último conserva el conteo de cámara completo como referencia para el ingreso modelado; es una decisión de construcción, no una proporción observada de vehículos que alcanzan el área urbana. La Tabla \ref{tab:fuentes_mendoza} mantiene separados este registro y el resumen histórico, que consigna \texttt{camera\_retention}=0,95.
+
+Las 39 zonas, identificadas de 0 a 38, permiten 1482 pares OD entre zonas distintas. Una búsqueda en anchura (\textit{breadth-first search}, \acrshort{acr-bfs}) determinó que 520 pares son conectables. En la especificación canónica, 473 pares reciben proporciones fijas cuya suma es 0,60, 44 reciben proporciones aleatorias que suman 0,40 y tres se excluyen. Para un par conectable, $o$ y $d$ denotan origen y destino, $p_{od}$ su proporción, y $p_{od}^{\mathrm{fijo}}$ la fracción especificada para los pares fijos. Los conjuntos disjuntos $\mathcal P_{\mathrm{fijo}}$, $\mathcal P_{\mathrm{aleat}}$ y $\mathcal P_{\mathrm{excl}}$ identifican, respectivamente, pares fijos, aleatorios y excluidos. Para cada par aleatorio, $u_{od}$ se muestrea uniformemente entre cero y uno. La regla canónica es:
+\begin{equation}
+p_{od}=\begin{cases}
+p_{od}^{\mathrm{fijo}}, &(o,d)\in\mathcal P_{\mathrm{fijo}},\\
+0, &(o,d)\in\mathcal P_{\mathrm{excl}},\\
+\dfrac{0,40\,u_{od}}{\sum_{(o',d')\in\mathcal P_{\mathrm{aleat}}}u_{o'd'}},
+&(o,d)\in\mathcal P_{\mathrm{aleat}}.
+\end{cases}
+\label{eq:contrato_od_v14}
+\end{equation}
+La normalización requiere que la suma de los pesos aleatorios sea positiva. Esta regla canónica de 60/40 es distinta del 70/30 consignado en el registro de generación; no se conservó la matriz original de ese registro.
+
+Para un flujo positivo $Q_{od}$ en vehículos por hora, la tasa de llegadas es $\lambda_{od}=Q_{od}/3600$ vehículos por segundo. Si $U$ tiene distribución uniforme en $(0,1)$, el intervalo programado $H_{od}$, en segundos, se obtiene mediante:
+\begin{equation}
+H_{od}=-\frac{\ln(U)}{\lambda_{od}},
+\label{eq:llegadas_exponenciales_mendoza}
+\end{equation}
+donde $\ln$ es el logaritmo natural. El intervalo representa una llegada programada; si no hay espacio en el acceso, la inserción efectiva ocurre más tarde.
+
+El criterio GEH compara el flujo horario nominal programado, $V_{\mathrm{mod}}$, y el flujo horario observado, $V_{\mathrm{obs}}$, ambos en vehículos por hora:
+\begin{equation}
+\mathrm{GEH}=\sqrt{\frac{2(V_{\mathrm{mod}}-V_{\mathrm{obs}})^2}
+{V_{\mathrm{mod}}+V_{\mathrm{obs}}}}.
+\label{eq:geh}
+\end{equation}
+Se aplica cuando $V_{\mathrm{mod}}+V_{\mathrm{obs}}>0$, vale cero cuando los flujos coinciden y no es un porcentaje. No se presentan valores calculados en esta tesina; el conteo de la cámara 169 participó en la construcción del perfil y, por tanto, no constituye validación independiente de la demanda urbana.
+
+El parámetro \texttt{waiting\_time\_memory} determina cuántos segundos de historia conserva \acrshort{acr-sumo} al consultar la espera acumulada de un vehículo. En los experimentos de aprendizaje se fija en 1000 segundos. Esta ventana afecta la observación del agente, mientras que el atributo \texttt{waitingTime} de TripInfo acumula la espera durante el viaje \cite{SUMO2026_TraCIVehicle,SUMO2026_TripInfo}.
 
 En los episodios de aprendizaje, el entorno guarda el estado de \acrshort{acr-sumo} al terminar el calentamiento y lo carga al reiniciar el episodio; también puede pasar una \gls{semilla} al iniciar \acrshort{acr-sumo}. Guardar y cargar ese estado vehicular no demuestra por sí solo que se restaure toda fuente de aleatoriedad. En el código de inicialización y restauración consultado no aparece una opción explícita para guardar el estado de los generadores aleatorios; por eso, aquí no se afirma que el reinicio reproduzca todas las fuentes estocásticas.
 
@@ -355,7 +391,20 @@ Los registros de las ejecuciones documentadas se guardaron en almacenamiento per
 
 En una comprobación de $3\times3$, cerca del 70\% de los vehículos cargados —incluidos en la demanda de \acrshort{acr-sumo}— completó el viaje; este dato no se extrapola a las otras redes. Esa comprobación incluyó 600 segundos de calentamiento y 3600 segundos de control.
 
-En el cribado exploratorio de formulaciones de \acrshort{acr-mappo} (subsección \ref{subsec:screening_vecinal}), B y D incluyen ejecuciones completadas y no se clasifican como fallos técnicos. Esta comprobación distingue el estado de ejecución de las diferencias de desempeño.
+En la prueba preliminar de formulaciones de \acrshort{acr-mappo} (subsección \ref{subsec:screening_vecinal}), B y D incluyen ejecuciones completadas y no se clasifican como fallos técnicos. Esta comprobación distingue el estado de ejecución de las diferencias de desempeño.
+
+\subsection{Detalles de las redes sintéticas}
+\label{subsec:detalles_redes_sinteticas}
+
+La Tabla \ref{tab:escenarios_sinteticos} reúne las dimensiones comparables de las redes. Este apartado conserva las excepciones topológicas y las asignaciones de demanda por par origen--destino (OD) que explican la función de cada escenario.
+
+En el corredor $3\times1$, los cruces B1, C1 y D1 se disponen en línea. El 75\% del flujo solicitado se asigna a los pares de zonas $3\to4$ (40\%) y $4\to3$ (35\%); el 25\% restante se distribuye de manera reproducible entre los pares válidos.
+
+La red $3\times3$ forma una cuadrícula regular. Sus asignaciones principales son 20\% para $5\to6$, 17,5\% para $6\to5$, 17,5\% para $10\to1$ y 20\% para $1\to10$; el 25\% restante se reparte entre los pares válidos.
+
+En $4\times4\_H$, la fila 2 tiene tres carriles por sentido, mientras que el sector A1--B1--C1 de la fila 1 tiene uno por sentido. La columna C es asimétrica, con cuatro carriles hacia el sur y dos hacia el norte. La columna D solo permite circular hacia el norte: tiene cuatro carriles hasta D3 y tres desde D3 hasta el borde norte. Las demás vías tienen dos carriles por sentido donde existe circulación. Faltan los enlaces horizontales B4--C4 y D1--E1, por lo que la red no es una malla completa.
+
+C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas de referencia contienen cinco fases, porque las fases amarillas y el estado final de todo rojo no son acciones de los agentes. B4 y E1 tienen un vecino; los demás agentes tienen entre dos y cuatro. La demanda asigna 20\% a $5\to9$, 17,5\% a $6\to5$, 17,5\% a $13\to1$ y 20\% a $1\to13$; el 25\% restante se distribuye entre pares válidos. Estas diferencias de capacidad, conectividad y demanda se presentan como características del escenario, no como una variación controlada de un único factor.
 
 \subsection{Espacio de búsqueda inicial de fase 1}
 \label{subsec:espacio_busqueda_fase1}
@@ -537,6 +586,17 @@ Algoritmo & Escenario & Arquitectura & Entrenamiento & Evaluación & \acrshort{a
 
 Las arquitecturas h128 y h256 contienen dos capas ocultas de 128 y 256 unidades, respectivamente. La arquitectura asignada a cada combinación prevista se consigna en la Tabla \ref{tab:busquedas_v2}. Son preferencias de búsqueda derivadas de la fase 1, no evidencia de superioridad bajo la recompensa local. Las semillas \acrshort{acr-tpe} controlan las propuestas; las semillas \acrshort{acr-sumo}, la simulación. Ninguna sustituye una réplica de entrenamiento.
 
+\subsubsection{Admisibilidad y selección de candidatos}
+\label{subsec:criterios_admisibilidad_hpo}
+
+Antes de evaluar un ensayo, el protocolo requiere que haya alcanzado 60 iteraciones, que sus métricas sean numéricas y finitas y que existan al menos 15 registros finitos de métricas de tránsito. También se comprueba que la configuración efectiva y el archivo del modelo final estén completos y puedan leerse. El estado \texttt{COMPLETE} de Optuna solo indica que el ensayo terminó sin registrar un fallo; por sí solo no acredita estos requisitos.
+
+Para cada combinación de algoritmo y red se consideran hasta tres candidatos técnicamente admisibles, procurando incluir ambas arquitecturas cuando sea posible. El vector de referencia se construye con los cinco mejores ensayos de fase 1, ordenados por el objetivo: se toma la mediana de los parámetros numéricos y la moda de los categóricos. Esta configuración se entrena desde cero; no importa puntuaciones, estados de modelos ni bases de Optuna de fase 1.
+
+Cada candidato se evalúa con las semillas \acrshort{acr-sumo} 950001, 950003 y 950007, comunes a los algoritmos de una misma red. Los tres episodios deben registrar cero teletransportes, una \acrshort{acr-ci} de al menos 0,95 y una cantidad de vehículos insertados igual o superior al 95\% de la referencia empírica para esa red y semilla. La referencia corresponde al máximo de inserciones observado en el conjunto inicial de episodios utilizado para fijar el umbral; no es una medición independiente de la demanda total.
+
+Entre quienes cumplen los tres filtros se elige el candidato con menor espera media en las tres evaluaciones. En caso de empate exacto, se priorizan la mayor \acrshort{acr-ci} media, el menor tiempo de entrenamiento registrado y, por último, el identificador del ensayo. Si no se puede completar la auditoría o faltan evaluaciones, la combinación se informa como incompleta; si ningún candidato cumple los filtros, se informa que no hay candidato admisible. El procedimiento no inicia otra búsqueda ni un entrenamiento final adicional. Las semillas de selección no reemplazan una evaluación independiente posterior.
+
 \subsection{Dominios declarados y significado de los parámetros}
 \label{subsec:dominios_refinados}
 
@@ -576,6 +636,17 @@ El asterisco de \texttt{minibatch\_size} en la Tabla \ref{tab:dominios_happo_v2}
 Para \acrshort{acr-ppo}, el código multiplica \texttt{train\_batch\_episodes} por los pasos de control del episodio ($3600/5=720$) para calcular el tamaño del lote por componente de aprendizaje; ese cálculo no incluye un factor adicional por el número de procesos de simulación. En \acrshort{acr-idqn}, \texttt{num\_steps\_}\allowbreak\hspace{0pt}\texttt{sampled\_before\_}\allowbreak\hspace{0pt}\texttt{learning\_starts} fija los pasos muestreados antes de iniciar el aprendizaje; \texttt{target\_network\_}\allowbreak\hspace{0pt}\texttt{update\_freq} fija el intervalo de actualización de la red objetivo; \texttt{train\_batch\_size\_}\allowbreak\hspace{0pt}\texttt{per\_learner} es el tamaño del lote de \glspl{transicion_aprendizaje}; \texttt{n\_step}, el horizonte del valor objetivo temporal; \texttt{epsilon\_final}, el nivel final de exploración; y \texttt{epsilon\_timesteps}, el horizonte de su programación. $c_v=\texttt{vf\_clip\_param}$ es la cota superior de la pérdida cuadrática de valor, no un recorte \acrshort{acr-ppo} convencional de predicciones.
 
 
+\subsection{Métricas y análisis por pares de A/C}
+\label{subsec:detalle_analisis_pareado}
+
+En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra la medida por paso utilizada para calcular el Gini de espera descrito en la metodología. La medida se promedia temporalmente por intersección y luego se compara entre intersecciones con igual peso.
+
+Para cada una de las tres redes, las cinco evaluaciones de una política se promedian antes de calcular las diferencias entre las 24 parejas de entrenamiento. El remuestreo conserva cada pareja completa y genera 20.000 conjuntos de 24 parejas con reemplazo. Para el intervalo percentil del 95\% se usan los percentiles 2,5 y 97,5; para el intervalo del 98,33\%, aproximadamente 0,83 y 99,17. Este nivel aplica Bonferroni al error de 0,05 dividido entre las tres comparaciones por red (0,05/3), para cada medida por separado. No se ajusta en conjunto por todas las métricas.
+
+Como análisis de sensibilidad, se calcula un intervalo basado en $t$ de Student con 24 diferencias pareadas, bajo el supuesto de diferencias independientes y aproximadamente normales. Los intervalos percentiles y el intervalo $t$ son aproximaciones; su cobertura no está garantizada, y los valores extremos se conservan para revisar su influencia.
+
+El protocolo original de la campaña, conservado en \path{docs/PROTOCOLO_COOPERACION_MULTIESCENARIO.md}, incluye las tres redes. El informe histórico, en \path{cooperation_multiscenario_20260920/report/INFORME.md}, presenta como análisis principal 48 parejas de $3\times1$ y $4\times4\_H$. El mismo informe separa los datos de $3\times3$ después de revisar los resultados porque su entrenamiento tuvo una dinámica distinta; señala que esa decisión no estaba fijada de antemano y que los registros de esa red se conservaron aparte. Esta decisión de presentación histórica se distingue del alcance metodológico adoptado aquí, que analiza por separado las tres redes, y no constituye una exclusión previa del protocolo.
+
 \section{Detalles del aprendizaje y de la codificación}
 \label{sec:apendice_detalles_aprendizaje}
 
@@ -597,6 +668,21 @@ En el aprendiz de \acrshort{acr-happo} de la versión congelada inspeccionada, e
 Tras actualizar un actor, el código calcula para la acción de la muestra la razón entre su probabilidad bajo el actor actualizado y su probabilidad bajo la política recolectora. Esa razón multiplica los factores de los agentes que aún esperan su turno. La reponderación no ejecuta una actualización de gradiente adicional para esos actores. Describe el procedimiento implementado, pero no acredita que \acrshort{acr-happo} haya corrido en cada campaña: la comparación A/C documentada en esta tesina evaluó \acrshort{acr-mappo}, no \acrshort{acr-happo}.
 
 
+\subsection{Desarrollo algebraico del codificador}
+\label{subsec:codificacion_espera_apendice}
+
+Para la espera local $x\geq0$, sea $u=1\,\text{veh}\cdot\text{s}$ la unidad de vehículo-segundo. El valor numérico de la espera es $x_{\mathrm{num}}=x/u$ y el del umbral local, $M_{\mathrm{num}}=M_{\mathrm{lane}}/u>0$. La entrada normalizada $\hat{x}=\min(1,x_{\mathrm{num}}/M_{\mathrm{num}})$ queda entre cero y uno. Para $I\geq2$, se define $L=(I-1)/M_{\mathrm{num}}$; en los dominios utilizados, $M_{\mathrm{num}}>I-1$, por lo que $0<L<1$. La transformación mezcla una componente logarítmica y otra lineal:
+\begin{equation}
+    g(\hat{x}) = (1 - L) \frac{\log_2\left(\frac{\hat{x}}{L} + 1\right)}{\log_2\left(\frac{1}{L} + 1\right)} + L \hat{x},
+    \label{eq:encoder_mezcla_convexa}
+\end{equation}
+El parámetro adimensional $L$ regula la curvatura y el peso lineal. La salida se escala por el nivel máximo y se redondea hacia arriba, de modo que el máximo puede alcanzarse antes de llegar al umbral. La codificación se limita a $I-1$:
+\begin{equation}
+e(x)=\min\{I-1,\operatorname{ceil}((I-1)g(\hat{x}))\}.
+\label{eq:encoder_saturacion}
+\end{equation}
+Para la observación vecinal, se aplica la misma función a la espera media por carril, con el umbral vecinal expresado en veh·s por carril.
+
 La Figura \ref{fig:mezcla_log_lineal} separa las contribuciones del codificador utilizado en la sección \ref{subsec:observaciones_encoder}. Permite comprobar la equivalencia algebraica, sin atribuir al ejemplo un resultado de control.
 
 La resolución $I$ se registra como \texttt{encoder\_intervals} y el umbral local $M_{\mathrm{lane}}$ como \texttt{max\_lane\_value}.
@@ -615,12 +701,27 @@ Para $x_{\mathrm{num}}\geq M_{\mathrm{num}}$, el codificador devuelve directamen
     \label{fig:mezcla_log_lineal}
 \end{figure}
 
+\subsection{Aplicación de la máscara de acciones}
+\label{subsec:mascara_acciones_apendice}
+
+En cada decisión, $\mathcal{A}^{\mathrm{adm}}_i(t)$ es el subconjunto de acciones permitidas por la señal vigente. La máscara binaria $b_i(a,t)$ vale uno si $a$ pertenece a ese conjunto y cero en caso contrario. Si $z_i(a,t)$ es la puntuación no normalizada (\gls{logit}) asignada por el actor, la puntuación enmascarada $\widetilde z_i(a,t)$ se obtiene sumando el logaritmo natural de la máscara:
+\begin{equation}
+\widetilde z_i(a,t) = z_i(a,t) + \log b_i(a,t), \qquad b_i(a,t) = \begin{cases}
+    1 & \text{si } a \in \mathcal{A}^{\mathrm{adm}}_i(t) \\
+    0 & \text{si } a \notin \mathcal{A}^{\mathrm{adm}}_i(t)
+    \end{cases}
+    \label{eq:action_mask}
+\end{equation}
+Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero después de normalizar la política. La implementación sustituye el infinito por una puntuación finita muy baja y requiere al menos una acción admisible. Los algoritmos PPO aplican la máscara a las puntuaciones de política; IDQN filtra las acciones al seleccionarlas y evaluarlas.
+
 La Tabla \ref{tab:alternativas_recompensa}, en la metodología, distingue las señales por procedimiento. En el programa de fase 1 consultado, la normalización por carriles está desactivada por defecto; esa configuración del programa no verifica cada ensayo histórico. La comparación A/C fija la señal local en A y activa la contribución vecinal normalizada en C, según la ecuación \eqref{eq:recompensa_compuesta}.
 
 \subsection{Configuración fija de la comparación multiescenario}
 \label{subsec:receta_ac_apendice}
 
 La Tabla \ref{tab:receta_ac} conserva los hiperparámetros de \acrshort{acr-mappo} h128 seleccionados en un ensayo histórico de $4\times4\_H$ y aplicados sin cambios entre las tres redes de tráfico. El ensayo \texttt{49cfbba0} está registrado en \path{rho_screening_recipes/mappo_4x4_H_h128.json} e incorporado a los manifiestos de campaña. Los valores continuos se muestran redondeados; la fuente conserva precisión completa.
+
+Se entrenaron 24 parejas por red. La planificación usó una desviación de referencia cercana a dos segundos por vehículo y un intervalo del 95\% basado en $t$ de Student, bajo supuestos de diferencias independientes y aproximadamente normales. Con 24 parejas, se esperaba una semiamplitud cercana a 0,85 segundos por vehículo. Esta previsión no garantiza detectar una diferencia ni determina la amplitud de los intervalos observados.
 
 \begin{table}[H]\centering\small
 \caption[Hiperparámetros fijos de aprendizaje de MAPPO.]{Hiperparámetros fijos de aprendizaje de la comparación multiescenario.}\label{tab:receta_ac}
