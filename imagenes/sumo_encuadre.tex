@@ -1,0 +1,20 @@
+% Encuadre de las capturas originales, sin modificar los archivos PNG.
+% Argumentos: archivo, recorte (izq./abajo/der./arriba), longitud relativa
+% de la barra y distancia representada. Recortes en bp: las capturas son
+% de 72 unidades por pulgada. La barra conserva la proporción original.
+\newcommand{\sumonetcapture}[4]{%
+  \begin{tikzpicture}
+    \node[inner sep=0pt, outer sep=0pt] (sumonet) {%
+      \includegraphics[width=\linewidth,trim=#2,clip]{#1}};
+    \pgfmathsetlengthmacro{\sumoscalewidth}{#3*\linewidth}
+    % Banda inferior propia: la escala nunca tapa calles ni zonas.
+    \coordinate (sumoscale) at ([xshift=9pt,yshift=-20pt]sumonet.south west);
+    \draw[line width=0.4pt] (sumoscale) -- ++(\sumoscalewidth,0);
+    \draw[line width=0.4pt] (sumoscale) -- ++(0,4pt);
+    \draw[line width=0.4pt] ([xshift=\sumoscalewidth]sumoscale) -- ++(0,4pt);
+    \node[anchor=south,inner sep=0pt,font=\footnotesize] at
+      ([yshift=6pt]sumoscale) {0};
+    \node[anchor=south,inner sep=0pt,font=\footnotesize] at
+      ([xshift=\sumoscalewidth,yshift=6pt]sumoscale) {#4};
+  \end{tikzpicture}%
+}

@@ -29,13 +29,7 @@ PARAM_ORDER = {
               "kl_target", "lambda_gae", "lr", "minibatch_size", "num_epochs",
               "train_batch_episodes", "vf_clip_param"],
 }
-LONG = {
-    "num_steps_sampled_before_learning_starts":
-        r"\texttt{num\_steps\_}\\\texttt{sampled\_before\_}\\\texttt{learning\_starts}",
-    "target_network_update_freq": r"\texttt{target\_network\_}\\\texttt{update\_freq}",
-    "train_batch_size_per_learner":
-        r"\texttt{train\_batch\_}\\\texttt{size\_per\_}\\\texttt{learner}",
-}
+PARAMETER_LABELS = {'neighborhood_relevance': 'Peso de recompensa vecinal', 'lr': 'Tasa de aprendizaje', 'clip_param': 'Recorte del actor', 'lambda_gae': 'Parámetro de GAE', 'entropy_coeff': 'Peso de entropía', 'grad_clip': 'Límite del gradiente', 'kl_coeff': 'Coeficiente de penalización KL', 'kl_target': 'Objetivo de divergencia KL', 'vf_clip_param': 'Cota de pérdida de valor', 'num_epochs': 'Recorridos de optimización', 'train_batch_episodes': 'Episodios por lote', 'encoder_intervals': 'Niveles del codificador', 'minibatch_size': 'Tamaño del minilote', 'greedy_selection_prob': 'Probabilidad de ordenación (HAPPO)', 'train_batch_size_per_learner': 'Transiciones por lote', 'target_network_update_freq': 'Actualización de red objetivo', 'epsilon_timesteps': 'Pasos para reducir exploración', 'epsilon_final': 'Exploración final', 'n_step': 'Horizonte del retorno', 'num_steps_sampled_before_learning_starts': 'Pasos antes de aprender'}
 SCENARIO_LABEL = {"3x1": r"$3\times1$", "3x3": r"$3\times3$", "4x4_H": r"$4\times4_{\mathrm{H}}$"}
 
 
@@ -61,42 +55,29 @@ def domain_cell(domain: dict[str, Any], parameter: str) -> str:
     if kind in ("uniform", "loguniform"):
         low = latex_number(domain["lower"], parameter)
         high = latex_number(domain["upper"], parameter)
-        return rf"$[{low};\allowbreak\,{high}]$"
+        return rf"$[{low};\,{high}]$"
     if kind == "randint":
         low = int(domain["lower"])
         high = int(domain["upper_exclusive"])
         return rf"$[{latex_number(low, parameter)};\,{latex_number(high, parameter)})$"
     if kind == "choice":
         values = [latex_number(v, parameter) for v in domain["values"]]
-        # Keep categorical domains readable without letting a long math list
-        # force the p-column beyond its width. Stack pairs, retaining the set
-        # notation and every value exactly as supplied by the manifest.
-        chunks = [values[index:index + 2] for index in range(0, len(values), 2)]
-        rows = []
-        for index, chunk in enumerate(chunks):
-            opening = r"\{" if index == 0 else ""
-            closing = ";" if index < len(chunks) - 1 else r"\}"
-            rows.append("$" + opening + r";\,".join(chunk) + closing + "$")
-        if len(rows) == 1:
-            return rows[0]
-        return r"\shortstack{" + r"\\".join(rows) + "}"
+        return "$" + r"\{" + r";\,".join(values) + r"\}" + "$"
     raise ValueError(f"Unsupported domain type {kind!r} for {parameter}")
 
 
 def kind_label(domain: dict[str, Any]) -> str:
-    return {"uniform": "U", "loguniform": "LU", "randint": "R", "choice": "C"}[domain["type"]]
+    return {"uniform": "Uniforme continua", "loguniform": "Loguniforme",
+            "randint": "Uniforme entera", "choice": "Categórico"}[domain["type"]]
 
 
 def parameter_label(name: str, domain: dict[str, Any], algorithm: str) -> str:
-    if name in LONG:
-        label = LONG[name]
-        kind = kind_label(domain)
-        return rf"\begin{{tabular}}[t]{{@{{}}l@{{}}}}{label}\\\textsc{{{kind}}}\end{{tabular}}"
-    safe_name = name.replace("_", r"\_\allowbreak{}")
-    suffix = rf"\,\textsc{{{kind_label(domain)}}}"
+    label = PARAMETER_LABELS[name]
+    if name == "greedy_selection_prob":
+        label = "Probabilidad de ordenación"
     if algorithm == "happo" and name == "minibatch_size":
-        suffix += r"$^{*}$"
-    return rf"\texttt{{{safe_name}}}{suffix}"
+        label += r"$^{*}$"
+    return label
 
 
 def validate_manifest(manifest: dict[str, Any]) -> None:
@@ -123,26 +104,25 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
 def render_table(algorithm: str, manifest: dict[str, Any], heading: bool = False) -> str:
     cells = CELLS[algorithm]
     parameters = PARAM_ORDER[algorithm]
-    col_spec = (r"@{}>{\raggedright\arraybackslash}p{2.8cm}"
-                r"@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}"
-                r"@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}"
-                r"@{\hspace{3pt}}>{\raggedright\arraybackslash}p{3.7cm}@{}")
-    lines = [r"\begingroup\footnotesize\setstretch{1.05}",
+    col_spec = (r"@{}>{\raggedright\arraybackslash}p{5.5cm}"
+                r"@{\hspace{6pt}}>{\raggedright\arraybackslash}p{3.3cm}"
+                r"@{\hspace{6pt}}lll@{}")
+    lines = [r"\begingroup\small\setstretch{1.05}\renewcommand{\arraystretch}{1.18}",
              rf"\begin{{tabular}}{{{col_spec}}}", r"\hline",
              r"\rowcolor{catAzulCielo!25}"]
     if heading:
         title = algorithm.upper()
-        lines.extend([rf"\multicolumn{{4}}{{l}}{{\textbf{{{title}}}}}\\", r"\hline",
+        lines.extend([rf"\multicolumn{{5}}{{l}}{{\textbf{{{title}}}}}\\", r"\hline",
                       r"\rowcolor{catAzulCielo!25}"])
-    labels = ["Parámetro"]
+    labels = ["Parámetro", "Muestreo"]
     for cell_name in cells:
         scenario = cell_name.split("/", 1)[1]
         architecture = manifest["cells"][cell_name]["architecture"]
-        labels.append(rf"\shortstack{{{SCENARIO_LABEL[scenario]}\\({architecture})}}")
+        labels.append(rf"{SCENARIO_LABEL[scenario]} ({architecture})")
     lines.extend([" & ".join(labels) + " " + chr(92) * 2, r"\hline"])
     for parameter in parameters:
         domains = [manifest["cells"][cell]["search_space"][parameter] for cell in cells]
-        row = [parameter_label(parameter, domains[0], algorithm)]
+        row = [parameter_label(parameter, domains[0], algorithm), kind_label(domains[0])]
         row.extend(domain_cell(domain, parameter) for domain in domains)
         lines.append(" & ".join(row) + " " + chr(92) * 2)
     lines.extend([r"\hline", r"\end{tabular}", r"\endgroup"])
@@ -154,9 +134,8 @@ def render_outputs(manifest: dict[str, Any]) -> dict[Path, str]:
     outputs = {
         HERE / "metodologia_v2_dominios_happo.tex": render_table("happo", manifest),
         HERE / "metodologia_v2_dominios_idqn.tex": render_table("idqn", manifest),
-        HERE / "metodologia_v2_dominios_mappo.tex": (
-            render_table("ippo", manifest, heading=True) + r"\par\medskip" + "\n"
-            + render_table("mappo", manifest, heading=True)),
+        HERE / "metodologia_v2_dominios_ippo.tex": render_table("ippo", manifest, heading=True),
+        HERE / "metodologia_v2_dominios_mappo.tex": render_table("mappo", manifest, heading=True),
     }
     return outputs
 

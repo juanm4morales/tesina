@@ -1,0 +1,31 @@
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  >=Stealth,
+  box/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners=3pt,
+    align=center,minimum height=1.05cm,inner sep=5pt},
+  pair/.style={draw=colAgente!75!black,fill=colAgente!13,rounded corners=3pt,
+    align=center,minimum height=1.05cm,inner sep=5pt},
+  flow/.style={-{Stealth[length=2mm]},line width=.8pt,draw=black!72}
+]
+\node[box,text width=2.2cm] (seeds) at (0,0)
+  {24 semillas\\pareadas};
+\node[pair,text width=2.4cm] (policies) at (3.0,0)
+  {A y C\\misma semilla};
+\node[box,text width=2.8cm] (evals) at (6.3,0)
+  {5 evaluaciones\\SUMO comunes por política};
+\node[box,text width=2.1cm] (means) at (9.6,0)
+  {Media por\\política};
+\node[pair,text width=2.3cm] (diff) at (12.8,0)
+  {Diferencia\\C $-$ A por par};
+\draw[flow] (seeds.east) -- (policies.west);
+\draw[flow] (policies.east) -- (evals.west);
+\draw[flow] (evals.east) -- (means.west);
+\draw[flow] (means.east) -- (diff.west);
+
+\node[box,text width=4.8cm,minimum height=.9cm] (boot) at (6.4,-1.75)
+  {Bootstrap: 20.000 remuestreos\\de 24 pares completos};
+\draw[flow] (diff.south) |- (boot.east);
+\end{tikzpicture}
+\endgroup

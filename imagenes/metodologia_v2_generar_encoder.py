@@ -91,7 +91,7 @@ def standalone(figure: str) -> str:
 \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage[spanish,es-noquoting]{babel}
 \usepackage{pgfplots}\pgfplotsset{compat=1.18}
 \definecolor{blueplot}{HTML}{4D8FBD}\definecolor{mintplot}{HTML}{3A9274}
-\definecolor{salmonplot}{HTML}{CF706E}\definecolor{inkplot}{HTML}{263746}
+\definecolor{salmonplot}{HTML}{A64B49}\definecolor{inkplot}{HTML}{263746}
 \begin{document}
 """ + figure + r"""\end{document}
 """
@@ -104,17 +104,17 @@ def pgf(output: Path) -> None:
     stair.sort()
     fig1 = rf"""\begin{{tikzpicture}}
 \begin{{axis}}[width=14.3cm,height=8cm,axis lines=left,xmin=0,xmax={1.2*M},ymin=-.5,ymax=21.8,
- xlabel={{Espera $x$ (vehículo$\cdot$s)}},ylabel={{Nivel $e(x)$}},
- ytick={{0,5,10,15,21}},yticklabels={{0,5,10,15,$I-1$}},
+ xlabel={{Espera acumulada por carril (vehículo$\cdot$s)}},ylabel={{Nivel de espera}},
+ ytick={{0,5,10,15,21}},yticklabels={{0,5,10,15,21}},
  grid=major,grid style={{inkplot!12}},
- tick label style={{font=\small}},label style={{font=\small}},title style={{font=\small}}]
+  tick label style={{font=\small}},label style={{font=\normalsize}},title style={{font=\small}}]
 \addplot[blueplot,thick,const plot] coordinates {{
 {coordinates(stair)}
 }};
 \addplot[salmonplot,dashed,thick] coordinates {{({M},0) ({M},21)}};
 \node[anchor=east,align=right,text=salmonplot,font=\small,fill=white,inner sep=2pt]
- at (axis cs:1070,15) {{$M_{{\mathrm{{lane}}}}$}};
-\draw[->,salmonplot,thin] (axis cs:1085,15)--(axis cs:{M},15);
+ at (axis cs:1010,15.5) {{M lane = {M:.0f} veh$\cdot$s\\umbral de entrada}};
+\draw[->,salmonplot,thick] (axis cs:1020,15.5)--(axis cs:{M},15.5);
 \end{{axis}}\end{{tikzpicture}}"""
     L = (I - 1) / M
     points = [blend(j / 1000) for j in range(1001)]
