@@ -1,20 +1,27 @@
 \newglossaryentry{agente}{
     name={Agente},
+    text={agente},
+    plural={agentes},
     description={Entidad computacional que observa el estado de su entorno y ejecuta acciones según una política determinada con el objetivo de maximizar su recompensa a largo plazo}
 }
 
 \newglossaryentry{entorno}{
     name={Entorno},
+    text={entorno},
     description={El sistema dinámico con el que interactúa el agente. Responde a las acciones del agente produciendo transiciones de estado y emitiendo señales de recompensa}
 }
 
 \newglossaryentry{estado}{
     name={Estado},
+    text={estado},
+    plural={estados},
     description={Representación cuantitativa o cualitativa de la situación actual del entorno en un instante de tiempo específico. Sirve como base para que el agente seleccione su próxima acción}
 }
 
 \newglossaryentry{observacion}{
     name={Observación},
+    text={observación},
+    plural={observaciones},
     description={Subconjunto de información del estado completo del entorno que es efectivamente visible o medible por un agente individual, especialmente relevante en escenarios de observabilidad parcial}
 }
 
@@ -91,7 +98,29 @@
 \newglossaryentry{transicion_aprendizaje}{
     name={Transición (Aprendizaje por Refuerzo)},
     text={transición},
+    plural={transiciones},
     description={Registro de un paso de interacción que contiene el estado u observación actual, la acción ejecutada, la recompensa recibida, el estado siguiente y, cuando corresponde, un indicador de terminación}
+}
+
+\newglossaryentry{mascara_acciones}{
+    name={Máscara de acciones},
+    text={máscara de acciones},
+    plural={máscaras de acciones},
+    description={Representación de las acciones habilitadas en una decisión; excluye del proceso de selección las acciones no admisibles. En el control semafórico, la admisibilidad depende de las fases, las transiciones y los tiempos definidos por el control; la máscara no constituye por sí sola una garantía de seguridad vial en campo}
+}
+
+\newglossaryentry{ensayo_hpo}{
+    name={Ensayo de búsqueda de hiperparámetros},
+    text={ensayo},
+    plural={ensayos},
+    description={Evaluación de una configuración concreta de hiperparámetros mediante entrenamiento y registro del objetivo y sus métricas. Puede terminar antes del presupuesto previsto y no equivale a un episodio ni a una iteración de entrenamiento}
+}
+
+\newglossaryentry{estudio_hpo}{
+    name={Estudio de búsqueda de hiperparámetros},
+    text={estudio},
+    plural={estudios},
+    description={Búsqueda que agrupa ensayos y su historial bajo una función objetivo y un espacio de búsqueda. En el protocolo de este proyecto, cada estudio se asocia con un algoritmo, un escenario y una arquitectura}
 }
 
 \newglossaryentry{episodio_aprendizaje}{
@@ -103,6 +132,7 @@
 \newglossaryentry{iteracion_entrenamiento}{
     name={Iteración de entrenamiento},
     text={iteración de entrenamiento},
+    plural={iteraciones de entrenamiento},
     description={Ciclo completo en el que se recolectan datos con una política y se realizan una o más actualizaciones de sus parámetros}
 }
 
@@ -216,22 +246,29 @@
 
 \newglossaryentry{recompensa}{
     name={Recompensa},
+    text={recompensa},
+    plural={recompensas},
     description={Señal escalar devuelta por el entorno que evalúa cuán buena o mala fue la acción ejecutada por el agente en un estado particular. El objetivo del agente es maximizar la suma total de estas señales}
 }
 
 \newglossaryentry{politica}{
     name={Política (Aprendizaje por Refuerzo)},
-    plural={Políticas (Aprendizaje por Refuerzo)},
+    text={política},
+    plural={políticas},
     description={Estrategia que define el comportamiento del agente en un momento dado, mapeando los estados observados a probabilidades de selección de las acciones disponibles}
 }
 
 \newglossaryentry{actor}{
     name={Actor (Aprendizaje por Refuerzo)},
+    text={actor},
+    plural={actores},
     description={Componente de la arquitectura del modelo de aprendizaje responsable de seleccionar y ejecutar la acción en el entorno basándose en el estado actual y la política que está aprendiendo}
 }
 
 \newglossaryentry{critico}{
     name={Crítico (Aprendizaje por Refuerzo)},
+    text={crítico},
+    plural={críticos},
     description={Componente encargado de estimar la función de valor, prediciendo la recompensa futura esperada para evaluar la calidad de las acciones tomadas por el Actor y así guiar su actualización}
 }
 
@@ -242,6 +279,8 @@
 
 \newglossaryentry{ventaja}{
     name={Ventaja (Aprendizaje por Refuerzo)},
+    text={ventaja},
+    plural={ventajas},
     description={Métrica que cuantifica cuánto mejor o peor resulta tomar una acción particular en un estado dado, en comparación con el desempeño promedio esperado según la política actual}
 }
 
@@ -321,6 +360,7 @@
 
 \newglossaryentry{bootstrap}{
     name={\textit{Bootstrap}},
+    text={\textit{bootstrap}},
     description={Procedimiento de remuestreo con reemplazo utilizado para aproximar la incertidumbre de un estimador a partir de las observaciones disponibles}
 }
 
@@ -351,4 +391,47 @@
 \newglossaryentry{velocidad_maxima_vehicular}{
  name={$v_{\max}$ (velocidad máxima vehicular)}, text={velocidad máxima},
  description={Velocidad máxima configurada para un tipo de vehículo, expresada en metros por segundo; el límite de la vía también restringe la velocidad permitida}
+}
+
+\newglossaryentry{hiperparametro}{
+ name={Hiperparámetro}, text={hiperparámetro}, plural={hiperparámetros},
+ description={Valor de configuración que se fija antes de un entrenamiento, como la tasa de aprendizaje o el tamaño de las capas ocultas. Se distingue de los parámetros de la red, que se ajustan durante el aprendizaje}
+}
+\newglossaryentry{dominio_busqueda}{
+ name={Dominio de búsqueda}, text={dominio de búsqueda},
+ description={Conjunto de rangos u opciones permitidos para los hiperparámetros en una búsqueda de configuraciones}
+}
+\newglossaryentry{distribucion_uniforme_continua}{
+ name={Distribución uniforme continua}, text={distribución uniforme continua},
+ description={Distribución que asigna la misma probabilidad a intervalos de igual longitud dentro de un rango. En la búsqueda de hiperparámetros, delimita propuestas para parámetros continuos}
+}
+\newglossaryentry{distribucion_loguniforme}{
+ name={Distribución loguniforme}, text={distribución loguniforme},
+ description={Distribución uniforme en el logaritmo de una variable positiva. Asigna la misma probabilidad a intervalos con igual razón entre sus extremos y permite explorar distintas escalas de magnitud}
+}
+\newglossaryentry{percentil}{
+ name={Percentil}, text={percentil}, plural={percentiles},
+ description={Valor que deja una proporción determinada de las observaciones por debajo o a su altura. El percentil 99 corresponde aproximadamente al 99\% de las observaciones}
+}
+\newglossaryentry{cohorte_evaluacion}{
+ name={Cohorte de evaluación}, text={cohorte},
+ description={Conjunto de vehículos definido por un criterio común de inclusión, como el ingreso durante un mismo intervalo de simulación, sobre el que se calculan las medidas de desempeño}
+}
+\newglossaryentry{cribado_exploratorio}{
+ name={Cribado exploratorio}, text={cribado exploratorio},
+ description={Prueba preliminar utilizada para elegir qué formulaciones evaluar con mayor detalle; no constituye por sí misma una confirmación de sus efectos}
+}
+\newglossaryentry{intervalo_confianza}{
+ name={Intervalo de confianza}, text={intervalo de confianza},
+ description={Rango que expresa la incertidumbre de una estimación. Su nivel nominal indica la proporción de estudios repetidos en la que el procedimiento cubriría el valor verdadero bajo sus supuestos; no asigna una probabilidad a ese valor una vez calculado el intervalo}
+}
+
+\newglossaryentry{carriles_controlados}{
+    name={$m_i$ (carriles controlados)},
+    description={Número de carriles entrantes controlados por el agente $i$. En el entorno utilizado, la observación local incorpora una medida de espera codificada por cada uno de estos carriles}
+}
+
+\newglossaryentry{numero_acciones}{
+    name={$K_i$ (número de acciones)},
+    description={Número de fases semafóricas seleccionables por el agente $i$. Excluye las fases con amarillo y el estado final de todo rojo; las restricciones temporales pueden reducir el subconjunto de acciones habilitado en un instante}
 }
