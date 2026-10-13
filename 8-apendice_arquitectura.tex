@@ -275,7 +275,7 @@ En los programas accionados, la duración efectiva puede variar. Los atributos \
 
 En la Figura \ref{fig:dominio_mendoza}, el acceso de Avenida José Vicente Zapata se representa mediante el tramo interno \texttt{93904440\#0}, ubicado en la \acrshort{acr-taz} 28. La continuidad de los carriles de ingreso se restablece entre los tramos \texttt{93904440\#0} y \texttt{93904440\#1}. La configuración \acrshort{acr-marl} de la hora pico parte de la demanda generada con el perfil de doce horas, cuyo origen es 06:00. La simulación comienza en $t=1500$ segundos (06:25), incluye 300 segundos de calentamiento y controla entre $t=1800$ y $t=9000$ (06:30--08:30). Se utiliza \path{nets/Mendoza/mendoza_marl_2h.sumocfg}; la configuración estática \texttt{mendoza\_0630\_0830.sumocfg} no incluye el calentamiento.
 
-La comprobación de doce horas controla desde $t=0$ hasta $t=43200$ (06:00--18:00). La de dos horas comienza en $t=1800$ y controla hasta $t=9000$, sin calentamiento previo. Los registros primarios confirman esas ventanas, pero no se conservaron los archivos de rutas originales de las corridas; por ello, no se afirma que las comprobaciones y la configuración \acrshort{acr-marl} usaran el mismo archivo. Mendoza forma parte de las fases 1 y 2 de búsqueda para los cuatro algoritmos. Los dominios, presupuestos y semillas detallados en este apéndice corresponden a los protocolos sintéticos; la búsqueda urbana utiliza condiciones propias de esa red.
+La comprobación de doce horas controla desde $t=0$ hasta $t=43200$ (06:00--18:00). La de dos horas comienza en $t=1800$ y controla hasta $t=9000$, sin calentamiento previo. Los registros primarios confirman esas ventanas, pero no se conservaron los archivos de rutas originales de las corridas; por ello, no se afirma que las comprobaciones y la configuración \acrshort{acr-marl} usaran el mismo archivo. Mendoza forma parte de las fases 1 y 2 de búsqueda para los cuatro algoritmos. Los dominios, presupuestos y semillas detallados en este apéndice corresponden a las búsquedas sintéticas; la búsqueda urbana utiliza condiciones propias de esa red.
 
 Los dos perfiles de conteo documentados corresponden a versiones distintas y no deben combinarse como si describieran una única entrada canónica. La Tabla \ref{tab:fuentes_mendoza} compara sus valores. En la Tabla \ref{tab:archivos_procedencia_mendoza}, se identifican los archivos; las carpetas se detallan después de ella y se señala qué archivos registrados no se conservaron.
 
@@ -294,9 +294,9 @@ Flujo horario asociado (vehículos/h) & 16\,744 & 14\,986 \\
 Factor de expansión (redondeado) & 11,4698 & 10,3274 \\\hline
 \end{tabular}\end{table}
 
-El resumen histórico identificado en la Tabla \ref{tab:archivos_procedencia_mendoza} corresponde a una versión distinta de la entrada de generación; su factor de expansión registrado es 11,46977289. El log de generación consigna 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica advierte que sus parámetros no deben aplicarse a ciegas para regenerar la entrada canónica. Como no se conservaron la matriz ni las rutas originales, la transformación desde ese registro hasta las rutas consumidas no puede reconstruirse por completo. La regla canónica y sus 520 pares conectables se detallan en la subsección \ref{subsec:procedimiento_demanda_mendoza}.
+El resumen histórico identificado en la Tabla \ref{tab:archivos_procedencia_mendoza} corresponde a una versión distinta de la entrada de generación; su factor de expansión registrado es 11,46977289. El log de generación registra 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica advierte que sus parámetros no deben aplicarse a ciegas para regenerar la entrada canónica. Como no se conservaron la matriz ni las rutas originales, la transformación desde ese registro hasta las rutas consumidas no puede reconstruirse por completo. La regla canónica y sus 520 pares conectables se detallan en la subsección \ref{subsec:procedimiento_demanda_mendoza}.
 
-Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado, cuyo hash completo se consigna después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14\,986,32 vehículos por hora. El registro de generación informa 14\,986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
+Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado; su hash completo se presenta después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14\,986,32 vehículos por hora. El registro de generación informa 14\,986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
 
 \begin{table}[H]
 \centering
@@ -334,7 +334,7 @@ El preprocesamiento de los conteos descartó fechas no interpretables, valores n
 
 La suma de las longitudes de carril es 66,3 km; cuenta cada carril por separado y no equivale a la extensión geográfica del área. Las longitudes de carril varían aproximadamente entre 11 y 276 m, con una media cercana a 120 m; los límites viales de velocidad registrados van de 10 a 100 km/h. Los agentes controlan de 3 a 10 carriles entrantes. De los 73 agentes descritos en el cuerpo, 67 tienen dos acciones, cuatro tienen una, uno tiene tres y uno tiene cuatro. El grado de vecindad varía entre dos y cuatro, con una media de 3,23.
 
-El registro de generación asociado a la semilla 104773 consigna el factor de expansión 10,327359932077748 y \texttt{camera\_retention}=1. Este último conserva el conteo de cámara completo como referencia para el ingreso modelado; es una decisión de construcción, no una proporción observada de vehículos que alcanzan el área urbana. La Tabla \ref{tab:fuentes_mendoza} mantiene separados este registro y el resumen histórico, que consigna \texttt{camera\_retention}=0,95.
+El registro de generación asociado a la semilla 104773 incluye el factor de expansión 10,327359932077748 y \texttt{camera\_retention}=1. Este último conserva el conteo de cámara completo como referencia para el ingreso modelado; es una decisión de construcción, no una proporción observada de vehículos que alcanzan el área urbana. La Tabla \ref{tab:fuentes_mendoza} mantiene separados este registro y el resumen histórico, que informa \texttt{camera\_retention}=0,95.
 
 Las 39 zonas, identificadas de 0 a 38, permiten 1482 pares OD entre zonas distintas. Una búsqueda en anchura (\textit{breadth-first search}, \acrshort{acr-bfs}) determinó que 520 pares son conectables. En la especificación canónica, 473 pares reciben proporciones fijas cuya suma es 0,60, 44 reciben proporciones aleatorias que suman 0,40 y tres se excluyen. Para un par conectable, $o$ y $d$ denotan origen y destino, $p_{od}$ su proporción, y $p_{od}^{\mathrm{fijo}}$ la fracción especificada para los pares fijos. Los conjuntos disjuntos $\mathcal P_{\mathrm{fijo}}$, $\mathcal P_{\mathrm{aleat}}$ y $\mathcal P_{\mathrm{excl}}$ identifican, respectivamente, pares fijos, aleatorios y excluidos. Para cada par aleatorio, $u_{od}$ se muestrea uniformemente entre cero y uno. La regla canónica es:
 \begin{equation}
@@ -346,7 +346,7 @@ p_{od}^{\mathrm{fijo}}, &(o,d)\in\mathcal P_{\mathrm{fijo}},\\
 \end{cases}
 \label{eq:contrato_od_v14}
 \end{equation}
-La normalización requiere que la suma de los pesos aleatorios sea positiva. Esta regla canónica de 60/40 es distinta del 70/30 consignado en el registro de generación; no se conservó la matriz original de ese registro.
+La normalización requiere que la suma de los pesos aleatorios sea positiva. Esta regla canónica de 60/40 es distinta del 70/30 informado en el registro de generación; no se conservó la matriz original de ese registro.
 
 Para un flujo positivo $Q_{od}$ en vehículos por hora, la tasa de llegadas es $\lambda_{od}=Q_{od}/3600$ vehículos por segundo. Si $U$ tiene distribución uniforme en $(0,1)$, el intervalo programado $H_{od}$, en segundos, se obtiene mediante:
 \begin{equation}
@@ -371,18 +371,18 @@ En los episodios de aprendizaje, el entorno guarda el estado de \acrshort{acr-su
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
 
-Este apéndice distingue los valores observados en configuraciones y archivos de ejecución de los parámetros, dominios y semillas que aparecen en protocolos de búsqueda. En este contexto, fase 1 y fase 2 designan etapas de búsqueda de hiperparámetros.
+Este apéndice distingue los valores observados en configuraciones y archivos de ejecución de los parámetros, dominios y semillas que aparecen en los diseños de búsqueda. En este contexto, fase 1 y fase 2 designan etapas de búsqueda de hiperparámetros.
 
 \subsection{Infraestructura y almacenamiento de las ejecuciones}
 \label{sec:infraestructura_apendice}
 
 Los programas de envío de trabajos, o \textit{scripts}, especifican recursos solicitados; se distinguen de los registros de asignación efectiva. La metodología resume las plataformas utilizadas en la subsección \ref{subsec:infraestructura_hpc}.
 
-Los trabajos se envían con \texttt{sbatch}, comando del gestor de trabajos \acrfull{acr-slurm}. Para los protocolos sintéticos, fase 1 utiliza \texttt{submit\_phase1.sh} y fase 2 especifica \texttt{submit\_phase2\_refined.sh}.
+Los trabajos se envían con \texttt{sbatch}, comando del gestor de trabajos \acrfull{acr-slurm}. En las búsquedas sintéticas, fase 1 utiliza \texttt{submit\_phase1.sh} y fase 2 especifica \texttt{submit\_phase2\_refined.sh}.
 
 Las configuraciones de los scripts corresponden a una combinación de algoritmo, red de tráfico y arquitectura, y solicitan un servidor del clúster (nodo), una tarea de ejecución, diez núcleos de la \acrfull{acr-cpu} y una partición —grupo de recursos que el sistema asigna para ejecutar trabajos— con unidades de procesamiento gráfico (\acrshort{acr-gpu}). El manual institucional describe una partición de Toko con hasta ocho núcleos; por ello no permite confirmar los recursos físicos asignados a cada trabajo \cite{TokoManual2024}.
 
-El script refinado también especifica el uso exclusivo del nodo y un límite de tiempo. La configuración de Ray limita a un ensayo simultáneo por trabajo; \acrshort{acr-asha} define las detenciones anticipadas según los parámetros de cada protocolo.
+El script refinado también especifica el uso exclusivo del nodo y un límite de tiempo. La configuración de Ray limita a un ensayo simultáneo por trabajo; \acrshort{acr-asha} define las detenciones anticipadas según los parámetros de cada búsqueda.
 
 Los registros de las ejecuciones documentadas se guardaron en almacenamiento persistente y se copiaron al espacio temporal del nodo durante la ejecución. Aunque los scripts configuraron un recurso de \acrshort{acr-gpu} para Ray, no solicitaron una tarjeta física mediante un identificador de recurso de \acrshort{acr-slurm}; por ello, los archivos del proyecto no permiten asociar cada trabajo con un modelo específico de \acrshort{acr-gpu}.
 
@@ -409,7 +409,7 @@ C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas 
 \subsection{Espacio de búsqueda inicial de fase 1 sintética}
 \label{subsec:espacio_busqueda_fase1}
 
-Esta sección especifica los parámetros que la fase 1 sintética permite variar y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. El protocolo y el programa de ejecución sintéticos especifican el presupuesto y la aplicación de las configuraciones. Esta reconstrucción permite identificar la especificación consultada; una clave almacenada en un archivo de configuración no demuestra por sí sola cómo operó cada ejecución histórica.
+Esta sección especifica los parámetros que la fase 1 sintética permite variar y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. El diseño de búsqueda y el programa de ejecución sintéticos especifican el presupuesto y la aplicación de las configuraciones. Esta reconstrucción permite identificar la especificación consultada; una clave almacenada en un archivo de configuración no demuestra por sí sola cómo operó cada ejecución histórica.
 
 Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. Uniforme continua y loguniforme tienen el significado explicado en la sección \ref{subsec:hpo_phase1}; uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. Los mismos dominios iniciales se declaran para las tres redes sintéticas y para ambas arquitecturas de cada algoritmo. Mendoza también integra la fase 1, con una parametrización propia del escenario urbano; las tablas siguientes describen el componente sintético.
 
@@ -444,7 +444,7 @@ Probabilidad de ordenación (HAPPO) & $[0{,}20;\,0{,}90)$ & Uniforme continua \\
 \endgroup
 \end{table}
 
-El asterisco de \texttt{minibatch\_size} señala una diferencia de implementación: el módulo de aprendizaje de \acrshort{acr-happo} consultado procesa el \gls{batch_entrenamiento} completo por actor, aunque la configuración registre un tamaño de minilote. Por tanto, variar esa clave no acredita un cambio del procedimiento de actualización de HAPPO. La probabilidad de ordenación, en cambio, interviene al elegir el siguiente actor: selecciona al de mayor magnitud media de ventaja con la probabilidad configurada y, en caso contrario, elige al azar entre los restantes. Su dominio excluye tanto la ordenación completamente aleatoria como la selección siempre guiada por ese criterio.
+El asterisco de \texttt{minibatch\_size} señala una diferencia de implementación: el módulo de aprendizaje de \acrshort{acr-happo} consultado procesa el \gls{batch_entrenamiento} completo por actor, aunque la configuración registre un tamaño de minilote. En ese módulo, la clave registrada no determina una subdivisión efectiva del lote. La probabilidad de ordenación, en cambio, interviene al elegir el siguiente actor: selecciona al de mayor magnitud media de ventaja con la probabilidad configurada y, en caso contrario, elige al azar entre los restantes. Su dominio excluye tanto la ordenación completamente aleatoria como la selección siempre guiada por ese criterio.
 
 Para \acrshort{acr-ppo}, entre 2 y 12 episodios nominales por lote equivalen a un objetivo de 1440 a 8640 pasos de decisión, al multiplicar por $3600/5=720$ pasos por episodio controlado. La recolección de episodios completos puede producir un tamaño efectivo distinto. Los niveles del codificador modifican la representación de las observaciones; el peso vecinal modifica la recompensa. No son parámetros del optimizador y se distinguen de la inclusión de información vecinal en la observación, que permanece desactivada durante esta búsqueda.
 
@@ -547,20 +547,20 @@ $4\times4\_H$ & 179 & 100179 & 1871007461 \\\hline
 
 El código de fase 1 define 7001 como semilla \acrshort{acr-tpe} por defecto, independiente de las semillas de entrenamiento.
 
-\subsection{Arquitecturas y semillas del protocolo refinado sintético}
+\subsection{Arquitecturas y semillas de la búsqueda refinada sintética}
 \label{subsec:protocolo_refinado_apendice}
 
-Este apartado detalla el protocolo refinado sintético, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. La fase 2 abarca los cuatro escenarios; en Mendoza, los dominios y condiciones de búsqueda son propios de la red urbana y se derivan de su fase 1.
+Este apartado detalla la búsqueda refinada sintética, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. La fase 2 abarca los cuatro escenarios; en Mendoza, los dominios y condiciones de búsqueda son propios de la red urbana y se derivan de su fase 1.
 
-El protocolo refinado sintético prevé hasta 100 configuraciones por combinación de algoritmo y escenario. Especifica \acrshort{acr-asha} con 30 iteraciones de gracia y factor de reducción 2, una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto. La fase 2 también comprende Mendoza y refina los dominios de búsqueda de ese escenario; los valores sintéticos de presupuesto, semillas y arquitectura no se trasladan a la búsqueda urbana. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
+El diseño de la búsqueda refinada sintética prevé hasta 100 configuraciones por combinación de algoritmo y escenario. La configuración de \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; además, se prevé una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto. Los valores sintéticos de presupuesto, semillas y arquitectura no se trasladan a la búsqueda urbana. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
 
-El estado del modelo al final de un ensayo se guarda en un archivo \gls{checkpoint}, que puede servir para reanudar o evaluar el entrenamiento. Su existencia no libera presupuesto si el ensayo está incompleto ni certifica una política apta para selección. En el protocolo sintético, la fase 1 adapta las propuestas mediante \acrshort{acr-tpe} y las detenciones mediante \acrshort{acr-asha}, sin reservar una prueba en $\rho_{\mathrm{coop}}=0$; por eso sus registros no identifican la causa de las diferencias asociadas al peso vecinal ni demuestran que el valor local sea un óptimo.
+El estado del modelo al final de un ensayo se guarda en un archivo \gls{checkpoint}, que puede servir para reanudar o evaluar el entrenamiento. Su existencia no libera presupuesto si el ensayo está incompleto ni garantiza que la política sea admisible para selección. En la búsqueda sintética, la fase 1 adapta las propuestas mediante \acrshort{acr-tpe} y las detenciones mediante \acrshort{acr-asha}, sin reservar una prueba en $\rho_{\mathrm{coop}}=0$; por eso sus registros no identifican la causa de las diferencias asociadas al peso vecinal ni demuestran que el valor local sea un óptimo.
 
-La selección de configuraciones, el entrenamiento final desde cero y la evaluación comparativa son etapas posteriores a las búsquedas; los identificadores 950001, 950003 y 950007 que aparecen en el protocolo no son por sí mismos resultados de selección.
+La selección de configuraciones, el entrenamiento final desde cero y la evaluación comparativa son etapas posteriores a las búsquedas; los identificadores 950001, 950003 y 950007 que aparecen en la tabla de semillas no son por sí mismos resultados de selección.
 
 \begin{table}[H]
 \centering
-\caption{Arquitecturas y semillas del protocolo refinado para las doce combinaciones sintéticas. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de \acrshort{acr-tpe} no son réplicas de entrenamiento.}
+\caption{Arquitecturas y semillas de la búsqueda refinada para las doce combinaciones sintéticas. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de \acrshort{acr-tpe} no son réplicas de entrenamiento.}
 \label{tab:busquedas_v2}
 \small
 \begin{tabular}{llrrrr}
@@ -584,12 +584,12 @@ Algoritmo & Escenario & Arquitectura & Entrenamiento & Evaluación & \acrshort{a
 \end{table}
 
 
-Las arquitecturas h128 y h256 contienen dos capas ocultas de 128 y 256 unidades, respectivamente. La arquitectura asignada a cada combinación prevista se consigna en la Tabla \ref{tab:busquedas_v2}. Son preferencias de búsqueda derivadas de la fase 1, no evidencia de superioridad bajo la recompensa local. Las semillas \acrshort{acr-tpe} controlan las propuestas; las semillas \acrshort{acr-sumo}, la simulación. Ninguna sustituye una réplica de entrenamiento.
+Las arquitecturas h128 y h256 contienen dos capas ocultas de 128 y 256 unidades, respectivamente. La arquitectura asignada a cada combinación prevista se indica en la Tabla \ref{tab:busquedas_v2}. Son preferencias de búsqueda derivadas de la fase 1, no evidencia de superioridad bajo la recompensa local. Las semillas \acrshort{acr-tpe} controlan las propuestas; las semillas \acrshort{acr-sumo}, la simulación. Ninguna sustituye una réplica de entrenamiento.
 
 \subsubsection{Admisibilidad y selección de candidatos}
 \label{subsec:criterios_admisibilidad_hpo}
 
-Para los candidatos sintéticos, el protocolo requiere que el ensayo haya alcanzado 60 iteraciones, que sus métricas sean numéricas y finitas y que existan al menos 15 registros finitos de métricas de tránsito. También se comprueba que la configuración efectiva y el archivo del modelo final estén completos y puedan leerse. El estado \texttt{COMPLETE} de Optuna solo indica que el ensayo terminó sin registrar un fallo; por sí solo no acredita estos requisitos.
+Para los candidatos sintéticos, la selección exige que el ensayo haya alcanzado 60 iteraciones, que sus métricas sean numéricas y finitas y que existan al menos 15 registros finitos de métricas de tránsito. También se comprueba que la configuración efectiva y el archivo del modelo final estén completos y puedan leerse. Por sí solo, el estado \texttt{COMPLETE} de Optuna indica que el ensayo terminó sin registrar un fallo, pero no garantiza el cumplimiento de estos requisitos.
 
 Para cada combinación sintética de algoritmo y red se consideran hasta tres candidatos técnicamente admisibles, procurando incluir ambas arquitecturas cuando sea posible. El vector de referencia se construye con los cinco mejores ensayos de fase 1, ordenados por el objetivo: se toma la mediana de los parámetros numéricos y la moda de los categóricos. Esta configuración se entrena desde cero; no importa puntuaciones, estados de modelos ni bases de Optuna de fase 1. En Mendoza, los candidatos se someten a los criterios urbanos descritos en la subsección \ref{subsec:seleccion_mendoza} de la metodología.
 
@@ -602,34 +602,34 @@ El criterio \texttt{final\_declared\_budget} del contrato de entrenamiento ident
 \subsection{Dominios declarados y significado de los parámetros}
 \label{subsec:dominios_refinados}
 
-Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados en el protocolo refinado, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. Mendoza también forma parte de la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico. Cada columna de valores corresponde al escenario y a la arquitectura indicados.
+Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados para la búsqueda refinada, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. Mendoza también forma parte de la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico. Cada columna de valores corresponde al escenario y a la arquitectura indicados.
 
 % Dominios expresados como [inferior, superior], excepto randint: [inferior, superior exclusivo).
 \begin{landscape}
-\begin{table}[H]\centering\caption{Dominios declarados en el protocolo \texttt{phase2\_refined} para \acrshort{acr-happo} por escenario y arquitectura.}\label{tab:dominios_happo_v2}
+\begin{table}[H]\centering\caption{Dominios declarados para la búsqueda \texttt{phase2\_refined} de \acrshort{acr-happo} por escenario y arquitectura.}\label{tab:dominios_happo_v2}
 \input{imagenes/metodologia_v2_dominios_happo.tex}
 \end{table}
 \end{landscape}
 
 \begin{landscape}
-\begin{table}[H]\centering\caption{Dominios declarados en el protocolo \texttt{phase2\_refined} para \acrshort{acr-idqn} por escenario y arquitectura.}\label{tab:dominios_idqn_v2}
+\begin{table}[H]\centering\caption{Dominios declarados para la búsqueda \texttt{phase2\_refined} de \acrshort{acr-idqn} por escenario y arquitectura.}\label{tab:dominios_idqn_v2}
 \input{imagenes/metodologia_v2_dominios_idqn.tex}
 \end{table}
 \end{landscape}
 
 \begin{landscape}
-\begin{table}[H]\centering\caption{Dominios declarados en el protocolo refinado para \acrshort{acr-ippo} por escenario y arquitectura.}\label{tab:dominios_ippo_v2}
+\begin{table}[H]\centering\caption{Dominios declarados para la búsqueda refinada de \acrshort{acr-ippo} por escenario y arquitectura.}\label{tab:dominios_ippo_v2}
 \input{imagenes/metodologia_v2_dominios_ippo.tex}
 \end{table}
 \end{landscape}
 
 \begin{landscape}
-\begin{table}[H]\centering\caption{Dominios declarados en el protocolo refinado para \acrshort{acr-mappo} por escenario y arquitectura.}\label{tab:dominios_mappo_v2}
+\begin{table}[H]\centering\caption{Dominios declarados para la búsqueda refinada de \acrshort{acr-mappo} por escenario y arquitectura.}\label{tab:dominios_mappo_v2}
 \input{imagenes/metodologia_v2_dominios_mappo.tex}
 \end{table}
 \end{landscape}
 
-Para los dominios sintéticos de las tablas, el protocolo describe la derivación de cada uno a partir de los ensayos de fase 1 que completaron el presupuesto sin errores y cuyo objetivo es numérico y finito, ordenados de menor a mayor por ese objetivo. Propone como vector inicial la mediana de los parámetros numéricos y la moda de los categóricos entre los cinco mejores; esa combinación puede no coincidir con un ensayo histórico. También propone entrenar desde cero, sin incorporar puntuaciones, archivos de estado del modelo (\gls{checkpoint}) ni bases Optuna de fase 1. La búsqueda urbana sigue la misma relación entre fases con sus propios dominios.
+Para los dominios sintéticos de las tablas, la documentación describe su derivación a partir de los ensayos de fase 1 que completaron el presupuesto sin errores y cuyo objetivo es numérico y finito, ordenados de menor a mayor por ese objetivo. Como vector inicial, propone la mediana de los parámetros numéricos y la moda de los categóricos entre los cinco mejores; esa combinación puede no coincidir con un ensayo histórico. También plantea entrenar desde cero, sin incorporar puntuaciones, archivos de estado del modelo (\gls{checkpoint}) ni bases Optuna de fase 1. La búsqueda urbana sigue la misma relación entre fases con sus propios dominios.
 
 En parámetros numéricos se parte del intervalo de los diez mejores \glspl{ensayo_hpo}, se amplía cada extremo en un 10\% del ancho del dominio original y se limita a sus fronteras. Los parámetros loguniformes se tratan en escala logarítmica. Se conserva el dominio original si el intervalo de los veinte mejores \glspl{ensayo_hpo} cubre al menos el 70\% de su ancho o si alguno de los diez mejores queda a una distancia de un extremo no mayor que el 5\% de ese ancho. Para los parámetros enteros se calcula el ancho entre el menor y el mayor valor admisibles; las distancias del 5\% y del 10\% se redondean hacia arriba, con un margen mínimo de una unidad para la ampliación. El extremo superior del dominio resultante se expresa como exclusivo. En parámetros categóricos se consideran las alternativas de los veinte mejores; si solo aparece una, se añade la siguiente en el orden del dominio original o, si ocupa la última posición, la anterior.
 
@@ -641,13 +641,15 @@ Para \acrshort{acr-ppo}, el código multiplica \texttt{train\_batch\_episodes} p
 \subsection{Métricas y análisis por pares de A/C}
 \label{subsec:detalle_analisis_pareado}
 
-En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra la medida por paso utilizada para calcular el Gini de espera descrito en la metodología. La medida se promedia temporalmente por controlador semafórico y luego se compara entre controladores con igual peso. Cada controlador corresponde a un agente.
+En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra el cociente por paso descrito en la metodología: espera acumulada en los carriles del controlador dividida por los vehículos presentes. Cuando no hay vehículos, el valor del paso es cero. El código promedia estos valores por controlador y calcula el Gini dando el mismo peso a cada uno.
 
-Para cada una de las tres redes, las cinco evaluaciones de una política se promedian antes de calcular las diferencias entre las 24 parejas de entrenamiento. El remuestreo conserva cada pareja completa y genera 20.000 conjuntos de 24 parejas con reemplazo. Para el intervalo percentil del 95\% se usan los percentiles 2,5 y 97,5; para el intervalo del 98,33\%, aproximadamente 0,83 y 99,17. Este nivel aplica Bonferroni al error de 0,05 dividido entre las tres comparaciones por red (0,05/3), para cada medida por separado. No se ajusta en conjunto por todas las métricas.
+En \texttt{Summary}, \texttt{loaded}, \texttt{inserted} y \texttt{arrived} cuentan los vehículos cargados, insertados y llegados a destino, respectivamente. \texttt{loaded} puede incluir vehículos cuya salida está programada para más adelante. \texttt{ended} incluye los que llegaron o fueron retirados de la simulación, por lo que no equivale por sí solo a viajes completados \cite{SUMO2026_SUMO}.\footnote{\url{https://sumo.dlr.de/docs/Simulation/Output/Summary.html}, consultada el 13 de octubre de 2026.} El material de la comprobación operacional de Mendoza no identifica una salida \texttt{Summary} con el mapeo exacto de los conteos reportados. Por ello, en la metodología se los define por su significado operacional y no se atribuyen a campos nativos concretos.
+
+Para cada una de las tres redes, las cinco evaluaciones de una política se promedian antes de calcular las diferencias entre las 24 parejas de entrenamiento. El remuestreo conserva cada pareja completa y genera 20.000 conjuntos de 24 parejas con reemplazo. Para el intervalo percentil del 95\% se usan los percentiles 2,5 y 97,5; para el intervalo del 98,33\%, aproximadamente 0,83 y 99,17. Este nivel aplica la corrección de Bonferroni al nivel nominal de 0,05 dividido entre los tres contrastes A/C, uno por cada red ($0{,}05/3$), para cada medida por separado. No se ajusta conjuntamente entre métricas distintas.
 
 Como análisis de sensibilidad, se calcula un intervalo basado en $t$ de Student con 24 diferencias pareadas, bajo el supuesto de diferencias independientes y aproximadamente normales. Los intervalos percentiles y el intervalo $t$ son aproximaciones; su cobertura no está garantizada, y los valores extremos se conservan para revisar su influencia.
 
-El protocolo original de la campaña, conservado en \path{docs/PROTOCOLO_COOPERACION_MULTIESCENARIO.md}, incluye las tres redes. El informe histórico, en \path{cooperation_multiscenario_20260920/report/INFORME.md}, presenta como análisis principal 48 parejas de $3\times1$ y $4\times4\_H$. El mismo informe separa los datos de $3\times3$ después de revisar los resultados porque su entrenamiento tuvo una dinámica distinta; señala que esa decisión no estaba fijada de antemano y que los registros de esa red se conservaron aparte. Esta decisión de presentación histórica se distingue del alcance metodológico adoptado aquí, que analiza por separado las tres redes, y no constituye una exclusión previa del protocolo.
+El protocolo original de la campaña, identificado en \path{docs/PROTOCOLO_COOPERACION_MULTIESCENARIO.md}, incluye las tres redes. El informe histórico, en \path{cooperation_multiscenario_20260920/report/INFORME.md}, presenta como análisis principal 48 parejas de $3\times1$ y $4\times4\_H$. El mismo informe separa los datos de $3\times3$ después de revisar los resultados porque su entrenamiento tuvo una dinámica distinta; señala que esa decisión de presentación no estaba fijada de antemano y que los registros de esa red se conservaron aparte. El criterio histórico de presentación se distingue del alcance metodológico adoptado aquí, que analiza por separado las tres redes; por tanto, no implica una exclusión previa de $3\times3$.
 
 \section{Detalles del aprendizaje y de la codificación}
 \label{sec:apendice_detalles_aprendizaje}
@@ -659,7 +661,7 @@ En los módulos de aprendizaje propios de \acrshort{acr-mappo} y \acrshort{acr-h
  \mathcal{L}_V=\frac{1}{B}\sum_{b=1}^{B}\min\{c_v,\max(0,\ell_b)\}.
  \label{eq:perdida_valor_marl_tlc}
 \end{equation}
-Las muestras válidas son las que la máscara del lote no excluye del cálculo. Este recorte del error cuadrático no es el \textit{value clipping} convencional de \acrshort{acr-ppo}, que compara predicciones de valor recortadas y no recortadas; tampoco se afirma con qué frecuencia se activa.
+Las muestras válidas son las que la máscara del lote no excluye del cálculo. Este recorte del error cuadrático no es el \textit{value clipping} convencional de \acrshort{acr-ppo}, que compara predicciones de valor recortadas y no recortadas. Su consecuencia para el aprendizaje y la falta de una frecuencia de activación cuantificada se explican en la subsección \ref{subsec:mecanismos_algoritmos}.
 
 \acrshort{acr-idqn} reutiliza \glspl{transicion_aprendizaje} de un búfer de experiencia priorizado y aprende valores para las acciones; no tiene un actor \acrshort{acr-ppo}, y la selección se realiza entre acciones permitidas. Los métodos tipo \acrshort{acr-ppo} recolectan un lote de trayectorias. En \acrshort{acr-ippo} y \acrshort{acr-mappo}, un \gls{mini_lote} es una subdivisión del lote que produce una actualización; \acrshort{acr-happo} procesa el lote completo por actor. Los críticos y optimizadores son componentes de entrenamiento, mientras que en \acrshort{acr-ppo} la ejecución de cada actor depende de su observación y de la \glsdisp{mascara_acciones}{máscara} vigente.
 
@@ -668,6 +670,8 @@ En \acrshort{acr-mappo}, los objetivos de valor y las ventajas se calculan por s
 En el aprendiz de \acrshort{acr-happo} de la versión congelada inspeccionada, el crítico se actualiza al comienzo de cada \gls{epoca_entrenamiento} con el lote completo. Se aplica un paso de gradiente por actor y época. Las ventajas individuales estandarizadas ya calculadas inicializan los factores de reponderación $M$; estos se reinician en cada \gls{epoca_entrenamiento}, y las ventajas no se recalculan durante la secuencia de actores. Antes de actualizar actores, el código construye un orden entero de agentes. En cada turno, \texttt{greedy\_selection\_prob} determina la probabilidad de elegir, entre los agentes pendientes, el que tiene la mayor media del valor absoluto de su factor inicial; de lo contrario, elige uno al azar. Esta regla ordena a los actores para su actualización, no selecciona la fase semafórica. El orden no se vuelve a sortear después de reponderar factores.
 
 Tras actualizar un actor, el código calcula para la acción de la muestra la razón entre su probabilidad bajo el actor actualizado y su probabilidad bajo la política recolectora. Esa razón multiplica los factores de los agentes que aún esperan su turno. La reponderación no ejecuta una actualización de gradiente adicional para esos actores. Estas reglas caracterizan el procedimiento de HAPPO; la comparación A/C de esta tesina se delimita a MAPPO.
+
+Zhong et al. encuadran HAPPO como una instancia de HAML y demuestran mejora monótona del retorno conjunto y convergencia bajo las condiciones del marco, que incluyen una recompensa compartida en un juego cooperativo. Las ventajas por agente no constituyen por sí solas una diferencia con ese planteo: HAPPO utiliza una descomposición por agentes de la ventaja conjunta. En esta adaptación, los objetivos de valor y las ventajas se calculan a partir de recompensas específicas por agente, en un juego parcialmente observable. Al faltar el retorno común, las garantías teóricas no se aplican directamente a la formulación experimental \cite{zhong2024heterogeneous}.
 
 
 \subsection{Desarrollo algebraico del codificador}
@@ -687,7 +691,7 @@ Para la observación vecinal, se aplica la misma función a la espera media por 
 
 La Figura \ref{fig:mezcla_log_lineal} separa las contribuciones del codificador utilizado en la sección \ref{subsec:observaciones_encoder}. Permite comprobar la equivalencia algebraica, sin atribuir al ejemplo un resultado de control.
 
-La resolución $I$ se registra como \texttt{encoder\_intervals} y el umbral local $M_{\mathrm{lane}}$ como \texttt{max\_lane\_value}.
+El número de niveles $I$ se registra como \texttt{encoder\_intervals} y el umbral local $M_{\mathrm{lane}}$ como \texttt{max\_lane\_value}. La dependencia de $L$ respecto de $I$ explica por qué cambiar los niveles también modifica la transformación.
 
 Sea $F=(1-L)(I-1)/\log_2(1/L+1)$ el factor que pondera el componente logarítmico. Para $0\leq x_{\mathrm{num}}<M_{\mathrm{num}}$, la mezcla escalada de la sección \ref{subsec:observaciones_encoder} se expresa en la forma implementada por el código:
 \begin{equation}
@@ -750,7 +754,7 @@ La comparación fija el peso de la recompensa vecinal en cero para la variante l
 
 Los manifiestos de la comparación registran \acrshort{acr-sumo} 1.26.0, Ray 2.54.1 y PyTorch 2.10.0 con CUDA 12.8 (\textit{Compute Unified Device Architecture}), plataforma que permite ejecutar cálculos en las unidades de procesamiento gráfico. Estas versiones corresponden a esa campaña y no se atribuyen automáticamente a las búsquedas históricas. Los archivos \texttt{manifest.json} de cada par conservan su configuración y versiones efectivas.
 
-La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a protocolos distintos.
+La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a diseños distintos.
 
 \subsection{Calibraciones y semillas de cooperación}
 \label{subsec:calibraciones_cooperacion}
