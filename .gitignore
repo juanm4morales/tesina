@@ -1,3 +1,37 @@
-# Local tracking files
+# Archivos de seguimiento local / configuracion
 plan-correcciones.md
 AGENTS.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Artefactos intermedios de compilacion LaTeX
+*.aux
+*.log
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.toc
+*.out
+*.lof
+*.lot
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+*.ist
+*.nav
+*.snm
+*.vrb
+
+# Temporales y respaldos
+*~
+*.swp
+*.swo
+.DS_Store
