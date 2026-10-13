@@ -1,0 +1,143 @@
+\begingroup
+\setstretch{1}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\begin{tikzpicture}[
+  x=0.108cm, y=1cm,
+  font=\sffamily,
+  verde/.style={draw=catVerdeMenta!60!black, fill=colSemaforoVerde, line width=0.5pt},
+  amarillo/.style={draw=seqNivelUno!80!black, fill=colSemaforoAmarillo, line width=0.5pt},
+  rojo/.style={draw=catRosaSalmon!90!black, fill=colSemaforoRojo, line width=0.5pt},
+  guia/.style={draw=black!14, line width=0.4pt, dashed},
+  flecha/.style={-{Stealth[length=1.6mm,width=1.3mm]}, draw=black!70, line width=0.5pt}
+]
+
+  % Líneas guía verticales para referencias de tiempo
+  \foreach \t in {0, 15, 30, 45, 60, 75, 90} {
+    \draw[guia] (\t, -0.6) -- (\t, 4.8);
+  }
+
+  % -------------------------------------------------------------
+  % FILA 1: Secuencia común (y = 4.0)
+  % -------------------------------------------------------------
+  \node[anchor=east, align=right, font=\sffamily\footnotesize, text width=3.3cm] at (-2, 4.0) {
+    \textbf{Secuencia común}\\
+    \scriptsize $3\times1$, $3\times3$ y\\
+    \scriptsize 13 cruces de $4\times4\_H$
+  };
+
+  % V1 (0-42)
+  \filldraw[verde] (0, 3.62) rectangle (42, 4.38);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (21, 4.0) {$V_1 = 42\text{ s}$ \normalfont\footnotesize(Norte--Sur)};
+
+  % A1 (42-45)
+  \filldraw[amarillo] (42, 3.62) rectangle (45, 4.38);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (43.5, 4.0) {3};
+
+  % V2 (45-87)
+  \filldraw[verde] (45, 3.62) rectangle (87, 4.38);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (66, 4.0) {$V_2 = 42\text{ s}$ \normalfont\footnotesize(Este--Oeste)};
+
+  % A2 (87-90)
+  \filldraw[amarillo] (87, 3.62) rectangle (90, 4.38);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (88.5, 4.0) {3};
+
+  % -------------------------------------------------------------
+  % FILA 2: Intersección C1 (y = 2.1)
+  % -------------------------------------------------------------
+  \node[anchor=east, align=right, font=\sffamily\footnotesize, text width=3.3cm] at (-2, 2.1) {
+    \textbf{Intersección C1}\\
+    \scriptsize $4\times4\_H$ (3 fases verdes)
+  };
+
+  % V1 (0-38)
+  \filldraw[verde] (0, 1.72) rectangle (38, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (19, 2.1) {$V_1 = 38\text{ s}$ \normalfont\footnotesize(Norte--Sur)};
+
+  % A1 (38-41)
+  \filldraw[amarillo] (38, 1.72) rectangle (41, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (39.5, 2.1) {3};
+
+  % V2 (41-78)
+  \filldraw[verde] (41, 1.72) rectangle (78, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (59.5, 2.1) {$V_2 = 37\text{ s}$ \normalfont\footnotesize(Este--Oeste)};
+
+  % A2 (78-81)
+  \filldraw[amarillo] (78, 1.72) rectangle (81, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (79.5, 2.1) {3};
+
+  % V3 (81-87)
+  \filldraw[verde] (81, 1.72) rectangle (87, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90, inner sep=0pt] at (84, 2.1) {$V_3$};
+  % Llamada a V3 desde el margen derecho
+  \draw[flecha] (93.7, 2.1) -- (87.3, 2.1);
+  \node[anchor=west, font=\sffamily\scriptsize, align=left, inner sep=1pt] at (94.2, 2.1) {Giro protegido\\($V_3 = 6\text{ s}$)};
+
+  % A3 (87-90)
+  \filldraw[amarillo] (87, 1.72) rectangle (90, 2.48);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (88.5, 2.1) {3};
+
+  % -------------------------------------------------------------
+  % FILA 3: Intersecciones C4 y D1 (y = 0.2)
+  % -------------------------------------------------------------
+  \node[anchor=east, align=right, font=\sffamily\footnotesize, text width=3.3cm] at (-2, 0.2) {
+    \textbf{Cruces C4 y D1}\\
+    \scriptsize $4\times4\_H$ (con todo rojo)
+  };
+
+  % V1 (0-42)
+  \filldraw[verde] (0, -0.18) rectangle (42, 0.58);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (21, 0.2) {$V_1 = 42\text{ s}$ \normalfont\footnotesize(Acceso principal)};
+
+  % A1 (42-45)
+  \filldraw[amarillo] (42, -0.18) rectangle (45, 0.58);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (43.5, 0.2) {3};
+
+  % V2 (45-86)
+  \filldraw[verde] (45, -0.18) rectangle (86, 0.58);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!90] at (65.5, 0.2) {$V_2 = 41\text{ s}$ \normalfont\footnotesize(Acceso transversal)};
+
+  % A2 (86-89)
+  \filldraw[amarillo] (86, -0.18) rectangle (89, 0.58);
+  \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (87.5, 0.2) {3};
+
+  % R (89-90)
+  \filldraw[rojo] (89, -0.18) rectangle (90, 0.58);
+  % LLAMADA A TODO ROJO DESDE LA DERECHA (¡Cero interferencia vertical!)
+  \draw[flecha] (94, 0.2) -- (90.3, 0.2);
+  \node[anchor=west, font=\sffamily\scriptsize\bfseries, align=left, text=colSemaforoRojo!80!black, inner sep=1pt] at (94.2, 0.2) {Todo rojo\\($R = 1\text{ s}$)};
+
+  % -------------------------------------------------------------
+  % EJE DE TIEMPO
+  % -------------------------------------------------------------
+  \draw[draw=black!70, line width=0.6pt, ->] (0, -0.6) -- (93, -0.6) node[right, font=\sffamily\scriptsize] {$t\text{ (s)}$};
+  \foreach \t in {0, 15, 30, 45, 60, 75, 90} {
+    \draw[line width=0.6pt, draw=black!70] (\t, -0.6) -- (\t, -0.72) node[below, font=\sffamily\scriptsize] {\t};
+  }
+  \foreach \t in {5, 10, 20, 25, 35, 40, 50, 55, 65, 70, 80, 85} {
+    \draw[line width=0.4pt, draw=black!40] (\t, -0.6) -- (\t, -0.68);
+  }
+
+  % -------------------------------------------------------------
+  % LEYENDA INFERIOR
+  % -------------------------------------------------------------
+  \node[anchor=west, font=\sffamily\footnotesize] at (0, -1.5) {
+    \tikz[x=1cm,y=1cm,baseline=-0.6ex]{
+      \filldraw[verde] (0, -0.15) rectangle (0.5, 0.15);
+    }\;\textbf{Verde ($V$)}
+  };
+
+  \node[anchor=west, font=\sffamily\footnotesize] at (36, -1.5) {
+    \tikz[x=1cm,y=1cm,baseline=-0.6ex]{
+      \filldraw[amarillo] (0, -0.15) rectangle (0.5, 0.15);
+    }\;\textbf{Amarillo ($A$): 3 s}
+  };
+
+  \node[anchor=west, font=\sffamily\footnotesize] at (68, -1.5) {
+    \tikz[x=1cm,y=1cm,baseline=-0.6ex]{
+      \filldraw[rojo] (0, -0.15) rectangle (0.5, 0.15);
+    }\;\textbf{Todo rojo ($R$): 1 s}
+  };
+
+\end{tikzpicture}
+\endgroup
