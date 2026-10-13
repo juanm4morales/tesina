@@ -171,6 +171,55 @@ mathfontname=mathsf]{mhchem}
 \newcommand {\ACO}[1]{{\color{red} {\textbf{Caro: #1}}}}
 
 \usepackage[acronym,nonumberlist]{glossaries}
+
+% Estilo de acrónimos: término en español (término en inglés, SIGLA)
+\newacronymstyle{spanish-english}%
+{%
+  \ifglshaslong{\glslabel}{\glsgenacfmt}{\glsgenentryfmt}%
+}%
+{%
+  \renewcommand*{\GenericAcronymFields}{description={\the\glslongtok}}%
+  \renewcommand*{\genacrfullformat}[2]{%
+    \glsentrylong{##1}##2\space
+    \ifglshasfield{useri}{##1}%
+      {(\glsentryuseri{##1},\space\protect\firstacronymfont{\glsentryshort{##1}})}%
+      {(\protect\firstacronymfont{\glsentryshort{##1}})}%
+  }%
+  \renewcommand*{\Genacrfullformat}[2]{%
+    \Glsentrylong{##1}##2\space
+    \ifglshasfield{useri}{##1}%
+      {(\glsentryuseri{##1},\space\protect\firstacronymfont{\glsentryshort{##1}})}%
+      {(\protect\firstacronymfont{\glsentryshort{##1}})}%
+  }%
+  \renewcommand*{\genplacrfullformat}[2]{%
+    \glsentrylongpl{##1}##2\space
+    \ifglshasfield{useri}{##1}%
+      {(\glsentryuseri{##1},\space\protect\firstacronymfont{\glsentryshortpl{##1}})}%
+      {(\protect\firstacronymfont{\glsentryshortpl{##1}})}%
+  }%
+  \renewcommand*{\Genplacrfullformat}[2]{%
+    \Glsentrylongpl{##1}##2\space
+    \ifglshasfield{useri}{##1}%
+      {(\glsentryuseri{##1},\space\protect\firstacronymfont{\glsentryshortpl{##1}})}%
+      {(\protect\firstacronymfont{\glsentryshortpl{##1}})}%
+  }%
+  \renewcommand*{\acronymentry}[1]{\acronymfont{\glsentryshort{##1}}}%
+  \renewcommand*{\acronymsort}[2]{##1}%
+  \renewcommand*{\acronymfont}[1]{##1}%
+  \renewcommand*{\firstacronymfont}[1]{\acronymfont{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+}
+\setacronymstyle{spanish-english}
+
+% Macro para registrar acrónimos con traducción opcional al inglés
+\newcommand{\definiracronimo}[5][]{%
+  \if\relax\detokenize{#5}\relax
+    \newacronym[description={\makefirstuc{#4}},#1]{#2}{#3}{#4}%
+  \else
+    \newacronym[user1={\textit{#5}},description={\makefirstuc{#4} (\textit{#5})},#1]{#2}{#3}{#4}%
+  \fi
+}
+
 \loadglsentries{glosario.tex}
 \loadglsentries{glosario_abreviaturas.tex}
 \makeglossaries
