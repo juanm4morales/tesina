@@ -21,10 +21,10 @@
 \contentsline {figure}{\numberline {2.16}{\ignorespaces Red de política para un espacio discreto de acciones}}{36}{figure.caption.72}%
 \contentsline {figure}{\numberline {2.17}{\ignorespaces Interacción agente-entorno en MARL cooperativo}}{41}{figure.caption.87}%
 \contentsline {figure}{\numberline {2.18}{\ignorespaces Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera}}{43}{figure.caption.91}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{44}{figure.caption.94}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort {acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}}{45}{figure.caption.94}%
 \contentsline {figure}{\numberline {2.20}{\ignorespaces Esquema de actualización secuencial de \acrshort {acr-happo}. A diferencia de \acrshort {acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}}{51}{figure.caption.115}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Recorrido metodológico general. La preparación de escenarios alimenta las dos líneas de aprendizaje y la comprobación operacional de Mendoza.}}{61}{figure.caption.126}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Orden de los estudios sintéticos y su continuación en Mendoza. La prueba A--E y la comparación A/C preceden a la fase 2; la búsqueda urbana continúa después de los estudios sintéticos. En cada búsqueda, la selección precede a la evaluación. La comprobación operacional de Mendoza pertenece a la preparación del escenario y utiliza programas semafóricos de referencia.}}{61}{figure.caption.126}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Red $3\times 1$ en \acrshort {acr-sumo}: tres intersecciones semaforizadas y dos carriles por sentido.}}{63}{figure.caption.132}%
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Red $3\times 3$ en \acrshort {acr-sumo}: nueve intersecciones semaforizadas y dos carriles por sentido.}}{64}{figure.caption.133}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Red $4\times 4\_H$ en \acrshort {acr-sumo}: dieciséis intersecciones semaforizadas y tramos de uno a cuatro carriles por sentido de circulación.}}{65}{figure.caption.134}%
@@ -33,14 +33,14 @@
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Flujo entre la simulación, el entorno y el aprendizaje. El estado de \acrshort {acr-sumo} se almacena aparte del flujo de aprendizaje.}}{72}{figure.caption.149}%
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Codificación de la espera por carril con $I=22$ y umbral de entrada $M_{\mathrm {lane}}=1136$ veh·s, como ejemplo ilustrativo. La fase activa se conserva y el nivel máximo puede alcanzarse antes del umbral.}}{74}{figure.caption.154}%
 \contentsline {figure}{\numberline {3.9}{\ignorespaces Información de los algoritmos durante el entrenamiento y la ejecución. Cada algoritmo y agente tiene su propia política; el crítico centralizado de \acrshort {acr-mappo} y \acrshort {acr-happo} no interviene al ejecutar. En la variante vecinal de \acrshort {acr-mappo}, el actor recibe además la espera media por carril codificada de cada vecino directo.}}{77}{figure.caption.162}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Búsqueda en dos fases: la exploración amplia orienta la reducción de dominios y la elección de arquitecturas del protocolo refinado.}}{81}{figure.caption.172}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Análisis por pares: las variantes comparten semilla y evaluaciones; el remuestreo conserva cada par completo.}}{87}{figure.caption.187}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Búsqueda en dos fases: la exploración amplia orienta la reducción de dominios y la elección de arquitecturas del protocolo refinado.}}{82}{figure.caption.172}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Análisis por pares: A y C comparten la semilla de entrenamiento y las cinco semillas de evaluación; el remuestreo conserva cada par completo.}}{88}{figure.caption.187}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{95}{figure.caption.206}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{96}{figure.caption.208}%
-\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo de codificación de observaciones.}}{118}{figure.caption.251}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Diagrama de clases del entorno de simulación y de sus relaciones principales.}}{97}{figure.caption.206}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Especificación UML del módulo de recompensas.}}{98}{figure.caption.208}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Ejemplo de codificación de observaciones.}}{120}{figure.caption.251}%
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 
 \babel@toc {spanish}{}\relax 

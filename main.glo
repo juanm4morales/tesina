@@ -76,6 +76,8 @@
 \glossaryentry{Intervalo de confianza?\glossentry{intervalo_confianza}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xii}}
 \glossaryentry{$m_i$ (carriles controlados)?\glossentry{carriles_controlados}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xii}}
 \glossaryentry{$K_i$ (número de acciones)?\glossentry{numero_acciones}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xii}}
+\glossaryentry{Grado de vecindad?\glossentry{grado_vecindad}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xii}}
+\glossaryentry{$W_i^{(t)}$ (espera atribuida a la intersección)?\glossentry{espera_interseccion}|setentrycounter[]{page}"\glsnumberformat}{\es@scroman  {xii}}
 \glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{2}
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{2}
 \glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{2}
@@ -92,12 +94,13 @@
 \glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{13}
 \glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{20}
 \glossaryentry{Lote ("\textit {batch})?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{28}
+\glossaryentry{Hiperparámetro?\glossentry{hiperparametro}|setentrycounter[]{page}"\glsnumberformat}{32}
 \glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{34}
 \glossaryentry{Episodio?\glossentry{episodio_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{34}
 \glossaryentry{"\textit {Rollout}?\glossentry{rollout}|setentrycounter[]{page}"\glsnumberformat}{34}
-\glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{34}
-\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{34}
-\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{34}
+\glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{"\textit {Replay buffer}?\glossentry{replay_buffer}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{61}
 \glossaryentry{$a$ (aceleración vehicular)?\glossentry{aceleracion_vehicular}|setentrycounter[]{page}"\glsnumberformat}{62}
@@ -105,9 +108,11 @@
 \glossaryentry{$v_{"\max }$ (velocidad máxima vehicular)?\glossentry{velocidad_maxima_vehicular}|setentrycounter[]{page}"\glsnumberformat}{62}
 \glossaryentry{$m_i$ (carriles controlados)?\glossentry{carriles_controlados}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{$K_i$ (número de acciones)?\glossentry{numero_acciones}|setentrycounter[]{page}"\glsnumberformat}{63}
+\glossaryentry{Grado de vecindad?\glossentry{grado_vecindad}|setentrycounter[]{page}"\glsnumberformat}{63}
 \glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{66}
 \glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{67}
 \glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{71}
+\glossaryentry{$W_i^{(t)}$ (espera atribuida a la intersección)?\glossentry{espera_interseccion}|setentrycounter[]{page}"\glsnumberformat}{73}
 \glossaryentry{Percentil?\glossentry{percentil}|setentrycounter[]{page}"\glsnumberformat}{74}
 \glossaryentry{Máscara de acciones?\glossentry{mascara_acciones}|setentrycounter[]{page}"\glsnumberformat}{74}
 \glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{76}
@@ -117,43 +122,42 @@
 \glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{78}
 \glossaryentry{Iteración de entrenamiento?\glossentry{iteracion_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{78}
 \glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{80}
-\glossaryentry{Par de políticas?\glossentry{parpoliticas}|setentrycounter[]{page}"\glsnumberformat}{83}
-\glossaryentry{"\textit {Bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{87}
-\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{88}
-\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{89}
-\glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{90}
-\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{93}
-\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{93}
-\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{94}
-\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{95}
-\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{95}
-\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{95}
-\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{96}
-\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{98}
-\glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{101}
-\glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{102}
-\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{104}
-\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{104}
-\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{105}
-\glossaryentry{Lote ("\textit {batch})?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{105}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{105}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{106}
-\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{106}
-\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{106}
-\glossaryentry{Percentil?\glossentry{percentil}|setentrycounter[]{page}"\glsnumberformat}{106}
-\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{106}
+\glossaryentry{Par de políticas?\glossentry{parpoliticas}|setentrycounter[]{page}"\glsnumberformat}{84}
+\glossaryentry{Cohorte de evaluación?\glossentry{cohorte_evaluacion}|setentrycounter[]{page}"\glsnumberformat}{85}
+\glossaryentry{"\textit {Bootstrap}?\glossentry{bootstrap}|setentrycounter[]{page}"\glsnumberformat}{88}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{89}
+\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{91}
+\glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{92}
+\glossaryentry{Recompensa?\glossentry{recompensa}|setentrycounter[]{page}"\glsnumberformat}{95}
+\glossaryentry{Entorno?\glossentry{entorno}|setentrycounter[]{page}"\glsnumberformat}{95}
+\glossaryentry{Agente?\glossentry{agente}|setentrycounter[]{page}"\glsnumberformat}{96}
+\glossaryentry{Observación?\glossentry{observacion}|setentrycounter[]{page}"\glsnumberformat}{97}
+\glossaryentry{Estado?\glossentry{estado}|setentrycounter[]{page}"\glsnumberformat}{97}
+\glossaryentry{Fase (Ingeniería de Tránsito)?\glossentry{fase}|setentrycounter[]{page}"\glsnumberformat}{97}
+\glossaryentry{Cola vehicular?\glossentry{cola}|setentrycounter[]{page}"\glsnumberformat}{98}
+\glossaryentry{Ciclo (Ingeniería de Tránsito)?\glossentry{ciclo}|setentrycounter[]{page}"\glsnumberformat}{100}
+\glossaryentry{Teletransporte de SUMO?\glossentry{teleport}|setentrycounter[]{page}"\glsnumberformat}{103}
+\glossaryentry{Semilla?\glossentry{semilla}|setentrycounter[]{page}"\glsnumberformat}{104}
+\glossaryentry{Actor (Aprendizaje por Refuerzo)?\glossentry{actor}|setentrycounter[]{page}"\glsnumberformat}{106}
+\glossaryentry{Ventaja (Aprendizaje por Refuerzo)?\glossentry{ventaja}|setentrycounter[]{page}"\glsnumberformat}{106}
+\glossaryentry{Crítico (Aprendizaje por Refuerzo)?\glossentry{critico}|setentrycounter[]{page}"\glsnumberformat}{106}
+\glossaryentry{Lote ("\textit {batch})?\glossentry{batch_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{107}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{107}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{108}
 \glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{108}
-\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{108}
-\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{108}
-\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{108}
-\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{115}
-\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{115}
-\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{115}
-\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{115}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{115}
-\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{116}
-\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{117}
-\glossaryentry{Máscara de acciones?\glossentry{mascara_acciones}|setentrycounter[]{page}"\glsnumberformat}{117}
-\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{117}
-\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{117}
-\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{119}
+\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{108}
+\glossaryentry{Percentil?\glossentry{percentil}|setentrycounter[]{page}"\glsnumberformat}{108}
+\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{108}
+\glossaryentry{Estudio de búsqueda de hiperparámetros?\glossentry{estudio_hpo}|setentrycounter[]{page}"\glsnumberformat}{110}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{110}
+\glossaryentry{"\textit {checkpoint}?\glossentry{checkpoint}|setentrycounter[]{page}"\glsnumberformat}{117}
+\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{117}
+\glossaryentry{Ensayo de búsqueda de hiperparámetros?\glossentry{ensayo_hpo}|setentrycounter[]{page}"\glsnumberformat}{117}
+\glossaryentry{Política (Aprendizaje por Refuerzo)?\glossentry{politica}|setentrycounter[]{page}"\glsnumberformat}{117}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{117}
+\glossaryentry{Transición (Aprendizaje por Refuerzo)?\glossentry{transicion_aprendizaje}|setentrycounter[]{page}"\glsnumberformat}{118}
+\glossaryentry{"\textit {Minibatch} (minilote)?\glossentry{mini_lote}|setentrycounter[]{page}"\glsnumberformat}{119}
+\glossaryentry{Máscara de acciones?\glossentry{mascara_acciones}|setentrycounter[]{page}"\glsnumberformat}{119}
+\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{119}
+\glossaryentry{"\textit {Epoch} (época)?\glossentry{epoca_entrenamiento}|setentrycounter[]{page}"\glsnumberformat}{119}
+\glossaryentry{"\textit {Logit}?\glossentry{logit}|setentrycounter[]{page}"\glsnumberformat}{121}

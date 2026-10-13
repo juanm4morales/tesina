@@ -18,6 +18,9 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
 \glossentry{v_aprendizaje}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
+\glossentry{espera_interseccion}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{73}}}%
 \glossentry{demora_wnet}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
 \glossentry{tasa_aprendizaje_alpha}{\glossaryentrynumbers{\relax 
@@ -79,16 +82,16 @@
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
 \glossentry{epoca_entrenamiento}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{34}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{35}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{77}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{117}}}%
+		\setentrycounter[]{page}\glsnumberformat{118}}}%
 \glossentry{logit}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{119}}}%
+		\setentrycounter[]{page}\glsnumberformat{120}}}%
 \glossentry{mini_lote}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{34}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{117}}}%
+		\setentrycounter[]{page}\glsnumberformat{35}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{118}}}%
 \glossentry{replay_buffer}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{35}}}%
@@ -100,34 +103,35 @@
 \glossentry{checkpoint}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{88}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{108}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{115}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{109}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{116}}}\glsgroupskip
 \glsgroupheading{A}\relax \glsresetentrylist %
 \glossentry{actor}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{3}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{104}}}%
+		\setentrycounter[]{page}\glsnumberformat{105}}}%
 \glossentry{agente}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{94}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{95}}}\glsgroupskip
 \glsgroupheading{C}\relax \glsresetentrylist %
 \glossentry{ciclo}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{61}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{98}}}%
+		\setentrycounter[]{page}\glsnumberformat{99}}}%
 \glossentry{cohorte_evaluacion}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
+		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{84}}}%
 \glossentry{cola}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{66}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{96}}}%
+		\setentrycounter[]{page}\glsnumberformat{97}}}%
 \glossentry{critico}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{3}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{76}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{105}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{106}}}\glsgroupskip
 \glsgroupheading{D}\relax \glsresetentrylist %
 \glossentry{densidad}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
@@ -141,63 +145,68 @@
 \glossentry{ensayo_hpo}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{78}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{108}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{115}}}%
+		\setentrycounter[]{page}\glsnumberformat{109}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{116}}}%
 \glossentry{entorno}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{93}}}%
+		\setentrycounter[]{page}\glsnumberformat{94}}}%
 \glossentry{episodio_aprendizaje}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{34}}}%
 \glossentry{estado}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{76}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{95}}}%
+		\setentrycounter[]{page}\glsnumberformat{96}}}%
 \glossentry{estudio_hpo}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{80}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{106}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{108}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{107}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{109}}}\glsgroupskip
 \glsgroupheading{F}\relax \glsresetentrylist %
 \glossentry{fase}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{7\delimN 8}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{20}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{95}}}%
+		\setentrycounter[]{page}\glsnumberformat{96}}}%
 \glossentry{flujo}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{13}}}%
 \glossentry{funcion_valor}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}\glsgroupskip
+\glsgroupheading{G}\relax \glsresetentrylist %
+\glossentry{grado_vecindad}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{63}}}\glsgroupskip
 \glsgroupheading{H}\relax \glsresetentrylist %
 \glossentry{hiperparametro}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}\glsgroupskip
+		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{32}}}\glsgroupskip
 \glsgroupheading{I}\relax \glsresetentrylist %
 \glossentry{intervalo_confianza}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
 \glossentry{iteracion_entrenamiento}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{34}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{35}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{78}}}\glsgroupskip
 \glsgroupheading{L}\relax \glsresetentrylist %
 \glossentry{batch_entrenamiento}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{28}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{105}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{106}}}\glsgroupskip
 \glsgroupheading{M}\relax \glsresetentrylist %
 \glossentry{memoriaespera}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}%
 \glossentry{mascara_acciones}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{74}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{117}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{118}}}\glsgroupskip
 \glsgroupheading{O}\relax \glsresetentrylist %
 \glossentry{observacion}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{3}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{95}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{96}}}\glsgroupskip
 \glsgroupheading{P}\relax \glsresetentrylist %
 \glossentry{parpoliticas}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
@@ -205,25 +214,25 @@
 \glossentry{percentil}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{74}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{106}}}%
+		\setentrycounter[]{page}\glsnumberformat{107}}}%
 \glossentry{politica}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{89}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{115}}}%
+		\setentrycounter[]{page}\glsnumberformat{90}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{116}}}%
 \glossentry{mdp}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}\glsgroupskip
 \glsgroupheading{R}\relax \glsresetentrylist %
 \glossentry{recompensa}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{2}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{93}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{94}}}\glsgroupskip
 \glsgroupheading{S}\relax \glsresetentrylist %
 \glossentry{semilla}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{13}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{67}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{102}}}%
+		\setentrycounter[]{page}\glsnumberformat{103}}}%
 \glossentry{serializacion}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}}}\glsgroupskip
 \glsgroupheading{T}\relax \glsresetentrylist %
@@ -232,17 +241,17 @@
 \glossentry{teleport}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{71}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{90}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{101}}}%
+		\setentrycounter[]{page}\glsnumberformat{91}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{102}}}%
 \glossentry{transicion_aprendizaje}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{34}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{76}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{105\delimN 106}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{115\delimN 116}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{106\delimN 107}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{116\delimN 117}}}\glsgroupskip
 \glsgroupheading{V}\relax \glsresetentrylist %
 \glossentry{ventaja}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glslocationcstoencap{glsnumberformat}{es@scroman}{xii}\delimN 
 		\setentrycounter[]{page}\glsnumberformat{3}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{104}}}%
+		\setentrycounter[]{page}\glsnumberformat{105}}}%
 \end{theglossary}\glossarypostamble
