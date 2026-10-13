@@ -2,43 +2,46 @@
 \chapter{Metodología}
 \label{capitulo:metodologia}
 
-Este trabajo estudia el control semafórico mediante aprendizaje por refuerzo multiagente en simulación. Cada agente observa información de su intersección y elige una fase semafórica permitida. El diseño contempla búsquedas de hiperparámetros para MAPPO, HAPPO, IPPO e IDQN y, específicamente para MAPPO, compara una variante local con otra que incorpora información vecinal en la observación y la recompensa. Este contraste estima el efecto conjunto de ambas modificaciones.
+El problema consiste en aprender políticas que controlen semáforos en una simulación multiagente. Cada agente observa el tránsito de su intersección y elige una fase permitida; la geometría de la red y su demanda determinan las condiciones de interacción. La evaluación considera la espera de los vehículos y la atención a la demanda durante el intervalo de control. MAPPO y HAPPO son los métodos propuestos, con IPPO e IDQN como referencias. Se incluye HAPPO para compararlo con MAPPO en escenarios heterogéneos, como $4\times4\_H$ y la red parcial de Mendoza; su actualización secuencial motiva esta comparación.
 
-También se realizó una comprobación operacional de una red parcial de Mendoza con programas semafóricos de referencia; esta no evalúa políticas aprendidas. La búsqueda de hiperparámetros genera configuraciones candidatas, mientras que la comparación A/C produce políticas y registros para analizar su desempeño. El capítulo presenta el diseño experimental, los escenarios, el sistema de control, los procedimientos de entrenamiento y la evaluación; el apéndice reúne los detalles técnicos necesarios para reproducirlos.
+El diseño contempla dos líneas de estudio. La primera se orienta a comparar los cuatro algoritmos mediante procedimientos de búsqueda, selección y evaluación de políticas. La segunda examina cómo varía el desempeño de MAPPO al añadir información vecinal tanto a la observación como a la recompensa. Para ello, una campaña específica compara las variantes local A y vecinal C con una configuración de aprendizaje fija. El contraste estima el efecto conjunto de ambas modificaciones.
+
+La búsqueda de hiperparámetros comprende las tres redes sintéticas y la red parcial de Mendoza. El recorrido comienza con los estudios sintéticos y continúa con la búsqueda urbana. Para Mendoza se describen también la construcción del escenario y su comprobación operacional con programas semafóricos de referencia. La exposición avanza desde el diseño y los escenarios hasta el sistema de control, el entrenamiento y la evaluación; el apéndice reúne las especificaciones técnicas.
 
 \section{Diseño experimental}
 \label{sec:tarea_investigacion}
 \label{sec:enfoque_diseno}
 
-El diseño comprende dos líneas de aprendizaje en las tres redes sintéticas. La primera busca hiperparámetros y establece un protocolo de selección y evaluación; su fase 1 explora dominios amplios y la fase 2 los reduce según sus resultados. La segunda compara las variantes local y vecinal de \acrshort{acr-mappo} con una configuración de aprendizaje fija. También se realizó una campaña de entrenamiento de \acrshort{acr-mappo} y \acrshort{acr-happo}, cuyos registros se distinguen de los del protocolo refinado.
+La comparación de los cuatro algoritmos se organiza primero en las redes sintéticas y luego en Mendoza. La fase 1 explora dominios amplios de hiperparámetros. Después se examinaron cinco formulaciones de cooperación mediante recompensa, A--E, implementadas con \acrshort{acr-mappo} en $4\times4\_H$, y se amplió la comparación de las formulaciones local A y vecinal C a las tres redes sintéticas con una configuración de aprendizaje fija. Ambas campañas precedieron a la fase 2 de búsqueda con dominios reducidos, en ejecución en octubre de 2026. La búsqueda en Mendoza continúa el recorrido de los estudios sintéticos.
 
-La documentación disponible permite distinguir las búsquedas registradas de los protocolos definidos para fases posteriores, sin asumir que estos últimos se ejecutaron por completo. La variante vecinal de la comparación A/C modifica a la vez observación y recompensa; por eso, el contraste no identifica el efecto aislado de cada cambio. En una línea separada, la comprobación de Mendoza examina la operación de la red y la demanda con programas semafóricos de referencia. La Tabla \ref{tab:componentes_avance} resume los procedimientos y su estado documental.
+La comprobación operacional de Mendoza forma parte de la preparación del escenario y examina el funcionamiento de la red y la demanda con programas semafóricos de referencia. Se distingue de la búsqueda urbana de políticas aprendidas. La Tabla \ref{tab:componentes_avance} resume los escenarios y el propósito de cada procedimiento.
 
-En las líneas de aprendizaje, las redes y sus demandas alimentan el entorno; este convierte las mediciones de tránsito en observaciones, acciones y recompensas. La búsqueda produce configuraciones candidatas y la comparación A/C mantiene fija la configuración de aprendizaje. Las políticas y los registros resultantes se utilizan en la evaluación. La comprobación urbana sigue un recorrido independiente, como muestra la Figura \ref{fig:flujo_metodologico_general}.
+En los procedimientos de aprendizaje, las redes y sus demandas alimentan el entorno, que convierte las mediciones en observaciones y recompensas y aplica las acciones de los agentes. La búsqueda produce candidatos para una selección previa a la evaluación; A/C compara pares de políticas bajo una configuración fija. La Figura \ref{fig:flujo_metodologico_general} muestra el orden de los estudios sintéticos y su continuación en Mendoza.
 
 \begin{table}[H]\centering\small
 \caption{Escenarios y procedimientos del trabajo.}\label{tab:componentes_avance}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{4.1cm}>{\raggedright\arraybackslash}p{5cm}@{}}\hline
-Procedimiento & Escenarios & Propósito & Estado documental \\\hline
-Búsqueda de hiperparámetros, fase 1 & Tres redes sintéticas & Explorar rangos de hiperparámetros de los cuatro algoritmos. & Registros conservados; el presupuesto no indica cuántos ensayos completaron. \\
-Campaña adicional de entrenamiento & Tres redes sintéticas & Ampliar el entrenamiento de \acrshort{acr-mappo} y \acrshort{acr-happo}. & Registros conservados; separada del protocolo refinado. \\
-Protocolo refinado (fase 2) & Tres redes sintéticas & Buscar hiperparámetros en dominios reducidos y con recompensa local. & Protocolo definido; ejecución completa no acreditada. \\
-Selección y evaluación previstas & Tres redes sintéticas & Elegir candidatos admisibles y evaluar las políticas seleccionadas. & Protocolo definido; cierre de ambas etapas no acreditado. \\
-Comparación de \acrshort{acr-mappo} & Tres redes sintéticas & Contrastar conjuntamente observación y recompensa locales/vecinales. & Prueba preliminar y campaña A/C documentadas. \\
-Comprobación urbana & Mendoza & Examinar la operación de la red y la demanda con programas de referencia. & Registros de simulación; procedencia incompleta de las rutas originales. \\\hline
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{8.4cm}@{}}\hline
+Procedimiento & Escenarios & Propósito \\\hline
+Fase 1: búsqueda & Tres redes sintéticas & Explorar ampliamente los hiperparámetros seleccionados. \\
+Prueba A--E & $4\times4\_H$ & Examinar cinco formulaciones de cooperación mediante recompensa. \\
+Comparación A/C & Tres redes sintéticas & Contrastar las formulaciones local y vecinal de cooperación mediante recompensa. \\
+Fase 2: búsqueda refinada & Tres redes sintéticas & Buscar en dominios reducidos, con recompensa local. \\
+Búsqueda urbana & Mendoza & Continuar la comparación de los cuatro algoritmos. \\
+Selección y evaluación & Cuatro escenarios & Elegir candidatos admisibles y evaluar políticas. \\
+Comprobación operacional & Mendoza & Examinar red y demanda con programas de referencia. \\\hline
 \end{tabular}\end{table}
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_v2_flujo.tex}
-\caption{Recorrido metodológico general. La preparación de escenarios alimenta las dos líneas de aprendizaje y la comprobación operacional de Mendoza.}
+\caption{Orden de los estudios sintéticos y su continuación en Mendoza. La prueba A--E y la comparación A/C preceden a la fase 2; la búsqueda urbana continúa después de los estudios sintéticos. En cada búsqueda, la selección precede a la evaluación. La comprobación operacional de Mendoza pertenece a la preparación del escenario y utiliza programas semafóricos de referencia.}
 \label{fig:flujo_metodologico_general}
 \end{figure}
 
 \section{Escenarios de simulación}
 \label{sec:diseno_escenarios}
 
-La geometría de cada escenario determina los carriles, las fases y los vecinos que utiliza el sistema de control; la demanda define los viajes que debe atender. Los escenarios de aprendizaje comprenden las tres redes sintéticas y la red parcial de Mendoza, simuladas en \acrshort{acr-sumo} \cite{SUMO2026_SUMO}. Las campañas de aprendizaje documentadas en este capítulo y la comparación entre las variantes local y vecinal corresponden a las redes sintéticas. Para Mendoza también se dispone de una comprobación operacional con los programas semafóricos de referencia.
+La geometría de cada escenario determina los carriles, las fases y las relaciones de vecindad entre agentes, mientras que la demanda define los viajes que deben atender. La búsqueda de hiperparámetros contempla las tres redes sintéticas y la red parcial de Mendoza, todas simuladas en \acrshort{acr-sumo} \cite{SUMO2026_SUMO}. A continuación se describen sus condiciones de simulación y la construcción del escenario urbano.
 
 \subsection{Preparación de las redes de tráfico}
 \label{subsec:metodologia_modelado_sumo}
@@ -76,7 +79,7 @@ Rápido (\texttt{FASTVEHTYPE}) & 15\% & 3,1 & 5,0 & 19,44 \\\hline
 
 Los vehículos miden $4{,}5$ metros y mantienen una separación mínima de $2{,}5$ metros (\texttt{minGap}). Se utiliza el modelo de seguimiento de Krauss, que determina cómo un vehículo ajusta su velocidad respecto del que circula delante. Su parámetro adimensional $\sigma=0{,}5$ regula la variabilidad aleatoria de la conducción \cite{krauss1998microscopic,SUMO2026_SUMO}.
 
-Las rutas se generaron con \texttt{random\_}\allowbreak\texttt{routes\_}\allowbreak\texttt{taz.py} a partir de matrices de zonas de análisis de tránsito (\acrshort{acr-taz}, del inglés \textit{Traffic Analysis Zone}), que distribuyen el flujo entre orígenes y destinos. Los archivos expresan el flujo solicitado en vehículos por hora mediante \texttt{vehsPerHour}; los registros no especifican una distribución particular de los intervalos entre llegadas. La construcción de las matrices y las asignaciones principales se detalla en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+Las rutas se generaron con \texttt{random\_}\allowbreak\texttt{routes\_}\allowbreak\texttt{taz.py} a partir de matrices origen--destino (\acrshort{acr-od}, del inglés \textit{Origin-Destination}). Estas distribuyen el flujo entre zonas de análisis de tránsito (\acrshort{acr-taz}, del inglés \textit{Traffic Analysis Zone}). Los archivos expresan el flujo solicitado en vehículos por hora mediante \texttt{vehsPerHour}; los registros no especifican una distribución particular de los intervalos entre llegadas. La construcción de las matrices y las asignaciones principales se detalla en el apéndice \ref{subsec:detalles_redes_sinteticas}.
 
 Las Figuras \ref{fig:topologias_sinteticas}, \ref{fig:red_sintetica_3x3} y \ref{fig:red_sintetica_4x4_h} muestran las tres redes de tráfico en \acrshort{acr-sumo}. Las redes $3\times1$ y $3\times3$ tienen cuatro accesos por cruce y dos carriles por sentido; en $4\times4\_H$, los tramos tienen entre uno y cuatro carriles por sentido de circulación y existen calles de sentido único.
 
@@ -103,7 +106,7 @@ Las Figuras \ref{fig:topologias_sinteticas}, \ref{fig:red_sintetica_3x3} y \ref{
 
 Las redes sintéticas tienen una separación nominal de 100 metros entre centros de cruces consecutivos. Esta distancia no equivale necesariamente a la longitud disponible para almacenar vehículos: en $3\times3$ y $4\times4\_H$, los carriles de los tramos terminan en el límite de la zona interna de cada intersección. Para comparar las redes se cuentan únicamente los tramos de circulación y sus carriles, sin los elementos internos con los que \acrshort{acr-sumo} representa los movimientos dentro de los cruces.
 
-El número de carriles entrantes controlados por el agente $i$ se denota por $m_i$, y el de fases seleccionables, por $K_i$. \glsadd{carriles_controlados}\glsadd{numero_acciones} La Tabla \ref{tab:escenarios_sinteticos} reúne las dimensiones físicas, los tamaños de observación y acción y el flujo solicitado; los intervalos describen la variación entre agentes de una misma red.
+El número de carriles entrantes controlados por el agente $i$ se denota por $m_i$, y el de fases seleccionables, por $K_i$. \glsadd{carriles_controlados}\glsadd{numero_acciones} El \gls{grado_vecindad} es la cantidad de agentes conectados directamente con uno; el criterio de conexión se precisa en la subsección \ref{sec:stack_tecnologico}. La Tabla \ref{tab:escenarios_sinteticos} reúne la topología, la demanda y las dimensiones del control; los intervalos describen la variación entre agentes de una misma red.
 
 \begin{table}[H]
 \centering
@@ -148,7 +151,9 @@ Los conteos disponibles cubren accesos específicos. El conteo de un acceso info
 
 Los registros de cámaras térmicas instaladas en el entorno de Costanera y Acceso Este contienen conteos clasificados en intervalos de 15 minutos y abarcan aproximadamente de octubre de 2025 a abril de 2026. Se examinaron cuatro dispositivos: tres observan corrientes fuera del área modelada; para representar el ingreso hacia el oeste por la Avenida José Vicente Zapata, sobre el canal Cacique Guaymallén, se tomó el registro de la cámara 169.
 
-Los conteos se depuraron y redondearon al intervalo de 15 minutos más cercano, y se agregaron por cámara, intervalo, zona y clase vehicular. El registro de generación asociado a la \gls{semilla} 104773 informa una selección de 32 días completos de lunes a viernes y un promedio diario de 25.175,84 vehículos. Estos valores describen el perfil consignado en ese registro: no reconstruyen de forma independiente los conteos ni miden el volumen total urbano. Los criterios de limpieza y la procedencia de los registros se detallan en el apéndice \ref{sec:procedencia_mendoza}.
+Los conteos se depuraron y redondearon al intervalo de 15 minutos más cercano, y se agregaron por cámara, intervalo, zona y clase vehicular. El registro de generación asociado a la \gls{semilla} 104773 informa una selección de 32 días completos de lunes a viernes y un promedio diario de 25.175,84 vehículos.
+
+Estos valores describen el perfil consignado en ese registro: no reconstruyen de forma independiente los conteos ni miden el volumen total urbano. Los criterios de limpieza y la procedencia de los registros se detallan en el apéndice \ref{sec:procedencia_mendoza}.
 
 \subsubsection{Representación y revisión de la red de tráfico}
 \label{subsubsec:mendoza_topologia_red}
@@ -166,22 +171,26 @@ La Figura \ref{fig:dominio_mendoza} muestra la red de tráfico en \acrshort{acr-
 \label{fig:dominio_mendoza}
 \end{figure}
 
-Como la cámara 169 queda fuera del límite modelado, el ingreso que representa su conteo se asigna al primer tramo interno; la red de tráfico no se extiende hasta el punto de medición. Tras convertir el trazado de \acrshort{acr-osm}, la revisión con imágenes satelitales y vistas de calle permitió corregir sentidos de circulación, conectividad, carriles y restricciones de giro, y habilitar accesos laterales en Catamarca, Buenos Aires y Leandro N. Alem. Entre los cambios se incluyeron la prohibición de girar a la izquierda desde Av. General San Martín hacia el sur por Av. Colón y la conservación del giro semaforizado de calle Perú hacia Av. Las Heras. Se conservaron los programas de señales incluidos en el archivo de red, que sirven como referencia de la simulación; no se verificaron como reconstrucciones de planes municipales. El modelo constituye una aproximación topológica del área.
+Como la cámara 169 queda fuera del límite modelado, el ingreso que representa su conteo se asigna al primer tramo interno; la red de tráfico no se extiende hasta el punto de medición.
+
+Tras convertir el trazado de \acrshort{acr-osm}, la revisión con imágenes satelitales y vistas de calle permitió corregir sentidos de circulación, conectividad, carriles y restricciones de giro, y habilitar accesos laterales en Catamarca, Buenos Aires y Leandro N. Alem. Entre los cambios se incluyeron la prohibición de girar a la izquierda desde Av. General San Martín hacia el sur por Av. Colón y la conservación del giro semaforizado de calle Perú hacia Av. Las Heras.
+
+Se conservaron los programas de señales incluidos en el archivo de red como referencia de la simulación; no se verificaron como reconstrucciones de planes municipales. El modelo constituye una aproximación topológica del área.
 
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
 
-La demanda nominal se construyó a partir del perfil horario promedio de la cámara 169, $\bar{q}_{\mathrm{obs}}(h)$, donde $h$ identifica una hora entre 0 y 23. El perfil se escaló a un volumen diario nominal $V_{\mathrm{diario}}$ de 260.000 vehículos, fijado como supuesto. Sea $\Delta h=1$ hora la duración de cada intervalo; el factor adimensional $f_{\mathrm{exp}}$ relaciona el volumen nominal con el total diario del perfil:
+La demanda nominal se construyó a partir del perfil horario promedio de la cámara 169, $\bar{q}_{\mathrm{obs}}(h)$, expresado en vehículos por hora, donde $h$ identifica una hora entre 0 y 23. El perfil se escaló a un volumen diario nominal $V_{\mathrm{diario}}$ de 260.000 vehículos, fijado como supuesto. Sea $\Delta h=1$ hora la duración de cada intervalo; la ecuación \eqref{eq:factor_expansion_mendoza} define el factor adimensional $f_{\mathrm{exp}}$ que relaciona el volumen nominal con el total diario del perfil:
     \begin{equation}
     f_{\text{exp}} = \frac{V_{\text{diario}}}{\sum_{h=0}^{23} \bar{q}_{\mathrm{obs}}(h)\,\Delta h}
     \label{eq:factor_expansion_mendoza}
     \end{equation}
-El registro de generación consigna el factor 10,32735993; se conserva como valor registrado y no se recalcula a partir de la otra serie de conteos. El flujo horario nominal de la red se expresa como:
+El registro de generación consigna el factor 10,32735993. Se conserva como valor registrado; la Tabla \ref{tab:fuentes_mendoza} distingue su procedencia de la del resumen histórico. La ecuación \eqref{eq:demanda_red_horaria} aplica ese factor para obtener el flujo horario nominal de la red:
     \begin{equation}
     Q_{\text{red}}(h) = \bar{q}_{\mathrm{obs}}(h) \cdot f_{\text{exp}}
     \label{eq:demanda_red_horaria}
     \end{equation}
-$Q_{\mathrm{red}}(h)$ se expresa en vehículos por hora. En la generación se conservó el conteo de la cámara como referencia completa; esto es un supuesto de construcción, pues no se conoce qué fracción de esos vehículos llega al área modelada ni cuántos ingresan por accesos no observados. La tabla de procedencia del apéndice \ref{tab:fuentes_mendoza} distingue este perfil de la serie histórica.
+$Q_{\mathrm{red}}(h)$ se expresa en vehículos por hora. En la generación se conservó el conteo de la cámara como referencia completa; esto es un supuesto de construcción, pues no se conoce qué fracción de esos vehículos llega al área modelada ni cuántos ingresan por accesos no observados.
 
 \subsubsection{Distribución origen--destino y generación de rutas}
 \label{subsubsec:mendoza_contrato_od_v14}
@@ -195,9 +204,9 @@ La Figura \ref{fig:mendoza_taz} muestra los tramos asociados a las zonas de aná
 \label{fig:mendoza_taz}
 \end{figure}
 
-La red tiene 39 zonas de análisis de tránsito y 520 pares origen--destino conectables. La especificación canónica de la matriz de origen--destino (\acrfull{acr-od}) asigna 60\% del flujo a pares con proporciones fijadas y 40\% a pares con proporciones aleatorias; además, excluye tres pares en los que se habían observado bloqueos durante la construcción. La generación registrada consigna otra distribución, 70/30. No se conservaron la matriz asociada a ese registro ni las rutas originales de las comprobaciones; por ello, no es posible reconstruir la relación entre ambas especificaciones ni verificar que la ruta congelada fuera la utilizada en esas corridas. La formulación canónica se detalla en el apéndice \ref{sec:procedencia_mendoza}. La exclusión de esos tres pares limita la demanda representada, pero no garantiza que otras simulaciones estén libres de bloqueos.
+El flujo horario nominal se distribuye entre pares origen--destino. La especificación canónica de la matriz OD asigna 60\% del flujo a pares con proporciones fijadas y 40\% a pares con proporciones aleatorias. Prioriza los corredores Vicente Zapata, General San Martín, Colón--Emilio Civit, Las Heras y Manuel Belgrano, según la revisión cartográfica y los conteos disponibles. También excluye tres pares en los que se habían observado bloqueos durante la construcción: esta decisión limita la demanda representada, pero no garantiza que otras simulaciones estén libres de bloqueos. La formulación se detalla en el apéndice \ref{subsec:procedimiento_demanda_mendoza}.
 
-La especificación prioriza los corredores Vicente Zapata, General San Martín, Colón--Emilio Civit, Las Heras y Manuel Belgrano, según la revisión cartográfica y los conteos disponibles.
+La generación registrada consigna otra distribución, 70/30. No se conservaron la matriz asociada a ese registro ni las rutas originales de las comprobaciones; por ello, no es posible reconstruir la relación entre ambas especificaciones ni verificar que la ruta congelada fuera la utilizada en esas corridas.
 
 La semilla 104773 controla la generación de rutas y la semilla 104729 inicializa la dinámica estocástica de \acrshort{acr-sumo}. La documentación describe la elección de 104773 entre configuraciones consideradas por permitir una operación de doce horas sin \glspl{teleport} y aproximarse a la distribución espacial buscada; esta selección no constituye una validación independiente y su reconstrucción es incompleta.
 
@@ -208,16 +217,18 @@ La semilla 104773 controla la generación de rutas y la semilla 104729 inicializ
 
 La comprobación operacional examina si la red de tráfico y la demanda construidas funcionan con los programas semafóricos conservados; no evalúa políticas aprendidas. El tiempo de simulación $t_{\mathrm{sim}}$ se expresa en segundos desde las 06:00. Se registran dos horizontes: 12 horas diurnas ($t_{\mathrm{sim}}=0$--$43200$) y dos horas de hora pico matutina ($t_{\mathrm{sim}}=1800$--$9000$, correspondientes a 06:30--08:30).
 
-La simulación de hora pico con programas de referencia comienza en $t_{\mathrm{sim}}=1800$ y no añade calentamiento. La configuración \acrshort{acr-marl} correspondiente comienza en $t_{\mathrm{sim}}=1500$ (06:25) y reserva 300 segundos de calentamiento antes del mismo intervalo de control; su existencia no acredita una campaña urbana de aprendizaje. Los archivos y parámetros se describen en el apéndice \ref{sec:procedencia_mendoza}.
+La simulación de hora pico con programas de referencia comienza en $t_{\mathrm{sim}}=1800$ y no añade calentamiento, es decir, un período previo para poblar la red antes de medir el control. La configuración \acrshort{acr-marl} correspondiente comienza en $t_{\mathrm{sim}}=1500$ (06:25) y reserva 300 segundos para ese período antes del mismo intervalo de control; su existencia no acredita una campaña urbana de aprendizaje. Los archivos y parámetros se describen en el apéndice \ref{sec:procedencia_mendoza}.
 
-Se registraron la demanda cargada por \acrshort{acr-sumo} en la ventana, los vehículos insertados y los viajes completados antes del cierre. Con esos conteos se calcularon las tasas de inserción y completitud. Los valores se presentan en la Tabla \ref{tab:metricas_validacion_mendoza}, en el capítulo de Resultados (\ref{capitulo:resultados}). El informe documental del escenario canónico consigna cero teletransportes; las salidas de simulación consultadas no conservan un contador explícito que permita verificar ese dato de forma independiente. La procedencia de los registros y sus configuraciones se documentan en el apéndice \ref{sec:parametros_sumo}.
+Se registraron la demanda cargada por \acrshort{acr-sumo} en la ventana, los vehículos insertados y los viajes completados antes del cierre. Con esos conteos se calcularon las tasas de inserción y completitud. Los valores se presentan en la Tabla \ref{tab:metricas_validacion_mendoza}, en el capítulo de Resultados (\ref{capitulo:resultados}).
 
-\paragraph{Contraste con el conteo observado.} El criterio \acrfull{acr-geh} compara el flujo horario nominal solicitado desde la zona 28, asociada al acceso representado ($V_{\mathrm{mod}}$), con el flujo horario del perfil de la cámara 169 ($V_{\mathrm{obs}}$); ambos se expresan en vehículos por hora \cite{ite_handbook}. Su fórmula se conserva en el apéndice \ref{sec:procedencia_mendoza}, pero no se presentan valores calculados. Como el conteo de la cámara 169 contribuyó a construir el perfil, esta comparación no constituye una validación independiente de la demanda urbana.
+El informe documental del escenario canónico consigna cero teletransportes; las salidas de simulación consultadas no conservan un contador explícito que permita verificar ese dato de forma independiente. La procedencia de los registros y sus configuraciones se documentan en el apéndice \ref{sec:parametros_sumo}.
+
+\paragraph{Contraste con el conteo observado.} El criterio \acrfull{acr-geh} compara el flujo horario nominal solicitado desde la zona 28, asociada al acceso representado ($V_{\mathrm{mod}}$), con el flujo horario del perfil de la cámara 169 ($V_{\mathrm{obs}}$); ambos se expresan en vehículos por hora \cite{ite_handbook}. Su fórmula se conserva en la ecuación \eqref{eq:geh} del apéndice, pero no se presentan valores calculados. Como el conteo de la cámara 169 contribuyó a construir el perfil, esta comparación no constituye una validación independiente de la demanda urbana.
 
 \section{Sistema de control multiagente}
 \label{sec:arquitectura_entorno_agentes}
 
-El sistema implementa el ciclo agente--entorno presentado en el marco teórico mediante mediciones por carril, restricciones semafóricas y señales de espera. Su organización permite utilizar la misma interfaz de simulación con los cuatro algoritmos del estudio.
+Con las redes y sus demandas definidas, el sistema implementa el ciclo agente--entorno presentado en el marco teórico: convierte las mediciones del tránsito en información para los agentes y aplica sus decisiones a la simulación. La misma interfaz permite utilizar los cuatro algoritmos del estudio. Sus observaciones, acciones y recompensas definen la información disponible y las restricciones bajo las que se entrenan las políticas.
 
 Cada agente $i$ gobierna las señales de una intersección; si varios nodos comparten un mismo controlador semafórico, se representan mediante un único agente. Los tamaños $m_i$ y $K_i$ describen sus carriles entrantes controlados y sus fases seleccionables. Las fases con amarillo y el estado final de todo rojo no integran ese conjunto de acciones; el entorno los utiliza para las transiciones y la inicialización, respectivamente. La cantidad de acciones habilitadas en un instante también depende de las restricciones temporales del control.
 
@@ -237,7 +248,7 @@ Antes del control, la simulación avanza durante un período de calentamiento. A
 
 En cada paso, \texttt{step} recibe las acciones de los agentes, ejecuta las transiciones y avanza la simulación hasta la decisión siguiente. Luego actualiza las mediciones y devuelve observaciones, recompensas e información del episodio. Los episodios cierran al alcanzar su límite temporal; la interfaz distingue terminación y truncamiento, como se explica en el apéndice \ref{sec:apendice_uml_entorno}. Las ejecuciones se realizaron sin interfaz gráfica.
 
-El grado de vecindad indica cuántos agentes están conectados directamente con un agente. El entorno considera vecinos a dos agentes cuando una conexión desde un carril controlado por uno desemboca en un carril controlado por el otro, y registra la relación para ambos. Por ello, una vía de sentido único también puede generar una relación de vecindad simétrica. El diagrama de clases y las responsabilidades de los componentes se describen en el apéndice \ref{sec:apendice_uml_entorno}.
+El entorno considera vecinos a dos agentes cuando una conexión desde un carril controlado por uno desemboca en un carril controlado por el otro, y registra la relación para ambos. Por ello, una vía de sentido único también puede generar una relación de vecindad simétrica. El diagrama de clases y las responsabilidades de los componentes se describen en el apéndice \ref{sec:apendice_uml_entorno}.
 
 \subsection{Observación, acciones y recompensas}
 \label{sec:formulacion_dec_pomdp}
@@ -247,17 +258,21 @@ La formulación utilizada representa la fase activa y la espera por carril en la
 \subsubsection{Observaciones y codificación de la espera}
 \label{subsec:observaciones_encoder}
 
-La observación local $o_i^{(t)}$ del agente $i$ en el paso de decisión $t$ reúne el índice $p_i^{(t)}$ de la fase activa y las esperas codificadas de sus carriles controlados, como formaliza la ecuación \eqref{eq:observacion_local_metodologia}. Aquí $m_i$ es el número de carriles, $l$ identifica uno de ellos y $w_{i,l}^{(t)}$ es la espera acumulada, en veh·s, atribuida por el entorno a los vehículos presentes en $l$. Esta atribución evita volver a contar en otro carril la espera de quien cambió de carril. El índice de fase también puede identificar el estado inicial de todo rojo, aunque no sea una acción seleccionable. En las búsquedas de hiperparámetros se usa esta entrada local; las políticas no conservan un historial de observaciones:
+En el paso de decisión $t$, el entorno atribuye al carril $l$ del agente $i$ una espera acumulada $w_{i,l}^{(t)}$, en veh·s, correspondiente a los vehículos presentes en él. Para cada vehículo presente, la implementación resta de la espera devuelta por SUMO las atribuciones almacenadas en otros carriles y limita el resultado a un mínimo de cero. La suma de estas medidas en los $m_i$ carriles controlados es $\glsdisp{espera_interseccion}{W_i^{(t)}}=\sum_{l=1}^{m_i}w_{i,l}^{(t)}$, también en veh·s.
+
+La función de codificación $e(x)$ transforma una medida de espera $x$ en un nivel entero. La observación local $o_i^{(t)}$ reúne el índice $p_i^{(t)}$ de la fase activa y las esperas codificadas de sus carriles, según la ecuación \eqref{eq:observacion_local_metodologia}. El índice de fase también puede identificar el estado inicial de todo rojo, aunque no sea una acción seleccionable. En las búsquedas de hiperparámetros se usa esta entrada local; las políticas no conservan un historial de observaciones:
 \begin{equation}
  o_i^{(t)}=\bigl(p_i^{(t)},e(w_{i,1}^{(t)}),\ldots,e(w_{i,m_i}^{(t)})\bigr),
  \label{eq:observacion_local_metodologia}
 \end{equation}
 
-La variante vecinal C añade a esa entrada una espera media por carril para cada vecino directo: $W_j/m_j$, donde $W_j$ es la suma de esperas atribuidas a sus carriles y $m_j$ su número de carriles controlados. Esta media se codifica con la misma función, usando el umbral vecinal $M_{\mathrm{vec}}$, expresado también en veh·s por carril. Las búsquedas de hiperparámetros usan observaciones locales; los valores y las semillas de calibración de ambos umbrales se presentan en el apéndice.
+La variante vecinal C añade a esa entrada la espera media por carril $W_j^{(t)}/m_j$ de cada vecino directo $j$. Esta media se codifica con la misma función, usando el umbral vecinal $M_{\mathrm{vec}}$, expresado en veh·s por carril. Los valores y las semillas de calibración de ambos umbrales se presentan en el apéndice \ref{subsec:calibraciones_cooperacion}.
 
 \acrshort{acr-sumo} obtiene la espera acumulada mediante \texttt{getAccumulatedWaitingTime}, que considera una ventana temporal finita denominada memoria de espera \cite{SUMO2026_TraCIVehicle}. Su duración se detalla en el apéndice \ref{sec:parametros_sumo}. Esta magnitud no es la espera total de un viaje: \texttt{TripInfo} registra esta última en \texttt{waitingTime}. La salida de vehículos, los cambios de carril y el vencimiento de la ventana pueden reducir la señal observada sin demostrar que disminuyó la espera total de los viajes.
 
-El codificador $e(x)$ transforma cada espera $x$ en uno de $I$ niveles enteros, entre $0$ e $I-1$; $I$ es la cantidad de niveles y $M_{\mathrm{lane}}$, el umbral de saturación local en veh·s. Combina una transformación logarítmica, que da mayor resolución a esperas bajas, y un componente lineal. La salida se redondea hacia arriba; por ello, el nivel máximo puede alcanzarse antes de que la espera llegue al umbral. Las ecuaciones y la forma computada por el código se desarrollan en el apéndice \ref{sec:apendice_detalles_aprendizaje}.
+En la versión de código conservada para A/C, las atribuciones almacenadas en otros carriles no se actualizan por el vencimiento de esa memoria, lo que puede subestimar la espera atribuida al carril actual. Su efecto en las campañas no está cuantificado aquí.
+
+El codificador utiliza $I$ niveles, entre $0$ e $I-1$, y un umbral de saturación local $M_{\mathrm{lane}}$, en veh·s. Combina una transformación logarítmica, que da mayor resolución a esperas bajas, y un componente lineal. La salida se redondea hacia arriba; por ello, el nivel máximo puede alcanzarse antes de que la espera llegue al umbral. Las ecuaciones y la forma computada por el código se desarrollan en el apéndice \ref{subsec:codificacion_espera_apendice}.
 
 La resolución $I$ se muestrea entre los valores permitidos para cada combinación de algoritmo y escenario. El umbral $M_{\mathrm{lane}}$ se estimó en simulaciones previas mediante el \gls{percentil} 99 de la mayor espera entre carriles en cada paso, después de 300 segundos de calentamiento. Los umbrales son 1184, 1136 y 712 veh·s para $3\times1$, $3\times3$ y $4\times4\_H$, respectivamente. Proporcionan una escala de referencia para esperas elevadas; no demuestran por sí mismos una mejora de desempeño.
 
@@ -285,13 +300,13 @@ El agente conserva la fase vigente durante el verde mínimo y la transición ama
 
 La recompensa se calcula a partir del cambio de la espera acumulada entre decisiones. Se define primero la señal de la propia intersección y luego la contribución de sus vecinos, utilizada en la variante vecinal.
 
-La señal local $L_i^{(t)}$ compara la suma $W_i^{(t)}$ de las esperas acumuladas en los carriles de la intersección $i$ entre dos pasos de decisión. La ecuación \eqref{eq:recompensa_local} formaliza esta diferencia: la recompensa es positiva cuando la suma disminuye.
+La señal local $L_i^{(t)}$ compara la suma $W_i^{(t)}$ definida para la observación entre dos pasos de decisión consecutivos. La ecuación \eqref{eq:recompensa_local} formaliza esta diferencia, en veh·s: la recompensa es positiva cuando la suma disminuye.
 \begin{equation}
 L_i^{(t)} = W_i^{(t-1)} - W_i^{(t)}
 \label{eq:recompensa_local}
 \end{equation}
 
-En la variante C, sea $\mathcal{N}(i)$ el conjunto de vecinos directos del agente $i$, definidos por las conexiones viales, y $m_j$ el número de carriles controlados por el vecino $j$. La señal vecinal normaliza por carriles la señal local de cada vecino y luego promedia esos valores; si no hay vecinos, vale cero:
+En la variante C, sea $\mathcal{N}(i)$ el conjunto de vecinos directos del agente $i$ y $|\mathcal{N}(i)|$ su cantidad; $m_j$ es el número de carriles controlados por el vecino $j$. La ecuación \eqref{eq:recompensa_vecinal} normaliza por carriles la señal local de cada vecino y luego promedia esos valores para obtener $N_{i,\mathrm{carril}}^{(t)}$, en veh·s por carril; si no hay vecinos, vale cero:
 \begin{equation}
 N_{i,\mathrm{carril}}^{(t)} = \begin{cases}
 \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} \frac{L_j^{(t)}}{m_j}, & |\mathcal{N}(i)|>0,\\
@@ -300,7 +315,7 @@ N_{i,\mathrm{carril}}^{(t)} = \begin{cases}
 \label{eq:recompensa_vecinal}
 \end{equation}
 
-En C, el coeficiente $\rho_{\mathrm{coop}}\in[0,1)$ determina el peso de la señal vecinal en la recompensa; si el agente no tiene vecinos, conserva la señal local completa:
+En C, el coeficiente adimensional $\rho_{\mathrm{coop}}\in[0,1)$ determina el peso de la señal vecinal en la recompensa de la ecuación \eqref{eq:recompensa_compuesta}; si el agente no tiene vecinos, conserva la señal local completa:
 \begin{equation}
 R_i^{(t)} = \begin{cases}
 (1 - \rho_{\mathrm{coop}}) L_i^{(t)} + \rho_{\mathrm{coop}} N_{i,\mathrm{carril}}^{(t)}, & |\mathcal{N}(i)|>0,\\
@@ -308,7 +323,7 @@ L_i^{(t)}, & |\mathcal{N}(i)|=0.
 \end{cases}
 \label{eq:recompensa_compuesta}
 \end{equation}
-Cada agente recibe su propia recompensa; las señales pueden tener escalas distintas y no se suman en un único retorno para toda la red de tráfico. En la variante vecinal de la comparación, $\rho_{\mathrm{coop}}$ se fijó en $0{,}1$.
+Cada agente recibe su propia recompensa. La componente local es una suma por intersección y la vecinal, un promedio normalizado por carriles: tienen escalas distintas y su combinación es una señal de aprendizaje, no una medida homogénea de espera de toda la red. Las recompensas no se suman en un único retorno global. En C, $\rho_{\mathrm{coop}}$ se fijó en $0{,}1$.
 
 Las formulaciones dependen del procedimiento. En fase 1, cada agente recibió observaciones locales y se exploró un peso vecinal entre cero y $0{,}95$, sin reservar un ensayo específico con $\rho_{\mathrm{coop}}=0$. El programa documentado promedia las señales vecinales sin normalizarlas por carriles; esta configuración no verifica por separado todos los ensayos históricos. El protocolo refinado fija $\rho_{\mathrm{coop}}=0$ y usa solo la señal local. En la comparación A/C, A usa la señal local y C añade la señal vecinal normalizada por carriles, con $\rho_{\mathrm{coop}}=0{,}1$. La Tabla \ref{tab:alternativas_recompensa} reúne estas diferencias.
 
@@ -347,15 +362,15 @@ En \acrshort{acr-mappo}, las recompensas individuales y las estimaciones del cr�
 
 La implementación de \acrshort{acr-happo} actualiza primero el crítico y después los actores, uno por uno, sobre el lote completo. Utiliza ventajas individuales y un paso de gradiente por actor y \gls{epoca_entrenamiento}; tras cada actualización repondera los factores de los actores restantes. El apéndice \ref{sec:apendice_detalles_aprendizaje} detalla estas operaciones y sus diferencias con la formulación teórica de la sección \ref{subsec:happo}.
 
-En \acrshort{acr-mappo} y \acrshort{acr-happo}, la pérdida del crítico limita a una cota el error cuadrático medio entre agentes para cada muestra y luego promedia las muestras válidas. A diferencia del recorte convencional de valores de \acrshort{acr-ppo}, esta operación satura la pérdida; por encima de la cota, esa muestra deja de aportar gradiente al crítico. No se midió la frecuencia ni el efecto de este recorte; la fórmula se presenta en el apéndice \ref{sec:apendice_detalles_aprendizaje}.
+En \acrshort{acr-mappo} y \acrshort{acr-happo}, la pérdida del crítico limita a una cota el error cuadrático medio entre agentes para cada muestra y luego promedia las muestras válidas. A diferencia del recorte convencional de valores de \acrshort{acr-ppo}, esta operación satura la pérdida; por encima de la cota, esa muestra deja de aportar gradiente al crítico. No se midió la frecuencia ni el efecto de este recorte; la fórmula se presenta en la ecuación \eqref{eq:perdida_valor_marl_tlc} del apéndice.
 
 
 \section{Entrenamiento y búsqueda de hiperparámetros}
 \label{sec:experimentos_hiperparametros}
 
-La búsqueda de hiperparámetros (\acrfull{acr-hpo}) explora combinaciones de valores para el entrenamiento. Cada \gls{ensayo_hpo} entrena una configuración propuesta; el presupuesto limita la cantidad de ensayos y la duración máxima de cada uno, medida en \glspl{iteracion_entrenamiento}. Una iteración puede incluir varios episodios o fragmentos de ellos y no equivale necesariamente a una simulación completa.
+Con los agentes, las acciones y las señales de aprendizaje definidos, la búsqueda de hiperparámetros (\acrfull{acr-hpo}) explora combinaciones de valores que regulan el entrenamiento y produce configuraciones candidatas para comparar los algoritmos. El espacio de búsqueda fija los rangos y las opciones permitidos. Cada \gls{ensayo_hpo} entrena una configuración propuesta; el presupuesto limita la cantidad de ensayos y su duración máxima, medida en \glspl{iteracion_entrenamiento}. Una iteración puede incluir varios episodios o fragmentos y no equivale necesariamente a una simulación completa.
 
-Optuna es la herramienta que propone y registra configuraciones. Su \acrfull{acr-tpe} usa el historial de resultados para proponer nuevos valores \cite{akiba2019optuna,Bergstra2011TPE}. Ray Tune organiza la ejecución y el registro de los ensayos \cite{Eimer2023HPO}. La fase 1 documentada utiliza el \acrfull{acr-asha} para comparar el rendimiento intermedio y detener ensayos antes de completar su presupuesto; el protocolo refinado también prevé su uso \cite{li2020system}. El período de gracia fija el mínimo de iteraciones antes de considerar una detención; el factor de reducción determina la proporción de ensayos que continúan en cada nivel de comparación.
+La búsqueda combina propuestas basadas en el historial con detenciones anticipadas para distribuir un presupuesto de entrenamiento limitado. Optuna propone y registra configuraciones mediante el \acrfull{acr-tpe}, que usa los resultados anteriores para proponer nuevos valores \cite{akiba2019optuna,Bergstra2011TPE}. Ray Tune organiza la ejecución y el registro de los ensayos \cite{Eimer2023HPO}. La fase 1 documentada utiliza el \acrfull{acr-asha} para comparar el rendimiento intermedio y detener ensayos antes de completar su presupuesto; el protocolo refinado también prevé su uso \cite{li2020system}. El período de gracia fija el mínimo de iteraciones antes de considerar una detención; el factor de reducción determina la proporción de ensayos que continúan en cada nivel de comparación.
 
 \subsection{Condiciones de simulación y semillas}
 \label{subsec:ciclo_episodico}
@@ -377,14 +392,16 @@ Configuración \acrshort{acr-marl} de Mendoza, 2 h & 300 s & 7200 s \\\hline
 
 En las campañas de aprendizaje, el agente puede solicitar una fase cada cinco segundos. Un cambio solicitado activa cuatro segundos de amarillo; el verde debe mantenerse al menos cinco segundos antes de que pueda solicitarse otro cambio.
 
-En estas campañas, la semilla de aprendizaje controla las fuentes aleatorias del algoritmo y la inicialización de sus redes; la de \acrshort{acr-sumo}, la dinámica estocástica del simulador; la de rutas, la selección y generación de itinerarios; y la de \acrshort{acr-tpe}, la secuencia de propuestas. El código de fase 1 prevé que la semilla de \acrshort{acr-tpe} sea independiente de la de aprendizaje, pero los registros disponibles no verifican que se aplicara así en todas las búsquedas. Las semillas verificables por escenario se detallan en el apéndice.
+En estas campañas, la semilla de aprendizaje controla las fuentes aleatorias del algoritmo y la inicialización de sus redes; la de \acrshort{acr-sumo}, la dinámica estocástica del simulador; la de rutas, la selección y generación de itinerarios; y la de \acrshort{acr-tpe}, la secuencia de propuestas. El código de fase 1 prevé que la semilla de \acrshort{acr-tpe} sea independiente de la de aprendizaje, pero los registros disponibles no verifican que se aplicara así en todas las búsquedas. Las semillas verificables de fase 1 figuran en la Tabla \ref{tab:semillas_fase1}; las del protocolo refinado, en la Tabla \ref{tab:busquedas_v2}, y las de A/C, en el apéndice \ref{subsec:calibraciones_cooperacion}.
 
 \subsection{Función objetivo de la búsqueda}
 \label{subsec:objetivo_busqueda}
 
-Para orientar la búsqueda, se minimiza una función objetivo que combina la espera media por vehículo insertado, $w_r$, con una penalización por los aumentos recientes. Las mediciones se calculan con TripInfo y se expresan en segundos por vehículo. Se descartan las primeras cinco mediciones disponibles, además del calentamiento; del historial restante se usan hasta las diez más recientes. Se calculan las diferencias consecutivas, se truncan los descensos a cero y se conservan también los ceros. Si hay menos de dos mediciones, la penalización vale cero.
+La búsqueda ordena las configuraciones mediante la espera media por vehículo insertado y una penalización por sus aumentos recientes. A igualdad de espera actual, una penalización mayor produce una puntuación menos favorable. El criterio incorpora el deterioro reciente al ordenamiento; no mide por sí solo la variabilidad entre entrenamientos ni demuestra estabilidad futura.
 
-Sea $n$ el número de diferencias disponibles y $X_{(j)}$ el aumento situado en la posición $j$ al ordenarlas de mayor a menor. La penalización promedia los $k=\lceil0{,}2n\rceil$ aumentos mayores; esta operación finita se inspira en el \glsentrylong{acr-cvar}, pero no estima necesariamente el \acrshort{acr-cvar} de una distribución poblacional. La ecuación \eqref{eq:objetivo_estable_espera} define el objetivo $J_r$ como la suma de $w_r$ y esa penalización $T_r$:
+El índice $r$ identifica las mediciones válidas de espera $w_r$ registradas para el objetivo, calculadas con TripInfo en segundos por vehículo. Este historial se distingue de los episodios diagnósticos de la subsección \ref{subsec:seguimiento_diagnostico}. Se descartan las primeras cinco mediciones disponibles, además del calentamiento; del historial restante se usan hasta las diez más recientes. Las diferencias se calculan entre mediciones consecutivas de ese historial retenido, se truncan los descensos a cero y se conservan también los ceros. Si hay menos de dos mediciones, la penalización vale cero.
+
+Sea $n$ el número de diferencias disponibles y $X_{(j)}$ el aumento situado en la posición $j$ al ordenarlas de mayor a menor. La penalización promedia los $k=\lceil0{,}2n\rceil$ aumentos mayores, donde el techo redondea $k$ hacia arriba. Esta operación finita se inspira en el \acrfull{acr-cvar}, que resume una cola desfavorable, pero no estima necesariamente el CVaR de una distribución poblacional. La ecuación \eqref{eq:objetivo_estable_espera} define el objetivo $J_r$ como la suma de $w_r$ y esa penalización $T_r$:
 \begin{equation}
 \begin{split}
 X_r&=\max(0,w_r-w_{r-1}),\qquad k=\lceil0{,}2n\rceil,\\
@@ -395,7 +412,7 @@ J_r&=w_r+T_r,\qquad T_r=\begin{cases}
 \end{split}
 \label{eq:objetivo_estable_espera}
 \end{equation}
-Las magnitudes $w_r$, $X_r$, $T_r$ y $J_r$ se expresan en segundos por vehículo. La búsqueda minimiza $J_r$; la recompensa del agente se calcula por separado.
+Las magnitudes $w_r$, $X_r$, $T_r$ y $J_r$ se expresan en segundos por vehículo. La búsqueda minimiza $J_r$; la recompensa del agente se calcula por separado. La longitud del historial y la fracción de aumentos retenidos son elecciones de este criterio de ordenamiento.
 
 \subsection{Seguimiento diagnóstico del entrenamiento}
 \label{subsec:seguimiento_diagnostico}
@@ -411,18 +428,14 @@ La configuración de \acrshort{acr-asha} especificó una gracia de 10 iteracione
 
 En los métodos basados en \acrshort{acr-ppo} se exploraron la tasa de aprendizaje, la amplitud de las actualizaciones, la estimación de ventajas, la exploración y la reutilización de experiencias. En \acrshort{acr-idqn} se incluyeron además el inicio del aprendizaje, la actualización de la red objetivo y la programación de la exploración. Ambos espacios variaron los niveles del codificador y el peso de la recompensa vecinal; el descuento se fijó en $\gamma=0{,}99$ y el umbral de espera, por calibración de escenario. Las distribuciones loguniformes permitieron explorar varias escalas de magnitudes positivas; los rangos completos, las alternativas y los factores fijos figuran en las Tablas \ref{tab:dominios_fase1_ppo}, \ref{tab:dominios_fase1_idqn} y \ref{tab:factores_fase1} del apéndice \ref{subsec:espacio_busqueda_fase1}.
 
-Los mecanismos incluidos en la búsqueda se apoyan en los métodos presentados en el marco teórico, y la literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la conveniencia de explorar configuraciones y separar las semillas de búsqueda y evaluación \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}. La documentación recuperada no ofrece una justificación original para cada límite numérico ni una evaluación de sensibilidad que los valide. Los rangos delimitan una exploración realizada bajo un presupuesto finito. Esta fase orienta la reducción del espacio posterior; no demuestra que el mejor ensayo observado sea un óptimo global.
+Los mecanismos incluidos en la búsqueda se apoyan en los métodos presentados en el marco teórico, y la literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la conveniencia de explorar configuraciones y separar las semillas de búsqueda y evaluación \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}. No se dispone de una justificación original documentada para cada límite numérico ni de una evaluación de sensibilidad que los valide. Los rangos delimitan una exploración realizada bajo un presupuesto finito. Esta fase orienta la reducción del espacio posterior; no demuestra que el mejor ensayo observado sea un óptimo global.
 
 La interpretación de la búsqueda también depende de la implementación y de las repeticiones disponibles. En HAPPO, variar la clave de tamaño del minilote no acredita un cambio efectivo de la actualización, dado el procesamiento descrito en la subsección \ref{subsec:mecanismos_algoritmos}. Cada configuración utiliza una sola semilla de entrenamiento por escenario: repetir episodios de evaluación de esa política no permite estimar la variabilidad entre entrenamientos independientes.
-
-Los registros también incluyen una campaña adicional de entrenamiento de \acrshort{acr-mappo} y \acrshort{acr-happo} con 40 iteraciones. Sus resultados se consideran por separado porque no proceden del protocolo de fase 2, que prevé 60 iteraciones y abarca cuatro algoritmos.
 
 \subsection[Fase 2: protocolo de búsqueda con dominios reducidos]{Fase 2: protocolo de búsqueda con dominios reducidos}
 \label{subsec:hpo_phase2}
 
-La fase 2 reduce los dominios de búsqueda a partir de los resultados de fase 1. Para cada combinación de algoritmo, escenario y arquitectura, ordena los ensayos que completaron su presupuesto sin errores. En parámetros numéricos, toma el intervalo de los diez mejores y amplía cada extremo un 10\% del ancho del dominio original, sin exceder sus límites; los dominios loguniformes se reducen en escala logarítmica.
-
-Se conserva el dominio original si el intervalo de los veinte mejores cubre al menos el 70\% de su ancho o si alguno de los diez mejores queda a menos del 5\% de un límite. Para parámetros categóricos se mantienen las opciones presentes entre los veinte mejores y, si solo aparece una, se añade una opción vecina del dominio original. Los dominios resultantes y el cálculo se documentan en el apéndice \ref{subsec:dominios_refinados}.
+La fase 2 está en ejecución en octubre de 2026, después de la prueba A--E y de la comparación A/C. Su protocolo utiliza la exploración amplia para concentrar la nueva búsqueda en regiones asociadas con mejores puntuaciones, conservando un margen para explorar fuera de ellas. Para cada combinación de algoritmo, escenario y arquitectura, ordena por el objetivo los ensayos de fase 1 que completaron su presupuesto sin errores y con puntuaciones finitas. En parámetros numéricos, parte del intervalo de los diez mejores y lo amplía; mantiene el dominio original cuando esos ensayos están dispersos o próximos a sus límites. Las reglas para variables numéricas y categóricas, así como los dominios resultantes, se documentan en el apéndice \ref{subsec:dominios_refinados}.
 
 Esta reducción orienta una nueva búsqueda con recompensa local ($\rho_{\mathrm{coop}}=0$) y máscara de acciones; las puntuaciones de fase 1 no se incorporan como resultados de fase 2. La elección de recompensa local responde a la lectura exploratoria de que valores vecinales altos podían ser desfavorables, sin demostrar un peso óptimo ni aislar su efecto. Las arquitecturas, semillas y condiciones de ejecución del protocolo sintético se conservan en el apéndice \ref{subsec:protocolo_refinado_apendice}.
 
@@ -436,9 +449,11 @@ La Figura \ref{fig:protocolo_informado_v2} resume el paso de la exploración amp
 \subsection{Criterios de selección de configuraciones}
 \label{subsec:seleccion_phase2}
 
-El protocolo de selección se aplica a las doce combinaciones sintéticas de fase 2. Sus criterios son previstos: la documentación revisada no acredita una selección final completada. La admisibilidad técnica exige 60 iteraciones, registros de métricas válidos y archivos de configuración y modelo legibles; la lista de comprobaciones se presenta en el apéndice \ref{subsec:criterios_admisibilidad_hpo}.
+Una espera baja entre los vehículos insertados debe interpretarse junto con cuántos ingresaron y cuántos completaron su viaje; por eso, la selección combina esa medida con filtros de atención a la demanda y de incidencias. El protocolo se aplica a las doce combinaciones sintéticas de fase 2, con el estado documental indicado en la Tabla \ref{tab:componentes_avance}.
 
-Para cada algoritmo y escenario se consideran hasta tres candidatos admisibles, procurando incluir ambas arquitecturas. También se construye una configuración de referencia a partir de los cinco mejores ensayos de fase 1; se entrena desde cero, sin transferir estados de modelo ni de búsqueda. La selección compara cada candidato con tres semillas \acrshort{acr-sumo} comunes y exige cero teletransportes, una \acrfull{acr-ci} de al menos 0,95 y al menos el 95\% de la referencia empírica de vehículos insertados para ese escenario y semilla. Esa referencia es el máximo observado en episodios iniciales; no mide de forma independiente la demanda total.
+La admisibilidad técnica exige 60 iteraciones, registros de métricas válidos y archivos de configuración y modelo legibles. Esta comprobación permite distinguir un candidato evaluable de un ensayo incompleto; la lista de requisitos se presenta en el apéndice \ref{subsec:criterios_admisibilidad_hpo}.
+
+Para cada algoritmo y escenario se consideran hasta tres candidatos admisibles, procurando incluir ambas arquitecturas. También se construye una configuración de referencia a partir de los cinco mejores ensayos de fase 1; se entrena desde cero, sin transferir estados de modelo ni de búsqueda. La selección compara cada candidato con tres semillas \acrshort{acr-sumo} comunes y exige cero teletransportes, una \acrfull{acr-ci} de al menos 0,95 y al menos el 95\% de la referencia empírica de vehículos insertados para ese escenario y semilla. La CI divide los viajes completados por los vehículos insertados en el mismo intervalo. La referencia de inserciones es el máximo observado en episodios iniciales; no mide de forma independiente la demanda total.
 
 Entre los candidatos que superan los filtros se elige el de menor espera media. Si falta evidencia, el resultado se informa como incompleto; si ningún candidato es admisible, se informa esa condición. Las semillas usadas para seleccionar no son una prueba independiente: la evaluación posterior debe conservarse como etapa separada. El candidato se interpreta como el mejor observado dentro del presupuesto, no como un óptimo global.
 
@@ -446,14 +461,16 @@ Entre los candidatos que superan los filtros se elige el de menor espera media. 
 \label{sec:cooperacion_vecinal}
 \label{sec:comparacion_local_vecinal}
 
-La campaña de cooperación comparó las variantes A y C de MAPPO con una receta de aprendizaje transferida y fija. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno. La prueba preliminar A--E y la campaña multiescenario documentadas se realizaron con MAPPO; no se registran pruebas equivalentes con HAPPO, IPPO o IDQN. Por tanto, esta comparación no evalúa la superioridad de MAPPO frente a esos algoritmos ni permite generalizarles sus resultados.
+Esta línea examina si una formulación que incorpora información de los vecinos y una contribución ponderada de su señal de recompensa mejora el desempeño respecto de la formulación local. La campaña comparó A y C de MAPPO con una configuración de aprendizaje transferida y fija. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno.
+
+El procedimiento comprende una prueba preliminar de cinco formulaciones de cooperación mediante recompensa, A--E, y una comparación ampliada de las formulaciones local A y vecinal C en las tres redes sintéticas, ambas realizadas con MAPPO. La primera permite examinar alternativas; la segunda contrasta las dos variantes bajo condiciones comunes de entrenamiento y evaluación. Su alcance se restringe a MAPPO y no se generaliza a HAPPO, IPPO o IDQN.
 
 \subsection{Prueba preliminar de formulaciones}
 \label{subsec:screening_vecinal}
 
 Se examinaron cinco formulaciones en la red $4\times4\_H$, con \acrshort{acr-mappo} de arquitectura h128 y tres semillas de entrenamiento, durante veinte iteraciones por política. Cada episodio duró 1800 segundos, después de 300 segundos de calentamiento. Se aplicaron las mismas semillas a las cinco formulaciones; las repeticiones en el entorno local y en el clúster de cómputo Toko (grupo de servidores que ejecuta trabajos en paralelo) no se contaron como semillas independientes adicionales.
 
-La Tabla \ref{tab:variantes_vecinales} identifica las formulaciones como A--E. La campaña multiescenario documentada se limitó a A y C; B, D y E no se incluyeron en esa comparación. La documentación revisada no especifica un criterio previo para elegir C entre las variantes vecinales. Por ello, la comparación A/C describe el contraste definido por la campaña, pero no establece que C sea la mejor formulación vecinal.
+La Tabla \ref{tab:variantes_vecinales} identifica las formulaciones como A--E. B, C y D fijaron $\rho_{\mathrm{coop}}=0{,}1$: la prueba comparó formulaciones y no realizó un barrido del coeficiente. C y D comparten recompensa y difieren en la observación, mientras que E examina otra recompensa local. La campaña multiescenario documentada se limitó a A y C. No se dispone de un criterio previo documentado para elegir C entre las variantes vecinales; por ello, esa elección no establece que C sea la mejor formulación vecinal.
 
 \begin{table}[H]\centering\small
 \caption{Variantes examinadas en la prueba preliminar.}\label{tab:variantes_vecinales}
@@ -471,25 +488,27 @@ Un resultado desfavorable no se clasificó como fallo técnico si la ejecución 
 \subsection{Entrenamiento de las variantes en las tres redes sintéticas}
 \label{subsec:cooperacion_multiescenario}
 
-La comparación ampliada utilizó las variantes local y vecinal de \acrshort{acr-mappo} con arquitectura h128. Ambas utilizaron los hiperparámetros de una configuración histórica de $4\times4\_H$, documentada en el apéndice \ref{subsec:receta_ac_apendice}. La misma configuración se aplicó a las tres redes, sin búsqueda específica por variante o escenario. Mantener fijos los hiperparámetros define el contraste bajo una receta común; no supone que A y C rindan de forma similar ni que la configuración sea óptima para ambas. C tiene una observación más amplia, por lo que los resultados describen la comparación bajo la receta aplicada, no el desempeño que cada variante alcanzaría con una búsqueda propia.
+La comparación ampliada utilizó \acrshort{acr-mappo} con arquitectura h128 y los hiperparámetros de una configuración histórica de $4\times4\_H$, documentada en el apéndice \ref{subsec:receta_ac_apendice}. Se aplicaron estos valores a las tres redes sin ajustes por variante o escenario, para mantener una configuración de aprendizaje común; C recibe una observación más amplia que A. El contraste examina las dos formulaciones bajo esa configuración transferida, sin establecer el desempeño que alcanzaría cada una con una búsqueda propia.
 
 Las observaciones se definen en la subsección \ref{subsec:observaciones_encoder}; A recibe la recompensa local de la ecuación \eqref{eq:recompensa_local} y C, la recompensa vecinal de la ecuación \eqref{eq:recompensa_compuesta} con $\rho_{\mathrm{coop}}=0{,}1$.
 
-Cada \gls{parpoliticas} reúne una política local y una vecinal entrenadas con la misma semilla. Se entrenaron 24 pares por red, y la configuración fija se transfirió sin cambios a los tres escenarios. La planificación de este tamaño, basada en la dispersión histórica de las diferencias, se detalla en el apéndice \ref{subsec:receta_ac_apendice}; es una previsión, no una garantía de precisión.
+Cada \gls{parpoliticas} reúne una política local y una vecinal entrenadas con la misma semilla. Se entrenaron 24 pares por red para examinar la variación del contraste entre entrenamientos. La planificación de este tamaño, basada en la dispersión histórica de las diferencias, se detalla en el apéndice \ref{subsec:receta_ac_apendice}; es una previsión, no una garantía de precisión.
 
-Cada política se entrenó durante 40 iteraciones y se evaluó con el modelo de la última. El protocolo de evaluación se presenta en la subsección \ref{sec:evaluacion_variantes_mappo}.
+Cada política se entrenó durante 40 iteraciones y se evaluó con el modelo de la última. Esta elección estaba fijada en el protocolo, sin seleccionar el modelo según el desempeño observado. El protocolo de evaluación se presenta en la subsección \ref{sec:evaluacion_variantes_mappo}.
 
 \section{Evaluación y análisis de políticas}
 \label{sec:evaluacion_modelos}
 
-La evaluación describe el desempeño de las políticas durante episodios en los que sus parámetros permanecen fijos. Para interpretar ese desempeño se especifican las condiciones de simulación, los vehículos incluidos en cada medida y los criterios de análisis. Se distinguen el protocolo previsto para los modelos seleccionados mediante búsqueda de hiperparámetros y la campaña documentada de comparación entre las variantes local y vecinal de MAPPO.
+Una vez obtenidas las políticas, la evaluación examina su desempeño sin continuar el aprendizaje: sus parámetros permanecen fijos durante cada episodio. Los registros permiten calcular la espera y la atención a la demanda; el análisis compara esas medidas y estima la incertidumbre del contraste. Se distinguen el protocolo previsto para los modelos seleccionados mediante búsqueda y la campaña documentada de comparación A/C.
 
 \subsection{Métricas de desempeño y vehículos evaluados}
 \label{sec:metricas_evidencia}
 
 Las métricas se calculan con registros vehiculares y medidas por intersección durante el intervalo de control. La espera media caracteriza la eficiencia, las tasas de inserción y completitud describen la demanda atendida y el coeficiente de Gini permite examinar la distribución espacial de la espera.
 
-La medida principal es la espera media durante la ventana de evaluación $[t_{\mathrm{inicio}},t_{\mathrm{fin}})$, donde $t_{\mathrm{inicio}}$ y $t_{\mathrm{fin}}$ son los instantes de apertura y cierre, en segundos de simulación. En \texttt{TripInfo}, el atributo \texttt{depart} indica el instante efectivo de inserción y \texttt{waitingTime} registra en segundos el tiempo a una velocidad menor o igual a 0,1 metros por segundo, salvo las detenciones programadas \cite{SUMO2026_TripInfo}. Se incluyen los vehículos cuyo \texttt{depart} pertenece a la ventana, aunque su viaje siga inconcluso al cierre. El atributo \texttt{departDelay} registra el retraso previo a la inserción y no integra la espera del viaje:
+La medida principal es la espera media de los vehículos insertados durante la ventana de evaluación $[t_{\mathrm{inicio}},t_{\mathrm{fin}})$, donde $t_{\mathrm{inicio}}$ y $t_{\mathrm{fin}}$ son los instantes de apertura y cierre, en segundos de simulación. La \gls{cohorte_evaluacion} para la espera reúne los vehículos cuyo instante efectivo de inserción, \texttt{depart}, pertenece a esa ventana, aunque su viaje siga inconcluso al cierre. La cohorte puede variar entre políticas aun con la misma demanda programada.
+
+Para esos vehículos, \texttt{TripInfo} registra en \texttt{waitingTime} el tiempo en segundos a una velocidad menor o igual a 0,1 metros por segundo, salvo las detenciones programadas \cite{SUMO2026_TripInfo}. El retraso previo a la inserción se registra aparte, en \texttt{departDelay}, y no integra la espera del viaje. Con esta población y estos registros se definen las siguientes medidas:
 \begin{itemize}
     \item \textbf{Espera media de los vehículos insertados ($\bar{w}_{\mathrm{ins}}$):} sea $\mathcal{V}_{\mathrm{ins}}$ el conjunto de vehículos insertados dentro de la ventana y $w_v$ la espera en segundos registrada para el vehículo $v$. Su cantidad es $|\mathcal{V}_{\mathrm{ins}}|$; la ecuación \eqref{eq:espera_media_insertados} define la media:
     \begin{equation}
@@ -498,18 +517,22 @@ La medida principal es la espera media durante la ventana de evaluación $[t_{\m
         \label{eq:espera_media_insertados}
     \end{equation}
     La medida se expresa en segundos por vehículo; si el conjunto está vacío, no se asigna una puntuación.
-    \item \textbf{\acrfull{acr-cr} ($\mathrm{CR}_{\mathrm{ventana}}$):} en la comprobación de Mendoza, mide qué proporción de los vehículos cargados en la demanda termina su viaje dentro del horizonte. Sea $N_{\mathrm{completados}}$ el número de viajes terminados y $N_{\mathrm{cargados}}$ el total de vehículos cargados en \acrshort{acr-sumo}:
+    \item \textbf{\acrfull{acr-cr} ($\mathrm{CR}_{\mathrm{ventana}}$):} en la comprobación de Mendoza, mide qué proporción de los vehículos cargados en la demanda termina su viaje dentro del horizonte. Sea $N_{\mathrm{completados}}$ el número de viajes terminados y $N_{\mathrm{cargados}}$ el total de vehículos cargados en \acrshort{acr-sumo}. La ecuación \eqref{eq:tasa_completitud} define esta proporción adimensional:
     \begin{equation}
         \text{CR}_{\mathrm{ventana}} = \frac{N_{\mathrm{completados}}}{N_{\mathrm{cargados}}}
         \label{eq:tasa_completitud}
     \end{equation}
-    La \acrfull{acr-ir} es el número de vehículos insertados dividido por los cargados; la \acrshort{acr-ci}, usada en la selección, es el número de viajes completados dividido por los insertados. Para cada tasa, los conteos deben corresponder a la misma cohorte y un denominador positivo. Así, $\mathrm{CR}$ incluye también los vehículos que no llegaron a insertarse, mientras que la \acrshort{acr-ci} no. Estas métricas complementan la espera, calculada solo sobre los vehículos insertados \cite{jiang2024xlight}.
+    La \acrfull{acr-ir} expresa la proporción que logró insertarse: divide los insertados por los cargados. La \acrshort{acr-ci}, usada en la selección, expresa la proporción de los insertados que completó el viaje. Así, $\mathrm{CR}$ incluye también los vehículos que no llegaron a insertarse, mientras que la \acrshort{acr-ci} no.
+
+    Para cada tasa, los conteos deben corresponder a la misma cohorte y un denominador positivo. Estas métricas complementan la espera, calculada solo sobre los vehículos insertados \cite{jiang2024xlight}.
     \item \textbf{Desigualdad espacial de espera (coeficiente de Gini, $G_{\text{wait}}$):} en cada paso, el entorno divide la espera acumulada atribuida a cada intersección por los vehículos presentes en ella y asigna cero si no hay vehículos. Luego promedia esa medida por intersección durante el control. Sea $N$ el número de intersecciones y $\bar{w}_{(i)}$ la media temporal de la intersección situada en la posición $i$ al ordenarlas de menor a mayor. La ecuación \eqref{eq:gini_espera} calcula el coeficiente dando igual peso a cada intersección:
     \begin{equation}
         G_{\text{wait}} = \frac{2 \sum_{i=1}^{N} i \cdot \bar{w}_{(i)} - (N + 1) \sum_{i=1}^{N} \bar{w}_{(i)}}{N \sum_{i=1}^{N} \bar{w}_{(i)}}
         \label{eq:gini_espera}
     \end{equation}
-    El Gini compara las medias por intersección, no los vehículos; cero indica igualdad entre esas medias, no ausencia de espera. Por eso se interpreta junto con la espera media. El coeficiente es adimensional; los promedios de espera y su desviación estándar entre intersecciones ($\sigma_{\text{wait}}$) se expresan en segundos. Si todas las medias suman cero, la implementación informa Gini cero.
+    El coeficiente es adimensional; los promedios de espera y su desviación estándar entre intersecciones ($\sigma_{\text{wait}}$) se expresan en segundos. Si todas las medias suman cero, la implementación informa Gini cero.
+
+    El Gini compara las medias por intersección, no los vehículos: cero indica igualdad entre esas medias, no ausencia de espera. Por eso se interpreta junto con la espera media.
     \item \textbf{Pérdida temporal ($\bar{\ell}$):} es la media de \texttt{timeLoss} entre los vehículos insertados, en segundos por vehículo. Estima la demora respecto del tiempo de viaje ideal según la velocidad deseada de cada vehículo y el límite vial, sin contar detenciones programadas. Se informa como medida secundaria, distinta de la espera \cite{SUMO2026_TripInfo}.
 \end{itemize}
 
@@ -521,7 +544,7 @@ En las evaluaciones de políticas, los registros de vehículos inconclusos se co
 \subsection{Evaluación de configuraciones seleccionadas}
 \label{sec:evaluacion_modelos_finales}
 
-El protocolo establece una evaluación posterior de las políticas seleccionadas mediante búsqueda, con escenario, cohorte de evaluación, intervalo de control y semillas comunes entre algoritmos. Las semillas usadas para filtrar candidatos no forman una prueba independiente; la documentación revisada tampoco acredita una campaña final completa para todos los modelos seleccionados.
+El protocolo establece una evaluación posterior de las políticas seleccionadas mediante búsqueda, con escenario, cohorte de evaluación, intervalo de control y semillas comunes entre algoritmos. Esta etapa debe utilizar semillas distintas de las del filtro de candidatos y conserva el estado documental indicado en la Tabla \ref{tab:componentes_avance}.
 
 Las evaluaciones repetidas de una política describen su respuesta a distintas simulaciones, pero no estiman la variabilidad entre entrenamientos, que requiere réplicas independientes \cite{Agarwal2021RLiable}. La comparación A/C documentada mantiene esa distinción y sigue el protocolo de la subsección \ref{sec:evaluacion_variantes_mappo}; las métricas y las cohortes se definen en la subsección \ref{sec:metricas_evidencia}.
 
@@ -535,29 +558,38 @@ Para cada evaluación se reconstruyó el entorno con la semilla correspondiente,
 \subsection{Análisis por pares y criterio de decisión}
 \label{sec:experimentos_evaluacion}
 
-El análisis utiliza los pares de políticas y las evaluaciones descritos en las subsecciones \ref{subsec:cooperacion_multiescenario} y \ref{sec:evaluacion_variantes_mappo}. Para emitir una decisión se requieren los 24 pares completos de una red; si faltan pares, el análisis se informa como incompleto. Primero se promedian las cinco evaluaciones de cada política, realizadas con semillas \acrshort{acr-sumo} comunes a ambas variantes. Si $w_{s,b,q}$ es la espera media por vehículo insertado, en segundos por vehículo, para el par de entrenamiento $s$, la variante $b\in\{A,C\}$ —local y vecinal, respectivamente— y el índice de evaluación $q\in\{1,\ldots,5\}$, la media por política es $\bar w_{s,b}=\frac{1}{5}\sum_{q=1}^{5}w_{s,b,q}$.
-
-Para cada par, $d_s$ es la diferencia de la variante vecinal menos la local, en segundos por vehículo, y $z_s$ es la diferencia relativa adimensional respecto de A; un valor negativo favorece la variante vecinal. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio, no el cociente entre medias globales. La diferencia relativa no está definida cuando $\bar w_{s,A}=0$ y debe marcarse como tal. La ecuación \eqref{eq:contrastes_pareados} define ambas diferencias:
+El análisis utiliza los pares de políticas y las evaluaciones descritos en las subsecciones \ref{subsec:cooperacion_multiescenario} y \ref{sec:evaluacion_variantes_mappo}. Para emitir una decisión se requieren los 24 pares completos de una red; si faltan pares, el análisis se informa como incompleto. Primero se promedian las cinco evaluaciones de cada política, realizadas con semillas \acrshort{acr-sumo} comunes a ambas variantes. Sea $w_{s,b,q}$ la espera media por vehículo insertado, en segundos por vehículo, para el par de entrenamiento $s\in\{1,\ldots,24\}$, la variante $b\in\{A,C\}$ y la evaluación $q\in\{1,\ldots,5\}$. La ecuación \eqref{eq:contrastes_pareados} reúne la media por política $\bar w_{s,b}$, la diferencia absoluta $d_s$ de C menos A y la diferencia relativa $z_s$ respecto de A:
 \begin{equation}
- d_s=\bar w_{s,C}-\bar w_{s,A},\qquad
+ \begin{split}
+ \bar w_{s,b}&=\frac{1}{5}\sum_{q=1}^{5}w_{s,b,q},\\
+ d_s&=\bar w_{s,C}-\bar w_{s,A},\qquad
  z_s=\frac{\bar w_{s,C}-\bar w_{s,A}}{\bar w_{s,A}}.
+ \end{split}
  \label{eq:contrastes_pareados}
 \end{equation}
 
-El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes \cite{Agarwal2021RLiable}.
+La diferencia $d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; un valor negativo favorece C. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio, no el cociente entre medias globales. La diferencia relativa no está definida cuando $\bar w_{s,A}=0$ y debe marcarse como tal. El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes \cite{Agarwal2021RLiable}.
 
 La incertidumbre se estima mediante 20.000 remuestreos con reemplazo (\gls{bootstrap}) de los 24 pares completos de cada red. Cada remuestreo conserva juntas las dos variantes del par; el efecto se recalcula en cada conjunto.
 
 La Figura \ref{fig:analisis_pareado} resume la unidad de pareo y el recorrido desde las evaluaciones hasta el remuestreo.
 \begin{figure}[htbp]\centering
 \input{imagenes/metodologia_analisis_pareado.tex}
-\caption{Análisis por pares: las variantes comparten semilla y evaluaciones; el remuestreo conserva cada par completo.}
+\caption{Análisis por pares: A y C comparten la semilla de entrenamiento y las cinco semillas de evaluación; el remuestreo conserva cada par completo.}
 \label{fig:analisis_pareado}
 \end{figure}
 
-Se informan intervalos percentiles del 95\% y del 98,33\%. Este último aplica la corrección de Bonferroni a las tres comparaciones por red para cada medida por separado; no ajusta simultáneamente todas las métricas. También se calcula un intervalo basado en la distribución $t$ como análisis de sensibilidad. Ambos son aproximaciones con 24 pares y su cobertura no está garantizada; se conservan los valores extremos y se revisa su influencia. El cálculo de los percentiles y del ajuste se detalla en el apéndice \ref{subsec:detalle_analisis_pareado}.
+Se informan intervalos percentiles del 95\% y del 98,33\%. Este último aplica la corrección de Bonferroni a las tres comparaciones por red para cada medida por separado; no ajusta simultáneamente todas las métricas. También se calcula un intervalo basado en la distribución $t$ de Student como análisis de sensibilidad. Ambos son aproximaciones con 24 pares y su cobertura no está garantizada; se conservan los valores extremos y se revisa su influencia. El cálculo de los percentiles y del ajuste se detalla en el apéndice \ref{subsec:detalle_analisis_pareado}.
 
-El criterio de decisión para la comparación entre variantes usa el intervalo del 98,33\%: su límite superior para el efecto relativo en espera debe ser menor que $-0,05$, y el límite inferior para la diferencia de \acrshort{acr-ci} (vecinal menos local) debe superar $-0,005$, equivalente a 0,5 puntos porcentuales en la tasa. Además, la variante vecinal no debe producir más teletransportes que la local en ninguna evaluación del mismo par. Si falta el contador de teletransportes de una evaluación, este requisito no se considera acreditado. Los márgenes del 5\% y de 0,5 puntos porcentuales son decisiones prácticas de este análisis, no umbrales universales. El intervalo del 95\% se informa para describir la incertidumbre y examinar cómo cambia la interpretación al utilizar otro nivel de confianza.
+La decisión favorable a C requiere cumplir conjuntamente tres condiciones:
+\begin{itemize}
+    \item \textbf{Espera:} el límite superior del intervalo del 98,33\% para el efecto relativo debe ser menor que $-0,05$.
+    \item \textbf{CI:} el límite inferior del intervalo del 98,33\% para la diferencia C menos A debe superar $-0,005$, equivalente a una disminución de 0,5 puntos porcentuales en la tasa.
+    \item \textbf{Teletransportes:} C no debe producir más que A en ninguna evaluación del mismo par; si falta un contador, el requisito no se considera acreditado.
+\end{itemize}
+Los márgenes del 5\% y de 0,5 puntos porcentuales son decisiones prácticas de este análisis, no umbrales universales. El intervalo del 95\% se informa para describir la incertidumbre y examinar cómo cambia la interpretación al utilizar otro nivel de confianza.
+
+El criterio de A/C no impone un umbral de inserciones ni evalúa el retraso previo al ingreso; la condición sobre CI se refiere solo a los vehículos insertados.
 
 Los intervalos describen la variación entre entrenamientos, condicionada a las cinco semillas de evaluación compartidas, y no cubren toda demanda posible. La ausencia de evidencia de una reducción práctica no demuestra equivalencia. Para los viajes que siguen inconclusos al cierre no se observa cuánto tardarían en completarse fuera del horizonte simulado.
 
@@ -575,12 +607,12 @@ La reproducción se apoya en los archivos de red y rutas, las configuraciones de
 
 Las búsquedas documentadas de fase 1 y la comparación entre las variantes local y vecinal se ejecutaron en el clúster de cómputo Toko. La prueba preliminar se realizó en un entorno local y en Toko; las exploraciones anteriores en el clúster Mendieta no forman parte de los análisis presentados.
 
-Los trabajos se organizaron por combinación experimental y conservaron sus configuraciones y productos en almacenamiento persistente. Los programas de envío y el traslado de registros durante la ejecución se describen en el apéndice \ref{sec:infraestructura_apendice}. Esos archivos registran recursos solicitados, pero no permiten identificar los recursos físicos efectivamente asignados ni el modelo de \acrshort{acr-gpu} de cada trabajo.
+Los trabajos se organizaron por combinación experimental y conservaron sus configuraciones y productos en almacenamiento persistente. Los programas de envío y el traslado de registros durante la ejecución se describen en el apéndice \ref{sec:infraestructura_apendice}. Esos archivos registran recursos solicitados, pero no permiten identificar los recursos físicos efectivamente asignados ni el modelo de \acrfull{acr-gpu} de cada trabajo.
 
 \subsection{Limitaciones del diseño y alcance de la inferencia}
 
-La comparación A/C modifica conjuntamente observación y recompensa; no permite atribuir el resultado a un componente aislado ni determinar un peso vecinal óptimo. Su alcance se limita a \acrshort{acr-mappo}, la configuración documentada y las tres redes sintéticas, analizadas por separado (subsección \ref{sec:experimentos_evaluacion}).
+El alcance de A/C es el contraste conjunto definido en la sección \ref{sec:comparacion_local_vecinal}, bajo una configuración fija de \acrshort{acr-mappo}. La unidad de inferencia y el análisis separado por red se precisan en la subsección \ref{sec:experimentos_evaluacion}.
 
 La búsqueda adaptativa explora regiones distintas y consume presupuestos efectivos desiguales; igualar iteraciones no iguala pasos de gradiente ni costo computacional entre algoritmos. Las arquitecturas seleccionadas tampoco permiten atribuir causalmente sus diferencias de desempeño. Además, la implementación de \acrshort{acr-happo}, con recompensas y ventajas individuales y objetivo recortado, no hereda la garantía teórica de mejora monótona para recompensas compartidas.
 
-En Mendoza, los supuestos de demanda y la procedencia incompleta de las rutas limitan la extrapolación al tránsito real. En todos los escenarios, las conclusiones se restringen a las condiciones, medidas y presupuestos descritos; para los viajes inconclusos solo se conoce la espera hasta el cierre (subsección \ref{sec:metricas_evidencia}).
+La comprobación de Mendoza se interpreta con los supuestos y límites de procedencia de la subsección \ref{subsec:escenario_mendoza}. La comparación de algoritmos prevista y el contraste A/C documentado responden preguntas distintas; sus conclusiones se restringen a las condiciones simuladas, las poblaciones evaluadas y los presupuestos descritos, con la limitación temporal de los viajes inconclusos definida en la subsección \ref{sec:metricas_evidencia}.

@@ -12,32 +12,39 @@
   flow/.style={-{Stealth[length=2.2mm]},line width=.8pt,draw=black!70}
 ]
 \node[stage,text width=12.4cm] (setup) at (0,0)
-  {Preparación de escenarios};
-\node[stage,text width=7.2cm] (environment) at (-2.5,-2)
-  {Entorno multiagente};
-\node[check,text width=3.85cm] (urban) at (4.5,-2)
-  {Verificación del\\escenario de Mendoza};
+  {Preparación de escenarios y entorno multiagente\\
+   Mendoza: construcción y comprobación operacional};
 
-\node[learning] (hpo) at (-4.5,-4.2)
-  {Búsqueda de hiperparámetros};
-\node[learning] (ac) at (-.5,-4.2)
-  {Comparación A/C};
+\node[learning] (phaseone) at (-4.5,-2.3)
+  {Fase 1\\Búsqueda amplia\\en redes sintéticas};
+\node[learning] (screening) at (0,-2.3)
+  {Prueba A--E\\MAPPO en $4\times4\_H$};
+\node[output] (ac) at (4.5,-2.3)
+  {Comparación y evaluación A/C\\Tres redes sintéticas};
 
-\node[output] (hporesult) at (-4.5,-6.2)
-  {Evaluación de configuraciones};
-\node[output] (acresult) at (-.5,-6.2)
-  {Evaluación por pares};
+\node[learning] (phasetwo) at (4.5,-4.6)
+  {Fase 2\\Búsqueda refinada\\en redes sintéticas};
+\node[learning] (syntheticselection) at (0,-4.6)
+  {Selección de candidatos\\Redes sintéticas};
+\node[output] (syntheticevaluation) at (-4.5,-4.6)
+  {Evaluación de políticas\\Redes sintéticas};
 
-% Dependencias de preparación; la comprobación urbana no sucede a las evaluaciones.
-\coordinate (prepared) at (0,-1);
-\draw[line width=.8pt,draw=black!70] (setup.south) -- (prepared);
-\draw[flow] (prepared) -| (environment.north);
-\draw[flow] (prepared) -| (urban.north);
-\coordinate (branch) at (-2.5,-3.1);
-\draw[line width=.8pt,draw=black!70] (environment.south) -- (branch);
-\draw[flow] (branch) -| (hpo.north);
-\draw[flow] (branch) -| (ac.north);
-\draw[flow] (hpo.south) -- (hporesult.north);
-\draw[flow] (ac.south) -- (acresult.north);
+\node[check] (urbansearch) at (-4.5,-6.9)
+  {Búsqueda de hiperparámetros\\Mendoza};
+\node[check] (urbanselection) at (0,-6.9)
+  {Selección de candidatos\\Mendoza};
+\node[output] (urbanevaluation) at (4.5,-6.9)
+  {Evaluación de políticas\\Mendoza};
+
+% Un único recorrido: las flechas expresan el orden de los procedimientos.
+\draw[flow] (setup.south) -- (0,-1.1) -| (phaseone.north);
+\draw[flow] (phaseone.east) -- (screening.west);
+\draw[flow] (screening.east) -- (ac.west);
+\draw[flow] (ac.south) -- (phasetwo.north);
+\draw[flow] (phasetwo.west) -- (syntheticselection.east);
+\draw[flow] (syntheticselection.west) -- (syntheticevaluation.east);
+\draw[flow] (syntheticevaluation.south) -- (urbansearch.north);
+\draw[flow] (urbansearch.east) -- (urbanselection.west);
+\draw[flow] (urbanselection.east) -- (urbanevaluation.west);
 \end{tikzpicture}
 \endgroup

@@ -414,7 +414,7 @@
  description={Valor que deja una proporción determinada de las observaciones por debajo o a su altura. El percentil 99 corresponde aproximadamente al 99\% de las observaciones}
 }
 \newglossaryentry{cohorte_evaluacion}{
- name={Cohorte de evaluación}, text={cohorte},
+ name={Cohorte de evaluación}, text={cohorte}, plural={cohortes},
  description={Conjunto de vehículos definido por un criterio común de inclusión, como el ingreso durante un mismo intervalo de simulación, sobre el que se calculan las medidas de desempeño}
 }
 \newglossaryentry{intervalo_confianza}{
@@ -430,4 +430,14 @@
 \newglossaryentry{numero_acciones}{
     name={$K_i$ (número de acciones)},
     description={Número de fases semafóricas seleccionables por el agente $i$. Excluye las fases con amarillo y el estado final de todo rojo; las restricciones temporales pueden reducir el subconjunto de acciones habilitado en un instante}
+}
+
+\newglossaryentry{grado_vecindad}{
+    name={Grado de vecindad}, text={grado de vecindad}, plural={grados de vecindad},
+    description={Cantidad de agentes vecinos directos de un agente. En el entorno utilizado, una conexión vial entre carriles controlados establece una relación de vecindad registrada para ambos agentes, incluso si la vía es de sentido único}
+}
+
+\newglossaryentry{espera_interseccion}{
+    name={$W_i^{(t)}$ (espera atribuida a la intersección)},
+    description={Suma de las esperas atribuidas a los carriles controlados por el agente $i$ en el paso de decisión $t$, en veh·s. Se utiliza en la observación vecinal y en las diferencias de espera de la recompensa; depende de la memoria temporal finita de SUMO y no equivale a la espera total por viaje de TripInfo}
 }

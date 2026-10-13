@@ -378,7 +378,7 @@ Este apéndice distingue los valores observados en configuraciones y archivos de
 
 Los programas de envío de trabajos, o \textit{scripts}, especifican recursos solicitados; se distinguen de los registros de asignación efectiva. La metodología resume las plataformas utilizadas en la subsección \ref{subsec:infraestructura_hpc}.
 
-Los trabajos documentados se enviaron con \texttt{sbatch}, comando del gestor de trabajos \acrfull{acr-slurm}. Para fase 1 se utilizó \texttt{submit\_phase1.sh}; el protocolo refinado de fase 2 especifica \texttt{submit\_phase2\_refined.sh}, pero la presencia de este archivo no acredita que se haya enviado o ejecutado.
+Los trabajos se envían con \texttt{sbatch}, comando del gestor de trabajos \acrfull{acr-slurm}. Para fase 1 se utilizó \texttt{submit\_phase1.sh}; el protocolo refinado de fase 2 especifica \texttt{submit\_phase2\_refined.sh}.
 
 Las configuraciones de los scripts corresponden a una combinación de algoritmo, red de tráfico y arquitectura, y solicitan un servidor del clúster (nodo), una tarea de ejecución, diez núcleos de la \acrfull{acr-cpu} y una partición —grupo de recursos que el sistema asigna para ejecutar trabajos— con unidades de procesamiento gráfico (\acrshort{acr-gpu}). El manual institucional describe una partición de Toko con hasta ocho núcleos; por ello no permite confirmar los recursos físicos asignados a cada trabajo \cite{TokoManual2024}.
 
@@ -550,13 +550,13 @@ El código de fase 1 define 7001 como semilla \acrshort{acr-tpe} por defecto, in
 \subsection{Arquitecturas y semillas del protocolo refinado}
 \label{subsec:protocolo_refinado_apendice}
 
-Se distinguen la exploración amplia de fase 1, la campaña adicional de entrenamiento registrada como \texttt{phase2\_}\allowbreak\texttt{confirmation} y el protocolo refinado. En \path{ray_results/canonical/phase2} se encontraron 420 archivos \texttt{progress.csv} de \glspl{ensayo_hpo} históricos \acrshort{acr-mappo}/\acrshort{acr-happo}; la muestra de junio descrita en los registros corresponde a 40 iteraciones. Esto no acredita la ejecución del plan refinado, que presupuesta 1200 configuraciones en doce combinaciones, con hasta 60 iteraciones por \gls{ensayo_hpo}.
+Este apartado describe el protocolo refinado de búsqueda, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. Los registros antiguos de versiones obsoletas del diseño no se utilizan para caracterizar esta fase.
 
-El protocolo sintético prevé 100 configuraciones por combinación de algoritmo y escenario. Especifica \acrshort{acr-asha} con 30 iteraciones de gracia y factor de reducción 2, una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto; estos límites no acreditan que se hayan ejecutado todas las configuraciones. Aunque Mendoza forma parte del alcance previsto, no se presenta una campaña de \acrshort{acr-hpo} urbana como ejecutada ni se le atribuyen los presupuestos y semillas sintéticos. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
+El protocolo sintético prevé 100 configuraciones por combinación de algoritmo y escenario. Especifica \acrshort{acr-asha} con 30 iteraciones de gracia y factor de reducción 2, una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto; estos límites no acreditan que se hayan ejecutado todas las configuraciones. La búsqueda urbana de Mendoza se organiza como continuación de los estudios sintéticos, con presupuesto y semillas propios. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
 
 El estado del modelo al final de un ensayo se guarda en un archivo \gls{checkpoint}, que puede servir para reanudar o evaluar el entrenamiento. Su existencia no libera presupuesto si el ensayo está incompleto ni certifica una política apta para selección. La fase 1 adaptó las propuestas mediante \acrshort{acr-tpe} y las detenciones mediante \acrshort{acr-asha}, sin reservar una prueba en $\rho_{\mathrm{coop}}=0$; por eso sus registros no identifican la causa de las diferencias asociadas al peso vecinal ni demuestran que el valor local sea un óptimo.
 
-La copia del estado del proyecto conservada en \path{artifacts/phase2/}\allowbreak\texttt{release.json} indica que no se habían enviado trabajos, que la lista de trabajos enviados estaba vacía y que no se había alcanzado la aceptación empírica, es decir, la comprobación de los requisitos mediante ejecuciones. Describen esa copia y no prueban que no hubiera ejecuciones posteriores o fuera de ella. La ejecución del plan refinado y la adjudicación de una selección final no están acreditadas aquí; los identificadores 950001, 950003 y 950007 que aparecen en la documentación del procedimiento no son por sí mismos resultados de selección.
+La fase 2 está en ejecución en octubre de 2026. La selección final y la evaluación comparativa se mantienen como etapas posteriores a las búsquedas; los identificadores 950001, 950003 y 950007 que aparecen en el protocolo no son por sí mismos resultados de selección. La búsqueda urbana continúa después de los estudios sintéticos y requiere sus propias condiciones, sin trasladarle automáticamente sus presupuestos o semillas.
 
 \begin{table}[H]
 \centering
@@ -751,6 +751,7 @@ Los manifiestos de la comparación registran \acrshort{acr-sumo} 1.26.0, Ray 2.5
 La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a protocolos distintos.
 
 \subsection{Calibraciones y semillas de cooperación}
+\label{subsec:calibraciones_cooperacion}
 
 El umbral local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo umbrales 9660, 5329 y 4652 en esas redes. Los umbrales locales se expresan en veh·s y los vecinales en veh·s por carril. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Los umbrales corresponden a señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
 
