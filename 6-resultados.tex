@@ -1,18 +1,18 @@
 \chapter{Análisis y discusión de resultados}
 \label{capitulo:resultados}
-Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, comparación pareada A/C de \acrshort{acr-mappo} y comprobación operacional de Mendoza. La búsqueda y la comparación corresponden a unidades experimentales distintas; sus métricas y criterios de selección se interpretan por separado.
+Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de los modelos finales, comparación pareada A/C de \acrshort{acr-mappo} y comprobación operacional de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
 
 La comprobación de Mendoza corresponde a la red urbana con los programas semafóricos incluidos en ella. Sus conteos y tasas describen esa operación y no se interpretan como una evaluación de \glspl{politica} aprendidas.
 
 \section{Resultados del ajuste de hiperparámetros}
 
-La presentación de \acrshort{acr-hpo} distingue la exploración amplia de fase 1 de los dominios informados para fase 2. Las configuraciones candidatas y su selección se interpretan mediante los criterios especificados en la metodología, sin confundir el objetivo de búsqueda con la evaluación física.
+La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas y en Mendoza. Los dominios y criterios se interpretan según el escenario al que corresponden; la comparación A/C y la comprobación operacional urbana se presentan como procedimientos distintos de la búsqueda de hiperparámetros.
 
 \subsection{Estado de la consolidación y de las búsquedas}
 
 \subsection{Resultados del ajuste y análisis de sensibilidad}
 
-\subsection{Selección de configuraciones de HPO}
+\subsection[Selección de configuraciones de HPO]{Selección de configuraciones de \acrshort{acr-hpo}}
 
 \section{Evaluación de políticas y comprobación de escenarios}
 
@@ -35,7 +35,7 @@ Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los
 \begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
-        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{Inserción} & \textbf{Finalización} & \textbf{Teletransportes} \\ \hline
+        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{\acrshort{acr-ir}} & \textbf{\acrshort{acr-ci}} & \textbf{Teletransportes} \\ \hline
 2 horas ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
 12 horas ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
 \end{tabular}

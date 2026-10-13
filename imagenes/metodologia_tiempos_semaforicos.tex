@@ -69,13 +69,13 @@
   % V3 (81-87)
   \filldraw[verde] (81, 1.72) rectangle (87, 2.48);
   \node[font=\sffamily\scriptsize\bfseries, text=black!90, inner sep=0pt] at (84, 2.1) {$V_3$};
-  % Llamada a V3 desde el margen derecho
-  \draw[flecha] (93.7, 2.1) -- (87.3, 2.1);
-  \node[anchor=west, font=\sffamily\scriptsize, align=left, inner sep=1pt] at (94.2, 2.1) {Giro protegido\\($V_3 = 6\text{ s}$)};
-
   % A3 (87-90)
   \filldraw[amarillo] (87, 1.72) rectangle (90, 2.48);
   \node[font=\sffamily\scriptsize\bfseries, text=black!85, inner sep=0pt] at (88.5, 2.1) {3};
+
+  % La llamada apunta al verde V3 desde el espacio libre superior.
+  \draw[flecha] (93.7, 2.95) -- (84, 2.52);
+  \node[anchor=west, font=\sffamily\scriptsize, align=left, inner sep=1pt] at (94.2, 2.95) {Giro protegido\\($V_3 = 6\text{ s}$)};
 
   % -------------------------------------------------------------
   % FILA 3: Intersecciones C4 y D1 (y = 0.2)

@@ -5,46 +5,38 @@
   font=\sffamily\small,
   >=Stealth,
   stage/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners=3pt,
-    text width=3.35cm,minimum height=1.15cm,align=center,inner sep=6pt},
+    text width=4.2cm,minimum height=1.15cm,align=center,inner sep=6pt},
   learning/.style={stage,fill=colInterfaz!18,draw=colInterfaz!70!black},
   check/.style={stage,fill=catLilaSuave!18,draw=catLilaSuave!80!black},
   output/.style={stage,fill=colAgente!14,draw=colAgente!75!black},
-  flow/.style={-{Stealth[length=2.2mm]},line width=.8pt,draw=black!70}
+  flow/.style={-{Stealth[length=2mm,width=1.5mm]},line width=.8pt,draw=black!70}
 ]
-\node[stage,text width=12.4cm] (setup) at (0,0)
-  {Preparación de escenarios y entorno multiagente\\
-   Mendoza: construcción y comprobación operacional};
+\node[stage] (setup) at (0,0) {Preparación de escenarios};
+\node[learning] (phaseone) at (0,-1.45)
+  {Fase 1\\Búsqueda amplia};
+\node[learning] (screening) at (0,-2.9)
+  {Prueba A--E};
+\node[output] (ac) at (0,-4.35)
+  {Comparación A/C};
+\node[learning] (phasetwo) at (0,-5.8)
+  {Fase 2\\Búsqueda refinada};
 
-\node[learning] (phaseone) at (-4.5,-2.3)
-  {Fase 1\\Búsqueda amplia\\en redes sintéticas};
-\node[learning] (screening) at (0,-2.3)
-  {Prueba A--E\\MAPPO en $4\times4\_H$};
-\node[output] (ac) at (4.5,-2.3)
-  {Comparación y evaluación A/C\\Tres redes sintéticas};
+\node[check,text width=3.7cm] (syntheticselection) at (-3.2,-7.5)
+  {Selección sintética};
+\node[check,text width=3.7cm] (urbanselection) at (3.2,-7.5)
+  {Selección Mendoza};
+\node[output,text width=3.7cm] (syntheticevaluation) at (-3.2,-9.35)
+  {Entrenamiento\\y evaluación\\Sintéticas};
+\node[output,text width=3.7cm] (urbanevaluation) at (3.2,-9.35)
+  {Entrenamiento\\y evaluación\\Mendoza};
 
-\node[learning] (phasetwo) at (4.5,-4.6)
-  {Fase 2\\Búsqueda refinada\\en redes sintéticas};
-\node[learning] (syntheticselection) at (0,-4.6)
-  {Selección de candidatos\\Redes sintéticas};
-\node[output] (syntheticevaluation) at (-4.5,-4.6)
-  {Entrenamiento final\\y evaluación\\Redes sintéticas};
-
-\node[check] (urbansearch) at (-4.5,-6.9)
-  {Búsqueda de hiperparámetros\\Mendoza};
-\node[check] (urbanselection) at (0,-6.9)
-  {Selección de candidatos\\Mendoza};
-\node[output] (urbanevaluation) at (4.5,-6.9)
-  {Entrenamiento final\\y evaluación\\Mendoza};
-
-% Un único recorrido: las flechas expresan el orden de los procedimientos.
-\draw[flow] (setup.south) -- (0,-1.1) -| (phaseone.north);
-\draw[flow] (phaseone.east) -- (screening.west);
-\draw[flow] (screening.east) -- (ac.west);
+\draw[flow] (setup.south) -- (phaseone.north);
+\draw[flow] (phaseone.south) -- (screening.north);
+\draw[flow] (screening.south) -- (ac.north);
 \draw[flow] (ac.south) -- (phasetwo.north);
-\draw[flow] (phasetwo.west) -- (syntheticselection.east);
-\draw[flow] (syntheticselection.west) -- (syntheticevaluation.east);
-\draw[flow] (syntheticevaluation.south) -- (urbansearch.north);
-\draw[flow] (urbansearch.east) -- (urbanselection.west);
-\draw[flow] (urbanselection.east) -- (urbanevaluation.west);
+\draw[flow] (phasetwo.south west) -- (syntheticselection.north);
+\draw[flow] (phasetwo.south east) -- (urbanselection.north);
+\draw[flow] (syntheticselection.south) -- (syntheticevaluation.north);
+\draw[flow] (urbanselection.south) -- (urbanevaluation.north);
 \end{tikzpicture}
 \endgroup
