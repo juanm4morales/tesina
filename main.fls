@@ -706,6 +706,16 @@ INPUT ./imagenes/metodologia_v2_flujo.tex
 INPUT ./imagenes/metodologia_v2_flujo.tex
 INPUT imagenes/metodologia_v2_flujo.tex
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecss0800.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1000.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0700.tfm
+INPUT ./imagenes/metodologia_tiempos_semaforicos.tex
+INPUT ./imagenes/metodologia_tiempos_semaforicos.tex
+INPUT imagenes/metodologia_tiempos_semaforicos.tex
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx1000.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecss0800.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx0900.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx0900.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx0900.tfm
 INPUT ./imagenes/escenario_3x1_sumo.png
 INPUT ./imagenes/escenario_3x1_sumo.png
 INPUT ./imagenes/escenario_3x1_sumo.png
@@ -771,7 +781,6 @@ OUTPUT 8-apendice_arquitectura.aux
 INPUT ./8-apendice_arquitectura.tex
 INPUT ./8-apendice_arquitectura.tex
 INPUT 8-apendice_arquitectura.tex
-INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecsx0900.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecso0900.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecit0800.tfm
@@ -871,6 +880,7 @@ INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb
