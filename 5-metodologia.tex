@@ -6,7 +6,7 @@ El problema consiste en aprender políticas que controlen semáforos en una simu
 
 El diseño contempla dos líneas de estudio. La primera compara los cuatro algoritmos mediante políticas entrenadas desde cero con los hiperparámetros seleccionados en la búsqueda. La segunda examina cómo varía el desempeño de MAPPO al añadir información vecinal tanto a la observación como a la recompensa. Para ello, una campaña específica compara las variantes local A y vecinal C con una configuración de aprendizaje fija. El contraste estima el efecto conjunto de ambas modificaciones.
 
-La búsqueda de hiperparámetros comprende las tres redes sintéticas y la red parcial de Mendoza. Para Mendoza se describen también la construcción del escenario y su comprobación operacional con programas semafóricos de referencia.
+El capítulo presenta primero los escenarios y el sistema de control, y luego los procedimientos experimentales. Las búsquedas de hiperparámetros se articulan con los estudios de cooperación y conducen a una selección con criterios propios para las redes sintéticas y Mendoza. Cada configuración seleccionada pasa a un entrenamiento final desde cero; las políticas resultantes se evalúan tanto por el desempeño de cada agente como por el comportamiento global de la red. En Mendoza, la preparación del escenario incluye además una comprobación operacional de la red y la demanda con programas semafóricos de referencia.
 
 \section{Diseño experimental}
 \label{sec:tarea_investigacion}
