@@ -113,7 +113,7 @@ def pgf(output: Path) -> None:
 }};
 \addplot[salmonplot,dashed,thick] coordinates {{({M},0) ({M},21)}};
 \node[anchor=east,align=right,text=salmonplot,font=\small,fill=white,inner sep=2pt]
- at (axis cs:1010,15.5) {{M lane = {M:.0f} veh$\cdot$s\\umbral de entrada}};
+ at (axis cs:1010,15.5) {{M lane = {M:.0f} veh$\cdot$s\\límite de escala}};
 \draw[->,salmonplot,thick] (axis cs:1020,15.5)--(axis cs:{M},15.5);
 \end{{axis}}\end{{tikzpicture}}"""
     L = (I - 1) / M

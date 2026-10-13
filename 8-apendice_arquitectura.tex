@@ -413,7 +413,7 @@ C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas 
 
 Esta sección especifica los dominios iniciales compartidos por los cuatro escenarios y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. Las tablas de dominios describen el espacio común; las tablas posteriores de presupuestos y semillas corresponden a las búsquedas sintéticas. Esta reconstrucción permite identificar la especificación consultada; una clave almacenada en un archivo de configuración no demuestra por sí sola cómo operó cada ejecución histórica.
 
-Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. Uniforme continua y loguniforme tienen el significado explicado en la sección \ref{subsec:hpo_phase1}; uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. Estos dominios iniciales se aplican a los cuatro escenarios; algunos factores fijos, como el umbral de espera, se calibran por escenario. La Tabla \ref{tab:factores_fase1} especifica esos factores para los estudios sintéticos documentados.
+Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. Uniforme continua y loguniforme tienen el significado explicado en la sección \ref{subsec:hpo_phase1}; uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. Estos dominios iniciales se aplican a los cuatro escenarios; algunos factores fijos, como el límite de escala del codificador de espera acumulada por carril, se fijan por escenario. La Tabla \ref{tab:factores_fase1} especifica esos factores para los estudios sintéticos documentados.
 
 En la familia \acrshort{acr-ppo}, el margen de recorte limita la razón de probabilidades del \gls{actor} y el parámetro de \acrshort{acr-gae} regula la estimación de \glspl{ventaja}. La entropía favorece la exploración; los parámetros de divergencia \acrshort{acr-kl} configuran la penalización y su adaptación. El límite del gradiente acota la magnitud del gradiente utilizado para actualizar los parámetros. Las cantidades de episodios, recorridos de optimización y minilotes controlan la recolección y reutilización de experiencias. En \acrshort{acr-mappo} y \acrshort{acr-happo}, la cota de valor limita la pérdida cuadrática del \gls{critico}, según la sección \ref{sec:apendice_detalles_aprendizaje}; no se interpreta como un límite físico de espera. En \acrshort{acr-happo}, la probabilidad de ordenación determina con qué frecuencia se elige el siguiente actor según la magnitud de su ventaja, en lugar de elegirlo al azar; su aplicación se precisa después de la tabla.
 
@@ -477,7 +477,7 @@ Niveles del codificador & 4--64 & Uniforme entera \\
 \endgroup
 \end{table}
 
-La Tabla \ref{tab:factores_fase1} separa los factores de \gls{estudio_hpo} y los valores fijos de los parámetros anteriores. La arquitectura se conserva dentro de cada \gls{estudio_hpo} para evitar que RLlib 2.53 altere la arquitectura al almacenarla dentro de otros campos de configuración, según la decisión registrada en \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{architectures.py}. El umbral de espera aporta una escala calibrada por escenario; su fijación no implica que el \gls{percentil} utilizado sea superior a otras alternativas.
+La Tabla \ref{tab:factores_fase1} separa los factores de \gls{estudio_hpo} y los valores fijos de los parámetros anteriores. La arquitectura se conserva dentro de cada \gls{estudio_hpo} para evitar que RLlib 2.53 altere la arquitectura al almacenarla dentro de otros campos de configuración, según la decisión registrada en \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{architectures.py}. El límite de escala del codificador de espera acumulada por carril se calibra por escenario; su fijación no implica que el \gls{percentil} utilizado sea superior a otras alternativas.
 
 \begin{table}[H]
 \centering
@@ -491,16 +491,16 @@ Factor & Valor o alternativa \\\hline
 Arquitectura por estudio & h128 o h256: dos capas de 128 o 256 unidades \\
 Descuento & $\gamma=0{,}99$ \\
 Medición de espera & Espera acumulada por carril (veh·s) \\
-Umbral en $3\times1$ & 1184 veh·s \\
-Umbral en $3\times3$ & 1136 veh·s \\
-Umbral en $4\times4\_H$ & 712 veh·s \\
+Límite de escala del codificador, $3\times1$ & 1184 veh·s \\
+Límite de escala del codificador, $3\times3$ & 1136 veh·s \\
+Límite de escala del codificador, $4\times4\_H$ & 712 veh·s \\
 Información observada & Observación local y máscara de acciones \\
 Penalización KL & Activada en los métodos PPO \\\hline
 \end{tabular}
 \endgroup
 \end{table}
 
-La arquitectura permanece fija por \gls{estudio_hpo} y los umbrales, por escenario. La medición de espera y el descuento son comunes a los cuatro algoritmos. Variar el peso de recompensa vecinal no activa la observación vecinal. En los métodos PPO, la penalización KL permanece activada, aunque su coeficiente y su objetivo se exploran.
+La arquitectura permanece fija por \gls{estudio_hpo}, y el límite de escala del codificador de espera acumulada por carril varía según el escenario. La medición de espera y el descuento son comunes a los cuatro algoritmos. Variar el peso de recompensa vecinal no activa la observación vecinal. En los métodos PPO, la penalización KL permanece activada, aunque su coeficiente y su objetivo se exploran.
 
 Los rangos y distribuciones documentan cómo se acotó la exploración. No se recuperó una justificación contemporánea para todos sus límites exactos, ni una comparación que validara las alternativas de cada fila. La calibración de espera y la separación de arquitecturas tienen un respaldo local identificable; los demás límites se conservan como decisiones del diseño exploratorio. Las propuestas adaptativas de \acrshort{acr-tpe}, las detenciones de \acrshort{acr-asha} y la única semilla de entrenamiento por escenario limitan las inferencias sobre sensibilidad y variabilidad. La especificación no garantiza cobertura exhaustiva del espacio ni optimalidad global.
 
@@ -677,33 +677,33 @@ Zhong et al. encuadran \acrshort{acr-happo} como una instancia de \acrshort{acr-
 \subsection{Desarrollo algebraico del codificador}
 \label{subsec:codificacion_espera_apendice}
 
-Para la espera local $x\geq0$, sea $u=1\,\text{veh}\cdot\text{s}$ la unidad de vehículo-segundo. El valor numérico de la espera es $x_{\mathrm{num}}=x/u$ y el del umbral local, $M_{\mathrm{num}}=M_{\mathrm{lane}}/u>0$. La entrada normalizada $\hat{x}=\min(1,x_{\mathrm{num}}/M_{\mathrm{num}})$ queda entre cero y uno. Para $I\geq2$, se define $L=(I-1)/M_{\mathrm{num}}$; en los dominios utilizados, $M_{\mathrm{num}}>I-1$, por lo que $0<L<1$. La transformación mezcla una componente logarítmica y otra lineal:
+Para la espera local $x\geq0$, sea $u=1\,\text{veh}\cdot\text{s}$ la unidad de vehículo-segundo. El valor numérico de la espera es $x_{\mathrm{num}}=x/u$ y el del límite local de escala, $M_{\mathrm{num}}=M_{\mathrm{lane}}/u>0$. La entrada normalizada $\hat{x}=\min(1,x_{\mathrm{num}}/M_{\mathrm{num}})$ queda entre cero y uno. Para $I\geq2$, se define $L=(I-1)/M_{\mathrm{num}}$; en los dominios utilizados, $M_{\mathrm{num}}>I-1$, por lo que $0<L<1$. La transformación mezcla una componente logarítmica y otra lineal:
 \begin{equation}
     g(\hat{x}) = (1 - L) \frac{\log_2\left(\frac{\hat{x}}{L} + 1\right)}{\log_2\left(\frac{1}{L} + 1\right)} + L \hat{x},
     \label{eq:encoder_mezcla_convexa}
 \end{equation}
-El parámetro adimensional $L$ regula la curvatura y el peso lineal. La salida se escala por el nivel máximo y se redondea hacia arriba, de modo que el máximo puede alcanzarse antes de llegar al umbral. La codificación se limita a $I-1$:
+El parámetro adimensional $L$ regula la curvatura y el peso lineal. La salida se escala por el nivel máximo y se redondea hacia arriba, de modo que el máximo puede alcanzarse antes de llegar al límite de escala. La codificación se limita a $I-1$:
 \begin{equation}
 e(x)=\min\{I-1,\operatorname{ceil}((I-1)g(\hat{x}))\}.
 \label{eq:encoder_saturacion}
 \end{equation}
-Para la observación vecinal, se aplica la misma función a la espera media por carril, con el umbral vecinal expresado en veh·s por carril.
+Para la observación vecinal, se aplica la misma función a la espera media por carril, con el límite de escala vecinal expresado en veh·s por carril.
 
 La Figura \ref{fig:mezcla_log_lineal} separa las contribuciones del codificador utilizado en la sección \ref{subsec:observaciones_encoder}. Permite comprobar la equivalencia algebraica, sin atribuir al ejemplo un resultado de control.
 
-El número de niveles $I$ se registra como \texttt{encoder\_intervals} y el umbral local $M_{\mathrm{lane}}$ como \texttt{max\_lane\_value}. La dependencia de $L$ respecto de $I$ explica por qué cambiar los niveles también modifica la transformación.
+El número de niveles $I$ se registra como \texttt{encoder\_intervals} y el límite local de escala $M_{\mathrm{lane}}$ como \texttt{max\_lane\_value}. Este parámetro fija la escala de la espera acumulada por carril; la dependencia de $L$ respecto de $I$ explica por qué cambiar los niveles también modifica la transformación.
 
 Sea $F=(1-L)(I-1)/\log_2(1/L+1)$ el factor que pondera el componente logarítmico. Para $0\leq x_{\mathrm{num}}<M_{\mathrm{num}}$, la mezcla escalada de la sección \ref{subsec:observaciones_encoder} se expresa en la forma implementada por el código:
 \begin{equation}
     e(x) = \operatorname{ceil}\left( F \cdot \log_2\left( \frac{x_{\mathrm{num}}}{M_{\mathrm{num}} \cdot L} + 1 \right) + L^2 \cdot x_{\mathrm{num}} \right),
     \label{eq:encoder_log_lineal}
 \end{equation}
-Para $x_{\mathrm{num}}\geq M_{\mathrm{num}}$, el codificador devuelve directamente $I-1$. Para valores inferiores al umbral, esta expresión es algebraicamente equivalente a la combinación de la ecuación \eqref{eq:encoder_mezcla_convexa}, escalada por $I-1$ y redondeada hacia arriba. La saturación en $I-1$ cuando se alcanza el umbral se expresa en la ecuación \eqref{eq:encoder_saturacion}.
+Para $x_{\mathrm{num}}\geq M_{\mathrm{num}}$, el codificador devuelve directamente $I-1$. Para valores inferiores al límite de escala, esta expresión es algebraicamente equivalente a la combinación de la ecuación \eqref{eq:encoder_mezcla_convexa}, escalada por $I-1$ y redondeada hacia arriba. La saturación en $I-1$ al llegar a ese límite se expresa en la ecuación \eqref{eq:encoder_saturacion}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.78\textwidth]{imagenes/metodologia_v2_componentes_encoder.pdf}
-    \caption[Ejemplo de codificación de observaciones.]{Ejemplo ilustrativo con $I=22$ y umbral $M_{\mathrm{num}}=1136$ calibrado para el escenario $3\times3$; $I=22$ no corresponde a la configuración de la comparación A/C.}
+    \caption[Ejemplo de codificación de observaciones.]{Ejemplo ilustrativo con $I=22$ y límite de escala $M_{\mathrm{num}}=1136$ calibrado para el escenario $3\times3$; $I=22$ no corresponde a la configuración de la comparación A/C.}
     \label{fig:mezcla_log_lineal}
 \end{figure}
 
@@ -750,7 +750,7 @@ Niveles del codificador ($I$) & 17 \\
 Descuento ($\gamma$) & 0,99 \\\hline
 \end{tabular}\end{table}
 
-La comparación fija el peso de la recompensa vecinal en cero para la variante local y en 0,1 para la vecinal; también asigna observación local o vecinal y normaliza por carriles, según la condición. Los umbrales del codificador corresponden a cada escenario. Los tres episodios de cada lote representan $3\times(3600/5)=2160$ pasos de entorno por componente de aprendizaje. El número de procesos de simulación no multiplica este tamaño de lote.
+La comparación fija el peso de la recompensa vecinal en cero para la variante local y en 0,1 para la vecinal; también asigna observación local o vecinal y normaliza por carriles, según la condición. Los límites de escala del codificador corresponden a cada escenario. Los tres episodios de cada lote representan $3\times(3600/5)=2160$ pasos de entorno por componente de aprendizaje. El número de procesos de simulación no multiplica este tamaño de lote.
 
 Los manifiestos de la comparación registran \acrshort{acr-sumo} 1.26.0, Ray 2.54.1 y PyTorch 2.10.0 con CUDA 12.8 (\textit{Compute Unified Device Architecture}), plataforma que permite ejecutar cálculos en las unidades de procesamiento gráfico. Estas versiones corresponden a esa campaña y no se atribuyen automáticamente a las búsquedas históricas. Los archivos \texttt{manifest.json} de cada par conservan su configuración y versiones efectivas.
 
@@ -759,7 +759,7 @@ La calibración vecinal específica se conserva junto con la configuración de l
 \subsection{Calibraciones y semillas de cooperación}
 \label{subsec:calibraciones_cooperacion}
 
-El umbral local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo umbrales 9660, 5329 y 4652 en esas redes. Los umbrales locales se expresan en veh·s y los vecinales en veh·s por carril. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Los umbrales corresponden a señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
+El límite de escala local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo límites de escala de 9660, 5329 y 4652 en esas redes. Los límites locales se expresan en veh·s y los vecinales en veh·s por carril. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Estos valores corresponden a escalas de señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
 
 La comparación en las tres redes utiliza las semillas 61001--61024 para el entrenamiento y 71001--71005 para la evaluación. Las semillas de evaluación son comunes a las dos variantes y se mantienen separadas de las de entrenamiento.
 
