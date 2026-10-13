@@ -4,7 +4,7 @@
 
 El problema consiste en aprender políticas que controlen semáforos en una simulación multiagente. Cada agente observa el tránsito de su intersección y elige una fase permitida; la geometría de la red y su demanda determinan las condiciones de interacción. La evaluación considera la espera local de cada agente y, a nivel de red, la espera de los vehículos, la atención a la demanda y la distribución de la espera entre agentes. Se estudian implementaciones de \acrshort{acr-mappo} y una adaptación de \acrshort{acr-happo}, con \acrshort{acr-ippo} e \acrshort{acr-idqn} como referencias. La actualización secuencial de los actores de \acrshort{acr-happo} motiva su comparación con \acrshort{acr-mappo} en escenarios heterogéneos, como $4\times4\_H$ y la red parcial de Mendoza.
 
-El diseño contempla dos líneas de estudio. La primera compara el desempeño de los cuatro procedimientos mediante políticas entrenadas desde cero con los hiperparámetros seleccionados en la búsqueda. La segunda examina si incorporar información vecinal a la observación y a la recompensa (variante vecinal, C) mejora el desempeño frente a una formulación estrictamente local (variante local, A) en \acrshort{acr-mappo} bajo una configuración de aprendizaje fija. Esta última pregunta se refiere al contraste conjunto de ambos cambios (comparación A/C).
+El diseño contempla dos líneas de estudio. La primera compara el desempeño de los cuatro procedimientos mediante políticas entrenadas desde cero con los hiperparámetros seleccionados en la búsqueda. La segunda estudia, con \acrshort{acr-mappo} y una configuración de aprendizaje fija, el efecto conjunto de incorporar información vecinal a la observación y a la recompensa.
 
 El capítulo presenta primero los escenarios y el sistema de control, y luego los procedimientos experimentales. La búsqueda de hiperparámetros conduce a la selección de configuraciones, al entrenamiento final desde cero y a la evaluación de las políticas obtenidas, tanto por agente como a nivel de red.
 
@@ -17,42 +17,13 @@ Las dos fases de búsqueda abarcan los cuatro escenarios: la fase 1 explora domi
 
 La medida principal es la espera media observada hasta el cierre entre los vehículos insertados durante el intervalo de evaluación. Se interpreta junto con la cantidad de vehículos insertados ($N_{\mathrm{insertados}}$) y con tres proporciones de inserción y completitud: CR (\textit{Completion Rate}), completitud sobre vehículos cargados; IR (\textit{Insertion Rate}), inserción sobre vehículos cargados; y CI (\textit{Completion of Inserted Vehicles}), completitud sobre vehículos insertados. Se formalizan en la subsección \ref{sec:metricas_evidencia}. Las inserciones permiten detectar si una espera menor coincide con una reducción del tránsito atendido; se ha señalado que el tiempo medio de viaje puede ocultar congestión cuando los vehículos nuevos no consiguen ingresar a la red \cite{jiang2024xlight}.
 
-El capítulo reúne especificaciones del diseño y registros de las campañas. Los presupuestos y las combinaciones previstos describen el alcance planificado, mientras que las configuraciones y los registros permiten comprobar qué etapas se completaron. Los criterios de selección permiten que una combinación quede incompleta o sin candidato admisible.
+Las configuraciones y los registros permiten comprobar el cumplimiento de los presupuestos y de los criterios de selección. Solo las combinaciones con una configuración admisible pasan al entrenamiento final y a su evaluación.
 
 La comprobación operacional de Mendoza forma parte de la preparación del escenario y examina el funcionamiento de la red y la demanda con programas semafóricos de referencia, distinguiéndose de la búsqueda de políticas aprendidas. La Figura \ref{fig:flujo_metodologico_general} esquematiza las dependencias entre las etapas y sitúa los estudios A--E y A/C en una línea independiente de la selección final de hiperparámetros.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-  font=\sffamily\small,
-  >=Stealth,
-  stage/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners=3pt,
-    text width=4.0cm,minimum height=1.0cm,align=center,inner sep=6pt},
-  learning/.style={stage,fill=colInterfaz!18,draw=colInterfaz!70!black},
-  check/.style={stage,fill=catLilaSuave!18,draw=catLilaSuave!80!black},
-  output/.style={stage,fill=colAgente!14,draw=colAgente!75!black},
-  flow/.style={-{Stealth[length=2mm,width=1.5mm]},line width=.8pt,draw=black!70}
-]
-\node[stage] (setup) at (0,0) {Preparación de escenarios};
-\node[learning] (phaseone) at (0,-1.45) {Fase 1\\Búsqueda amplia};
-\node[learning] (phasetwo) at (0,-2.9) {Fase 2\\Búsqueda refinada};
-\node[check,text width=3.5cm] (syntheticselection) at (-2.45,-4.55)
-  {Selección\\redes sintéticas};
-\node[check,text width=3.5cm] (urbanselection) at (2.45,-4.55)
-  {Selección\\Mendoza};
-\node[output,text width=3.5cm] (syntheticevaluation) at (-2.45,-6.15)
-  {Reentrenamiento y evaluación\\redes sintéticas};
-\node[output,text width=3.5cm] (urbanevaluation) at (2.45,-6.15)
-  {Reentrenamiento y evaluación\\Mendoza};
-\node[output,text width=3.7cm] (cooperation) at (5.0,-1.55)
-  {Prueba A--E y comparación A/C\\redes sintéticas; configuración fija};
-\draw[flow] (setup.south) -- (phaseone.north);
-\draw[flow] (phaseone.south) -- (phasetwo.north);
-\draw[flow] (phasetwo.south west) -- (syntheticselection.north);
-\draw[flow] (phasetwo.south east) -- (urbanselection.north);
-\draw[flow] (syntheticselection.south) -- (syntheticevaluation.north);
-\draw[flow] (urbanselection.south) -- (urbanevaluation.north);
-\end{tikzpicture}
+\input{imagenes/metodologia_v2_flujo.tex}
 \caption{Flujo de las etapas experimentales. Las flechas muestran la dependencia entre las dos fases de búsqueda, la selección y el reentrenamiento. La prueba A--E y la comparación A/C se presentan en una línea independiente, con configuraciones fijas en redes sintéticas; sus resultados no determinan la selección de hiperparámetros para los modelos finales.}
 \label{fig:flujo_metodologico_general}
 \end{figure}
@@ -402,7 +373,7 @@ Con los agentes, las acciones y las señales de aprendizaje definidos, la \acrfu
 
 La búsqueda combina propuestas basadas en el historial con detenciones anticipadas para distribuir un presupuesto de entrenamiento limitado. En las búsquedas sintéticas, Optuna propone y registra configuraciones mediante el \acrfull{acr-tpe}, que usa los resultados anteriores para proponer nuevos valores \cite{akiba2019optuna,Bergstra2011TPE}; Ray Tune organiza la ejecución y el registro de los ensayos \cite{liaw2018tune}. El \acrfull{acr-asha} compara el rendimiento intermedio y detiene ensayos antes de completar su presupuesto \cite{li2020system}. El período de gracia fija el mínimo de iteraciones antes de considerar una detención; el factor de reducción determina la proporción de ensayos que continúan en cada nivel de comparación.
 
-Mendoza forma parte de ambas fases de búsqueda, con una parametrización urbana propia. Las tablas de dominios, presupuestos y semillas del apéndice describen las búsquedas sintéticas; los valores equivalentes de la búsqueda urbana no se especifican allí. Las ventanas y los criterios urbanos documentados se mantienen separados de esos valores. Completar la especificación de la búsqueda de Mendoza requiere sus configuraciones efectivas, sin extrapolar los rangos sintéticos.
+Mendoza forma parte de ambas fases de búsqueda, con parámetros propios del escenario urbano. Las tablas de dominios, presupuestos y semillas del apéndice corresponden a las búsquedas sintéticas. Los dominios, los presupuestos y las semillas de la búsqueda urbana requieren una definición propia en sus configuraciones. Las ventanas y los criterios de selección de Mendoza se describen por separado; los valores sintéticos no se extrapolan al escenario urbano.
 
 \subsection{Condiciones de simulación y semillas}
 \label{subsec:ciclo_episodico}
@@ -584,7 +555,7 @@ A nivel de red, la población evaluada es la \gls{cohorte_evaluacion} $\mathcal{
         \text{CI}_{\mathrm{operacional}} = \frac{N_{\mathrm{completados}}}{N_{\mathrm{insertados}}}.
         \label{eq:tasas_operacionales}
     \end{equation}
-    Si un denominador es cero, la tasa correspondiente queda indefinida. La identidad $\text{CR}_{\mathrm{ventana}}=\text{IR}\cdot\text{CI}_{\mathrm{operacional}}$ se cumple algebraicamente si los conteos corresponden a conjuntos anidados y sus denominadores son positivos; por sí sola no demuestra que los registros compartan una misma cohorte ni identifica el campo nativo de \acrshort{acr-sumo} del que provino cada conteo. El apéndice \ref{subsec:detalle_analisis_pareado} resume las limitaciones de esa reconstrucción.
+    Si un denominador es cero, la tasa correspondiente queda indefinida. La identidad $\text{CR}_{\mathrm{ventana}}=\text{IR}\cdot\text{CI}_{\mathrm{operacional}}$ se cumple algebraicamente si los conteos corresponden a conjuntos anidados y sus denominadores son positivos; por sí sola no demuestra que los registros compartan una misma cohorte ni identifica el campo nativo de \acrshort{acr-sumo} del que provino cada conteo. El apéndice \ref{sec:procedencia_mendoza} resume las limitaciones de esa reconstrucción.
     \item \textbf{Pérdida temporal media ($\bar{\ell}$):} media de \texttt{timeLoss} en segundos por vehículo sobre $\mathcal{V}_{\mathrm{ins}}$. Estima la diferencia respecto del tiempo de viaje ideal según la velocidad deseada del vehículo y el límite vial; excluye las detenciones programadas \cite{SUMO2026_TripInfo}.
 \end{itemize}
 
@@ -607,11 +578,11 @@ Cuando la salida lo permite, se registra el contador nativo \texttt{teleports} d
 \subsection{Entrenamiento y evaluación de los modelos finales}
 \label{sec:evaluacion_modelos_finales}
 
-El procedimiento prevé entrenar desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, independiente de las fases de búsqueda, selección y evaluación. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
+Se entrena desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, independiente de las fases de búsqueda, selección y evaluación. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
 
 El procedimiento fija para el reentrenamiento el presupuesto completo de iteraciones de la búsqueda que produjo la configuración seleccionada y toma el punto de control (\gls{checkpoint}) de la última iteración.
 
-El diseño prevé veinte simulaciones por combinación de algoritmo y escenario (320 en total si las dieciséis combinaciones cuentan con un candidato seleccionado y completan la evaluación). Las semillas aleatorias de \acrshort{acr-sumo} se registran antes de cada evaluación y son independientes de las etapas anteriores; no se fija un panel común entre algoritmos. En cada corrida se reconstruye el entorno con la semilla correspondiente y las políticas actúan sin exploración. El calentamiento se aplica cuando lo establece la configuración del escenario.
+Se realizan veinte simulaciones por cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. Para las dieciséis combinaciones del diseño, esto corresponde a 320 simulaciones. Cada resumen estadístico requiere veinte observaciones válidas por métrica. Las semillas aleatorias de \acrshort{acr-sumo} se registran antes de cada evaluación y son independientes de las etapas anteriores; no se fija un panel común entre algoritmos. En cada corrida se reconstruye el entorno con la semilla correspondiente y se comprueba que sea la utilizada por \acrshort{acr-sumo}. Los parámetros de las políticas permanecen fijos y estas actúan sin exploración. El calentamiento se aplica cuando lo establece la configuración del escenario.
 
 En Mendoza, la configuración documentada para la búsqueda, la selección y el entrenamiento final establece la ventana de dos horas del escenario v14: la simulación comienza en $t=1500$ s, incluye 300 s de calentamiento y el control se evalúa entre $t=1800$ y $t=9000$ s (06:30--08:30), según \path{nets/Mendoza/mendoza_marl_2h.sumocfg}. La configuración de evaluación final establece una jornada completa, de $t=0$ a $t=43200$ s (06:00--18:00), sin calentamiento, según \path{nets/Mendoza/mendoza_marl_12h.sumocfg}. Esta separación busca examinar el modelo reentrenado en un horizonte diario que incluye condiciones horarias distintas de las del recorte matutino.
 
@@ -661,7 +632,7 @@ La decisión favorable a C requiere cumplir conjuntamente tres condiciones:
 \begin{itemize}
     \item \textbf{Espera:} el límite superior del intervalo del 98,33\% para el efecto relativo debe ser menor que $-0,05$.
     \item \textbf{\acrshort{acr-ci}:} el límite inferior del intervalo del 98,33\% para la diferencia media pareada $\bar d_{\mathrm{CI}}$ debe superar $-0,005$, equivalente a una disminución de 0,5 puntos porcentuales en la tasa (ecuación \eqref{eq:tasa_completitud}).
-    \item \textbf{Teletransportes:} el contador nativo \texttt{teleports} de C no debe superar al de A en ninguna evaluación del mismo par. Si falta el contador de alguna variante, esta condición no puede evaluarse y no se emite una decisión favorable.
+    \item \textbf{Inicios de teletransporte:} el conteo de C no debe superar al de A en ninguna evaluación con la misma semilla dentro de un par. Se utiliza \texttt{teleport\_}\allowbreak\texttt{starts}, que acumula los vehículos que comienzan un teletransporte en cada paso de simulación, mediante \texttt{getStartingTeleport}\allowbreak\texttt{IDList}; cuenta eventos, no vehículos distintos. Si falta el contador de alguna variante, esta condición no puede evaluarse y no se emite una decisión favorable.
 \end{itemize}
 Los márgenes del 5\% y de 0,5 puntos porcentuales son decisiones prácticas de este análisis, no umbrales universales. El intervalo del 95\% se informa para describir la incertidumbre y examinar cómo cambia la interpretación al utilizar otro nivel de confianza.
 
@@ -689,6 +660,6 @@ Los trabajos se organizaron por combinación experimental y conservaron sus conf
 
 El contraste A/C conserva el alcance y la unidad de inferencia establecidos en las secciones \ref{sec:comparacion_local_vecinal} y \ref{sec:experimentos_evaluacion}. La planificación de su tamaño se basó en una diferencia absoluta y un intervalo del 95\%, mientras que el criterio de decisión utiliza el efecto relativo y un intervalo del 98,33\%; por tanto, aquella previsión no garantiza por sí sola la precisión de este último criterio.
 
-La búsqueda adaptativa explora regiones distintas y consume presupuestos efectivos desiguales; igualar iteraciones no iguala pasos de gradiente ni costo computacional entre algoritmos. Las arquitecturas seleccionadas tampoco permiten atribuir causalmente sus diferencias de desempeño. El marco \textit{Heterogeneous-Agent Mirror Learning} (HAML) ofrece garantías para \acrshort{acr-happo} bajo condiciones específicas, entre ellas una recompensa compartida. Como el entrenamiento aquí emplea recompensas individuales, esas garantías no se trasladan directamente a la formulación experimental; el apéndice \ref{sec:apendice_detalles_aprendizaje} precisa su alcance \cite{zhong2024heterogeneous}.
+La búsqueda adaptativa explora regiones distintas y consume presupuestos efectivos desiguales; igualar iteraciones no iguala pasos de gradiente ni costo computacional entre algoritmos. Las arquitecturas seleccionadas tampoco permiten atribuir causalmente sus diferencias de desempeño. El marco \acrshort{acr-haml} ofrece garantías para \acrshort{acr-happo} bajo condiciones específicas, entre ellas una recompensa compartida. Como el entrenamiento aquí emplea recompensas individuales, esas garantías no se trasladan directamente a la formulación experimental; el apéndice \ref{sec:apendice_detalles_aprendizaje} precisa su alcance \cite{zhong2024heterogeneous}.
 
 La comprobación de Mendoza se interpreta con los supuestos y límites de procedencia de la subsección \ref{subsec:escenario_mendoza}. Las conclusiones de ambas líneas experimentales se restringen a las condiciones simuladas, las poblaciones evaluadas y los presupuestos descritos.

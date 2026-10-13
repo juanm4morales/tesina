@@ -1,39 +1,30 @@
 \begingroup
 \setstretch{1}
-\hyphenpenalty=10000
 \begin{tikzpicture}[
   font=\sffamily\small,
   >=Stealth,
   stage/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners=3pt,
-    text width=4.2cm,minimum height=1.15cm,align=center,inner sep=6pt},
+    text width=4.0cm,minimum height=1.0cm,align=center,inner sep=6pt},
   learning/.style={stage,fill=colInterfaz!18,draw=colInterfaz!70!black},
   check/.style={stage,fill=catLilaSuave!18,draw=catLilaSuave!80!black},
   output/.style={stage,fill=colAgente!14,draw=colAgente!75!black},
   flow/.style={-{Stealth[length=2mm,width=1.5mm]},line width=.8pt,draw=black!70}
 ]
 \node[stage] (setup) at (0,0) {Preparación de escenarios};
-\node[learning] (phaseone) at (0,-1.45)
-  {Fase 1\\Búsqueda amplia};
-\node[learning] (screening) at (0,-2.9)
-  {Prueba A--E};
-\node[output] (ac) at (0,-4.35)
-  {Comparación A/C};
-\node[learning] (phasetwo) at (0,-5.8)
-  {Fase 2\\Búsqueda refinada};
-
-\node[check,text width=3.7cm] (syntheticselection) at (-3.2,-7.5)
-  {Selección sintética};
-\node[check,text width=3.7cm] (urbanselection) at (3.2,-7.5)
-  {Selección Mendoza};
-\node[output,text width=3.7cm] (syntheticevaluation) at (-3.2,-9.35)
-  {Entrenamiento\\y evaluación\\Sintéticas};
-\node[output,text width=3.7cm] (urbanevaluation) at (3.2,-9.35)
-  {Entrenamiento\\y evaluación\\Mendoza};
-
+\node[learning] (phaseone) at (0,-1.75) {Fase 1\\Búsqueda amplia};
+\node[learning] (phasetwo) at (0,-3.5) {Fase 2\\Búsqueda refinada};
+\node[check,text width=3.5cm] (syntheticselection) at (-2.45,-5.25)
+  {Selección\\redes sintéticas};
+\node[check,text width=3.5cm] (urbanselection) at (2.45,-5.25)
+  {Selección\\Mendoza};
+\node[output,text width=3.5cm] (syntheticevaluation) at (-2.45,-7.15)
+  {Reentrenamiento y evaluación\\redes sintéticas};
+\node[output,text width=3.5cm] (urbanevaluation) at (2.45,-7.15)
+  {Reentrenamiento y evaluación\\Mendoza};
+\node[output,text width=3.7cm] (cooperation) at (5.0,-1.55)
+  {Prueba A--E y comparación A/C};
 \draw[flow] (setup.south) -- (phaseone.north);
-\draw[flow] (phaseone.south) -- (screening.north);
-\draw[flow] (screening.south) -- (ac.north);
-\draw[flow] (ac.south) -- (phasetwo.north);
+\draw[flow] (phaseone.south) -- (phasetwo.north);
 \draw[flow] (phasetwo.south west) -- (syntheticselection.north);
 \draw[flow] (phasetwo.south east) -- (urbanselection.north);
 \draw[flow] (syntheticselection.south) -- (syntheticevaluation.north);
