@@ -18,12 +18,13 @@
 \node[check,text width=3.5cm] (urbanselection) at (2.45,-5.25)
   {Selección\\Mendoza};
 \node[output,text width=3.5cm] (syntheticevaluation) at (-2.45,-7.15)
-  {Reentrenamiento y evaluación\\redes sintéticas};
+  {Entrenamiento final\\y evaluación\\redes sintéticas};
 \node[output,text width=3.5cm] (urbanevaluation) at (2.45,-7.15)
-  {Reentrenamiento y evaluación\\Mendoza};
+  {Entrenamiento final\\y evaluación\\Mendoza};
 \node[output,text width=3.7cm] (cooperation) at (5.0,-1.55)
   {Prueba A--E y comparación A/C};
 \draw[flow] (setup.south) -- (phaseone.north);
+\draw[flow] (setup.east) -| (cooperation.north);
 \draw[flow] (phaseone.south) -- (phasetwo.north);
 \draw[flow] (phasetwo.south west) -- (syntheticselection.north);
 \draw[flow] (phasetwo.south east) -- (urbanselection.north);
