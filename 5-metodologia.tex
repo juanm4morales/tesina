@@ -15,7 +15,7 @@ El capítulo describe los escenarios y el sistema de control. Luego presenta la 
 \label{sec:tarea_investigacion}
 \label{sec:enfoque_diseno}
 
-Las dos fases de búsqueda abarcan los cuatro escenarios: la fase 1 explora dominios amplios y la fase 2 los refina a partir de los resultados del mismo escenario. La búsqueda aporta configuraciones candidatas; la selección determina cuáles son admisibles para el entrenamiento final. Los modelos obtenidos se evalúan por el desempeño de cada agente y por el comportamiento global de la red.
+Las dos fases de búsqueda abarcan los cuatro escenarios: la fase 1 explora dominios amplios y la fase 2 los refina a partir de los resultados del mismo escenario.
 
 En las redes sintéticas, entre ambas fases de búsqueda se desarrolla la segunda línea, que mantiene fija la configuración de aprendizaje en cada campaña. La prueba A--E examina cinco formulaciones locales y vecinales de observación y recompensa con \acrshort{acr-mappo}; la comparación A/C contrasta las formulaciones local (A) y vecinal (C) en las tres redes sintéticas. Sus protocolos se detallan en las secciones \ref{subsec:screening_vecinal} y \ref{sec:comparacion_local_vecinal}, respectivamente.
 
@@ -129,11 +129,11 @@ Flujo solicitado (vehículos por hora) & 3.260 & 7.087 & 7.202 \\
 \end{tabular}
 \end{table}
 
-El corredor $3\times1$ consta de tres cruces en línea, identificados como B1, C1 y D1. La demanda concentra el 75\% del flujo solicitado en los dos sentidos de la arteria y distribuye el resto entre los pares válidos. Esta configuración permite estudiar la propagación longitudinal de \glspl{cola} y la coordinación sobre las corrientes predominantes; las asignaciones por par se presentan en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+El corredor $3\times1$ consta de tres cruces en línea, identificados como B1, C1 y D1. La demanda concentra el 75\% del flujo solicitado en los dos sentidos de la arteria y distribuye el resto entre los pares válidos. Esta configuración permite estudiar la propagación longitudinal de \glspl{cola} y la coordinación sobre las corrientes predominantes.
 
-La red $3\times3$ dispone de nueve cruces en una cuadrícula regular. Frente al corredor, incorpora conexiones en dos direcciones y permite estudiar la coordinación bidimensional con tamaños locales de observación y acción uniformes. La distribución de demanda por par se conserva en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+La red $3\times3$ dispone de nueve cruces en una cuadrícula regular. Frente al corredor, incorpora conexiones en dos direcciones y permite estudiar la coordinación bidimensional con tamaños locales de observación y acción uniformes.
 
-La red $4\times4\_H$ dispone de dieciséis cruces sobre una cuadrícula con capacidad y conectividad heterogéneas. La fila 2 es una arteria de tres carriles por sentido; el sector A1--B1--C1 tiene un carril por sentido. La columna C presenta cuatro carriles hacia el sur y dos hacia el norte, y la columna D es de sentido único. C1 tiene tres acciones seleccionables, mientras que los demás cruces tienen dos. Así, el escenario incorpora diferencias de capacidad, conectividad y tamaño de observación y acción. Las vías y asignaciones \acrshort{acr-od} específicas se describen en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+La red $4\times4\_H$ dispone de dieciséis cruces sobre una cuadrícula con capacidad y conectividad heterogéneas. La fila 2 es una arteria de tres carriles por sentido; el sector A1--B1--C1 tiene un carril por sentido. La columna C presenta cuatro carriles hacia el sur y dos hacia el norte, y la columna D es de sentido único. C1 tiene tres acciones seleccionables, mientras que los demás cruces tienen dos. Así, el escenario incorpora diferencias de capacidad, conectividad y tamaño de observación y acción. Las vías y asignaciones \acrshort{acr-od} de las tres redes se detallan en el apéndice \ref{subsec:detalles_redes_sinteticas}.
 
 \FloatBarrier
 
@@ -173,7 +173,7 @@ Como la cámara 169 queda fuera del límite modelado, el ingreso que representa 
 
 Tras convertir el trazado de \acrshort{acr-osm}, la revisión con imágenes satelitales y vistas de calle permitió corregir sentidos de circulación, conectividad, carriles y restricciones de giro, y habilitar accesos laterales en Catamarca, Buenos Aires y Leandro N. Alem. Entre los cambios se incluyeron la prohibición de girar a la izquierda desde Av. General San Martín hacia el sur por Av. Colón y la conservación del giro semaforizado de calle Perú hacia Av. Las Heras.
 
-Los programas de señales incluidos en el archivo de red se utilizan como referencias de simulación dentro de una aproximación topológica del área: 17 son estáticos y 56 accionados. Las referencias conservan esos programas; sus duraciones nominales se describen en el apéndice \ref{sec:parametros_sumo}.
+Los programas de señales incluidos en el archivo de red se utilizan como referencias de simulación dentro de una aproximación topológica del área: 17 son estáticos y 56 accionados. Sus duraciones nominales se describen en el apéndice \ref{sec:parametros_sumo}.
 
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
@@ -221,7 +221,7 @@ Los registros consultados contienen conteos de carga, inserción y viajes comple
 
 El informe documental del escenario canónico indica cero teletransportes; las salidas de simulación consultadas no conservan un contador explícito que permita verificar ese dato de forma independiente. La procedencia de los registros y sus configuraciones se documentan en el apéndice \ref{sec:parametros_sumo}.
 
-\paragraph{Contraste con el conteo observado.} El criterio \acrfull{acr-geh} compara el flujo horario nominal solicitado desde la zona 28, asociada al acceso representado ($V_{\mathrm{mod}}$), con el flujo horario del perfil de la cámara 169 ($V_{\mathrm{obs}}$); ambos se expresan en vehículos por hora \cite{ite_handbook}. Su fórmula se conserva en la ecuación \eqref{eq:geh} del apéndice. Como el conteo de la cámara 169 contribuyó a construir el perfil, esta comparación no constituye una validación independiente de la demanda urbana.
+\paragraph{Contraste con el conteo observado.} El estadístico \acrshort{acr-geh}, denominado así por las iniciales de Geoffrey E. Havers, compara el flujo horario nominal solicitado desde la zona 28, asociada al acceso representado ($V_{\mathrm{mod}}$), con el flujo horario del perfil de la cámara 169 ($V_{\mathrm{obs}}$); ambos se expresan en vehículos por hora \cite{TfL2021TrafficModelling}. Su fórmula se presenta en la ecuación \eqref{eq:geh} del apéndice. Como el conteo de la cámara 169 contribuyó a construir el perfil, esta comparación no constituye una validación independiente de la demanda urbana.
 
 \section{Sistema de control multiagente}
 \label{sec:arquitectura_entorno_agentes}
@@ -308,9 +308,7 @@ Durante el verde mínimo y la transición amarilla no se admite una nueva solici
 \subsubsection{Recompensas locales y vecinales}
 \label{subsec:recompensa_coordinacion}
 
-La recompensa se calcula a partir del cambio de la espera acumulada entre decisiones. Se define primero la señal de la propia intersección y luego la contribución de sus vecinos, utilizada en la variante vecinal.
-
-La señal local $L_i^{(t)}$ compara la suma $W_i^{(t)}$ definida para la observación entre dos pasos de decisión consecutivos. La ecuación \eqref{eq:recompensa_local} formaliza esta diferencia, en veh·s: la recompensa es positiva cuando la suma disminuye.
+La recompensa se calcula a partir del cambio de la espera acumulada entre decisiones. La señal local $L_i^{(t)}$ compara la suma $W_i^{(t)}$ definida para la observación entre dos pasos de decisión consecutivos. La ecuación \eqref{eq:recompensa_local} formaliza esta diferencia, en veh·s: la recompensa es positiva cuando la suma disminuye.
 \begin{equation}
 L_i^{(t)} = W_i^{(t-1)} - W_i^{(t)}
 \label{eq:recompensa_local}
@@ -368,9 +366,9 @@ En \acrshort{acr-mappo}, las recompensas individuales y las estimaciones del cr�
 
 La implementación de \acrshort{acr-happo} actualiza primero el crítico y después los actores, uno por uno, sobre el lote completo. Utiliza ventajas individuales y un paso de gradiente por actor y \gls{epoca_entrenamiento}; tras cada actualización repondera los factores de los actores restantes. El apéndice \ref{sec:apendice_detalles_aprendizaje} detalla estas operaciones y sus diferencias con la formulación teórica de la sección \ref{subsec:happo}.
 
-En \acrshort{acr-mappo} y \acrshort{acr-happo}, la pérdida del crítico limita a una cota el error cuadrático medio entre agentes para cada muestra y luego promedia las muestras válidas. A diferencia del recorte convencional de valores de \acrshort{acr-ppo}, esta operación satura la pérdida; por encima de la cota, esa muestra deja de aportar gradiente al crítico. La fórmula se presenta en la ecuación \eqref{eq:perdida_valor_marl_tlc} del apéndice.
+En \acrshort{acr-mappo} y \acrshort{acr-happo}, la pérdida del crítico limita a una cota el error cuadrático medio entre agentes para cada muestra y luego promedia las muestras válidas. A diferencia del recorte convencional de valores de \acrshort{acr-ppo}, esta operación satura la pérdida. La fórmula se presenta en la ecuación \eqref{eq:perdida_valor_marl_tlc} del apéndice.
 
-Como el error se promedia entre agentes antes de aplicar la cota, una muestra saturada deja de contribuir al ajuste de todas las salidas del crítico. Esto puede afectar las estimaciones de valor y las ventajas que guían a los actores. Su impacto efectivo requiere conocer la frecuencia de saturación, que no se cuantifica en los registros descritos aquí.
+Por encima de la cota, la muestra deja de aportar gradiente a todas las salidas del crítico, ya que el error se promedia entre agentes antes de aplicar ese límite. Esto puede afectar las estimaciones de valor y las ventajas que guían a los actores. Su impacto efectivo requiere conocer la frecuencia de saturación, que no se cuantifica en los registros descritos aquí.
 
 \begin{figure}[H]\centering
 \input{imagenes/metodologia_controladores.tex}
@@ -384,9 +382,9 @@ Como el error se promedia entre agentes antes de aplicar la cota, una muestra sa
 
 Con los agentes, las acciones y las señales de aprendizaje definidos, la \acrfull{acr-hpo} explora combinaciones de valores que regulan el entrenamiento y produce configuraciones candidatas para comparar los algoritmos. El espacio de búsqueda fija los rangos y las opciones permitidos. Cada \gls{ensayo_hpo} entrena una configuración propuesta; el presupuesto limita la cantidad de ensayos y su duración máxima, medida en \glspl{iteracion_entrenamiento}. Una iteración puede incluir varios episodios o fragmentos y no equivale necesariamente a una simulación completa.
 
-La búsqueda combina propuestas basadas en el historial con detenciones anticipadas para distribuir un presupuesto de entrenamiento limitado. En las búsquedas, Optuna propone y registra configuraciones mediante el \acrfull{acr-tpe}, que usa los resultados anteriores para proponer nuevos valores \cite{akiba2019optuna,Bergstra2011TPE}; Ray Tune organiza la ejecución y el registro de los ensayos \cite{liaw2018tune}. El \acrfull{acr-asha} compara el rendimiento intermedio y detiene ensayos antes de completar su presupuesto \cite{li2020system}. El período de gracia fija el mínimo de iteraciones antes de considerar una detención; el factor de reducción determina la proporción de ensayos que continúan en cada nivel de comparación.
+La búsqueda combina propuestas de hiperparámetros con detenciones anticipadas para distribuir un presupuesto de entrenamiento limitado. Optuna propone y registra configuraciones mediante el \acrfull{acr-tpe}, que usa los resultados anteriores para proponer nuevos valores \cite{akiba2019optuna,Bergstra2011TPE}; Ray Tune organiza la ejecución y el registro de los ensayos \cite{liaw2018tune}. El \acrfull{acr-asha} compara el rendimiento intermedio y detiene ensayos antes de completar su presupuesto \cite{li2020system}. El período de gracia fija el mínimo de iteraciones antes de considerar una detención; el factor de reducción determina la proporción de ensayos que continúan en cada nivel de comparación.
 
-En la fase 1, los cuatro escenarios usan los mismos dominios iniciales por algoritmo y los mismos límites de búsqueda, salvo por el peso de la recompensa vecinal en Mendoza. La fase 1 de Mendoza se desarrolla después de A--E y A/C y fija la observación local y \(\rho_{\mathrm{coop}}=0\). Algunas condiciones propias de cada red, como el límite de escala del codificador, se establecen por escenario. En la fase 2, cada red se refina a partir de sus propios resultados; los dominios sintéticos y las reglas de refinamiento urbano se presentan por separado, en esta sección y en el apéndice \ref{subsec:protocolo_urbano_mendoza}, respectivamente.
+En la fase 1, los cuatro escenarios usan los mismos dominios iniciales por algoritmo y los mismos límites de búsqueda, salvo por el peso de la recompensa vecinal en Mendoza. Algunas condiciones propias de cada red, como el límite de escala del codificador, se establecen por escenario. En la fase 2, cada red se refina a partir de sus propios resultados; los dominios sintéticos y las condiciones urbanas se presentan por separado, en esta sección y en el apéndice \ref{subsec:protocolo_urbano_mendoza}, respectivamente.
 
 \subsection{Condiciones de simulación y semillas}
 \label{subsec:ciclo_episodico}
@@ -446,29 +444,31 @@ La fase 1 realiza una exploración amplia en las cuatro redes. En cada escenario
 
 La fase 1 combina los cuatro algoritmos con dos arquitecturas: h128 y h256, con dos capas ocultas de 128 y 256 unidades, respectivamente. Cada combinación de algoritmo, red y arquitectura constituye un \gls{estudio_hpo}; en total, se definen 32 estudios. En cada escenario se asignan 100 propuestas iniciales por estudio, ampliables hasta 150, y un máximo de 40 iteraciones por ensayo. La duración efectiva de cada ensayo depende de las detenciones anticipadas de \acrshort{acr-asha}.
 
-En la fase 1, \acrshort{acr-asha} especifica una gracia de 10 iteraciones y un factor de reducción de 4. Cada diez iteraciones se programa un episodio de seguimiento diagnóstico. La arquitectura se mantiene fija dentro de cada estudio para evitar que RLlib altere su configuración al almacenarla. Estos resultados orientan los dominios y las arquitecturas propuestas para fase 2 en el mismo escenario.
+En la fase 1, \acrshort{acr-asha} especifica una gracia de 10 iteraciones y un factor de reducción de 4. Cada diez iteraciones se programa un episodio de seguimiento diagnóstico. La arquitectura se mantiene fija dentro de cada estudio para evitar que RLlib altere su configuración al almacenarla.
 
 En el espacio inicial de fase 1, los métodos basados en \acrshort{acr-ppo} exploran la tasa de aprendizaje, la amplitud de las actualizaciones, la estimación de ventajas, la exploración y la reutilización de experiencias. Para \acrshort{acr-idqn} se incluyen además el inicio del aprendizaje, la actualización de la red objetivo y la programación de la exploración. Ambos espacios varían los niveles del codificador; en las redes sintéticas también se explora el peso de la recompensa vecinal. El descuento se fija en $\gamma=0{,}99$ y el límite de escala del codificador de espera acumulada por carril se calibra por escenario. Las distribuciones loguniformes permiten explorar varias escalas de magnitudes positivas; los rangos completos, las alternativas y los factores fijos figuran en las Tablas \ref{tab:dominios_fase1_ppo}, \ref{tab:dominios_fase1_idqn} y \ref{tab:factores_fase1} del apéndice \ref{subsec:espacio_busqueda_fase1}.
 
 La fase 1 de Mendoza comienza después de la prueba A--E y de la comparación A/C y fija la recompensa local, con $\rho_{\mathrm{coop}}=0$, y la observación local con máscara de acciones. El contraste entre las formulaciones local y vecinal orienta esta elección; sus variantes modifican conjuntamente observación y recompensa. Los demás dominios iniciales se conservan.
 
-La literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la exploración de configuraciones y la separación de las semillas de búsqueda y evaluación \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}. Los rangos numéricos y los presupuestos utilizados son decisiones del diseño experimental.
+La literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la exploración de configuraciones y la separación de las semillas de búsqueda y evaluación \cite{Eimer2023HPO}. Los rangos numéricos y los presupuestos utilizados son decisiones del diseño experimental.
 
 En la implementación documentada para la búsqueda sintética, \acrshort{acr-happo} procesa el lote completo por actor; por ello, la clave de tamaño del minilote registrada no determina una subdivisión efectiva del lote (subsección \ref{subsec:mecanismos_algoritmos}). Cada configuración sintética utiliza una sola semilla de entrenamiento por escenario.
 
 \subsection[Fase 2: búsqueda con dominios reducidos]{Fase 2: búsqueda con dominios reducidos}
 \label{subsec:hpo_phase2}
 
-La fase 2 refina la búsqueda en los cuatro escenarios a partir de los resultados de fase 1 del mismo escenario. En las redes sintéticas, la búsqueda se concentra en regiones asociadas con mejores puntuaciones y conserva un margen para explorar fuera de ellas. Para cada combinación de algoritmo, escenario sintético y arquitectura, ordena por el objetivo los ensayos de fase 1 que completaron su presupuesto sin errores y con puntuaciones finitas. En parámetros numéricos, parte del intervalo de los diez mejores y lo amplía; mantiene el dominio original cuando esos ensayos están dispersos o próximos a sus límites. Las reglas para variables numéricas y categóricas, así como los dominios sintéticos resultantes, se documentan en el apéndice \ref{subsec:dominios_refinados}.
+La fase 2 refina la búsqueda en los cuatro escenarios a partir de los resultados de fase 1 del mismo escenario. La búsqueda se concentra en regiones asociadas con mejores puntuaciones y conserva un margen para explorar fuera de ellas.
+
+Para cada combinación de algoritmo, escenario y arquitectura, el refinamiento requiere al menos diez ensayos de fase 1 que hayan completado su presupuesto sin errores, pertenezcan al dominio inicial y tengan puntuaciones finitas. Los ordena por el objetivo y, en caso de empate, por identificador. En parámetros numéricos, parte del intervalo de los diez mejores y lo amplía; mantiene el dominio original cuando esos ensayos están dispersos o próximos a sus límites. Las reglas comunes de refinamiento y los dominios sintéticos resultantes se documentan en el apéndice \ref{subsec:dominios_refinados}.
 
 En la búsqueda refinada sintética, esta reducción orienta una nueva exploración con recompensa local ($\rho_{\mathrm{coop}}=0$) y máscara de acciones; las puntuaciones de fase 1 no se incorporan como resultados de fase 2. La elección de recompensa local responde a la lectura exploratoria de que valores vecinales altos podían ser desfavorables, sin demostrar un peso óptimo ni aislar su efecto. Como también cambia la recompensa, los dominios heredados constituyen una orientación exploratoria: las configuraciones favorables en fase 1 no tienen por qué serlo bajo la señal local.
 
 \Needspace{3\baselineskip}
-En las redes sintéticas, la fase 2 utiliza hasta 100 propuestas por combinación de algoritmo y escenario, con un máximo de 60 iteraciones por ensayo. \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; el seguimiento diagnóstico se realiza cada 15 iteraciones. Las arquitecturas, las semillas y las condiciones de ejecución figuran en el apéndice \ref{subsec:protocolo_refinado_apendice}.
+En los cuatro escenarios, la fase 2 utiliza hasta 100 propuestas por combinación de algoritmo y escenario, con un máximo de 60 iteraciones por ensayo. \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; el seguimiento diagnóstico se realiza cada 15 iteraciones y se ejecuta un ensayo a la vez por combinación. Las arquitecturas y las semillas sintéticas figuran en el apéndice \ref{subsec:protocolo_refinado_apendice}; las condiciones urbanas se describen en el apéndice \ref{subsec:protocolo_urbano_mendoza}.
 
-La fase 1 también aporta una configuración de referencia como punto inicial de la búsqueda refinada sintética: se construye con las medianas de los parámetros numéricos y las modas de los categóricos de los cinco mejores ensayos. Con estos valores se inicia un entrenamiento desde cero bajo la señal local; no se transfieren estados de modelos ni de búsqueda. Las reglas se detallan en el apéndice \ref{subsec:dominios_refinados}.
+La fase 1 también aporta una configuración de referencia como punto inicial de la búsqueda refinada: se construye con las medianas de los parámetros numéricos y las modas de los categóricos de los cinco mejores ensayos. Con estos valores se inicia un entrenamiento desde cero bajo la señal local; no se transfieren estados de modelos ni de búsqueda. Las reglas se detallan en el apéndice \ref{subsec:dominios_refinados}.
 
-En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rho_{\mathrm{coop}}=0$, y deriva sus dominios exclusivamente de los ensayos completos de la fase 1 de esa red. Las reglas específicas de refinamiento se presentan en el apéndice \ref{subsec:protocolo_urbano_mendoza}.
+En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rho_{\mathrm{coop}}=0$, y deriva sus dominios exclusivamente de los ensayos completos de la fase 1 de esa red. Las condiciones de simulación y las semillas urbanas se describen en el apéndice \ref{subsec:protocolo_urbano_mendoza}.
 
 La Figura \ref{fig:protocolo_informado_v2} resume el paso de la exploración amplia a la búsqueda con dominios reducidos.
 \begin{figure}[H]\centering
@@ -514,9 +514,9 @@ Entre las configuraciones admisibles se elige la de menor media aritmética de l
 \label{sec:cooperacion_vecinal}
 \label{sec:comparacion_local_vecinal}
 
-Esta línea examina si una formulación que incorpora información de los vecinos y una contribución ponderada de su señal de recompensa mejora el desempeño respecto de la formulación local. La campaña comparó A y C de \acrshort{acr-mappo} con una configuración de aprendizaje transferida y fija. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno.
+La campaña comparó A y C de \acrshort{acr-mappo} con una configuración de aprendizaje transferida y fija. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Las observaciones y las recompensas de ambas variantes se definen en la subsección \ref{sec:formulacion_dec_pomdp}. Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno.
 
-El procedimiento comprende una prueba preliminar de cinco formulaciones locales y vecinales de observación y recompensa, A--E, y una comparación ampliada de las formulaciones local A y vecinal C en las tres redes sintéticas, ambas realizadas con \acrshort{acr-mappo}. La primera permite examinar alternativas; la segunda contrasta las dos variantes bajo condiciones comunes de entrenamiento y evaluación.
+La comparación ampliada de A y C en las tres redes sintéticas estuvo precedida por una prueba preliminar de cinco formulaciones, A--E.
 
 \subsection{Prueba preliminar de formulaciones}
 \label{subsec:screening_vecinal}
@@ -542,8 +542,6 @@ Un resultado desfavorable no se clasificó como fallo técnico si la ejecución 
 \label{subsec:cooperacion_multiescenario}
 
 La comparación ampliada utilizó \acrshort{acr-mappo} con arquitectura h128 y los hiperparámetros de una configuración histórica de $4\times4\_H$, documentada en el apéndice \ref{subsec:receta_ac_apendice}. Se aplicaron estos valores a las tres redes sin ajustes por variante o escenario, para mantener una configuración de aprendizaje común. C incorpora una coordenada codificada por cada vecino directo; por eso, su primera capa tiene más pesos que la de A. El contraste caracteriza las variantes bajo esa configuración transferida, sin establecer qué desempeño alcanzarían con búsquedas propias.
-
-Las observaciones y las recompensas de ambas variantes se definen en la subsección \ref{sec:formulacion_dec_pomdp}.
 
 Cada \gls{parpoliticas} reúne una política local y una vecinal entrenadas con la misma semilla. Se entrenaron 24 pares por red para examinar la variación del contraste entre entrenamientos. La planificación de este tamaño, basada en la dispersión histórica de las diferencias, se detalla en el apéndice \ref{subsec:receta_ac_apendice}.
 
