@@ -354,15 +354,13 @@ Comparación: vecinal & Vecinal & Local y promedio vecinal normalizado por carri
 
 \subsection{Agentes y algoritmos de aprendizaje}
 \label{sec:implementacion_algoritmos}
+\label{subsec:mecanismos_algoritmos}
 
 RLlib vincula un módulo de aprendizaje con cada agente. Los actores de los métodos basados en \acrshort{acr-ppo} tienen parámetros propios, sin compartirlos entre agentes. \acrshort{acr-mappo} y \acrshort{acr-happo} utilizan un \gls{critico} centralizado durante el entrenamiento. El crítico reúne en un único vector las observaciones definidas para los agentes de una simulación y produce un valor para cada uno; en la variante vecinal de \acrshort{acr-mappo}, esas observaciones incluyen información de los vecinos. La entrada no es el \gls{estado} físico completo de la red de tráfico.
 
 El uso de un crítico centralizado en ambos algoritmos no exige que sus arquitecturas sean idénticas. Esta implementación sigue el paradigma \acrshort{acr-ctde} presentado en el marco teórico (Figura \ref{fig:ctde_architecture}).
 
 En \acrshort{acr-idqn}, la memoria de experiencias es un búfer priorizado: asigna distinta prioridad a las \glspl{transicion_aprendizaje} al seleccionarlas para aprender. La Figura \ref{fig:informacion_controladores} reúne los cuatro algoritmos y distingue la información utilizada durante el entrenamiento y la ejecución.
-
-\subsubsection{Actualización de los actores y del crítico}
-\label{subsec:mecanismos_algoritmos}
 
 En \acrshort{acr-mappo}, las recompensas individuales y las estimaciones del crítico permiten calcular objetivos de valor y ventajas por agente. Las ventajas se estandarizan por agente antes de actualizar cada actor.
 
@@ -392,8 +390,9 @@ En la fase 1, los cuatro escenarios usan los mismos dominios iniciales por algor
 
 En la fase 2, los dominios de cada escenario se refinan a partir de los resultados de su fase 1. Los dominios sintéticos y las condiciones urbanas se presentan por separado, en esta sección y en el apéndice \ref{subsec:protocolo_urbano_mendoza}, respectivamente.
 
-\subsection{Condiciones de simulación y semillas}
+\subsection{Condiciones de simulación y entrenamiento}
 \label{subsec:ciclo_episodico}
+\label{subsec:seguimiento_diagnostico}
 
 Los horizontes de simulación dependen de la campaña y del escenario; la Tabla \ref{tab:horizontes_simulacion} resume el calentamiento y la duración del control. Las correspondencias horarias de Mendoza se definieron en la subsección \ref{subsubsec:mendoza_validacion_operacional}.
 
@@ -416,6 +415,9 @@ En las campañas de aprendizaje, el agente puede solicitar una fase cada cinco s
 
 En las búsquedas sintéticas, la semilla de aprendizaje controla las fuentes aleatorias del algoritmo y la inicialización de sus redes; la de \acrshort{acr-sumo}, la dinámica estocástica del simulador; la de rutas, la selección y generación de itinerarios; y la de \acrshort{acr-tpe}, la secuencia de propuestas. El código de fase 1 define la semilla de \acrshort{acr-tpe} como independiente de la de aprendizaje. Las semillas de entrenamiento, \acrshort{acr-sumo} y rutas de fase 1 figuran en la Tabla \ref{tab:semillas_fase1}; las de fase 2, en la Tabla \ref{tab:busquedas_v2}, y las de A/C, en el apéndice \ref{subsec:calibraciones_cooperacion}. La selección urbana y la evaluación final utilizan paneles de semillas independientes, descritos en sus respectivas subsecciones.
 
+En los episodios de seguimiento, la política actúa sin muestrear acciones: \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} eligen la fase permitida con mayor probabilidad; \acrshort{acr-idqn} selecciona la fase permitida con mayor valor estimado. Estos registros permiten observar el comportamiento durante el entrenamiento, pero no constituyen una evaluación independiente. Su frecuencia se especifica para cada fase de búsqueda; la selección de configuraciones utiliza los criterios de la subsección \ref{subsec:seleccion_phase2}.
+
+\Needspace{8\baselineskip}
 \subsection{Función objetivo de la búsqueda}
 \label{subsec:objetivo_busqueda}
 
@@ -437,11 +439,6 @@ J_r&=w_r+T_r,\qquad T_r=\begin{cases}
 \label{eq:objetivo_estable_espera}
 \end{equation}
 Las magnitudes $w_r$, $X_r$, $T_r$ y $J_r$ se expresan en segundos por vehículo. La búsqueda minimiza $J_r$; la recompensa del agente se calcula por separado. La longitud del historial y la fracción de aumentos retenidos son elecciones de este criterio de ordenamiento.
-
-\subsection{Seguimiento diagnóstico del entrenamiento}
-\label{subsec:seguimiento_diagnostico}
-
-En los episodios de seguimiento, la política actúa sin muestrear acciones: \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} eligen la fase permitida con mayor probabilidad; \acrshort{acr-idqn} selecciona la fase permitida con mayor valor estimado. Estos registros permiten observar el comportamiento durante el entrenamiento, pero no constituyen una evaluación independiente. Su frecuencia se especifica para cada fase de búsqueda; la selección de configuraciones utiliza los criterios de la subsección \ref{subsec:seleccion_phase2}.
 
 \subsection[Fase 1: búsqueda amplia]{Fase 1: búsqueda amplia}
 \label{subsec:hpo_phase1}
