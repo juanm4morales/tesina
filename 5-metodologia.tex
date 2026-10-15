@@ -529,12 +529,7 @@ El procedimiento comprende una prueba preliminar de cinco formulaciones locales 
 
 Se examinaron cinco formulaciones en la red $4\times4\_H$, con \acrshort{acr-mappo} de arquitectura h128 y tres semillas de entrenamiento, durante veinte iteraciones por política. Cada episodio duró 1800 segundos, después de 300 segundos de calentamiento. Se aplicaron las mismas semillas a las cinco formulaciones; las repeticiones en el entorno local y en el clúster de cómputo Toko (grupo de servidores que ejecuta trabajos en paralelo) no se contaron como semillas independientes adicionales.
 
-\begingroup
-\clubpenalty=10000
-\widowpenalty=10000
 La Tabla \ref{tab:variantes_vecinales} identifica las formulaciones como A--E. B, C y D fijaron $\rho_{\mathrm{coop}}=0{,}1$: la prueba comparó formulaciones y no realizó un barrido del coeficiente. C y D comparten recompensa y difieren en la observación, mientras que E utiliza otra recompensa local. La campaña multiescenario documentada se limitó a A y C. No se dispone de un criterio previo documentado para elegir C entre las variantes vecinales; por ello, esa elección no establece que C sea la mejor formulación vecinal.
-\par
-\endgroup
 
 \begin{table}[H]\centering\small
 \caption{Variantes examinadas en la prueba preliminar.}\label{tab:variantes_vecinales}
@@ -560,12 +555,7 @@ C incorpora una coordenada codificada por cada vecino directo, por lo que su pri
 \par
 \endgroup
 
-\begingroup
-\clubpenalty=10000
-\widowpenalty=10000
 Cada \gls{parpoliticas} reúne una política local y una vecinal entrenadas con la misma semilla. Se entrenaron 24 pares por red para cuantificar la variación del contraste entre entrenamientos. La planificación de este tamaño, basada en la dispersión histórica de las diferencias, se detalla en el apéndice \ref{subsec:receta_ac_apendice}; es una previsión, no una garantía de precisión.
-\par
-\endgroup
 
 Cada política se entrenó durante 40 iteraciones y se evaluó con el modelo de la última, elegido de antemano (subsección \ref{sec:evaluacion_variantes_mappo}).
 
@@ -703,12 +693,7 @@ Para las evaluaciones urbanas se utiliza el archivo congelado \path{nets/Mendoza
 
 El protocolo requiere registrar por simulación las inserciones, la completitud de la cohorte insertada y los teletransportes. Como el modelo final puede diferir del comportamiento observado durante la selección, estos diagnósticos se informan de manera independiente y no operan como filtros retroactivos.
 
-\begingroup
-\clubpenalty=10000
-\widowpenalty=10000
 Las medidas de viajes con denominador nulo quedan indefinidas; si falta una de las veinte observaciones válidas de una métrica, no se calcula su resumen para esa combinación. Un cierre anticipado se conserva en el registro y no cuenta como un horizonte completo. Las repeticiones por un fallo técnico conservan el intento original y la semilla asignada.
-\par
-\endgroup
 
 Para cada métrica, la media da el mismo peso a las veinte simulaciones y la desviación estándar muestral utiliza el divisor $20-1=19$. El resumen se calcula por separado para cada agente y para cada medida global de red; las métricas globales de viajes se conservan diferenciadas de la señal local por agente.
 
@@ -730,12 +715,7 @@ Los trabajos se organizaron por combinación experimental y conservaron sus conf
 
 \subsection{Limitaciones del diseño y alcance de la inferencia}
 
-\begingroup
-\clubpenalty=10000
-\widowpenalty=10000
 El contraste A/C conserva el alcance y la unidad de inferencia establecidos en las secciones \ref{sec:comparacion_local_vecinal} y \ref{sec:experimentos_evaluacion}. La planificación de su tamaño se basó en una diferencia absoluta y un intervalo del 95\%, mientras que el criterio de decisión utiliza el efecto relativo y un intervalo del 98,33\%; por tanto, aquella previsión no garantiza por sí sola la precisión de este último criterio.
-\par
-\endgroup
 
 \Needspace{4\baselineskip}
 La búsqueda adaptativa explora regiones distintas y consume presupuestos efectivos desiguales; igualar iteraciones no iguala pasos de gradiente ni costo computacional entre algoritmos. Las arquitecturas seleccionadas tampoco permiten atribuir causalmente sus diferencias de desempeño.
