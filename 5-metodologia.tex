@@ -21,7 +21,7 @@ En las redes sintéticas, entre ambas fases de búsqueda se desarrolla la segund
 
 La medida principal es la espera media observada hasta el cierre entre los vehículos que ingresan durante la ventana de evaluación, incluidos los viajes inconclusos. Se interpreta junto con la cantidad de vehículos insertados y la proporción que llega a destino. Así se examina si una espera menor coincide con una reducción del tránsito atendido; se ha señalado que el tiempo medio de viaje puede ocultar congestión cuando los vehículos nuevos no consiguen ingresar a la red \cite{jiang2024xlight}. Las métricas y las poblaciones que utilizan se precisan en la subsección \ref{sec:metricas_evidencia}.
 
-La comprobación operacional de Mendoza forma parte de la preparación del escenario: examina el funcionamiento de la red y la demanda con programas semafóricos de referencia, sin evaluar políticas aprendidas. La Figura \ref{fig:flujo_metodologico_general} muestra cómo los escenarios preparados alimentan las dos líneas.
+La preparación de Mendoza incluye una comprobación operacional con programas semafóricos de referencia (subsección \ref{subsec:escenario_mendoza}). La Figura \ref{fig:flujo_metodologico_general} muestra cómo los escenarios preparados alimentan las dos líneas.
 
 \begin{figure}[H]
 \centering
@@ -129,11 +129,11 @@ Flujo solicitado (vehículos por hora) & 3.260 & 7.087 & 7.202 \\
 \end{tabular}
 \end{table}
 
-El corredor $3\times1$ consta de tres cruces en línea, identificados como B1, C1 y D1. La demanda concentra el 75\% del flujo solicitado en los dos sentidos de la arteria y distribuye el resto entre los pares válidos. Esta configuración permite estudiar la propagación longitudinal de \glspl{cola} y la coordinación sobre las corrientes predominantes; las asignaciones por par se presentan en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+El corredor $3\times1$ consta de tres cruces en línea, identificados como B1, C1 y D1. La demanda concentra el 75\% del flujo solicitado en los dos sentidos de la arteria y distribuye el resto entre los pares válidos. Esta configuración permite estudiar la propagación longitudinal de \glspl{cola} y la coordinación sobre las corrientes predominantes.
 
-La red $3\times3$ dispone de nueve cruces en una cuadrícula regular. Frente al corredor, incorpora conexiones en dos direcciones y permite estudiar la coordinación bidimensional con tamaños locales de observación y acción uniformes. La distribución de demanda por par se conserva en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+La red $3\times3$ dispone de nueve cruces en una cuadrícula regular. Frente al corredor, incorpora conexiones en dos direcciones y permite estudiar la coordinación bidimensional con tamaños locales de observación y acción uniformes.
 
-La red $4\times4\_H$ dispone de dieciséis cruces sobre una cuadrícula con capacidad y conectividad heterogéneas. La fila 2 es una arteria de tres carriles por sentido; el sector A1--B1--C1 tiene un carril por sentido. La columna C presenta cuatro carriles hacia el sur y dos hacia el norte, y la columna D es de sentido único. C1 tiene tres acciones seleccionables, mientras que los demás cruces tienen dos. Así, el escenario incorpora diferencias de capacidad, conectividad y tamaño de observación y acción. Las vías y asignaciones \acrshort{acr-od} específicas se describen en el apéndice \ref{subsec:detalles_redes_sinteticas}.
+La red $4\times4\_H$ dispone de dieciséis cruces sobre una cuadrícula con capacidad y conectividad heterogéneas. La fila 2 es una arteria de tres carriles por sentido; el sector A1--B1--C1 tiene un carril por sentido. La columna C presenta cuatro carriles hacia el sur y dos hacia el norte, y la columna D es de sentido único. C1 tiene tres acciones seleccionables, mientras que los demás cruces tienen dos. Así, el escenario incorpora diferencias de capacidad, conectividad y tamaño de observación y acción. Las vías y las asignaciones por par \acrshort{acr-od} de las tres redes se detallan en el apéndice \ref{subsec:detalles_redes_sinteticas}.
 
 \FloatBarrier
 
@@ -213,7 +213,7 @@ La semilla 104773 controla la generación de rutas y la semilla 104729 inicializ
 \subsubsection{Comprobación operacional y contraste con los conteos}
 \label{subsubsec:mendoza_validacion_operacional}
 
-La comprobación operacional examina si la red de tráfico y la demanda construidas funcionan con los programas semafóricos conservados; no evalúa políticas aprendidas. El tiempo de simulación $t_{\mathrm{sim}}$ se expresa en segundos desde las 06:00. Se registran dos horizontes: 12 horas diurnas ($t_{\mathrm{sim}}=0$--$43200$) y la hora pico matutina ($t_{\mathrm{sim}}=1800$--$9000$, correspondiente a 06:30--08:30).
+La comprobación operacional examina si la red de tráfico y la demanda construidas funcionan con los programas semafóricos de referencia; no evalúa políticas aprendidas. El tiempo de simulación $t_{\mathrm{sim}}$ se expresa en segundos desde las 06:00. Se registran dos horizontes: 12 horas diurnas ($t_{\mathrm{sim}}=0$--$43200$) y la hora pico matutina ($t_{\mathrm{sim}}=1800$--$9000$, correspondiente a 06:30--08:30).
 
 La simulación de hora pico con programas de referencia comienza en $t_{\mathrm{sim}}=1800$ y no añade calentamiento, es decir, un período previo para poblar la red antes de medir el control. La configuración \acrshort{acr-marl} correspondiente comienza en $t_{\mathrm{sim}}=1500$ (06:25) y reserva 300 segundos para ese período antes del mismo intervalo de control. Los archivos y parámetros se describen en el apéndice \ref{sec:procedencia_mendoza}.
 
@@ -337,7 +337,7 @@ L_i^{(t)}, & |\mathcal{N}(i)|=0.
 \end{cases}
 \label{eq:recompensa_compuesta}
 \end{equation}
-Cada agente recibe su propia recompensa; las señales no se suman en un retorno global. El objetivo de control busca la operación coordinada de la red, pero el aprendizaje guía a cada agente mediante señales individuales, contrastando empíricamente si esa recompensa descentralizada produce una mejora coordinada. En la variante C, el peso vecinal se fijó en $\rho_{\mathrm{coop}}=0{,}1$. Como ambas señales tienen escalas distintas, ese valor pondera su influencia relativa pero no representa un porcentaje fijo de la recompensa resultante.
+Cada agente recibe su propia recompensa; las señales no se suman en un retorno global. El entrenamiento utiliza estas señales individuales para favorecer la operación coordinada de la red; la evaluación examina el desempeño global de las políticas obtenidas. En la variante C, el peso vecinal se fijó en $\rho_{\mathrm{coop}}=0{,}1$. Como ambas señales tienen escalas distintas, ese valor pondera su influencia relativa pero no representa un porcentaje fijo de la recompensa resultante.
 
 La Tabla \ref{tab:alternativas_recompensa} reúne las señales utilizadas en los procedimientos sintéticos. En la fase 1, las observaciones son locales y el programa promedia las señales vecinales sin normalizarlas por carriles; se explora un peso entre cero y $0{,}95$, sin reservar un ensayo específico con $\rho_{\mathrm{coop}}=0$. La búsqueda refinada fija recompensa local, mientras que A/C contrasta las dos formulaciones descritas anteriormente.
 
@@ -370,7 +370,7 @@ La implementación de \acrshort{acr-happo} actualiza primero el crítico y despu
 
 En \acrshort{acr-mappo} y \acrshort{acr-happo}, la pérdida del crítico limita a una cota el error cuadrático medio entre agentes para cada muestra y luego promedia las muestras válidas. A diferencia del recorte convencional de valores de \acrshort{acr-ppo}, esta operación satura la pérdida; por encima de la cota, esa muestra deja de aportar gradiente al crítico. La fórmula se presenta en la ecuación \eqref{eq:perdida_valor_marl_tlc} del apéndice.
 
-Como el error se promedia entre agentes antes de aplicar la cota, una muestra saturada deja de contribuir al ajuste de todas las salidas del crítico. Esto puede afectar las estimaciones de valor y las ventajas que guían a los actores. Su impacto efectivo requiere conocer la frecuencia de saturación, que no se cuantifica en los registros descritos aquí.
+Como el error se promedia entre agentes antes de aplicar la cota, una muestra saturada deja de contribuir al ajuste de todas las salidas del crítico. Esto puede afectar las estimaciones de valor y las ventajas que guían a los actores. Estimar su impacto requiere conocer la frecuencia de saturación, que no se cuantifica en los registros descritos aquí.
 
 \begin{figure}[H]\centering
 \input{imagenes/metodologia_controladores.tex}
@@ -506,7 +506,7 @@ La selección compara cada candidato con los programas semafóricos conservados 
 
 En cada comparación se mantienen la misma semilla de \acrshort{acr-sumo}, demanda, calentamiento y ventana. La referencia conserva el funcionamiento de sus programas; las políticas actúan con la inicialización descrita en la subsección \ref{sec:stack_tecnologico}.
 
-El diseño adopta un panel común de cinco semillas de \acrshort{acr-sumo} ($N=5$) para todos los candidatos urbanos y la referencia. Las semillas se generan aleatoriamente, se registran antes de la selección y son distintas de las usadas en la búsqueda y en la evaluación final. Con hasta tres candidatos por algoritmo, el panel comprende hasta 65 simulaciones: cinco de referencia y hasta sesenta de candidatos. Este tamaño acota el presupuesto computacional de la selección; es una decisión operativa, no una garantía de potencia estadística ni de estabilidad del ordenamiento.
+El diseño adopta un panel común de cinco semillas de \acrshort{acr-sumo} ($N=5$) para todos los candidatos urbanos y la referencia. Las semillas se generan aleatoriamente, se registran antes de la selección y son distintas de las usadas en la búsqueda y en la evaluación final. Con hasta tres candidatos por algoritmo, el panel comprende hasta 65 simulaciones: cinco de referencia y hasta sesenta de candidatos. Este tamaño acota el presupuesto computacional de la selección, pero no garantiza potencia estadística ni estabilidad del ordenamiento.
 
 Para cada semilla, las inserciones cuentan los vehículos cuyo instante efectivo de inserción pertenece a $[1800,9000)$; la \acrshort{acr-ci} divide los vehículos de esa cohorte que completan el viaje antes del cierre por el total insertado. Se contabilizan también los inicios de teletransporte durante el control.
 
@@ -617,7 +617,7 @@ A nivel individual, la señal local proviene de \texttt{getAccumulatedWaitingTim
     \end{equation}
     El coeficiente es adimensional. Si la suma de las medias es cero, todas son cero y la implementación informa Gini cero; si la suma es positiva, Gini cero indica igualdad de las esperas medias entre controladores, no ausencia de espera. Al dar igual peso a cruces con demandas desiguales, el índice también refleja disparidades de carga estructural de la red.
 \end{itemize}
-Los teletransportes se utilizan como indicador de incidencias operacionales severas. En la selección de candidatos, el análisis A/C y la evaluación final se cuentan sus inicios mediante TraCI durante la ventana de control; un vehículo puede contribuir con más de un evento. La salida Summary de \acrshort{acr-sumo} dispone de un contador nativo \texttt{teleports}. Estos registros no se sustituyen entre sí sin comprobar su correspondencia.
+Los teletransportes se utilizan como indicador de incidencias operacionales severas. En la selección de candidatos, el análisis A/C y la evaluación final se cuentan sus inicios mediante TraCI durante la ventana de control; un vehículo puede contribuir con más de un evento. La salida Summary de \acrshort{acr-sumo} dispone de un contador nativo \texttt{teleports}. Antes de sustituir un registro por otro, debe comprobarse su correspondencia.
 
 
 \subsection[Evaluación de las variantes A y C de MAPPO]{Evaluación de las variantes A y C de \acrshort{acr-mappo}}
@@ -642,7 +642,7 @@ Sea $w_{s,b,q}$ la espera media por vehículo insertado, en segundos por vehícu
  \label{eq:contrastes_pareados}
 \end{equation}
 
-La diferencia $d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; un valor negativo favorece C. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio entre pares, no el cambio porcentual calculado a partir de las medias globales de A y C. La diferencia relativa queda indefinida cuando $\bar w_{s,A}=0$; si esto ocurre en alguno de los 24 pares requeridos, no es posible emitir la decisión basada en dicho efecto. El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes \cite{Agarwal2021RLiable}.
+La diferencia $d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; un valor negativo favorece C. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio entre pares, no el calculado a partir de las medias globales de A y C. La diferencia relativa queda indefinida cuando $\bar w_{s,A}=0$; si esto ocurre en alguno de los 24 pares requeridos, no es posible emitir la decisión basada en dicho efecto. El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes \cite{Agarwal2021RLiable}.
 
 La incertidumbre se estima mediante 20.000 remuestreos con reemplazo (\gls{bootstrap}) de los 24 pares completos de cada red. Cada remuestreo conserva juntas las dos variantes del par; el efecto se recalcula en cada conjunto.
 
@@ -677,7 +677,7 @@ Cada red se analiza por separado con sus 24 pares ($3\times1$, $3\times3$ y $4\t
 \subsection{Entrenamiento y evaluación de los modelos finales}
 \label{sec:evaluacion_modelos_finales}
 
-Junto con el contraste A/C, el diseño evalúa el desempeño de las políticas seleccionadas mediante la búsqueda de hiperparámetros. Se entrena desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, separada de las fases de búsqueda, selección y evaluación. En Mendoza también se asigna una semilla nueva al simulador de entrenamiento; ambas se conservan en la receta junto con los hiperparámetros, la arquitectura y los archivos del entorno. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
+Para comparar los cuatro algoritmos, se entrena desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, separada de las fases de búsqueda, selección y evaluación. En Mendoza también se asigna una semilla nueva al simulador de entrenamiento; ambas se conservan en la receta junto con los hiperparámetros, la arquitectura y los archivos del entorno. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
 
 El procedimiento fija para el entrenamiento final el presupuesto completo de iteraciones de la búsqueda que produjo la configuración seleccionada y toma el punto de control (\gls{checkpoint}) de la última iteración.
 
