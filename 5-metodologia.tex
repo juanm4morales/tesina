@@ -21,7 +21,7 @@ En las redes sintéticas, entre ambas fases de búsqueda se desarrolla la segund
 
 La medida principal es la espera media observada hasta el cierre entre los vehículos que ingresan durante la ventana de evaluación, incluidos los viajes inconclusos. Se interpreta junto con la cantidad de vehículos insertados y la proporción que llega a destino. Así se examina si una espera menor coincide con una reducción del tránsito atendido; se ha señalado que el tiempo medio de viaje puede ocultar congestión cuando los vehículos nuevos no consiguen ingresar a la red \cite{jiang2024xlight}. Las métricas y las poblaciones que utilizan se precisan en la subsección \ref{sec:metricas_evidencia}.
 
-La comprobación operacional de Mendoza forma parte de la preparación del escenario y examina el funcionamiento de la red y la demanda con programas semafóricos de referencia, distinguiéndose de la búsqueda de políticas aprendidas. La Figura \ref{fig:flujo_metodologico_general} muestra cómo los escenarios preparados alimentan las dos líneas.
+La comprobación operacional de Mendoza forma parte de la preparación del escenario y examina el funcionamiento de la red y la demanda con programas semafóricos de referencia, y se distingue de la búsqueda de políticas aprendidas. La Figura \ref{fig:flujo_metodologico_general} muestra cómo los escenarios preparados alimentan las dos líneas.
 
 \begin{figure}[H]
 \centering
@@ -213,7 +213,7 @@ La semilla 104773 controla la generación de rutas y la semilla 104729 inicializ
 \subsubsection{Comprobación operacional y contraste con los conteos}
 \label{subsubsec:mendoza_validacion_operacional}
 
-La comprobación operacional examina si la red de tráfico y la demanda construidas funcionan con los programas semafóricos conservados; no evalúa políticas aprendidas. El tiempo de simulación $t_{\mathrm{sim}}$ se expresa en segundos desde las 06:00. Se registran dos horizontes: 12 horas diurnas ($t_{\mathrm{sim}}=0$--$43200$) y dos horas de hora pico matutina ($t_{\mathrm{sim}}=1800$--$9000$, correspondientes a 06:30--08:30).
+La comprobación operacional examina si la red de tráfico y la demanda construidas funcionan con los programas semafóricos conservados; no evalúa políticas aprendidas. El tiempo de simulación $t_{\mathrm{sim}}$ se expresa en segundos desde las 06:00. Se registran dos horizontes: 12 horas diurnas ($t_{\mathrm{sim}}=0$--$43200$) y la hora pico matutina ($t_{\mathrm{sim}}=1800$--$9000$, correspondiente a 06:30--08:30).
 
 La simulación de hora pico con programas de referencia comienza en $t_{\mathrm{sim}}=1800$ y no añade calentamiento, es decir, un período previo para poblar la red antes de medir el control. La configuración \acrshort{acr-marl} correspondiente comienza en $t_{\mathrm{sim}}=1500$ (06:25) y reserva 300 segundos para ese período antes del mismo intervalo de control. Los archivos y parámetros se describen en el apéndice \ref{sec:procedencia_mendoza}.
 
@@ -226,7 +226,7 @@ El informe documental del escenario canónico indica cero teletransportes; las s
 \section{Sistema de control multiagente}
 \label{sec:arquitectura_entorno_agentes}
 
-Con las redes y sus demandas definidas, el sistema implementa el ciclo agente--entorno presentado en el marco teórico: convierte las mediciones del tránsito en información para los agentes y aplica sus decisiones a la simulación. La misma interfaz permite utilizar los cuatro algoritmos del estudio. Sus observaciones, acciones y recompensas definen la información disponible y las restricciones bajo las que se entrenan las políticas.
+Con las redes y sus demandas definidas, el sistema implementa el ciclo agente--entorno presentado en el marco teórico: convierte las mediciones del tránsito en información para los agentes y aplica sus decisiones a la simulación. Los cuatro algoritmos del estudio comparten esta interfaz. Sus observaciones, acciones y recompensas definen la información disponible y las restricciones bajo las que se entrenan las políticas.
 
 Cada agente $i$ gobierna las señales de una intersección; si varios nodos comparten un mismo controlador semafórico, se representan mediante un único agente. Los tamaños $m_i$ y $K_i$ describen sus carriles entrantes controlados y sus fases seleccionables. Las fases con amarillo y el estado final de todo rojo no integran ese conjunto de acciones; el entorno los utiliza para las transiciones y la inicialización, respectivamente. La cantidad de acciones habilitadas en un instante también depende de las restricciones temporales del control.
 
@@ -337,7 +337,7 @@ L_i^{(t)}, & |\mathcal{N}(i)|=0.
 \end{cases}
 \label{eq:recompensa_compuesta}
 \end{equation}
-Cada agente recibe su propia recompensa; las señales no se suman en un retorno global. La finalidad del sistema es favorecer la operación coordinada de la red, mientras que el aprendizaje utiliza señales individuales cuya alineación con esa finalidad se examina empíricamente. En la variante C, el peso vecinal se fijó en $\rho_{\mathrm{coop}}=0{,}1$. Como ambas señales tienen escalas distintas, ese valor pondera su influencia relativa pero no representa un porcentaje fijo de la recompensa resultante.
+Cada agente recibe su propia recompensa; las señales no se suman en un retorno global. El objetivo de control busca la operación coordinada de la red, pero el aprendizaje guía a cada agente mediante señales individuales, contrastando empíricamente si esa recompensa descentralizada produce una mejora coordinada. En la variante C, el peso vecinal se fijó en $\rho_{\mathrm{coop}}=0{,}1$. Como ambas señales tienen escalas distintas, ese valor pondera su influencia relativa pero no representa un porcentaje fijo de la recompensa resultante.
 
 La Tabla \ref{tab:alternativas_recompensa} reúne las señales utilizadas en los procedimientos sintéticos. En la fase 1, las observaciones son locales y el programa promedia las señales vecinales sin normalizarlas por carriles; se explora un peso entre cero y $0{,}95$, sin reservar un ensayo específico con $\rho_{\mathrm{coop}}=0$. La búsqueda refinada fija recompensa local, mientras que A/C contrasta las dos formulaciones descritas anteriormente.
 
@@ -454,7 +454,7 @@ En el espacio inicial de fase 1, los métodos basados en \acrshort{acr-ppo} expl
 
 La fase 1 de Mendoza comienza después de la prueba A--E y de la comparación A/C y fija la recompensa local, con $\rho_{\mathrm{coop}}=0$, y la observación local con máscara de acciones. El contraste entre las formulaciones local y vecinal orienta esta elección; sus variantes modifican conjuntamente observación y recompensa. Los demás dominios iniciales se conservan.
 
-Los mecanismos incluidos en la búsqueda se apoyan en los métodos presentados en el marco teórico, y la literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la conveniencia de explorar configuraciones y separar las semillas de búsqueda y evaluación \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}. Estas fuentes fundamentan los mecanismos generales; los rangos numéricos son decisiones particulares del diseño y delimitan una exploración bajo un presupuesto finito. Los resultados se interpretan dentro de esos rangos y del presupuesto disponible.
+Los mecanismos incluidos en la búsqueda se apoyan en los métodos presentados en el marco teórico, y la literatura sobre \acrshort{acr-hpo} en aprendizaje por refuerzo fundamenta la conveniencia de explorar configuraciones y separar las semillas de búsqueda y evaluación \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}. Estas fuentes fundamentan los mecanismos generales; los rangos numéricos son decisiones particulares del diseño y delimitan una exploración con presupuesto finito. Los resultados se interpretan dentro de esos rangos y del presupuesto disponible.
 
 En la implementación documentada para la búsqueda sintética, \acrshort{acr-happo} procesa el lote completo por actor; por ello, la clave de tamaño del minilote registrada no determina una subdivisión efectiva del lote (subsección \ref{subsec:mecanismos_algoritmos}). Cada configuración sintética utiliza una semilla de entrenamiento por escenario: repetir episodios de evaluación de esa política no permite estimar la variabilidad entre entrenamientos independientes.
 
@@ -463,12 +463,12 @@ En la implementación documentada para la búsqueda sintética, \acrshort{acr-ha
 
 La fase 2 refina la búsqueda en los cuatro escenarios a partir de los resultados de fase 1 del mismo escenario. En las redes sintéticas, la búsqueda se concentra en regiones asociadas con mejores puntuaciones y conserva un margen para explorar fuera de ellas. Para cada combinación de algoritmo, escenario sintético y arquitectura, ordena por el objetivo los ensayos de fase 1 que completaron su presupuesto sin errores y con puntuaciones finitas. En parámetros numéricos, parte del intervalo de los diez mejores y lo amplía; mantiene el dominio original cuando esos ensayos están dispersos o próximos a sus límites. Las reglas para variables numéricas y categóricas, así como los dominios sintéticos resultantes, se documentan en el apéndice \ref{subsec:dominios_refinados}.
 
-En la búsqueda refinada sintética, esta reducción orienta una nueva exploración con recompensa local ($\rho_{\mathrm{coop}}=0$) y máscara de acciones; las puntuaciones de fase 1 no se incorporan como resultados de fase 2. La elección de recompensa local responde a la lectura exploratoria de que valores vecinales altos podían ser desfavorables, sin demostrar un peso óptimo ni aislar su efecto. Como también cambia la recompensa, los dominios heredados constituyen una orientación exploratoria: las configuraciones favorables en fase 1 no tienen por qué serlo bajo la señal local.
+En la búsqueda refinada sintética, esta reducción orienta una nueva exploración con recompensa local ($\rho_{\mathrm{coop}}=0$) y máscara de acciones; las puntuaciones de fase 1 no se incorporan como resultados de fase 2. Se optó por la recompensa local porque, en la exploración de fase 1, los valores altos de $\rho_{\mathrm{coop}}$ parecían desfavorables; esa lectura no identifica un peso óptimo ni aísla el efecto de la recompensa. Como también cambia la señal, los dominios heredados constituyen una orientación exploratoria: las configuraciones favorables en fase 1 no tienen por qué serlo con la recompensa local.
 
 \Needspace{3\baselineskip}
 En las redes sintéticas, la fase 2 utiliza hasta 100 propuestas por combinación de algoritmo y escenario, con un máximo de 60 iteraciones por ensayo. \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; el seguimiento diagnóstico se realiza cada 15 iteraciones. Las arquitecturas, las semillas y las condiciones de ejecución figuran en el apéndice \ref{subsec:protocolo_refinado_apendice}.
 
-La fase 1 también aporta una configuración de referencia como punto inicial de la búsqueda refinada sintética: se construye con las medianas de los parámetros numéricos y las modas de los categóricos de los cinco mejores ensayos. Con estos valores se inicia un entrenamiento desde cero bajo la señal local; no se transfieren estados de modelos ni de búsqueda. Las reglas se detallan en el apéndice \ref{subsec:dominios_refinados}.
+La fase 1 también aporta una configuración de referencia como punto inicial de la búsqueda refinada sintética: se construye con las medianas de los parámetros numéricos y las modas de los categóricos de los cinco mejores ensayos. Con estos valores se inicia un entrenamiento desde cero con la señal local; no se transfieren estados de modelos ni de búsqueda. Las reglas se detallan en el apéndice \ref{subsec:dominios_refinados}.
 
 En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rho_{\mathrm{coop}}=0$, y deriva sus dominios exclusivamente de los ensayos completos de la fase 1 de esa red. Las reglas específicas de refinamiento se presentan en el apéndice \ref{subsec:protocolo_urbano_mendoza}.
 
@@ -583,7 +583,7 @@ El retraso previo al ingreso se registra por separado en \texttt{departDelay} y 
         \qquad w_v=\texttt{waitingTime}_v .
         \label{eq:espera_media_insertados}
     \end{equation}
-    La medida se expresa en segundos por vehículo; si la cohorte está vacía, se mantiene como indefinida.
+    La medida se expresa en segundos por vehículo; si la cohorte está vacía, queda indefinida.
     \Needspace{7\baselineskip}
     \item \textbf{Completitud e inserción de la demanda:} la cantidad de vehículos insertados es el tamaño de $\mathcal{V}_{\mathrm{ins}}$. La tasa de completitud sobre vehículos insertados (\acrshort{acr-ci}) mide la fracción de vehículos de $\mathcal{V}_{\mathrm{ins}}$ que logra completar su recorrido antes del cierre $t_{\mathrm{fin}}$:
     \begin{equation}
@@ -664,7 +664,7 @@ El criterio exige una reducción práctica de la espera, admite una disminución
 \begin{itemize}
     \item \textbf{Espera:} el límite superior del intervalo del 98,33\% para el efecto relativo debe ser menor que $-0,05$.
     \item \textbf{\acrshort{acr-ci}:} el límite inferior del intervalo del 98,33\% para la diferencia media pareada $\bar d_{\mathrm{CI}}$ debe superar $-0,005$, equivalente a una disminución de 0,5 puntos porcentuales en la tasa (ecuación \eqref{eq:tasa_completitud}).
-    \item \textbf{Inicios de teletransporte:} el conteo de C no debe superar al de A en ninguna evaluación con la misma semilla dentro de un par. Se utiliza \texttt{teleport\_}\allowbreak\texttt{starts}, que acumula los vehículos que comienzan un teletransporte en cada paso de simulación, mediante \texttt{getStartingTeleport}\allowbreak\texttt{IDList}; cuenta eventos, no vehículos distintos. Si falta el contador de alguna variante, esta condición no puede evaluarse y no se emite una decisión favorable.
+    \item \textbf{Inicios de teletransporte:} el conteo de C no debe superar al de A en ninguna evaluación con la misma semilla dentro de un par. Se utiliza \texttt{teleport\_}\allowbreak\texttt{starts}, que registra mediante \texttt{getStartingTeleport}\allowbreak\texttt{IDList} los eventos de inicio de teletransporte en cada paso de simulación. Si falta el contador de alguna variante, esta condición no puede evaluarse y no se emite una decisión favorable.
 \end{itemize}
 Los márgenes del 5\% y de 0,5 puntos porcentuales se fijaron como umbrales prácticos para este análisis; otros estudios podrían justificar valores distintos. El intervalo del 95\% se informa para describir la incertidumbre y mostrar cómo cambia la interpretación con otro nivel de confianza.
 
@@ -693,11 +693,11 @@ Para las evaluaciones urbanas se utiliza el archivo congelado \path{nets/Mendoza
 
 El protocolo requiere registrar por simulación las inserciones, la completitud de la cohorte insertada y los teletransportes. Como el modelo final puede diferir del comportamiento observado durante la selección, estos diagnósticos se informan de manera independiente y no operan como filtros retroactivos.
 
-Las medidas de viajes con denominador nulo se mantienen como indefinidas; si falta una de las veinte observaciones válidas de una métrica, no se calcula su resumen para esa combinación. Un cierre anticipado se conserva en el registro y no cuenta como un horizonte completo. Las repeticiones por un fallo técnico conservan el intento original y la semilla asignada.
+Las medidas de viajes con denominador nulo quedan indefinidas; si falta una de las veinte observaciones válidas de una métrica, no se calcula su resumen para esa combinación. Un cierre anticipado se conserva en el registro y no cuenta como un horizonte completo. Las repeticiones por un fallo técnico conservan el intento original y la semilla asignada.
 
 Para cada métrica, la media da el mismo peso a las veinte simulaciones y la desviación estándar muestral utiliza el divisor $20-1=19$. El resumen se calcula por separado para cada agente y para cada medida global de red; las métricas globales de viajes se conservan diferenciadas de la señal local por agente.
 
-La dispersión describe la variación entre simulaciones del modelo evaluado; no estima la variabilidad entre entrenamientos independientes \cite{Agarwal2021RLiable}. Por ello, la comparación descriptiva caracteriza los modelos obtenidos bajo este procedimiento y no establece una superioridad general de los algoritmos.
+La dispersión describe la variación entre simulaciones del modelo evaluado; no estima la variabilidad entre entrenamientos independientes \cite{Agarwal2021RLiable}. Por ello, la comparación descriptiva caracteriza los modelos obtenidos con este procedimiento y no establece una superioridad general de los algoritmos.
 
 \FloatBarrier
 
