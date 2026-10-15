@@ -657,9 +657,9 @@ La fase 1 urbana comienza después de A--E y A/C y utiliza observación local y 
 
 En los métodos de la familia \acrshort{acr-ppo}, cada episodio controlado aporta $7200/5=1440$ pasos nominales; el tamaño objetivo del lote por componente de aprendizaje es esa cantidad multiplicada por \texttt{train\_batch\_episodes}.
 
-La fase 2 urbana utiliza los límites de propuestas e iteraciones y las condiciones de \acrshort{acr-asha}, concurrencia y seguimiento comunes a los cuatro escenarios, definidos en la subsección \ref{subsec:hpo_phase2}.
+La fase 2 urbana utiliza los límites de propuestas e iteraciones y las condiciones de \acrshort{acr-asha}, concurrencia y seguimiento comunes a los cuatro escenarios, definidos en la subsección \ref{subsec:protocolo_refinado_apendice}.
 
-Los dominios urbanos se derivan exclusivamente de los ensayos de fase 1 de Mendoza mediante \path{experiments/marl_experiments/tuning/urban/}\allowbreak\path{refinement.py}, con las reglas comunes de la subsección \ref{subsec:dominios_refinados}. El archivo de dominios conserva los identificadores de los ensayos y los hashes de sus fuentes.
+Los dominios urbanos se derivan exclusivamente de los ensayos de fase 1 de Mendoza, con las reglas comunes de la subsección \ref{subsec:dominios_refinados}. El archivo de dominios conserva los identificadores de los ensayos y los hashes de sus fuentes.
 
 \Needspace{3\baselineskip}
 El registro \path{experiments/marl_experiments/tuning/urban/seeds.json} separa las semillas del aprendiz, de SUMO de entrenamiento, de SUMO diagnóstico y de Optuna para cada fase, algoritmo y arquitectura. También registra la selección, el entrenamiento final y la evaluación final. Se genera con \texttt{random.Random}, semilla maestra 20261013 y muestreo sin reemplazo de enteros desde 1.000.001 hasta $2^{31}-1$, excluyendo las semillas históricas identificadas y las de calibración. La semilla de SUMO se pasa mediante \texttt{--seed}; el reinicio del entorno recupera el estado asociado a ella. Las semillas del aprendiz y de SUMO del entrenamiento final son nuevas respecto de las búsquedas y la selección.

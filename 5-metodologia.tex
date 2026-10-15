@@ -470,7 +470,7 @@ En las redes sintéticas, la fase 2 utiliza hasta 100 propuestas por combinació
 
 La fase 1 también aporta una configuración de referencia como punto inicial de la búsqueda refinada sintética: se construye con las medianas de los parámetros numéricos y las modas de los categóricos de los cinco mejores ensayos. Con estos valores se inicia un entrenamiento desde cero con la señal local; no se transfieren estados de modelos ni de búsqueda. Las reglas se detallan en el apéndice \ref{subsec:dominios_refinados}.
 
-En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rho_{\mathrm{coop}}=0$, y deriva sus dominios exclusivamente de los ensayos completos de la fase 1 de esa red. Las reglas específicas de refinamiento se presentan en el apéndice \ref{subsec:protocolo_urbano_mendoza}.
+En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rho_{\mathrm{coop}}=0$, y deriva sus dominios exclusivamente de los ensayos completos de la fase 1 de esa red. Las reglas de refinamiento se presentan en el apéndice \ref{subsec:dominios_refinados}; las condiciones del escenario se detallan en la subsección \ref{subsec:protocolo_urbano_mendoza}.
 
 La Figura \ref{fig:protocolo_informado_v2} resume el paso de la exploración amplia a la búsqueda con dominios reducidos.
 \begin{figure}[H]\centering
@@ -657,7 +657,12 @@ Se informan intervalos percentiles del 95\% y del 98,33\%. Este último aplica l
 
 También se calcula un intervalo basado en la distribución $t$ de Student como análisis de sensibilidad. Ambos son aproximaciones con 24 pares y su cobertura no está garantizada; se conservan los valores extremos y se revisa su influencia. El cálculo de los percentiles y del ajuste se detalla en el apéndice \ref{subsec:detalle_analisis_pareado}.
 
+\begingroup
+\clubpenalty=10000
+\widowpenalty=10000
 Para CI, se promedian las cinco evaluaciones de cada política. En cada par $s$, la diferencia es $d_{\mathrm{CI},s}=\overline{\mathrm{CI}}_{s,C}-\overline{\mathrm{CI}}_{s,A}$; $\bar d_{\mathrm{CI}}$ denota la media de las 24 diferencias pareadas y su intervalo se obtiene con el remuestreo descrito arriba.
+\par
+\endgroup
 
 \Needspace{7\baselineskip}
 El criterio exige una reducción práctica de la espera, admite una disminución acotada de la tasa de completitud sobre vehículos insertados (\acrshort{acr-ci}) y no permite más inicios de teletransporte que A. Una decisión favorable a C requiere cumplir conjuntamente las siguientes condiciones:
