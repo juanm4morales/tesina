@@ -250,7 +250,7 @@ En cada paso, \texttt{step} recibe las acciones de los agentes, ejecuta las tran
 
 Los episodios cierran al alcanzar su límite temporal; la interfaz distingue terminación y truncamiento. En la versión conservada para A/C, el límite temporal activa ambos indicadores, como se explica en el apéndice \ref{sec:apendice_uml_entorno}.
 
-En esta comparación con \acrshort{acr-mappo}, ambos indicadores se transmiten al cálculo de los objetivos de valor y las ventajas; su tratamiento conjunto puede afectar la incorporación del valor del estado final mediante \textit{bootstrapping} (ecuación \ref{eq:gae}). Por ello, este cierre temporal forma parte de la interpretación de las actualizaciones. Las ejecuciones se realizaron sin interfaz gráfica.
+En esta comparación con \acrshort{acr-mappo}, ambos indicadores se transmiten al cálculo de los objetivos de valor y las ventajas; su tratamiento conjunto puede afectar la incorporación del valor del estado final mediante \textit{bootstrapping} (ecuación \ref{eq:gae}). Las ejecuciones se realizaron sin interfaz gráfica.
 
 En Mendoza, al alcanzar el horizonte se activa únicamente el indicador de truncamiento; el de terminación permanece falso. Así se distingue el corte temporal de un estado terminal al calcular los objetivos de aprendizaje. El episodio urbano tampoco se cierra por una ausencia momentánea de vehículos.
 
@@ -520,7 +520,7 @@ Entre las configuraciones admisibles se elige la de menor media aritmética de l
 \label{sec:cooperacion_vecinal}
 \label{sec:comparacion_local_vecinal}
 
-Esta línea examina si una formulación que incorpora información de los vecinos y una contribución ponderada de su señal de recompensa mejora el desempeño respecto de la formulación local. La campaña comparó A y C de \acrshort{acr-mappo} con una configuración de aprendizaje transferida y fija. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno.
+Esta línea examina si una formulación que incorpora información de los vecinos y una contribución ponderada de su señal de recompensa mejora el desempeño respecto de la formulación local. La campaña comparó A y C de \acrshort{acr-mappo} con una configuración común y fija de hiperparámetros. A utiliza observación y recompensa locales ($\rho_{\mathrm{coop}}=0$); C añade a la observación la espera media por carril de los vecinos y combina la recompensa local con una señal vecinal normalizada ($\rho_{\mathrm{coop}}=0{,}1$). Como C modifica tanto la observación como la recompensa, el contraste evalúa conjuntamente esos cambios y no permite aislar el efecto de cada uno.
 
 El procedimiento comprende una prueba preliminar de cinco formulaciones locales y vecinales de observación y recompensa, A--E, y una comparación ampliada de las formulaciones local A y vecinal C en las tres redes sintéticas, ambas realizadas con \acrshort{acr-mappo}. La primera permite examinar alternativas; la segunda contrasta las dos variantes bajo condiciones comunes de entrenamiento y evaluación. Su alcance se restringe a \acrshort{acr-mappo} y no se generaliza a \acrshort{acr-happo}, \acrshort{acr-ippo} o \acrshort{acr-idqn}.
 
@@ -551,7 +551,7 @@ La comparación ampliada utilizó \acrshort{acr-mappo} con arquitectura h128 y l
 
 \begingroup
 \widowpenalty=10000
-C incorpora una coordenada codificada por cada vecino directo; por eso, su primera capa tiene más pesos que la de A. Esta diferencia de capacidad forma parte de la comparación, que también modifica observación y recompensa, como se indicó arriba. El contraste caracteriza las variantes bajo esa configuración transferida, sin establecer qué desempeño alcanzarían con búsquedas propias. Las observaciones y las recompensas de ambas variantes se definen en la subsección \ref{sec:formulacion_dec_pomdp}.
+C incorpora una coordenada codificada por cada vecino directo, por lo que su primera capa tiene más pesos que la de A. El contraste evalúa cada variante con la arquitectura que le corresponde, pero no permite aislar el efecto de la información vecinal del aumento de capacidad asociado. Tampoco establece qué desempeño alcanzarían con búsquedas de hiperparámetros independientes. Las observaciones y las recompensas de ambas variantes se definen en la subsección \ref{sec:formulacion_dec_pomdp}.
 \par
 \endgroup
 
