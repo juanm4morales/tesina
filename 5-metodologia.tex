@@ -585,7 +585,7 @@ El retraso previo al ingreso se registra por separado en \texttt{departDelay} y 
     \end{equation}
     La medida se expresa en segundos por vehículo; si la cohorte está vacía, se mantiene como indefinida.
     \Needspace{7\baselineskip}
-    \item \textbf{Completitud e inserción de la demanda:} la cantidad de vehículos insertados es el tamaño de $\mathcal{V}_{\mathrm{ins}}$. La tasa de completitud sobre insertados (\acrshort{acr-ci}) mide la fracción de vehículos de $\mathcal{V}_{\mathrm{ins}}$ que logra completar su recorrido antes del cierre $t_{\mathrm{fin}}$:
+    \item \textbf{Completitud e inserción de la demanda:} la cantidad de vehículos insertados es el tamaño de $\mathcal{V}_{\mathrm{ins}}$. La tasa de completitud sobre vehículos insertados (\acrshort{acr-ci}) mide la fracción de vehículos de $\mathcal{V}_{\mathrm{ins}}$ que logra completar su recorrido antes del cierre $t_{\mathrm{fin}}$:
     \begin{equation}
         \text{CI} = \frac{|\{v \in \mathcal{V}_{\mathrm{ins}} : \text{completó su viaje antes de } t_{\mathrm{fin}}\}|}{|\mathcal{V}_{\mathrm{ins}}|}.
         \label{eq:tasa_completitud}
@@ -685,7 +685,7 @@ También se calcula un intervalo basado en la distribución $t$ de Student como 
 Para CI, se promedian las cinco evaluaciones de cada política. En cada par $s$, la diferencia es $d_{\mathrm{CI},s}=\overline{\mathrm{CI}}_{s,C}-\overline{\mathrm{CI}}_{s,A}$; $\bar d_{\mathrm{CI}}$ denota la media de las 24 diferencias pareadas y su intervalo se obtiene con el remuestreo descrito arriba.
 
 \Needspace{7\baselineskip}
-El criterio exige una reducción práctica de la espera, admite una disminución acotada de la tasa de completitud (\acrshort{acr-ci}) y no permite más inicios de teletransporte que A. Una decisión favorable a C requiere cumplir conjuntamente las siguientes condiciones:
+El criterio exige una reducción práctica de la espera, admite una disminución acotada de la tasa de completitud sobre vehículos insertados (\acrshort{acr-ci}) y no permite más inicios de teletransporte que A. Una decisión favorable a C requiere cumplir conjuntamente las siguientes condiciones:
 \begin{itemize}
     \item \textbf{Espera:} el límite superior del intervalo del 98,33\% para el efecto relativo debe ser menor que $-0,05$.
     \item \textbf{\acrshort{acr-ci}:} el límite inferior del intervalo del 98,33\% para la diferencia media pareada $\bar d_{\mathrm{CI}}$ debe superar $-0,005$, equivalente a una disminución de 0,5 puntos porcentuales en la tasa (ecuación \eqref{eq:tasa_completitud}).
