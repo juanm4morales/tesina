@@ -516,7 +516,7 @@ La clasificación requiere simulaciones que alcancen el fin de la ventana, los t
 
 Entre las configuraciones admisibles se elige la de menor media aritmética de las cinco esperas medias por simulación, calculadas sobre los vehículos insertados en el intervalo y ponderando por igual cada semilla. Ante un empate exacto, se prioriza la mayor media de las cinco \acrshort{acr-ci}, después el menor número medio de inicios de teletransporte y, finalmente, el identificador de la configuración. Si ninguna configuración satisface los criterios en las cinco semillas, no se designa una configuración urbana admisible para esa combinación.
 
-\section[Comparación de variantes locales y vecinales de MAPPO]{Comparación de variantes locales y vecinales de \acrshort{acr-mappo}}
+\section[Comparación de formulaciones con recompensa vecinal]{Comparación de formulaciones con recompensa vecinal}
 \label{sec:cooperacion_vecinal}
 \label{sec:comparacion_local_vecinal}
 
@@ -562,7 +562,7 @@ Cada política se entrenó durante 40 iteraciones y se evaluó con el modelo de 
 \section{Evaluación y análisis de políticas}
 \label{sec:evaluacion_modelos}
 
-Una vez obtenidas las políticas, la evaluación examina su desempeño con parámetros fijos durante cada episodio. La comparación de los cuatro algoritmos resume descriptivamente la variación entre simulaciones de cada modelo final. La comparación A/C utiliza pares de políticas entrenadas para estimar la incertidumbre del contraste entre las formulaciones local y vecinal de \acrshort{acr-mappo}. Ambos análisis consideran la espera y la atención a la demanda, con las unidades de observación que se precisan a continuación.
+Una vez obtenidas las políticas, la evaluación examina su desempeño con parámetros fijos durante cada episodio. La comparación A/C utiliza pares de políticas entrenadas para estimar la incertidumbre del contraste entre las formulaciones local y vecinal. Por su parte, la evaluación de los modelos finales resume descriptivamente la variación entre simulaciones de los cuatro algoritmos en cada escenario. Ambos análisis consideran la espera y la atención a la demanda, con las medidas y unidades de observación que se precisan a continuación.
 
 \subsection{Métricas de desempeño y vehículos evaluados}
 \label{sec:metricas_evidencia}
@@ -620,32 +620,7 @@ A nivel individual, la señal local proviene de \texttt{getAccumulatedWaitingTim
 Los teletransportes se utilizan como indicador de incidencias operacionales severas. En la selección de candidatos, el análisis A/C y la evaluación final se cuentan sus inicios mediante TraCI durante la ventana de control; un vehículo puede contribuir con más de un evento. La salida Summary de \acrshort{acr-sumo} dispone de un contador nativo \texttt{teleports}. Estos registros no se sustituyen entre sí sin comprobar su correspondencia.
 
 
-\subsection{Entrenamiento y evaluación de los modelos finales}
-\label{sec:evaluacion_modelos_finales}
-
-Se entrena desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, separada de las fases de búsqueda, selección y evaluación. En Mendoza también se asigna una semilla nueva al simulador de entrenamiento; ambas se conservan en la receta junto con los hiperparámetros, la arquitectura y los archivos del entorno. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
-
-El procedimiento fija para el entrenamiento final el presupuesto completo de iteraciones de la búsqueda que produjo la configuración seleccionada y toma el punto de control (\gls{checkpoint}) de la última iteración.
-
-El protocolo contempla veinte simulaciones por cada combinación de algoritmo y escenario. Para las dieciséis combinaciones previstas, esto representa 320 simulaciones si todas cuentan con una configuración seleccionada. Cada resumen estadístico requiere veinte observaciones válidas por métrica.
-
-Las semillas aleatorias de \acrshort{acr-sumo} se registran antes de cada evaluación y son distintas de las usadas en las etapas anteriores; no se fija un panel común entre algoritmos. En cada corrida se reconstruye el entorno con la semilla correspondiente y se comprueba que sea la utilizada por \acrshort{acr-sumo}. Los parámetros de las políticas permanecen fijos y estas actúan sin exploración. El calentamiento se aplica cuando lo establece la configuración del escenario.
-
-En Mendoza, la configuración de búsqueda, selección y entrenamiento final establece la ventana de dos horas del escenario v14: la simulación comienza en $t=1500$ s, incluye 300 s de calentamiento y el control se evalúa entre $t=1800$ y $t=9000$ s (06:30--08:30), según \path{nets/Mendoza/mendoza_hpo_v14.sumocfg}.
-
-La configuración de evaluación final establece una jornada completa, de $t=0$ a $t=43200$ s (06:00--18:00), sin calentamiento, según \path{nets/Mendoza/mendoza_evaluation_v14.sumocfg}. Esta separación busca examinar el modelo final en un horizonte diario que incluye condiciones horarias distintas de las del recorte matutino.
-
-Para las evaluaciones urbanas se utiliza el archivo congelado \path{nets/Mendoza/mendoza_12h.rou.xml} (apéndice \ref{sec:procedencia_mendoza}). El panel urbano de selección se especifica en la subsección \ref{subsec:seleccion_mendoza}; las veinte semillas de evaluación final excluyen la semilla 104729, reservada para la evaluación diaria canónica.
-
-El protocolo requiere registrar por simulación las inserciones, la completitud de la cohorte insertada y los teletransportes. Como el modelo final puede diferir del comportamiento observado durante la selección, estos diagnósticos se informan de manera independiente y no operan como filtros retroactivos.
-
-Las medidas de viajes con denominador nulo se mantienen como indefinidas; si falta una de las veinte observaciones válidas de una métrica, no se calcula su resumen para esa combinación. Un cierre anticipado se conserva en el registro y no cuenta como un horizonte completo. Las repeticiones por un fallo técnico conservan el intento original y la semilla asignada.
-
-Para cada métrica, la media da el mismo peso a las veinte simulaciones y la desviación estándar muestral utiliza el divisor $20-1=19$. El resumen se calcula por separado para cada agente y para cada medida global de red; las métricas globales de viajes se conservan diferenciadas de la señal local por agente.
-
-La dispersión describe la variación entre simulaciones del modelo evaluado; no estima la variabilidad entre entrenamientos independientes \cite{Agarwal2021RLiable}. Por ello, la comparación descriptiva caracteriza los modelos obtenidos bajo este procedimiento y no establece una superioridad general de los algoritmos.
-
-\subsection[Evaluación de variantes de MAPPO]{Evaluación de variantes de \acrshort{acr-mappo}}
+\subsection[Evaluación de variantes con recompensa vecinal]{Evaluación de variantes con recompensa vecinal}
 \label{sec:evaluacion_variantes_mappo}
 
 Cada política de la comparación A/C se evaluó cinco veces con el modelo de la última iteración y las semillas 71001--71005, comunes a ambas variantes y distintas de las de entrenamiento. La campaña reunió 72 pares, 144 políticas y 720 episodios; las configuraciones y semillas se conservan en el apéndice \ref{subsec:receta_ac_apendice}. Los parámetros de cada modelo permanecieron fijos y, en cada decisión, el agente seleccionó la fase permitida con mayor probabilidad.
@@ -698,6 +673,31 @@ El criterio de A/C no impone un umbral de inserciones ni evalúa el retraso prev
 Los intervalos describen la variación entre entrenamientos, condicionada a las cinco semillas de evaluación compartidas, y no cubren toda demanda posible. La ausencia de evidencia de una reducción práctica no implica equivalencia estadística ni operacional. El cierre temporal de los viajes inconclusos se interpreta según la subsección \ref{sec:metricas_evidencia}.
 
 El análisis de esta tesina considera por separado las tres redes: 24 pares de $3\times1$, 24 de $3\times3$ y 24 de $4\times4\_H$; no combina los 72 pares en una única estimación. El informe histórico presentó $3\times1$ y $4\times4\_H$ como análisis principal y separó $3\times3$ después de revisar los resultados. Esta decisión de presentación no estaba fijada de antemano y se distingue aquí del alcance de tres redes adoptado en esta tesina; el antecedente se identifica en el apéndice \ref{subsec:detalle_analisis_pareado}.
+
+\subsection{Entrenamiento y evaluación de los modelos finales}
+\label{sec:evaluacion_modelos_finales}
+
+Junto con el contraste entre variantes de recompensa, el diseño evalúa el desempeño de las políticas seleccionadas mediante la búsqueda de hiperparámetros. Se entrena desde cero un modelo final para cada combinación de algoritmo y escenario que cuente con una configuración seleccionada. A cada combinación se asigna una semilla de aprendizaje nueva, separada de las fases de búsqueda, selección y evaluación. En Mendoza también se asigna una semilla nueva al simulador de entrenamiento; ambas se conservan en la receta junto con los hiperparámetros, la arquitectura y los archivos del entorno. En las redes sintéticas, el diseño conserva el calentamiento y la duración del control de la búsqueda refinada (Tabla \ref{tab:horizontes_simulacion}).
+
+El procedimiento fija para el entrenamiento final el presupuesto completo de iteraciones de la búsqueda que produjo la configuración seleccionada y toma el punto de control (\gls{checkpoint}) de la última iteración.
+
+El protocolo contempla veinte simulaciones por cada combinación de algoritmo y escenario. Para las dieciséis combinaciones previstas, esto representa 320 simulaciones si todas cuentan con una configuración seleccionada. Cada resumen estadístico requiere veinte observaciones válidas por métrica.
+
+Las semillas aleatorias de \acrshort{acr-sumo} se registran antes de cada evaluación y son distintas de las usadas en las etapas anteriores; no se fija un panel común entre algoritmos. En cada corrida se reconstruye el entorno con la semilla correspondiente y se comprueba que sea la utilizada por \acrshort{acr-sumo}. Los parámetros de las políticas permanecen fijos y estas actúan sin exploración. El calentamiento se aplica cuando lo establece la configuración del escenario.
+
+En Mendoza, la configuración de búsqueda, selección y entrenamiento final establece la ventana de dos horas del escenario v14: la simulación comienza en $t=1500$ s, incluye 300 s de calentamiento y el control se evalúa entre $t=1800$ y $t=9000$ s (06:30--08:30), según \path{nets/Mendoza/mendoza_hpo_v14.sumocfg}.
+
+La configuración de evaluación final establece una jornada completa, de $t=0$ a $t=43200$ s (06:00--18:00), sin calentamiento, según \path{nets/Mendoza/mendoza_evaluation_v14.sumocfg}. Esta separación busca examinar el modelo final en un horizonte diario que incluye condiciones horarias distintas de las del recorte matutino.
+
+Para las evaluaciones urbanas se utiliza el archivo congelado \path{nets/Mendoza/mendoza_12h.rou.xml} (apéndice \ref{sec:procedencia_mendoza}). El panel urbano de selección se especifica en la subsección \ref{subsec:seleccion_mendoza}; las veinte semillas de evaluación final excluyen la semilla 104729, reservada para la evaluación diaria canónica.
+
+El protocolo requiere registrar por simulación las inserciones, la completitud de la cohorte insertada y los teletransportes. Como el modelo final puede diferir del comportamiento observado durante la selección, estos diagnósticos se informan de manera independiente y no operan como filtros retroactivos.
+
+Las medidas de viajes con denominador nulo se mantienen como indefinidas; si falta una de las veinte observaciones válidas de una métrica, no se calcula su resumen para esa combinación. Un cierre anticipado se conserva en el registro y no cuenta como un horizonte completo. Las repeticiones por un fallo técnico conservan el intento original y la semilla asignada.
+
+Para cada métrica, la media da el mismo peso a las veinte simulaciones y la desviación estándar muestral utiliza el divisor $20-1=19$. El resumen se calcula por separado para cada agente y para cada medida global de red; las métricas globales de viajes se conservan diferenciadas de la señal local por agente.
+
+La dispersión describe la variación entre simulaciones del modelo evaluado; no estima la variabilidad entre entrenamientos independientes \cite{Agarwal2021RLiable}. Por ello, la comparación descriptiva caracteriza los modelos obtenidos bajo este procedimiento y no establece una superioridad general de los algoritmos.
 
 \FloatBarrier
 
