@@ -674,7 +674,7 @@ El manifiesto reserva veinte semillas de evaluación final por algoritmo, sin im
 \subsection{Métricas y análisis por pares de A/C}
 \label{subsec:detalle_analisis_pareado}
 
-En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra el cociente por paso descrito en la metodología: espera acumulada en los carriles del controlador dividida por los vehículos presentes. Cuando no hay vehículos, el valor del paso es cero. El código promedia estos valores por controlador y calcula el Gini dando el mismo peso a cada uno.
+En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra en cada paso de decisión la espera acumulada en los carriles del agente dividida por la cantidad de vehículos presentes. Cuando no hay vehículos, el valor del paso es cero. Para calcular el Gini, el código promedia estos valores a lo largo del control para cada agente y da igual peso a todos los agentes.
 
 Para cada una de las tres redes, las cinco evaluaciones de una política se promedian antes de calcular las diferencias entre las 24 parejas de entrenamiento. El remuestreo conserva cada pareja completa y genera 20.000 conjuntos de 24 parejas con reemplazo. Para el intervalo percentil del 95\% se usan los percentiles 2,5 y 97,5; para el intervalo del 98,33\%, aproximadamente 0,83 y 99,17. Este nivel aplica la corrección de Bonferroni al nivel nominal de 0,05 dividido entre los tres contrastes A/C, uno por cada red ($0{,}05/3$), para cada medida por separado. No se ajusta conjuntamente entre métricas distintas.
 
