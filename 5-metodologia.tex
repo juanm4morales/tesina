@@ -590,7 +590,7 @@ El retraso previo al ingreso se registra por separado en \texttt{departDelay} y 
         \text{CI} = \frac{|\{v \in \mathcal{V}_{\mathrm{ins}} : \text{completó su viaje antes de } t_{\mathrm{fin}}\}|}{|\mathcal{V}_{\mathrm{ins}}|}.
         \label{eq:tasa_completitud}
     \end{equation}
-    Si $|\mathcal{V}_{\mathrm{ins}}|=0$, CI queda indefinida. La medida responde qué proporción de quienes ingresaron logró terminar su viaje; una tasa alta puede coexistir con un bajo volumen de inserciones si la congestión retiene vehículos fuera de la red.
+    Si $|\mathcal{V}_{\mathrm{ins}}|=0$, CI queda indefinida. La medida indica qué proporción de los vehículos que ingresaron logró terminar su viaje; una tasa alta puede coexistir con un bajo volumen de inserciones si la congestión retiene vehículos fuera de la red.
 
     \item \textbf{Pérdida temporal media ($\bar{\ell}$):} media de \texttt{timeLoss} en segundos por vehículo sobre $\mathcal{V}_{\mathrm{ins}}$. Estima la diferencia respecto del tiempo de viaje ideal según la velocidad deseada del vehículo y el límite vial; excluye las detenciones programadas \cite{SUMO2026_TripInfo}.
 \end{itemize}
@@ -610,7 +610,7 @@ A nivel individual, la señal local proviene de \texttt{getAccumulatedWaitingTim
 \begin{itemize}
     \item \textbf{Cociente local acumulado por observación de vehículo:} para cada agente, se divide la suma de esperas reportadas durante el control por la suma de vehículos presentes en sus pasos. Un vehículo puede contribuir en varios pasos y se incluyen los presentes al comenzar el control; el denominador cuenta observaciones de vehículos, no viajes distintos. Los pasos con mayor presencia vehicular pesan más en el cociente, que se expresa en segundos. El agregado de red divide la suma de numeradores por la suma de denominadores de todos los agentes. Si no hay observaciones de vehículos, se informa cero junto con el conteo nulo.
     \Needspace{10\baselineskip}
-    \item \textbf{Desigualdad espacial de espera (coeficiente de Gini, $G_{\text{wait}}$):} para cada agente $i$ y paso $t$, la espera acumulada $W_i^{(t)}$ de sus carriles se divide por el número $n_i^{(t)}$ de vehículos presentes; si $n_i^{(t)}=0$, se asigna cero. La media temporal $\bar{w}_i$ de estos cocientes da el mismo peso a cada paso, cualquiera que sea la cantidad de vehículos presentes. El coeficiente de Gini se calcula entre agentes —cada uno corresponde a un controlador— a partir de esas medias. Sean $N$ el número de agentes y $\bar{w}_{(i)}$ las medias temporales ordenadas de menor a mayor:
+    \item \textbf{Desigualdad espacial de espera (coeficiente de Gini, $G_{\text{wait}}$):} para cada agente $i$ y paso $t$, la espera acumulada $W_i^{(t)}$ de sus carriles se divide por el número $n_i^{(t)}$ de vehículos presentes; si $n_i^{(t)}=0$, se asigna cero. La media temporal $\bar{w}_i$ de estos cocientes da el mismo peso a cada paso, cualquiera que sea la cantidad de vehículos presentes. El coeficiente de Gini se calcula entre agentes (cada uno corresponde a un controlador) a partir de esas medias. Sean $N$ el número de agentes y $\bar{w}_{(i)}$ las medias temporales ordenadas de menor a mayor:
     \begin{equation}
         G_{\text{wait}} = \frac{2 \sum_{i=1}^{N} i \cdot \bar{w}_{(i)} - (N + 1) \sum_{i=1}^{N} \bar{w}_{(i)}}{N \sum_{i=1}^{N} \bar{w}_{(i)}}.
         \label{eq:gini_espera}
