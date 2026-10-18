@@ -286,17 +286,17 @@ Los dos perfiles de conteo documentados corresponden a versiones distintas y no 
 \rowcolor{catAzulCielo!25}
 Dato & Resumen histórico & Generación \\\hline
 Días incluidos & 33 & 32 \\
-Media diaria observada (vehículos/día) & 25\,283,85 & 25\,175,84 \\
-Desviación estándar interdiaria (vehículos/día) & 2\,316,54 & No informada \\
-Volumen nominal (vehículos/día) & 290\,000 & 260\,000 \\
+Media diaria observada (vehículos/día) & 25.283,85 & 25.175,84 \\
+Desviación estándar interdiaria (vehículos/día) & 2.316,54 & No informada \\
+Volumen nominal (vehículos/día) & 290.000 & 260.000 \\
 \texttt{camera\_retention} & 0,95 & 1,00 \\
-Flujo horario asociado (vehículos/h) & 16\,744 & 14\,986 \\
+Flujo horario asociado (vehículos/h) & 16.744 & 14.986 \\
 Factor de expansión (redondeado) & 11,4698 & 10,3274 \\\hline
 \end{tabular}\end{table}
 
 El resumen histórico identificado en la Tabla \ref{tab:archivos_procedencia_mendoza} corresponde a una versión distinta de la entrada de generación; su factor de expansión registrado es 11,46977289. El log de generación registra 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica advierte que sus parámetros no deben aplicarse a ciegas para regenerar la entrada canónica. Como no se conservaron la matriz ni las rutas originales, la transformación desde ese registro hasta las rutas consumidas no puede reconstruirse por completo. La regla canónica y sus 520 pares conectables se detallan en la subsección \ref{subsec:procedimiento_demanda_mendoza}.
 
-Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado; su hash completo se presenta después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14\,986,32 vehículos por hora. El registro de generación informa 14\,986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
+Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado; su hash completo se presenta después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14.986,32 vehículos por hora. El registro de generación informa 14.986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
 
 \begin{table}[H]
 \centering
@@ -466,11 +466,11 @@ Peso de recompensa vecinal & $[0;\,0{,}95)$ & Uniforme continua \\
 Tasa de aprendizaje & $[10^{-5};\,10^{-3}]$ & Loguniforme \\
 Transiciones por lote & $\{64;\,128;\,256;\,512\}$ & Categórico \\
 Límite del gradiente & $\{0{,}5;\,1;\,2;\,5;\,10\}$ & Categórico \\
-Actualización de red objetivo & $\{500;\,1000;\,2000;\,5000\}$ & Categórico \\
-Pasos para reducir exploración & $\{5000;\,10000;\,20000\}$ & Categórico \\
+Actualización de red objetivo & $\{500;\,1{.}000;\,2{.}000;\,5{.}000\}$ & Categórico \\
+Pasos para reducir exploración & $\{5{.}000;\,10{.}000;\,20{.}000\}$ & Categórico \\
 Exploración final & $[0{,}02;\,0{,}10)$ & Uniforme continua \\
 Horizonte del retorno & $\{1;\,3;\,5\}$ & Categórico \\
-Pasos antes de aprender & $\{1000;\,2000;\,5000\}$ & Categórico \\
+Pasos antes de aprender & $\{1{.}000;\,2{.}000;\,5{.}000\}$ & Categórico \\
 Niveles del codificador & 4--64 & Uniforme entera \\
 \hline
 \end{tabular}

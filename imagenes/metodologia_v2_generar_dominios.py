@@ -37,7 +37,7 @@ def latex_number(value: int | float, parameter: str) -> str:
     if isinstance(value, bool):
         raise TypeError("boolean is not a numeric domain value")
     if isinstance(value, int):
-        return f"{value:,}".replace(",", r"\,")
+        return f"{value:,}".replace(",", r"{.}")
     if parameter == "lr":
         exponent = math.floor(math.log10(abs(value))) if value else 0
         mantissa = value / (10 ** exponent) if value else 0

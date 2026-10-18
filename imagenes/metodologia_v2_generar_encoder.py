@@ -106,6 +106,7 @@ def pgf(output: Path) -> None:
 \begin{{axis}}[width=14.3cm,height=8cm,axis lines=left,xmin=0,xmax={1.2*M},ymin=-.5,ymax=21.8,
  xlabel={{Espera acumulada por carril (vehículo$\cdot$s)}},ylabel={{Nivel de espera}},
  ytick={{0,5,10,15,21}},yticklabels={{0,5,10,15,21}},
+ /pgf/number format/1000 sep={{\mbox{{.}}}},
  grid=major,grid style={{inkplot!12}},
   tick label style={{font=\small}},label style={{font=\normalsize}},title style={{font=\small}}]
 \addplot[blueplot,thick,const plot] coordinates {{

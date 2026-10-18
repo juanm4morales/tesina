@@ -1515,7 +1515,13 @@ El algoritmo \ref{alg:happo} presenta la secuencia completa de optimización de 
 \end{algorithm}
 El procedimiento de \acrshort{acr-happo} organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre agentes para seleccionar su acción \cite{kuba2021trust}.
 
-La adaptación para control semafórico de este trabajo conserva la actualización sucesiva de los actores, pero inicializa los factores $M_{i_m}$ con las ventajas individuales $\hat{A}_i(s, \mathbf{a})$ calculadas mediante el crítico centralizado multi-salida a partir de las señales de recompensa individuales (sección \ref{subsec:recompensa_coordinacion}), propagándolos mediante la razón $\rho_{\text{post}}^{i_m}$ tras optimizar a cada actor. Esta adaptación utiliza ventajas individuales, mientras que la demostración teórica parte de una recompensa global compartida. Su efecto sobre el aprendizaje debe comprobarse mediante los experimentos; esta adaptación no hereda por sí sola la garantía teórica de mejora.
+\begingroup
+\widowpenalty=10000
+La adaptación para control semafórico de este trabajo conserva la actualización sucesiva de los actores, pero inicializa los factores $M_{i_m}$ con las ventajas individuales $\hat{A}_i(s, \mathbf{a})$ calculadas mediante el crítico centralizado multi-salida a partir de las señales de recompensa individuales (Sección \ref{subsec:recompensa_coordinacion}), propagándolos mediante la razón $\rho_{\text{post}}^{i_m}$ tras optimizar a cada actor. A diferencia del Algoritmo \ref{alg:happo}, la implementación actualiza el crítico al comienzo de cada época, antes de los actores (Sección \ref{subsec:mecanismos_algoritmos}).
+\par
+\endgroup
+
+Esta adaptación utiliza ventajas individuales, mientras que la demostración teórica parte de una recompensa global compartida. Su efecto sobre el aprendizaje debe comprobarse mediante los experimentos; esta adaptación no hereda por sí sola la garantía teórica de mejora.
 
 Para finalizar el estudio comparativo de los algoritmos derivados de \acrshort{acr-ppo} en escenarios \acrshort{acr-marl}, la Tabla \ref{tab:marl_ppo_comparison} sintetiza sus principales propiedades operativas, arquitectónicas y teóricas.
 
