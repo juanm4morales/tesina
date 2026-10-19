@@ -5,15 +5,15 @@
 \node[met/head] at (3.6,.9) {Red vial};\node[met/head] at (11.4,.9) {Demanda};
 \node[met/box,text width=5.7cm,minimum height=1cm] (map) at (3.6,0) {Cartografía OSM};
 \node[met/box,text width=5.7cm,minimum height=1cm] (counts) at (11.4,0) {Conteos observados};
-\node[met/learn,text width=5.7cm,minimum height=1cm] (correct) at (3.6,-1.8) {Conversión y correcciones};
-\node[met/learn,text width=5.7cm,minimum height=1cm] (profile) at (11.4,-1.8) {Depuración y perfil temporal};
-\node[met/out,text width=5.7cm,minimum height=1cm] (road) at (3.6,-3.6) {Archivo de red};
-\node[met/out,text width=5.7cm,minimum height=1cm] (demand) at (11.4,-3.6) {Rutas: supuestos de volumen y OD};
-\node[met/out,text width=6.8cm,minimum height=1cm] (check) at (7.5,-5.7) {Comprobación operacional\\con programas de referencia};
+\node[met/learn,text width=5.7cm,minimum height=1cm] (correct) at (3.6,-1.5) {Conversión y correcciones};
+\node[met/learn,text width=5.7cm,minimum height=1cm] (profile) at (11.4,-1.5) {Depuración y perfil temporal};
+\node[met/out,text width=5.7cm,minimum height=1cm] (road) at (3.6,-3.0) {Archivo de red};
+\node[met/out,text width=5.7cm,minimum height=1cm] (demand) at (11.4,-3.0) {Rutas: supuestos de volumen y OD};
+\node[met/out,text width=6.8cm,minimum height=1cm] (check) at (7.5,-4.9) {Comprobación operacional\\con programas de referencia};
 \draw[met/arrow] (map)--(correct);\draw[met/arrow] (correct)--(road);
 \draw[met/arrow] (counts)--(profile);\draw[met/arrow] (profile)--(demand);
-\draw (road.south)--(3.6,-4.7)--(7.5,-4.7);\draw (demand.south)--(11.4,-4.7)--(7.5,-4.7);
-\fill (7.5,-4.7) circle (1.3pt);\draw[met/arrow] (7.5,-4.7)--(check.north);
+\draw (road.south)--(3.6,-3.9)--(7.5,-3.9);\draw (demand.south)--(11.4,-3.9)--(7.5,-3.9);
+\fill (7.5,-3.9) circle (1.3pt);\draw[met/arrow] (7.5,-3.9)--(check.north);
 
 \end{tikzpicture}
 \endgroup

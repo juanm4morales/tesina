@@ -12,7 +12,7 @@ import tempfile
 import shutil
 
 ROOT=Path(__file__).resolve().parent.parent
-NAMES=['metodologia_v2_flujo','metodologia_redes_sinteticas','metodologia_construccion_urbana','metodologia_red_mendoza','metodologia_v2_integracion','metodologia_v2_encoder','metodologia_controladores','metodologia_cambio_mascara','metodologia_v2_protocolo','metodologia_contraste_ac','metodologia_cohorte','metodologia_analisis_pareado']
+NAMES=['metodologia_v2_flujo','metodologia_redes_sinteticas','metodologia_construccion_urbana','metodologia_red_mendoza','metodologia_v2_integracion','metodologia_v2_encoder','metodologia_controladores','metodologia_cambio_mascara','metodologia_v2_protocolo','metodologia_contraste_ac','metodologia_cohorte']
 PREAMBLE=r'''\documentclass[tikz,border=4pt]{standalone}
 \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
 \usepackage[spanish,es-noquoting,es-nodecimaldot]{babel}

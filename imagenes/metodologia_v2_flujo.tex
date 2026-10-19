@@ -5,15 +5,15 @@
 \node[met/head] at (7.5,1) {(a) Comparación de los cuatro algoritmos};
 \foreach \id/\x/\txt in {prep/2.4/Preparación,p1/7.5/Búsqueda amplia,p2/12.6/Búsqueda refinada} {
 \node[met/box,text width=3.8cm,minimum height=1cm] (\id) at (\x,0) {\txt};}
-\node[met/learn,text width=3.8cm,minimum height=1cm] (sel) at (12.6,-1.9) {Selección};
-\node[met/learn,text width=3.8cm,minimum height=1cm] (train) at (7.5,-1.9) {Entrenamiento\\desde cero};
-\node[met/out,text width=3.8cm,minimum height=1cm] (eval) at (2.4,-1.9) {Evaluación};
+\node[met/learn,text width=3.8cm,minimum height=1cm] (sel) at (12.6,-1.5) {Selección};
+\node[met/learn,text width=3.8cm,minimum height=1cm] (train) at (7.5,-1.5) {Entrenamiento\\desde cero};
+\node[met/out,text width=3.8cm,minimum height=1cm] (eval) at (2.4,-1.5) {Evaluación};
 \draw[met/arrow] (prep)--(p1);\draw[met/arrow] (p1)--(p2);\draw[met/arrow] (p2)--(sel);
 \draw[met/arrow] (sel)--(train);\draw[met/arrow] (train)--(eval);
-\node[met/head] at (7.5,-3.4) {(b) Variantes de MAPPO en redes sintéticas};
-\node[met/box,text width=3.8cm,minimum height=1cm] (ae) at (2.4,-4.4) {Prueba A--E};
-\node[met/learn,text width=3.8cm,minimum height=1cm] (ac) at (7.5,-4.4) {Contraste A/C};
-\node[met/out,text width=3.8cm,minimum height=1cm] (pairs) at (12.6,-4.4) {Análisis por pares};
+\node[met/head] at (7.5,-2.7) {(b) Variantes de MAPPO en redes sintéticas};
+\node[met/box,text width=3.8cm,minimum height=1cm] (ae) at (2.4,-3.65) {Prueba A--E};
+\node[met/learn,text width=3.8cm,minimum height=1cm] (ac) at (7.5,-3.65) {Contraste A/C};
+\node[met/out,text width=3.8cm,minimum height=1cm] (pairs) at (12.6,-3.65) {Análisis por pares};
 \draw[met/arrow] (ae)--(ac);\draw[met/arrow] (ac)--(pairs);
 
 \end{tikzpicture}

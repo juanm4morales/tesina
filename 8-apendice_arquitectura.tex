@@ -25,7 +25,7 @@ La interfaz distingue dos indicadores de cierre: la terminación señala que se 
 
 La Figura \ref{fig:uml_entorno_agentes} presenta las entidades del entorno y sus relaciones con los \glspl{agente} semafóricos. En un diagrama de clases, cada recuadro contiene el nombre de la clase, sus atributos y sus operaciones. El signo ``$-$'' identifica miembros privados, ``$+$'' públicos y ``\#'' protegidos, disponibles en la clase y sus derivadas. El texto después de los dos puntos indica el tipo de dato. La cursiva señala una clase u operación abstracta, que debe concretarse en otra clase. La flecha ``hereda de'' apunta desde la clase especializada hacia la general; la multiplicidad $1..*$ indica ``uno o más'' objetos relacionados.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{tikzpicture}[
   font=\sffamily\scriptsize,
@@ -122,7 +122,7 @@ La clase base abstracta \texttt{RewardFn} define la interfaz común \texttt{comp
 
 La Figura \ref{fig:uml_recompensas} detalla las clases que intervienen en la recompensa cooperativa. Las demás estrategias locales no se dibujan para conservar la legibilidad. Se mantienen las convenciones de la Figura \ref{fig:uml_entorno_agentes}; en este segundo diagrama, la flecha discontinua ``compone'' indica que una clase usa otra en su cálculo, no que herede sus atributos y métodos.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \resizebox{0.98\textwidth}{!}{%
 \begin{tikzpicture}[
@@ -560,7 +560,7 @@ El estado del modelo al final de un ensayo se guarda en un archivo \gls{checkpoi
 
 La selección de configuraciones, el entrenamiento final desde cero y la evaluación comparativa son etapas posteriores a las búsquedas. Las semillas 950001, 950003 y 950007 se utilizan en la evaluación de candidatos sintéticos descrita en el apartado de admisibilidad y selección de la subsección \ref{subsec:criterios_admisibilidad_hpo}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Arquitecturas y semillas de la búsqueda refinada para las doce combinaciones sintéticas. La semilla de evaluación es común a los algoritmos del mismo escenario; las semillas de \acrshort{acr-tpe} no son réplicas de entrenamiento.}
 \label{tab:busquedas_v2}
@@ -607,7 +607,7 @@ El criterio \texttt{final\_declared\_budget} del contrato de entrenamiento ident
 \subsection{Dominios declarados y significado de los parámetros}
 \label{subsec:dominios_refinados}
 
-Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados para la búsqueda refinada, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. Mendoza también forma parte de la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico. Cada columna de valores corresponde al escenario y a la arquitectura indicados.
+Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados para la búsqueda refinada, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. Mendoza también forma parte de la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico.
 
 % Dominios expresados como [inferior, superior], excepto randint: [inferior, superior exclusivo).
 \begin{landscape}

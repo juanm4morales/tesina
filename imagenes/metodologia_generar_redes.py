@@ -117,15 +117,15 @@ def main():
         elif fragment=='San Martín':named[fragment]=max(pts,key=lambda q:q[0])
         else:named[fragment]=min(pts,key=lambda q:(q[0]-2.1)**2+(q[1]-4.8)**2)
     urban=r'''\begingroup\setstretch{1}
-\begin{tikzpicture}[met/base,x=.925926cm,y=.925926cm]
-\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=10cm,trim=330bp 0bp 377bp 0bp,clip]{imagenes/escenario_mendoza_sumo.png}};
+\begin{tikzpicture}[met/base,x=1.111111cm,y=1.111111cm]
+\node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=12cm,trim=330bp 0bp 377bp 0bp,clip]{imagenes/escenario_mendoza_sumo.png}};
 \draw[met/arrow,line width=.8pt] (.55,9.7)--(.55,10.6) node[above]{N};
 \draw[line width=.6pt] (.3,-.3)--(.9624,-.3);
 \draw (.3,-.2)--(.3,-.4);\draw (.9624,-.2)--(.9624,-.4);
 \node[met/note,anchor=north] at (.63,-.45) {100 m};
 \draw[draw=colDatoPrimario,line width=1.2pt] (9.25,1.05) ellipse (.8 and .35);
-\node[met/note,anchor=east] (lh) at (-.25,9.4) {Las Heras};
-\node[met/note,anchor=east] (mb) at (-.25,4.8) {Manuel Belgrano};
+\node[met/note,anchor=east] (lh) at (1.1,9.4) {Las Heras};
+\node[met/note,anchor=east] (mb) at (1.1,4.8) {Manuel Belgrano};
 \node[met/note,anchor=east] (co) at (-.25,2.7) {Colón};
 \node[met/note,anchor=west] (sm) at (11.05,8) {San Martín};
 \node[met/note,anchor=west,align=left] (vz) at (11.05,1.05) {Vicente Zapata\\TAZ 28};

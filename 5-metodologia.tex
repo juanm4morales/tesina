@@ -19,8 +19,6 @@ El diseño de búsqueda comprende dos fases en los cuatro escenarios. La fase 1 
 
 En las redes sintéticas, entre ambas fases de búsqueda se desarrolla la segunda línea, que mantiene fija la configuración de aprendizaje en cada campaña. La prueba A--E examina cinco formulaciones locales y vecinales de observación y recompensa con \acrshort{acr-mappo}; la comparación A/C contrasta las formulaciones local (A) y vecinal (C) en las tres redes sintéticas. Sus protocolos se detallan en las secciones \ref{subsec:screening_vecinal} y \ref{sec:comparacion_local_vecinal}, respectivamente.
 
-La medida principal es la espera media observada hasta el cierre entre los vehículos que ingresan durante la ventana de evaluación, incluidos los viajes inconclusos. Se interpreta junto con la cantidad de vehículos insertados y la proporción que llega a destino. Así se examina si una espera menor coincide con una reducción del tránsito atendido; se ha señalado que el tiempo medio de viaje puede ocultar congestión cuando los vehículos nuevos no consiguen ingresar a la red \cite{jiang2024xlight}. Las métricas y las poblaciones que utilizan se precisan en la Sección \ref{sec:metricas_evidencia}.
-
 La preparación de Mendoza incluye una comprobación operacional con programas semafóricos de referencia, descrita en la Sección \ref{subsec:escenario_mendoza}. La Figura \ref{fig:flujo_metodologico_general} muestra el recorrido desde los escenarios preparados hasta la búsqueda de hiperparámetros y los estudios de variantes. La banda superior representa el protocolo de los cuatro algoritmos en los escenarios sintéticos y urbano, sin acreditar por ello una campaña urbana ejecutada. La inferior corresponde a A--E y A/C, con configuraciones fijas en las tres redes sintéticas.
 
 Las flechas representan dependencias entre operaciones y no una cronología de campañas. La selección utiliza configuraciones candidatas de la búsqueda. El contraste de variantes orienta la formulación de aprendizaje: la fase 2 sintética fija la señal local, mientras que el protocolo urbano la adopta desde la búsqueda amplia.
@@ -31,6 +29,8 @@ Las flechas representan dependencias entre operaciones y no una cronología de c
 \caption{Etapas y dependencias del diseño experimental.}
 \label{fig:flujo_metodologico_general}
 \end{figure}
+
+La medida principal es la espera media observada hasta el cierre entre los vehículos que ingresan durante la ventana de evaluación, incluidos los viajes inconclusos. Se interpreta junto con la cantidad de vehículos insertados y la proporción que llega a destino. Así se examina si una espera menor coincide con una reducción del tránsito atendido; se ha señalado que el tiempo medio de viaje puede ocultar congestión cuando los vehículos nuevos no consiguen ingresar a la red \cite{jiang2024xlight}. Las métricas y las poblaciones que utilizan se precisan en la Sección \ref{sec:metricas_evidencia}.
 
 \section{Escenarios de simulación}
 \label{sec:diseno_escenarios}
@@ -92,7 +92,7 @@ La fila 2 forma una arteria de tres carriles por sentido; el sector A1--B1--C1 t
 
 
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \input{imagenes/metodologia_redes_sinteticas.tex}
 \caption{Redes sintéticas: (a) corredor, (b) cuadrícula y (c) red heterogénea. Cada franja representa un carril; las escalas y los anchos son convencionales.}
@@ -140,7 +140,7 @@ El escenario modela parte del microcentro de la Ciudad de Mendoza y utiliza la r
 
 La Figura \ref{fig:construccion_urbana} distingue las dos entradas de la construcción del escenario. La cartografía se corrige para obtener la red vial; los conteos depurados aportan un perfil temporal que se combina con supuestos de volumen y distribución origen--destino para generar la demanda. Ambas entradas se comprueban juntas con programas de referencia. El esquema representa las funciones del procedimiento; los perfiles documentales se distinguen en la Sección \ref{sec:procedencia_mendoza}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \input{imagenes/metodologia_construccion_urbana.tex}
 \caption{Construcción de la red y la demanda de Mendoza.}
@@ -182,17 +182,19 @@ Los programas de señales incluidos en el archivo de red se utilizan como refere
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
 
-La demanda nominal se construyó a partir del perfil horario promedio de la cámara 169, $\bar{q}_{\mathrm{obs}}(h)$, expresado en vehículos por hora, donde $h$ identifica una hora entre 0 y 23. El perfil se escaló a un volumen diario nominal $V_{\mathrm{diario}}$ de 260.000 vehículos, fijado como supuesto. Sea $\Delta h=1$ hora la duración de cada intervalo; la Ecuación \eqref{eq:factor_expansion_mendoza} define el factor adimensional $f_{\mathrm{exp}}$ que relaciona el volumen nominal con el total diario del perfil:
+La demanda nominal se construyó a partir del perfil horario promedio de la cámara 169, $\bar{q}_{\mathrm{obs}}(h)$, expresado en vehículos por hora, donde $h$ identifica una hora entre 0 y 23. El perfil se escaló a un volumen diario nominal $V_{\mathrm{diario}}$ de 260.000 vehículos, fijado como supuesto. Sea $\Delta h=1$ hora la duración de cada intervalo; la Ecuación \eqref{eq:factor_expansion_mendoza} define el factor adimensional $f_{\mathrm{exp}}$, cuyo subíndice abrevia «expansión», que relaciona el volumen nominal con el total diario del perfil:
     \begin{equation}
     f_{\text{exp}} = \frac{V_{\text{diario}}}{\sum_{h=0}^{23} \bar{q}_{\mathrm{obs}}(h)\,\Delta h}
     \label{eq:factor_expansion_mendoza}
     \end{equation}
-El registro de generación informa un factor de 10,32735993. Se conserva como valor registrado; la Tabla \ref{tab:fuentes_mendoza} distingue su procedencia de la del resumen histórico. La Ecuación \eqref{eq:demanda_red_horaria} aplica ese factor para obtener el flujo horario nominal de la red:
+El valor 10,32735993 procede del archivo \texttt{gen.log} del registro de generación, que informa el método \texttt{daily\_volume} y el volumen objetivo de 260.000 vehículos diarios. La Ecuación \eqref{eq:factor_expansion_mendoza} expresa esa operación de escalado, sin estimar a partir de la cámara el volumen total de la ciudad. La Tabla \ref{tab:fuentes_mendoza} distingue este registro del resumen histórico y la Tabla \ref{tab:archivos_procedencia_mendoza} permite localizar los archivos de procedencia. La Ecuación \eqref{eq:demanda_red_horaria} aplica ese factor para obtener el flujo horario nominal de la red:
     \begin{equation}
     Q_{\text{red}}(h) = \bar{q}_{\mathrm{obs}}(h) \cdot f_{\text{exp}}
     \label{eq:demanda_red_horaria}
     \end{equation}
 $Q_{\mathrm{red}}(h)$ se expresa en vehículos por hora. En la generación se conservó el conteo de la cámara como referencia completa; esto es un supuesto de construcción, pues no se conoce qué fracción de esos vehículos llega al área modelada ni cuántos ingresan por accesos no observados.
+
+Como criterio de calibración de la demanda, Wunderlich, Vasudevan y Wang recomiendan contrastar los flujos simulados con conteos observados en secciones transversales que abarquen los enlaces de entrada y salida del área, y ajustar la demanda hasta reproducir los intervalos observados~\cite[cap.~5]{Wunderlich2019Microsimulation}. El escalado aquí documentado conserva la distribución horaria de una cámara y fija el volumen total por supuesto; no constituye esa calibración espacial. En la documentación revisada no se identificó una fuente empírica o bibliográfica que justifique específicamente el volumen de 260.000 vehículos diarios. Por ello, su justificación y el contraste con conteos adicionales permanecen pendientes.
 
 \subsubsection{Distribución origen--destino y generación de rutas}
 \label{subsubsec:mendoza_contrato_od_v14}
@@ -292,7 +294,7 @@ En Mendoza se fija $M_{\mathrm{lane}}=5.396$ veh·s mediante una calibración co
 
 La Figura \ref{fig:codificacion_carriles} muestra cómo la función $e(x)$ distribuye los niveles de espera con $I=22$ y el límite de escala estimado para $3\times3$. Los escalones más estrechos para esperas bajas permiten distinguir variaciones menores en ese rango. Los puntos señalan los ejemplos $e(0)=0$, $e(120)=10$ y $e(600)=18$, con las entradas expresadas en veh·s. El nivel máximo se alcanza antes del límite de escala. La comparación entre las variantes local y vecinal utiliza $I=17$, distinto del número de niveles del ejemplo.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.94\textwidth]{imagenes/metodologia_v2_encoder.pdf}
 \caption{Codificación local: $I=22$ y $M_{\mathrm{lane}}=1.136$ veh·s.}
@@ -489,7 +491,7 @@ En Mendoza, la fase 2 conserva la observación y la recompensa locales, con $\rh
 La Figura \ref{fig:protocolo_informado_v2} resume el paso de la exploración amplia a la búsqueda con dominios reducidos. En las redes sintéticas, los diez mejores ensayos orientan los dominios y los cinco mejores aportan los parámetros de la configuración inicial (Sección \ref{subsec:dominios_refinados}). Cada escenario utiliza sus propios resultados y el entrenamiento comienza desde cero.
 
 La fase 2 emplea señal local en los cuatro escenarios. En Mendoza, esta condición ya se aplica desde la fase 1. Las condiciones sintéticas y urbanas se documentan por separado en el apéndice.
-\begin{figure}[H]\centering
+\begin{figure}[!htbp]\centering
 \input{imagenes/metodologia_v2_protocolo.tex}
 \caption{Derivación de dominios y configuración inicial en el refinamiento sintético.}
 \label{fig:protocolo_informado_v2}
@@ -547,7 +549,7 @@ Se examinaron cinco formulaciones en la red $4\times4\_H$, con \acrshort{acr-map
 
 La Tabla \ref{tab:variantes_vecinales} identifica las formulaciones como A--E. B, C y D fijaron $\rho_{\mathrm{coop}}=0{,}1$: la prueba comparó formulaciones y no realizó un barrido del coeficiente. C y D comparten recompensa y difieren en la observación, mientras que E utiliza otra recompensa local. Esta última se inspira en PressLight, cuya presión utiliza densidades vehiculares de entrada y salida; la adaptación E cuenta vehículos detenidos. La campaña multiescenario documentada se limitó a A y C. No se dispone de un criterio previo documentado para elegir C entre las variantes vecinales; por ello, esa elección no establece que C sea la mejor formulación vecinal.
 
-\begin{table}[H]\centering\small
+\begin{table}[!htbp]\centering\small
 \caption{Variantes examinadas en la prueba preliminar.}\label{tab:variantes_vecinales}
 \begin{tabular}{>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{5.5cm}>{\raggedright\arraybackslash}p{5.7cm}}\hline
 \textbf{Variante} & \textbf{Observación} & \textbf{Recompensa} \\\hline
@@ -605,7 +607,7 @@ La Figura \ref{fig:cohorte_evaluacion} muestra por qué la inserción efectiva d
 
 En el caso 1, el ingreso ocurre antes de la ventana y el vehículo se excluye de la cohorte, aunque complete su viaje durante ella. En el caso 2, el vehículo ingresa y llega a destino dentro de la ventana: contribuye a la espera observada y cuenta como viaje completo. En el caso 3, ingresa dentro de la ventana y sigue en la red al cierre: su espera parcial se incluye y permanece en el denominador de la completitud, pero no en su numerador. En el caso 4, tiene una salida programada pero no logra ingresar antes del cierre, por lo que se excluye de la cohorte. Este último caso muestra por qué también es necesario informar las inserciones y el retraso de ingreso para interpretar el desempeño.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \input{imagenes/metodologia_cohorte.tex}
 \caption{Pertenencia a la cohorte global de evaluación. Trayectorias esquemáticas.}
@@ -683,16 +685,9 @@ Sea $w_{s,b,q}$ la espera media por vehículo insertado, en segundos por vehícu
  \label{eq:contrastes_pareados}
 \end{equation}
 
-La diferencia $d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; un valor negativo favorece C. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio entre pares, no el calculado a partir de las medias globales de A y C. La diferencia relativa queda indefinida cuando $\bar w_{s,A}=0$; si esto ocurre en alguno de los 24 pares requeridos, no es posible emitir la decisión basada en dicho efecto. El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes \cite{Agarwal2021RLiable}.
+La diferencia $d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; un valor negativo favorece C. Los efectos reportados son las medias entre pares, $\bar d$ y $\bar z$; $100\bar z$ expresa el cambio porcentual medio entre pares, no el calculado a partir de las medias globales de A y C. La diferencia relativa queda indefinida cuando $\bar w_{s,A}=0$; si esto ocurre en alguno de los 24 pares requeridos, no es posible emitir la decisión basada en dicho efecto. El análisis trata cada par de políticas entrenadas como una observación independiente; las cinco evaluaciones de una misma política no se cuentan como entrenamientos independientes~\cite{Agarwal2021RLiable}.
 
-La Figura \ref{fig:analisis_pareado} muestra qué evaluaciones se emparejan dentro de un único par de entrenamientos. La fila superior corresponde al modelo entrenado con la formulación local (A) y la inferior al entrenado con la formulación vecinal (C); ambos usan la misma semilla de aprendizaje. Cada círculo representa un episodio de evaluación de uno de esos modelos. Cada columna reúne dos episodios con la misma semilla de tráfico, indicada sobre ella; la línea punteada marca esa correspondencia. Los cinco episodios de una fila evalúan el mismo modelo entrenado y se promedian para obtener su espera media. La diferencia entre las dos medias aporta un único contraste del par, no cinco entrenamientos independientes.
-
-La incertidumbre se estima mediante 20.000 remuestreos con reemplazo (\gls{bootstrap}) de los 24 pares completos de cada red. En cada remuestreo se seleccionan 24 pares; un mismo par puede repetirse y otro quedar fuera. Cada selección conserva juntas la formulación local y la vecinal, con sus cinco evaluaciones, y se recalcula el efecto entre pares. Así se mantiene el pareo que ilustra la figura.
-\begin{figure}[H]\centering
-\input{imagenes/metodologia_analisis_pareado.tex}
-\caption{Evaluaciones emparejadas dentro de un par de entrenamientos de MAPPO. Círculos: episodios; líneas punteadas: misma semilla de tráfico.}
-\label{fig:analisis_pareado}
-\end{figure}
+La incertidumbre se estima mediante 20.000 remuestreos con reemplazo (\gls{bootstrap}) de los 24 pares completos de cada red. En cada remuestreo se seleccionan 24 pares; un mismo par puede repetirse y otro quedar fuera. Cada selección conserva juntas las dos políticas del par y las cinco evaluaciones de cada una; luego se recalcula el efecto entre pares.
 
 Se informan intervalos percentiles del 95\% y del 98,33\%. Este último aplica la corrección de Bonferroni a los tres contrastes A/C, uno por cada red, para cada medida por separado; no ajusta simultáneamente todas las métricas.
 

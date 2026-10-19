@@ -28,7 +28,7 @@ En este contexto, se emplearán las siguientes nociones:
 
 La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en una intersección de cuatro accesos. Los números del 1 al 8 identifican movimientos vehiculares individuales y las etiquetas $P2$, $P4$, $P6$ y $P8$ identifican cruces peatonales del esquema. Esta numeración sigue de manera esquemática una convención habitual de los manuales de temporización semafórica; no representa una configuración experimental ni una asignación obligatoria de \glspl{fase} para el caso de estudio. Las flechas, los accesos y las etiquetas de calles permiten distinguir trayectorias y sentidos, mientras que los cruces peatonales muestran otros usuarios que también deben considerarse al ordenar los movimientos. En este trabajo, la Figura se utiliza para separar la noción geométrica de movimiento de la regla semafórica que habilita un conjunto de movimientos compatibles \cite{fhwa_signal_timing_manual}. Por ejemplo, dos movimientos que no comparten un punto de conflicto pueden incluirse en una misma fase, mientras que los que sí lo comparten deben atenderse en fases compatibles o sucesivas.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         x=0.74cm,
@@ -173,7 +173,7 @@ Microscópica & Velocidad puntual ($v_i$, kilómetros por hora) & Variable indiv
 
 La Figura \ref{fig:variables_microscopicas} presenta de manera conjunta estas distancias y tiempos entre vehículos, y permite interpretar cómo las magnitudes microscópicas describen la separación y el avance de una corriente.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[>=Stealth, font=\sffamily\small, x=0.82cm, y=0.82cm,
         guiaEsp/.style={densely dashed, draw=colSeparacionEsp!85!black, line width=0.75pt},
@@ -269,7 +269,7 @@ Esta representación probabilística supone independencia entre arribos sucesivo
 
 En este trabajo, la limitación de esos modelos analíticos motiva el uso de simulación microscópica para analizar la operación semafórica bajo condiciones variables. En el simulador \textit{Simulation of Urban Mobility} (\acrshort{acr-sumo}), la formación, dispersión e interacción de los agrupamientos vehiculares emergen de la dinámica simulada de los vehículos y de sus cambios de carril. Los procesos aleatorios del simulador se inicializan con una \gls{semilla} (\textit{seed}), un número que permite repetir su secuencia pseudoaleatoria bajo la misma configuración y versión. Cambiar la semilla permite estudiar variaciones de la simulación. Repetirla no hace iguales los resultados si también cambia el agente o sus decisiones.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{tikzpicture}[font=\sffamily\small]
 \begin{axis}[
@@ -310,7 +310,7 @@ La Figura \ref{fig:distribucion_intervalos} se interpreta comparando la forma de
 
 \subsection{Sistemas de control de tránsito}
 
-Para ordenar los movimientos en conflicto y regular el paso en las intersecciones urbanas se utilizan sistemas de control de tránsito \cite{ite_handbook}. El semáforo asigna el derecho de paso de manera alternada mediante indicaciones luminosas rojas, amarillas y verdes \cite{calymayor}.
+Para ordenar los movimientos en conflicto y regular el paso en las intersecciones urbanas se utilizan sistemas de control de tránsito \cite{ite_handbook}. El semáforo asigna el derecho de paso de manera alternada mediante indicaciones luminosas rojas, amarillas y verdes~\cite{calymayor}.
 
 En el modelo computacional, el semáforo actúa como el mecanismo mediante el cual el controlador interviene sobre la red. La selección de fases, la duración del verde efectivo y la coordinación entre intersecciones modifican la prioridad de paso y afectan la evolución de las colas y las demoras.
 
@@ -324,7 +324,7 @@ Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecut
 
 Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite{fernandez}. En la Figura \ref{fig:verde_efectivo}, $q_{\max}$ representa la tasa de descarga de saturación, $g$ el intervalo de verde efectivo, y $l_1$ y $l_2$ las pérdidas inicial y final de servicio, respectivamente; el tiempo se expresa en segundos y la tasa de flujo en vehículos por hora. La barra inferior distingue los intervalos de rojo, verde y amarillo, mientras que la curva superior muestra cómo la descarga alcanza y abandona el régimen de saturación. La descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control. La Figura es conceptual: estos parámetros no se estiman en este trabajo. En su lugar, los efectos se representan mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[font=\sffamily\small, >=Stealth]
     % Ejes
@@ -376,10 +376,10 @@ Debido a la densidad y complejidad de las redes urbanas, la sincronización y op
 
 La simulación de tránsito constituye una representación abstracta del fenómeno real. Su objetivo no es reproducir visualmente una escena particular, sino modelar los procesos que determinan la evolución de la circulación mediante reglas de comportamiento y variables observables. La calidad de los resultados depende de la representación de la red, la demanda, la flota, los modelos de comportamiento y las reglas de control. Por ello, la simulación debe entenderse como un entorno experimental sujeto a supuestos y parámetros, cuyos resultados requieren una evaluación operacional acorde con el objetivo del estudio. La correspondencia entre el fenómeno y su representación se resume en la Figura \ref{fig:sim_vs_real}: el tránsito real constituye la referencia y el simulador representa sus vehículos, red y reglas dinámicas para permitir experimentos controlados.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.98\textwidth]{imagenes/SIMvsREAL.png}
-    \caption[Correspondencia entre la circulación real y su representación en SUMO]{Correspondencia entre la circulación real y su representación microscópica en \acrshort{acr-sumo}. Fuente: \acrshort{acr-dlr} -- Institute of Transportation Systems, \textit{SUMO User Documentation} \cite{SUMO2026_SUMO}.}
+    \caption[Correspondencia entre la circulación real y su representación en SUMO]{Correspondencia entre la circulación real y su representación microscópica en \acrshort{acr-sumo}. Fuente: \acrshort{acr-dlr} -- Institute of Transportation Systems, \textit{SUMO User Documentation}~\cite{SUMO2026_SUMO}.}
     \label{fig:sim_vs_real}
 \end{figure}
 
@@ -389,16 +389,16 @@ La Figura \ref{fig:sim_vs_real} muestra, de forma sintética, la correspondencia
 
 En \acrshort{acr-sumo}, la evolución vehicular se actualiza en pasos temporales discretos sobre una representación espacial continua. El entorno permite modelar calles con múltiples carriles, cambios de carril, distintos tipos de vehículos, rutas individuales, semáforos y salidas de simulación a nivel de vehículo, carril, arco o detector \cite{SUMO2026_SUMO}.
 
-La interfaz gráfica del programa \texttt{sumo-gui} permite inspeccionar visualmente la red, los vehículos y algunos valores de la simulación durante la ejecución. Esta visualización cumple una función de apoyo para la inspección del escenario y la depuración del modelo; las métricas utilizadas para la evaluación se obtienen de las salidas de simulación y de las interfaces de control \cite{SUMO2026_SUMO}. La interfaz y su función de inspección se muestran en la Figura \ref{fig:sumo_gui}; la \gls{acr-gui} no constituye la fuente de las métricas ni reemplaza su cálculo operacional.
+La interfaz gráfica del programa \texttt{sumo-gui} permite inspeccionar visualmente la red, los vehículos y algunos valores de la simulación durante la ejecución. Esta visualización cumple una función de apoyo para la inspección del escenario y la depuración del modelo; las métricas utilizadas para la evaluación se obtienen de las salidas de simulación y de las interfaces de control~\cite{SUMO2026_SUMO}. La interfaz y su función de inspección se muestran en la Figura \ref{fig:sumo_gui}; la \gls{acr-gui} no constituye la fuente de las métricas ni reemplaza su cálculo operacional.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.98\textwidth]{imagenes/SUMO_GUI_vehSpeed.png}
-    \caption[Interfaz sumo-gui durante una simulación microscópica]{Interfaz del programa \texttt{sumo-gui} durante una simulación microscópica. El panel izquierdo presenta una vista general de la red; el derecho muestra información sobre un vehículo particular; el recuadro inferior grafica su velocidad y el superior muestra los valores de sus variables relacionadas. Fuente: \acrshort{acr-dlr} -- Institute of Transportation Systems, \textit{SUMO User Documentation} \cite{SUMO2026_SUMO}.}
+    \caption[Interfaz sumo-gui durante una simulación microscópica]{Interfaz del programa \texttt{sumo-gui} durante una simulación microscópica. El panel izquierdo presenta una vista general de la red; el derecho muestra información sobre un vehículo particular; el recuadro inferior grafica su velocidad y el superior muestra los valores de sus variables relacionadas. Fuente: \acrshort{acr-dlr} -- Institute of Transportation Systems, \textit{SUMO User Documentation}~\cite{SUMO2026_SUMO}.}
     \label{fig:sumo_gui}
 \end{figure}
 
-La Figura \ref{fig:sumo_gui} reúne cuatro zonas de inspección. A la izquierda se observa la red completa, útil para localizar la parte del escenario que se está examinando. A la derecha se muestra una vista ampliada de la calzada y de un vehículo seleccionado, mientras que el gráfico superpuesto en la parte inferior representa la evolución temporal de su velocidad, expresada en metros por segundo. La franja inferior contiene el registro de mensajes y advertencias producidos durante la ejecución, y la barra superior agrupa los controles de avance, pausa, tiempo y escala de visualización. En conjunto, estos elementos permiten verificar visualmente la presencia de vehículos, su movimiento y posibles inconsistencias de configuración. En este trabajo la interfaz se usa con fines de inspección y depuración; la evaluación cuantitativa se realiza con las salidas de simulación y las interfaces de control \cite{SUMO2026_SUMO}.
+La Figura \ref{fig:sumo_gui} reúne cuatro zonas de inspección. A la izquierda se observa la red completa, útil para localizar la parte del escenario que se está examinando. A la derecha se muestra una vista ampliada de la calzada y de un vehículo seleccionado, mientras que el gráfico superpuesto en la parte inferior representa la evolución temporal de su velocidad, expresada en metros por segundo. La franja inferior contiene el registro de mensajes y advertencias producidos durante la ejecución, y la barra superior agrupa los controles de avance, pausa, tiempo y escala de visualización. En conjunto, estos elementos permiten verificar visualmente la presencia de vehículos, su movimiento y posibles inconsistencias de configuración. En este trabajo la interfaz se usa con fines de inspección y depuración; la evaluación cuantitativa se realiza con las salidas de simulación y las interfaces de control~\cite{SUMO2026_SUMO}.
 
 Esta granularidad vuelve a la simulación microscópica especialmente adecuada para estudiar control semafórico mediante aprendizaje por refuerzo. Las decisiones sobre fases y tiempos de servicio pueden evaluarse mediante sus consecuencias sobre la dinámica simulada: colas, tiempos de espera, detenciones, ocupación de carriles, completitud de viajes y propagación de congestión. En la formulación computacional, las variables de tránsito constituyen observaciones, las fases admisibles constituyen acciones y la evolución simulada constituye la transición del entorno. La definición operacional de estas variables y su procedimiento de cálculo se presentan en la metodología.
 
@@ -413,7 +413,7 @@ En este contexto, el simulador de tránsito constituye el entorno operativo sobr
     \item \textbf{Conexiones (\textit{links}):} relaciones que conectan un carril entrante con uno saliente a través del área de cruce. En \acrshort{acr-sumo}, cada enlace controlado se asocia con un índice y con un estado de señal ($G$ para verde prioritario, $g$ para verde con cesión de paso, $y$ para amarillo y $r$ para rojo). En la fase conceptual ilustrada, las flechas verdes corresponden a los movimientos directos opuestos habilitados del eje horizontal, mientras que las flechas rojas señalan las conexiones retenidas.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         scale=0.92,
@@ -516,7 +516,7 @@ La \textit{suite} \acrshort{acr-sumo} reúne aplicaciones para construir redes, 
 
 Desde la perspectiva del modelado computacional, una simulación de \acrshort{acr-sumo} se construye a partir de archivos \gls{acr-xml} de red, demanda, elementos adicionales y configuración \cite{SUMO2026_SUMO}. Los archivos \acrshort{acr-taz} pueden utilizarse durante la estructuración espacial y la generación de demanda, mientras que las salidas de la simulación se solicitan mediante opciones de configuración específicas. Sus funciones generales se resumen en la Tabla \ref{tab:sumo_input_files}:
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Archivos de entrada y configuración empleados en una simulación de \acrshort{acr-sumo}.}
 \label{tab:sumo_input_files}
@@ -567,7 +567,7 @@ Un aspecto característico de \acrshort{acr-rl} es el dilema entre exploración 
 
 El marco matemático estándar para estudiar problemas de aprendizaje por refuerzo de un solo agente es el \gls{acr-mdp}. En un \gls{acr-mdp} finito, el agente y el entorno interactúan en pasos temporales discretos $t = 0, 1, 2, \dots$: en cada instante, el agente recibe $S_t \in \mathcal{S}$, selecciona $A_t \in \mathcal{A}(S_t)$ y el entorno emite $R_{t+1} \in \mathcal{R}$ y transita a $S_{t+1}$ \cite{liang2025marlreview}. La notación se ilustra en la Figura \ref{fig:agent_env_interaction}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         bloque/.style={rectangle, rounded corners=5pt, thick, align=center,
@@ -622,7 +622,7 @@ Esta clasificación distingue dos formas de obtener una regla de decisión. Los 
 
 La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$; si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.98\textwidth]{imagenes/metodo_valor_2.png}
     \caption[Esquema de un método basado en valor]{Esquema de un método basado en valor. A partir del estado observado $s$, la función de valor estima el retorno esperado de los pares estado--acción $Q(s,a)$. Las estimaciones para las acciones disponibles se comparan y se selecciona la alternativa con mayor valor esperado para ejecutarla en el entorno. La exploración puede incorporarse mediante estrategias como la selección $\varepsilon$-greedy \cite{suttonRL}.}
@@ -649,7 +649,7 @@ Q-learning es un algoritmo \textit{off-policy}: la política que genera los dato
 
 En los métodos basados en política, la regla de decisión se parametriza directamente como $\pi_\theta(a \mid s) = \Pr\{A_t = a \mid S_t = s, \theta\}$, donde $\theta \in \mathbb{R}^d$ representa el vector de parámetros ajustables de la política. La política puede ser determinista, si asigna siempre la misma acción a un estado, o estocástica, si produce una distribución de probabilidad sobre las acciones posibles \cite{suttonRL}. La Figura \ref{fig:metodo_basado_politica} ilustra este último caso: para el estado observado, la política asigna probabilidades a cada fase admisible y la selección se efectúa mediante muestreo o según la alternativa más probable, de acuerdo con la regla de ejecución adoptada.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.98\textwidth]{imagenes/metodo_politica_2.png}
     \caption[Esquema de un método basado en política]{Esquema de un método basado en política. A partir del estado observado $s$, la política parametrizada $\pi_\theta(a\mid s)$ genera directamente una distribución de probabilidad sobre las acciones disponibles. La regla de ejecución puede seleccionar la alternativa de mayor probabilidad o muestrear una acción a partir de dicha distribución \cite{suttonRL}.}
@@ -680,7 +680,7 @@ En la regla \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de apre
 
 La Figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y entorno, así como el circuito de evaluación mediante el cual el crítico genera la señal de retroalimentación compartida.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \resizebox{0.97\textwidth}{!}{%
     \begin{tikzpicture}[
@@ -735,7 +735,7 @@ La unidad neuronal artificial constituye el bloque computacional básico de esta
 
 La Figura \ref{fig:neurona_artificial} ilustra este procesamiento: la transformación afín $z = \mathbf{w}^{\top}\mathbf{x} + b$ integra las entradas $\mathbf{x} = (x_1, \dots, x_n)$ con los pesos $\mathbf{w}$ y el sesgo $b$, antes de que la activación $y = g(z)$ genere la salida. Sin la introducción de estas no linealidades $g(\cdot)$, una red multicapa se reduciría a una transformación afín simple, imposibilitando la captura de patrones de congestión complejos.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[>=Stealth, font=\sffamily\small,
         entrada/.style={circle, draw=catVerdeMenta!65!black, fill=catVerdeMenta!28, line width=1pt, minimum size=0.82cm, inner sep=0pt},
@@ -798,7 +798,7 @@ donde $\mathbf{W}_k$ y $\mathbf{b}_k$ denotan la matriz de pesos y el vector de 
 
 La Figura \ref{fig:red_feedforward} esquematiza esta composición con dos capas ocultas conectadas en cascada hacia la salida.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \resizebox{0.94\textwidth}{!}{%
     \begin{tikzpicture}[
@@ -894,7 +894,7 @@ Para mitigar la inestabilidad de la tríada mortal —en particular el problema 
 
 Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar; la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los \textit{minibatches} muestreados del \textit{buffer} contra el valor objetivo fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \resizebox{0.98\textwidth}{!}{%
     \begin{tikzpicture}[
@@ -994,7 +994,7 @@ la cual garantiza valores estrictamente positivos que suman la unidad. En este e
 
 La Figura \ref{fig:red_politica} muestra este recorrido para un agente semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la acción; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente de la log-probabilidad de la acción observada.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \resizebox{\textwidth}{!}{%
     \begin{tikzpicture}[
@@ -1140,7 +1140,7 @@ donde $\Omega_i$ es el conjunto de observaciones locales accesibles al agente $i
 
 La Figura \ref{fig:marl_interaction} esquematiza este acoplamiento: cada agente procesa su observación local $o_i$ y emite una fase $a_i$. La concurrencia de estas decisiones conforma la acción conjunta $\mathbf{a}$, la cual perturba el estado global del simulador de tráfico y devuelve a cada agente su nueva observación y su retroalimentación individual $r_i$.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         scale=0.9,
@@ -1216,7 +1216,7 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
         \label{eq:no_estacionariedad}
     \end{equation}
-    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp}s estacionarios dejan de ser suficientes \cite{foerster2017,liang2025marlreview}.
+    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp}s estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
 
     En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \gls{acr-wolf-phc} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes; si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
 
@@ -1225,7 +1225,7 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
     \item \textbf{Asignación de crédito multiagente (\textit{Credit Assignment}):} cuando múltiples agentes actúan en paralelo, determinar la contribución marginal de cada decisión local sobre el desempeño del sistema resulta complejo \cite{marlbook}. Una acción local desfavorable puede quedar enmascarada si el resto de los semáforos operó de forma eficiente, o viceversa. En las variantes vecinales, la recompensa individual combina señales de la intersección y sus vecinos (sección \ref{subsec:recompensa_coordinacion}), pero no identifica la contribución causal de cada acción.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.65\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
     \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en el juego de Piedra, Papel o Tijera. La diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. Cada punto en el símplex representa una distribución sobre las tres acciones disponibles; las trayectorias muestran el avance de las políticas durante el entrenamiento y los marcadores centrales destacan la política convergida en el equilibrio de Nash ($\pi^*(a) = 1/3$ para cada acción). Adaptado de \cite{bowling2002multiagent,marlbook}.}
@@ -1252,7 +1252,7 @@ El uso de redes neuronales para aproximar políticas y funciones de valor de var
 
 La Figura \ref{fig:ctde_architecture} resume esta partición operativa entre ambas etapas.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         font=\sffamily\small,
@@ -1333,7 +1333,7 @@ Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de
 
 El algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-mappo} bajo el paradigma \acrshort{acr-ctde}.
 
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
 \caption{Algoritmo Multi-Agent Proximal Policy Optimization (\acrshort{acr-mappo})}
 \label{alg:mappo}
 \begin{algorithmic}[1]
@@ -1443,7 +1443,7 @@ Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron anal
 
 La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al sustituir su restricción por un recorte. El análisis de \acrshort{acr-happo} dentro de \acrshort{acr-haml} establece garantías bajo las condiciones de ese marco \cite{kuba2021trust,zhong2024heterogeneous}. Su aplicación a un controlador semafórico requiere comprobar esas condiciones: las recompensas específicas de cada agente no definen por sí solas el retorno compartido del planteo cooperativo. La metodología delimita por ello el alcance de las garantías para la adaptación utilizada y evalúa empíricamente su desempeño. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
         scale=0.9,
