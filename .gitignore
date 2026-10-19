@@ -36,3 +36,7 @@ __pycache__/
 *.swp
 *.swo
 .DS_Store
+
+# Auditorías editoriales conservadas solo localmente
+/auditoria-referencias-caro.csv
+/observaciones-caro.csv
