@@ -1,57 +1,27 @@
 \begingroup
 \setstretch{1}
-\setlength{\parskip}{0pt}
-\setlength{\parindent}{0pt}
-\hyphenpenalty=10000
-\begin{tikzpicture}[
-  font=\sffamily\small,
-  frame/.style={draw=black!28,rounded corners=4pt},
-  box/.style={rounded corners=3pt,text width=4.9cm,minimum height=1.7cm,
-    align=center,inner sep=4pt},
-  local/.style={box,draw=colEntorno!80!black,fill=colEntorno!16},
-  joint/.style={box,draw=colInterfaz!75!black,fill=colInterfaz!19},
-  actor/.style={box,draw=colAgente!75!black,fill=colAgente!15},
-  learn/.style={box,draw=colInterfaz!75!black,fill=colInterfaz!10},
-  action/.style={box,draw=colDatoPrimario!85!black,fill=colEntorno!9},
-  flow/.style={-{Stealth[length=2mm]},line width=.75pt,draw=black!72},
-  feedback/.style={-{Stealth[length=1.8mm]},dashed,line width=.7pt,draw=colInterfaz!75!black}
-]
-% Flujo común de ejecución, centrado sobre las dos columnas de entrenamiento.
-\node[font=\sffamily\small\bfseries] at (0,0) {Ejecución descentralizada};
-\node[local,text width=3.4cm,minimum height=1.2cm] (obs) at (-4.4,-1.1) {Observación y máscara de acciones};
-\node[actor,text width=3.4cm,minimum height=1.2cm] (policy) at (0,-1.1) {Política de la intersección};
-\node[action,text width=3.4cm,minimum height=1.2cm] (act) at (4.4,-1.1) {Selección de la fase semafórica};
-\draw[flow] (obs) -- (policy);
-\draw[flow] (policy) -- (act);
-\node[font=\sffamily\footnotesize,align=center,text=black!75] at (0,-2.15)
-  {MAPPO: observación local o ampliada con información vecinal};
-\node[font=\sffamily\small\bfseries] at (0,-2.9) {Entrenamiento};
+\begin{tikzpicture}[met/base]
 
-% Cuatro paneles con centros de columna y alturas compartidos.
-\draw[frame] (-5.85,-3.25) rectangle (-.15,-7.7);
-\draw[frame] (.15,-3.25) rectangle (5.85,-7.7);
-\node[font=\sffamily\small\bfseries] at (-3,-3.45) {IPPO};
-\node[font=\sffamily\small\bfseries] at (3,-3.45) {IDQN};
-\node[local] (ipExp) at (-3,-4.65) {Experiencia local};
-\node[local] (idExp) at (3,-4.65) {Experiencia local};
-\node[learn] (ipLearn) at (-3,-6.65) {Crítico local y ventajas;\\actualización PPO del actor};
-\node[learn] (idLearn) at (3,-6.65) {Valores de las acciones,\\memoria priorizada\\y red objetivo};
-\draw[flow] (ipExp) -- (ipLearn);
-\draw[flow] (idExp) -- (idLearn);
+\node[met/head] at (3.6,.9) {(a) MAPPO};\node[met/head] at (11.4,.9) {(b) HAPPO};
+\foreach \x/\tag in {3.6/M,11.4/H} {
+\node[met/box,text width=5.9cm,minimum height=.85cm] (obs\tag) at (\x,0) {Observaciones concatenadas};
+\node[met/learn,text width=5.9cm,minimum height=.85cm] (critic\tag) at (\x,-1.6) {Crítico centralizado};
+\draw[met/arrow] (obs\tag)--(critic\tag);}
 
-\draw[frame] (-5.85,-7.95) rectangle (-.15,-14.45);
-\draw[frame] (.15,-7.95) rectangle (5.85,-14.45);
-\node[font=\sffamily\small\bfseries] at (-3,-8.15) {MAPPO};
-\node[font=\sffamily\small\bfseries] at (3,-8.15) {HAPPO};
-\node[joint] (mapExp) at (-3,-9.35) {Experiencia conjunta\\de los agentes};
-\node[joint] (hapExp) at (3,-9.35) {Experiencia conjunta\\de los agentes};
-\node[learn] (mapCritic) at (-3,-11.35) {Crítico centralizado:\\estima el retorno por agente};
-\node[learn] (hapCritic) at (3,-11.35) {Crítico centralizado:\\estima el retorno por agente};
-\node[learn] (mapUpdate) at (-3,-13.35) {Actualización PPO de cada actor\\con las ventajas del crítico};
-\node[learn] (hapUpdate) at (3,-13.35) {Actualización secuencial de los actores\\con ventajas reponderadas};
-\draw[flow] (mapExp) -- (mapCritic);
-\draw[flow] (hapExp) -- (hapCritic);
-\draw[feedback] (mapCritic) -- (mapUpdate);
-\draw[feedback] (hapCritic) -- (hapUpdate);
+\node[met/learn,text width=5.9cm,minimum height=.85cm] (advantagesM) at (3.6,-3.2) {Ventajas por agente};
+\draw[met/arrow] (criticM)--(advantagesM);
+\foreach \x/\id in {1.3/1,3.6/2,5.9/3} {
+\node[met/out,text width=1.35cm,minimum height=1.1cm] (m\id) at (\x,-4.7) {Actor\\$i_{\id}$};
+\draw[met/arrow] (advantagesM.south -| m\id.north)--(m\id.north);}
+\node[met/note] at (3.6,-5.8) {Actualizaciones PPO por actor};
+\node[met/learn,text width=5.9cm,minimum height=.85cm] (advantages) at (11.4,-3.2) {Ventajas iniciales};
+\draw[met/arrow] (criticH)--(advantages);
+\node[met/out,text width=1.35cm,minimum height=1.1cm] (h1) at (9.1,-4.7) {Actor\\$i_1$};
+\node[met/out,text width=1.35cm,minimum height=1.1cm] (h2) at (11.4,-4.7) {Actor\\$i_2$};
+\node[met/out,text width=1.35cm,minimum height=1.1cm] (h3) at (13.7,-4.7) {Actor\\$i_3$};
+\foreach \id in {1,2,3} {\draw[met/arrow] (advantages.south -| h\id.north)--(h\id.north);}
+\draw[met/arrow,dashed] (h1)--(h2);\draw[met/arrow,dashed] (h2)--(h3);
+\node[met/note] at (11.4,-5.8) {Orden fijo; factores acumulados};
+
 \end{tikzpicture}
 \endgroup

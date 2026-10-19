@@ -1,0 +1,25 @@
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[met/base]
+
+\node[met/head] at (3.6,0) {(a) A: local};\node[met/head] at (11.4,0) {(b) C: local y vecinal};
+\node[met/note] at (3.6,-.85) {Observación del agente $i$};
+\node[met/note] at (11.4,-.85) {Observación del agente $i$};
+\node[met/box,text width=3.7cm,minimum height=1cm] (localA) at (3.6,-1.7) {Fase y carriles propios};
+\node[met/box,text width=3.7cm,minimum height=1cm] (localC) at (10.2,-1.7) {Fase y carriles propios};
+\node[met/learn,text width=.7cm,minimum height=1cm,rounded corners=0pt] (v1) at (12.9,-1.7) {$j$};
+\node[met/learn,text width=.7cm,minimum height=1cm,rounded corners=0pt] (v2) at (14,-1.7) {$k$};
+
+\node[met/learn,text width=3cm,minimum height=1cm] (actorA) at (3.6,-3.6) {Actor local};
+\node[met/learn,text width=3cm,minimum height=1cm] (actorC) at (11.4,-3.6) {Actor local};
+\draw[met/arrow] (localA.south)--(actorA.north);
+\draw (localC.south)--(10.2,-2.5);
+\draw (v1.south)--(12.9,-2.5);\draw (v2.south)--(14,-2.5);
+\draw (10.2,-2.5)--(14,-2.5);
+\fill (11.4,-2.5) circle (1.2pt);\draw[met/arrow] (11.4,-2.5)--(actorC.north);
+\node[met/note] at (3.6,-4.8) {Recompensa del agente $i$};\node[met/note] at (11.4,-4.8) {Recompensa del agente $i$};
+\node[met/out,text width=5.9cm,minimum height=1cm] at (3.6,-5.7) {$L_i$};
+\node[met/out,text width=5.9cm,minimum height=1cm] at (11.4,-5.7) {$(1-\rho_{\mathrm{coop}})L_i+\rho_{\mathrm{coop}}N_{i,\mathrm{carril}}$};
+
+\end{tikzpicture}
+\endgroup

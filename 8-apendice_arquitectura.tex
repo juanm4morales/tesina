@@ -796,4 +796,24 @@ La comparación en las tres redes utiliza las semillas 61001--61024 para el entr
 
 \subsection{Preparación de las figuras de escenarios}
 
-Las figuras de topología utilizan capturas de las redes sintéticas y urbanas en SUMO. El encuadre elimina márgenes blancos para ampliar la red y conserva una escala de distancia. La Figura \ref{fig:dominio_mendoza} muestra el dominio urbano modelado; el punto de conteo de la cámara 169 queda fuera de ese dominio y no aparece en la captura.
+Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se representan mediante calzadas divididas en carriles, con anchos convencionales y escala propia por panel. El mapa urbano conserva la captura de SUMO y destaca el tramo de la TAZ 28. El encuadre conserva la escala de distancia. La Figura \ref{fig:dominio_mendoza} muestra el dominio urbano modelado; el punto de conteo de la cámara 169 queda fuera de ese dominio y no aparece en la captura.
+
+
+\Needspace{9\baselineskip}
+\subsection{Vistas documentales de los escenarios}
+
+La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos de referencia. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} conserva la vista completa de las zonas urbanas: el celeste identifica sus tramos y los recuadros rojos facilitan localizarlos; no son límites territoriales.
+
+\begin{figure}[H]
+\centering
+\input{imagenes/metodologia_tiempos_semaforicos.tex}
+\caption{Distribución de los intervalos de verde, amarillo y todo rojo en los ciclos de referencia de 90 segundos.}
+\label{fig:tiempos_semaforicos_base}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\sumonetcapture{imagenes/escenario_mendoza_taz_sumo.png}{215bp 0bp 480bp 0bp}{0.060575}{100\,m}
+\caption{Zonas de análisis de tránsito y sus tramos asociados en la red de Mendoza.}
+\label{fig:mendoza_taz}
+\end{figure}

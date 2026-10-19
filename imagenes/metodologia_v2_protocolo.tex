@@ -1,12 +1,19 @@
 \begingroup
 \setstretch{1}
-\begin{tikzpicture}[font=\sffamily\small,>=Stealth,
-box/.style={draw=colEntorno!80!black,fill=colEntorno!12,rounded corners,text width=3.5cm,minimum height=1.15cm,align=center,inner sep=6pt},
-arrow/.style={-{Stealth[length=2mm,width=1.5mm]},line width=.8pt,draw=black!70}]
-\node[box] (p1) at (0,0) {Fase 1\\Búsqueda amplia};
-\node[box] (dom) at (5,0) {Reducir dominios};
-\node[box] (p2) at (10,0) {Fase 2\\Búsqueda refinada};
-\draw[arrow] (p1.east)--(dom.west);
-\draw[arrow] (dom.east)--(p2.west);
+\begin{tikzpicture}[met/base]
+
+\node[met/box,text width=5cm,minimum height=1cm] (input) at (7.5,0) {Ensayos completos de fase 1};
+\node[met/box,text width=5cm,minimum height=1cm] (ten) at (3.6,-1.8) {Diez mejores ensayos};
+\node[met/box,text width=5cm,minimum height=1cm] (five) at (11.4,-1.8) {Cinco mejores ensayos};
+\node[met/learn,text width=5cm,minimum height=1cm] (domain) at (3.6,-3.6) {Dominios de búsqueda};
+\node[met/learn,text width=5cm,minimum height=1cm] (initial) at (11.4,-3.6) {Configuración inicial\\medianas y modas};
+\node[met/out,text width=5cm,minimum height=1cm] (new) at (7.5,-5.7) {Nuevos ensayos de fase 2\\entrenados desde cero};
+\coordinate (split) at (7.5,-.9);\coordinate (merge) at (7.5,-4.7);
+\draw (input.south)--(split);\fill (split) circle (1.3pt);
+\draw[met/arrow] (split)-|(ten.north);\draw[met/arrow] (split)-|(five.north);
+\draw[met/arrow] (ten)--(domain);\draw[met/arrow] (five)--(initial);
+\draw (domain.south)|-(merge);\draw (initial.south)|-(merge);
+\fill (merge) circle (1.3pt);\draw[met/arrow] (merge)--(new.north);
+
 \end{tikzpicture}
 \endgroup

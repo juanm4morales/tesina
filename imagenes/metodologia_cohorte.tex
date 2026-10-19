@@ -1,0 +1,29 @@
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[met/base]
+
+\fill[colEntorno!12] (3,.6) rectangle (10,-6.6);
+\draw[met/arrow] (0,.2)--(14,.2) node[right]{tiempo};
+\draw[dashed] (3,.5)--(3,-6.6);\draw[dashed] (10,.5)--(10,-6.6);
+\node[anchor=south] at (3,.6) {$t_{\mathrm{inicio}}$};\node[anchor=south] at (10,.6) {$t_{\mathrm{fin}}$};
+\node[met/note] at (6.5,-.35) {Ventana de evaluación};
+% Círculo vacío: salida programada; lleno: inserción; cuadrado: llegada.
+\foreach \y/\start/\ins/\end in {-1.4/.5/1.3/6,-2.8/3.5/4.5/8,-4.2/5/6/10} {
+\draw[black!60,dashed] (\start,\y)--(\ins,\y);
+\draw[black!75,line width=1pt] (\ins,\y)--(\end,\y);
+\draw[fill=white] (\start,\y) circle (3pt);\fill (\ins,\y) circle (3pt);}
+\node[rectangle,draw,fill=white,inner sep=2.5pt] at (6,-1.4) {};
+\node[rectangle,draw,fill=white,inner sep=2.5pt] at (8,-2.8) {};
+\node[met/note,anchor=west,text width=3.8cm,align=left] at (10.3,-1.4) {1. Ingreso previo\\Excluido};
+\node[met/note,anchor=west,text width=3.8cm,align=left] at (10.3,-2.8) {2. Viaje completo\\Incluido};
+\node[met/note,anchor=west,text width=3.8cm,align=left] at (10.3,-4.2) {3. Viaje inconcluso\\Incluido};
+\draw[black!60,dashed] (7,-5.6)--(10,-5.6);\draw[fill=white] (7,-5.6) circle (3pt);
+\node[met/note,anchor=west,text width=3.8cm,align=left] at (10.3,-5.6) {4. Sin ingreso\\Excluido};
+
+\draw[fill=white] (.3,-7.1) circle (3pt);\node[anchor=west,met/note] at (.5,-7.1) {salida programada};
+\fill (5,-7.1) circle (3pt);\node[anchor=west,met/note] at (5.2,-7.1) {inserción efectiva};
+\node[rectangle,draw,fill=white,inner sep=2.5pt] at (10,-7.1) {};\node[anchor=west,met/note] at (10.2,-7.1) {viaje completo};
+
+
+\end{tikzpicture}
+\endgroup

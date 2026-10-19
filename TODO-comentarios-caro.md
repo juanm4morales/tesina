@@ -3200,3 +3200,18 @@ Las fichas cubren las 287 anotaciones de revisión, sin fusionar sus identificad
 Se revisaron visualmente las páginas físicas 29, 42 y 51 para precisar la pequeña tachadura de la tabla y la ubicación de las notas junto a Sutton y Barto y la puntuación de DRL. Las demás ubicaciones proceden de los objetos de anotación del PDF, sus coordenadas y el contraste con las fuentes actuales. La revisión visual de la diagramación completa se realizará al aplicar las correcciones, no se presume completada por este inventario.
 
 Identificación de la fuente: SHA-256 `5744bcd65e0637108baf1724d374973f249c058da6be9d01a4e7bfec19612065`. Las líneas de este TODO reflejan el estado local del repositorio al generar el relevamiento.
+
+
+## Seguimiento de figuras de metodología — 2026-10-18
+
+El [informe del rediseño de figuras](INFORME-redisenio-figuras-metodologia.md) registra las decisiones, fuentes, integración y comprobaciones de las doce figuras principales y los dos traslados al apéndice. Este bloque aplica especialmente R08–R12, R17 y R24; no modifica el estado de las 287 fichas de revisión anteriores.
+
+
+### Revisión posterior de las figuras
+
+Las observaciones del usuario sobre utilidad, simetría y superposiciones motivaron una [segunda revisión con justificación por figura](REVISION-figuras-metodologia-criterio-y-verificacion.md). Sustituye la aprobación visual del informe v05: se retiran el panel «fase activa: 2», el inserto urbano y recorridos redundantes, se rehacen las calzadas sintéticas y se separa la recompensa de la entrada del actor en A/C. No se modifican por ello los estados de las fichas anteriores.
+
+En una revisión posterior, el usuario pidió explicitar los nombres de las formulaciones A y C, ampliar la variedad de recursos visuales y mantener en inglés el término de RLlib *Learner*. La Figura 3.12 pasó de un flujo a una matriz que hace visibles las filas de entrenamiento emparejadas, las cinco evaluaciones comunes y la unidad remuestreada. La Figura 3.5 y su explicación usan *Learner*. Se compilaron y revisaron las páginas completas y ambas figuras en color y escala de grises.
+
+
+En la revisión v16, el usuario pidió justificar las figuras 3.8, 3.11 y 3.12 y explicar previamente toda notación. Se descartó la matriz de «w» y se simplificó el pareo a dos filas de episodios; se conservaron los casos de inclusión vehicular y la línea temporal de la máscara por su función metodológica explícita. Se corrigió el salmón del estado amarillo y se retiró el panel de inicialización. La revisión de las doce introducciones añadió las convenciones que faltaban, conforme a R01, R05, R09, R10, R12 y R24. Las decisiones actuales están en el informe de revisión; las notas de v14 describen el estado histórico.

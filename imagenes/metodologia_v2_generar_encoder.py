@@ -88,7 +88,7 @@ def coordinates(points: Sequence[tuple[float, float | int]]) -> str:
 
 def standalone(figure: str) -> str:
     return r"""\documentclass[tikz,border=3pt]{standalone}
-\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage[spanish,es-noquoting]{babel}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage[spanish,es-noquoting,es-nodecimaldot]{babel}
 \usepackage{pgfplots}\pgfplotsset{compat=1.18}
 \definecolor{blueplot}{HTML}{4D8FBD}\definecolor{mintplot}{HTML}{3A9274}
 \definecolor{salmonplot}{HTML}{A64B49}\definecolor{inkplot}{HTML}{263746}
@@ -102,31 +102,49 @@ def pgf(output: Path) -> None:
     stair = [(1.2 * M * j / 1200, encoded(1.2 * M * j / 1200)) for j in range(1201)]
     stair += [(M, I - 1), (1.2 * M, I - 1)]
     stair.sort()
-    fig1 = rf"""\begin{{tikzpicture}}
+    # Format labels only; numerical parameters and plot coordinates stay unchanged.
+    m_label = f"{M:,.0f}".replace(",", ".")
+    examples = (0, 120, 600)
+    # The phase index is defined in the observation equation; a duplicated
+    # arbitrary phase value adds no information to this numerical figure.
+    (output / 'metodologia_observaciones.tex').write_text(
+        r"\includegraphics[width=.94\textwidth]{imagenes/metodologia_v2_encoder.pdf}"+"\n")
+    lo, hi = 0.0, M
+    for _ in range(70):
+        mid = (lo+hi)/2
+        if encoded(mid) == I-1: hi = mid
+        else: lo = mid
+    print(f'Ejemplos: {[(x, encoded(x)) for x in examples]}; nivel máximo desde x > {lo:.6f}; límite M={M}')
+    fig1 = rf"""\begin{{tikzpicture}}[font=\sffamily]
 \begin{{axis}}[width=14.3cm,height=8cm,axis lines=left,xmin=0,xmax={1.2*M},ymin=-.5,ymax=21.8,
- xlabel={{Espera acumulada por carril (vehículo$\cdot$s)}},ylabel={{Nivel de espera}},
+ xlabel={{Espera acumulada por carril (veh$\cdot$s)}},ylabel={{Nivel codificado, $e(x)$}},
  ytick={{0,5,10,15,21}},yticklabels={{0,5,10,15,21}},
  /pgf/number format/1000 sep={{\mbox{{.}}}},
  grid=major,grid style={{inkplot!12}},
-  tick label style={{font=\small}},label style={{font=\normalsize}},title style={{font=\small}}]
+  tick label style={{font=\sffamily\small}},label style={{font=\sffamily\normalsize}},title style={{font=\sffamily\small}}]
 \addplot[blueplot,thick,const plot] coordinates {{
 {coordinates(stair)}
 }};
 \addplot[salmonplot,dashed,thick] coordinates {{({M},0) ({M},21)}};
-\node[anchor=east,align=right,text=salmonplot,font=\small,fill=white,inner sep=2pt]
- at (axis cs:1010,15.5) {{$M_{{\mathrm{{lane}}}} = {M:.0f}$ veh$\cdot$s\\límite de escala}};
+\node[anchor=east,align=right,text=salmonplot,font=\sffamily\small,fill=white,inner sep=2pt]
+ at (axis cs:1010,15.5) {{$M_{{\mathrm{{lane}}}} = {m_label}$ veh$\cdot$s\\límite de escala}};
 \draw[->,salmonplot,thick] (axis cs:1020,15.5)--(axis cs:{M},15.5);
+\addplot[only marks,mark=*,mark size=2.5pt,inkplot] coordinates {{{coordinates([(x,encoded(x)) for x in examples])}}};
+\draw[->,inkplot] (axis cs:680,20)--(axis cs:{hi},21);
+\node[anchor=east,fill=white,font=\sffamily\small] at (axis cs:680,20) {{nivel máximo}};
 \end{{axis}}\end{{tikzpicture}}"""
     L = (I - 1) / M
+    l_label = f"{L:.4f}".replace(".", "{,}")
     points = [blend(j / 1000) for j in range(1001)]
-    fig2 = rf"""\begin{{tikzpicture}}
+    fig2 = rf"""\begin{{tikzpicture}}[font=\sffamily]
 \begin{{axis}}[width=14.3cm,height=8cm,axis lines=left,xmin=0,xmax=1,ymin=0,ymax=1.05,
  xlabel={{Espera normalizada, $\hat{{x}}=x/M_{{\mathrm{{lane}}}}$}},ylabel={{Contribución normalizada}},
  title={{Mezcla logarítmico-lineal antes de discretizar}},grid=major,grid style={{inkplot!12}},
- legend style={{draw=none,fill=none,font=\small,at={{(.98,.50)}},anchor=east}},
- tick label style={{font=\small}},label style={{font=\small}},title style={{font=\small}}]
-\node[anchor=north west,align=left,text width=8cm,font=\scriptsize,fill=white,fill opacity=.9,text opacity=1]
- at (rel axis cs:.02,.98) {{Escenario $3\times3$; $I={I}$; $M_{{\mathrm{{lane}}}}={M:.0f}$ vehículo·s.\\$L=(I-1)/M_{{\mathrm{{num}}}}={L:.4f}$, con $M_{{\mathrm{{num}}}}=M_{{\mathrm{{lane}}}}/u$ y $u=1$ vehículo·s.}};
+ /pgf/number format/use comma,
+ legend style={{draw=none,fill=none,font=\sffamily\small,at={{(.98,.50)}},anchor=east}},
+ tick label style={{font=\sffamily\small}},label style={{font=\sffamily\small}},title style={{font=\sffamily\small}}]
+\node[anchor=north west,align=left,text width=8cm,font=\sffamily\scriptsize,fill=white,fill opacity=.9,text opacity=1]
+ at (rel axis cs:.02,.98) {{Escenario $3\times3$; $I={I}$; $M_{{\mathrm{{lane}}}}={m_label}$ veh·s.\\$L=(I-1)/M_{{\mathrm{{num}}}}={l_label}$, con $M_{{\mathrm{{num}}}}=M_{{\mathrm{{lane}}}}/u$ y $u=1$ veh·s.}};
 \addplot[blueplot,thick] coordinates {{{coordinates([(j/1000, p[0]) for j,p in enumerate(points)])}}};
 \addlegendentry{{Componente logarítmica ponderada}}
 \addplot[mintplot,thick] coordinates {{{coordinates([(j/1000, p[1]) for j,p in enumerate(points)])}}};
@@ -138,6 +156,7 @@ def pgf(output: Path) -> None:
         with tempfile.TemporaryDirectory(prefix="metodologia-v2-") as tmp:
             src = Path(tmp) / "plot.tex"
             src.write_text(standalone(figure), encoding="utf-8")
+            (output / f"metodologia_v2_{name}.tex").write_text(standalone(figure), encoding="utf-8")
             result = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
                                      "-output-directory", tmp, str(src)],
                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,

@@ -1,51 +1,17 @@
 \begingroup
 \setstretch{1}
-\begin{tikzpicture}[
-  font=\sffamily\small,
-  >=Stealth,
-  block/.style={draw=colEntorno!80!black,fill=colEntorno!13,rounded corners=3pt,
-    text width=3.25cm,minimum height=1.05cm,align=center,inner sep=5pt},
-  interface/.style={block,fill=colInterfaz!20,draw=colInterfaz!75!black},
-  learn/.style={block,fill=colAgente!16,draw=colAgente!75!black},
-  persist/.style={block,fill=catLilaSuave!17,draw=catLilaSuave!80!black},
-  flow/.style={-{Stealth[length=2.1mm]},line width=.8pt,draw=colEntorno!80!black},
-  return/.style={-{Stealth[length=2.1mm]},line width=.8pt,draw=colAgente!80!black}
-]
-\node[block] (sumo) at (0,0)
-  {SUMO / libsumo};
-\node[interface] (env) at (0,-2.3)
-  {\texttt{SumoRllibEnv}};
-\node[block] (workers) at (6.5,-2.3)
-  {Muestreo (RLlib)};
-\node[learn] (learner) at (6.5,-4.8)
-  {Aprendizaje (PyTorch)};
-\node[persist] (archive) at (0,-4.8)
-  {Almacenamiento};
+\begin{tikzpicture}[met/base]
 
-% Flujos de ida y vuelta separados, con entradas perpendiculares a los bloques.
-\draw[flow] ($(sumo.south)+(.9,0)$) --
-  node[right,font=\scriptsize,inner sep=2pt] {mediciones}
-  ($(env.north)+(.9,0)$);
-\draw[return] ($(env.north)+(-.9,0)$) --
-  node[left,font=\scriptsize,align=right,inner sep=3pt] {fases y\\avance}
-  ($(sumo.south)+(-.9,0)$);
-\draw[flow] ($(env.east)+(0,.4)$) --
-  node[above,font=\scriptsize,align=center,inner sep=3pt]
-  {datos}
-  ($(workers.west)+(0,.4)$);
-\draw[return] ($(workers.west)+(0,-.4)$) --
-  node[below,font=\scriptsize,inner sep=3pt] {acciones}
-  ($(env.east)+(0,-.4)$);
-\draw[flow] ($(workers.south)+(-.9,0)$) --
-  node[left,font=\scriptsize,inner sep=3pt] {transiciones}
-  ($(learner.north)+(-.9,0)$);
-\draw[return] ($(learner.north)+(.9,0)$) --
-  node[right,font=\scriptsize,inner sep=3pt] {parámetros}
-  ($(workers.south)+(.9,0)$);
-% El recorrido exterior evita atravesar el entorno y entra por archive.west.
-\coordinate (storageway) at (-2.8,-4.8);
-\draw[flow] (sumo.west) -- (-2.8,0) --
-  node[pos=.72,right,font=\scriptsize,inner sep=3pt] {estado}
-  (storageway) -- (archive.west);
+\node[met/box,text width=4.1cm,minimum height=1.15cm] (sumo) at (2.5,0) {SUMO / libsumo};
+\node[met/box,text width=4.1cm,minimum height=1.15cm] (env) at (12,0) {Entorno\\\texttt{SumoRllibEnv}};
+\node[met/learn,text width=4.1cm,minimum height=1.15cm] (sample) at (12,-4) {Muestreo\\RLlib};
+\node[met/learn,text width=4.1cm,minimum height=1.15cm] (learn) at (2.5,-4) {Learner\\PyTorch};
+\draw[met/arrow] ([yshift=9pt]sumo.east)--node[above,met/note]{Mediciones}([yshift=9pt]env.west);
+\draw[met/arrow] ([yshift=-9pt]env.west)--node[below,met/note]{Fases y avance}([yshift=-9pt]sumo.east);
+\draw[met/arrow] ([xshift=-12pt]env.south)--node[left,met/note,text width=3.2cm]{Observaciones,\\recompensas e\\indicadores}([xshift=-12pt]sample.north);
+\draw[met/arrow] ([xshift=12pt]sample.north)--node[right,met/note]{Acciones}([xshift=12pt]env.south);
+\draw[met/arrow] ([yshift=9pt]sample.west)--node[above,met/note]{Transiciones}([yshift=9pt]learn.east);
+\draw[met/arrow] ([yshift=-9pt]learn.east)--node[below,met/note]{Parámetros}([yshift=-9pt]sample.west);
+
 \end{tikzpicture}
 \endgroup

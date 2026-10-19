@@ -1,0 +1,23 @@
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[met/base]
+\fill[green!22] (0,-.4) rectangle (12,.4);
+\fill[yellow!65] (0,-.4) rectangle (4.8,.4);
+\draw (0,-.4) rectangle (12,.4);
+\draw (4.8,-.4)--(4.8,.4);
+\node at (2.4,0) {Amarillo};
+\node at (8.4,0) {Verde de la nueva fase};
+\foreach \t in {0,4,5,9,10} {
+  \draw (1.2*\t,-.4)--(1.2*\t,-.6);
+  \node[anchor=north] at (1.2*\t,-.65) {$\t$};
+}
+\foreach \t in {0,5,10} {\draw[met/arrow] (1.2*\t,1.15)--(1.2*\t,.45);}
+\node[met/note,anchor=south west,align=left] at (0,1.2) {Solicitud de cambio\\permitida};
+\node[met/note,anchor=south] at (6,1.2) {Cambio bloqueado\\1 s de verde};
+\node[met/note,anchor=south east,align=right] at (12,1.2) {Cambio habilitado\\6 s de verde};
+\draw[black!60] (4.8,-1.45)--(4.8,-1.7)--(10.8,-1.7)--(10.8,-1.45);
+\draw[black!50,densely dotted] (10.8,-1.15)--(10.8,-1.45);
+\node[met/note,anchor=north] at (7.8,-1.85) {Mínimo de verde: 5 segundos};
+\node[anchor=north] at (6,-2.6) {Tiempo desde la solicitud de cambio (s)};
+\end{tikzpicture}
+\endgroup

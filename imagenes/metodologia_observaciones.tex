@@ -1,12 +1,1 @@
-\begingroup
-\setstretch{1}
-\hyphenpenalty=10000
-\begin{tikzpicture}[font=\sffamily\small,>=Stealth,
- box/.style={draw=colEntorno!80!black,fill=colEntorno!15,rounded corners,text width=3.5cm,minimum height=1.3cm,align=center,inner sep=4pt},arrow/.style={->,thick}]
-\node[box] (local) at (0,0) {Fase activa y espera acumulada por carril};
-\node[box] (enc) at (4.6,0) {Fase activa y espera codificada por carril};
-\node[box,fill=colAgente!18] (actor) at (9.2,0) {Política que selecciona la fase semafórica};
-\draw[arrow] (local)--(enc);
-\draw[arrow] (enc)--(actor);
-\end{tikzpicture}
-\endgroup
+\includegraphics[width=.94\textwidth]{imagenes/metodologia_v2_encoder.pdf}

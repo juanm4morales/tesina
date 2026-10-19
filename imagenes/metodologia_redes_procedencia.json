@@ -2,20 +2,26 @@
   "generador": "imagenes/metodologia_generar_redes.py",
   "fuentes": {
     "nets/3x1/3x1.net.xml": {
-      "sha256": "1eb015578981caf8b06982968708bd5138ec65ff4d382d764d93dbc4b6c488b1",
-      "representacion": "primera polilínea de carril por tramo externo; geometría SUMO sin giros internos"
+      "sha256": "1eb015578981caf8b06982968708bd5138ec65ff4d382d764d93dbc4b6c488b1"
     },
     "nets/3x3/3x3.net.xml": {
-      "sha256": "181d72be47043e28358fb352577424e266be3d0bba776d6544e2b2c405e64419",
-      "representacion": "primera polilínea de carril por tramo externo; geometría SUMO sin giros internos"
+      "sha256": "181d72be47043e28358fb352577424e266be3d0bba776d6544e2b2c405e64419"
     },
     "nets/4x4_H/4x4_H.net.xml": {
-      "sha256": "2c70271966a74179096eb826a6098d96b3136cf82da53a35557657049f9a7860",
-      "representacion": "primera polilínea de carril por tramo externo; geometría SUMO sin giros internos"
+      "sha256": "2c70271966a74179096eb826a6098d96b3136cf82da53a35557657049f9a7860"
     },
     "nets/Mendoza/gran_mendoza2_fixed.net.xml": {
-      "sha256": "988a1d277fec9188aea5996b96dd9aa1893781e1d0fa4c85770a0c7415274a86",
-      "representacion": "primera polilínea de carril por tramo externo; geometría SUMO sin giros internos"
+      "sha256": "988a1d277fec9188aea5996b96dd9aa1893781e1d0fa4c85770a0c7415274a86"
+    },
+    "nets/Mendoza/gran_mendoza2_fixed.taz.xml": {
+      "sha256": "cf710f36e1c5021d3d3e585d897262310579bf1c34466ecca6290e1715923e40"
     }
+  },
+  "convenciones": {
+    "geometria": "esquema entre centros de nodos; conectividad, sentidos y carriles del XML; sin giros internos",
+    "carril_cm": 0.072,
+    "separacion_sentidos_cm": 0.025,
+    "escalas": "independientes por panel sintético",
+    "captura_urbana": "original conservada; corredores y TAZ 28; sin inserto redundante ni posición de cámara"
   }
 }
