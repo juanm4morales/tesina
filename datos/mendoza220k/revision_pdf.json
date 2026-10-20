@@ -1,0 +1,63 @@
+{
+  "pdf_sha256": "07ac508981f5030d9df1a7f9d7599bf74cbea7970853929a6ce59424f116839e",
+  "paginas_pdf": 170,
+  "dpi_revision": 150,
+  "paginas_renderizadas_color_y_gris": [
+    44,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116
+  ],
+  "enlaces_glosario_comprobados": [
+    "glo:acr-taz",
+    "glo:desfase_semaforico",
+    "glo:pendientes_ingreso"
+  ],
+  "avisos_compilacion": [
+    "Advertencia externa conocida de tracklang para spanish"
+  ],
+  "bibtex": "sin advertencias",
+  "entradas_glosario_rechazadas": 0,
+  "nuevas_simulaciones": 0,
+  "revision_editorial": "REVISION-final-cambios-metodologia.md",
+  "cierre_tipografico": {
+    "paginas_revisadas_150_dpi": [
+      44,
+      84
+    ],
+    "revision_anterior_pdf_sha256": "04feeeb3bb696cc4a485b9f6d8ee2d118cbdd397b47739ed5b0e4dd21919adb4"
+  }
+}

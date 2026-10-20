@@ -1,0 +1,89 @@
+{
+  "pdf_sha256": "07ac508981f5030d9df1a7f9d7599bf74cbea7970853929a6ce59424f116839e",
+  "paginas_pdf": 170,
+  "metodologia_paginas_fisicas": [
+    81,
+    116
+  ],
+  "referencias_usos": 139,
+  "referencias_destinos": 75,
+  "referencias_ausentes": [],
+  "etiquetas_duplicadas": [],
+  "citas_distintas": 25,
+  "citas_ausentes": [],
+  "claves_bib_duplicadas": [],
+  "ecuaciones": 10,
+  "formulas_conservadas": true,
+  "figuras": {
+    "3.1": 82,
+    "3.2": 85,
+    "3.3": 88,
+    "3.4": 90,
+    "3.5": 92,
+    "3.6": 95,
+    "3.7": 99,
+    "3.8": 101,
+    "3.9": 104,
+    "3.10": 108,
+    "3.11": 109
+  },
+  "paginas_con_ecuaciones": {
+    "3.1": [
+      94,
+      94
+    ],
+    "3.2": [
+      96,
+      96
+    ],
+    "3.3": [
+      96,
+      96
+    ],
+    "3.4": [
+      97,
+      97
+    ],
+    "3.5": [
+      102,
+      102
+    ],
+    "3.7": [
+      105,
+      110,
+      113
+    ],
+    "3.6": [
+      110
+    ],
+    "3.8": [
+      110
+    ],
+    "3.9": [
+      111
+    ],
+    "3.10": [
+      112,
+      112
+    ]
+  },
+  "overfull": 0,
+  "underfull": 0,
+  "referencias_citas_indefinidas": false,
+  "advertencias": [
+    "Package tracklang Warning: No `datatool' support for dialect `spanish'  on inpu"
+  ],
+  "nuevas_simulaciones": 0,
+  "pdf_comparados_sha256": [
+    "09d697c48755e2bd6f4eb6de5905b286232ecccd2739fae45e531392a5b5c580",
+    "63936a067bbc851328e3417004f8269b8699ce94bc19ea228a4bd44875a37c5d"
+  ],
+  "cierre_tipografico": {
+    "paginas_revisadas_150_dpi": [
+      44,
+      84
+    ],
+    "cambios": "Cursiva de los desarrollos ingleses de OD y TAZ",
+    "sin_cambios_metodologicos": true
+  }
+}
