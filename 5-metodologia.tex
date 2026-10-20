@@ -251,7 +251,7 @@ L_i^{(t)} = W_i^{(t-1)} - W_i^{(t)}.
 \label{eq:recompensa_local}
 \end{equation}
 
-En las formulaciones que incorporan acoplamiento espacial, cada agente $i$ complementa su señal local con el promedio de las variaciones de espera de sus vecinos directos $j \in \mathcal{N}(i)$, normalizadas por el número de carriles entrantes $m_j$ de cada vecino para compensar diferencias de capacidad en redes heterogéneas como $4\times4\_H$. Dado que toda intersección controlada posee al menos un vecino en los escenarios estudiados ($|\mathcal{N}(i)| \ge 1$), el término vecinal por carril $N_{i,\mathrm{carril}}^{(t)}$ y la recompensa compuesta $R_i^{(t)}$ ponderada por el coeficiente de cooperación $\rho_{\mathrm{coop}} \in [0,1)$ quedan definidos por:
+En la variante C, cada agente $i$ complementa su señal local con el promedio de las variaciones de espera de sus vecinos directos $j \in \mathcal{N}(i)$, normalizadas por el número de carriles entrantes $m_j$ de cada vecino para compensar diferencias de capacidad en redes heterogéneas como $4\times4\_H$. Dado que toda intersección controlada posee al menos un vecino en los escenarios estudiados ($|\mathcal{N}(i)| \ge 1$), el término vecinal por carril $N_{i,\mathrm{carril}}^{(t)}$ y la recompensa compuesta $R_i^{(t)}$ ponderada por el coeficiente de cooperación $\rho_{\mathrm{coop}} \in [0,1)$ quedan definidos por:
 \begin{align}
 N_{i,\mathrm{carril}}^{(t)} &= \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} \frac{L_j^{(t)}}{m_j}, \label{eq:recompensa_vecinal} \\
 R_i^{(t)} &= (1 - \rho_{\mathrm{coop}}) L_i^{(t)} + \rho_{\mathrm{coop}} N_{i,\mathrm{carril}}^{(t)}, \label{eq:recompensa_compuesta}
@@ -375,7 +375,7 @@ Como punto de partida determinista del muestreador \acrshort{acr-tpe} en la fase
 \label{subsec:seleccion_phase2}
 \label{subsec:seleccion_sintetica}
 
-Concluida la fase 2 en cada combinación sintética de algoritmo y escenario, un procedimiento de selección filtra los candidatos antes del entrenamiento final desde cero, asegurando que una baja espera media no sea producto de retener vehículos fuera de la red:
+Concluida la fase 2 en cada combinación sintética de algoritmo y escenario, un procedimiento filtra los candidatos antes del entrenamiento final desde cero. Los criterios combinan la espera media con el volumen de vehículos insertados, la tasa de completitud y los teletransportes:
 \begin{enumerate}
     \item \textbf{Admisibilidad técnica y preselección:} se verifican la completitud de las 60 iteraciones de entrenamiento, la validez de los registros de métricas y la integridad de los archivos de estado (\gls{checkpoint}), formando una lista corta de hasta tres configuraciones candidatas por algoritmo y escenario ordenadas por su espera diagnóstica (véase la Sección \ref{subsec:criterios_admisibilidad_hpo} del Apéndice \ref{apendice:arquitectura_software}).
     \item \textbf{Evaluación en panel común y filtros operacionales:} los candidatos preseleccionados para los cuatro algoritmos de una misma red se evalúan sobre un panel común de tres semillas de \acrshort{acr-sumo}. Tomando como referencia empírica de flujo el máximo de vehículos insertados en ese panel para cada red y semilla, se exige que cada episodio registre: (i) cero inicios de teletransporte, (ii) una \acrfull{acr-ci} de al menos $0{,}95$ (Ecuación \eqref{eq:tasa_completitud}), y (iii) un volumen de inserciones no inferior al $95\%$ de la referencia empírica del panel.
