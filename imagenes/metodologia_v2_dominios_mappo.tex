@@ -1,7 +1,7 @@
-\begingroup\small\setstretch{1.05}\renewcommand{\arraystretch}{1.18}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{5.5cm}@{\hspace{6pt}}>{\raggedright\arraybackslash}p{3.3cm}@{\hspace{6pt}}lll@{}}
+\begingroup\footnotesize\setstretch{1.05}\renewcommand{\arraystretch}{1.15}
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}@{\hspace{5pt}}>{\raggedright\arraybackslash}p{2.3cm}@{\hspace{5pt}}lll@{}}
 \hline
-\multicolumn{5}{l}{\textbf{MAPPO}}\\\hline
 \rowcolor{catAzulCielo!25}
 Parámetro & Muestreo & $3\times1$ (h128) & $3\times3$ (h128) & $4\times4_{\mathrm{H}}$ (h128) \\
 \hline
@@ -17,4 +17,5 @@ Tamaño del minilote & Categórico & $\{256;\,512\}$ & $\{128;\,512\}$ & $\{128;
 Recorridos de optimización & Uniforme entera & $[5;\,16)$ & $[6;\,13)$ & $[5;\,16)$ \\
 Episodios por lote & Uniforme entera & $[2;\,13)$ & $[2;\,13)$ & $[2;\,13)$ \\
 Cota de pérdida de valor & Loguniforme & $[5;\,20]$ & $[5;\,20]$ & $[5;\,20]$ \\
-\hline\end{tabular}\endgroup
+\hline\end{tabular}%
+}\endgroup
