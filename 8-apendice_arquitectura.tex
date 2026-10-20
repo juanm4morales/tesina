@@ -103,7 +103,7 @@ La Figura \ref{fig:uml_entorno_agentes} presenta el diagrama de clases \acrshort
   \draw[->, thick, line width=1pt] (tl) -- node[right] {1..* gestiona} (lane);
 
 \end{tikzpicture}
-\caption[Diagrama de clases del entorno de simulación y de sus relaciones principales.]{Diagrama de clases \acrshort{acr-uml} del entorno: \texttt{SumoRllibEnv} especializa \texttt{BaseSumoEnvironment}, que agrega las instancias de \texttt{TrafficLight} y sus respectivos carriles (\texttt{Lane}).}
+\caption[Diagrama de clases del entorno de simulación y de sus relaciones principales.]{Diagrama de clases \acrshort{acr-uml} del entorno de simulación y sus relaciones principales.}
 \label{fig:uml_entorno_agentes}
 \end{figure}
 
@@ -179,7 +179,7 @@ El cálculo de la señal de recompensa se desacopla del bucle principal del ento
 
 \end{tikzpicture}%
 }
-\caption[Especificación UML del módulo de recompensas.]{Diagrama de clases \acrshort{acr-uml} del módulo de recompensas: las subclases concretas implementan la interfaz \texttt{RewardFn} y componen la señal local con el promedio vecinal ponderado por $\rho_{\mathrm{coop}}$.}
+\caption[Especificación UML del módulo de recompensas.]{Diagrama de clases \acrshort{acr-uml} del módulo de recompensas. Las subclases implementan la interfaz \texttt{RewardFn}; \texttt{NeighborhoodRelevanceReward} combina la señal local con el promedio vecinal ponderado por $\rho_{\mathrm{coop}}$.}
 \label{fig:uml_recompensas}
 \end{figure}
 
@@ -233,7 +233,7 @@ Q_{\text{red}}(h) &= \bar{q}_{\mathrm{obs}}(h) \cdot f_{\text{exp}}, \label{eq:d
 \end{align}
 donde $Q_{\mathrm{red}}(h)$ expresa el flujo horario nominal de la red (en vehículos por hora).
 
-Sobre las 39 zonas \acrshort{acr-taz} (numeradas de 0 a 38, con $1.482$ pares posibles), una búsqueda en anchura (\acrfull{acr-bfs}) sobre el grafo vial determinó $520$ pares \acrshort{acr-od} físicamente conectables. La distribución espacial canónica divide estos pares en tres subconjuntos disjuntos: $\mathcal{P}_{\mathrm{fijo}}$ ($473$ pares principales que concentran una proporción fija total de $0{,}60$), $\mathcal{P}_{\mathrm{aleat}}$ ($44$ pares secundarios que se reparten el $0{,}40$ restante mediante pesos uniformes $u_{od} \sim \mathcal{U}(0,1)$) y $\mathcal{P}_{\mathrm{excl}}$ (tres pares sin demanda asignada):
+Sobre las 39 zonas \acrshort{acr-taz} (numeradas de 0 a 38, con $1.482$ pares posibles), una \acrfull{acr-bfs} sobre el grafo vial determinó $520$ pares \acrshort{acr-od} físicamente conectables. La distribución espacial canónica divide estos pares en tres subconjuntos disjuntos: $\mathcal{P}_{\mathrm{fijo}}$ ($473$ pares principales que concentran una proporción fija total de $0{,}60$), $\mathcal{P}_{\mathrm{aleat}}$ ($44$ pares secundarios que se reparten el $0{,}40$ restante mediante pesos uniformes $u_{od} \sim \mathcal{U}(0,1)$) y $\mathcal{P}_{\mathrm{excl}}$ (tres pares sin demanda asignada):
 \begin{equation}
 p_{od}=\begin{cases}
 p_{od}^{\mathrm{fijo}}, &(o,d)\in\mathcal P_{\mathrm{fijo}},\\
@@ -253,7 +253,7 @@ H_{od}=-\frac{\ln(U)}{\lambda_{od}}.
 \subsection{Construcción de los programas semafóricos fijos}
 \label{sec:mendoza_plan_fijo_apendice}
 
-Para estructurar los programas de tiempo fijo con ciclo común de $90\,\text{s}$ (preservando el orden de fases e intervalos de despeje reglamentarios), se reservó la suma de duraciones de las fases fijas de despeje $\mathcal{F}$ ($d_p$, amarillos y todo rojo) dentro del ciclo de $90\,\text{s}$, y el tiempo remanente $G$ se repartió entre las fases vehiculares $\mathcal{V}$ en proporción a la demanda relativa asignada $\overline{d}_p$:
+Para fijar el reparto de verdes de los programas ajustados, se registraron las duraciones de sus fases en una simulación de calibración sensible al tránsito, reuniendo entre 121 y 373 ciclos completos por controlador. Se conservaron el orden de fases y los intervalos de despeje. Dentro del ciclo de $90\,\text{s}$ se reservaron las duraciones $d_p$ de las fases fijas de despeje $\mathcal{F}$, correspondientes a amarillos y todo rojo. El tiempo de verde restante $G$ se repartió entre las fases vehiculares $\mathcal{V}$ en proporción a sus duraciones medias observadas $\overline{d}_p$, medidas en segundos:
 \begin{equation}
 G=90-\sum_{p\in\mathcal F}d_p,
 \qquad
@@ -262,7 +262,7 @@ G=90-\sum_{p\in\mathcal F}d_p,
 \end{equation}
 aplicando cotas mínimas de verde y ajuste de restos enteros hasta sumar exactamente $90\,\text{s}$. Esta ecuación describe la asignación de los programas; no estima un ciclo óptimo ni acredita la adecuación física de los intervalos de despeje.
 
-Esta asignación conformó el plan base de tiempo fijo denominado \texttt{T0}. A continuación, se optimizaron los desfases de once intersecciones arteriales para minimizar la llegada de pelotones en rojo según los tiempos de recorrido en flujo libre y los volúmenes de las rutas principales, dando lugar al plan fijo final \texttt{P2}. La Tabla \ref{tab:mendoza_desfases} detalla los once desfases modificados entre \texttt{T0} y \texttt{P2}, mientras que las Tablas \ref{tab:mendoza_programas_1} a \ref{tab:mendoza_programas_3} especifican el desfase y la secuencia completa de duraciones (en segundos) de los $73$ controladores del plan \texttt{P2} (resguardados en formato tabular en \path{datos/mendoza220k/programas_tls_completos.csv}).
+Esta asignación conformó el plan base de tiempo fijo denominado \texttt{T0}. A continuación, se ajustaron los desfases de once intersecciones arteriales para reducir la llegada de pelotones en rojo según los tiempos de recorrido en flujo libre y los volúmenes de las rutas principales, dando lugar al plan fijo final \texttt{P2}. La Tabla \ref{tab:mendoza_desfases} detalla los once desfases modificados entre \texttt{T0} y \texttt{P2}, mientras que las Tablas \ref{tab:mendoza_programas_1} a \ref{tab:mendoza_programas_3} especifican el desfase y la secuencia completa de duraciones (en segundos) de los $73$ controladores del plan \texttt{P2} (resguardados en formato tabular en \path{datos/mendoza220k/programas_tls_completos.csv}).
 
 \begin{table}[H]\centering\small
 \caption{Desfases modificados entre el plan fijo inicial (\texttt{T0}) y el plan fijo coordinado final (\texttt{P2}).}\label{tab:mendoza_desfases}
@@ -385,7 +385,7 @@ En la prueba preliminar de formulaciones de \acrshort{acr-mappo} (subsección \r
 \subsection{Detalles de las redes sintéticas}
 \label{subsec:detalles_redes_sinteticas}
 
-La Tabla \ref{tab:escenarios_sinteticos} reúne las dimensiones comparables de las redes. Este apartado conserva las excepciones topológicas y las asignaciones de demanda por par origen--destino (OD) que explican la función de cada escenario.
+La Tabla \ref{tab:escenarios_sinteticos} reúne las dimensiones comparables de las redes. Este apartado conserva las excepciones topológicas y las asignaciones de demanda por par \acrshort{acr-od} que explican la función de cada escenario.
 
 En el corredor $3\times1$, los cruces B1, C1 y D1 se disponen en línea. El 75\% del flujo solicitado se asigna a los pares de zonas $3\to4$ (40\%) y $4\to3$ (35\%); el 25\% restante se distribuye de manera reproducible entre los pares válidos.
 
@@ -400,7 +400,7 @@ C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas 
 
 Esta sección especifica los dominios iniciales por algoritmo y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. Las tablas posteriores de presupuestos y semillas corresponden a las búsquedas sobre las tres redes sintéticas; la delimitación del escenario urbano de Mendoza se sintetiza en la subsección \ref{subsec:protocolo_urbano_mendoza}.
 
-Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. Uniforme continua y loguniforme tienen el significado explicado en la sección \ref{subsec:hpo_phase1}; uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. La excepción urbana del peso vecinal también se aplica a estas tablas. Otros factores, como el límite de escala del codificador de espera acumulada por carril, se fijan por escenario. La Tabla \ref{tab:factores_fase1} especifica esos factores para los estudios sintéticos documentados.
+Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. El muestreo uniforme continuo asigna la misma probabilidad a intervalos de igual longitud; el loguniforme lo hace a intervalos de igual longitud en escala logarítmica. Uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. Otros factores, como el límite de escala del codificador de espera acumulada por carril, se fijan por escenario. La Tabla \ref{tab:factores_fase1} especifica esos factores para los estudios sintéticos documentados.
 
 En la familia \acrshort{acr-ppo}, el margen de recorte limita la razón de probabilidades del \gls{actor} y el parámetro de \acrshort{acr-gae} regula la estimación de \glspl{ventaja}. La entropía favorece la exploración; los parámetros de divergencia \acrshort{acr-kl} configuran la penalización y su adaptación. El límite del gradiente acota la magnitud del gradiente utilizado para actualizar los parámetros. Las cantidades de episodios, recorridos de optimización y minilotes controlan la recolección y reutilización de experiencias. En \acrshort{acr-mappo} y \acrshort{acr-happo}, la cota de valor limita la pérdida cuadrática del \gls{critico}, según la sección \ref{sec:apendice_detalles_aprendizaje}; no se interpreta como un límite físico de espera. En \acrshort{acr-happo}, la probabilidad de ordenación determina con qué frecuencia se elige el siguiente actor según la magnitud de su ventaja, en lugar de elegirlo al azar; su aplicación se precisa después de la tabla.
 
@@ -626,9 +626,9 @@ En las redes sintéticas, para \acrshort{acr-ppo}, el código multiplica \texttt
 \subsection{Antecedente de calibración y delimitación del aprendizaje urbano}
 \label{subsec:protocolo_urbano_mendoza}
 
-A diferencia de las tres redes sintéticas, donde se completó el ciclo íntegro de búsqueda de hiperparámetros en dos fases, selección de configuraciones y evaluación de los cuatro algoritmos, la extensión del aprendizaje por refuerzo multiagente al microcentro de Mendoza queda formalmente planteada como trabajo futuro. El alcance de la presente investigación sobre dicho escenario se concentró en la modelación cartográfica de la red, la deducción del plan semafórico coordinado de tiempo fijo (P2) y la calibración y comprobación operacional de la demanda horaria (O2) bajo 73 controladores.
+Para las tres redes sintéticas se especifica un protocolo de búsqueda de hiperparámetros en dos fases, selección de configuraciones y evaluación de los cuatro algoritmos. La aplicación del aprendizaje multiagente al microcentro de Mendoza queda planteada como trabajo futuro. El trabajo sobre este escenario comprendió la construcción cartográfica de la red, el plan semafórico coordinado de tiempo fijo (\texttt{P2}) y el ajuste y la comprobación operacional de la demanda horaria (\texttt{O2}) bajo 73 controladores.
 
-En fases exploratorias para dimensionar la magnitud de las demoras acumuladas en un entorno de esta escala, se llevó a cabo una calibración empírica del codificador de observaciones. A partir de simulaciones de $7.200\,\text{s}$ de control con una ventana temporal de espera de $1.000\,\text{s}$ sobre los programas de referencia, el percentil 99 de la suma de demoras por carril arrojó un umbral de saturación $M_{\mathrm{lane}} = 5.396\,\text{veh}\cdot\text{s}$, sustancialmente superior a los valores correspondientes de las redes sintéticas ($712$ a $1.184\,\text{veh}\cdot\text{s}$). Este antecedente confirma cuantitativamente que una campaña de aprendizaje en el microcentro requiere cotas de escala y asignaciones presupuestarias diseñadas específicamente para su topología. La definición de un protocolo completo de búsqueda, entrenamiento y selección operacional adaptado a los 73 agentes en el escenario definitivo O2/P2 constituye una línea prioritaria de continuidad.
+La calibración exploratoria del codificador se realizó sobre una versión previa de la red y la demanda, identificada como \texttt{v14}. Utilizó las semillas 5001 y 5002, $300\,\text{s}$ de calentamiento, $7.200\,\text{s}$ de control y una memoria de espera de $1.000\,\text{s}$. El percentil 99 del máximo por paso de la suma de esperas de los vehículos por carril produjo $M_{\mathrm{lane}}=5.396\,\text{veh}\cdot\text{s}$, frente a $712$--$1.184\,\text{veh}\cdot\text{s}$ en las redes sintéticas. El cálculo se conserva en \path{docs/mendoza_preparation/encoder_calibration.json} de \texttt{marl-tlc}. Este valor es un antecedente y debe recalibrarse para el escenario O2/P2 antes de utilizarlo en una campaña de aprendizaje urbano.
 
 \subsection{Métricas y análisis por pares de A/C}
 \label{subsec:detalle_analisis_pareado}
@@ -667,7 +667,7 @@ Zhong et al. encuadran \acrshort{acr-happo} como una instancia de \acrshort{acr-
 \subsection{Desarrollo algebraico del codificador}
 \label{subsec:codificacion_espera_apendice}
 
-Para una espera acumulada por carril $x \ge 0$ (en veh$\cdot$s) y una cota superior de escala $M_{\mathrm{lane}} > 0$, la entrada normalizada se define como $\hat{x} = \min(1, x / M_{\mathrm{lane}}) \in [0, 1]$. Para $I \ge 2$ niveles discretos, sea $L = (I - 1) / M_{\mathrm{lane}}$ el factor de escala (con $0 < L < 1$). La función de mezcla entre las componentes logarítmica y lineal queda dada por:
+En las ecuaciones siguientes, $x \ge 0$ y $M_{\mathrm{lane}} > 0$ representan los valores numéricos de la espera acumulada por carril y de su límite de escala, expresados en veh$\cdot$s. La entrada normalizada es $\hat{x} = \min(1, x / M_{\mathrm{lane}}) \in [0, 1]$. Para $I \ge 2$ niveles discretos se define $L = (I - 1) / M_{\mathrm{lane}}$. En los dominios utilizados, $M_{\mathrm{lane}} > I-1$, por lo que $0 < L < 1$. La mezcla entre las componentes logarítmica y lineal queda dada por:
 \begin{equation}
     g(\hat{x}) = (1 - L) \frac{\log_2\left(\frac{\hat{x}}{L} + 1\right)}{\log_2\left(\frac{1}{L} + 1\right)} + L \hat{x},
     \label{eq:encoder_mezcla_convexa}

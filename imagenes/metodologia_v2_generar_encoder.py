@@ -144,7 +144,7 @@ def pgf(output: Path) -> None:
  legend style={{draw=none,fill=none,font=\sffamily\small,at={{(.98,.50)}},anchor=east}},
  tick label style={{font=\sffamily\small}},label style={{font=\sffamily\small}},title style={{font=\sffamily\small}}]
 \node[anchor=north west,align=left,text width=8cm,font=\sffamily\scriptsize,fill=white,fill opacity=.9,text opacity=1]
- at (rel axis cs:.02,.98) {{Escenario $3\times3$; $I={I}$; $M_{{\mathrm{{lane}}}}={m_label}$ veh·s.\\$L=(I-1)/M_{{\mathrm{{num}}}}={l_label}$, con $M_{{\mathrm{{num}}}}=M_{{\mathrm{{lane}}}}/u$ y $u=1$ veh·s.}};
+ at (rel axis cs:.02,.98) {{Escenario $3\times3$; $I={I}$; $M_{{\mathrm{{lane}}}}={m_label}$ veh·s.\\$L=(I-1)/M_{{\mathrm{{lane}}}}={l_label}$ (valores numéricos en veh·s).}};
 \addplot[blueplot,thick] coordinates {{{coordinates([(j/1000, p[0]) for j,p in enumerate(points)])}}};
 \addlegendentry{{Componente logarítmica ponderada}}
 \addplot[mintplot,thick] coordinates {{{coordinates([(j/1000, p[1]) for j,p in enumerate(points)])}}};
