@@ -2,11 +2,11 @@
 \chapter{Metodología}
 \label{capitulo:metodologia}
 
-Este capítulo establece cómo aprender y evaluar políticas de control semafórico a partir de redes viales y demandas de tráfico simuladas. Cada agente recibe mediciones de su intersección y selecciona una fase permitida. El procedimiento produce políticas cuyo desempeño se analiza mediante la espera de los vehículos, la atención a la demanda y la distribución de la espera entre intersecciones.
+Este capítulo presenta el procedimiento de entrenamiento y evaluación de políticas de control semafórico en redes viales y demandas simuladas. Cada agente recibe mediciones de su intersección y selecciona una fase permitida. El desempeño de las políticas se analiza mediante la espera de los vehículos, la atención a la demanda y la distribución de la espera entre intersecciones.
 
 El diseño comprende dos líneas en tres redes sintéticas de complejidad creciente. La primera compara \acrshort{acr-mappo}, una adaptación de \acrshort{acr-happo} y los métodos independientes \acrshort{acr-ippo} e \acrshort{acr-idqn}, mediante un protocolo de búsqueda, selección de configuraciones, entrenamiento y evaluación. La segunda examina en \acrshort{acr-mappo} el efecto conjunto de incorporar información vecinal en la observación y la recompensa. Como preparación para extender el estudio a un dominio urbano, se construye además un escenario del microcentro de Mendoza y se comprueba su funcionamiento con programas semafóricos fijos.
 
-La exposición sigue las dependencias del procedimiento: define los escenarios y la interfaz de control que utilizan los agentes, explica cómo se ajustan y seleccionan las configuraciones de aprendizaje y presenta el contraste local y vecinal. Luego establece las métricas y los criterios de evaluación, y delimita el alcance de las conclusiones.
+Primero se describen los escenarios y la interfaz de control. Luego se presentan el ajuste y la selección de configuraciones, el contraste entre información local y vecinal y los criterios de evaluación. El capítulo cierra delimitando el alcance de las conclusiones.
 
 \Needspace{9\baselineskip}
 \section{Diseño experimental}
@@ -124,7 +124,7 @@ Las vías y las asignaciones por par \acrshort{acr-od} de las tres redes se deta
 \subsection{Red de tráfico de la Ciudad de Mendoza}
 \label{subsec:escenario_mendoza}
 
-Para disponer de un dominio de investigación con geometría urbana irregular, se construyó un modelo microscópico del microcentro de la Ciudad de Mendoza. El escenario comprende una demanda nominal de 220.000 viajes diarios distribuida entre 39 zonas \acrshort{acr-taz} y 73 controladores semafóricos de tiempo fijo con ciclo común de 90 segundos.
+El escenario urbano representa el microcentro de la Ciudad de Mendoza mediante un modelo microscópico de geometría irregular. Comprende una demanda nominal de 220.000 viajes diarios, distribuida entre 39 zonas \acrshort{acr-taz} y 73 controladores semafóricos de tiempo fijo con un ciclo común de 90 segundos.
 
 \subsubsection{Dominio y datos disponibles}
 \label{subsubsec:mendoza_dominio_datos}
@@ -181,7 +181,7 @@ La Sección \ref{subsec:alcance_limitaciones} reúne los límites de esta constr
 \section{Sistema de control multiagente}
 \label{sec:arquitectura_entorno_agentes}
 
-Con las redes y sus demandas definidas, el sistema implementa el ciclo de interacción agente--entorno presentado en el Capítulo \ref{cap:marco_teorico}: transforma las mediciones microscópicas del tránsito en observaciones locales para cada agente y traduce sus decisiones en estados semafóricos dentro del simulador. Los cuatro algoritmos evaluados comparten esta interfaz común.
+En cada paso de interacción, el sistema transforma las mediciones microscópicas del tránsito en observaciones locales y traduce las decisiones de los agentes en estados semafóricos dentro del simulador, siguiendo el ciclo agente--entorno presentado en el Capítulo \ref{cap:marco_teorico}. Los cuatro algoritmos evaluados comparten esta interfaz.
 
 Cada agente $i$ gobierna las señales de una intersección (o de un conjunto de nodos asociados a un mismo controlador semafórico), caracterizada por $m_i$ carriles entrantes controlados y $K_i$ fases verdes seleccionables. Los intervalos de cambio amarillo y el estado inicial de despeje en todo rojo son gestionados automáticamente por el entorno durante las transiciones y la inicialización, por lo que no forman parte del espacio de decisiones discretas del agente.
 
@@ -281,7 +281,7 @@ Sobre la formulación general de los algoritmos de aprendizaje multiagente desar
     \item \textbf{Crítico centralizado con salidas por agente en \acrshort{acr-mappo} y \acrshort{acr-happo}:} siguiendo el esquema \acrshort{acr-ctde} (Figura \ref{fig:ctde_architecture}), el \gls{critico} centralizado concatena las observaciones de todos los agentes en un único vector de entrada y produce $N$ salidas escalares de valor asociadas a sus respectivas recompensas individuales, donde $N$ es la cantidad de agentes. Las ventajas se estandarizan por agente —restando su media y dividiendo por su desviación estándar— antes de actualizar las políticas. Para acotar el impacto de valores atípicos, la función de pérdida del crítico satura en un umbral $c_v$ (\texttt{vf\_clip\_param}) el error cuadrático medio entre agentes de cada transición, según se formaliza en la Ecuación \eqref{eq:perdida_valor_marl_tlc} del Apéndice \ref{apendice:arquitectura_software}.
     \item \textbf{Ordenamiento híbrido y alcance teórico en \acrshort{acr-happo}:} en cada \glsdisp{epoca_entrenamiento}{época}, se actualiza primero el crítico y luego los actores, de forma secuencial y con el lote completo de transiciones por agente. El orden $i_1,\ldots,i_N$ se construye antes de actualizar actores: en cada posición, \texttt{greedy\_selection\_prob} fija la probabilidad de elegir al agente pendiente con mayor media de ventaja absoluta estandarizada $|\hat{A}_i|$; en caso contrario, se elige al azar entre los restantes.
 
-    La adaptación conserva el factor acumulado $M_{i_{1:m}}$ de la actualización secuencial, pero utiliza recompensas individuales por intersección. Por ello, no satisface el supuesto de recompensa compartida de la garantía de mejora monótona de \acrshort{acr-haml} (Sección \ref{subsec:happo}). La Sección \ref{sec:apendice_detalles_aprendizaje} del Apéndice \ref{apendice:arquitectura_software} especifica la secuencia implementada.
+    La adaptación conserva el factor acumulado $M_{i_{1:m}}$ de la actualización secuencial. Como cada agente recibe una recompensa individual, la garantía de mejora monótona de \acrshort{acr-haml} no se aplica bajo su supuesto de recompensa compartida (Sección \ref{subsec:happo}). La secuencia implementada se detalla en la Sección \ref{sec:apendice_detalles_aprendizaje} del Apéndice \ref{apendice:arquitectura_software}.
 \end{itemize}
 
 La Figura \ref{fig:informacion_controladores} contrasta el flujo de actualización de actores entre ambos métodos centralizados para un caso ilustrativo de tres agentes ($i_1, i_2, i_3$). En el panel (a), correspondiente a \acrshort{acr-mappo}, los actores se actualizan en paralelo empleando únicamente sus ventajas locales $\hat{A}_i$. En el panel (b), correspondiente a \acrshort{acr-happo}, los actores se actualizan de manera secuencial y cada agente transfiere al siguiente el factor acumulado de razones de verosimilitud posoptimización (representado mediante las flechas horizontales discontinuas). Durante la fase de ejecución descentralizada, ambos métodos prescinden del crítico y seleccionan las fases semafóricas consultando únicamente el actor local de cada intersección.
@@ -295,9 +295,9 @@ La Figura \ref{fig:informacion_controladores} contrasta el flujo de actualizaci�
 \section{Entrenamiento y búsqueda de hiperparámetros}
 \label{sec:experimentos_hiperparametros}
 
-Con el entorno y las arquitecturas de agentes definidos, el ajuste mediante \acrfull{acr-hpo} explora sistemáticamente el espacio de configuraciones de aprendizaje para ofrecer una comparación equitativa entre los cuatro algoritmos. Cada \gls{ensayo_hpo} entrena una configuración candidata durante un presupuesto acotado de \glspl{iteracion_entrenamiento}, donde cada iteración agrupa un lote fijo de episodios recolectados en paralelo.
+El ajuste de hiperparámetros mediante \acrfull{acr-hpo} explora el espacio de configuraciones de aprendizaje con un presupuesto común para los cuatro algoritmos. Cada \gls{ensayo_hpo} entrena una configuración candidata durante un número acotado de \glspl{iteracion_entrenamiento}; cada iteración agrupa un lote fijo de episodios recolectados en paralelo.
 
-Para distribuir el presupuesto computacional se combinó muestreo adaptativo con detención temprana. Optuna propuso las configuraciones mediante el \acrfull{acr-tpe} \cite{Bergstra2011TPE,akiba2019optuna}; Ray Tune organizó la ejecución de los ensayos \cite{liaw2018tune}, y el \acrfull{acr-asha} reguló su detención anticipada \cite{li2020system}. Tras un período de gracia inicial, \acrshort{acr-asha} compara el desempeño intermedio de las corridas activas y retiene la fracción definida por su factor de reducción.
+Optuna propuso las configuraciones mediante el \acrfull{acr-tpe} \cite{Bergstra2011TPE,akiba2019optuna}, mientras que Ray Tune organizó los ensayos \cite{liaw2018tune}. La detención temprana se realizó con \acrfull{acr-asha} \cite{li2020system}: tras un período de gracia, el método compara el desempeño de los ensayos en curso y conserva la fracción determinada por su factor de reducción.
 
 \subsection{Condiciones de simulación y entrenamiento}
 \label{subsec:ciclo_episodico}
@@ -332,13 +332,13 @@ La Figura \ref{fig:cambio_mascara} ilustra el efecto combinado del paso de decis
 \label{fig:cambio_mascara}
 \end{figure}
 
-Para garantizar la trazabilidad estocástica en las campañas sintéticas se controlaron por separado cuatro fuentes de números pseudoaleatorios: la semilla de entrenamiento de las redes neuronales, la semilla microscópica de \acrshort{acr-sumo}, la semilla generadora de rutas y la semilla del muestreador \acrshort{acr-tpe}. Los valores específicos empleados en la fase 1, en la fase 2 y en la comparación A/C se reportan en las Tablas \ref{tab:semillas_fase1} y \ref{tab:busquedas_v2} y en la Sección \ref{subsec:calibraciones_cooperacion} del Apéndice \ref{apendice:arquitectura_software}. Asimismo, durante el entrenamiento se intercalan periódicamente episodios deterministas de seguimiento diagnóstico —en los que los métodos basados en \acrshort{acr-ppo} eligen la acción permitida de máxima probabilidad e \acrshort{acr-idqn} la de mayor valor estimado—, cuyos registros se almacenan por separado sin intervenir en el cálculo del objetivo de optimización.
+En las campañas sintéticas se controlaron por separado cuatro fuentes de aleatoriedad: la semilla de entrenamiento de las redes neuronales, la semilla microscópica de \acrshort{acr-sumo}, la semilla generadora de rutas y la semilla del muestreador \acrshort{acr-tpe}. Los valores de cada fase y de la comparación A/C se presentan en las Tablas \ref{tab:semillas_fase1} y \ref{tab:busquedas_v2}, y en la Sección \ref{subsec:calibraciones_cooperacion} del Apéndice \ref{apendice:arquitectura_software}. El entrenamiento también intercala episodios de seguimiento diagnóstico con selección determinista de acciones: los métodos basados en \acrshort{acr-ppo} eligen la acción permitida de mayor probabilidad y \acrshort{acr-idqn}, la de mayor valor estimado. Estos registros se almacenan por separado y no intervienen en el objetivo de optimización.
 
 \Needspace{8\baselineskip}
 \subsection{Función objetivo de la búsqueda}
 \label{subsec:objetivo_busqueda}
 
-Con el propósito de favorecer configuraciones que alcancen simultáneamente una baja demora vehicular y una evolución estable al final del entrenamiento, la búsqueda de hiperparámetros minimiza un objetivo compuesto $J_r$ (en segundos por vehículo). En cada iteración de entrenamiento $r$ que produce un registro válido, se calcula primero la espera media por vehículo insertado $w_r$, obtenida dividiendo la suma de los tiempos de espera (\texttt{TripInfo.waitingTime}) de todos los episodios de aprendizaje completados en esa iteración por el total de vehículos insertados en ellos.
+La búsqueda minimiza el objetivo compuesto $J_r$, expresado en segundos por vehículo, que combina la demora media y una penalización por inestabilidad reciente. En cada iteración de entrenamiento $r$ con un registro válido, la espera media por vehículo insertado $w_r$ se calcula como la suma de los tiempos de espera (\texttt{TripInfo.waitingTime}) de los episodios completados dividida por el total de vehículos insertados en ellos.
 
 A continuación, se descartan las primeras cinco mediciones válidas del ensayo y se retiene una ventana deslizante con hasta las diez mediciones válidas más recientes. Para cada par de mediciones consecutivas dentro de esa ventana ($s = 1, \ldots, n$, con $n \le 9$ diferencias disponibles), se registra el incremento no negativo de espera $\Delta w_s = \max(0, w_s - w_{s-1})$. Ordenando dichos incrementos de mayor a menor como $\Delta w_{(1)} \ge \Delta w_{(2)} \ge \cdots \ge \Delta w_{(n)}$, se define una penalización por inestabilidad reciente $T_r$ igual al promedio del $20\%$ de los incrementos más severos ($k = \lceil 0{,}2n \rceil$), inspirada en el concepto de \acrfull{acr-cvar} sobre una muestra finita. De este modo, el objetivo $J_r$ evaluado en la iteración $r$ queda expresado como:
 \begin{equation}
@@ -423,12 +423,12 @@ La Figura \ref{fig:contraste_ac} muestra ambas formulaciones para un agente $i$ 
 \end{figure}
 
 \Needspace{6\baselineskip}
-Con el fin de controlar la variabilidad inherente a la inicialización neuronal y al muestreo estocástico del entrenamiento, el experimento se estructuró mediante un diseño de bloques pareados: cada \gls{parpoliticas} está constituido por una política entrenada bajo la variante A y otra bajo la variante C compartiendo exactamente la misma semilla de entrenamiento. Se entrenaron $24$ pares independientes por cada red sintética ($72$ pares y $144$ políticas en total) a lo largo de $40$ iteraciones por corrida, reteniendo para la evaluación el modelo de la iteración final. La justificación del tamaño muestral de $24$ pares por red se detalla en la Sección \ref{subsec:receta_ac_apendice} del Apéndice \ref{apendice:arquitectura_software}.
+La comparación A/C usa un diseño pareado para controlar la variabilidad asociada con la inicialización de las redes y el muestreo estocástico. Cada \gls{parpoliticas} reúne una política de cada variante, entrenadas con la misma semilla. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución; para evaluar se retuvo el modelo de la última iteración. La Sección \ref{subsec:receta_ac_apendice} del Apéndice \ref{apendice:arquitectura_software} justifica el tamaño muestral de $24$ pares por red.
 
 \section{Evaluación y análisis de políticas}
 \label{sec:evaluacion_modelos}
 
-Una vez entrenadas las políticas, su desempeño se evalúa con los pesos neuronales congelados y selección determinista de acciones. A continuación se formalizan las métricas globales y locales de evaluación, el protocolo de inferencia estadística por pares para el contraste A/C y el procedimiento de evaluación de los modelos finales de los cuatro algoritmos.
+La evaluación mantiene fijos los pesos neuronales y selecciona las acciones de forma determinista. En esta sección se definen las métricas globales y locales, la inferencia estadística por pares para el contraste A/C y el protocolo aplicado a los modelos finales de los cuatro algoritmos.
 
 \Needspace{9\baselineskip}
 \subsection{Métricas de desempeño y vehículos evaluados}
@@ -565,10 +565,10 @@ Igualar el presupuesto máximo de iteraciones de búsqueda entre algoritmos con 
 
 El contraste A/C modifica conjuntamente la observación y la recompensa vecinales y aumenta la dimensión de entrada del actor y del crítico centralizado. Por ello, no aísla el aporte de cada componente ni el de la información vecinal frente al aumento del número de parámetros. Tampoco anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes.
 
-La elección de C entre las variantes vecinales no respondió a un criterio previo documentado. El contraste se restringe a \acrshort{acr-mappo} y no establece que C sea la mejor formulación vecinal. Además, la planificación muestral utilizó una diferencia absoluta y un intervalo del $95\%$, mientras que la decisión emplea el efecto relativo y un intervalo del $98{,}33\%$; aquella planificación no garantiza la precisión de este último criterio.
+La variante C se eligió entre las formulaciones vecinales sin un criterio previo documentado. La evidencia se limita a \acrshort{acr-mappo}, por lo que permite comparar A y C, pero no ordenar las formulaciones vecinales en general. La planificación muestral se basó en una diferencia absoluta y un intervalo del $95\%$; la regla de decisión, en cambio, usa el efecto relativo y un intervalo del $98{,}33\%$. Por esa diferencia, el cálculo muestral no asegura la precisión requerida por la regla final.
 
-La construcción de Mendoza fue adaptativa: los ajustes de demanda respondieron a fallos observados en ejecuciones preliminares. Tres semillas ya se habían utilizado con la demanda de 210.000 viajes, aunque sus resultados con la redistribución final no se observaron antes de fijarla. No se compararon completamente ambas distribuciones con todas las semillas y horizontes comunes. El margen del $20\%$ de cambio por par se comprobó respecto de la redistribución anterior, no de forma acumulada respecto de la demanda inicial; dos pares exceden ese margen acumulado.
+La construcción de Mendoza se ajustó a partir de fallos observados en ejecuciones preliminares. Tres semillas ya se habían usado con una demanda de 210.000 viajes, pero sus resultados con la redistribución final no se observaron antes de fijarla. Tampoco se completó una comparación de ambas distribuciones con las mismas semillas y horizontes. El margen de cambio del $20\%$ por par se calculó respecto de la redistribución anterior; al medirlo de forma acumulada desde la demanda inicial, dos pares superan ese valor.
 
-En Mendoza, completar el horizonte sin teletransportes no implica atender toda la demanda: los vehículos pendientes de ingreso deben informarse junto con los viajes completados. Tampoco demuestra que las colas se mantengan estables fuera del horizonte ensayado ni que el desempeño se conserve en períodos más extensos.
+En Mendoza, finalizar el horizonte sin teletransportes describe el comportamiento de la red durante el período simulado, pero no confirma que toda la demanda haya ingresado. Por eso, los vehículos que aún esperan ingresar deben informarse junto con los viajes completados. La estabilidad de las colas y el desempeño en períodos más extensos quedan fuera de estos horizontes.
 
-El objetivo $J_r$ de la búsqueda ordena las configuraciones por su demora y por un término de inestabilidad reciente, pero no mide por sí solo la variabilidad entre entrenamientos ni demuestra estabilidad futura.
+El objetivo $J_r$ ordena las configuraciones según la demora y los aumentos recientes de espera dentro de cada ensayo. La variabilidad entre entrenamientos y la estabilidad futura requieren evaluaciones específicas y no quedan caracterizadas por esta medida.
