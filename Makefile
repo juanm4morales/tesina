@@ -9,7 +9,7 @@
 # finales fijan las referencias cruzadas.
 
 TEX      := pdflatex
-TEXFLAGS := -interaction=nonstopmode -halt-on-error
+TEXFLAGS := -synctex=1 -interaction=nonstopmode -halt-on-error
 
 .PHONY: all pdf check clean distclean
 

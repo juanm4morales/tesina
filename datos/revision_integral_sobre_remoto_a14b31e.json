@@ -1,0 +1,329 @@
+{
+  "base_git": "a14b31e0c29918faff49854ce84e02ae09c04ec4",
+  "revision_anterior_resguardada": "stash: respaldo revision local antes de integrar origin main a14b31e",
+  "alcance": "Revisión sobre el remoto actualizado; sin simulaciones ni modificación de datos experimentales",
+  "archivos": {
+    "5-metodologia.tex": {
+      "palabras_fuente_antes": 10085,
+      "palabras_fuente_despues": 10048,
+      "reduccion_porcentaje": 0.37,
+      "etiquetas": {
+        "cantidad": 66,
+        "identicos": true
+      },
+      "formulas_numeradas": {
+        "cantidad": 9,
+        "identicos": true
+      },
+      "tablas_tabular": {
+        "cantidad": 6,
+        "identicos": true
+      },
+      "diagramas_tikz": {
+        "cantidad": 0,
+        "identicos": true
+      }
+    },
+    "8-apendice_arquitectura.tex": {
+      "palabras_fuente_antes": 9075,
+      "palabras_fuente_despues": 8531,
+      "reduccion_porcentaje": 5.99,
+      "etiquetas": {
+        "cantidad": 63,
+        "identicos": true
+      },
+      "formulas_numeradas": {
+        "cantidad": 9,
+        "identicos": true
+      },
+      "tablas_tabular": {
+        "cantidad": 12,
+        "identicos": true
+      },
+      "diagramas_tikz": {
+        "cantidad": 2,
+        "identicos": true
+      }
+    }
+  },
+  "referencias": {
+    "fuentes_activas": 34,
+    "usos_en_archivos_revisados": 152,
+    "destinos_distintos": 88,
+    "ausentes": [],
+    "etiquetas_duplicadas": []
+  },
+  "citas": {
+    "claves_distintas": 26,
+    "ausentes": []
+  },
+  "compilacion": {
+    "receta": "make pdf; make check",
+    "overfull": 0,
+    "underfull": 0,
+    "indefinidas": false,
+    "advertencias": [
+      "Package tracklang Warning: No `datatool' support for dialect `spanish'  on inpu"
+    ],
+    "indices_sin_rechazos": true,
+    "synctex_presente": true
+  },
+  "pdf": {
+    "sha256": "8391448a06a8134540de8b7176e45335ea7b5c095a606aa82cd287ea8f4c8179",
+    "paginas": 152,
+    "paginas_base_remota": 153
+  },
+  "comparacion_externa": {
+    "obra": "Schneider, Chantal (2020). Intelligent signalized intersection management for mixed traffic using Deep Q-Learning. TU Delft.",
+    "apendices": "A (pp. 123–135), B (pp. 136–140), C (p. 141)",
+    "url": "https://repository.tudelft.nl/file/File_ddde71cc-ee81-4e50-9610-4456ec45511d",
+    "criterio": "Introducciones breves y separación de especificaciones, experimentos y resultados complementarios. No se adopta su extensión como norma."
+  },
+  "justificaciones": [
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R01: trasladar m_i y K_i antes de sus usos en los paneles sintéticos."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R01: definir dimensiones de observación y acción antes de aplicar sus valores."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R02/R15: reservar el identificador técnico del plan para el apéndice."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R08/R19: distinguir restricción del proyecto de fundamento bibliográfico; no atribuir 90 segundos a la cita."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R02/R04/R08: mantener propósito y criterio en metodología; dejar pares, hora puntual y catálogo en el apéndice. Explicitar conservación en esperanza y alcance de la elección."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R04/R09: explicar perfil y horizontes según la figura, sin distraer con la modificación de cuatro pares. Mantener uso corto para ajuste y evaluación, y convención temporal."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R08/R15: evitar códigos opacos y dejar claro que se reutiliza el panel en los dos horizontes."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R08: doce horas cubren el período modelado, sin implicar un día de 24 horas."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R17: convención de secciones para referencias a subsecciones."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R13: definir N en su primer uso sustantivo."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R01: explicar estandarización donde se aplica; retirar luego la definición duplicada del apéndice."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R02/R05: explicar el recorrido en el cuerpo y conservar una sola especificación exacta de 10 %, 70 % y 5 % en el apéndice."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R02/R05: mantener separación de semillas en el cuerpo y valores exactos en el apéndice."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R08/R13: precisar población del denominador cargado según Summary; no identificar loaded con demanda debida."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R08/R13: corregir requisito absoluto indebidamente generalizado; distinguir eventos TraCI y contador nativo."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R13/R18: definir unidades e interpretación junto a los contrastes."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R04/R08: separar fuentes de variabilidad y presupuesto; evitar afirmar captura completa de variabilidad."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R04: separar selección adaptativa urbana de interpretación de horizontes finitos."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R04: separar limitaciones del escenario de alcance del objetivo de búsqueda."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R02/R05/R08/R12: conservar funciones y relaciones útiles para leer el UML; retirar el inventario verbal de atributos ya dibujados y aclarar alcance de diseño."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R08: no equiparar propuesta, implementación verificada y patrones clásicos; el tipado estructural es un mecanismo de diseño."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R13/R18: las longitudes describen carriles; no convertirlas en longitudes de tramos viales."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R08/R22: recuperar conexión breve entre reescalado, heurística y demanda final; no describir O1 como simple asignación calibrada."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R02/R05/R08: retirar tutorial repetido y reunir particularidades de implementación donde se especifica fase 1."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: conservar excepción HAPPO y dominio sin explicar de nuevo toda la regla de ordenación."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: el párrafo repite tabla de factores y distinción entre observación y recompensa explicada inmediatamente antes."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: dejar presupuestos comunes en metodología y conservar aquí concurrencia y tratamiento de interrupciones."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05/R08: retirar definición repetida de checkpoint sin eliminar límite inferencial del diseño adaptativo."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: etapas ya explicadas en metodología y semillas repetidas en el apartado siguiente."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: retirar el segundo diccionario de parámetros, conservando distinción coeficiente/objetivo KL y excepción HAPPO."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R05: conservar unidades del presupuesto y excepción de la pérdida; funciones individuales de claves ya figuran en tablas y fase 1."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R02/R05: retirar comparación general IDQN/PPO ya desarrollada en marco y metodología; conservar detalles específicos de aprendizaje posteriores."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R01/R05: estandarización explicada ahora en su uso sustantivo en metodología."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R04/R05: retirar párrafo de recompensas ajeno a máscara; su única cautela se conservó junto al espacio de fase 1."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R09/R13: explicar lectura y propósito de la figura del codificador junto a ella."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R17: uniformar referencias singulares a secciones y ecuaciones."
+    },
+    {
+      "archivo": "Makefile",
+      "motivo": "Build: conservar SyncTeX también en la nueva receta canónica del remoto."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "R13: explicitar g_p como duración fija asignada a cada fase, y p_od y p_od fijo como proporciones por origen y destino; indicar segundos de H_od."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "motivo": "Tipografía: dejar O1/O2 monoespaciados fuera de la negrita para evitar sustitución de fuente no disponible."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "motivo": "R09/R12: retirar recorte superior de Figura 3.4 que cortaba la marca 18.000 del eje vertical; conservar el PDF gráfico completo sin cambiar datos."
+    }
+  ],
+  "ajustes_cierre": [
+    "Definición de N con antecedente gramatical claro y funciones del crítico en oraciones separadas",
+    "Definiciones m_i/K_i en párrafo previo a lectura de los paneles",
+    "Identificadores O1/O2 fuera de la negrita para evitar sustitución tipográfica de cmtt",
+    "Revisión preserva todas las decisiones remotas, incluidas tablas verticales, plan fijo y condensación histórica",
+    "Desfase definido en el primer uso operativo; ciclo de 90 s identificado como restricción y sin introducir un método no desarrollado."
+  ],
+  "revision_visual": {
+    "paginas_fisicas_renderizadas": [
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143
+    ],
+    "resolucion_dpi": 150,
+    "escala": "grises",
+    "metodo": "Vistas de conjunto de metodología y apéndice y ampliaciones dirigidas; cierre de Figura 3.4, definiciones de las ecuaciones urbanas y composición de las tablas.",
+    "figura_3_4": "Se retiró el recorte que cortaba la marca 18.000 del eje vertical; el archivo gráfico y los datos no cambiaron."
+  },
+  "glosario": {
+    "destinos_y_enlaces_GoTo_verificados": [
+      "carriles_controlados",
+      "numero_acciones",
+      "espera_interseccion"
+    ]
+  }
+}
