@@ -28,7 +28,7 @@ La Figura \ref{fig:flujo_metodologico_general} sintetiza los dos recorridos del 
 \label{fig:flujo_metodologico_general}
 \end{figure}
 
-La métrica primaria de desempeño vehicular es la espera media acumulada hasta el cierre del horizonte por los vehículos que ingresan a la red durante la ventana de evaluación, incluidos aquellos cuyos viajes permanecen en curso al finalizar el episodio. Este indicador se analiza conjuntamente con el volumen de vehículos insertados y la tasa de viajes completados para verificar que una reducción en la espera no responda a una restricción artificial del flujo admitido en los bordes de la red \cite{jiang2024xlight}. Las definiciones formales de todas las métricas y poblaciones se presentan en la Sección \ref{sec:metricas_evidencia}.
+En la evaluación de políticas en las redes sintéticas, la métrica primaria de desempeño vehicular es la espera media acumulada hasta el cierre del horizonte por los vehículos que ingresan a la red durante la ventana de evaluación, incluidos aquellos cuyos viajes permanecen en curso al finalizar el episodio. Este indicador se analiza junto con el volumen de vehículos insertados y la tasa de viajes completados para comprobar si una reducción de la espera coincide con una menor admisión de vehículos en los bordes de la red \cite{jiang2024xlight}. Las definiciones formales de las métricas y poblaciones se presentan en la Sección \ref{sec:metricas_evidencia}.
 
 \section{Escenarios de simulación}
 \label{sec:diseno_escenarios}
@@ -332,7 +332,7 @@ La Figura \ref{fig:cambio_mascara} ilustra el efecto combinado del paso de decis
 \label{fig:cambio_mascara}
 \end{figure}
 
-En las campañas sintéticas se controlaron por separado cuatro fuentes de aleatoriedad: la semilla de entrenamiento de las redes neuronales, la semilla microscópica de \acrshort{acr-sumo}, la semilla generadora de rutas y la semilla del muestreador \acrshort{acr-tpe}. Los valores de cada fase y de la comparación A/C se presentan en las Tablas \ref{tab:semillas_fase1} y \ref{tab:busquedas_v2}, y en la Sección \ref{subsec:calibraciones_cooperacion} del Apéndice \ref{apendice:arquitectura_software}. El entrenamiento también intercala episodios de seguimiento diagnóstico con selección determinista de acciones: los métodos basados en \acrshort{acr-ppo} eligen la acción permitida de mayor probabilidad y \acrshort{acr-idqn}, la de mayor valor estimado. Estos registros se almacenan por separado y no intervienen en el objetivo de optimización.
+En las campañas sintéticas se controlaron por separado cuatro fuentes de números pseudoaleatorios: la semilla de entrenamiento de las redes neuronales, la semilla microscópica de \acrshort{acr-sumo}, la semilla generadora de rutas y la semilla del muestreador \acrshort{acr-tpe}. Los valores de cada fase y de la comparación A/C se presentan en las Tablas \ref{tab:semillas_fase1} y \ref{tab:busquedas_v2}, y en la Sección \ref{subsec:calibraciones_cooperacion} del Apéndice \ref{apendice:arquitectura_software}. El entrenamiento también intercala episodios de seguimiento diagnóstico con selección determinista de acciones: los métodos basados en \acrshort{acr-ppo} eligen la acción permitida de mayor probabilidad y \acrshort{acr-idqn}, la de mayor valor estimado. Estos registros se almacenan por separado y no intervienen en el objetivo de optimización.
 
 \Needspace{8\baselineskip}
 \subsection{Función objetivo de la búsqueda}
@@ -423,7 +423,7 @@ La Figura \ref{fig:contraste_ac} muestra ambas formulaciones para un agente $i$ 
 \end{figure}
 
 \Needspace{6\baselineskip}
-La comparación A/C usa un diseño pareado para controlar la variabilidad asociada con la inicialización de las redes y el muestreo estocástico. Cada \gls{parpoliticas} reúne una política de cada variante, entrenadas con la misma semilla. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución; para evaluar se retuvo el modelo de la última iteración. La Sección \ref{subsec:receta_ac_apendice} del Apéndice \ref{apendice:arquitectura_software} justifica el tamaño muestral de $24$ pares por red.
+La comparación A/C usa un diseño pareado para controlar la variabilidad asociada con la inicialización de las redes y el muestreo estocástico. Cada \gls{parpoliticas} reúne dos políticas, una por variante, entrenadas con la misma semilla. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución; para evaluar se retuvo el modelo de la última iteración. La Sección \ref{subsec:receta_ac_apendice} del Apéndice \ref{apendice:arquitectura_software} justifica el tamaño muestral de $24$ pares por red.
 
 \section{Evaluación y análisis de políticas}
 \label{sec:evaluacion_modelos}
