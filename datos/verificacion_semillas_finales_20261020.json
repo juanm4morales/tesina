@@ -1,0 +1,179 @@
+{
+  "fecha": "2026-10-20",
+  "base_tesina": "450492b04e0dafd06a92f7c2072c1dc2e7729fe7",
+  "alcance": "Inspección de archivos locales, fuentes y celdas de cuadernos; sin ejecutar código experimental, generar entradas ni iniciar simulaciones.",
+  "repositorios": [
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc",
+      "commit": "bd2b906e27d9f9ea23a22226eab0dbdca41d721d"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/.slim/worktrees/phase2-cluster",
+      "commit": "6e7931bd6dd15499547a40a9d550d398d08c4aa2"
+    }
+  ],
+  "fuentes": [
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/experiments/marl_experiments/tuning/shared/seeds.json",
+      "sha256": "4da178e116267960ea90e68229f10b532764e15730e7ae63177945f664c61ef2"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/experiments/marl_experiments/tuning/urban/seeds.json",
+      "sha256": "b4ea25b76a1ab1db9f2cae5be02670ff173ab6dcc1617dc0e98d703dbc516235"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/experiments/marl_experiments/tuning/urban/protocol.json",
+      "sha256": "97173c72ce5241068ced00731ebbc123fb43a3b714b15c9508a73a05392328c3"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/.slim/worktrees/phase2-cluster/experiments/marl_experiments/tuning/phase2_refined/protocol_informed_rho0_v3.json",
+      "sha256": "125a9e018e5dbeb9e1cb38c9eec2131fdce9c51549158f29f86186046e082bf1"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/.slim/worktrees/phase2-cluster/experiments/marl_experiments/tuning/phase2_refined/protocol_closure_rho0_100_v3.json",
+      "sha256": "f65642f873d27f5266f573511638afff785301dc5e38861cdba565f5268651f9"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/.slim/worktrees/phase2-cluster/experiments/marl_experiments/tuning/phase2_refined/closure.py",
+      "sha256": "7f2f6d2c981cb90d48c2c405cac7b74be8308761640747c28dab677abd393b49"
+    },
+    {
+      "ruta": "/home/juanm4/Dev/marl-tlc/.slim/worktrees/phase2-cluster/docs/PLAN_CIERRE_PHASE2_INFORMADA_20261008.md",
+      "sha256": "c315fd342e0fc2dd5e276bee45044f2288c97610c972094b389f554208222e4c"
+    }
+  ],
+  "hallazgos": {
+    "final_historica": {
+      "semillas": [
+        300101,
+        300137,
+        300179,
+        300191,
+        300193
+      ],
+      "uso": "Banco histórico de cinco evaluaciones; no constituye el panel final sintético de veinte."
+    },
+    "seleccion_refinada": {
+      "semillas": [
+        950001,
+        950003,
+        950007
+      ],
+      "uso": "Panel común para selección de candidatos; no corresponde a las veinte evaluaciones finales."
+    },
+    "diseno_urbano_anterior": {
+      "origen": "prospective design 2026-10-13",
+      "sumocfg": "nets/Mendoza/mendoza_hpo_v14.sumocfg",
+      "semillas_finales_por_algoritmo": {
+        "mappo": [
+          23237595,
+          1803199336,
+          319239781,
+          1477746136,
+          900182976,
+          1758967594,
+          506459518,
+          221063905,
+          1294199432,
+          1383907080,
+          1619943706,
+          99931147,
+          1383285414,
+          2118632881,
+          962989522,
+          1437394455,
+          1995448528,
+          151931410,
+          1013928674,
+          2120071798
+        ],
+        "happo": [
+          1171994264,
+          970566684,
+          304593390,
+          2141078128,
+          1136287383,
+          55370019,
+          916419630,
+          1937452909,
+          1645238806,
+          1729307296,
+          55909540,
+          2049794840,
+          904561237,
+          439078345,
+          805112151,
+          424240307,
+          1847165818,
+          1956606487,
+          1773231048,
+          1807775150
+        ],
+        "ippo": [
+          498066609,
+          84386647,
+          1505397745,
+          2143052088,
+          1029962930,
+          2115417288,
+          153601080,
+          637887261,
+          1556646898,
+          85055479,
+          467749486,
+          633563581,
+          334163365,
+          1076136326,
+          1789144699,
+          990610355,
+          1567602902,
+          313521536,
+          1726554357,
+          1186445103
+        ],
+        "idqn": [
+          775029285,
+          867231065,
+          1716697886,
+          1794556304,
+          1619779818,
+          311678408,
+          1830677155,
+          1383674559,
+          191378294,
+          1484764686,
+          1159027008,
+          1474413445,
+          1167717875,
+          1330329911,
+          2018708143,
+          1379434259,
+          1461565626,
+          19648660,
+          1532980388,
+          963892089
+        ]
+      },
+      "uso": "Diseño prospectivo urbano con veinte semillas por algoritmo; no transferible a las doce combinaciones sintéticas."
+    },
+    "protocolo_sintetico_consultado": {
+      "scope": {
+        "additional_refinements": 0,
+        "final_recipe_retrainings": 0,
+        "max_new_trials": 1200,
+        "new_studies": 12
+      },
+      "interpretacion": "El alcance de esta búsqueda no incluye reentrenamientos finales. Esto no prueba ausencia de ejecuciones posteriores o externas."
+    },
+    "panel_sintetico_final_de_veinte": {
+      "estado": "No localizado en las fuentes inspeccionadas",
+      "conclusion": "El número veinte se conserva como especificación del protocolo de tesis; no se acredita su ejecución ni se fabrican semillas. La incidencia documental se informa fuera de la tesis."
+    }
+  },
+  "cobertura": {
+    "candidatos_por_nombre": 224,
+    "lectura": "Cuadernos analizados como JSON sin ejecutar sus celdas; copias idénticas deduplicadas por SHA-256.",
+    "limites": "No es un censo de todos los artefactos externos. La inspección remota preliminar fue parcial y no sustenta una afirmación de inexistencia."
+  },
+  "decision_editorial": "Redactar un procedimiento de evaluación completo y autónomo, sin notas de trabajo ni afirmaciones de ejecución no respaldadas."
+}

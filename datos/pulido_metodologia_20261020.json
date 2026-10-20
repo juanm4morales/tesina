@@ -1,0 +1,392 @@
+{
+  "fecha": "2026-10-20",
+  "base_git": "450492b04e0dafd06a92f7c2072c1dc2e7729fe7",
+  "alcance": "Pulido localizado de apertura, párrafos densos y repeticiones de alcance. Los nuevos resultados se incorporarán en el capítulo correspondiente; no se ejecutaron simulaciones ni se modificaron insumos experimentales.",
+  "archivos": {
+    "3-introduccion.tex": {
+      "sha256_antes": "24a96935afbb426b96787f815f79d5b8270566cae5480867b7f45a6ae7afa1d2",
+      "sha256_despues": "65b0bcda354e8151199b64827009e22c1a648270cdd515d241c50a96468d80f7",
+      "elementos_separados_por_espacios_antes": 1406,
+      "elementos_separados_por_espacios_despues": 1272,
+      "verificacion": {
+        "ecuaciones_numeradas": {
+          "cantidad": 0,
+          "identicos": true
+        },
+        "tablas": {
+          "cantidad": 0,
+          "identicos": true
+        },
+        "figuras": {
+          "cantidad": 1,
+          "identicos": true
+        },
+        "etiquetas": {
+          "cantidad": 4,
+          "identicos": true
+        },
+        "citas": {
+          "cantidad": 12,
+          "identicos": true
+        }
+      }
+    },
+    "5-metodologia.tex": {
+      "sha256_antes": "644c5ba83ecc8772deb25c7e29b484942493a8a912909fb53af8c063af76fa9d",
+      "sha256_despues": "e73b0e55a043db8b899a2d717b966bbac34612137d5e3204c0543bc57acca05c",
+      "elementos_separados_por_espacios_antes": 10048,
+      "elementos_separados_por_espacios_despues": 9600,
+      "verificacion": {
+        "ecuaciones_numeradas": {
+          "cantidad": 9,
+          "identicos": true
+        },
+        "tablas": {
+          "cantidad": 6,
+          "identicos": true
+        },
+        "figuras": {
+          "cantidad": 11,
+          "identicos": true
+        },
+        "etiquetas": {
+          "cantidad": 66,
+          "identicos": true
+        },
+        "citas": {
+          "cantidad": 23,
+          "identicos": true
+        }
+      }
+    },
+    "8-apendice_arquitectura.tex": {
+      "sha256_antes": "5f542be1c88c5215bd1469324f2341bac9a7eea5e3a076bc4d9cc978e298202f",
+      "sha256_despues": "12fafd56e37d99a5807a1d49ff92245844dfd02ff048564233a5984ad2683a37",
+      "elementos_separados_por_espacios_antes": 8531,
+      "elementos_separados_por_espacios_despues": 8373,
+      "verificacion": {
+        "ecuaciones_numeradas": {
+          "cantidad": 9,
+          "identicos": true
+        },
+        "tablas": {
+          "cantidad": 12,
+          "identicos": true
+        },
+        "figuras": {
+          "cantidad": 5,
+          "identicos": true
+        },
+        "etiquetas": {
+          "cantidad": 63,
+          "identicos": true
+        },
+        "citas": {
+          "cantidad": 3,
+          "identicos": true
+        }
+      }
+    }
+  },
+  "referencias": {
+    "fuentes_activas": 34,
+    "usos_en_archivos_revisados": 155,
+    "destinos_distintos": 90,
+    "ausentes": [],
+    "etiquetas_duplicadas": {}
+  },
+  "compilacion": {
+    "receta": "make pdf; makeglossaries; latexmk -pdf -synctex=1; make check, en copia aislada",
+    "compilacion_aislada": true,
+    "transferencia": "PDF e índices verificados, copiados atómicamente; rutas SyncTeX ajustadas al repositorio",
+    "overfull": 0,
+    "underfull": 0,
+    "errores": 0,
+    "citas_indefinidas": 0,
+    "referencias_indefinidas": 0,
+    "advertencias": [
+      "Package tracklang Warning: No `datatool' support for dialect `spanish'  on inpu"
+    ],
+    "indices": {
+      "main.alg": {
+        "aceptadas": 548,
+        "rechazadas": 0
+      },
+      "main.glg": {
+        "aceptadas": 144,
+        "rechazadas": 0
+      }
+    },
+    "synctex_presente": true
+  },
+  "pdf": {
+    "sha256": "efd015494d9033f6fd80a3808b5f79af930b50c9f3c5ced7591b57493506abf7",
+    "paginas": 151,
+    "paginas_base": 152
+  },
+  "comparacion_apertura": {
+    "fuente": "/home/juanm4/Documentos/Tesina_LCC_Maglione.pdf",
+    "paginas_impresas": "37–38",
+    "paginas_fisicas_del_extracto": "1–2",
+    "criterio": "Adoptar una apertura orientada a la tarea, sus entradas y salidas, y el recorrido del método; sin copiar formulaciones ni introducir otra tarea de investigación."
+  },
+  "semillas": {
+    "registro": "datos/verificacion_semillas_finales_20261020.json",
+    "conclusion": "Separados el banco histórico, el panel de selección y el diseño urbano. No se localizó un manifiesto del panel final sintético de veinte; el procedimiento se describe como definición del protocolo, sin atribución de ejecución ni notas de recuperación en la tesis."
+  },
+  "cambios_justificados": [
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El problema consiste en aprender políticas para controlar los semáforos de una red de tráfico simulada. Cada agente recibe observaciones del tránsito en su intersección y elige una fase permitida. Se examina la espera en los carriles que controla cada agente y, a nivel de la red vial, la espera por viaje, la atención a la demanda y la distribución de la espera entre agentes.\n\nEl diseño compara implementaciones de \\acrshort{acr-mappo} y una adaptación de \\acrshort{acr-happo}, con \\acrshort{acr-ippo} y \\acrshort{acr-idqn} como esquemas de aprendizaje independiente de referencia. La actualización secuencial de los \\glspl{actor} de \\acrshort{acr-happo} motiva su contraste con \\acrshort{acr-mappo} a lo largo de tres redes viales sintéticas de complejidad creciente —un corredor arterial ($3\\times1$), una cuadrícula regular homogénea ($3\\times3$) y una cuadrícula heterogénea ($4\\times4\\_H$)— además de la preparación de una red urbana del microcentro de la Ciudad de Mendoza.\n\nEl trabajo se organiza en dos líneas metodológicas complementarias. La primera establece un protocolo común en dos fases para comparar los cuatro algoritmos en las redes sintéticas mediante la búsqueda de \\glspl{hiperparametro}, la selección de configuraciones admisibles y el entrenamiento desde cero de las \\glspl{politica} finales, dejando preparada la base operativa para su futura extensión al escenario de Mendoza. La segunda línea analiza específicamente en \\acrshort{acr-mappo} el efecto de incorporar información vecinal en la \\gls{observacion} y en la \\gls{recompensa} dentro de las redes sintéticas.\n\nEn las secciones siguientes se describen primero los escenarios de simulación y la formulación del sistema de control multiagente; a continuación se presentan el protocolo de búsqueda y selección de configuraciones, el diseño de comparación entre variantes locales y vecinales, y las métricas e instrumentos de evaluación estadística.\n\n",
+      "nuevo": "Este capítulo establece cómo aprender y evaluar políticas de control semafórico a partir de redes viales y demandas de tráfico simuladas. Cada agente recibe mediciones de su intersección y selecciona una fase permitida. El procedimiento produce políticas cuyo desempeño se analiza mediante la espera de los vehículos, la atención a la demanda y la distribución de la espera entre intersecciones.\n\nEl diseño comprende dos líneas en tres redes sintéticas de complejidad creciente. La primera compara \\acrshort{acr-mappo}, una adaptación de \\acrshort{acr-happo} y los métodos independientes \\acrshort{acr-ippo} e \\acrshort{acr-idqn}, mediante un protocolo de búsqueda, selección de configuraciones, entrenamiento y evaluación. La segunda examina en \\acrshort{acr-mappo} el efecto conjunto de incorporar información vecinal en la observación y la recompensa. Como preparación para extender el estudio a un dominio urbano, se construye además un escenario del microcentro de Mendoza y se comprueba su funcionamiento con programas semafóricos fijos.\n\nLa exposición sigue las dependencias del procedimiento: define los escenarios y la interfaz de control que utilizan los agentes, explica cómo se ajustan y seleccionan las configuraciones de aprendizaje y presenta el contraste local y vecinal. Luego establece las métricas y los criterios de evaluación, y delimita el alcance de las conclusiones. La Figura \\ref{fig:flujo_metodologico_general} organiza las etapas de las dos líneas sintéticas.\n\n",
+      "justificacion": "R01/R02/R03: explicitar entradas, decisiones y productos; distinguir las dos líneas sintéticas y la construcción urbana, sin enumerar topologías antes de presentarlas. Comparación estructural con Maglione, pp. 37–38."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "En las tres redes sintéticas, el ajuste de hiperparámetros se estructura en dos fases sucesivas: la fase 1 explora dominios amplios y la fase 2 refina los intervalos de búsqueda a partir de las configuraciones de mejor desempeño en cada escenario. Mientras que la búsqueda genera configuraciones candidatas, una etapa posterior de selección filtra aquellas que cumplen criterios de admisibilidad operacional antes de entrenar desde cero las políticas definitivas. En el escenario urbano de Mendoza se documenta la construcción de la red, de la demanda nominal de 220.000 viajes diarios y del plan de tiempos fijos, junto con su comprobación operacional; la ejecución del ciclo de aprendizaje sobre este dominio queda planteada como trabajo futuro una vez adaptados sus codificadores y presupuestos de cómputo.",
+      "nuevo": "En las tres redes sintéticas, el ajuste de hiperparámetros se estructura en dos fases sucesivas. La fase 1 explora dominios amplios y la fase 2 refina los intervalos a partir de las configuraciones de mejor desempeño en cada escenario. Una etapa posterior selecciona las configuraciones que cumplen criterios de admisibilidad operacional antes del entrenamiento desde cero de las políticas definitivas.\n\nEl estudio de Mendoza comprende la construcción y la comprobación operacional del escenario. El protocolo de aprendizaje urbano requiere adaptar sus codificadores y presupuestos de cómputo; las evaluaciones con programas fijos no constituyen una evaluación de políticas aprendidas.",
+      "justificacion": "R04/R05/R08: separar la secuencia sintética del alcance urbano y concentrar aquí la distinción entre comprobación y aprendizaje."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "Con el propósito de contar con un entorno urbano realista de alta demanda y topología irregular, se construyó y verificó operacionalmente un modelo microscópico del microcentro de la Ciudad de Mendoza. El escenario resultante consolida una demanda nominal de 220.000 viajes diarios distribuida entre 39 zonas \\acrshort{acr-taz} y operada mediante 73 controladores semafóricos de tiempo fijo con ciclo común de 90 segundos. En el marco de esta tesina, dicho escenario se somete a una comprobación operacional bajo control de tiempo fijo que sienta la línea base para futuras campañas de aprendizaje multiagente.",
+      "nuevo": "Para disponer de un dominio de investigación con geometría urbana irregular, se construyó un modelo microscópico del microcentro de la Ciudad de Mendoza. El escenario comprende una demanda nominal de 220.000 viajes diarios distribuida entre 39 zonas \\acrshort{acr-taz} y 73 controladores semafóricos de tiempo fijo con ciclo común de 90 segundos.",
+      "justificacion": "R05/R08: presentar características del escenario sin repetir su alcance ni equiparar geometría urbana con validación de campo."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "La comprobación operacional evaluó el funcionamiento conjunto de la red de Mendoza con el plan fijo y la demanda final sobre las mismas seis semillas en cada horizonte (dos y doce horas), iniciando cada simulación con la red vacía. Las seis semillas por horizonte responden a un presupuesto del proyecto y no a un cálculo de precisión estadística; como son simulaciones de horizonte finito, la condición inicial debe considerarse al interpretar los resultados \\cite{Law2015Output}. Se definió como criterio de aceptación que las seis réplicas de cada ventana completaran la totalidad del horizonte sin teletransportes, colisiones detectadas ni descartes de carga, alcanzando una proporción de viajes finalizados sobre vehículos cargados de al menos el 75\\%. Los parámetros de ejecución y el registro por semilla se detallan en la Sección \\ref{sec:mendoza_evidencia_final} del Apéndice \\ref{apendice:arquitectura_software}, y la síntesis cuantitativa se reporta en la Tabla \\ref{tab:metricas_validacion_mendoza} del Capítulo \\ref{capitulo:resultados}.",
+      "nuevo": "La comprobación operacional evaluó el funcionamiento conjunto de la red, el plan fijo y la demanda final sobre las mismas seis semillas en cada horizonte, iniciando cada simulación con la red vacía. Este número de semillas responde a un presupuesto del proyecto y no a un cálculo de precisión estadística. Al tratarse de simulaciones de horizonte finito, la condición inicial debe considerarse al interpretar los resultados \\cite{Law2015Output}.\n\nSe exigió que las seis ejecuciones de cada horizonte lo completaran sin teletransportes, colisiones detectadas ni descartes de carga, y que los viajes finalizados representaran al menos el 75\\% de los vehículos cargados. Los parámetros y el registro por semilla se detallan en la Sección \\ref{sec:mendoza_evidencia_final} del Apéndice \\ref{apendice:arquitectura_software}; la Tabla \\ref{tab:metricas_validacion_mendoza} del Capítulo \\ref{capitulo:resultados} presenta la síntesis cuantitativa.",
+      "justificacion": "R04/R21: separar condiciones experimentales, fundamento del número de semillas y criterio de aceptación; conservar denominador y umbrales."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "Siguiendo la distinción metodológica clásica entre verificación operativa de un modelo de simulación y validación empírica frente al sistema físico real \\cite{Sargent2013,Wunderlich2019Microsimulation}, esta comprobación acredita la consistencia interna y la estabilidad de ejecución del escenario urbano bajo control de tiempo fijo, sin reclamar una calibración de campo completa —la cual requeriría aforos independientes por movimiento y mediciones de tiempos de viaje en los corredores interiores—. Asimismo, dado que el horizonte corto de dos horas (06:30--08:30) concluye antes de la franja de redistribución (09:00--10:00), las corridas de dos horas verifican el régimen matutino de carga creciente, en tanto que las ejecuciones de doce horas abarcan todo el período diurno modelado.",
+      "nuevo": "Esta comprobación verifica el funcionamiento del modelo bajo las condiciones ensayadas. Se distingue de su validación frente al tránsito real, que requeriría conteos independientes por movimiento y mediciones de tiempos de viaje en los corredores interiores \\cite{Sargent2013,Wunderlich2019Microsimulation}.\n\nEl horizonte corto (06:30--08:30) examina el régimen matutino de carga creciente y termina antes de la redistribución de demanda de 09:00 a 10:00; por ello no comprueba directamente ese ajuste. El horizonte largo (06:00--18:00) abarca el período diurno modelado completo.",
+      "justificacion": "R04/R08/R23: sustituir el anuncio de estabilidad por funcionamiento bajo condiciones ensayadas; hacer explícito qué comprueba cada horizonte sin confundirlo con sus usos futuros."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El paquete desarrollado, \\texttt{marlTLC}, acopla el simulador \\acrshort{acr-sumo} con el marco distribuido Ray RLlib \\cite{liang2018rllib} a través del entorno \\texttt{SumoRllibEnv}, utilizando \\texttt{libsumo} como enlace en memoria y PyTorch \\cite{pytorch} para el cómputo y la optimización de las redes neuronales. La Figura \\ref{fig:integracion_marl_tlc} esquematiza el flujo de datos entre los subsistemas: el componente de muestreo de RLlib consulta las políticas activas para seleccionar acciones y recolecta del entorno las observaciones, recompensas e indicadores de cierre; con ellos ensambla lotes de transiciones que transfiere al módulo de aprendizaje (\\textit{Learner}), encargado de actualizar los pesos neuronales y sincronizarlos nuevamente con los trabajadores de muestreo. De manera desacoplada respecto de este lazo de optimización, el entorno gestiona la carga de estados de \\acrshort{acr-sumo} y el volcado de registros de viaje (\\texttt{TripInfo}) para la evaluación. La arquitectura de clases de \\texttt{marlTLC} se detalla en la Sección \\ref{sec:apendice_uml_entorno} del Apéndice \\ref{apendice:arquitectura_software}.",
+      "nuevo": "El paquete desarrollado, \\texttt{marlTLC}, acopla \\acrshort{acr-sumo} con Ray RLlib \\cite{liang2018rllib} a través del entorno \\texttt{SumoRllibEnv}. Utiliza \\texttt{libsumo} como enlace en memoria y PyTorch \\cite{pytorch} para el cómputo y la optimización de las redes neuronales.\n\nLa Figura \\ref{fig:integracion_marl_tlc} representa el recorrido de la información. El componente de muestreo consulta las políticas para seleccionar acciones y recibe del entorno observaciones, recompensas e indicadores de cierre. Con ellos forma lotes de transiciones y los envía al módulo de aprendizaje (\\textit{Learner}), que actualiza los pesos neuronales y los sincroniza con los trabajadores de muestreo. Por separado, el entorno carga los estados de \\acrshort{acr-sumo} y registra los viajes en \\texttt{TripInfo} para la evaluación. La Sección \\ref{sec:apendice_uml_entorno} del Apéndice \\ref{apendice:arquitectura_software} detalla la arquitectura de clases.",
+      "justificacion": "R04/R09: presentar herramientas por su función y reunir la lectura de la figura en un párrafo propio, sin perder intercambios ni fuentes."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "    \\item \\textbf{Ordenamiento híbrido y alcance teórico en \\acrshort{acr-happo}:} al inicio de cada \\glsdisp{epoca_entrenamiento}{época} de optimización, la adaptación implementada actualiza primero el crítico y luego recorre secuencialmente los actores utilizando el lote completo de transiciones para cada agente (Sección \\ref{subsec:happo}). El orden de actualización $i_1, \\ldots, i_N$ se determina en cada época mediante el hiperparámetro \\texttt{greedy\\_selection\\_prob}: en cada posición se elige con esa probabilidad al agente pendiente que registra la mayor media de ventaja absoluta estandarizada $|\\hat{A}_i|$ y, con la probabilidad complementaria, se selecciona un agente al azar entre los restantes. Cabe recordar que, dado que el entorno asigna recompensas individuales por intersección en lugar de una recompensa cooperativa única, esta adaptación aprovecha el mecanismo algorítmico de actualización secuencial con factor acumulado $M_{i_{1:m}}$, pero opera fuera del supuesto de recompensa compartida requerido por la garantía teórica de mejora monótona en \\acrshort{acr-haml} (Sección \\ref{subsec:happo}).",
+      "nuevo": "    \\item \\textbf{Ordenamiento híbrido y alcance teórico en \\acrshort{acr-happo}:} en cada \\glsdisp{epoca_entrenamiento}{época}, se actualiza primero el crítico y luego los actores, de forma secuencial y con el lote completo de transiciones por agente. El orden $i_1,\\ldots,i_N$ se construye antes de actualizar actores: en cada posición, \\texttt{greedy\\_selection\\_prob} fija la probabilidad de elegir al agente pendiente con mayor media de ventaja absoluta estandarizada $|\\hat{A}_i|$; en caso contrario, se elige al azar entre los restantes.\n\n    La adaptación conserva el factor acumulado $M_{i_{1:m}}$ de la actualización secuencial, pero utiliza recompensas individuales por intersección. Por ello, no satisface el supuesto de recompensa compartida de la garantía de mejora monótona de \\acrshort{acr-haml} (Sección \\ref{subsec:happo}). La Sección \\ref{sec:apendice_detalles_aprendizaje} del Apéndice \\ref{apendice:arquitectura_software} especifica la secuencia implementada.",
+      "justificacion": "R04/R08/R22: separar regla operativa y alcance teórico; conservar lote completo, orden previo y recompensas individuales."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "Para la comparación multiescenario entre las variantes A y C se adoptó en las tres redes sintéticas ($3\\times1$, $3\\times3$ y $4\\times4\\_H$) una misma receta de hiperparámetros de \\acrshort{acr-mappo} con arquitectura \\texttt{h128}, especificada en la Sección \\ref{subsec:receta_ac_apendice} del Apéndice \\ref{apendice:arquitectura_software}. La Figura \\ref{fig:contraste_ac} contrapone la estructura de ambas formulaciones para un agente $i$ con dos vecinos ilustrativos ($j$ y $k$): en el panel (a), correspondiente a la variante local A, la observación del actor contiene únicamente la fase propia $p_i$ y los $m_i$ carriles locales codificados, y la recompensa coincide con $L_i$; en el panel (b), correspondiente a la variante vecinal C, el vector de observación incorpora además los niveles codificados de espera media por carril de cada vecino directo —lo que incrementa proporcionalmente la dimensión de entrada de la primera capa del actor y del crítico centralizado— y la recompensa combina linealmente $L_i$ y $N_{i,\\mathrm{carril}}$ con peso $\\rho_{\\mathrm{coop}}=0{,}1$. El alcance inferencial de este contraste, que evalúa el efecto combinado de la observación y la recompensa vecinales, se delimita en la Sección \\ref{subsec:alcance_limitaciones}.",
+      "nuevo": "La comparación A/C adopta una misma receta de hiperparámetros de \\acrshort{acr-mappo} con arquitectura \\texttt{h128} en las tres redes sintéticas. La Sección \\ref{subsec:receta_ac_apendice} del Apéndice \\ref{apendice:arquitectura_software} especifica esa receta.\n\nLa Figura \\ref{fig:contraste_ac} muestra ambas formulaciones para un agente $i$ con dos vecinos ilustrativos, $j$ y $k$. En el panel (a), la variante A observa la fase propia $p_i$ y los $m_i$ carriles locales codificados, y recibe la recompensa local $L_i$. En el panel (b), la variante C añade la espera media por carril codificada de cada vecino directo. Esto amplía la entrada del actor y del crítico centralizado. Su recompensa combina $L_i$ y $N_{i,\\mathrm{carril}}$ con peso $\\rho_{\\mathrm{coop}}=0{,}1$.",
+      "justificacion": "R04/R05/R09: distinguir configuración compartida y lectura de paneles; conservar las dos modificaciones y retirar la cautela repetida que se desarrolla en limitaciones."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El protocolo prevé evaluar el punto de control (\\gls{checkpoint}) de la última iteración de cada modelo final mediante $20$ simulaciones con semillas de \\acrshort{acr-sumo} nuevas (hasta $240$ episodios en total para las doce combinaciones sintéticas), manteniendo el calentamiento de $600\\,\\text{s}$ y la ventana de control de $3.600\\,\\text{s}$ (Tabla \\ref{tab:horizontes_simulacion}). El listado efectivo de semillas por combinación no está documentado en el material reunido aquí y debe recuperarse de los manifiestos de evaluación para reproducir exactamente esta etapa. Para cada combinación y métrica se prevé reportar la media muestral y la desviación estándar con divisor $n-1=19$ sobre las $20$ réplicas, sin aplicar descartes retroactivos.",
+      "nuevo": "El protocolo prevé evaluar el punto de control (\\gls{checkpoint}) de la última iteración mediante $20$ simulaciones con semillas de \\acrshort{acr-sumo} nuevas, reservadas para esta etapa y distintas de las utilizadas en búsqueda y selección. Esto supone hasta $240$ episodios para las doce combinaciones sintéticas, con $600\\,\\text{s}$ de calentamiento y $3.600\\,\\text{s}$ de control (Tabla \\ref{tab:horizontes_simulacion}). Para cada combinación y métrica se establece reportar la media muestral y la desviación estándar con divisor $n-1=19$, sin descartes retroactivos.",
+      "justificacion": "R08/R23 y pedido del usuario: redactar el protocolo definitivo sin una nota de auditoría sobre archivos no recuperados; no inventar semillas ni afirmar ejecución."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El diseño metodológico delimita el alcance de las conclusiones que se extraen en el Capítulo \\ref{capitulo:resultados}. En la comparación de los cuatro algoritmos se entrena un modelo final por combinación de algoritmo y escenario y se lo evalúa sobre veinte realizaciones estocásticas de tráfico, por lo que la dispersión observada en esa línea refleja la variabilidad entre episodios de simulación y no la variabilidad entre entrenamientos independientes \\cite{Agarwal2021RLiable}. La comparación A/C examina esta última variabilidad mediante sus $24$ pares de políticas entrenadas desde cero por red.",
+      "nuevo": "En la comparación de los cuatro algoritmos, el protocolo prevé un modelo final por combinación de algoritmo y escenario, evaluado sobre veinte realizaciones de tráfico. La dispersión entre esos episodios representa variabilidad de la simulación, no de entrenamientos independientes \\cite{Agarwal2021RLiable}. La comparación A/C examina esta última mediante sus $24$ pares de políticas entrenadas desde cero por red.",
+      "justificacion": "R05/R08: conservar la unidad de replicación y expresar como protocolo la evaluación final sin evidencia de ejecución."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El contraste A/C evalúa el efecto combinado de la observación y la recompensa vecinales, y no el de cada elemento por separado: la variante C modifica simultáneamente el vector de observación y la función de recompensa e incrementa la dimensión de entrada del actor y del crítico centralizado, de modo que el contraste tampoco separa el aporte de la información vecinal del aumento del número de parámetros ni anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes. La elección de C entre las variantes vecinales no respondió a un criterio previo documentado, por lo que el resultado no establece que C sea la mejor formulación vecinal, y el alcance de esta línea se restringe a \\acrshort{acr-mappo}. La planificación del tamaño muestral se basó en una diferencia absoluta y en un intervalo del $95\\%$, mientras que el criterio de decisión emplea el efecto relativo y un intervalo del $98{,}33\\%$; aquella previsión no garantiza por sí sola la precisión de este último criterio.",
+      "nuevo": "El contraste A/C modifica conjuntamente la observación y la recompensa vecinales y aumenta la dimensión de entrada del actor y del crítico centralizado. Por ello, no aísla el aporte de cada componente ni el de la información vecinal frente al aumento del número de parámetros. Tampoco anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes.\n\nLa elección de C entre las variantes vecinales no respondió a un criterio previo documentado. El contraste se restringe a \\acrshort{acr-mappo} y no establece que C sea la mejor formulación vecinal. Además, la planificación muestral utilizó una diferencia absoluta y un intervalo del $95\\%$, mientras que la decisión emplea el efecto relativo y un intervalo del $98{,}33\\%$; aquella planificación no garantiza la precisión de este último criterio.",
+      "justificacion": "R04/R08/R21: separar límites de atribución causal, selección exploratoria y precisión; conservar todas las restricciones."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El escenario urbano de Mendoza se construyó de forma adaptativa: los ajustes de su demanda se decidieron a partir de fallos observados en corridas preliminares y tres de las semillas ya se habían utilizado con la demanda de 210.000 viajes, de modo que sus resultados con la redistribución final no se observaron antes de fijarla; no se efectuó una comparación completa entre las dos distribuciones con todas las semillas y horizontes comunes, y el margen del $20\\%$ de cambio por par se comprobó respecto de la redistribución inmediatamente anterior y no de forma acumulada respecto de la demanda inicial, con dos pares fuera de ese margen acumulado.",
+      "nuevo": "La construcción de Mendoza fue adaptativa: los ajustes de demanda respondieron a fallos observados en ejecuciones preliminares. Tres semillas ya se habían utilizado con la demanda de 210.000 viajes, aunque sus resultados con la redistribución final no se observaron antes de fijarla. No se compararon completamente ambas distribuciones con todas las semillas y horizontes comunes. El margen del $20\\%$ de cambio por par se comprobó respecto de la redistribución anterior, no de forma acumulada respecto de la demanda inicial; dos pares exceden ese margen acumulado.",
+      "justificacion": "R04/R08/R21: dividir la cadena de condiciones sin suprimir selección adaptativa, reutilización de semillas ni base del margen del20%."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "En general, las simulaciones tienen horizonte finito, la demanda pendiente de ingreso está permitida y debe informarse junto con los viajes completados, y las seis semillas por horizonte responden a un presupuesto del proyecto y no a un cálculo de precisión estadística: finalizar un horizonte sin teletransportes no demuestra que las colas se mantengan estables fuera de ese horizonte ni que el desempeño observado se conserve en ventanas más extensas.",
+      "nuevo": "En Mendoza, completar el horizonte sin teletransportes no implica atender toda la demanda: los vehículos pendientes de ingreso deben informarse junto con los viajes completados. Tampoco demuestra que las colas se mantengan estables fuera del horizonte ensayado ni que el desempeño se conserve en períodos más extensos.",
+      "justificacion": "R05/R06/R08: retirar la justificación presupuestaria ya expuesta, precisar que los límites con demanda pendiente corresponden a Mendoza y conservar la limitación temporal."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "La congestión deteriora las condiciones de operación de la red e incrementa las demoras y las detenciones de los vehículos \\cite{calymayor}. Este trabajo aborda decisiones de \\glspl{fase} semafóricas en tres escenarios sintéticos y prepara también una red del microcentro de la Ciudad de Mendoza con información parcial de tránsito. La comparación local y vecinal de \\acrshort{acr-mappo} se circunscribe a las redes sintéticas; la aplicación del aprendizaje a Mendoza queda pendiente de adaptación. El escenario urbano representa 220.000 viajes nominales diarios y utiliza 73 programas semafóricos fijos de 90 segundos. Su comprobación operacional se presenta por separado. La geometría y las condiciones de construcción se especifican en la Sección \\ref{sec:diseno_escenarios}.",
+      "nuevo": "La congestión deteriora las condiciones de operación de la red e incrementa las demoras y las detenciones de los vehículos \\cite{calymayor}. Una alternativa para mejorar esa operación sin grandes modificaciones de infraestructura consiste en ajustar los semáforos a las condiciones del tránsito.",
+      "justificacion": "R05: retirar el primer anuncio detallado de alcance urbano y enlazar la motivación con el control adaptativo."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "El objetivo general es desarrollar y evaluar procedimientos de control semafórico mediante aprendizaje por refuerzo multiagente. Se consideran \\acrshort{acr-mappo} y \\acrshort{acr-happo} con entrenamiento centralizado y ejecución descentralizada, e \\acrshort{acr-ippo} e \\acrshort{acr-idqn} con aprendizaje independiente. La búsqueda organiza una fase amplia y otra refinada para estos cuatro algoritmos en las tres redes sintéticas. La extensión urbana requiere adaptar y verificar el procedimiento para la red, la demanda y los programas fijos de Mendoza. En las redes sintéticas también se compara una configuración de cooperación vecinal de \\acrshort{acr-mappo} con su variante local mediante pares con semillas compartidas. La comprobación operacional de Mendoza utiliza los programas fijos y no evalúa políticas aprendidas.",
+      "nuevo": "El objetivo general es desarrollar y evaluar procedimientos de control semafórico mediante aprendizaje por refuerzo multiagente. El diseño compara \\acrshort{acr-mappo} y \\acrshort{acr-happo}, con entrenamiento centralizado y ejecución descentralizada, frente a \\acrshort{acr-ippo} e \\acrshort{acr-idqn}, con aprendizaje independiente. Para ello, organiza una búsqueda amplia y otra refinada en tres redes sintéticas. Una línea complementaria compara en esas redes las variantes local y vecinal de \\acrshort{acr-mappo} mediante pares con semillas compartidas.\n\nPara extender la investigación a un dominio urbano, se construye un escenario del microcentro de Mendoza y se comprueba su funcionamiento con programas semafóricos fijos. Esta comprobación no evalúa políticas aprendidas; el aprendizaje urbano requiere adaptar y verificar el procedimiento para ese escenario.",
+      "justificacion": "R04/R05/R08: concentrar el alcance en el objetivo y separar las dos comparaciones sintéticas de la construcción urbana."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "El capítulo \\ref{capitulo:metodologia} describe los escenarios, la representación de observaciones, acciones y recompensas, y los protocolos de búsqueda y evaluación. Comprende las tres redes sintéticas y el escenario urbano de Mendoza, construido con conteos parciales, una demanda nominal de 220.000 viajes diarios y programas fijos. La comprobación operacional se distingue de la aplicación del aprendizaje urbano, que requiere trabajo adicional. El capítulo \\ref{capitulo:resultados} organiza la evidencia de búsqueda, la comparación entre las variantes local y vecinal de \\acrshort{acr-mappo} y la comprobación operacional de Mendoza, que no evalúa políticas aprendidas.",
+      "nuevo": "El capítulo \\ref{capitulo:metodologia} describe los escenarios de simulación, la interfaz de control de los agentes y los protocolos de búsqueda y evaluación. El capítulo \\ref{capitulo:resultados} presenta la evidencia de búsqueda, la comparación local y vecinal de \\acrshort{acr-mappo} y los resultados de la comprobación operacional de Mendoza.",
+      "justificacion": "R02/R05: usar la organización como guía de contenidos sin reiterar cifras ni límites del objetivo."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "reúne los dominios, las semillas y las especificaciones necesarias para reproducir los experimentos.",
+      "nuevo": "reúne los dominios de búsqueda, las semillas documentadas y las especificaciones técnicas de los experimentos.",
+      "justificacion": "R08: no prometer un inventario completo de una etapa final que solo está especificada como protocolo."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": " Las tablas posteriores de presupuestos y semillas corresponden a las búsquedas sobre las tres redes sintéticas; la delimitación del escenario urbano de Mendoza se sintetiza en la Sección \\ref{subsec:protocolo_urbano_mendoza}.",
+      "nuevo": "",
+      "justificacion": "R02/R05: el apartado ya delimita las combinaciones sintéticas; el antecedente urbano se desarrolla en su sección propia."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "En las tres redes sintéticas, cada red deriva sus dominios de su propia fase 1; la delimitación del escenario urbano de Mendoza se resume en la Sección \\ref{subsec:protocolo_urbano_mendoza}.",
+      "nuevo": "Cada red deriva sus dominios de su propia fase 1.",
+      "justificacion": "R02/R05: el apartado ya delimita las combinaciones sintéticas; el antecedente urbano se desarrolla en su sección propia."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": " El escenario urbano O2/P2 requiere un protocolo de selección propio adaptado a su escala, cuya formulación queda planteada como trabajo futuro (Sección \\ref{subsec:protocolo_urbano_mendoza}).",
+      "nuevo": "",
+      "justificacion": "R02/R05: el apartado ya delimita las combinaciones sintéticas; el antecedente urbano se desarrolla en su sección propia."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": " El diseño anterior también contemplaba Mendoza en la fase 2 de \\acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas.",
+      "nuevo": "",
+      "justificacion": "R02/R05: el apartado ya delimita las combinaciones sintéticas; el antecedente urbano se desarrolla en su sección propia."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "Para las tres redes sintéticas se especifica un protocolo de búsqueda de hiperparámetros en dos fases, selección de configuraciones y evaluación de los cuatro algoritmos. La aplicación del aprendizaje multiagente al microcentro de Mendoza queda planteada como trabajo futuro. El trabajo sobre este escenario comprendió la construcción cartográfica de la red, el plan semafórico coordinado de tiempo fijo (\\texttt{P2}) y el ajuste y la comprobación operacional de la demanda horaria (\\texttt{O2}) bajo 73 controladores.",
+      "nuevo": "El aprendizaje sobre el escenario urbano exige una calibración propia del codificador, de la inicialización y de los presupuestos de entrenamiento. El antecedente siguiente permite identificar las condiciones bajo las que se obtuvo el límite de escala anterior.",
+      "justificacion": "R02/R05/R22: sustituir el resumen repetido del alcance por la función específica del antecedente de calibración."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "El extremo superior del dominio resultante se expresa como exclusivo. En parámetros categóricos",
+      "nuevo": "El extremo superior del dominio resultante se expresa como exclusivo.\n\nEn parámetros categóricos",
+      "justificacion": "R04: separar el tratamiento categórico del numérico sin cambiar las reglas de refinamiento."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": " La Figura \\ref{fig:flujo_metodologico_general} organiza las etapas de las dos líneas sintéticas.",
+      "nuevo": "",
+      "justificacion": "R05/R09: reservar la presentación de la figura para el bloque que la explica, inmediatamente anterior al diagrama."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "variaciones en el flujo vehicular \\cite{ite_handbook}. En este contexto,",
+      "nuevo": "variaciones en el flujo vehicular \\cite{ite_handbook}.\n\nEn este contexto,",
+      "justificacion": "R04: separar la motivación vial del desarrollo de aprendizaje por refuerzo; evitar un párrafo de 180 palabras."
+    },
+    {
+      "archivo": "3-introduccion.tex",
+      "anterior": "reúne los dominios de búsqueda, las semillas documentadas y las especificaciones técnicas de los experimentos.",
+      "nuevo": "reúne los dominios de búsqueda y los parámetros de ejecución de los experimentos.",
+      "justificacion": "R02/R08: describir el contenido del apéndice sin promesas de inventario exhaustivo ni lenguaje de auditoría."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El protocolo de selección y ajuste de hiperparámetros para los 73 controladores de Mendoza queda pendiente de adaptación. La Sección \\ref{subsec:protocolo_urbano_mendoza} del Apéndice \\ref{apendice:arquitectura_software} delimita ese trabajo futuro y conserva el antecedente de calibración del codificador.",
+      "nuevo": "La Sección \\ref{subsec:protocolo_urbano_mendoza} del Apéndice \\ref{apendice:arquitectura_software} conserva el antecedente de calibración del codificador urbano y precisa por qué no se transfiere al escenario de demanda final y programas fijos.",
+      "justificacion": "R05/R22: remisión funcional al antecedente, en lugar de repetir el alcance anunciado en diseño experimental."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El protocolo prevé evaluar el punto de control (\\gls{checkpoint}) de la última iteración mediante $20$ simulaciones",
+      "nuevo": "La evaluación final se define sobre el punto de control (\\gls{checkpoint}) de la última iteración y comprende $20$ simulaciones",
+      "justificacion": "R08 y aclaración del usuario sobre resultados futuros: Expresar la definición metodológica en presente sin atribuir ejecución."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "Para cada combinación y métrica se establece reportar la media muestral y la desviación estándar con divisor $n-1=19$, sin descartes retroactivos.",
+      "nuevo": "Para cada combinación y métrica, el resumen incluye la media muestral y la desviación estándar con divisor $n-1=19$, sin descartes retroactivos. Cada ejecución se identifica mediante la semilla de simulación, la configuración efectiva y el punto de control evaluado.",
+      "justificacion": "R08 y aclaración del usuario sobre resultados futuros: Precisar el registro que exige el protocolo para vincular los resultados futuros con la configuración y semilla correspondientes."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "En la comparación de los cuatro algoritmos, el protocolo prevé un modelo final por combinación",
+      "nuevo": "En la comparación de los cuatro algoritmos, el protocolo define un modelo final por combinación",
+      "justificacion": "R08 y aclaración del usuario sobre resultados futuros: Mantener el mismo tiempo y alcance normativo al describir la unidad de replicación."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "El carácter adaptativo de esta construcción, las condiciones de interpretación de sus resultados y el alcance de la inferencia sobre el escenario urbano se delimitan en la Sección \\ref{subsec:alcance_limitaciones}.",
+      "nuevo": "La Sección \\ref{subsec:alcance_limitaciones} reúne los límites de esta construcción adaptativa y las condiciones para interpretar sus resultados.",
+      "justificacion": "R22/R24: remisión más directa y referencia integrada en la oración, sin un número aislado al final del párrafo."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "En parámetros categóricos se consideran las alternativas de los veinte mejores disponibles; si solo aparece una, se añade la siguiente en el orden del dominio original o, si ocupa la última posición, la anterior.",
+      "nuevo": "En parámetros categóricos se retienen las alternativas de los veinte mejores ensayos disponibles. Si solo hay una, se añade la siguiente del dominio original o, si es la última, la anterior.",
+      "justificacion": "R21/R23/R24: acortar el tratamiento categórico manteniendo el número de ensayos y la regla de alternativas adyacentes; evitar una línea sola en la página siguiente."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "\\subsection{Antecedente de calibración y delimitación del aprendizaje urbano}",
+      "nuevo": "\\subsection{Antecedente de calibración del codificador urbano}",
+      "justificacion": "R02/R23/R24: identificar el contenido específico con un título más breve y sin corte de aprendizaje entre líneas."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "la desviación estándar con divisor $n-1=19$",
+      "nuevo": "la desviación estándar muestral con divisor $20-1=19$",
+      "justificacion": "R13: conservar el denominador exacto sin introducir un símbolo n innecesario."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "El aprendizaje sobre el escenario urbano exige una calibración propia del codificador, de la inicialización y de los presupuestos de entrenamiento. El antecedente siguiente permite identificar las condiciones bajo las que se obtuvo el límite de escala anterior.",
+      "nuevo": "El aprendizaje urbano exige recalibrar el codificador y adaptar la inicialización y los presupuestos de entrenamiento.",
+      "justificacion": "R05/R06/R23: precisar qué se calibra y qué se adapta; el registro posterior ya explicita sus condiciones sin un anuncio adicional."
+    },
+    {
+      "archivo": "8-apendice_arquitectura.tex",
+      "anterior": "En parámetros categóricos se retienen las alternativas de los veinte mejores ensayos disponibles.",
+      "nuevo": "\\Needspace{3\\baselineskip}\nEn parámetros categóricos se retienen las alternativas de los veinte mejores ensayos disponibles.",
+      "justificacion": "R24: la revisión renderizada mostró que el recorte por sí solo no evitaba una línea viuda; mantener junto el párrafo categórico mediante Needspace, ya usado en el proyecto."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "La Figura \\ref{fig:integracion_marl_tlc} representa el recorrido de la información.",
+      "nuevo": "\\Needspace{3\\baselineskip}\nLa Figura \\ref{fig:integracion_marl_tlc} representa el recorrido de la información.",
+      "justificacion": "R09/R24: evitar una única línea introductoria de la figura de integración al pie de página; mantener el comienzo de su explicación con el desarrollo."
+    }
+  ],
+  "revision_visual": {
+    "resolucion_dpi": 150,
+    "escala": "grises",
+    "paginas_fisicas": [
+      25,
+      26,
+      27,
+      81,
+      82,
+      87,
+      88,
+      89,
+      90,
+      91,
+      95,
+      96,
+      102,
+      103,
+      108,
+      109,
+      110,
+      130,
+      131,
+      132,
+      135,
+      136,
+      137
+    ],
+    "contactos": "Inspección de las 23 páginas renderizadas en tres contactos, ampliando páginas de apertura, comprobación operacional, evaluación y calibración.",
+    "hallazgos": "Referencia aislada y línea al comienzo de página corregidas. Sin superposiciones ni desbordes nuevos en las páginas revisadas."
+  }
+}
