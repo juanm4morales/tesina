@@ -1,0 +1,87 @@
+{
+  "base_git": "f79ae4aced6bfbbd9f5c2f1922d19a6dcfad2ebb",
+  "fecha": "2026-10-20",
+  "cambios": [
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "compuesta por la prueba preliminar A--E en $4\\times4\\_H$ y la comparación pareada A/C en las tres redes sintéticas.",
+      "nuevo": "compuesta por la prueba preliminar A--E en $4\\times4\\_H$, la comparación A/C en las tres redes sintéticas y su análisis por pares.",
+      "motivo": "R09/R12: hacer explícita la correspondencia con los tres bloques del panel b, cuyo último bloque es Análisis por pares."
+    },
+    {
+      "archivo": "5-metodologia.tex",
+      "anterior": "Cada ejecución se identifica mediante la semilla de simulación, la configuración efectiva y el punto de control evaluado.",
+      "nuevo": "El listado de veinte semillas se fija y registra por combinación antes de iniciar la evaluación. Cada ejecución se identifica mediante la semilla de simulación, la configuración efectiva y el punto de control evaluado.",
+      "motivo": "R08: exigir el registro previo del banco de veinte semillas como regla del protocolo, sin atribuir una ejecución ni trasladar bancos históricos."
+    }
+  ],
+  "decision_limitaciones": "Conservar su organización temática actual; no se comprobó una necesidad de reescritura adicional.",
+  "figura": {
+    "fuente": "imagenes/metodologia_v2_flujo.tex",
+    "sha256": "42f17406d9aad42473494554d515b796146ba3ec0ff55b2d64b7acb7c2c0ff75",
+    "decision": "Conservar geometría y etapas; precisar su lectura en el texto."
+  },
+  "revision_futura_resultados": [
+    "Vincular cada tabla con escenario, algoritmo, configuración y modelo evaluado.",
+    "Contrastar las semillas efectivamente utilizadas con el listado fijado antes de la evaluación; distinguir búsqueda, selección y evaluación final.",
+    "Exigir veinte observaciones válidas por combinación para el resumen final y conservar los intentos fallidos.",
+    "Comprobar los horizontes y la inicialización contra el procedimiento de cada campaña.",
+    "Utilizar la población vehicular y los denominadores definidos en metodología, incluyendo el tratamiento de viajes inconclusos.",
+    "Distinguir variabilidad entre episodios, variabilidad entre entrenamientos y comprobación urbana con programas fijos."
+  ],
+  "alcance": "Aplicación de recomendaciones de revisión. Sin nuevos resultados, simulaciones o insumos experimentales.",
+  "verificacion": {
+    "elementos_conservados": {
+      "ecuaciones": {
+        "cantidad": 8,
+        "identicos": true
+      },
+      "tablas": {
+        "cantidad": 6,
+        "identicos": true
+      },
+      "figuras": {
+        "cantidad": 11,
+        "identicos": true
+      },
+      "etiquetas": {
+        "cantidad": 66,
+        "identicos": true
+      },
+      "citas": {
+        "cantidad": 23,
+        "identicos": true
+      }
+    },
+    "compilacion": "pdflatex -synctex=1; makeglossaries; latexmk -pdf -synctex=1, en copia aislada",
+    "advertencias": [
+      "Package tracklang Warning: No `datatool' support for dialect `spanish'  on inpu"
+    ],
+    "referencias_indefinidas": 0,
+    "citas_indefinidas": 0,
+    "overfull": 0,
+    "underfull": 0,
+    "pdf_estructura": "qpdf --check: sin errores de sintaxis o codificación",
+    "revision_visual": {
+      "paginas_fisicas": [
+        82,
+        83,
+        108,
+        109
+      ],
+      "dpi": 150,
+      "escala": "grises",
+      "resultado": "Texto y flujo concordantes; etapas legibles, sin solapamientos ni recortes. Evaluación y limitaciones conservan continuidad.",
+      "skill": "tikz-diagrams",
+      "revision_automatizada_skill": "PyMuPDF no está instalado en el entorno consultado; se completó la revisión mediante Poppler e inspección visual directa. No se instalaron dependencias."
+    }
+  },
+  "pdf": {
+    "sha256": "8b24d9b0550e709e0763180e040c5830ad3dd9fc93d331eb50396012f00c5f27",
+    "paginas": 151
+  },
+  "fuentes": {
+    "antes_sha256": "e73b0e55a043db8b899a2d717b966bbac34612137d5e3204c0543bc57acca05c",
+    "despues_sha256": "43b3d5506f3c214d3729070f7f0a1f6630f0a849494000e0bc4eaabfd3084160"
+  }
+}
