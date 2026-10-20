@@ -1,0 +1,155 @@
+{
+  "state": "validated",
+  "validated_nominal": 210000,
+  "new_consumed": 14,
+  "prior_consumed": 1,
+  "total_including_prior": 15,
+  "max_total_including_prior": 19,
+  "next_case": null,
+  "rejected_230k": {
+    "case": "r2_p2_confirm_12h_seed104759",
+    "first_teleport_time": 8978,
+    "seed": 104759,
+    "source": "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/runs/r2_p2_confirm_12h_seed104759"
+  },
+  "holdout_failure_upper_95_if_all_pass": 0.6315968501359612,
+  "confirmation_unit": "one seed with both horizons; three confirmation seeds, not six independent trials",
+  "results": [
+    {
+      "accepted": true,
+      "case": "n220000_2h_s104759",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 220000,
+      "seed": 104759,
+      "termination": "completed"
+    },
+    {
+      "accepted": false,
+      "case": "n220000_12h_s104759",
+      "first_event": {
+        "initial": false,
+        "interval_begin": 11788.0,
+        "interval_end": 11789.0,
+        "kind": "teleport_start",
+        "native_step": 11788.0,
+        "post_time": 11789.0,
+        "vehicles": [
+          "f_10_27_i3.0"
+        ]
+      },
+      "integrity": "complete",
+      "level": 220000,
+      "seed": 104759,
+      "termination": "physical_event"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104759",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104759,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104759",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104759,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104729",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104729,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104729",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104729,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104771",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104771,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104771",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104771,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104861",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104861,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104861",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104861,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104879",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104879,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104879",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104879,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_2h_s104891",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104891,
+      "termination": "completed"
+    },
+    {
+      "accepted": true,
+      "case": "n210000_12h_s104891",
+      "first_event": null,
+      "integrity": "complete",
+      "level": 210000,
+      "seed": 104891,
+      "termination": "completed"
+    }
+  ]
+}

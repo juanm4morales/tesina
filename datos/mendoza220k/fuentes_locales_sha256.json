@@ -1,0 +1,739 @@
+{
+  "scope": "Files read or explicitly checked; missing antecedents remain explicit.",
+  "files": {
+    "nets/Mendoza/mendoza_12h.rou.xml": {
+      "exists": true,
+      "sha256": "e7380990e07dbaea1df2cf1013d3ee886b92820ad74f6064786f1082b6716055",
+      "bytes": 793157
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/demand/O0.rou.xml": {
+      "exists": true,
+      "sha256": "20b563127cd3c37e8ec604a6de8e7fd9e2da133b9e95ec67473091e1dd05df7b",
+      "bytes": 817973
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/demand/O1.rou.xml": {
+      "exists": true,
+      "sha256": "69b8d911623d345104afeddd2c91bcc49874f74a87fd59bf8faa6c9e59c70e3a",
+      "bytes": 817973
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/demand/O1_220000_reference.rou.xml": {
+      "exists": true,
+      "sha256": "ad8ef880ad1cd4d28181bbb17f860472cac2dc3e6379140fc04a28887dedfd2f",
+      "bytes": 824083
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/demand/O2_220000_benegas_h3.rou.xml": {
+      "exists": true,
+      "sha256": "84d512c8f25b30f743f432cafdcfd4c5fcbd643634c10f46e674e172e96b4c46",
+      "bytes": 824083
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/prepared.json": {
+      "exists": true,
+      "sha256": "d5e5643194ab117e6ce79b7ae0a7667cfbb093cc10aa13ce14ba689f98f5efac",
+      "bytes": 7707
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/campaign_result.json": {
+      "exists": true,
+      "sha256": "a542499b25026ed06cd32fd7bdf975a94c2a057660d2b7870b4e4f32e1652993",
+      "bytes": 56197
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/result.json": {
+      "exists": true,
+      "sha256": "fd7688690d36939cbb630ef57a1680e2f45cca1dfbac9663c494cb65e583e118",
+      "bytes": 4151
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "cea0ccd60ef4c9f3ecfed6676ab5c7fcbef3fcd20baca2952f172cdb1a2cae1b",
+      "bytes": 364785
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/launch.json": {
+      "exists": true,
+      "sha256": "e4f3d93c462d35778516b44ca3e1b96036300970dff20d8317e57e15eece529a",
+      "bytes": 2693
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/summary.xml": {
+      "exists": true,
+      "sha256": "f64e06b9bb82109e99bb52a6f498f20e4613a6eb6992b2682baab75427906330",
+      "bytes": 2068294
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "2ea0b1824568c8b9915aeaca452db2c1b79e1d2c3484c1fcf6ea27be142a7c48",
+      "bytes": 3421604
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104759/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "ee04bc42fca4e880c8c78938d7125eefc245e3aa473703732d0d011d60e53c04",
+      "bytes": 1025204
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/result.json": {
+      "exists": true,
+      "sha256": "8819458e792ebe42b582413e8352ce1dc624c59a14a39729815bc787a33df811",
+      "bytes": 4165
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "30522dfa0ae97650543a4e0df8170ed269aa99a82a77fadf5906deeae33d7d57",
+      "bytes": 2207390
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/launch.json": {
+      "exists": true,
+      "sha256": "04cf4d0aff2e24f6cb9902ec50ce6c0ac1895428dffb83ce9211f5816964cc0d",
+      "bytes": 2698
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/summary.xml": {
+      "exists": true,
+      "sha256": "e1b6cfc784d1469645fb361a3a54680ddcf08eed6e596b9484623f502e232f14",
+      "bytes": 12687402
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "b89847fd906e89adc33589a3cfa0ab8db1e3d2209f22318a87ca505ad0f736c2",
+      "bytes": 21033942
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104759/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "f10751a6760bfcda27d4822c4ebb8d62a988d1907e96b7b121d188e32db32f15",
+      "bytes": 6365822
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/result.json": {
+      "exists": true,
+      "sha256": "5b2cf3c4658113bca89ba9f190e6198ef570bf64d3efa57a8017957b0743442d",
+      "bytes": 4151
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "c1c37641a412928f2448180371017c00576d46c67519e1bf2da41f60810d5eb9",
+      "bytes": 363463
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/launch.json": {
+      "exists": true,
+      "sha256": "985def7419761790ad59991526caa45ad1afcfa8295a440e55680621bac576d4",
+      "bytes": 2693
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/summary.xml": {
+      "exists": true,
+      "sha256": "9594e59f04f0564d67b9873825f7bdf4af6b076d1b7b511b778ecfde575fd16c",
+      "bytes": 2067279
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "266db507e09d72889911b953ff17591f0a9096483c6f53846cbb49e439b1e15d",
+      "bytes": 3397815
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104729/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "6163c9991d2064c8f364859fd5befd885783cb1852dc56a0d3937a993fceb43d",
+      "bytes": 1009219
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/result.json": {
+      "exists": true,
+      "sha256": "63095f8443cc6ba73807fd301d1aefff3e83ab93afc8b4e5e860514bc6659dfb",
+      "bytes": 4165
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "2f4b445d2809a222e81efd10e1759ae485cc2391446572d032ba04046a523047",
+      "bytes": 2209164
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/launch.json": {
+      "exists": true,
+      "sha256": "b6b2a51909d13f89185c6f07d83770033930f451a662c7861ae05a4f2191008a",
+      "bytes": 2698
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/summary.xml": {
+      "exists": true,
+      "sha256": "da47baaf97efeaa598c593c77041e3e0dc7ab8367d5cce50d6d8e546d68fdf66",
+      "bytes": 12684440
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "3b16d36a965c065b9fdaba845f05b0f0cbecaa20548dccf1c426261c2b1fc7a2",
+      "bytes": 21045013
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104729/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "3d02f651e3c22da94c28c0f8684455b79df986be441c37ae05f8e4ba8d0deecc",
+      "bytes": 6353018
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/result.json": {
+      "exists": true,
+      "sha256": "475aa575dbf615d1c551b86d5dbae16bcd1897af140bf54e9df6bccc8484ffb7",
+      "bytes": 4150
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "5c424457f298a6e98a9a808a45df448f6d978f1d9a493628df723ab2d83b73e9",
+      "bytes": 362313
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/launch.json": {
+      "exists": true,
+      "sha256": "cfada6ddce140f1c0a7462df6943404cdc4bd7522c42fedc4dee04e2a3625ddf",
+      "bytes": 2693
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/summary.xml": {
+      "exists": true,
+      "sha256": "11c906cd8b7c12c3acfb20146d81433536000941c5a43d4f3794577be89b50e1",
+      "bytes": 2068670
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "c1d0fb3d5854bdc2d9d9dc5ebbe26d34a057dfb1f58fe58f60b7e74fab142cca",
+      "bytes": 3383781
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104771/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "8b19d115e1d685794c3f965dd33412b6f19c075231814025407d7fbbdc7c4224",
+      "bytes": 1007781
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/result.json": {
+      "exists": true,
+      "sha256": "38396abc8e14adf1b31eccedc2fed63d43902b9e51b4e3829f5180e3eb22be52",
+      "bytes": 4165
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "07cbd3aba163a8f923262919c3cc93a755f37d3da1cfc08e36a40258ba273657",
+      "bytes": 2207257
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/launch.json": {
+      "exists": true,
+      "sha256": "e289541984af949f65fd409a9e997149d3b1de4fc4def10d4d7c83669e28c946",
+      "bytes": 2698
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/stderr.log": {
+      "exists": true,
+      "sha256": "77595cff95396adf5b78bbc79451650cd6c64d20b11aa9200405ddeed770e64d",
+      "bytes": 144
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/summary.xml": {
+      "exists": true,
+      "sha256": "36b894d4a331e3183304c6cffda27973397ca4c9bcd06b5038460a99874b8cd6",
+      "bytes": 12680923
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "da8c59614dd9fc54dc73d00d79374c15fc8fece0b54a62bcd512513fe4b7e33b",
+      "bytes": 20981656
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104771/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "21b1686ce3bf6eaa49909fb259bb2ed56de9021b91ba99bc9c388a1ae9dec323",
+      "bytes": 6317443
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/result.json": {
+      "exists": true,
+      "sha256": "0dbfbabe602ae2848b49831557eac9019ccc96499dc581a69d90c91e58385463",
+      "bytes": 4150
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "fb545f921ff4da975e832d98bd5679df2deeea64b4780a3c775edd7c43b49888",
+      "bytes": 364141
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/launch.json": {
+      "exists": true,
+      "sha256": "481da9f8f576a18c81178e5409361a82f903db720a4a9c37257b4819cd521f00",
+      "bytes": 2694
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/summary.xml": {
+      "exists": true,
+      "sha256": "c4c8ea6e382ad44afed86a607e60faf9bc8ae74eacbea563cc819de7c581d9db",
+      "bytes": 2068230
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "32d4177334c8bb2b69d16f8a55a1a4263f555cab3b1b2736cebccb9db739a935",
+      "bytes": 3399344
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104861/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "a3b9b1a27c58bd9dad7930b0135a56d5afb9e7e74142f21af8adcfa504c9d6b1",
+      "bytes": 1008624
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/result.json": {
+      "exists": true,
+      "sha256": "50fa19c20c517af20b9c8f6114452970ad7c9956cf392b837d54695cdaca3115",
+      "bytes": 4166
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "212abf7bd84f64a5a3f0be15ec5b544588401fb2debbdd8b83d2324fdc0ed21b",
+      "bytes": 2207631
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/launch.json": {
+      "exists": true,
+      "sha256": "92a89a5c1bc6d095b17c1bf6a629d1c66fb184db04bc4f30bb55035fa9c74820",
+      "bytes": 2699
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/summary.xml": {
+      "exists": true,
+      "sha256": "d6387a0cbd6069050ea6faa75a75310a9b19452f572591a366106d5faf96959e",
+      "bytes": 12686688
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "d6340db948b14babb4fce20a600ac748b6626c348c44b98f16ea6e34d2a6e57d",
+      "bytes": 21013264
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104861/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "32c683c61389c046cd88b0afb59a8c1b7f8fd4109992a4f6e0ba2a36cd0894d3",
+      "bytes": 6350955
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/result.json": {
+      "exists": true,
+      "sha256": "7a6fa631434abd0ab9c7823c452ca5a1fd5ec90837887669675e276acc3fa42a",
+      "bytes": 4151
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "bb4cab281bb9e39fac992b7aca01c1b144ae1dd51a12cc655e76092f2184a6fa",
+      "bytes": 363182
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/launch.json": {
+      "exists": true,
+      "sha256": "1a48543631ceda061df648f25801ac7dadb47642158bfeac9bf3518de0dd6dc4",
+      "bytes": 2694
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/summary.xml": {
+      "exists": true,
+      "sha256": "b262b12f2b46d75abf184566b5839cd58bf29170d83190d155ca10fed2149b7d",
+      "bytes": 2066938
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "0a6d1285ece6821f165a8a843856bf88e4d9405676f83e1d14751d74c37ef682",
+      "bytes": 3414277
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104879/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "5750d762362ea85154e249f72069189647320768cd61ad35da095cfe3b76273c",
+      "bytes": 1005849
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/result.json": {
+      "exists": true,
+      "sha256": "eca2d8b13c2b865aa57a2a11228ce42046e187f180df6df44e1a6f3d3aa49729",
+      "bytes": 4164
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "0d9c3ab3f6a78d14fd7153bf1981bbf22b99f225d7bad0db9198f769c3d78f15",
+      "bytes": 2209753
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/launch.json": {
+      "exists": true,
+      "sha256": "72fdf13db53ba1598bf4faa0a9dce4183e8934b822f98ef9fbe5e6e39334bd9f",
+      "bytes": 2699
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/summary.xml": {
+      "exists": true,
+      "sha256": "0a167ac7b3aa0c90fc3e7a26f920b558d7e33b8e073d6ed8a24ecaf0c49998b5",
+      "bytes": 12687999
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "4967d1d08985ed3c26b3e2d1f98d0c1247e41d997bf37d391b3aa3c325d28190",
+      "bytes": 21106132
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104879/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "56d0b0a69f5dbec5decc4d3c9ec42ab0dfdeba8ea7987fa479f0967f35bedb22",
+      "bytes": 6378468
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/result.json": {
+      "exists": true,
+      "sha256": "c6a402881c502a6e5c14bd9c309ee71532933da67d96c87246383ac253f2954a",
+      "bytes": 4151
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "b69960e788b71581ba00d0728f05d7be5b99bfb9ca6566ac28c71b5bf523422e",
+      "bytes": 364240
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/launch.json": {
+      "exists": true,
+      "sha256": "2c7620b10a9c67032043c6663022cce411034aeec2f00b6b09ea62ad019dfecd",
+      "bytes": 2694
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/summary.xml": {
+      "exists": true,
+      "sha256": "9aecfdf3691233cc8ecec3619569119f65e1befba6eb203e131c78775def9961",
+      "bytes": 2067546
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "a6fcce1374803e6bda8412800d332498cd824e3860313ee3c2bd0fc35a99b949",
+      "bytes": 3415600
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_2h_s104891/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "8c25aab053c66d42b177714cae3402cdd4b30ba3b1153022784e01bd19e906ca",
+      "bytes": 1012792
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/result.json": {
+      "exists": true,
+      "sha256": "5ca805fdaf7a1908e823ee23a778ed7530f019636ed2489f1d0e1f0d6c1b80ec",
+      "bytes": 4162
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/edge_data.xml.gz": {
+      "exists": true,
+      "sha256": "155c6930160a3e444e636ad6643a8b7d0d68e42b955c58f6e56c7ae055260ea2",
+      "bytes": 2207851
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/launch.json": {
+      "exists": true,
+      "sha256": "c1517837dcf58b1c5d6e3184a416aa49316f769657a5a4b024dacfd92c19ddab",
+      "bytes": 2699
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/stderr.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/stdout.log": {
+      "exists": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/summary.xml": {
+      "exists": true,
+      "sha256": "5b1448210d94df2226bfaa46b805d36d5ba1e95b105faeb2f6a354f79910c2ba",
+      "bytes": 12688498
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/tripinfo.xml.gz": {
+      "exists": true,
+      "sha256": "ca5c61f33854802832b8677eca8848a75b52880c547c647df4957176eec8407e",
+      "bytes": 20994728
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/runs/o2_benegas_h3_12h_s104891/vehroute.xml.gz": {
+      "exists": true,
+      "sha256": "58780cc0da02052848b859648adf92d461023092103cfa09684f1c9e3c339bda",
+      "bytes": 6333437
+    },
+    "nets/Mendoza/mendoza_220k_static.net.xml": {
+      "exists": true,
+      "sha256": "2efa0e9f9806040a596d446f6668635307649c610db020c13b6fd52f03b9e0a8",
+      "bytes": 461106
+    },
+    "nets/Mendoza/gran_mendoza2_fixed.net.xml": {
+      "exists": true,
+      "sha256": "988a1d277fec9188aea5996b96dd9aa1893781e1d0fa4c85770a0c7415274a86",
+      "bytes": 463787
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/tls/T0.net.xml": {
+      "exists": true,
+      "sha256": "f7d52138c875929b472096f9e7573f33da18dc46806f223d53708e7a5ac5706d",
+      "bytes": 461096
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/tls/T2.net.xml": {
+      "exists": true,
+      "sha256": "205169fde08d0a55ccf2ded99f0efc318d64a4d26550a3983e443dd070da0111",
+      "bytes": 461101
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/tls/R2_P1.net.xml": {
+      "exists": true,
+      "sha256": "1caf003f653418526ad25aebad0383c3880fbffa3da9dfafb6041171906e51aa",
+      "bytes": 461103
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/analysis/offline_audit_20261015_v3/run_outcomes.csv": {
+      "exists": true,
+      "sha256": "b869da126a7be5519a275e65695989311c4661edc16b340adaaa26fd379c8a9a",
+      "bytes": 14626
+    },
+    "experiments/mendoza_scenario/results/mendoza_demand_ladder_20261016_v2/campaign_result.json": {
+      "exists": true,
+      "sha256": "ad699067525827d1b80b08ab4b1d7de2940bbe82e310daa37b29b5f4d29aad10",
+      "bytes": 48679
+    },
+    "experiments/mendoza_scenario/results/mendoza_poisson_od_static_20261014/demand/manifest.json": {
+      "exists": true,
+      "sha256": "a703e62283abdf5a05af980a3d5c0f8a22713fb1f7aab3216ad145e14e890c3d",
+      "bytes": 214374
+    },
+    "experiments/mendoza_scenario/SCENARIO_CANONICO_V14.md": {
+      "exists": true,
+      "sha256": "c9ed0f1f04016e2fd0eae8f8852e6cb7991c45d87ea6a6c9241cd2dda37323f6",
+      "bytes": 7479
+    },
+    "experiments/mendoza_scenario/CAMERA_FLOW_METHODOLOGY.md": {
+      "exists": true,
+      "sha256": "fc377094264e418e4b48f3e9d9921ff828ff9e09b32e94b3033d9fcd006c8557",
+      "bytes": 19192
+    },
+    "experiments/mendoza_scenario/MENDOZA_SCENARIO_GENERATION_PROCEDURE.md": {
+      "exists": true,
+      "sha256": "097131ada662a3b5cce45ecfea38935fcfa2c622a78ac4d2c526d8320bc488df",
+      "bytes": 34012
+    },
+    "experiments/mendoza_scenario/generate_camera_calibrated_flows.py": {
+      "exists": true,
+      "sha256": "66ae501435c5a70dd15251db2628259c717f0984ff5d5ead41eae8804ace578b",
+      "bytes": 46728
+    },
+    "experiments/mendoza_scenario/results/scenario_canonico_v14/seed_search/s104773/gen.log": {
+      "exists": true,
+      "sha256": "16a267ee06bfe1d2e013c71813afe57e80945c1c4f466bae36f0cb63816ea9ba",
+      "bytes": 6493
+    },
+    "experiments/mendoza_scenario/results/scenario_canonico_v14/seed_search/s104773/generation_summary.json": {
+      "exists": false
+    },
+    "experiments/mendoza_scenario/results/scenario_canonico_v14/seed_search/s104773/mendoza_camera_calibrated.rou.xml": {
+      "exists": false
+    },
+    "experiments/mendoza_scenario/results/scenario_canonico_v14/od_calibrated_7030.json": {
+      "exists": false
+    },
+    "experiments/mendoza_scenario/mendoza_od_proportions.json": {
+      "exists": true,
+      "sha256": "82c5cc1932c9e755f4284fb2639fa51dd34592667fc126ace77ed86f57b8c4a7",
+      "bytes": 35898
+    },
+    "experiments/mendoza_scenario/mendoza_220k_od_adjustment.py": {
+      "exists": true,
+      "sha256": "4f813305084f1b006873cd757cdb873ba44c1205f77d49ae70fbc50c8db00eed",
+      "bytes": 43039
+    },
+    "experiments/mendoza_scenario/finalize_mendoza_220k_od_adjustment.py": {
+      "exists": true,
+      "sha256": "b3046f3668d0e33a67a1b475756ffc195ecea285b30f08209e12b7342aae3227",
+      "bytes": 13122
+    },
+    "experiments/mendoza_scenario/mendoza_demand_ladder.py": {
+      "exists": true,
+      "sha256": "af12644344ed421710b2ef26b58a8d03ad2ec21f3a49eb5b55f09327fc1d75fe",
+      "bytes": 38280
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/PROTOCOL.md": {
+      "exists": true,
+      "sha256": "cc802227ff113cb1e623bce273bf5d103d5f5a7e447624a1d30f2c67141386e0",
+      "bytes": 1213
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/candidate_design.json": {
+      "exists": true,
+      "sha256": "45a7756bbe4dceafb46840a12a422f9805c9884777fc25fe65e6f2b29d41e931",
+      "bytes": 3378
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/final_analysis.json": {
+      "exists": true,
+      "sha256": "f0493efdb56d8eeea3e973ff44c0bb18f5de9b487cde9a9ddfc40646e96a20b2",
+      "bytes": 7361
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/approval.json": {
+      "exists": true,
+      "sha256": "4e9c173e2e4534b195a072cb6f394dcc22c2e9f883dcd07e1496d1d4308bcff5",
+      "bytes": 436
+    },
+    "experiments/mendoza_scenario/results/mendoza_220k_od_adjustment_20261017/source_snapshot/test_mendoza_220k_od_adjustment.py": {
+      "exists": true,
+      "sha256": "1cf0692d07eda7c1ef16c22dd5bcbf61a7fc731c772b7783e987cf7359f50d5c",
+      "bytes": 4869
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_od_adjustment_20261017/CLOSURE.md": {
+      "exists": true,
+      "sha256": "24ef00086dbcd35177964c3b83f028c1d7116f7ede0f628b1104e13403a2cd48",
+      "bytes": 5043
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_research_20261017/analysis/C2_SCREEN_FAILURE.md": {
+      "exists": true,
+      "sha256": "f8137da61fd08fc4509b86ed30996f6e8e8c052cf2569c24d3db50752144dd6e",
+      "bytes": 4136
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_research_20261017/analysis/C3_SCREEN_FAILURE.md": {
+      "exists": true,
+      "sha256": "1e17dc8d27c3bb225d30060c1c9d28f2f5022027b4be682bf7afae010572d17f",
+      "bytes": 4444
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_research_20261017/analysis/C4_4H_SEED104729_FAILURE.md": {
+      "exists": true,
+      "sha256": "c0c99801852a836db07c8a445e41e90e02683636eed446e8119d4364bb51c1d1",
+      "bytes": 5357
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_research_20261017/analysis/C5_4H_SEED104759_FAILURE.md": {
+      "exists": true,
+      "sha256": "923aacb0ce4025c2ad331c9fc73bdac8c84db14a6542f4ce8b8f2e39cfd75e5d",
+      "bytes": 4995
+    },
+    "experiments/mendoza_scenario/results/mendoza_225k_research_20261017/analysis/C6_4H_SEED104729_FAILURE.md": {
+      "exists": true,
+      "sha256": "e11b0f0d02523ed7ce37e3624c607c2914f4079a8db8c464c15be6f826f63717",
+      "bytes": 7082
+    },
+    "docs/PLAN_MENDOZA_225K.md": {
+      "exists": true,
+      "sha256": "9f44865534b1f088fba55302b65698654a1a697de0748d338221af1161757ac6",
+      "bytes": 53200
+    },
+    "docs/mendoza_220k/reconstruir_evidencia.py": {
+      "exists": true,
+      "sha256": "3bb3aa403945cd8643b39a38763e050cb03fd719b3e2a4f220074582a88968b7",
+      "bytes": 20259
+    },
+    "nets/Mendoza/mendoza_scenarios.json": {
+      "exists": true,
+      "sha256": "6b4bf4bc761da12899a22be03ac454c0b76952ee62189b641206e8ef2d33c63e",
+      "bytes": 8533
+    },
+    "nets/Mendoza/mendoza_195k_static.net.xml": {
+      "exists": true,
+      "sha256": "f7d52138c875929b472096f9e7573f33da18dc46806f223d53708e7a5ac5706d",
+      "bytes": 461096
+    },
+    "nets/Mendoza/mendoza_195k_static.rou.xml": {
+      "exists": true,
+      "sha256": "ce4da6d5fe2e416a39fbc152d77071351ada9b4f693249d2633b94decd2bb6fa",
+      "bytes": 817973
+    },
+    "nets/Mendoza/mendoza_195k_static_2h.sumocfg": {
+      "exists": true,
+      "sha256": "66246166e6231ca277ce5e68200145d844dcd6f581d5bef0fe159e5e9bce6e86",
+      "bytes": 784
+    },
+    "nets/Mendoza/mendoza_195k_static_12h.sumocfg": {
+      "exists": true,
+      "sha256": "a57357e090d5c9ea70b588b7628ad01ddb29f6ceae8f9ae7cfe2567f5886a657",
+      "bytes": 782
+    },
+    "nets/Mendoza/mendoza_210k_static.net.xml": {
+      "exists": true,
+      "sha256": "2efa0e9f9806040a596d446f6668635307649c610db020c13b6fd52f03b9e0a8",
+      "bytes": 461106
+    },
+    "nets/Mendoza/mendoza_210k_static.rou.xml": {
+      "exists": true,
+      "sha256": "107013a397e2eaa0d243b0bf38bf0fd4b2c71b5dc168eec7e2d96e559ff5eabe",
+      "bytes": 824083
+    },
+    "nets/Mendoza/mendoza_210k_static_2h.sumocfg": {
+      "exists": true,
+      "sha256": "02bc3bf6fa1f01868c9053e904497e05f8db5604b44f7f59c00e780cea371697",
+      "bytes": 735
+    },
+    "nets/Mendoza/mendoza_210k_static_12h.sumocfg": {
+      "exists": true,
+      "sha256": "a1b568cbd4296840b8e4f97804f2221cf10a24ee58ea5e650c9b0ad52ff38211",
+      "bytes": 733
+    },
+    "nets/Mendoza/mendoza_220k_static.rou.xml": {
+      "exists": true,
+      "sha256": "84d512c8f25b30f743f432cafdcfd4c5fcbd643634c10f46e674e172e96b4c46",
+      "bytes": 824083
+    },
+    "nets/Mendoza/mendoza_220k_static_2h.sumocfg": {
+      "exists": true,
+      "sha256": "c972eecda9a0e7787be4b80c739f2ea53b58ba7a89eb810c82445318ccc580e4",
+      "bytes": 735
+    },
+    "nets/Mendoza/mendoza_220k_static_12h.sumocfg": {
+      "exists": true,
+      "sha256": "2ee0c4b89806692e00bfa4daf07bf1e18a0335d151896fa47b763a44881c1770",
+      "bytes": 733
+    }
+  }
+}

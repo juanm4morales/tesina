@@ -1,0 +1,2 @@
+# Conservar los bytes de las copias CSV verificadas mediante SHA-256.
+datos/mendoza220k/*.csv -text whitespace=cr-at-eol

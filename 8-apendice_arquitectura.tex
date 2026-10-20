@@ -3,6 +3,8 @@
 
 Este apéndice reúne el diseño orientado a objetos de \texttt{marlTLC}, los parámetros y protocolos experimentales y los detalles del aprendizaje y la codificación. Los diagramas de clases \acrshort{acr-uml} y los patrones de diseño representan la propuesta inicial para separar la simulación, el aprendizaje por refuerzo y el cálculo de \glspl{recompensa}; no describen una correspondencia exhaustiva entre clases y archivos ejecutables.
 
+En los registros de Mendoza se conservan etiquetas breves para identificar archivos y tratamientos. O0 designa la demanda inicial reescalada; O1, su primera redistribución; O2, la redistribución final; y P2, el plan de programas fijos usado con ella. La denominación v14 identifica la revisión archivada de la red mixta y la demanda de partida. Estas etiquetas facilitan seguir la procedencia técnica; en el cuerpo se usan nombres descriptivos.
+
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
 
@@ -29,7 +31,7 @@ La Figura \ref{fig:uml_entorno_agentes} presenta las entidades del entorno y sus
 \centering
 \begin{tikzpicture}[
   font=\sffamily\scriptsize,
-  node distance=0.8cm and 1.2cm,
+  node distance=0.8cm and 2cm,
   >=Stealth,
   umlclass/.style={
     rectangle, draw=colDatoPrimario!65!black, fill=catAzulCielo!10,
@@ -185,7 +187,7 @@ La Figura \ref{fig:uml_recompensas} detalla las clases que intervienen en la rec
   \draw[->, thick, line width=1pt] (diffacc) -- (rewardfn);
   \draw[->, thick, line width=1pt] (neighavg) -- (rewardfn);
   \draw[->, thick, line width=1pt] (neighrel) -- (rewardfn);
-  \draw[-{Stealth[length=5pt]}, dashed, thick, line width=0.8pt] (neighrel) -- node[below, font=\sffamily\scriptsize] {compone} (neighavg);
+  \draw[-{Stealth[length=5pt]}, dashed, thick, line width=0.8pt] (neighrel.south west) -- ++(0,-0.55cm) coordinate (componeA2Right) -- node[above, font=\sffamily\scriptsize] {compone} (neighavg.south |- componeA2Right) -- (neighavg.south);
 
 \end{tikzpicture}%
 }
@@ -244,10 +246,15 @@ A continuación se resumen los patrones definidos en la especificación de \text
 
 Los archivos de red contienen las secuencias de señales utilizadas antes de aplicar las decisiones de los agentes. En las redes sintéticas, todos los programas son de tiempo fijo y tienen un \gls{ciclo} de 90 segundos; sus duraciones aparecen en la Tabla \ref{tab:tiempos_semaforicos_base}.
 
-La red de tráfico de Mendoza contiene 73 programas: 17 de tiempo fijo y 56 accionados, es decir, que responden a la detección de vehículos. La Tabla \ref{tab:tiempos_mendoza_base} agrupa las secuencias de duraciones nominales del archivo \texttt{gran\_mendoza2\_fixed.net.xml}. Cada fila reúne programas con la misma secuencia de duraciones, aunque sus movimientos habilitados pueden diferir.
+\subsection{Mendoza: antecedentes de la red mixta anterior}
+\label{sec:procedencia_mendoza}
+
+El escenario actual O2/P2 utiliza 73 programas fijos. Esta sección conserva por separado los antecedentes de v14; su ausencia de archivos originales no se atribuye a la campaña final, documentada en la Sección \ref{sec:mendoza_evidencia_final}.
+
+La red de tráfico anterior de Mendoza contiene 73 programas: 17 de tiempo fijo y 56 accionados, es decir, que responden a la detección de vehículos. La Tabla \ref{tab:tiempos_mendoza_base} agrupa las secuencias de duraciones nominales del archivo \texttt{gran\_mendoza2\_fixed.net.xml}. Cada fila reúne programas con la misma secuencia de duraciones, aunque sus movimientos habilitados pueden diferir.
 
 \begin{table}[H]\centering\small
-\caption{Duraciones nominales de las fases en el archivo de red de Mendoza, en segundos.}
+\caption{Duraciones nominales de la red mixta anterior de Mendoza, en segundos.}
 \label{tab:tiempos_mendoza_base}
 \begin{tabular}{ll>{\raggedright\arraybackslash}p{8.6cm}}\hline
 \rowcolor{catAzulCielo!25}
@@ -270,12 +277,20 @@ Fijo & 2 & $82,\ 3,\ 5$ \\
 
 En los programas accionados, la duración efectiva puede variar. Los atributos \texttt{minDur} y \texttt{maxDur} establecen los límites de cada verde: los mínimos registrados son 5, 7, 10 o 13 segundos según la fase, y el máximo es de 50 segundos. Por eso, sumar las duraciones nominales de la Tabla anterior no permite afirmar que todos los ciclos ejecutados duren lo mismo.
 
-\subsection{Identificadores y procedencia del escenario urbano de Mendoza}
-\label{sec:procedencia_mendoza}
+\subsubsection{Procedencia de los antecedentes}
 
-En la Figura \ref{fig:dominio_mendoza}, el acceso de Avenida José Vicente Zapata se representa mediante el tramo interno \texttt{93904440\#0}, ubicado en la \acrshort{acr-taz} 28. La continuidad de los carriles de ingreso se restablece entre los tramos \texttt{93904440\#0} y \texttt{93904440\#1}. La configuración de búsqueda y entrenamiento urbano parte de la demanda congelada con el perfil de doce horas, cuyo origen es 06:00. La simulación comienza en $t=1500$ segundos (06:25), incluye 300 segundos de calentamiento y controla entre $t=1800$ y $t=9000$ (06:30--08:30). Se utiliza \path{nets/Mendoza/mendoza_hpo_v14.sumocfg}; la configuración histórica \texttt{mendoza\_0630\_0830.sumocfg} no incluye el calentamiento.
+En la Figura \ref{fig:dominio_mendoza}, el ingreso de José Vicente Zapata corresponde al tramo interno \texttt{93904440\#0}, asociado a la zona 28. Los archivos anteriores de búsqueda y entrenamiento urbano utilizaban v14 y 300 segundos de calentamiento, condiciones conservadas en la Sección \ref{subsec:protocolo_urbano_mendoza}.
 
-La comprobación de doce horas controla desde $t=0$ hasta $t=43200$ (06:00--18:00). La de dos horas comienza en $t=1800$ y controla hasta $t=9000$, sin calentamiento previo. Los registros primarios confirman esas ventanas, pero no se conservaron los archivos de rutas originales de las corridas; por ello, no se afirma que las comprobaciones y la configuración \acrshort{acr-marl} usaran el mismo archivo. Las condiciones de las búsquedas urbanas y la excepción al dominio inicial del peso vecinal se precisan en la subsección \ref{subsec:protocolo_urbano_mendoza}.
+Las comprobaciones históricas utilizaron dos ventanas sin calentamiento: $[0,43.200)$ segundos para doce horas y $[1.800,9.000)$ segundos para dos horas. Sus logs confirman las ventanas y conteos, pero no conservan las rutas originales ni un contador explícito de teletransportes. La Tabla \ref{tab:mendoza_resultados_historicos} preserva esos resultados como antecedentes; no se los renombra como ejecuciones O2.
+
+\begin{table}[H]\centering\small
+\caption{Comprobaciones históricas con la red mixta anterior.}\label{tab:mendoza_resultados_historicos}
+\begin{tabular}{lrrrrrr}\hline
+Ventana & Cargados & Insertados & Completados & $A/L$ & $I/L$ & $A/I$ \\\hline
+2 horas & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 \\
+12 horas & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 \\\hline
+\end{tabular}
+\end{table}
 
 Los dos perfiles de conteo documentados corresponden a versiones distintas y no deben combinarse como si describieran una única entrada canónica. La Tabla \ref{tab:fuentes_mendoza} compara sus valores. En la Tabla \ref{tab:archivos_procedencia_mendoza}, se identifican los archivos; las carpetas se detallan después de ella y se señala qué archivos registrados no se conservaron.
 
@@ -296,7 +311,7 @@ Factor de expansión (redondeado) & 11,4698 & 10,3274 \\\hline
 
 El resumen histórico identificado en la Tabla \ref{tab:archivos_procedencia_mendoza} corresponde a una versión distinta de la entrada de generación; su factor de expansión registrado es 11,46977289. El log de generación registra 181 pares \acrshort{acr-od} explícitos, una asignación 70/30 y un factor de expansión de 10,327359932077748. La guía histórica advierte que sus parámetros no deben aplicarse a ciegas para regenerar la entrada canónica. Como no se conservaron la matriz ni las rutas originales, la transformación desde ese registro hasta las rutas consumidas no puede reconstruirse por completo. La regla canónica y sus 520 pares conectables se detallan en la subsección \ref{subsec:procedimiento_demanda_mendoza}.
 
-Los logs canónicos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:metricas_validacion_mendoza}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado; su hash completo se presenta después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14.986,32 vehículos por hora. El registro de generación informa 14.986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
+Los logs históricos de \acrshort{acr-sumo} sustentan los conteos y las ventanas de la Tabla \ref{tab:mendoza_resultados_historicos}; ambos identifican la versión \texttt{v1\_25\_0+0570-f59cd14e561}. La Tabla \ref{tab:archivos_procedencia_mendoza} identifica el archivo de rutas congelado; su hash completo se presenta después de ella. Este hash coincide con la documentación canónica y el encabezado del archivo declara 14.986,32 vehículos por hora. El registro de generación informa 14.986 vehículos por hora redondeados. Son valores de artefactos distintos y no identifican la ruta consumida por las corridas.
 
 \begin{table}[H]
 \centering
@@ -323,20 +338,35 @@ Ruta congelada & \texttt{mendoza\_12h.rou.xml} \\
 
 Los archivos de la Tabla \ref{tab:archivos_procedencia_mendoza} se ubican en las siguientes carpetas, relativas a la raíz de \texttt{marl-tlc}. El documento canónico, la guía y el informe están en \path{experiments/mendoza_scenario/}. El resumen histórico está en \path{experiments/mendoza_scenario/results/scenario_12h/}. El registro de generación, la comprobación de doce horas y la ruta original registrada corresponden a \path{experiments/mendoza_scenario/results/scenario_canonico_v14/seed_search/s104773/}. La comprobación de dos horas está en \path{experiments/mendoza_scenario/results/scenario_canonico_v14/validation_2h/}; la matriz OD registrada, en \path{experiments/mendoza_scenario/results/scenario_canonico_v14/}. La ruta congelada se conserva en \path{nets/Mendoza/}. La ruta original y la matriz OD registradas no se conservaron.
 
+Tampoco se conserva \texttt{generation\_summary.json} en el directorio histórico de la semilla 104773. El resumen disponible de la Tabla \ref{tab:fuentes_mendoza} pertenece al otro directorio y corte de datos; no sustituye ese archivo ausente.
+
 El hash SHA-256 de la ruta congelada es:\par\noindent\texttt{e7380990}\allowbreak\hspace{0pt}\texttt{e07dbaea}\allowbreak\hspace{0pt}\texttt{1df2cf10}\allowbreak\hspace{0pt}\texttt{13d3ee88}\allowbreak\hspace{0pt}\texttt{6b92820a}\allowbreak\hspace{0pt}\texttt{d74f6064}\allowbreak\hspace{0pt}\texttt{786f1082}\allowbreak\hspace{0pt}\texttt{b6716055}.
 
 La ruta registrada para la entrada evaluada original no se conservó, por lo que no puede afirmarse que el archivo congelado produjera las corridas. El informe de candidatos y la documentación canónica registran cero \glspl{teleport}, sin que los logs primarios incluyan un contador explícito para confirmarlo.
 
-En \texttt{Summary}, \texttt{loaded}, \texttt{inserted} y \texttt{arrived} cuentan los vehículos cargados, insertados y llegados a destino, respectivamente. \texttt{loaded} puede incluir vehículos cuya salida está programada para más adelante. \texttt{ended} incluye los que llegaron o fueron retirados de la simulación, por lo que no equivale por sí solo a viajes completados \cite{SUMO2026_Summary}. El material de la comprobación operacional de Mendoza no identifica una salida \texttt{Summary} con el mapeo exacto de los conteos reportados. Por ello, en la metodología se los define por su significado operacional y no se atribuyen a campos nativos concretos.
+En \texttt{Summary}, \texttt{loaded}, \texttt{inserted} y \texttt{arrived} cuentan los vehículos cargados, insertados y llegados a destino, respectivamente. \texttt{loaded} puede incluir vehículos cuya salida está programada para más adelante. \texttt{ended} incluye los que llegaron o fueron retirados de la simulación, por lo que no equivale por sí solo a viajes completados \cite{SUMO2026_Summary}. El material de las dos comprobaciones históricas de v14 no identifica una salida \texttt{Summary} con el mapeo exacto de los conteos reportados. Esta limitación corresponde a esos antecedentes; O2 conserva los campos nativos de cada paso.
 
 \subsubsection{Detalle de preprocesamiento y generación de la demanda}
 \label{subsec:procedimiento_demanda_mendoza}
 
-El preprocesamiento de los conteos descartó fechas no interpretables, valores negativos, identificadores \texttt{ZoneID} fuera del rango 1--19 y códigos \texttt{ClassID} distintos de 1, 2 y 3. \texttt{ZoneID} identifica una región virtual configurada en la cámara. \texttt{ClassID} clasifica los vehículos por longitud: hasta 5 metros, más de 5 y hasta 10 metros, y más de 10 metros. Los tiempos se redondearon al intervalo de 15 minutos más cercano y los valores se agregaron por cámara, intervalo, zona y clase.
+El procedimiento histórico de preprocesamiento describe la exclusión de fechas no interpretables, valores negativos, identificadores \texttt{ZoneID} fuera del rango 1--19 y códigos \texttt{ClassID} distintos de 1, 2 y 3. \texttt{ZoneID} identifica una región virtual configurada en la cámara. \texttt{ClassID} clasifica los vehículos por longitud: hasta 5 metros, más de 5 y hasta 10 metros, y más de 10 metros. Los tiempos se redondearon al intervalo de 15 minutos más cercano y los valores se agregaron por cámara, intervalo, zona y clase. Hay una discrepancia entre la deduplicación y tolerancia de cinco segundos descritas en los documentos y la función actual, que redondea a quince minutos y suma por clave. No se certifica que todos los archivos históricos pasaran por un procedimiento idéntico. La conversión de \texttt{DateUTC} al reloj local tampoco quedó verificada.
 
 La suma de las longitudes de carril es 66,3 km; cuenta cada carril por separado y no equivale a la extensión geográfica del área. Las longitudes de carril varían aproximadamente entre 11 y 276 m, con una media cercana a 120 m; los límites viales de velocidad registrados van de 10 a 100 km/h. Los agentes controlan de 3 a 10 carriles entrantes. De los 73 agentes descritos en el cuerpo, 67 tienen dos acciones, cuatro tienen una, uno tiene tres y uno tiene cuatro. El grado de vecindad varía entre dos y cuatro, con una media de 3,23.
 
 El registro de generación asociado a la semilla 104773 incluye el factor de expansión 10,327359932077748 y \texttt{camera\_retention}=1. Este último conserva el conteo de cámara completo como referencia para el ingreso modelado; es una decisión de construcción, no una proporción observada de vehículos que alcanzan el área urbana. La Tabla \ref{tab:fuentes_mendoza} mantiene separados este registro y el resumen histórico, que informa \texttt{camera\_retention}=0,95.
+
+La demanda nominal se construyó a partir del perfil horario promedio de la cámara 169, $\bar{q}_{\mathrm{obs}}(h)$, expresado en vehículos por hora, donde $h$ identifica una hora entre 0 y 23. El perfil se escaló a un volumen diario nominal $V_{\mathrm{diario}}$ de 260.000 vehículos, fijado como supuesto. Sea $\Delta h=1$ hora la duración de cada intervalo; la Ecuación \eqref{eq:factor_expansion_mendoza} define el factor adimensional $f_{\mathrm{exp}}$, cuyo subíndice abrevia «expansión», que relaciona el volumen nominal con el total diario del perfil:
+    \begin{equation}
+    f_{\text{exp}} = \frac{V_{\text{diario}}}{\sum_{h=0}^{23} \bar{q}_{\mathrm{obs}}(h)\,\Delta h}
+    \label{eq:factor_expansion_mendoza}
+    \end{equation}
+El valor 10,32735993 procede del archivo \texttt{gen.log} del registro de generación, que informa el método \texttt{daily\_volume} y el volumen objetivo de 260.000 vehículos diarios. La Ecuación \eqref{eq:factor_expansion_mendoza} expresa esa operación de escalado, sin estimar a partir de la cámara el volumen total de la ciudad. La Tabla \ref{tab:fuentes_mendoza} distingue este registro del resumen histórico y la Tabla \ref{tab:archivos_procedencia_mendoza} permite localizar los archivos de procedencia. La Ecuación \eqref{eq:demanda_red_horaria} aplica ese factor para obtener el flujo horario nominal de la red:
+    \begin{equation}
+    Q_{\text{red}}(h) = \bar{q}_{\mathrm{obs}}(h) \cdot f_{\text{exp}}
+    \label{eq:demanda_red_horaria}
+    \end{equation}
+$Q_{\mathrm{red}}(h)$ se expresa en vehículos por hora. En la generación se conservó el conteo de la cámara como referencia completa; esto es un supuesto de construcción, pues no se conoce qué fracción de esos vehículos llega al área modelada ni cuántos ingresan por accesos no observados.
+
 
 Las 39 zonas, identificadas de 0 a 38, permiten 1482 pares OD entre zonas distintas. Una búsqueda en anchura (\textit{breadth-first search}, \acrshort{acr-bfs}) determinó que 520 pares son conectables. En la especificación canónica, 473 pares reciben proporciones fijas cuya suma es 0,60, 44 reciben proporciones aleatorias que suman 0,40 y tres se excluyen. Para un par conectable, $o$ y $d$ denotan origen y destino, $p_{od}$ su proporción, y $p_{od}^{\mathrm{fijo}}$ la fracción especificada para los pares fijos. Los conjuntos disjuntos $\mathcal P_{\mathrm{fijo}}$, $\mathcal P_{\mathrm{aleat}}$ y $\mathcal P_{\mathrm{excl}}$ identifican, respectivamente, pares fijos, aleatorios y excluidos. Para cada par aleatorio, $u_{od}$ se muestrea uniformemente entre cero y uno. La regla canónica es:
 \begin{equation}
@@ -365,9 +395,152 @@ El estadístico \acrshort{acr-geh} compara el flujo horario nominal programado, 
 \end{equation}
 Se aplica cuando $V_{\mathrm{mod}}+V_{\mathrm{obs}}>0$, vale cero cuando los flujos coinciden y no es un porcentaje. Como el conteo de la cámara 169 participó en la construcción del perfil, esta comparación no constituye validación independiente de la demanda urbana.
 
-El parámetro \texttt{waiting\_time\_memory} determina cuántos segundos de historia conserva \acrshort{acr-sumo} al consultar la espera acumulada de un vehículo. En los experimentos de aprendizaje se fija en 1000 segundos. Esta ventana afecta la observación del agente, mientras que el atributo \texttt{waitingTime} de TripInfo acumula la espera durante el viaje \cite{SUMO2026_TraCIVehicle,SUMO2026_TripInfo}.
+El parámetro \texttt{waiting\_time\_memory} determina cuántos segundos de historia conserva \acrshort{acr-sumo} al consultar la espera acumulada de un vehículo. En las configuraciones sintéticas y en el protocolo anterior de aprendizaje urbano se fija en 1000 segundos; la adaptación a O2/P2 requiere comprobar su valor efectivo. Esta ventana afecta la observación del agente, mientras que el atributo \texttt{waitingTime} de TripInfo acumula la espera durante el viaje \cite{SUMO2026_TraCIVehicle,SUMO2026_TripInfo}.
 
-En los episodios de aprendizaje, el entorno guarda el estado de \acrshort{acr-sumo} al terminar el calentamiento y lo carga al reiniciar el episodio. La versión conservada para A/C no activa la opción de guardar los generadores aleatorios; la restauración del estado vehicular, por sí sola, no garantiza que se repitan sus secuencias. El protocolo urbano activa \texttt{--save-state.rng} y conserva un estado posterior al calentamiento para cada semilla de \acrshort{acr-sumo}. Esta opción permite restaurar también los generadores aleatorios \cite{SUMO2026_SaveAndLoad}; su uso no altera los archivos de demanda congelados.
+En los episodios de aprendizaje, el entorno guarda el estado de \acrshort{acr-sumo} al terminar el calentamiento y lo carga al reiniciar el episodio. La versión conservada para A/C no activa la opción de guardar los generadores aleatorios; la restauración del estado vehicular, por sí sola, no garantiza que se repitan sus secuencias. El protocolo urbano anterior de v14 activa \texttt{--save-state.rng} y conserva un estado posterior al calentamiento para cada semilla de \acrshort{acr-sumo}. Esta opción permite restaurar también los generadores aleatorios \cite{SUMO2026_SaveAndLoad}; su uso no altera los archivos de demanda congelados.
+
+
+\subsection{Construcción de los programas semafóricos fijos}
+\label{sec:mendoza_plan_fijo_apendice}
+
+La red mixta descrita en la Sección \ref{sec:procedencia_mendoza} no cumplía el requisito de control fijo. Su conversión utilizó tiempos observados de los programas accionados, con 224 fases medidas y entre 121 y 373 ciclos completos por programa. Se excluyó el estado inicial al contar transiciones. El constructor conservó los 17 programas fijos, el orden y los estados de todas las fases y los intervalos fijos de despeje.
+
+Para cada programa convertido se reservó primero el tiempo de las fases fijas. Si $\mathcal F$ identifica esas fases, $d_p$ su duración en segundos y $\mathcal V$ las fases variables, el presupuesto disponible $G$ y la asignación proporcional preliminar $g_p$ se expresan mediante:
+\begin{equation}
+G=90-\sum_{p\in\mathcal F}d_p,
+\qquad
+ g_p\approx G\,\frac{\overline d_p}{\sum_{j\in\mathcal V}\overline d_j},
+\label{eq:mendoza_conversion_fija}
+\end{equation}
+donde $\overline d_p$ es la duración media observada de la fase variable $p$. La implementación impuso mínimos y distribuyó restos enteros para completar exactamente 90 segundos. Se registraron 111 fases variables. La Ecuación \eqref{eq:mendoza_conversion_fija} describe la construcción; no estima un ciclo óptimo ni acredita la adecuación física de los despejes.
+
+El comparador T0 incorporó después un desfase de 52 segundos en el controlador \texttt{676748154}. Los ajustes que condujeron a P2 conservaron sus duraciones y utilizaron una función aproximada de coincidencia entre verdes alimentadores y rojos receptores, ponderada por rutas históricas y almacenamiento. Las velocidades libres, las ponderaciones y las reglas de búsqueda fueron decisiones del proyecto. P2 cambia únicamente los once desfases de la Tabla \ref{tab:mendoza_desfases}; los 52 segundos del controlador anterior ya pertenecían a T0.
+
+\begin{table}[H]\centering\small
+\caption{Desfases modificados del primer plan fijo al plan final de señales.}\label{tab:mendoza_desfases}
+\input{datos/mendoza220k/tabla_desfases.tex}
+\end{table}
+
+\Needspace{8\baselineskip}
+Las tablas \ref{tab:mendoza_programas_1}--\ref{tab:mendoza_programas_3} permiten reconstruir los tiempos de los 73 programas P2. Cada fila presenta las duraciones en su orden de ejecución; su suma es 90 segundos. Los estados completos de las 294 fases se conservan en \path{datos/mendoza220k/programas_tls_completos.csv}, junto con los límites accionados anteriores. La Tabla \ref{tab:mendoza_maximos_anteriores} identifica las 18 fases cuya duración excede el \texttt{maxDur} anterior. El índice de fase comienza en cero. Esos máximos accionados no equivalen a una certificación de seguridad de los programas fijos.
+
+\begin{table}[!htbp]\centering\footnotesize
+\caption{Programas fijos: controladores 1--25.}\label{tab:mendoza_programas_1}
+\input{datos/mendoza220k/tabla_programas_1.tex}
+\end{table}
+\begin{table}[!htbp]\centering\footnotesize
+\caption{Programas fijos: controladores 26--50.}\label{tab:mendoza_programas_2}
+\input{datos/mendoza220k/tabla_programas_2.tex}
+\end{table}
+\begin{table}[!htbp]\centering\footnotesize
+\caption{Programas fijos: controladores 51--73.}\label{tab:mendoza_programas_3}
+\input{datos/mendoza220k/tabla_programas_3.tex}
+\end{table}
+\begin{table}[!htbp]\centering\footnotesize
+\caption{Fases fijas que superan máximos de los programas accionados anteriores.}\label{tab:mendoza_maximos_anteriores}
+\input{datos/mendoza220k/tabla_fases_excedidas.tex}
+\end{table}
+\FloatBarrier
+
+\subsection{Transformaciones de la demanda y selección del nominal}
+\label{sec:mendoza_demanda_apendice}
+
+La cadena de demanda parte del XML v14 identificado por su hash, lo reescala por $230/260$ para obtener O0 y aplica la primera redistribución, O1. Esta última conserva soporte, totales horarios, marginales esperadas y celdas que tocan la zona 28. Una búsqueda heurística utilizó dos fuentes de exposición de rutas, exigió al menos veinte rutas por par en ambas fuentes y registró 436 intercambios. No estimó una matriz urbana mediante ajuste a conteos independientes.
+
+Las restricciones O1 limitaron cada celda a 80--120\% de O0, la variación total por hora a 5\%, el presupuesto acumulado de intercambios a 0,05 y los aumentos de exposición proyectada a 2\% en los tramos señalados por fallos y a 5\% en los restantes. Son restricciones de proximidad del proyecto. La variación total obtenida fue aproximadamente 2,9680\%. El registro \path{ledger_o1_historico.json}, conservado en \path{datos/mendoza220k/}, identifica celdas, magnitudes y puntuaciones, pero no guarda explícitamente la orientación firmada de cada paso. Las tasas finales sí están disponibles; no se presenta el registro como reconstrucción independiente completa de los signos.
+
+La selección de los pares del intercambio final se apoyó en un catálogo histórico de rutas. De las 209 rutas asociadas con 10→27, 87 incluían el movimiento recto investigado en Benegas. El resto de los pares se usó para compensar el cambio y conservar los totales por origen y destino; que sus conteos sean cero en este catálogo no demuestra que nunca recorran ese movimiento.
+
+\begin{table}[H]\centering\small
+\caption{Rutas del catálogo histórico asociadas con el movimiento recto investigado en Benegas.}\label{tab:mendoza_exposicion_benegas}
+\begin{tabular}{lrr}\hline
+Par origen--destino & Rutas del catálogo & Rutas con el movimiento \\\hline
+10→27 & 209 & 87 \\
+36→15 & 196 & 0 \\
+10→15 & 214 & 0 \\
+36→27 & 191 & 0 \\\hline
+\end{tabular}
+\end{table}
+
+El caso fallido pertenecía al flujo 10→27, pero sus registros no identifican el giro que esperaba hacer el vehículo ni la conexión que lo bloqueó. Por eso, el catálogo funciona como una aproximación de exposición, no como reconstrucción de su trayectoria. El par 36→15 no se redujo por un fallo observado; su función fue compensar la redistribución manteniendo las sumas por origen y destino.
+
+O1 se reescaló por $220/230$, con redondeo al par a doce decimales. O2 cambió solo cuatro tasas de esa referencia durante $[10.800,14.400)$ segundos, sin alterar las otras horas ni atributos del XML. La Tabla \ref{tab:mendoza_tasas_o2} conserva la precisión escrita. El cambio absoluto por celda es $\delta_{\lambda}=0{,}001117230520$ vehículos por segundo, calculado como el 20\% de la menor tasa anterior y truncado hacia abajo a doce decimales. Las sumas por origen y por destino se conservan exactamente respecto de O1 a 220.000.
+
+\begin{table}[H]\centering\small
+\caption{Tasas del intercambio final durante 10.800--14.400 segundos.}\label{tab:mendoza_tasas_o2}
+\input{datos/mendoza220k/tabla_tasas.tex}
+\end{table}
+
+La masa trasladada es $2\delta_{\lambda}\times3.600=8{,}044059744$ solicitudes esperadas, frente a una suma de cambios absolutos de $16{,}088119488$. El total de esa hora es $14.852{,}233622826$ solicitudes esperadas. La variación total de su distribución es aproximadamente 0,05416\%. El archivo \path{matrices_od_completas.csv} conserva las 6.204 filas para v14, O0, O1 y O2; \path{demanda_horaria.csv} contiene sus sumas por hora.
+
+El margen del 20\% final es local respecto de O1. Frente a O0 reescalada, el cociente O2/O0 de $10\to15$ es aproximadamente 1,214586 y el de $36\to15$, 0,768017. Por tanto, no se conserva íntegramente la envolvente inicial. Tampoco se verificaron de nuevo para O2 todos los topes de exposición y distancia recorrida de O1. El soporte y las celdas de la zona 28 sí permanecen sin cambios en el intercambio final.
+
+La Tabla \ref{tab:mendoza_eleccion_nominal} reúne los antecedentes necesarios para interpretar la elección de 220.000. No se comparan como si todos fueran una única reducción uniforme: cambian distribuciones o planes según la fila. En el caso común de doce horas con semilla 104759, O2 a 220.000 completó 125.100 viajes y dejó 26.283 pendientes; O1 reescalada a 210.000 completó 120.274 y dejó 24.208. El mayor servicio absoluto coexistió con mayor demanda pendiente y una CR menor (0,8220 frente a 0,8280).
+
+\begin{table}[H]\centering\small
+\caption{Antecedentes para elegir el nominal de trabajo.}\label{tab:mendoza_eleccion_nominal}
+\begin{tabular}{@{}r>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{9cm}@{}}\hline
+Nominal diario & Tratamiento & Evidencia pertinente \\\hline
+260.000 & v14 mixto & No satisface el requisito de control fijo. \\
+230.000 & O1/P2 & Dos semillas completan doce horas; 104759 falla antes del cierre. \\
+225.000 & O2 reescalada/P2 y alternativas posteriores & El reescalado falla en la corrida larga; las alternativas investigadas no completan la validación requerida. \\
+220.000 & O1 reescalada/P2 & Completa dos horas con 104759, pero falla en la corrida larga. \\
+220.000 & O2/P2 & Seis semillas completan ambas ventanas y los criterios. \\
+210.000 & O1 reescalada/P2 & Seis semillas completan ambas ventanas y los criterios. \\\hline
+\end{tabular}
+\end{table}
+
+\subsection{Entradas, ejecución y evidencia final}
+\label{sec:mendoza_evidencia_final}
+
+La correspondencia horaria del escenario asigna las 06:00 al inicio de la simulación: el horizonte de doce horas cubre 06:00–18:00, el de dos horas corresponde a 06:30–08:30 y la redistribución ocurre entre 09:00 y 10:00. Es una convención del escenario; la conversión de las marcas temporales de las cámaras al reloj local requiere verificación independiente. Las corridas de aceptación con programas fijos comprendieron $[1.800,9.000)$ y $[0,43.200)$ segundos, respectivamente. Las seis semillas, en el orden de ejecución, fueron 104759, 104729, 104771, 104861, 104879 y 104891. Para cada semilla se ejecutó primero la corrida de dos horas; un rechazo detenía la tanda antes de iniciar la de doce. Ambas comenzaron con la red vacía y finalizaron en el horizonte establecido, sin atender después los vehículos pendientes. Estos resultados comprueban la operación del escenario, pero no constituyen ajuste de hiperparámetros ni evaluación de políticas aprendidas.
+
+La campaña final se conserva en \texttt{marl-tlc}, bajo \path{experiments/mendoza_scenario/results/}\allowbreak\path{mendoza_220k_od_adjustment_20261017/}. Las entradas incluyen \path{demand/O2_220000_benegas_h3.rou.xml}, la red fija P2, zonas, formas y configuraciones de ambas ventanas. La Tabla \ref{tab:mendoza_hashes_finales} identifica sus componentes mediante SHA-256. El inventario completo \path{datos/mendoza220k/fuentes_locales_sha256.json} registra rutas relativas, tamaños, hashes y antecedentes ausentes. La revisión offline contrastó los 145 archivos presentes del inventario sin diferencias, incluidas las doce salidas \texttt{Summary}.
+
+\begin{table}[H]\centering\small
+\caption{Identidad de los archivos de demanda final y del plan fijo.}\label{tab:mendoza_hashes_finales}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{12cm}@{}}\hline
+Componente & SHA-256 \\\hline
+Demanda O1, referencia & \texttt{ad8ef880}\allowbreak\texttt{ad1cd4d2}\allowbreak\texttt{8181bbb1}\allowbreak\texttt{7f860472}\allowbreak\texttt{cac2dc3e}\allowbreak\texttt{6379140f}\allowbreak\texttt{c04a2888}\allowbreak\texttt{7dedfd2f} \\
+Demanda O2 & \texttt{84d512c8}\allowbreak\texttt{f25b30f7}\allowbreak\texttt{43f432ca}\allowbreak\texttt{fdcfd4c5}\allowbreak\texttt{fcbd6436}\allowbreak\texttt{34c10f46}\allowbreak\texttt{e674e172}\allowbreak\texttt{e96b4c46} \\
+Red P2 & \texttt{2efa0e9f}\allowbreak\texttt{9806040a}\allowbreak\texttt{596d446f}\allowbreak\texttt{66686353}\allowbreak\texttt{07649c61}\allowbreak\texttt{0db020c1}\allowbreak\texttt{3b6fd52f}\allowbreak\texttt{03b9e0a8} \\
+Zonas & \texttt{cf710f36}\allowbreak\texttt{e1c5021d}\allowbreak\texttt{3d3e585d}\allowbreak\texttt{89726231}\allowbreak\texttt{0579bf1c}\allowbreak\texttt{34466ecc}\allowbreak\texttt{a6290e17}\allowbreak\texttt{15923e40} \\
+Formas & \texttt{fe96f276}\allowbreak\texttt{987b8f9c}\allowbreak\texttt{cd71736a}\allowbreak\texttt{76a8524e}\allowbreak\texttt{b948b192}\allowbreak\texttt{b2326221}\allowbreak\texttt{b92f4959}\allowbreak\texttt{749b8a38} \\
+Binario SUMO & \texttt{ca00e547}\allowbreak\texttt{70b03c99}\allowbreak\texttt{d1437702}\allowbreak\texttt{c4b9917e}\allowbreak\texttt{58c5a33e}\allowbreak\texttt{4defcf43}\allowbreak\texttt{2e4d82a7}\allowbreak\texttt{844cce74} \\\hline
+\end{tabular}
+\end{table}
+
+Las doce ejecuciones utilizaron el binario \texttt{v1\_25\_0+0570-}\allowbreak\texttt{f59cd14e561}, sin cliente TraCI ni políticas aprendidas. La Tabla \ref{tab:mendoza_opciones_finales} reúne las opciones relevantes. El umbral de teletransporte de 300 segundos conserva la regla de bloqueo del simulador; no define un tiempo de viaje aceptable. \texttt{max-num-teleports=0} puede terminar el proceso tras un evento incluso con código cero: la aceptación comprueba también los contadores y el horizonte. Las colisiones o descartes se analizan al cierre y rechazan el caso y la continuación de la tanda. La ausencia de activación de \texttt{collision.check-junctions} limita el alcance de cero colisiones a la detección efectiva.
+
+\begin{table}[H]\centering\small
+\caption{Opciones efectivas de las comprobaciones finales.}\label{tab:mendoza_opciones_finales}
+\begin{tabular}{@{}ll@{}}\hline
+Opción & Valor \\\hline
+Paso de simulación & 1 segundo \\
+\texttt{time-to-teleport} & 300 segundos \\
+\texttt{max-num-teleports} & 0 \\
+\texttt{max-depart-delay} & $-1$ (sin descarte por demora de ingreso) \\
+\texttt{collision.action} & \texttt{warn} \\
+\texttt{junction-taz} & \texttt{true} \\
+\texttt{summary-output.period} & 1 segundo \\
+\texttt{tripinfo-output.write-unfinished} & \texttt{true} \\
+\texttt{tripinfo-output.write-undeparted} & \texttt{true} \\
+\texttt{xml-validation} & \texttt{never}, tras validación offline de las entradas \\\hline
+\end{tabular}
+\end{table}
+
+Se conservaron \texttt{summary}, \texttt{tripinfo} con viajes terminados, inconclusos y no insertados, rutas realizadas, datos por tramo, comandos y registros del proceso. Las tablas \ref{tab:mendoza_casos_2h} y \ref{tab:mendoza_casos_12h} presentan los doce casos en el orden de semillas registrado. $L$, $I$, $A$, $R$ y $W$ corresponden a cargados, insertados, completados, circulando y pendientes de ingreso; $A/L$ es la proporción de completados sobre cargados. Todos completaron su horizonte con cero teletransportes, colisiones registradas y descartes. Las salidas contienen 7.200 pasos, etiquetados 1.800--8.999, o 43.200 pasos, etiquetados 0--43.199. La etiqueta final más un segundo identifica el cierre observado.
+
+\begin{table}[H]\centering\small
+\caption{Corridas de aceptación con programas fijos: horizonte de dos horas.}\label{tab:mendoza_casos_2h}
+\input{datos/mendoza220k/tabla_casos_2h.tex}
+\end{table}
+\begin{table}[H]\centering\small
+\caption{Corridas de aceptación con programas fijos: horizonte de doce horas.}\label{tab:mendoza_casos_12h}
+\input{datos/mendoza220k/tabla_casos_12h.tex}
+\end{table}
+
+Los balances al cierre satisfacen $I=A+R$ y $L=I+W$. La relectura de todos los pasos confirmó horizontes íntegros, contadores nulos e integrales de pendientes coherentes con el registro. La conciliación documental con \texttt{TripInfo} está disponible en los datos de respaldo. Un pendiente normal al cierre puede llevar \texttt{vaporized='end'} sin constituir un descarte: se interpreta con sus atributos de salida y llegada. El CSV de resultados conserva los cocientes sin redondear para la presentación, las integrales y los resultados de conciliación. Estas fuentes se distinguen de los logs incompletos de v14 descritos en la Sección \ref{sec:procedencia_mendoza}.
 
 
 \section{Especificaciones para reproducir los experimentos}
@@ -411,7 +584,7 @@ C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas 
 \subsection{Espacio de búsqueda inicial de fase 1}
 \label{subsec:espacio_busqueda_fase1}
 
-Esta sección especifica los dominios iniciales por algoritmo y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. Mendoza utiliza estos dominios, salvo el peso vecinal, que fija en cero después de A/C. Las tablas posteriores de presupuestos y semillas corresponden a las búsquedas sintéticas; las condiciones urbanas se reúnen en la subsección \ref{subsec:protocolo_urbano_mendoza}. Esta reconstrucción permite identificar la especificación consultada; una clave almacenada en un archivo de configuración no demuestra por sí sola cómo operó cada ejecución histórica.
+Esta sección especifica los dominios iniciales por algoritmo y los factores que se mantienen fijos. Los rangos se contrastaron con el código de \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{search_space.py} y con la revisión documental del 10 de octubre de 2026 conservada en \path{docs/initial_search_space_criteria.md}, dentro de \texttt{marl-tlc}. El protocolo anterior de Mendoza contemplaba estos dominios, salvo el peso vecinal, fijado en cero después de A/C. Las tablas posteriores de presupuestos y semillas corresponden a las búsquedas sintéticas; las condiciones urbanas se reúnen en la subsección \ref{subsec:protocolo_urbano_mendoza}. Esta reconstrucción permite identificar la especificación consultada; una clave almacenada en un archivo de configuración no demuestra por sí sola cómo operó cada ejecución histórica.
 
 Las Tablas \ref{tab:dominios_fase1_ppo} y \ref{tab:dominios_fase1_idqn} reúnen los dominios por familia algorítmica. Cada fila identifica el parámetro por su función; la Tabla \ref{tab:claves_parametros} conserva su correspondencia con las claves del código. Uniforme continua y loguniforme tienen el significado explicado en la sección \ref{subsec:hpo_phase1}; uniforme entera permite cualquiera de los enteros del rango, incluidos ambos extremos, y categórico restringe la búsqueda a las alternativas enumeradas. Los intervalos continuos conservan la notación de las distribuciones declaradas; la inclusión de cero como extremo no garantiza una propuesta exactamente nula. En las llamadas enteras del código, el límite superior es exclusivo: por ejemplo, \texttt{randint(4,65)} permite los enteros de 4 a 64. La excepción urbana del peso vecinal también se aplica a estas tablas. Otros factores, como el límite de escala del codificador de espera acumulada por carril, se fijan por escenario. La Tabla \ref{tab:factores_fase1} especifica esos factores para los estudios sintéticos documentados.
 
@@ -552,9 +725,9 @@ El código de fase 1 define 7001 como semilla \acrshort{acr-tpe} por defecto, in
 \subsection{Arquitecturas y semillas de la búsqueda refinada sintética}
 \label{subsec:protocolo_refinado_apendice}
 
-Este apartado detalla la búsqueda refinada sintética, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. La fase 2 abarca los cuatro escenarios; cada red deriva sus dominios de su propia fase 1.
+Este apartado detalla la búsqueda refinada sintética, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. En las tres redes sintéticas, cada red deriva sus dominios de su propia fase 1. El antecedente urbano de v14 se conserva en la Sección \ref{subsec:protocolo_urbano_mendoza}.
 
-El protocolo de fase 2 fija para los cuatro escenarios un máximo de 100 configuraciones por combinación de algoritmo y escenario y de 60 iteraciones por ensayo. La configuración de \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; además, establece una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto. Las semillas y las arquitecturas se establecen por algoritmo y escenario. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
+El protocolo sintético de fase 2 fija un máximo de 100 configuraciones por combinación de algoritmo y escenario y de 60 iteraciones por ensayo. La configuración de \acrshort{acr-asha} fija 30 iteraciones de gracia y un factor de reducción de 2; además, establece una ejecución concurrente por combinación y un episodio de seguimiento sin exploración cada 15 iteraciones. Los fallos, las detenciones anticipadas y las interrupciones consumen parte del presupuesto. Las semillas y las arquitecturas se establecen por algoritmo y escenario. Las fuentes históricas con rangos o arquitecturas distintos conservan su identidad.
 
 El estado del modelo al final de un ensayo se guarda en un archivo \gls{checkpoint}, que puede servir para reanudar o evaluar el entrenamiento. Su existencia no libera presupuesto si el ensayo está incompleto ni garantiza que la política sea admisible para selección. En la búsqueda sintética, la fase 1 adapta las propuestas mediante \acrshort{acr-tpe} y las detenciones mediante \acrshort{acr-asha}, sin reservar una prueba en $\rho_{\mathrm{coop}}=0$; por eso sus registros no identifican la causa de las diferencias asociadas al peso vecinal ni demuestran que el valor local sea un óptimo.
 
@@ -593,7 +766,7 @@ Las arquitecturas h128 y h256 contienen dos capas ocultas de 128 y 256 unidades,
 
 Para los candidatos sintéticos, la selección exige que el ensayo haya alcanzado 60 iteraciones, que sus métricas sean numéricas y finitas y que existan al menos 15 registros finitos de métricas de tránsito. También se comprueba que la configuración efectiva y el archivo del modelo final estén completos y puedan leerse. Por sí solo, el estado \texttt{COMPLETE} de Optuna indica que el ensayo terminó sin registrar un fallo, pero no garantiza el cumplimiento de estos requisitos.
 
-La lista inicial de candidatos sintéticos se construye con \texttt{build\_shortlist}, en \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/closure_audit.py}, de la copia \texttt{phase2-cluster} de \texttt{marl-tlc}. Entre los ensayos técnicamente admisibles se consideran aquellos con espera diagnóstica disponible. Se priorizan los que registran cero inicios de teletransporte y una \acrshort{acr-ci} diagnóstica de al menos 0,95; después se ordenan por menor espera diagnóstica y por el identificador de la política. Se toma el primero de cada arquitectura disponible y se completa la lista, hasta tres candidatos, con los restantes en ese orden. Este ordenamiento preliminar no sustituye los filtros del panel común de selección. En Mendoza se aplican los criterios urbanos descritos en la subsección \ref{subsec:seleccion_mendoza}.
+La lista inicial de candidatos sintéticos se construye con \texttt{build\_shortlist}, en \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/closure_audit.py}, de la copia \texttt{phase2-cluster} de \texttt{marl-tlc}. Entre los ensayos técnicamente admisibles se consideran aquellos con espera diagnóstica disponible. Se priorizan los que registran cero inicios de teletransporte y una \acrshort{acr-ci} diagnóstica de al menos 0,95; después se ordenan por menor espera diagnóstica y por el identificador de la política. Se toma el primero de cada arquitectura disponible y se completa la lista, hasta tres candidatos, con los restantes en ese orden. Este ordenamiento preliminar no sustituye los filtros del panel común de selección. La adaptación de la selección urbana se delimita en la Sección \ref{subsec:seleccion_mendoza}.
 
 \Needspace{3\baselineskip}
 Cada candidato se evalúa con las semillas \acrshort{acr-sumo} 950001, 950003 y 950007, comunes a los algoritmos de una misma red. Los tres episodios deben registrar cero inicios de teletransporte, una \acrshort{acr-ci} de al menos 0,95 y una cantidad de vehículos insertados igual o superior al 95\% de la referencia empírica para esa red y semilla.
@@ -607,7 +780,7 @@ El criterio \texttt{final\_declared\_budget} del contrato de entrenamiento ident
 \subsection{Dominios declarados y significado de los parámetros}
 \label{subsec:dominios_refinados}
 
-Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados para la búsqueda refinada, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. Mendoza también forma parte de la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico.
+Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan los doce dominios sintéticos declarados para la búsqueda refinada, uno por combinación de algoritmo, escenario sintético y arquitectura prevista. Los valores corresponden al archivo \path{experiments/marl_experiments/tuning/}\allowbreak\path{phase2_refined/informed_domains_rho0_v3.json}, localizado en la copia de trabajo \texttt{phase2-cluster} del proyecto \texttt{marl-tlc}. El diseño anterior también contemplaba Mendoza en la fase 2 de \acrshort{acr-hpo}, con dominios propios del escenario urbano; no integra estas doce combinaciones sintéticas. La columna «Muestreo» indica el tipo de selección sin abreviaturas: uniforme continua, loguniforme, uniforme entera o categórico, con los significados descritos al presentar el espacio inicial. En el muestreo entero, $[a;b)$ permite los enteros desde $a$ hasta $b-1$: el extremo superior queda excluido. En los dominios continuos, los corchetes indican los límites declarados; no garantizan que se propongan sus extremos. Las llaves enumeran las únicas alternativas del muestreo categórico.
 
 % Dominios expresados como [inferior, superior], excepto randint: [inferior, superior exclusivo).
 \begin{landscape}
@@ -634,7 +807,7 @@ Las Tablas \ref{tab:dominios_happo_v2}--\ref{tab:dominios_mappo_v2} presentan lo
 \end{table}
 \end{landscape}
 
-El refinamiento aplica las mismas reglas a los cuatro escenarios. Para cada combinación de algoritmo, escenario y arquitectura, requiere al menos diez ensayos de fase 1 que hayan completado el presupuesto sin errores, pertenezcan al dominio inicial y tengan un objetivo numérico y finito. Los ordena de menor a mayor por ese objetivo y, en caso de empate, por identificador.
+El refinamiento sintético aplica las mismas reglas a las tres redes. El diseño anterior también las contemplaba para v14; no constituye una adaptación a O2/P2. Para cada combinación de algoritmo, escenario y arquitectura, requiere al menos diez ensayos de fase 1 que hayan completado el presupuesto sin errores, pertenezcan al dominio inicial y tengan un objetivo numérico y finito. Los ordena de menor a mayor por ese objetivo y, en caso de empate, por identificador.
 
 Como vector inicial, utiliza la mediana de los parámetros numéricos y la moda de los categóricos entre los cinco mejores; esa combinación puede no coincidir con un ensayo histórico. La fase 2 entrena desde cero, sin incorporar puntuaciones, archivos de estado del modelo (\gls{checkpoint}) ni bases Optuna de fase 1. Cada red conserva sus propios dominios, derivados de sus ensayos de fase 1.
 
@@ -644,22 +817,22 @@ El asterisco de \texttt{minibatch\_size} en la Tabla \ref{tab:dominios_happo_v2}
 
 En las redes sintéticas, para \acrshort{acr-ppo}, el código multiplica \texttt{train\_batch\_episodes} por los pasos de control del episodio ($3600/5=720$) para calcular el tamaño del lote por componente de aprendizaje; ese cálculo no incluye un factor adicional por el número de procesos de simulación. En \acrshort{acr-idqn}, \texttt{num\_steps\_}\allowbreak\hspace{0pt}\texttt{sampled\_before\_}\allowbreak\hspace{0pt}\texttt{learning\_starts} fija los pasos muestreados antes de iniciar el aprendizaje; \texttt{target\_network\_}\allowbreak\hspace{0pt}\texttt{update\_freq} fija el intervalo de actualización de la red objetivo; \texttt{train\_batch\_size\_}\allowbreak\hspace{0pt}\texttt{per\_learner} es el tamaño del lote de \glspl{transicion_aprendizaje}; \texttt{n\_step}, el horizonte del valor objetivo temporal; \texttt{epsilon\_final}, el nivel final de exploración; y \texttt{epsilon\_timesteps}, el horizonte de su programación. $c_v=\texttt{vf\_clip\_param}$ es la cota superior de la pérdida cuadrática de valor, no un recorte \acrshort{acr-ppo} convencional de predicciones.
 
-\subsection{Protocolo urbano de Mendoza}
+\subsection{Antecedente del protocolo de aprendizaje urbano}
 \label{subsec:protocolo_urbano_mendoza}
 
-El protocolo \texttt{mendoza\_rho0\_v1} reúne las condiciones urbanas en \path{experiments/marl_experiments/tuning/urban/}\allowbreak\path{protocol.json}. El manifiesto \path{docs/mendoza_preparation/preparation_manifest.json} identifica los recursos congelados de v14, sus hashes y las versiones de software. Este protocolo utiliza libsumo 1.26.0; sus condiciones se distinguen de las comprobaciones históricas con el ejecutable SUMO 1.25.0.
+El protocolo siguiente es un antecedente ligado a la red mixta y demanda v14. Sus valores, semillas, versiones y presupuestos no se transfieren a O2/P2; esta actualización no acredita campañas de aprendizaje sobre el nuevo escenario. El protocolo \texttt{mendoza\_rho0\_v1} reúne las condiciones urbanas en \path{experiments/marl_experiments/tuning/urban/}\allowbreak\path{protocol.json}. El manifiesto \path{docs/mendoza_preparation/preparation_manifest.json} identifica los recursos congelados de v14, sus hashes y las versiones de software. Este protocolo utiliza libsumo 1.26.0; sus condiciones se distinguen de las comprobaciones históricas con el ejecutable SUMO 1.25.0.
 
-Los archivos \path{nets/Mendoza/mendoza_hpo_v14.sumocfg} y \path{nets/Mendoza/mendoza_evaluation_v14.sumocfg} conservan la red y la demanda congeladas y definen las ventanas indicadas en la metodología. Ambos fijan \texttt{time-to-teleport}=300 segundos y \texttt{max-num-teleports}=$-1$. El primero regula el umbral de espera por bloqueo que puede iniciar un teletransporte; el segundo permite registrarlos sin detener la simulación al ocurrir uno \cite{SUMO2026_SUMO,SUMO2026_Teleports}. La selección compara sus inicios con la referencia, según la subsección \ref{subsec:seleccion_mendoza}. La inicialización, la restauración de los generadores aleatorios y el cierre por truncamiento se describen en la subsección \ref{sec:stack_tecnologico}.
+Los archivos \path{nets/Mendoza/mendoza_hpo_v14.sumocfg} y \path{nets/Mendoza/mendoza_evaluation_v14.sumocfg} conservan la red mixta y la demanda v14. El primero comienza en $t=1.500$ segundos, incluye 300 segundos de calentamiento y controla $[1.800,9.000)$; el segundo comprende $[0,43.200)$, sin calentamiento. Estas ventanas pertenecen al diseño anterior de aprendizaje. Ambos fijan \texttt{time-to-teleport}=300 segundos y \texttt{max-num-teleports}=$-1$. El primero regula el umbral de espera por bloqueo que puede iniciar un teletransporte; el segundo permite registrarlos sin detener la simulación al ocurrir uno \cite{SUMO2026_SUMO,SUMO2026_Teleports}. La selección prevista compara sus inicios con la referencia mixta, según la Sección \ref{sec:seleccion_urbana_v14}. La inicialización, la restauración de los generadores aleatorios y el cierre por truncamiento se describen en la subsección \ref{sec:stack_tecnologico}.
 
-La calibración del codificador se registra en \path{docs/mendoza_preparation/encoder_calibration.json}. Utiliza los programas de referencia, las semillas 5001 y 5002, 300 segundos de calentamiento, 7200 segundos de control y una memoria de espera de 1000 segundos. Cada segundo se calcula el máximo, entre los carriles controlados, de la suma de \texttt{getAccumulatedWaitingTime} de sus vehículos. Las dos simulaciones aportan 14.400 muestras; su percentil 99 es $5396{,}04$ veh\,$\cdot$\,s y se redondea al entero más próximo para fijar $M_{\mathrm{lane}}=5396$ veh\,$\cdot$\,s. Esta suma conserva esperas anteriores de los vehículos, mientras que el entorno atribuye la espera a cada carril; por ello, la calibración proporciona una envolvente conservadora de la señal utilizada. El valor permanece fijo durante las búsquedas y el entrenamiento final.
+La calibración del codificador se registra en \path{docs/mendoza_preparation/encoder_calibration.json}. Utiliza los programas de referencia, las semillas 5001 y 5002, 300 segundos de calentamiento, 7200 segundos de control y una memoria de espera de 1000 segundos. Cada segundo se calcula el máximo, entre los carriles controlados, de la suma de \texttt{getAccumulatedWaitingTime} de sus vehículos. Las dos simulaciones aportan 14.400 muestras; su percentil 99 es $5396{,}04$ veh\,$\cdot$\,s y se redondea al entero más próximo para fijar $M_{\mathrm{lane}}=5396$ veh\,$\cdot$\,s. Esta suma conserva esperas anteriores de los vehículos, mientras que el entorno atribuye la espera a cada carril; por ello, la calibración proporciona una envolvente conservadora de la señal utilizada. El protocolo anterior preveía mantener fijo ese valor durante las búsquedas y el entrenamiento final; no es una calibración de O2/P2.
 
-La fase 1 urbana comienza después de A--E y A/C y utiliza observación local y $\rho_{\mathrm{coop}}=0$, conforme a la decisión explicada en la subsección \ref{subsec:hpo_phase1}. Comparte con los demás escenarios las dos arquitecturas, de dos capas ocultas con 128 o 256 unidades por capa, y los límites de propuestas, iteraciones, \acrshort{acr-asha} y seguimiento diagnóstico. Los cuatro algoritmos suman ocho estudios urbanos y 800 propuestas iniciales.
+El diseño anterior sitúa la fase 1 urbana después de A--E y A/C y utiliza observación local y $\rho_{\mathrm{coop}}=0$, conforme a la decisión explicada en la subsección \ref{subsec:hpo_phase1}. Comparte con los demás escenarios las dos arquitecturas, de dos capas ocultas con 128 o 256 unidades por capa, y los límites de propuestas, iteraciones, \acrshort{acr-asha} y seguimiento diagnóstico. El presupuesto previsto era de ocho estudios urbanos y 800 propuestas iniciales para los cuatro algoritmos; no es un presupuesto ejecutado ni asignado a O2/P2.
 
 En los métodos de la familia \acrshort{acr-ppo}, cada episodio controlado aporta $7200/5=1440$ pasos nominales; el tamaño objetivo del lote por componente de aprendizaje es esa cantidad multiplicada por \texttt{train\_batch\_episodes}.
 
-La fase 2 urbana utiliza los límites de propuestas e iteraciones y las condiciones de \acrshort{acr-asha}, concurrencia y seguimiento comunes a los cuatro escenarios, definidos en la subsección \ref{subsec:protocolo_refinado_apendice}.
+La fase 2 urbana prevista utilizaba los límites de propuestas e iteraciones y las condiciones de \acrshort{acr-asha}, concurrencia y seguimiento comunes a los cuatro escenarios, definidos en la subsección \ref{subsec:protocolo_refinado_apendice}.
 
-Los dominios urbanos se derivan exclusivamente de los ensayos de fase 1 de Mendoza, con las reglas comunes de la subsección \ref{subsec:dominios_refinados}. El archivo de dominios conserva los identificadores de los ensayos y los hashes de sus fuentes.
+El diseño preveía derivar los dominios urbanos exclusivamente de los ensayos de fase 1 de Mendoza, con las reglas comunes de la subsección \ref{subsec:dominios_refinados}. El archivo de dominios conserva los identificadores de los ensayos y los hashes de sus fuentes.
 
 \Needspace{3\baselineskip}
 El registro \path{experiments/marl_experiments/tuning/urban/seeds.json} separa las semillas del aprendiz, de SUMO de entrenamiento, de SUMO diagnóstico y de Optuna para cada fase, algoritmo y arquitectura. También registra la selección, el entrenamiento final y la evaluación final. Se genera con \texttt{random.Random}, semilla maestra 20261013 y muestreo sin reemplazo de enteros desde 1.000.001 hasta $2^{31}-1$, excluyendo las semillas históricas identificadas y las de calibración. La semilla de SUMO se pasa mediante \texttt{--seed}; el reinicio del entorno recupera el estado asociado a ella. Las semillas del aprendiz y de SUMO del entrenamiento final son nuevas respecto de las búsquedas y la selección.
@@ -670,6 +843,25 @@ El panel común de selección utiliza cinco semillas de SUMO: 1205571043,\allowb
 
 El manifiesto reserva veinte semillas de evaluación final por algoritmo, sin imponer un panel común entre ellos. Así se evita reutilizar para la evaluación final las simulaciones que intervienen en la elección de configuraciones. El criterio de checkpoint se mantiene en la última iteración del presupuesto completo de la búsqueda que aporta la configuración.
 
+
+\subsubsection{Selección urbana prevista para v14}
+\label{sec:seleccion_urbana_v14}
+
+La lista urbana prevista reúne hasta tres candidatos por algoritmo que completan el presupuesto declarado y conservan métricas finitas, una configuración íntegra y un modelo restaurable de la última iteración. Se incluye el primer candidato de cada arquitectura disponible y se completa la lista por menor espera diagnóstica e identificador. La auditoría contrasta cada configuración y modelo con su ensayo de origen, como precisa la Sección \ref{subsec:protocolo_urbano_mendoza} del apéndice.
+
+El protocolo anterior de selección compara cada candidato con los programas semafóricos conservados en la red de Mendoza, tanto fijos como accionados (Sección \ref{sec:parametros_sumo}). Para esas comparaciones, especifica el escenario v14, el archivo de flujos congelado \path{nets/Mendoza/mendoza_12h.rou.xml} y la configuración \path{nets/Mendoza/mendoza_hpo_v14.sumocfg}. El control comprende $[1.800, 9.000)$\,s, con 300 segundos de calentamiento desde $t=1.500$\,s.
+
+En cada comparación se mantienen la misma semilla de \acrshort{acr-sumo}, demanda, calentamiento y ventana. La referencia conserva el funcionamiento de sus programas; las políticas actúan con la inicialización descrita en la Sección \ref{sec:stack_tecnologico}.
+
+El diseño adopta un panel común de cinco semillas de \acrshort{acr-sumo} ($N=5$) para todos los candidatos urbanos y la referencia. Las semillas se generan aleatoriamente, se registran antes de la selección y son distintas de las usadas en la búsqueda y en la evaluación final. Con hasta tres candidatos por algoritmo, el panel comprende hasta 65 simulaciones: cinco de referencia y hasta sesenta de candidatos. Este tamaño acota el presupuesto computacional de la selección, pero no garantiza potencia estadística ni estabilidad del ordenamiento.
+
+Para cada semilla, las inserciones cuentan los vehículos cuyo instante efectivo de inserción pertenece a $[1.800, 9.000)$\,s; la \acrshort{acr-ci} divide los vehículos de esa cohorte que completan el viaje antes del cierre por el total insertado. Se contabilizan también los inicios de teletransporte durante el control.
+
+Una configuración es admisible solo si, en cada una de las cinco semillas, iguala o supera al programa de referencia en cantidad de vehículos insertados y en \acrshort{acr-ci}, y no registra más inicios de teletransporte. Los criterios se fijan en relación con el programa de referencia, sin umbrales absolutos de inserción o completitud.
+
+La clasificación requiere simulaciones que alcancen el fin de la ventana, los tres registros para cada comparación y un denominador positivo para calcular la tasa y la espera; si alguno falta, no puede determinarse la admisibilidad del candidato.
+
+Entre las configuraciones admisibles se elige la de menor media aritmética de las cinco esperas medias por simulación, calculadas sobre los vehículos insertados en el intervalo y ponderando por igual cada semilla. Ante un empate exacto, se prioriza la mayor media de las cinco \acrshort{acr-ci}, después el menor número medio de inicios de teletransporte y, finalmente, el identificador de la configuración. Si ninguna configuración satisface los criterios en las cinco semillas, no se designa una configuración urbana admisible para esa combinación.
 
 \subsection{Métricas y análisis por pares de A/C}
 \label{subsec:detalle_analisis_pareado}

@@ -5,23 +5,32 @@
 \draw[line width=.6pt] (.3,-.3)--(.9624,-.3);
 \draw (.3,-.2)--(.3,-.4);\draw (.9624,-.2)--(.9624,-.4);
 \node[met/note,anchor=north] at (.63,-.45) {100 m};
-\draw[draw=colDatoPrimario,line width=1.2pt] (9.25,1.05) ellipse (.8 and .35);
+\draw[white,line width=3pt] (9.25,1.05) ellipse (.8 and .35);
+\draw[draw=colDatoPrimario,line width=1.35pt] (9.25,1.05) ellipse (.8 and .35);
 \node[met/note,anchor=east] (lh) at (1.1,9.4) {Las Heras};
 \node[met/note,anchor=east] (mb) at (1.1,4.8) {Manuel Belgrano};
 \node[met/note,anchor=east] (co) at (-.25,2.7) {Colón};
 \node[met/note,anchor=west] (sm) at (10.75,8) {San Martín};
 \node[met/note,anchor=west,align=left] (vz) at (10.35,1.05) {Vicente Zapata\\TAZ 28};
-\draw[colDatoPrimario,line width=.5pt] (10.05,1.05)--(vz.west);
-\coordinate (lhstreet) at (3.2779,8.9430);
-\draw[colDatoPrimario,line width=.5pt] (lh.east)--(lhstreet);
-\fill[colDatoPrimario] (lhstreet) circle (1.3pt);
-\coordinate (mbstreet) at (2.1433,4.8065);
-\draw[colDatoPrimario,line width=.5pt] (mb.east)--(mbstreet);
-\fill[colDatoPrimario] (mbstreet) circle (1.3pt);
-\coordinate (costreet) at (1.7193,2.6886);
-\draw[colDatoPrimario,line width=.5pt] (co.east)--(costreet);
-\fill[colDatoPrimario] (costreet) circle (1.3pt);
-\coordinate (smstreet) at (9.7435,8.3865);
-\draw[colDatoPrimario,line width=.5pt] (sm.west)--(smstreet);
-\fill[colDatoPrimario] (smstreet) circle (1.3pt);
+% Reales longitudinales en tramos interiores (20--80 % de cada arista nombrada).
+% SUMO: Las Heras 681201872; Belgrano 252945269#2; Colón 573771609;
+% San Martín 681201875; Zapata 93904440#0. Los extremos quedan entre cruces.
+\coordinate (lhA) at (3.4518,8.9227);\coordinate (lhB) at (3.8616,8.8319);
+\coordinate (mbA) at (2.4358,5.1846);\coordinate (mbB) at (2.5317,5.6091);
+\coordinate (coA) at (2.4628,2.5072);\coordinate (coB) at (2.0422,2.6022);
+\coordinate (smA) at (9.5044,6.9760);\coordinate (smB) at (9.5946,7.3979);
+\coordinate (vzA) at (9.7100,.9114);\coordinate (vzB) at (9.0819,1.0507);
+\foreach \a/\b in {lhA/lhB,mbA/mbB,coA/coB,smA/smB,vzA/vzB} {
+  \draw[colDatoPrimario,line width=1.4pt,opacity=.85,line cap=round] (\a)--(\b);
+}
+\draw[white,line width=2.5pt] (lh.east)--(3.6567,8.8773);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (lh.east)--(3.6567,8.8773);
+\draw[white,line width=2.5pt] (mb.east)--(2.4838,5.3969);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (mb.east)--(2.4838,5.3969);
+\draw[white,line width=2.5pt] (co.east)--(2.2525,2.5547);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (co.east)--(2.2525,2.5547);
+\draw[white,line width=2.5pt] (sm.west)--(9.5495,7.1869);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (sm.west)--(9.5495,7.1869);
+\draw[white,line width=2.5pt] (vz.west)--(9.3960,.9810);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (vz.west)--(9.3960,.9810);
 \end{tikzpicture}\endgroup

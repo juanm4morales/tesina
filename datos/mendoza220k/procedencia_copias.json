@@ -1,0 +1,18 @@
+{
+  "origen": "marl-tlc/docs/mendoza_220k",
+  "documento": "marl-tlc/docs/METODOLOGIA_MENDOZA_220K.md",
+  "fecha_copia": "2026-10-19",
+  "archivos": {
+    "demanda_horaria.csv": "adaf7aa456e326bfe6472a7f75eda502c3eaa535883d5f78c8dfe8fc3a879f97",
+    "intercambio_o2.csv": "c7aaeb2d83d4ce722657ea3d2174664f798f03259e5f164862d3173d9a2effbc",
+    "matrices_od_completas.csv": "7fadce6b31d99e461dafaf93dd4d603289c9e5a837099cc9f2ef0222a9e2b3ca",
+    "programas_tls_completos.csv": "e196a6ba0c3c2ddbc83625869e6f1325afb0f740c3e5880aab4556190a84714c",
+    "resultados_12_ejecuciones.csv": "231732311ffddc7b126350fd3c03375184bd3fced96201852cd77b483fb9f1ea",
+    "trayectorias_agregadas_300s.csv": "cac85eaef7e575243ce0902627e5c8358d48584f7d6e2f5987e1b7b964acebe6",
+    "diferencias_tls.json": "d6ecdb9902e61dcda3debd1fe3df636e7035f483a01be9cd1f4d4a1c45b3c4e5",
+    "fuentes_locales_sha256.json": "13e9257d2eae4ac5e5504d268522c3bcaf1f0b8a2d8ae4bdb434e1d9e07ef2c3",
+    "comandos_originales.json": "ca6a24ef95f9de9f3f220ec8ea11d6e402ae39bb7ff82221ff3294226989df5f",
+    "antecedente_escalera_resumen.json": "d14ae626281e78bbb7201c39b54351590e6433c98b1e191ab2acf82099a70095",
+    "ledger_o1_historico.json": "5c63ea8ae6cf2a4ef597dec4d250b2e46336dbaa3c74fddebc79408fe4d9b777"
+  }
+}

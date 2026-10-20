@@ -102,20 +102,6 @@ def main():
     assert taz.find("taz[@id='28']").get('edges')=='93904440#0'
     edge=root.find("edge[@id='93904440#0']")
     assert edge.get('name')=='José Vicente Zapata'
-    # Capture registration: 0.59 pixels/m; bounds in SUMO coordinates.
-    # Labels identify street corridors, not cadastral boundaries.
-    def registered(pt):
-        x,y=pt
-        return ((27+(x-961.93)*.59)*10.8/962,(14+(y-639.2)*.59)*10.8/962)
-    named={}
-    for fragment in ('Las Heras','Manuel Belgrano','Colón','San Martín'):
-        pts=[]
-        for e in root.findall('edge'):
-            if fragment not in e.get('name',''):continue
-            pts.extend(registered(tuple(map(float,v.split(',')))) for v in e.find('lane').get('shape').split())
-        if fragment in ('Las Heras','Colón'):named[fragment]=min(pts,key=lambda q:q[0])
-        elif fragment=='San Martín':named[fragment]=max(pts,key=lambda q:q[0])
-        else:named[fragment]=min(pts,key=lambda q:(q[0]-2.1)**2+(q[1]-4.8)**2)
     urban=r'''\begingroup\setstretch{1}
 \begin{tikzpicture}[met/base,x=1.111111cm,y=1.111111cm]
 \node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=12cm,trim=330bp 0bp 377bp 0bp,clip]{imagenes/escenario_mendoza_sumo.png}};
@@ -123,21 +109,36 @@ def main():
 \draw[line width=.6pt] (.3,-.3)--(.9624,-.3);
 \draw (.3,-.2)--(.3,-.4);\draw (.9624,-.2)--(.9624,-.4);
 \node[met/note,anchor=north] at (.63,-.45) {100 m};
-\draw[draw=colDatoPrimario,line width=1.2pt] (9.25,1.05) ellipse (.8 and .35);
+\draw[white,line width=3pt] (9.25,1.05) ellipse (.8 and .35);
+\draw[draw=colDatoPrimario,line width=1.35pt] (9.25,1.05) ellipse (.8 and .35);
 \node[met/note,anchor=east] (lh) at (1.1,9.4) {Las Heras};
 \node[met/note,anchor=east] (mb) at (1.1,4.8) {Manuel Belgrano};
 \node[met/note,anchor=east] (co) at (-.25,2.7) {Colón};
-\node[met/note,anchor=west] (sm) at (11.05,8) {San Martín};
-\node[met/note,anchor=west,align=left] (vz) at (11.05,1.05) {Vicente Zapata\\TAZ 28};
-\draw[colDatoPrimario,line width=.5pt] (10.05,1.05)--(vz.west);
+\node[met/note,anchor=west] (sm) at (10.75,8) {San Martín};
+\node[met/note,anchor=west,align=left] (vz) at (10.35,1.05) {Vicente Zapata\\TAZ 28};
+% Reales longitudinales en tramos interiores (20--80 % de cada arista nombrada).
+% SUMO: Las Heras 681201872; Belgrano 252945269#2; Colón 573771609;
+% San Martín 681201875; Zapata 93904440#0. Los extremos quedan entre cruces.
+\coordinate (lhA) at (3.4518,8.9227);\coordinate (lhB) at (3.8616,8.8319);
+\coordinate (mbA) at (2.4358,5.1846);\coordinate (mbB) at (2.5317,5.6091);
+\coordinate (coA) at (2.4628,2.5072);\coordinate (coB) at (2.0422,2.6022);
+\coordinate (smA) at (9.5044,6.9760);\coordinate (smB) at (9.5946,7.3979);
+\coordinate (vzA) at (9.7100,.9114);\coordinate (vzB) at (9.0819,1.0507);
+\foreach \a/\b in {lhA/lhB,mbA/mbB,coA/coB,smA/smB,vzA/vzB} {
+  \draw[colDatoPrimario,line width=1.4pt,opacity=.85,line cap=round] (\a)--(\b);
+}
+\draw[white,line width=2.5pt] (lh.east)--(3.6567,8.8773);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (lh.east)--(3.6567,8.8773);
+\draw[white,line width=2.5pt] (mb.east)--(2.4838,5.3969);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (mb.east)--(2.4838,5.3969);
+\draw[white,line width=2.5pt] (co.east)--(2.2525,2.5547);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (co.east)--(2.2525,2.5547);
+\draw[white,line width=2.5pt] (sm.west)--(9.5495,7.1869);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (sm.west)--(9.5495,7.1869);
+\draw[white,line width=2.5pt] (vz.west)--(9.3960,.9810);
+\draw[colDatoPrimario,line width=.8pt,-{Stealth[length=1.2mm,width=1mm]}] (vz.west)--(9.3960,.9810);
 '''
-    for tag,name in (('lh','Las Heras'),('mb','Manuel Belgrano'),('co','Colón'),('sm','San Martín')):
-        x,y=named[name]
-        urban+=rf'\coordinate ({tag}street) at ({x:.4f},{y:.4f});'+'\n'
-        side='east' if tag!='sm' else 'west'
-        urban+=rf'\draw[colDatoPrimario,line width=.5pt] ({tag}.{side})--({tag}street);'+'\n'
-        urban+=rf'\fill[colDatoPrimario] ({tag}street) circle (1.3pt);'+'\n'
-    urban+=r'\end{tikzpicture}\endgroup'+'\n'
+    urban += r'\end{tikzpicture}\endgroup'+'\n'
     OUT.joinpath('metodologia_red_mendoza.tex').write_text(urban)
     OUT.joinpath('metodologia_redes_procedencia.json').write_text(json.dumps({'generador':'imagenes/metodologia_generar_redes.py','fuentes':sources,'convenciones':{'geometria':'esquema entre centros de nodos; conectividad, sentidos y carriles del XML; sin giros internos','carril_cm':unit,'separacion_sentidos_cm':median,'escalas':'independientes por panel sintético','captura_urbana':'original conservada; corredores y TAZ 28; sin inserto redundante ni posición de cámara'}},ensure_ascii=False,indent=2)+'\n')
     print('Tres redes contrastadas: agentes, tramos y carriles; TAZ 28 y acceso verificados.')

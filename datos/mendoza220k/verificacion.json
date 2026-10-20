@@ -1,0 +1,11 @@
+{
+  "nuevas_simulaciones": 0,
+  "flujos": 6204,
+  "pares_OD": 517,
+  "solicitudes_esperadas_12h": "152168.75388006840000",
+  "marginales_esperadas_conservadas": true,
+  "tasas_modificadas": 4,
+  "programas_fijos_90s": 73,
+  "fases_sobre_maxDur_historico": 18,
+  "casos_verificados": 12
+}

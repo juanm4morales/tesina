@@ -2,11 +2,11 @@
 \label{capitulo:resultados}
 Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de los modelos finales, comparación pareada A/C de \acrshort{acr-mappo} y comprobación operacional de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
 
-La comprobación de Mendoza corresponde a la red urbana con los programas semafóricos incluidos en ella. Sus conteos y tasas describen esa operación y no se interpretan como una evaluación de \glspl{politica} aprendidas.
+La comprobación de Mendoza corresponde al escenario de 220.000 viajes nominales diarios y programas semafóricos fijos. Sus conteos describen la operación simulada; no evalúan políticas aprendidas.
 
 \section{Resultados del ajuste de hiperparámetros}
 
-La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas y en Mendoza. Los dominios y criterios se interpretan según el escenario al que corresponden; la comparación A/C y la comprobación operacional urbana se presentan como procedimientos distintos de la búsqueda de hiperparámetros.
+La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los dominios y criterios se interpretan según el escenario al que corresponden; la comparación A/C y la comprobación operacional urbana son procedimientos distintos de la búsqueda de hiperparámetros.
 
 \subsection{Estado de la consolidación y de las búsquedas}
 
@@ -23,28 +23,31 @@ La comparación A/C se presenta por separado de la selección de configuraciones
 \subsection{Desempeño en escenarios sintéticos: \texorpdfstring{$3\times1$, $3\times3$, $4\times4$ heterogéneo}{3x1, 3x3, 4x4 heterogéneo}}
 
 \subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
+\label{sec:resultados_mendoza_o2}
 
-Se comprobó el funcionamiento de la red modelada de la Ciudad de Mendoza en los dos horizontes definidos en la sección \ref{subsubsec:mendoza_validacion_operacional}. La Tabla \ref{tab:metricas_validacion_mendoza} presenta conteos y tasas de las corridas con programas semafóricos, que caracterizan la operación de la red. La fila de dos horas corresponde al intervalo de control de 06:30 a 08:30, sin calentamiento. La configuración \acrshort{acr-marl} \path{mendoza_marl_2h.sumocfg} comienza a las 06:25 e incluye 300 segundos de calentamiento antes de ese intervalo. Las fuentes y límites de procedencia se detallan en la sección \ref{sec:procedencia_mendoza}.
+Las seis ejecuciones de cada ventana completaron el horizonte y cumplieron los criterios de aceptación definidos en la metodología. La Tabla \ref{tab:metricas_validacion_mendoza} resume los doce casos: no hubo teletransportes, colisiones detectadas ni descartes, y al menos el 75\% de los vehículos cargados llegó a destino. La media de viajes completados asigna igual peso a las seis ejecuciones; los rangos muestran sus extremos. Los casos individuales y sus registros se conservan en el apéndice.
 
 \begin{table}[H]
-\centering
-\caption{Métricas operacionales del escenario urbano de la Ciudad de Mendoza con los programas semafóricos de la red.}
+\centering\small
+\caption{Comprobación del escenario urbano con programas fijos: síntesis por ventana.}
 \label{tab:metricas_validacion_mendoza}
-\setlength{\tabcolsep}{4pt}
-\small
-\begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{|l|c|c|c|c|c|c|c|}
-\hline
-        \textbf{Ventana temporal} & \textbf{Cargados} & \textbf{Insertados} & \textbf{Completados} & \textbf{\acrshort{acr-cr}} & \textbf{\acrshort{acr-ir}} & \textbf{\acrshort{acr-ci}} & \textbf{Teletransportes} \\ \hline
-2 horas ($06:30\text{--}08:30$) & 30.629 & 23.735 & 22.702 & 0,7412 & 0,7749 & 0,9565 & 0 \\ \hline
-12 horas ($06:00\text{--}18:00$) & 180.163 & 143.819 & 143.022 & 0,7938 & 0,7983 & 0,9945 & 0 \\ \hline
-\end{tabular}
-\end{adjustbox}
+\input{datos/mendoza220k/tabla_sintesis.tex}
 \end{table}
 
-Los registros primarios, sus ventanas y la versión de \acrshort{acr-sumo} se documentan en el apéndice \ref{sec:procedencia_mendoza}; los campos de carga, inserción y estadísticas sustentan los conteos de la tabla.
+En doce horas se completaron, en promedio, 125.080,5 viajes, frente a 152.168,75 solicitudes esperadas por las tasas. Las solicitudes realizadas fluctúan: los cargados estuvieron entre 151.529 y 153.148. Al cierre permanecían entre 778 y 951 vehículos circulando y entre 25.984 y 26.529 pendientes de ingreso. Por tanto, el cumplimiento del criterio de aceptación no equivale a atender toda la demanda ni a servir 220.000 viajes en doce horas. El nominal diario y los conteos del horizonte describen magnitudes diferentes.
 
-Los logs revisados no contienen un contador explícito de \glspl{teleport}: los ceros de la tabla están informados en la documentación del escenario, no extraídos de un contador primario conservado. Tampoco se conservaron los archivos de rutas originales para confirmar que el archivo congelado descrito en el apéndice fuera exactamente la entrada consumida por estas dos corridas; los conteos describen las operaciones registradas y no validan por sí solos la construcción completa de la demanda.
+La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículos pendientes de ingreso en las seis ejecuciones largas. Cada trazo corresponde a una ejecución; el rayado identifica la hora en que se redistribuyeron las solicitudes. Las trayectorias muestran acumulación de vehículos fuera de la red durante el horizonte, pero no permiten establecer la estabilidad de las colas para tiempos indefinidos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{imagenes/mendoza220k_pendientes.pdf}
+\caption{Vehículos pendientes de ingreso durante las seis ejecuciones de doce horas. El rayado señala la hora en que se redistribuyeron las solicitudes.}
+\label{fig:mendoza_pendientes_o2}
+\end{figure}
+
+En las corridas de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las corridas no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano; los detalles se conservan en el apéndice.
+
+Una ejecución larga con la demanda redistribuida completó el horizonte en condiciones en que la referencia uniforme había fallado. Esta diferencia describe los casos observados, pero no identifica una causa única: los cambios pueden alterar las solicitudes, su orden y la secuencia aleatoria. La selección adaptativa y la reutilización de semillas limitan la generalización. Los resultados de la configuración urbana anterior se conservan en el apéndice como antecedentes; no son resultados del escenario actual ni evaluaciones de políticas aprendidas.
 
 \section{Discusión e interpretación de resultados}
 
