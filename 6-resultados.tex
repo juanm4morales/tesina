@@ -1,12 +1,12 @@
 \chapter{Análisis y discusión de resultados}
 \label{capitulo:resultados}
-Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de los modelos finales, comparación pareada A/C de \acrshort{acr-mappo} y comprobación operacional de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
+Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de los modelos finales y verificación del escenario de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
 
-La comprobación de Mendoza corresponde al escenario de 220.000 viajes nominales diarios y programas semafóricos fijos. Sus conteos describen la operación simulada; no evalúan políticas aprendidas.
+El escenario de Mendoza se verificó con una demanda nominal de 220.000 viajes diarios y programas semafóricos fijos. Sus conteos describen la operación simulada; no evalúan políticas aprendidas.
 
 \section{Resultados del ajuste de hiperparámetros}
 
-La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los dominios y criterios se interpretan según el escenario al que corresponden; la comparación A/C y la comprobación operacional urbana son procedimientos distintos de la búsqueda de hiperparámetros.
+La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los dominios y criterios se interpretan según el escenario al que corresponden.
 
 \subsection{Estado de la consolidación y de las búsquedas}
 
@@ -14,9 +14,7 @@ La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las t
 
 \subsection[Selección de configuraciones de HPO]{Selección de configuraciones de \acrshort{acr-hpo}}
 
-\section{Evaluación de políticas y comprobación de escenarios}
-
-La comparación A/C se presenta por separado de la selección de configuraciones mediante \acrshort{acr-hpo}. Esta tesina analiza las tres redes sintéticas por separado y conserva los pares de entrenamiento de cada una. El informe histórico separó la red $3\times3$ del análisis principal después de observar los resultados; ese antecedente se distingue del análisis adoptado aquí, como se explica en la Sección \ref{subsec:detalle_analisis_pareado} del Apéndice \ref{apendice:arquitectura_software}.
+\section{Evaluación de políticas y verificación de escenarios}
 
 \subsection{Criterios de evaluación y métricas de comparación}
 
@@ -45,7 +43,7 @@ La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículo
 \label{fig:mendoza_pendientes_o2}
 \end{figure}
 
-En las corridas de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las corridas no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano; los detalles se conservan en el apéndice.
+En las ejecuciones de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las ejecuciones no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano; los detalles se conservan en el apéndice.
 
 Una ejecución larga con la demanda redistribuida completó el horizonte en condiciones en que la referencia uniforme había fallado. Esta diferencia describe los casos observados, pero no identifica una causa única: los cambios pueden alterar las solicitudes, su orden y la secuencia aleatoria. La selección adaptativa y la reutilización de semillas limitan la generalización.
 

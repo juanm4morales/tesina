@@ -1,20 +1,82 @@
 \begingroup
 \setstretch{1}
-\begin{tikzpicture}[met/base]
+\begin{tikzpicture}[
+    met/base,
+    flow/card/.style={rounded corners=3pt,
+        line width=.65pt,minimum width=4.3cm,minimum height=1.55cm,inner sep=0pt},
+    flow/icon/.style={draw=black!75,line width=.8pt,line cap=round,line join=round},
+    flow/label/.style={font=\sffamily\fontsize{9.5}{10.5}\selectfont\bfseries,text=black!90},
+    flow/note/.style={font=\sffamily\fontsize{8}{9}\selectfont,text=black!75},
+    flow/number/.style={circle,draw=black!75,fill=white,line width=.6pt,
+        minimum size=5mm,inner sep=0pt,font=\sffamily\fontsize{8}{9}\selectfont\bfseries},
+    flow/arrow/.style={-{Stealth[length=2mm]},draw=black!75,line width=.8pt}
+]
 
-\node[met/head] at (7.5,1) {(a) Comparación de los cuatro algoritmos};
-\foreach \id/\x/\txt in {prep/2.4/Preparación,p1/7.5/Búsqueda amplia,p2/12.6/Búsqueda refinada} {
-\node[met/box,text width=3.8cm,minimum height=1cm] (\id) at (\x,0) {\txt};}
-\node[met/learn,text width=3.8cm,minimum height=1cm] (sel) at (12.6,-1.5) {Selección};
-\node[met/learn,text width=3.8cm,minimum height=1cm] (train) at (7.5,-1.5) {Entrenamiento\\desde cero};
-\node[met/out,text width=3.8cm,minimum height=1cm] (eval) at (2.4,-1.5) {Evaluación};
-\draw[met/arrow] (prep)--(p1);\draw[met/arrow] (p1)--(p2);\draw[met/arrow] (p2)--(sel);
-\draw[met/arrow] (sel)--(train);\draw[met/arrow] (train)--(eval);
-\node[met/head] at (7.5,-2.7) {(b) Variantes de MAPPO en redes sintéticas};
-\node[met/box,text width=3.8cm,minimum height=1cm] (ae) at (2.4,-3.65) {Prueba A--E};
-\node[met/learn,text width=3.8cm,minimum height=1cm] (ac) at (7.5,-3.65) {Contraste A/C};
-\node[met/out,text width=3.8cm,minimum height=1cm] (pairs) at (12.6,-3.65) {Análisis por pares};
-\draw[met/arrow] (ae)--(ac);\draw[met/arrow] (ac)--(pairs);
+% Compact serpentine: three stages across, then three stages back.
+% Each card has a numbered, monochrome-readable pictogram above its label.
+\node[met/head] at (7.5,1.18) {Comparación de los cuatro algoritmos};
+\node[flow/card,draw=colEntorno!65!black,fill=colEntorno!13] (prep) at (2.5,0) {};
+\node[flow/card,draw=colDatoPrimario!65!black,fill=colDatoPrimario!13] (broad) at (7.5,0) {};
+\node[flow/card,draw=colDatoPrimario!65!black,fill=colDatoPrimario!13] (refined) at (12.5,0) {};
+\node[flow/card,draw=colInterfaz!65!black,fill=colInterfaz!13] (select) at (12.5,-2.25) {};
+\node[flow/card,draw=colInterfaz!65!black,fill=colInterfaz!13] (train) at (7.5,-2.25) {};
+\node[flow/card,draw=colAgente!65!black,fill=colAgente!13] (eval) at (2.5,-2.25) {};
+
+\draw[flow/arrow] (prep.east)--(broad.west);
+\draw[flow/arrow] (broad.east)--(refined.west);
+\draw[flow/arrow] (refined.south)--(select.north);
+\draw[flow/arrow] (select.west)--(train.east);
+\draw[flow/arrow] (train.west)--(eval.east);
+
+\foreach \id/\num/\title/\note in {
+    prep/1/Preparación/Red vial y demanda,
+    broad/2/Búsqueda amplia/Explorar configuraciones,
+    refined/3/Búsqueda refinada/Reducir dominios,
+    select/4/Selección/Criterios operacionales,
+    train/5/Entrenamiento/Desde cero,
+    eval/6/Evaluación/Métricas y registros
+} {
+    \node[flow/number] at ([xshift=-1.78cm,yshift=.52cm]\id.center) {\num};
+    \node[flow/label] at ([yshift=-.12cm]\id.center) {\title};
+    \node[flow/note] at ([yshift=-.57cm]\id.center) {\note};
+}
+
+\begin{scope}[yshift=.05cm]
+% 1. Crossroad and approaches: the environment being prepared.
+\draw[flow/icon] (2.18,.43)--(2.82,.43) (2.18,.22)--(2.82,.22);
+\draw[flow/icon] (2.40,.10)--(2.40,.55) (2.60,.10)--(2.60,.55);
+\draw[flow/icon,densely dashed] (2.5,.10)--(2.5,.22) (2.5,.43)--(2.5,.55);
+% 2. Candidate points distributed through a search space.
+\draw[flow/icon] (7.05,.15) rectangle (7.95,.62);
+\foreach \x/\y in {7.17/.25,7.39/.25,7.61/.25,7.83/.25,7.17/.48,7.39/.48,7.61/.48,7.83/.48}
+    \fill[black!70] (\x,\y) circle (1.1pt);
+% 3. Broad domain with a clearly nested refined subdomain.
+\draw[flow/icon,dashed] (12.04,.14) rectangle (12.96,.62);
+\draw[flow/icon] (12.34,.25) rectangle (12.66,.51);
+\foreach \x in {12.42,12.50,12.58} \fill[black!70] (\x,.38) circle (1.1pt);
+\end{scope}
+
+\begin{scope}[yshift=.40cm]
+% 4. Operational checklist: criteria, not a winning-algorithm trophy.
+\foreach \y in {-1.99,-2.20,-2.41} {
+    \draw[flow/icon] (12.05,\y)--(12.14,\y-.08)--(12.29,\y+.08);
+    \draw[flow/icon] (12.42,\y)--(12.95,\y);
+}
+% 5. Small neural-network sketch: parameters are trained from initialization.
+\foreach \ya in {-2.14,-2.36} {
+    \foreach \yb in {-2.04,-2.25,-2.46} {
+        \draw[black!45,line width=.45pt] (7.12,\ya)--(7.48,\yb);
+        \draw[black!45,line width=.45pt] (7.52,\yb)--(7.88,\ya);
+    }
+}
+\foreach \x/\y in {7.10/-2.14,7.10/-2.36,7.50/-2.04,7.50/-2.25,7.50/-2.46,7.90/-2.14,7.90/-2.36}
+    \fill[white,draw=black!75,line width=.7pt] (\x,\y) circle (1.5pt);
+% 6. A record sheet for metrics, without fabricated values or outcome curves.
+\draw[flow/icon] (2.23,-2.02) rectangle (2.77,-2.43);
+\draw[flow/icon] (2.34,-2.13)--(2.66,-2.13)
+    (2.34,-2.23)--(2.66,-2.23) (2.34,-2.33)--(2.66,-2.33);
+\draw[flow/icon] (2.62,-1.98)--(2.77,-2.13);
+\end{scope}
 
 \end{tikzpicture}
 \endgroup

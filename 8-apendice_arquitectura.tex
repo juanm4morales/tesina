@@ -1,7 +1,7 @@
 \chapter{Arquitectura de software y especificaciones experimentales}
 \label{apendice:arquitectura_software}
 
-Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, los dominios y semillas de las campañas de búsqueda y evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. En los registros del escenario de Mendoza, \texttt{O2} designa la distribución de demanda adoptada a 220.000 viajes nominales diarios y \texttt{P2} el plan coordinado de 73 programas de tiempo fijo con ciclo de 90 segundos utilizado en la comprobación operacional.
+Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, los dominios y semillas de las campañas de búsqueda y evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. En los registros del escenario de Mendoza, \texttt{O2} designa la distribución de demanda adoptada a 220.000 viajes nominales diarios y \texttt{P2} el plan coordinado de 73 programas de tiempo fijo con ciclo de 90 segundos utilizado en la verificación del escenario.
 
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
@@ -312,7 +312,7 @@ La Tabla \ref{tab:mendoza_eleccion_nominal} sintetiza el barrido de niveles nomi
 \begin{table}[H]\centering\small
 \caption{Síntesis de los tratamientos evaluados para la elección del volumen nominal diario de Mendoza.}\label{tab:mendoza_eleccion_nominal}
 \begin{tabular}{@{}r>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{9cm}@{}}\hline
-Nominal diario & Tratamiento & Resultado en las corridas de verificación \\\hline
+Nominal diario & Tratamiento & Resultado en las ejecuciones de verificación \\\hline
 230.000 & \texttt{O1}/\texttt{P2} & Dos semillas completan doce horas; la semilla 104759 se satura antes del cierre. \\
 225.000 & \texttt{O2} reescalada/\texttt{P2} & No completa la tanda requerida de seis réplicas en el horizonte de doce horas. \\
 220.000 & \texttt{O1} reescalada/\texttt{P2} & Supera el horizonte de dos horas con la semilla 104759, pero falla en doce horas. \\
@@ -324,12 +324,12 @@ Nominal diario & Tratamiento & Resultado en las corridas de verificación \\\hli
 \subsection{Entradas, ejecución y evidencia final}
 \label{sec:mendoza_evidencia_final}
 
-Las doce corridas de comprobación operacional del escenario \texttt{O2}/\texttt{P2} se ejecutaron con el binario \texttt{v1\_25\_0+0570-f59cd14e561} de \acrshort{acr-sumo} empleando las seis semillas predefinidas ($104759$, $104729$, $104771$, $104861$, $104879$ y $104891$) sobre las ventanas de dos horas ($[1.800, 9.000)\,\text{s}$, 06:30--08:30) y doce horas ($[0, 43.200)\,\text{s}$, 06:00--18:00), partiendo en todos los casos desde la red vacía. El inventario completo de archivos de entrada y salida, junto con sus sumas de verificación criptográfica SHA-256, se preserva en \path{datos/mendoza220k/fuentes_locales_sha256.json} y es validado automáticamente mediante el script reproducible \path{datos/mendoza220k/generar.py}.
+Las doce ejecuciones de verificación del escenario \texttt{O2}/\texttt{P2} se realizaron con el binario \texttt{v1\_25\_0+0570-f59cd14e561} de \acrshort{acr-sumo} empleando las seis semillas predefinidas ($104759$, $104729$, $104771$, $104861$, $104879$ y $104891$) sobre las ventanas de dos horas ($[1.800, 9.000)\,\text{s}$, 06:30--08:30) y doce horas ($[0, 43.200)\,\text{s}$, 06:00--18:00), partiendo en todos los casos desde la red vacía. El inventario completo de archivos de entrada y salida, junto con sus sumas de verificación criptográfica SHA-256, se preserva en \path{datos/mendoza220k/fuentes_locales_sha256.json} y es validado automáticamente mediante el script reproducible \path{datos/mendoza220k/generar.py}.
 
 La Tabla \ref{tab:mendoza_opciones_finales} enumera las opciones de configuración de \acrshort{acr-sumo} utilizadas en la campaña, y las Tablas \ref{tab:mendoza_casos_2h} y \ref{tab:mendoza_casos_12h} reportan los contadores exactos al cierre de cada una de las doce ejecuciones (donde $L$, $I$, $A$, $R$ y $W$ denotan los vehículos cargados, insertados, completados, aún circulando al cierre y pendientes de ingreso, respectivamente, y $\acrshort{acr-cr} = A/L$), todas las cuales finalizaron con cero teletransportes, cero colisiones detectadas y cero descartes, verificando exactamente las identidades de conservación $L = I + W$ e $I = A + R$. La ausencia de colisiones detectadas depende de las opciones de simulación empleadas, en particular de que no se activó \texttt{collision.check-junctions}, y no certifica la seguridad física de los cruces.
 
 \begin{table}[H]\centering\small
-\caption{Opciones efectivas de \acrshort{acr-sumo} en las corridas de comprobación operacional de Mendoza.}\label{tab:mendoza_opciones_finales}
+\caption{Opciones efectivas de \acrshort{acr-sumo} en las ejecuciones de verificación del escenario de Mendoza.}\label{tab:mendoza_opciones_finales}
 \begin{tabular}{@{}ll@{}}\hline
 Opción & Valor \\\hline
 Paso de simulación & 1 segundo \\
@@ -346,11 +346,11 @@ Paso de simulación & 1 segundo \\
 \end{table}
 
 \begin{table}[H]\centering\small
-\caption{Corridas de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de dos horas.}\label{tab:mendoza_casos_2h}
+\caption{Ejecuciones de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de dos horas.}\label{tab:mendoza_casos_2h}
 \input{datos/mendoza220k/tabla_casos_2h.tex}
 \end{table}
 \begin{table}[H]\centering\small
-\caption{Corridas de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de doce horas.}\label{tab:mendoza_casos_12h}
+\caption{Ejecuciones de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de doce horas.}\label{tab:mendoza_casos_12h}
 \input{datos/mendoza220k/tabla_casos_12h.tex}
 \end{table}
 
@@ -376,8 +376,6 @@ Los registros de las ejecuciones documentadas se guardaron en almacenamiento per
 \label{subsec:comprobaciones_preliminares}
 
 En una comprobación de $3\times3$, cerca del 70\% de los vehículos cargados —incluidos en la demanda de \acrshort{acr-sumo}— completó el viaje; este dato no se extrapola a las otras redes. Esa comprobación incluyó 600 segundos de calentamiento y 3600 segundos de control.
-
-En la prueba preliminar de formulaciones de \acrshort{acr-mappo} (Sección \ref{subsec:screening_vecinal}), B y D incluyen ejecuciones completadas y no se clasifican como fallos técnicos. Esta comprobación distingue el estado de ejecución de las diferencias de desempeño.
 
 \subsection{Detalles de las redes sintéticas}
 \label{subsec:detalles_redes_sinteticas}
@@ -625,16 +623,137 @@ El aprendizaje urbano exige recalibrar el codificador y adaptar la inicializaci�
 
 La calibración exploratoria del codificador se realizó sobre una versión previa de la red y la demanda, identificada como \texttt{v14}. Utilizó las semillas 5001 y 5002, $300\,\text{s}$ de calentamiento, $7.200\,\text{s}$ de control y una memoria de espera de $1.000\,\text{s}$. El percentil 99 del máximo por paso de la suma de esperas de los vehículos por carril produjo $M_{\mathrm{lane}}=5.396\,\text{veh}\cdot\text{s}$, frente a $712$--$1.184\,\text{veh}\cdot\text{s}$ en las redes sintéticas. El cálculo se conserva en \path{docs/mendoza_preparation/encoder_calibration.json} de \texttt{marl-tlc}. El valor no se transfiere al escenario de demanda final y programas fijos: su uso exige una nueva calibración.
 
-\subsection{Métricas y análisis por pares de A/C}
+\section{Pruebas exploratorias de observación y recompensa}
+\label{sec:cooperacion_vecinal}
+\label{sec:comparacion_local_vecinal}
+
+Este apartado documenta una exploración preliminar de formulaciones con \acrshort{acr-mappo} en $4\times4\_H$ y una comparación pareada de formulaciones local y vecinal en las tres redes sintéticas. Estas pruebas se situaron entre las dos fases de búsqueda y se utilizaron como antecedente de la decisión de fijar la recompensa local en el protocolo refinado; no constituyen por sí solas una demostración de su superioridad. Son procedimientos exploratorios distintos del protocolo de comparación final de los cuatro algoritmos.
+
+\subsection{Exploración preliminar de formulaciones}
+\label{subsec:screening_vecinal}
+
+En la etapa exploratoria se entrenaron cinco variantes (A--E) sobre la red $4\times4\_H$ empleando \acrshort{acr-mappo} con arquitectura \texttt{h128} y tres semillas de entrenamiento durante 20 iteraciones por política, en episodios de $1.800\,\text{s}$ precedidos por $300\,\text{s}$ de calentamiento. La Tabla \ref{tab:variantes_vecinales} resume las variantes: A corresponde a la formulación local; B, C y D incorporan señales vecinales con distintas normalizaciones; y E evalúa una recompensa local inspirada en el concepto de presión de PressLight \cite{presslight2019}, mediante conteos de vehículos detenidos entre carriles de entrada y salida.
+
+\begin{table}[!htbp]\centering\small
+\caption{Variantes examinadas en la prueba preliminar sobre la red $4\times4\_H$.}\label{tab:variantes_vecinales}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{5.5cm}>{\raggedright\arraybackslash}p{5.7cm}}\hline
+\textbf{Variante} & \textbf{Observación} & \textbf{Recompensa} \\\hline
+A & Local: fase activa y señales de carriles propios. & Diferencia local de espera acumulada ($\rho_{\mathrm{coop}}=0$). \\
+B & Local y suma de espera acumulada de cada vecino. & Diferencia local y vecinal sin normalización por carriles ($\rho_{\mathrm{coop}}=0{,}1$). \\
+C & Local y vecinal: espera media por carril de cada vecino. & Diferencia local y vecinal normalizada por carriles ($\rho_{\mathrm{coop}}=0{,}1$). \\
+D & Local, suma de espera vecinal y $\ln(1+m_j)$ de cada vecino. & Igual que C ($\rho_{\mathrm{coop}}=0{,}1$). \\
+E & Local: fase activa y señales de carriles propios. & Negativo de la diferencia absoluta de vehículos detenidos entre carriles de entrada y salida. \\\hline
+\end{tabular}\end{table}
+
+En esta prueba, B y D incluyen ejecuciones completadas y no se clasifican como fallos técnicos. Esta constatación describe su estado de ejecución, no sus diferencias de desempeño.
+
+\subsection{Comparación local y vecinal multiescenario}
+\label{subsec:cooperacion_multiescenario}
+
+La comparación utiliza una misma configuración de hiperparámetros de \acrshort{acr-mappo} con arquitectura \texttt{h128} en las tres redes sintéticas. La variante C se eligió entre las formulaciones vecinales sin un criterio previo documentado; esta decisión no demuestra su superioridad.
+
+En la versión conservada para esta comparación, las atribuciones almacenadas en otros carriles no se actualizan cuando vence la memoria, lo que puede subestimar la espera atribuida al carril actual. La salida de vehículos, los cambios de carril y el vencimiento de la ventana también pueden reducir la señal local sin que disminuya la espera acumulada por viaje. Esta última se evalúa con \texttt{TripInfo.waitingTime}, que acumula la espera durante todo el viaje sin esa ventana de olvido \cite{SUMO2026_TripInfo}.
+
+En la variante C, el vector de observación local definido en la Ecuación \eqref{eq:observacion_local_metodologia} se amplía con un término codificado $e\bigl(W_j^{(t)}/m_j\bigr)$ por cada vecino directo $j \in \mathcal{N}(i)$, escalado según el umbral vecinal $M_{\mathrm{vec}}$ documentado en la Sección \ref{subsec:calibraciones_cooperacion}.
+
+La recompensa local $L_i^{(t)}$ se define en la Ecuación \eqref{eq:recompensa_local}. En la variante C, cada agente $i$ complementa esa señal con el promedio de las variaciones de espera de sus vecinos directos $j \in \mathcal{N}(i)$, normalizadas por el número de carriles entrantes $m_j$; el peso de cooperación se fija en $\rho_{\mathrm{coop}}=0{,}1$. Como todas las intersecciones controladas de los escenarios estudiados tienen al menos un vecino ($|\mathcal{N}(i)|\geq1$), el término vecinal por carril $N_{i,\mathrm{carril}}^{(t)}$ y la recompensa compuesta $R_i^{(t)}$ quedan definidos por:
+\begin{align}
+N_{i,\mathrm{carril}}^{(t)} &= \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} \frac{L_j^{(t)}}{m_j}, \label{eq:recompensa_vecinal} \\
+R_i^{(t)} &= (1 - \rho_{\mathrm{coop}}) L_i^{(t)} + \rho_{\mathrm{coop}} N_{i,\mathrm{carril}}^{(t)}, \label{eq:recompensa_compuesta}
+\end{align}
+Para un nodo aislado hipotético ($|\mathcal{N}(i)|=0$), el código anula $N_{i,\mathrm{carril}}^{(t)}$ y conserva $R_i^{(t)}=L_i^{(t)}$. Cada agente recibe su propia recompensa escalar durante el entrenamiento. El coeficiente $\rho_{\mathrm{coop}}$ pondera la combinación de señales de escalas distintas y no representa un porcentaje fijo de la recompensa resultante.
+
+La Figura \ref{fig:contraste_ac} compara ambas formulaciones para un agente $i$ con dos vecinos ilustrativos, $j$ y $k$. En el panel (a), la variante A observa la fase propia $p_i$ y los $m_i$ carriles locales codificados, y recibe la recompensa local $L_i$. En el panel (b), la variante C añade la espera media por carril codificada de cada vecino directo, ampliando la entrada del actor y del crítico centralizado; su recompensa combina $L_i$ y $N_{i,\mathrm{carril}}$ con $\rho_{\mathrm{coop}}=0{,}1$.
+
+\begin{figure}[H]
+\centering
+\input{imagenes/metodologia_contraste_ac.tex}
+\caption{Estructura de la observación del actor y de la señal de recompensa en \acrshort{acr-mappo}: (a) formulación local A; (b) formulación vecinal C.}
+\label{fig:contraste_ac}
+\end{figure}
+
+La comparación A/C usa un diseño pareado: cada \gls{parpoliticas} reúne dos políticas, una por variante, emparejadas por la semilla utilizada durante el entrenamiento. El emparejamiento no implica igualdad de inicializaciones al cambiar las dimensiones de entrada. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución; para evaluar se retuvo el modelo de la última iteración.
+
+\subsection{Configuración fija de la comparación multiescenario}
+\label{subsec:receta_ac_apendice}
+
+La Tabla \ref{tab:receta_ac} conserva los hiperparámetros de \acrshort{acr-mappo} h128 seleccionados en un ensayo histórico de $4\times4\_H$ y aplicados sin cambios entre las tres redes de tráfico. El ensayo \texttt{49cfbba0} está registrado en \path{rho_screening_recipes/mappo_4x4_H_h128.json} e incorporado a los manifiestos de campaña. Los valores continuos se muestran redondeados; la fuente conserva precisión completa.
+
+La planificación usó una desviación de referencia cercana a dos segundos por vehículo y un intervalo del $95\%$ basado en $t$ de Student, bajo supuestos de diferencias independientes y aproximadamente normales. Con 24 parejas, se esperaba una semiamplitud cercana a 0,85 segundos por vehículo.
+
+\begin{table}[H]\centering\small
+\caption[Hiperparámetros fijos de aprendizaje de MAPPO.]{Hiperparámetros fijos de aprendizaje de la comparación multiescenario.}\label{tab:receta_ac}
+\begin{tabular}{>{\raggedright\arraybackslash}p{7cm}r}\hline
+\rowcolor{catAzulCielo!25}
+Parámetro & Valor \\\hline
+Arquitectura & dos capas de 128 unidades \\
+Tasa de aprendizaje (\texttt{lr}) & $4,95235885\times10^{-5}$ \\
+Recorte del actor (\texttt{clip\_param}) & 0,20148266 \\
+\acrshort{acr-gae} (\texttt{lambda\_gae}) & 0,90059980 \\
+Coeficiente de entropía & 0,00483113 \\
+Recorte del gradiente & 1,48846291 \\
+Coeficiente \acrshort{acr-kl} & 0,24180060 \\
+Objetivo \acrshort{acr-kl} & 0,01053851 \\
+Cota de pérdida de valor & 10,11299284 \\
+Recorridos de optimización & 8 \\
+Episodios por lote & 3 \\
+Tamaño del minilote & 128 \\
+Niveles del codificador ($I$) & 17 \\
+Descuento ($\gamma$) & 0,99 \\\hline
+\end{tabular}\end{table}
+
+La comparación fija el peso de la recompensa vecinal en cero para la variante local y en 0,1 para la vecinal; también asigna observación local o vecinal y normaliza por carriles, según la condición. Los límites de escala del codificador corresponden a cada escenario. Los tres episodios de cada lote representan $3\times(3600/5)=2160$ pasos de entorno por componente de aprendizaje. El número de procesos de simulación no multiplica este tamaño de lote.
+
+Los manifiestos de la comparación registran \acrshort{acr-sumo} 1.26.0, Ray 2.54.1 y PyTorch 2.10.0 con CUDA 12.8. Estas versiones corresponden a esa campaña y no se atribuyen automáticamente a las búsquedas históricas. Los archivos \texttt{manifest.json} de cada par conservan su configuración y versiones efectivas.
+
+\subsection{Calibraciones y semillas}
+\label{subsec:calibraciones_cooperacion}
+
+El límite de escala local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo límites de escala de 9660, 5329 y 4652 en esas redes. Los límites locales se expresan en veh·s y los vecinales en veh·s por carril. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Estos valores corresponden a escalas de señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
+
+La comparación en las tres redes utiliza las semillas 61001--61024 para el entrenamiento y 71001--71005 para la evaluación. Las semillas de evaluación son comunes a las dos variantes y se mantienen separadas de las de entrenamiento.
+
+La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a diseños distintos.
+
+\subsection{Evaluación de las formulaciones}
+\label{sec:evaluacion_variantes_mappo}
+
+Cada una de las $144$ políticas entrenadas en la comparación pareada ($24$ pares por cada una de las tres redes sintéticas) se evaluó sobre cinco réplicas independientes utilizando las semillas de \acrshort{acr-sumo} $71001$ a $71005$ —comunes a ambas variantes y disjuntas de las semillas de entrenamiento—, totalizando $720$ episodios de evaluación en la ventana $[t_{\mathrm{inicio}},t_{\mathrm{fin}})=[300, 3.900)\,\text{s}$ tras restaurar el estado posterior a los $300\,\text{s}$ de calentamiento.
+
+\subsection{Análisis por pares y criterio de decisión}
+\label{sec:experimentos_evaluacion}
 \label{subsec:detalle_analisis_pareado}
 
-En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra en cada paso de decisión la espera acumulada en los carriles del agente dividida por la cantidad de vehículos presentes. Cuando no hay vehículos, el valor del paso es cero. Para calcular el Gini, el código promedia estos valores a lo largo del control para cada agente y da igual peso a todos los agentes. Cabe señalar que la restauración del estado posterior al calentamiento en la comparación A/C no almacena los generadores aleatorios (\texttt{--save-state.rng}) de \acrshort{acr-sumo}, por lo que la restauración del estado vehicular no garantiza la repetición determinista exacta de las secuencias microscópicas individuales entre ejecuciones.
+Siguiendo las recomendaciones metodológicas para inferencia estadística en aprendizaje por refuerzo profundo \cite{Agarwal2021RLiable}, la unidad de observación independiente es el par de entrenamiento $s \in \{1,\ldots,24\}$, mientras que las cinco evaluaciones ($q \in \{1,\ldots,5\}$) se promedian dentro de cada política para reducir la varianza de simulación. Sea $w_{s,b,q}$ la espera media por vehículo insertado ($\bar{w}_{\mathrm{ins}}$) del par $s$ bajo la variante $b \in \{A,C\}$ en la semilla de evaluación $q$. La media por política $\bar{w}_{s,b}$, la diferencia absoluta pareada $d_s$ y el cambio relativo pareado $z_s$ se definen como:
+\begin{equation}
+ \begin{split}
+ \bar w_{s,b}&=\frac{1}{5}\sum_{q=1}^{5}w_{s,b,q},\\
+ d_s&=\bar w_{s,C}-\bar w_{s,A},\qquad
+ z_s=\frac{\bar w_{s,C}-\bar w_{s,A}}{\bar w_{s,A}},
+ \end{split}
+ \label{eq:contrastes_pareados}
+\end{equation}
+$d_s$ se expresa en segundos por vehículo y $z_s$ es adimensional; sus valores negativos indican una menor espera de C respecto de A. Para la tasa de completitud \acrshort{acr-ci} se calcula la diferencia pareada $d_{\mathrm{CI},s} = \overline{\mathrm{CI}}_{s,C} - \overline{\mathrm{CI}}_{s,A}$. Los estimadores puntuales por red son los promedios muestrales entre los $24$ pares: $\bar{d}$, $\bar{z}$ y $\bar{d}_{\mathrm{CI}}$. Si $\bar{w}_{s,A}=0$, se conserva $d_s$ y se informa $z_s$ como indefinido; en ese caso no se emite la decisión basada en el efecto relativo.
 
-Para cada una de las tres redes, las cinco evaluaciones de una política se promedian antes de calcular las diferencias entre las 24 parejas de entrenamiento. El remuestreo conserva cada pareja completa y genera 20.000 conjuntos de 24 parejas con reemplazo. Para el intervalo percentil del 95\% se usan los percentiles 2,5 y 97,5; para el intervalo del 98,33\%, aproximadamente 0,83 y 99,17. Este nivel aplica la corrección de Bonferroni al nivel nominal de 0,05 dividido entre los tres contrastes A/C, uno por cada red ($0{,}05/3$), para cada medida por separado. No se ajusta conjuntamente entre métricas distintas.
+La incertidumbre muestral se cuantifica mediante \gls{bootstrap} no paramétrico con $20.000$ remuestreos con reemplazo de los $24$ pares de cada red. Se reportan intervalos de confianza percentiles al $95\%$ y al $98{,}33\%$ (percentiles 2,5 y 97,5; aproximadamente 0,83 y 99,17, respectivamente). El nivel del $98{,}33\%$ aplica la corrección de Bonferroni al nivel nominal de 0,05 entre los tres contrastes, uno por cada red ($0{,}05/3$), para cada medida por separado; no se ajusta conjuntamente entre métricas. Como análisis de sensibilidad se calcula también un intervalo basado en $t$ de Student con 24 diferencias pareadas, bajo el supuesto de diferencias independientes y aproximadamente normales. Ambos métodos dan aproximaciones cuya cobertura no está garantizada; los valores extremos se conservan para revisar su influencia.
 
-Como análisis de sensibilidad, se calcula un intervalo basado en $t$ de Student con 24 diferencias pareadas, bajo el supuesto de diferencias independientes y aproximadamente normales. Los intervalos percentiles y el intervalo $t$ son aproximaciones; su cobertura no está garantizada, y los valores extremos se conservan para revisar su influencia.
+Se adopta una decisión favorable a la incorporación de acoplamiento vecinal (variante C) en una red si y solo si se verifican simultáneamente tres condiciones prácticas:
+\begin{itemize}
+    \item \textbf{Reducción relevante de la espera:} el extremo superior del intervalo de confianza del $98{,}33\%$ para el cambio relativo medio $\bar{z}$ es estrictamente menor que $-0{,}05$ (reducción de al menos el $5\%$).
+    \item \textbf{Preservación de la completitud (\acrshort{acr-ci}):} el extremo inferior del intervalo de confianza del $98{,}33\%$ para la diferencia media $\bar{d}_{\mathrm{CI}}$ es superior a $-0{,}005$ (merma máxima admisible de $0{,}5$ puntos porcentuales).
+    \item \textbf{Ausencia de penalización por teletransportes:} el número de inicios de teletransporte de la variante C no supera al de la variante A en ninguna evaluación pareada con igual semilla.
+\end{itemize}
+La decisión requiere los $24$ pares completos de cada red y sus cinco evaluaciones por política. Si faltan pares, métricas o contadores de teletransporte, el análisis se informa como incompleto y no se emite una decisión favorable. Las tres redes sintéticas ($3\times1$, $3\times3$ y $4\times4\_H$) se analizan por separado. El criterio no fija un umbral de inserciones ni incluye el retraso previo al ingreso; para interpretar una decisión favorable como una mejora de la atención a la demanda, deben examinarse también esas medidas.
+
+En la implementación, el campo \texttt{mean\_acc\_waiting\_time} registra en cada paso de decisión la espera acumulada en los carriles del agente dividida por la cantidad de vehículos presentes. Cuando no hay vehículos, el valor del paso es cero. Para calcular el Gini, el código promedia estos valores a lo largo del control para cada agente y da igual peso a todos los agentes. La restauración del estado posterior al calentamiento no almacena los generadores aleatorios (\texttt{--save-state.rng}) de \acrshort{acr-sumo}; por tanto, restaurar el estado vehicular no garantiza repetir exactamente las secuencias microscópicas individuales.
 
 El protocolo original de la campaña, identificado en \path{docs/PROTOCOLO_COOPERACION_MULTIESCENARIO.md}, incluye las tres redes. El informe histórico, en \path{cooperation_multiscenario_20260920/report/INFORME.md}, presenta como análisis principal 48 parejas de $3\times1$ y $4\times4\_H$. El mismo informe separa los datos de $3\times3$ después de revisar los resultados porque su entrenamiento tuvo una dinámica distinta; señala que esa decisión de presentación no estaba fijada de antemano y que los registros de esa red se conservaron aparte. El criterio histórico de presentación se distingue del alcance metodológico adoptado aquí, que analiza por separado las tres redes; por tanto, no implica una exclusión previa de $3\times3$.
+
+\subsection{Alcance y limitaciones de la comparación}
+
+El contraste A/C modifica conjuntamente la observación y la recompensa vecinales y aumenta la dimensión de entrada del actor y del crítico centralizado. Por ello, no aísla el aporte de cada componente ni el de la información vecinal frente al aumento del número de parámetros. Tampoco anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes.
+
+La evidencia se limita a \acrshort{acr-mappo}, por lo que permite comparar A y C, pero no ordenar las formulaciones vecinales en general. La planificación muestral se basó en una diferencia absoluta y un intervalo del $95\%$; la regla de decisión usa el efecto relativo y un intervalo del $98{,}33\%$. Por esa diferencia, el cálculo muestral no asegura la precisión requerida por la regla final.
 
 \section{Detalles del aprendizaje y de la codificación}
 \label{sec:apendice_detalles_aprendizaje}
@@ -697,47 +816,6 @@ En cada decisión, $\mathcal{A}^{\mathrm{adm}}_i(t)$ es el subconjunto de accion
     \label{eq:action_mask}
 \end{equation}
 Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero después de normalizar la política. La implementación sustituye el infinito por una puntuación finita muy baja y requiere al menos una acción admisible. Los algoritmos PPO aplican la máscara a las puntuaciones de política; IDQN filtra las acciones al seleccionarlas y evaluarlas.
-
-\subsection{Configuración fija de la comparación multiescenario}
-\label{subsec:receta_ac_apendice}
-
-La Tabla \ref{tab:receta_ac} conserva los hiperparámetros de \acrshort{acr-mappo} h128 seleccionados en un ensayo histórico de $4\times4\_H$ y aplicados sin cambios entre las tres redes de tráfico. El ensayo \texttt{49cfbba0} está registrado en \path{rho_screening_recipes/mappo_4x4_H_h128.json} e incorporado a los manifiestos de campaña. Los valores continuos se muestran redondeados; la fuente conserva precisión completa.
-
-Se entrenaron 24 parejas por red. La planificación usó una desviación de referencia cercana a dos segundos por vehículo y un intervalo del 95\% basado en $t$ de Student, bajo supuestos de diferencias independientes y aproximadamente normales. Con 24 parejas, se esperaba una semiamplitud cercana a 0,85 segundos por vehículo.
-
-\begin{table}[H]\centering\small
-\caption[Hiperparámetros fijos de aprendizaje de MAPPO.]{Hiperparámetros fijos de aprendizaje de la comparación multiescenario.}\label{tab:receta_ac}
-\begin{tabular}{>{\raggedright\arraybackslash}p{7cm}r}\hline
-\rowcolor{catAzulCielo!25}
-Parámetro & Valor \\\hline
-Arquitectura & dos capas de 128 unidades \\
-Tasa de aprendizaje (\texttt{lr}) & $4,95235885\times10^{-5}$ \\
-Recorte del actor (\texttt{clip\_param}) & 0,20148266 \\
-\acrshort{acr-gae} (\texttt{lambda\_gae}) & 0,90059980 \\
-Coeficiente de entropía & 0,00483113 \\
-Recorte del gradiente & 1,48846291 \\
-Coeficiente \acrshort{acr-kl} & 0,24180060 \\
-Objetivo \acrshort{acr-kl} & 0,01053851 \\
-Cota de pérdida de valor & 10,11299284 \\
-Recorridos de optimización & 8 \\
-Episodios por lote & 3 \\
-Tamaño del minilote & 128 \\
-Niveles del codificador ($I$) & 17 \\
-Descuento ($\gamma$) & 0,99 \\\hline
-\end{tabular}\end{table}
-
-La comparación fija el peso de la recompensa vecinal en cero para la variante local y en 0,1 para la vecinal; también asigna observación local o vecinal y normaliza por carriles, según la condición. Los límites de escala del codificador corresponden a cada escenario. Los tres episodios de cada lote representan $3\times(3600/5)=2160$ pasos de entorno por componente de aprendizaje. El número de procesos de simulación no multiplica este tamaño de lote.
-
-Los manifiestos de la comparación registran \acrshort{acr-sumo} 1.26.0, Ray 2.54.1 y PyTorch 2.10.0 con CUDA 12.8. Estas versiones corresponden a esa campaña y no se atribuyen automáticamente a las búsquedas históricas. Los archivos \texttt{manifest.json} de cada par conservan su configuración y versiones efectivas.
-
-La calibración vecinal específica se conserva junto con la configuración de la comparación; otros archivos de calibración pueden corresponder a diseños distintos.
-
-\subsection{Calibraciones y semillas de cooperación}
-\label{subsec:calibraciones_cooperacion}
-
-El límite de escala local se calculó con las semillas 42--44; para $3\times1$, $3\times3$ y $4\times4\_H$ se obtuvieron 1184, 1136 y 712, respectivamente. La calibración de la señal de espera vecinal incorporada en la observación C utilizó las semillas 51001--51003 y produjo límites de escala de 9660, 5329 y 4652 en esas redes. Los límites locales se expresan en veh·s y los vecinales en veh·s por carril. En ambos casos se empleó el percentil 99 y 300 segundos de calentamiento. Para la señal vecinal, el percentil se calculó sobre la medida media agrupada por intersección y paso. Estos valores corresponden a escalas de señales codificadas, no a tiempos máximos de viaje ni a valores de recompensa.
-
-La comparación en las tres redes utiliza las semillas 61001--61024 para el entrenamiento y 71001--71005 para la evaluación. Las semillas de evaluación son comunes a las dos variantes y se mantienen separadas de las de entrenamiento.
 
 \subsection{Preparación de las figuras de escenarios}
 
