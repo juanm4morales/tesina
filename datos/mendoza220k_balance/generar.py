@@ -134,6 +134,23 @@ def write(name, body):
     (HERE / name).write_text(body.rstrip() + "\n", encoding="utf-8")
 
 
+def phase_sequence(phases):
+    """Label each archived signal state without inferring it from duration."""
+    result = []
+    for phase in phases:
+        state = phase["state"]
+        if any(signal in "yY" for signal in state):
+            kind = "A"
+        elif any(signal in "gG" for signal in state):
+            kind = "V"
+        elif set(state) == {"r"}:
+            kind = "R"
+        else:
+            raise ValueError(f"Unclassified signal state: {state}")
+        result.append(r"\mbox{" + f"{kind}\\,{phase['duration']}" + "}")
+    return "; ".join(result)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--proyecto", type=Path, help="marl-tlc root to verify input hashes and XML")
@@ -157,8 +174,8 @@ def main():
         f"Inicio $t$ (s) & {options[0][1]['begin']} & {options[1][1]['begin']}" + " " + chr(92)*2,
         f"Fin $t$ (s) & {options[0][1]['end']} & {options[1][1]['end']}" + " " + chr(92)*2,
         f"Paso (s) & {options[0][1]['step-length']} & {options[1][1]['step-length']}" + " " + chr(92)*2,
-        f"Umbral de teleport (s) & {options[0][1]['time-to-teleport']} & {options[1][1]['time-to-teleport']}" + " " + chr(92)*2,
-        f"Máximo de teleports & {options[0][1]['max-num-teleports']} & {options[1][1]['max-num-teleports']}" + " " + chr(92)*2,
+        f"Umbral de teletransporte (s) & {options[0][1]['time-to-teleport']} & {options[1][1]['time-to-teleport']}" + " " + chr(92)*2,
+        f"Máximo de teletransportes & {options[0][1]['max-num-teleports']} & {options[1][1]['max-num-teleports']}" + " " + chr(92)*2,
         f"Acción ante colisión & \\texttt{{{options[0][1]['collision.action']}}} & \\texttt{{{options[1][1]['collision.action']}}}" + " " + chr(92)*2,
         f"Semilla de desarrollo & {options[0][1]['seed']} & {options[1][1]['seed']}" + " " + chr(92)*2,
         f"Asignación de zonas & \\texttt{{{options[0][1]['junction-taz']}}} & \\texttt{{{options[1][1]['junction-taz']}}}" + " " + chr(92)*2,
@@ -196,9 +213,9 @@ def main():
 
     for index, group in enumerate((programs[:25], programs[25:50], programs[50:]), 1):
         body = [r"\begin{tabular}{@{}r>{\ttfamily\raggedright\arraybackslash}p{5.7cm}rp{6.5cm}@{}}\hline",
-                "N.º & ID & Desfase (s) & Duraciones de fase (s) \\\\ \\hline"]
+                "N.º & ID & Desfase (s) & Secuencia de estados y duraciones (s) \\\\ \\hline"]
         for num, p in enumerate(group, start=1 if index == 1 else (26 if index == 2 else 51)):
-            seq = ", ".join(str(phase["duration"]) for phase in p["phases"])
+            seq = phase_sequence(p["phases"])
             body.append(f"{num} & \\path{{{p['id']}}} & {p['offset']} & {seq}" + " " + chr(92)*2)
         body.append(r"\hline\end{tabular}")
         write(f"tabla_programas_{index}.tex", "\n".join(body))

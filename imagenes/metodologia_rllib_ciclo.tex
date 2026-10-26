@@ -1,0 +1,36 @@
+% Esquema vectorial basado en Ray RLlib, Key Concepts (consulta: 2026-10-26).
+% Cada flecha representa datos o parámetros; no una asignación de hardware.
+\begingroup
+\setstretch{1}
+\begin{tikzpicture}[met/base,
+ rllib/group/.style={draw=black!50,rounded corners=3pt,line width=.7pt},
+ rllib/node/.style={met/box,text width=4.8cm,minimum height=.85cm},
+ rllib/label/.style={met/note,fill=white,inner sep=2pt}]
+\draw[rllib/group,fill=colEntorno!8] (0,0) rectangle (6,-5.2);
+\draw[rllib/group,fill=colInterfaz!10] (8,0) rectangle (14,-5.2);
+\node[met/head] at (3,-.40) {Muestreo};
+\node[met/head] at (11,-.40) {Aprendizaje};
+\node[met/note] at (3,-.88) {\texttt{EnvRunnerGroup}};
+\node[met/note] at (11,-.88) {\texttt{LearnerGroup}};
+\node[rllib/node] (env) at (3,-2.0) {Entorno de simulación};
+\node[rllib/node] (inference) at (3,-4.1)
+ {\texttt{RLModule}\\Elección de acciones};
+\node[rllib/node,fill=colInterfaz!20] (update) at (11,-2.0)
+ {\textit{Learner}\\Pérdidas y gradientes\\Optimizador};
+\node[rllib/node,fill=colInterfaz!20] (model) at (11,-4.1)
+ {\texttt{RLModule}\\Pesos del modelo};
+\draw[met/arrow] ([xshift=-2cm]env.south) --
+ node[rllib/label,right,text width=2.3cm] {Observaciones\\y recompensas}
+ ([xshift=-2cm]inference.north);
+\draw[met/arrow] ([xshift=1.1cm]inference.north) --
+ node[rllib/label,right] {Acciones} ([xshift=1.1cm]env.south);
+\draw[met/arrow] (update.south) --
+ node[rllib/label,right] {Actualización} (model.north);
+\draw[met/arrow] (env.east) --
+ node[rllib/label,above,text width=2.0cm] {Datos de\\entrenamiento}
+ (update.west);
+\draw[met/arrow] (model.south) -- (11,-5.75) --
+ node[rllib/label,below] {Sincronización de pesos}
+ (3,-5.75) -- (inference.south);
+\end{tikzpicture}
+\endgroup

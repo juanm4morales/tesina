@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-26",
+  "base_commit": "d11f245",
+  "scope": [
+    "5-metodologia.tex",
+    "8-apendice_arquitectura.tex"
+  ],
+  "excluded": [
+    "6-resultados.tex"
+  ],
+  "editorial_rules": "REGLAS_EDITORIALES_CARO.md, R01-R26",
+  "corrections": {
+    "H1": {
+      "user_clarification": "Keep phase 2 in the main chapter focused on its objectives. Brevity was requested; repair the appendix dependency.",
+      "resolution": "Budgets (100 trials, 60 iterations, ASHA grace 30 and factor 2, diagnostic interval 15) specified in appendix; body and domain cross-references corrected."
+    },
+    "H2": {
+      "resolution": "Explain hourly OD/path decision variables, weighted objective, constraints, auxiliary route costs, service assumptions, native route probabilities and inherited nominal scale. Archive exact constructors and frozen design."
+    },
+    "H3": {
+      "resolution": "Specify proportional green allocation with integer largest remainders, retained offsets and new controller. Generate V/A/R labels directly from archived XML signal states without changing durations."
+    },
+    "H4": {
+      "resolution": "Replace uncertain raster montage with original TikZ schematic based on cited official RLlib documentation; retain previous raster file as historical artifact."
+    },
+    "H5": {
+      "resolution": "Explain CR as arrivals divided by loaded vehicles before applying its threshold; retain full balance equations in metrics section."
+    },
+    "H6": {
+      "resolution": "Remove the reference to the unincorporated summary table; keep individual cases and identify development and confirmatory rows."
+    },
+    "H7": {
+      "resolution": "Consolidate repeated urban scope, empty-start windows and allocation details. Move physical resource provenance into appendix and remove a context-dependent rebuttal about B/D failures."
+    }
+  },
+  "evidence": {
+    "construction": "datos/mendoza220k_balance/fuentes/construccion/procedencia.json",
+    "original_inputs": "Verified all 6 input hashes against local marl-tlc source tree.",
+    "signal_programs": "74 cycles of 90 seconds; inherited offsets and largest-remainder allocation reproduced independently from archived previous network.",
+    "scenario_counts": {
+      "controllers": 74,
+      "zones": 37,
+      "hourly_flows": 6204
+    },
+    "source_code": "Demand constructor hash matches frozen design; all archived copies byte-identical to source files."
+  },
+  "figure": {
+    "source": "imagenes/metodologia_rllib_ciclo.tex",
+    "documentation": "https://docs.ray.io/en/latest/rllib/key-concepts.html",
+    "static_safety": "passed",
+    "semantic_status": "schematic",
+    "design_critique": "keep after one visual repair",
+    "preview": "/tmp/tesina-correcciones-20261026/rllib_v02.png",
+    "visual_qa": "Manual inspection of rendered preview and full PDF page; automated PyMuPDF visual checker unavailable in installed Python environments. No dependencies installed."
+  },
+  "validation": {
+    "glossary_cycle": "pdflatex -synctex=1; makeglossaries main; latexmk -pdf -synctex=1",
+    "data_generator": "python3 datos/mendoza220k_balance/generar.py --proyecto /home/juanm4/Dev/marl-tlc",
+    "sources": "No undefined label targets in methodology or appendix; new SciPy citation verified against official documentation.",
+    "results_source": "Unchanged, byte-identical to base commit.",
+    "simulations_run": false,
+    "final_build": "passed; only known tracklang warning, no undefined citations/references or overfull/underfull boxes",
+    "pdf_structure": "qpdf --check passed",
+    "glossary_links": "CR and GPU destinations and GoTo annotations confirmed",
+    "visual_review": "Updated method, phase 2, RLlib figure, program tables and new equations inspected in full PDF pages; equation introduction kept on the same page.",
+    "git_diff_check": "passed"
+  }
+}

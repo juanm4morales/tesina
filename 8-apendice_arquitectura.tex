@@ -207,7 +207,7 @@ En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waitin
 
 El escenario \texttt{mendoza\_220k\_balance} utiliza SUMO 1.27.1, una red con 255 tramos de circulación, 554 carriles externos, ningún tramo interno, 744 conexiones y 74 controladores semafóricos fijos. El archivo de zonas contiene 37 \acrshort{acr-taz}, con identificadores de 0 a 38 salvo 6 y 9. Se conserva el ciclo común de 90 s; los programas actuales derivan de un plan previo, incorporan un controlador y normalizan las fases preservando sus verdes relativos, con amarillo de 5 s.
 
-La matriz sintética distribuye 6.204 flujos horarios entre 517 pares \acrshort{acr-od} activos, mediante rutas explícitas. Su construcción usa una optimización lineal por hora; evita el giro Benegas→Civit y cambia entre 11,6\% y 23,6\% de la masa respecto de las referencias documentadas. Las marginales actuales no se conservan como una matriz validada con datos de campo. El perfil horario heredado procede de 32 días hábiles de la cámara 169, con un promedio de 25.175,84 vehículos diarios; la documentación disponible no identifica al custodio de ese registro. La cámara está fuera del dominio modelado y no equivale a una medición completa de los flujos por movimiento. El nominal es 220.000 viajes diarios, mientras que la integral de demanda esperada de 12 h es 152.168,75 solicitudes.
+La matriz sintética contiene 6.204 flujos horarios entre 517 pares \acrshort{acr-od} activos. Se conservaron el nominal diario de 220.000 viajes y los totales horarios de la referencia, y se modificaron conjuntamente las tasas por par y la asignación de rutas. Las secciones siguientes especifican la transformación del plan fijo y el programa lineal de demanda.
 
 La Tabla \ref{tab:mendoza_archivos_balance} identifica las entradas congeladas y sus hashes SHA-256. Los manifiestos y registros compactos de cada caso se conservan bajo \path{datos/mendoza220k_balance/}; no se duplican las salidas nativas extensas.
 
@@ -219,7 +219,15 @@ La Tabla \ref{tab:mendoza_archivos_balance} identifica las entradas congeladas y
 \subsubsection{Programas semafóricos}
 \label{sec:mendoza_plan_fijo_apendice}
 
-Los programas fijos efectivos están definidos en el archivo de red. Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} resumen los desfases y las duraciones de fase de sus 74 controladores. Los estados XML completos se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}.
+El constructor conserva los estados y desfases de los 73 programas de referencia, adaptando el orden de sus señales a las conexiones de la red reconstruida. Fija en cinco segundos las fases que contienen amarillo y mantiene las duraciones de todo rojo. Para repartir el verde restante, se denota por $\mathcal{G}$ el conjunto de fases verdes y por $\mathcal{D}$ el de las demás fases. La duración verde anterior de la fase $p$ es $d_p^0$ y la duración reservada para cada fase $j\in\mathcal{D}$ es $d_j$, ambas en segundos. La cuota proporcional de verde $\widetilde g_p$, previa al redondeo, se calcula como:
+\begin{equation}
+ \widetilde g_p=\left(90-\sum_{j\in\mathcal{D}}d_j\right)
+ \frac{d_p^0}{\sum_{k\in\mathcal{G}}d_k^0},\qquad p\in\mathcal{G}.
+ \label{eq:mendoza_conversion_fija}
+\end{equation}
+Primero se toma la parte entera de cada cuota. Los segundos restantes se asignan a las fases con mayor parte fraccionaria, resolviendo los empates por el orden de fase. El constructor exige una duración final de al menos cinco segundos para cada verde y verifica que el ciclo sume 90 segundos. El nuevo controlador de Benegas--Civit se define por separado, con secuencia $V=18$, $A=5$, $R=1$, $V=60$, $A=5$, $R=1$ y desfase cero.
+
+Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} especifican los 74 programas resultantes. En sus secuencias cronológicas, $V$ identifica una fase con señales verdes, $A$ una fase que contiene amarillo y $R$ el estado de todo rojo; el número siguiente es la duración en segundos. Los estados de cada señal se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}.
 
 \begin{table}[H]\centering\footnotesize
 \caption{Programas semafóricos de Mendoza balance, controladores 1--25.}\label{tab:mendoza_programas_balance_1}
@@ -237,7 +245,52 @@ Los programas fijos efectivos están definidos en el archivo de red. Las Tablas 
 \subsubsection{Construcción de la demanda}
 \label{sec:mendoza_demanda_apendice}
 
-La distribución espacial de demanda se generó a partir de flujos horarios y rutas explícitas, resolviendo por separado un problema lineal por hora. La tasa de cada flujo se representa mediante \texttt{period=exp($\lambda$)}, donde $\lambda=q/3600$ es la tasa de llegadas en vehículos por segundo, obtenida del flujo horario $q$. El intervalo exponencial se interpreta según la Ecuación \ref{eq:intervalo_exponencial} del Capítulo \ref{cap:marco_teorico}. La construcción evita Benegas→Civit y no conserva las marginales de la especificación previa; el cambio de itinerario modifica también las distancias. No acredita calibración de campo.
+La construcción recibe la red y el plan fijo ya definidos, las zonas de origen y destino y las tasas horarias de la variante previa Civit. Mantiene el total solicitado de cada hora y el nominal diario, que se adopta como condición de diseño. Para cada par activo se construyen hasta tres itinerarios conectados de menor costo auxiliar, formando una biblioteca de 1.341 rutas. El costo combina tiempo de recorrido libre, penalizaciones semafóricas y penalizaciones para diversificar los itinerarios y reducir su exposición a accesos críticos. Estos costos ordenan rutas; no son tiempos de viaje medidos ni representan un equilibrio de elección de los usuarios.
+
+\Needspace{12\baselineskip}
+Para cada hora $h$ y par origen--destino $(o,d)$, $b_{od,h}$ denota el flujo de referencia y $\mathcal{P}_{od}$ el conjunto de rutas candidatas de ese par. La variable $x_{p,h}$ asigna una tasa a la ruta $p$ y su suma $q_{od,h}=\sum_{p\in\mathcal{P}_{od}}x_{p,h}$ da el nuevo flujo del par, todos en vehículos por hora. La variable auxiliar $u_{od,h}$ representa la desviación absoluta respecto de $b_{od,h}$. Si $\ell_p$ es la longitud de la ruta en metros, el objetivo penaliza cambios de flujo y recorridos largos con el peso de diseño $\kappa=0{,}00005\,\text{m}^{-1}$:
+\begin{equation}
+ \min_{x,u}\ \sum_{(o,d)}u_{od,h}
+       +\kappa\sum_p\ell_p x_{p,h}.
+ \label{eq:mendoza_balance_objetivo}
+\end{equation}
+Es una suma ponderada: el segundo término puede compensar un aumento del primero. El peso no se estimó a partir de preferencias de viaje.
+
+Las restricciones conservan el total horario, acotan el flujo de cada par y limitan las cargas previstas por acceso y movimiento. Se denotan por $\underline q_{od,h}$ y $\overline q_{od,h}$ las cotas del par. Para cada acceso o movimiento $a$, $c_a$ es el tope horario de diseño y $a_{ap}$ cuenta cuántas veces la ruta $p$ requiere atravesarlo. El tramo final de una ruta no añade un cruce posterior. Con estas definiciones, el problema exige:
+\begin{equation}
+\begin{aligned}
+ u_{od,h}&\ge q_{od,h}-b_{od,h}, &
+ u_{od,h}&\ge b_{od,h}-q_{od,h},\\
+ \sum_{(o,d)}q_{od,h}&=\sum_{(o,d)}b_{od,h}, &
+ \underline q_{od,h}&\le q_{od,h}\le\overline q_{od,h},\\
+ \sum_p a_{ap}x_{p,h}&\le c_a\quad\text{para cada }a, &
+ x_{p,h}&\ge0,\quad u_{od,h}\ge0.
+\end{aligned}
+\label{eq:mendoza_balance_restricciones}
+\end{equation}
+La cota inferior es $0{,}2b_{od,h}$ y la superior habitual, $3b_{od,h}$. Para los orígenes 7, 10 y 34, la cota superior se reduce a $0{,}5b_{od,h}$, $0{,}75b_{od,h}$ y $0{,}25b_{od,h}$, respectivamente. Estas restricciones mantienen positivos los pares de la referencia, pero permiten cambiar las marginales por origen y destino, incluida la zona 28.
+
+Los topes $c_a$ se construyen a partir de una referencia supuesta de $1.050$ vehículos por hora y carril, multiplicada por una fracción de servicio. En conexiones semaforizadas, esa fracción es $(t_G+0{,}3t_g)/90$, donde $t_G$ y $t_g$ son los segundos de verde protegido y permisivo. En conexiones no semaforizadas, vale $0{,}1$ para los estados minoritarios \texttt{m}/\texttt{o} de SUMO y uno para los demás. Para cada movimiento se suman los aportes de sus carriles; para cada acceso, los máximos por carril. Sobre los accesos críticos se aplica además el menor entre ese valor y los topes de la Tabla \ref{tab:mendoza_topes_diseno}. Son supuestos de construcción del escenario, no capacidades medidas ni una estimación de almacenamiento vehicular.
+
+\begin{table}[H]\centering\small
+\caption{Topes adicionales de diseño para la asignación de demanda de Mendoza balance.}
+\label{tab:mendoza_topes_diseno}
+\begin{tabular}{@{}llr@{}}\hline
+Acceso o receptor & Tramo SUMO & Tope (vehículos/hora) \\\hline
+Benegas & \texttt{446118223\#7} & 300 \\
+Civit oeste & \texttt{-574183755\#0} & 900 \\
+Receptor Civit & \texttt{-161265844\#1} & 350 \\
+Las Heras & \texttt{227837259} & 250 \\\hline
+\end{tabular}
+\end{table}
+
+La biblioteca se construye sobre las conexiones existentes. El costo por tramo utiliza su longitud y una velocidad de referencia limitada a $13{,}89$\,m/s. Para una conexión semaforizada se agrega $90(1-f)^2/2$ segundos, con $f$ igual a la fracción de servicio anterior; para una conexión minoritaria sin semáforo se agregan 20 segundos. Al ingresar en los tramos de la Tabla \ref{tab:mendoza_topes_diseno} o en el tramo \texttt{249657488\#2} de Perú, se añade una penalización de 120 segundos multiplicada por un factor de exploración. Se prueban sucesivamente los factores $0$, $1$, $3$, $6$ y $10$, acumulando además diez segundos por tramo de cada ruta encontrada para favorecer alternativas. La enumeración concluye al reunir tres rutas distintas o agotar esos factores. La biblioteca resultante no contiene itinerarios con el giro izquierdo Benegas→Civit; esa ausencia restringe la demanda servida por dicho movimiento.
+
+Cada problema horario se resolvió con HiGHS mediante \texttt{scipy.optimize.linprog} \cite{scipy_linprog_2026}. La tasa escrita en SUMO es \texttt{period=exp($\lambda$)}, con $\lambda=q_{od,h}/3600$ en vehículos por segundo; el intervalo entre solicitudes sigue la Ecuación \ref{eq:intervalo_exponencial} del Capítulo \ref{cap:marco_teorico}. La probabilidad de cada itinerario es $x_{p,h}/q_{od,h}$. El redondeo de tasas a 18 posiciones decimales se compensa en el par de mayor flujo para preservar el total horario escrito. Una vez elegido el itinerario, no se aplica reasignación dinámica de rutas.
+
+El cociente entre la suma de incrementos positivos de flujo y el total horario de referencia cuantifica la fracción redistribuida: $\sum_{(o,d)}\max(q_{od,h}-b_{od,h},0)/\sum_{(o,d)}b_{od,h}$. En el diseño conservado varía entre el $11{,}6\%$ y el $23{,}6\%$. Esta modificación conjunta de tasas y rutas cambia también las distancias previstas; la conservación del total de solicitudes no equivale a conservar el trabajo de transporte.
+
+Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que los hashes de la Tabla \ref{tab:mendoza_archivos_balance} identifican las entradas finales.
 
 \subsubsection{Configuración y resultados conservados}
 \label{sec:mendoza_evidencia_final}
@@ -249,7 +302,7 @@ Las configuraciones de 2 h y 12 h parten de una red vacía y usan paso de 1 s, \
 \input{datos/mendoza220k_balance/tabla_opciones.tex}
 \end{table}
 
-Se observó una ejecución de desarrollo con semilla 104729 y tres semillas confirmatorias nuevas (2026102001--2026102003); cada semilla tiene un caso en ambas ventanas. Las configuraciones canónicas declaran 104729; los seis archivos por caso registran las semillas confirmatorias correspondientes. La unidad confirmatoria es la semilla, no cada combinación de semilla y horizonte. Según el balance definido en la Sección \ref{subsec:balance_vehiculos_mendoza} del Capítulo \ref{capitulo:metodologia}, $L$ es el total de vehículos cargados, $I$ el de insertados, $A$ el de viajes llegados, $R$ los que siguen circulando y $W$ los pendientes de ingreso. Las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} muestran esos contadores al cierre; la tasa de completitud es \acrshort{acr-cr}. Cero colisiones registradas describe el control configurado en SUMO y no certifica seguridad física.
+Los registros comprenden una semilla de desarrollo (104729) y tres semillas confirmatorias nuevas (2026102001--2026102003); cada semilla tiene un caso en ambas ventanas. Las configuraciones canónicas declaran 104729; los seis archivos por caso registran las semillas confirmatorias correspondientes. La unidad confirmatoria es la semilla, no cada combinación de semilla y horizonte. Las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} muestran los contadores $L$, $I$, $A$, $R$ y $W$ definidos en la Sección \ref{subsec:balance_vehiculos_mendoza} del Capítulo \ref{capitulo:metodologia}, junto con la tasa \acrshort{acr-cr}. La primera fila corresponde a desarrollo; las tres restantes, a confirmación. La columna TP/Col./Desc. reúne teletransportes, colisiones registradas y descartes.
 
 \begin{table}[H]\centering\small
 \caption{Resultados por semilla en la ventana de 2 h.}\label{tab:mendoza_casos_balance_2h}
@@ -260,7 +313,7 @@ Se observó una ejecución de desarrollo con semilla 104729 y tres semillas conf
 \input{datos/mendoza220k_balance/tabla_casos_12h.tex}
 \end{table}
 
-Las tres semillas confirmatorias completaron ambos horizontes con cero teletransportes, colisiones y descartes, y con una tasa de completitud de al menos 0,75. La tabla de síntesis resume solo esas tres semillas; el caso de desarrollo se muestra por separado en las tablas precedentes. Quedaron vehículos pendientes de ingreso, en especial desde las zonas de acceso de Las Heras 37 y 38, y se observó congestión en otros sectores. La evidencia fortalece la repetibilidad de este escenario bajo SUMO 1.27.1, pero no establece riesgo bajo de fallo, capacidad vial, calibración de campo ni desempeño de políticas aprendidas.
+Las tres semillas confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Los vehículos pendientes de ingreso, en especial desde las zonas de acceso de Las Heras 37 y 38, forman parte del balance y deben conservarse al interpretar la atención a la demanda. La evidencia caracteriza la repetibilidad del escenario bajo SUMO 1.27.1 y las condiciones ensayadas; su alcance se delimita en la Sección \ref{subsec:alcance_limitaciones} de la metodología.
 
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
@@ -274,7 +327,7 @@ Los programas de envío de trabajos, o \textit{scripts}, especifican recursos so
 
 Los trabajos se envían con \texttt{sbatch}, comando del gestor de trabajos \acrfull{acr-slurm}. En las búsquedas sintéticas, fase 1 utiliza \texttt{submit\_phase1.sh} y fase 2 especifica \texttt{submit\_phase2\_refined.sh}.
 
-Las configuraciones de los scripts corresponden a una combinación de algoritmo, red de tráfico y arquitectura, y solicitan un nodo de cómputo, una tarea de ejecución, diez núcleos de \acrfull{acr-cpu} y una partición con aceleración por \acrshort{acr-gpu}. El manual institucional describe una partición de Toko con hasta ocho núcleos; por ello no permite confirmar los recursos físicos asignados a cada trabajo \cite{TokoManual2024}.
+Las configuraciones de los scripts corresponden a una combinación de algoritmo, red de tráfico y arquitectura, y solicitan un nodo de cómputo, una tarea de ejecución, diez núcleos de \acrfull{acr-cpu} y una partición con aceleración por \acrfull{acr-gpu}. Estas solicitudes identifican la configuración de envío; los recursos efectivamente asignados requieren el registro del gestor de trabajos. El manual institucional describe una partición de Toko con hasta ocho núcleos y no sustituye ese registro \cite{TokoManual2024}.
 
 El script refinado también especifica el uso exclusivo del nodo y un límite de tiempo. La configuración de Ray limita a un ensayo simultáneo por trabajo; \acrshort{acr-asha} define las detenciones anticipadas según los parámetros de cada búsqueda.
 
@@ -440,9 +493,9 @@ El código de fase 1 define 7001 como semilla \acrshort{acr-tpe} por defecto, in
 \subsection{Arquitecturas y semillas de la búsqueda refinada sintética}
 \label{subsec:protocolo_refinado_apendice}
 
-Este apartado detalla la búsqueda refinada sintética, posterior a la prueba A--E y a la comparación A/C de \acrshort{acr-mappo}. Cada red deriva sus dominios de su propia fase 1.
+El protocolo refinado concentra la búsqueda en una arquitectura por combinación de algoritmo y red, con doce combinaciones en total, después de la prueba A--E y la comparación A/C de \acrshort{acr-mappo}. Cada red deriva sus dominios de su propia fase 1 y utiliza recompensa local ($\rho_{\mathrm{coop}}=0$). Las reglas de reducción y construcción de la configuración inicial se especifican en la Sección \ref{subsec:dominios_refinados}.
 
-Los límites de propuestas, iteraciones, detención anticipada y seguimiento se especifican en la Sección \ref{subsec:hpo_phase2}. El protocolo permite un ensayo concurrente por combinación. Los fallos, las detenciones anticipadas y las interrupciones consumen presupuesto; un \gls{checkpoint} conservado no acredita por sí solo la admisibilidad del ensayo.
+Se contemplan hasta 100 ensayos por estudio y un máximo de 60 iteraciones por ensayo. Cada ensayo se entrena desde cero, con \acrshort{acr-asha} configurado con 30 iteraciones de gracia y factor de reducción de 2. El seguimiento diagnóstico se realiza cada 15 iteraciones. Se permite un ensayo concurrente por combinación; los fallos, las detenciones anticipadas y las interrupciones consumen presupuesto. La selección posterior comprueba el cumplimiento del presupuesto y la integridad de los registros según la Sección \ref{subsec:criterios_admisibilidad_hpo}.
 
 En la fase 1, las propuestas adaptativas de \acrshort{acr-tpe} y las detenciones de \acrshort{acr-asha} no reservaron una prueba en $\rho_{\mathrm{coop}}=0$. Sus registros no aíslan el efecto del peso vecinal ni demuestran que el valor local sea un óptimo.
 
@@ -552,8 +605,6 @@ C & Local y vecinal: espera media por carril de cada vecino. & Diferencia local 
 D & Local, suma de espera vecinal y $\ln(1+m_j)$ de cada vecino. & Igual que C ($\rho_{\mathrm{coop}}=0{,}1$). \\
 E & Local: fase activa y señales de carriles propios. & Negativo de la diferencia absoluta de vehículos detenidos entre carriles de entrada y salida. \\\hline
 \end{tabular}\end{table}
-
-En esta prueba, B y D incluyen ejecuciones completadas y no se clasifican como fallos técnicos. Esta constatación describe su estado de ejecución, no sus diferencias de desempeño.
 
 \subsection{Comparación local y vecinal multiescenario}
 \label{subsec:cooperacion_multiescenario}

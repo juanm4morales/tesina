@@ -1,0 +1,30 @@
+{
+  "scenario": "mendoza_220k_balance",
+  "scope": "Archived construction sources; builders run within the original marl-tlc tree, not the thesis tree. No simulations were run for this editorial revision.",
+  "sources": [
+    {
+      "source": "experiments/mendoza_scenario/build_mendoza_civit.py",
+      "archive": "build_mendoza_civit.py",
+      "sha256": "49d05c813244a5dc3766784f2ba21fb4650316646f9feba8f39b03e9884d7270"
+    },
+    {
+      "source": "experiments/mendoza_scenario/build_mendoza_compact_flows.py",
+      "archive": "build_mendoza_compact_flows.py",
+      "sha256": "e757615d6354fe6724f36500e4ada51d725603de7f213fda56a336a3923e1819"
+    },
+    {
+      "source": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/design.json",
+      "archive": "design.json",
+      "sha256": "064240924aa925acfd05e735a49574aa8a45a38db727acd5717d85a81e85982e"
+    }
+  ],
+  "decision_record": {
+    "source": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/DECISIONES_Y_EVIDENCIA.md",
+    "sha256": "e9efb799573790b31704185263074bd6a2184e0029bc211bcf50199464b22b26",
+    "nominal_daily_choice": "Retain the existing 220000 nominal scale and exact hourly totals as an explicit design constraint; not a new field-demand estimate."
+  },
+  "route_pool_count": 1341,
+  "linear_objective": "sum(u_od_h) + 0.00005 * sum(length_m_p * x_p_h)",
+  "route_assignment": "fixed native route distributions",
+  "signal_plan": "73 inherited offsets and phase states, yellows 5 seconds, integer largest-remainder green allocation; one new controller at Benegas-Civit with offset 0."
+}

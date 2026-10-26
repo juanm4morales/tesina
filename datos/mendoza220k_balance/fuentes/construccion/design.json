@@ -1,0 +1,137 @@
+{
+  "adapter_sha256": "ae299377fb8094ea7e5245992a7be51df80e613dd77bc0ec70d5c0f67f465ace",
+  "budget": {
+    "12h": 1,
+    "2h": 1,
+    "4h": 1,
+    "retries": 0,
+    "seed": 104729
+  },
+  "builder_sha256": "e757615d6354fe6724f36500e4ada51d725603de7f213fda56a336a3923e1819",
+  "candidate": "compact",
+  "candidates": [
+    {
+      "id": "compact",
+      "route": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/compact.rou.xml",
+      "sha256": "917e1904329d6b84fece04766a4196eebae0fb2304a729944f5f52df2c00e0ca",
+      "status": "frozen"
+    }
+  ],
+  "contract": {
+    "OD_bounds": [
+      0.2,
+      3
+    ],
+    "TAZ28": "no_longer_fixed_in_this_new_revision",
+    "expected_12h": 152168.7538800684,
+    "flow_count": 6204,
+    "hourly_totals": "unchanged",
+    "native_poisson": true,
+    "origins_and_destinations": "synthetically_redistributed",
+    "rationale": "prior dynamic assignment invalidated route exposure forecasts; remove that uncontrolled assignment variation",
+    "route_assignment": "fixed_distributions",
+    "signal_changes": 0,
+    "source_10_max_ratio": 0.75,
+    "source_34_max_ratio": 0.25,
+    "source_7_max_ratio": 0.5
+  },
+  "frozen_network_sha256": "06222972799a5583f9d9846f69909e6a33cb01c06cc5e2f602c1511cf7671115",
+  "frozen_zones_sha256": "b80859cb6f162601dd4b7dc8599144e0bf2608dd38a5bc1ca5cd2e1236702e0a",
+  "local_gates": {
+    "green_with_receiver_entry_lt_7m_fraction_max": 0.25,
+    "head_stop_episode_seconds_max": 180,
+    "note": "predeclared model-development thresholds; not field standards",
+    "receiver_full_fraction_max": 0.05,
+    "receiver_p95_fraction_of_geometric_storage_max": 0.8
+  },
+  "nominal_daily": 220000,
+  "shared_runner_sha256": "f876ba4c9946c101add1fac4dded2287d2a56a46b7d70bf401fc6c04af21c8d8",
+  "solutions": [
+    {
+      "expected_vkt": 8182.186463924951,
+      "hour": 0,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.11559429341978815,
+      "total_expected": 7274.833266438016
+    },
+    {
+      "expected_vkt": 15762.51226272521,
+      "hour": 1,
+      "maximum_capacity_ratio": 1.0000000000000007,
+      "moved_fraction": 0.2173305405254201,
+      "total_expected": 14736.44639075401
+    },
+    {
+      "expected_vkt": 16901.523233725944,
+      "hour": 2,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.2362316581921709,
+      "total_expected": 15854.705977874417
+    },
+    {
+      "expected_vkt": 15952.93408821444,
+      "hour": 3,
+      "maximum_capacity_ratio": 1.0000000000000004,
+      "moved_fraction": 0.21863515729988522,
+      "total_expected": 14852.233622825974
+    },
+    {
+      "expected_vkt": 15467.236012740337,
+      "hour": 4,
+      "maximum_capacity_ratio": 1.0000000000000004,
+      "moved_fraction": 0.21554362685277087,
+      "total_expected": 14340.20930861397
+    },
+    {
+      "expected_vkt": 13709.612449171878,
+      "hour": 5,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.1821720703787701,
+      "total_expected": 12733.134540948027
+    },
+    {
+      "expected_vkt": 13240.60466594477,
+      "hour": 6,
+      "maximum_capacity_ratio": 1.0000000000000004,
+      "moved_fraction": 0.16968689964971442,
+      "total_expected": 12147.113758197585
+    },
+    {
+      "expected_vkt": 12525.620138946962,
+      "hour": 7,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.1650293255962895,
+      "total_expected": 11495.270769220791
+    },
+    {
+      "expected_vkt": 12479.8592466936,
+      "hour": 8,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.14921597644932136,
+      "total_expected": 11331.692216297994
+    },
+    {
+      "expected_vkt": 12897.110579613602,
+      "hour": 9,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.15583260708453886,
+      "total_expected": 11640.005388025207
+    },
+    {
+      "expected_vkt": 13572.10325990517,
+      "hour": 10,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.1724035729408432,
+      "total_expected": 12457.051656908407
+    },
+    {
+      "expected_vkt": 14474.033723314253,
+      "hour": 11,
+      "maximum_capacity_ratio": 1.0000000000000002,
+      "moved_fraction": 0.1772418043329979,
+      "total_expected": 13306.056983963994
+    }
+  ],
+  "source_route_sha256": "e7ca0dd2ef9819ca93707380e24e58ad23db0108378de8083f6c71cdcc8b4619",
+  "status": "frozen_pending_screen"
+}
