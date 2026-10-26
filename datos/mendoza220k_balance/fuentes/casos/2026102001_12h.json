@@ -1,0 +1,124 @@
+{
+  "CR": 0.8514218055982573,
+  "acceptance": "passed",
+  "backlog_integral_vehicle_s": 496824462,
+  "case": {
+    "begin": 0,
+    "command": [
+      "/usr/bin/sumo",
+      "-c",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/seed2026102001_12h.sumocfg",
+      "--additional-files",
+      "/home/juanm4/Dev/marl-tlc/nets/Mendoza/mendoza_220k_balance.taz.xml,/home/juanm4/Dev/marl-tlc/nets/Mendoza/gran_mendoza2.add.xml,/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/seed2026102001_12h.add.xml",
+      "--summary-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/summary.xml",
+      "--summary-output.period",
+      "1",
+      "--tripinfo-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/tripinfo.xml.gz",
+      "--tripinfo-output.write-unfinished",
+      "true",
+      "--tripinfo-output.write-undeparted",
+      "true",
+      "--vehroute-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/vehroute.xml.gz",
+      "--vehroute-output.exit-times",
+      "true",
+      "--vehroute-output.intended-depart",
+      "true",
+      "--vehroute-output.write-unfinished",
+      "true",
+      "--fcd-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/fcd.xml.gz",
+      "--device.fcd.probability",
+      "1",
+      "--fcd-output.filter-edges.input-file",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/observed_edges.txt",
+      "--error-log",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/warnings.log",
+      "--no-step-log",
+      "true",
+      "--xml-validation",
+      "local"
+    ],
+    "end": 43200,
+    "horizon": "12h",
+    "id": "seed2026102001_12h",
+    "seed": 2026102001
+  },
+  "exit_code": 0,
+  "horizon_complete": true,
+  "integrity_errors": [],
+  "last": {
+    "arrived": "130156",
+    "collisions": "0",
+    "discarded": "0",
+    "duration": "11",
+    "ended": "130156",
+    "halting": "500",
+    "inserted": "130956",
+    "loaded": "152869",
+    "meanSpeed": "2.71",
+    "meanSpeedRelative": "0.22",
+    "meanTravelTime": "228.87",
+    "meanWaitingTime": "1101.03",
+    "running": "800",
+    "stopped": "0",
+    "teleports": "0",
+    "time": "43199.00",
+    "waiting": "21913"
+  },
+  "local_gates_passed": true,
+  "local_metrics": {
+    "blocked_fraction_of_all_green": {
+      "227830910#1_2": 0.0,
+      "446118223#7_1": 0.0
+    },
+    "blocked_green_seconds": {},
+    "frames": 43200,
+    "green_seconds": {
+      "227830910#1_2": 11520,
+      "446118223#7_1": 8640
+    },
+    "max_head_stop_seconds": {
+      "227830910#1_1": 65,
+      "227830910#1_2": 65,
+      "446118223#7_0": 70,
+      "446118223#7_1": 37
+    },
+    "receivers": [
+      {
+        "geometric_storage": 9,
+        "lane": "-161265844#1_1",
+        "worst_15min_near_full_fraction": 0.0,
+        "worst_15min_p95_stock_fraction": 0.33888888888888385
+      },
+      {
+        "geometric_storage": 17,
+        "lane": "227837259_0",
+        "worst_15min_near_full_fraction": 0.0,
+        "worst_15min_p95_stock_fraction": 0.35294117647058826
+      }
+    ],
+    "sampling": "native 1s; full requested horizon on completed runs",
+    "unknown_head_route_samples": {}
+  },
+  "outputs_sha256": {
+    "edges.xml.gz": "d578e56c2d841a53003f5e70f0c12042d86c1c43d1d272b58d1b7fef5b09aca5",
+    "fcd.xml.gz": "ef5303f9deb1988dfc51c451e356230a619686f7d0a800e49b631cb41282f915",
+    "lanes.xml.gz": "f91c5cb1217f99f351fc7de3b402cd30f13a8a1f1b2fe72199ff0cac9ffb58ca",
+    "launch.json": "9fa2431cc003b4e8cd78bbde137eefb4a2998144604db6b28575130b0d9d1e2d",
+    "stderr.log": "6ab000785370f39d12218fe47778c7da2e0ffd9081281e2d6930a23db873be29",
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.xml": "ba65062022a65721a61c533660d2b863d16651228b19c2feab1b4855ef72001a",
+    "tls_10936722266.xml.gz": "3b574fe23fb9031a38b8d6a3a700c11a38db182c65da8ed7cbac3f37c4ed9a85",
+    "tls_287040677.xml.gz": "6815907cf9fff81f45330674bb475da881b6534ebba804b5ed291a9829c23a52",
+    "tripinfo.xml.gz": "8472f57db5681d48d7cb1d530d6b6d699e55228263caf0a9938ca6a9fc0d0dc4",
+    "vehroute.xml.gz": "393f13afa217853b527a3eb61f4150fdf8268098412d8fa03540aac24d5086a6",
+    "warnings.log": "6ab000785370f39d12218fe47778c7da2e0ffd9081281e2d6930a23db873be29"
+  },
+  "technical_reason": null,
+  "termination": "completed",
+  "wall_seconds_simulation": 615.5410240340025,
+  "warning_text": "Warning: Vehicle 'f_31_17_i4.3' performs emergency braking on lane '183049798#1_0' with decel=9.00, wished=5.00, severity=1.00, time=17823.00.\n"
+}

@@ -1,0 +1,116 @@
+{
+  "scenario": "mendoza_220k_balance",
+  "synthetic": true,
+  "nominal_daily": 220000,
+  "expected_requests_12h": 152168.7538800684,
+  "scope": "one known development seed; not independent multiseed validation",
+  "sumo_version": "Eclipse SUMO sumo 1.27.1",
+  "binary_sha256": "c3cc34e2250b21eaca285f42186c713fa6be5ded681cb3532dbadb3cd67a87d1",
+  "copied_from": {
+    "nets/Mendoza/mendoza_220k_balance.net.xml": "nets/Mendoza/mendoza_civit_static.net.xml",
+    "nets/Mendoza/mendoza_220k_balance.taz.xml": "nets/Mendoza/mendoza_civit_static.taz.xml",
+    "nets/Mendoza/mendoza_220k_balance.rou.xml": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/compact.rou.xml"
+  },
+  "inputs_sha256": {
+    "nets/Mendoza/mendoza_220k_balance.net.xml": "06222972799a5583f9d9846f69909e6a33cb01c06cc5e2f602c1511cf7671115",
+    "nets/Mendoza/mendoza_220k_balance.taz.xml": "b80859cb6f162601dd4b7dc8599144e0bf2608dd38a5bc1ca5cd2e1236702e0a",
+    "nets/Mendoza/mendoza_220k_balance.rou.xml": "917e1904329d6b84fece04766a4196eebae0fb2304a729944f5f52df2c00e0ca",
+    "nets/Mendoza/mendoza_220k_balance_12h.sumocfg": "eba9d238efdfc98d732d00d0c60183f30340b8869f03583b14f0da02ff2d3ddc",
+    "nets/Mendoza/mendoza_220k_balance_2h.sumocfg": "6d0922b1c9374b60b214e30d85efeb50dcb90d0f311af9620d22d3ac470b03cd",
+    "nets/Mendoza/gran_mendoza2.add.xml": "fe96f276987b8f9ccd71736a76a8524eb948b192b2326221b92f4959749b8a38"
+  },
+  "validation": {
+    "compact_4h": {
+      "result": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_4h/result.json",
+      "sha256": "16493bbba0875bdf250e2433a3e6039cce04c2ee20c6051d190103b2ba60be92",
+      "seed": 104729,
+      "begin": 0,
+      "end": 14400,
+      "acceptance": "passed",
+      "last": {
+        "arrived": "43662",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "8",
+        "ended": "43662",
+        "halting": "475",
+        "inserted": "44455",
+        "loaded": "52888",
+        "meanSpeed": "2.95",
+        "meanSpeedRelative": "0.24",
+        "meanTravelTime": "229.12",
+        "meanWaitingTime": "301.67",
+        "running": "793",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "14399.00",
+        "waiting": "8433"
+      },
+      "CR": 0.8255558916956588
+    },
+    "compact_12h": {
+      "result": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_12h/result.json",
+      "sha256": "431437576fb6bec580482ea80bca481de8ea198a110fa9791c9f186d757a09f0",
+      "seed": 104729,
+      "begin": 0,
+      "end": 43200,
+      "acceptance": "passed",
+      "last": {
+        "arrived": "129526",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "12",
+        "ended": "129526",
+        "halting": "460",
+        "inserted": "130249",
+        "loaded": "152492",
+        "meanSpeed": "2.52",
+        "meanSpeedRelative": "0.21",
+        "meanTravelTime": "229.05",
+        "meanWaitingTime": "1099.25",
+        "running": "723",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "43199.00",
+        "waiting": "22243"
+      },
+      "CR": 0.8493953781181963
+    },
+    "compact_2h": {
+      "result": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/result.json",
+      "sha256": "6c5419b21ddc0fe32e77d022477df7b19cd6a3c29137cd054d9b69d439f75c0b",
+      "seed": 104729,
+      "begin": 1800,
+      "end": 9000,
+      "acceptance": "passed",
+      "last": {
+        "arrived": "20941",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "6",
+        "ended": "20941",
+        "halting": "505",
+        "inserted": "21749",
+        "loaded": "25924",
+        "meanSpeed": "2.55",
+        "meanSpeedRelative": "0.20",
+        "meanTravelTime": "224.05",
+        "meanWaitingTime": "143.40",
+        "running": "808",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "8999.00",
+        "waiting": "4175"
+      },
+      "CR": 0.8077842925474464
+    }
+  },
+  "prepared_sha256": "8ba51aaa18c63d30987d1eaddc53b56eca1e8ee72503a84bbc20e8fd456bb83f",
+  "decisions": "experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/DECISIONES_Y_EVIDENCIA.md",
+  "limitations": [
+    "changed OD marginals and route assignment",
+    "no left-turn demand from Benegas into Civit in this route policy",
+    "insertion backlog remains",
+    "field demand and capacity not independently calibrated"
+  ]
+}

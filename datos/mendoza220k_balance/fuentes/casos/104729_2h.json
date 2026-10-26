@@ -1,0 +1,125 @@
+{
+  "CR": 0.8077842925474464,
+  "acceptance": "passed",
+  "backlog_integral_vehicle_s": 11817715,
+  "case": {
+    "begin": 1800,
+    "candidate": "compact",
+    "command": [
+      "/usr/bin/sumo",
+      "-c",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/compact_2h.sumocfg",
+      "--additional-files",
+      "/home/juanm4/Dev/marl-tlc/nets/Mendoza/mendoza_civit_static.taz.xml,/home/juanm4/Dev/marl-tlc/nets/Mendoza/gran_mendoza2.add.xml,/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/compact_2h.add.xml",
+      "--summary-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/summary.xml",
+      "--summary-output.period",
+      "1",
+      "--tripinfo-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/tripinfo.xml.gz",
+      "--tripinfo-output.write-unfinished",
+      "true",
+      "--tripinfo-output.write-undeparted",
+      "true",
+      "--vehroute-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/vehroute.xml.gz",
+      "--vehroute-output.exit-times",
+      "true",
+      "--vehroute-output.intended-depart",
+      "true",
+      "--vehroute-output.write-unfinished",
+      "true",
+      "--fcd-output",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/fcd.xml.gz",
+      "--device.fcd.probability",
+      "1",
+      "--fcd-output.filter-edges.input-file",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/observed_edges.txt",
+      "--error-log",
+      "/home/juanm4/Dev/marl-tlc/experiments/mendoza_scenario/results/mendoza_compact_flows_20261020/runs/compact_2h/warnings.log",
+      "--no-step-log",
+      "true",
+      "--xml-validation",
+      "local"
+    ],
+    "end": 9000,
+    "horizon": "2h",
+    "id": "compact_2h",
+    "seed": 104729
+  },
+  "exit_code": 0,
+  "horizon_complete": true,
+  "integrity_errors": [],
+  "last": {
+    "arrived": "20941",
+    "collisions": "0",
+    "discarded": "0",
+    "duration": "6",
+    "ended": "20941",
+    "halting": "505",
+    "inserted": "21749",
+    "loaded": "25924",
+    "meanSpeed": "2.55",
+    "meanSpeedRelative": "0.20",
+    "meanTravelTime": "224.05",
+    "meanWaitingTime": "143.40",
+    "running": "808",
+    "stopped": "0",
+    "teleports": "0",
+    "time": "8999.00",
+    "waiting": "4175"
+  },
+  "local_gates_passed": true,
+  "local_metrics": {
+    "blocked_fraction_of_all_green": {
+      "227830910#1_2": 0.0,
+      "446118223#7_1": 0.0
+    },
+    "blocked_green_seconds": {},
+    "frames": 7200,
+    "green_seconds": {
+      "227830910#1_2": 1920,
+      "446118223#7_1": 1440
+    },
+    "max_head_stop_seconds": {
+      "227830910#1_1": 64,
+      "227830910#1_2": 60,
+      "446118223#7_0": 66,
+      "446118223#7_1": 23
+    },
+    "receivers": [
+      {
+        "geometric_storage": 9,
+        "lane": "-161265844#1_1",
+        "worst_15min_near_full_fraction": 0.0,
+        "worst_15min_p95_stock_fraction": 0.3333333333333333
+      },
+      {
+        "geometric_storage": 17,
+        "lane": "227837259_0",
+        "worst_15min_near_full_fraction": 0.0,
+        "worst_15min_p95_stock_fraction": 0.4117647058823529
+      }
+    ],
+    "sampling": "native 1s; full requested horizon on completed runs",
+    "unknown_head_route_samples": {}
+  },
+  "outputs_sha256": {
+    "edges.xml.gz": "adb350d62653ba52f6b394ab6046939a3fccfa5ef0d3ea9d6716b3d4386cf421",
+    "fcd.xml.gz": "2be4a68afbb39a9ffcbb37d80c48fd55f3d6ab9082807932a1ede6b66d8ad681",
+    "lanes.xml.gz": "1b75ffc3341907bbe2cf4cc83d5019ec5b706b81fc5f0ec51613b6b58fdf7344",
+    "launch.json": "72711cfebd58c80a96fa4c2193fc999eab202f6fd6ab6533f03d6dd48bb7b2af",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.xml": "742ebb6c23886177d84edc409928b27f1c0824c81fe8752cfa0347e1ab975574",
+    "tls_10936722266.xml.gz": "237b6b690891d55a7890b1d6d536e1a140bed4368da9712bcd3689fd91e5933d",
+    "tls_287040677.xml.gz": "a81246e711b80c270267964328b61e04101f67ac231841a68c7d7ae69e8a0c6a",
+    "tripinfo.xml.gz": "0f6a4895489674c7d1d7869bbba3d361655660218ba84107a16a4cc723692dad",
+    "vehroute.xml.gz": "f5cddc07a3c6618c8d8f521081ee36998bdf252fb6967f22e35617602237e36d",
+    "warnings.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "technical_reason": null,
+  "termination": "completed",
+  "wall_seconds_simulation": 50.071615202999965,
+  "warning_text": ""
+}

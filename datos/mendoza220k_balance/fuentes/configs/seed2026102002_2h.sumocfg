@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sumoConfiguration>
+    <input>
+        <net-file value="/home/juanm4/Dev/marl-tlc/nets/Mendoza/mendoza_220k_balance.net.xml" />
+        <route-files value="/home/juanm4/Dev/marl-tlc/nets/Mendoza/mendoza_220k_balance.rou.xml" />
+        <additional-files value="/home/juanm4/Dev/marl-tlc/nets/Mendoza/mendoza_220k_balance.taz.xml,/home/juanm4/Dev/marl-tlc/nets/Mendoza/gran_mendoza2.add.xml" />
+        <junction-taz value="true" />
+    </input>
+    <time>
+        <begin value="1800" />
+        <end value="9000" />
+        <step-length value="1" />
+    </time>
+    <processing>
+        <time-to-teleport value="300" />
+        <max-num-teleports value="0" />
+        <max-depart-delay value="-1" />
+        <collision.action value="warn" />
+    </processing>
+    <random_number>
+        <seed value="2026102002" />
+    </random_number>
+</sumoConfiguration>

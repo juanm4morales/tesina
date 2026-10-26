@@ -1,7 +1,7 @@
 \chapter{Arquitectura de software y especificaciones experimentales}
 \label{apendice:arquitectura_software}
 
-Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, los dominios y semillas de las campañas de búsqueda y evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. En los registros del escenario de Mendoza, \texttt{O2} designa la distribución de demanda adoptada a 220.000 viajes nominales diarios y \texttt{P2} el plan coordinado de 73 programas de tiempo fijo con ciclo de 90 segundos utilizado en la verificación del escenario.
+Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, los dominios y semillas de las campañas de búsqueda y evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. La documentación distingue el escenario histórico O2/P2 del canónico posterior \texttt{mendoza\_220k\_balance}; sus redes, programas y demandas no son intercambiables.
 
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
@@ -199,160 +199,68 @@ La especificación de \texttt{marlTLC} utiliza los siguientes mecanismos de dise
 \section{Parámetros de SUMO y programas semafóricos de referencia}
 \label{sec:parametros_sumo}
 
-En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. Las duraciones de los programas semafóricos de referencia de las tres redes sintéticas se presentaron en la Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia}; a continuación se detallan la caracterización y la conversión a tiempo fijo del escenario urbano de Mendoza.
+En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. Las duraciones de los programas semafóricos de referencia de las tres redes sintéticas se presentaron en la Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia}; a continuación se detallan los programas fijos y la evidencia operacional de Mendoza.
 
-\subsection{Mendoza: caracterización de la red y plan semafórico de referencia}
+\subsection{Mendoza balance: red, demanda y evidencia operacional}
 \label{sec:procedencia_mendoza}
 \label{subsec:procedimiento_demanda_mendoza}
 
-En la red vial modelada del microcentro de Mendoza, la longitud acumulada de todos los carriles asciende a $66{,}3\,\text{km}$, con carriles individuales de entre $11$ y $276\,\text{m}$ (media cercana a $120\,\text{m}$) y velocidades máximas reglamentarias de entre $10$ y $100\,\text{km/h}$. Los $73$ controladores semafóricos gobiernan entre $3$ y $10$ carriles entrantes cada uno y presentan un grado de vecindad de entre $2$ y $4$ intersecciones adyacentes (media de $3{,}23$); en términos de su espacio de decisiones verdes, $67$ controladores admiten dos fases seleccionables, cuatro admiten una única fase, uno admite tres fases y uno admite cuatro fases.
+El escenario \texttt{mendoza\_220k\_balance} utiliza SUMO 1.27.1, una red con 255 tramos de circulación, 554 carriles externos, ningún tramo interno, 744 conexiones y 74 controladores semafóricos fijos. El archivo de zonas contiene 37 \acrshort{acr-taz}, con identificadores de 0 a 38 salvo 6 y 9. Se conserva el ciclo común de 90 s; los programas actuales derivan de un plan previo, incorporan un controlador y normalizan las fases preservando sus verdes relativos, con amarillo de 5 s.
 
-Para el escenario operacional de evaluación, la totalidad de los $73$ controladores opera bajo el plan de tiempo fijo coordinado \texttt{P2} con ciclo común de $90\,\text{s}$, cuya distribución y duraciones nominales de fase se resumen en la Tabla \ref{tab:tiempos_mendoza_base} (con la especificación individual por controlador detallada en las Tablas \ref{tab:mendoza_programas_1} a \ref{tab:mendoza_programas_3}).
+La matriz sintética distribuye 6.204 flujos horarios entre 517 pares \acrshort{acr-od} activos, mediante rutas explícitas. Su construcción usa una optimización lineal por hora; evita el giro Benegas→Civit y cambia entre 11,6\% y 23,6\% de la masa respecto de las referencias documentadas. Las marginales actuales no se conservan como una matriz validada con datos de campo. El perfil horario heredado procede de 32 días hábiles de la cámara 169, con un promedio de 25.175,84 vehículos diarios; la documentación disponible no identifica al custodio de ese registro. La cámara está fuera del dominio modelado y no equivale a una medición completa de los flujos por movimiento. El nominal es 220.000 viajes diarios, mientras que la integral de demanda esperada de 12 h es 152.168,75 solicitudes.
+
+La Tabla \ref{tab:mendoza_archivos_balance} identifica las entradas congeladas y sus hashes SHA-256. Los manifiestos y registros compactos de cada caso se conservan bajo \path{datos/mendoza220k_balance/}; no se duplican las salidas nativas extensas.
 
 \begin{table}[H]\centering\small
-\caption{Distribución y duraciones de los programas semafóricos de tiempo fijo de Mendoza (plan \texttt{P2}), en segundos.}
-\label{tab:tiempos_mendoza_base}
-\begin{tabular}{@{}llc>{\raggedright\arraybackslash}p{3.8cm}>{\raggedright\arraybackslash}p{4.3cm}@{}}\hline
-\rowcolor{catAzulCielo!25}
-Estructura & Despeje ($A_i$) & Cant. & Rango de verdes ($V_i$) & Secuencias representativas \\\hline
-1 fase & $3$--$4$\,s ($+5$\,s rojo) & 4 & $V_1 \in [81, 82]$\,s & $82, 3, 5$ (3); $81, 4, 5$ (1) \\
-2 fases & $A_1=A_2=3$\,s & 32 & $V_1 \in [32, 66]$, $V_2 \in [18, 52]$ & $42, 3, 42, 3$ (8); $39, 3, 45, 3$ (5); $59, 3, 25, 3$ (3); otros (16) \\
-2 fases & $A_1=A_2=5$\,s & 22 & $V_1 \in [27, 53]$, $V_2 \in [27, 53]$ & $40, 5, 40, 5$ (3); $35, 5, 45, 5$ (3); $42, 5, 38, 5$ (2); otros (14) \\
-2 fases & $A_1=A_2=6$\,s & 7 & $V_1 \in [39, 51]$, $V_2 \in [27, 39]$ & $39, 6, 39, 6$ (2); $42, 6, 36, 6$ (2); otros (3) \\
-2 fases & $A_1=A_2=4$\,s & 6 & $V_1 \in [23, 42]$, $V_2 \in [40, 59]$ & $41, 4, 41, 4$ (2); otros (4) \\
-3 fases & $A_1=A_2=A_3=6$\,s & 1 & $V_1=20$, $V_2=31$, $V_3=21$ & $20, 6, 31, 6, 21, 6$ (1) \\
-4 fases & $A_1=\dots=A_4=3$\,s & 1 & $V_1=24$, $V_2=24$, $V_3=6$, $V_4=24$ & $24, 3, 24, 3,$ $6, 3, 24, 3$ (1) \\\hline
-\multicolumn{3}{l}{\textbf{Total red urbana: 73 controladores}} & \multicolumn{2}{l}{Ciclo común $C=90$\,s (Tablas \ref{tab:mendoza_programas_1}--\ref{tab:mendoza_programas_3})} \\\hline
-\end{tabular}\end{table}
+\caption{Entradas del escenario Mendoza balance y SHA-256.}\label{tab:mendoza_archivos_balance}
+\input{datos/mendoza220k_balance/tabla_entradas.tex}
+\end{table}
 
-Para construir el perfil horario de demanda a partir de los registros de las cámaras termográficas (agregados en intervalos de 15 minutos y filtrados por zonas válidas \texttt{ZoneID} 1--19 y clases vehiculares \texttt{ClassID} 1--3), se tomó la curva horaria media $\bar{q}_{\mathrm{obs}}(h)$ de la cámara 169 (asociada al ingreso oriental del tramo \texttt{93904440\#0} en la zona \acrshort{acr-taz} 28, con media de $25.175{,}84\,\text{veh/día}$ durante 32 días hábiles) y se escaló al volumen diario nominal $V_{\mathrm{diario}} = 220.000\,\text{veh/día}$ mediante el factor de expansión adimensional $f_{\mathrm{exp}} = 8{,}73853656$ ($\Delta h = 1\,\text{h}$):
-\begin{align}
-f_{\text{exp}} &= \frac{V_{\text{diario}}}{\sum_{h=0}^{23} \bar{q}_{\mathrm{obs}}(h)\,\Delta h}, \label{eq:factor_expansion_mendoza} \\
-Q_{\text{red}}(h) &= \bar{q}_{\mathrm{obs}}(h) \cdot f_{\text{exp}}, \label{eq:demanda_red_horaria}
-\end{align}
-donde $Q_{\mathrm{red}}(h)$ expresa el flujo horario nominal de la red (en vehículos por hora).
-
-Sobre las 39 zonas \acrshort{acr-taz} (numeradas de 0 a 38, con $1.482$ pares posibles), una \acrfull{acr-bfs} sobre el grafo vial determinó $520$ pares \acrshort{acr-od} físicamente conectables. La distribución espacial canónica divide estos pares en tres subconjuntos disjuntos: $\mathcal{P}_{\mathrm{fijo}}$ ($473$ pares principales que concentran una proporción fija total de $0{,}60$), $\mathcal{P}_{\mathrm{aleat}}$ ($44$ pares secundarios que se reparten el $0{,}40$ restante mediante pesos uniformes $u_{od} \sim \mathcal{U}(0,1)$) y $\mathcal{P}_{\mathrm{excl}}$ (tres pares sin demanda asignada). Para un origen $o$ y un destino $d$, $p_{od}$ denota la proporción asignada al par y $p_{od}^{\mathrm{fijo}}$ su valor especificado en el subconjunto fijo:
-\begin{equation}
-p_{od}=\begin{cases}
-p_{od}^{\mathrm{fijo}}, &(o,d)\in\mathcal P_{\mathrm{fijo}},\\
-0, &(o,d)\in\mathcal P_{\mathrm{excl}},\\
-\dfrac{0,40\,u_{od}}{\sum_{(o',d')\in\mathcal P_{\mathrm{aleat}}}u_{o'd'}},
-&(o,d)\in\mathcal P_{\mathrm{aleat}}.
-\end{cases}
-\label{eq:contrato_od_mendoza}
-\end{equation}
-Dado un flujo horario $Q_{od}(h) = Q_{\mathrm{red}}(h)\,p_{od} > 0$, la tasa de arribos por segundo es $\lambda_{od} = Q_{od}/3.600$ y los intervalos entre solicitudes sucesivas $H_{od}$, en segundos, se muestrean según una distribución exponencial a partir de $U \sim \mathcal{U}(0,1)$:
-\begin{equation}
-H_{od}=-\frac{\ln(U)}{\lambda_{od}}.
-\label{eq:llegadas_exponenciales_mendoza}
-\end{equation}
-
-\subsection{Construcción de los programas semafóricos fijos}
+\subsubsection{Programas semafóricos}
 \label{sec:mendoza_plan_fijo_apendice}
 
-Para fijar el reparto de verdes de los programas ajustados, se registraron las duraciones de sus fases en una simulación de calibración sensible al tránsito, reuniendo entre 121 y 373 ciclos completos por controlador. Se conservaron el orden de fases y los intervalos de despeje. Dentro del ciclo de $90\,\text{s}$ se reservaron las duraciones $d_p$ de las fases fijas de despeje $\mathcal{F}$, correspondientes a amarillos y todo rojo. El tiempo de verde restante $G$ se repartió entre las fases vehiculares $\mathcal{V}$ en proporción a sus duraciones medias observadas $\overline{d}_p$, medidas en segundos. Se denota por $g_p$ la duración fija asignada a la fase $p$:
-\begin{equation}
-G=90-\sum_{p\in\mathcal F}d_p,
-\qquad
- g_p\approx G\,\frac{\overline d_p}{\sum_{j\in\mathcal V}\overline d_j},
-\label{eq:mendoza_conversion_fija}
-\end{equation}
-aplicando cotas mínimas de verde y ajuste de restos enteros hasta sumar exactamente $90\,\text{s}$. Esta ecuación describe la asignación de los programas; no estima un ciclo óptimo ni acredita la adecuación física de los intervalos de despeje.
+Los programas fijos efectivos están definidos en el archivo de red. Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} resumen los desfases y las duraciones de fase de sus 74 controladores. Los estados XML completos se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}.
 
-Esta asignación conformó el plan base de tiempo fijo denominado \texttt{T0}. A continuación, se ajustaron los desfases de once intersecciones arteriales para reducir la llegada de pelotones en rojo según los tiempos de recorrido en flujo libre y los volúmenes de las rutas principales, dando lugar al plan fijo final \texttt{P2}. La Tabla \ref{tab:mendoza_desfases} detalla los once desfases modificados entre \texttt{T0} y \texttt{P2}, mientras que las Tablas \ref{tab:mendoza_programas_1} a \ref{tab:mendoza_programas_3} especifican el desfase y la secuencia completa de duraciones (en segundos) de los $73$ controladores del plan \texttt{P2} (resguardados en formato tabular en \path{datos/mendoza220k/programas_tls_completos.csv}).
-
-\begin{table}[H]\centering\small
-\caption{Desfases modificados entre el plan fijo inicial (\texttt{T0}) y el plan fijo coordinado final (\texttt{P2}).}\label{tab:mendoza_desfases}
-\input{datos/mendoza220k/tabla_desfases.tex}
+\begin{table}[H]\centering\footnotesize
+\caption{Programas semafóricos de Mendoza balance, controladores 1--25.}\label{tab:mendoza_programas_balance_1}
+\input{datos/mendoza220k_balance/tabla_programas_1.tex}
+\end{table}
+\begin{table}[H]\centering\footnotesize
+\caption{Programas semafóricos de Mendoza balance, controladores 26--50.}\label{tab:mendoza_programas_balance_2}
+\input{datos/mendoza220k_balance/tabla_programas_2.tex}
+\end{table}
+\begin{table}[H]\centering\footnotesize
+\caption{Programas semafóricos de Mendoza balance, controladores 51--74.}\label{tab:mendoza_programas_balance_3}
+\input{datos/mendoza220k_balance/tabla_programas_3.tex}
 \end{table}
 
-\Needspace{8\baselineskip}
-\begin{table}[!htbp]\centering\footnotesize
-\caption{Programas fijos del plan \texttt{P2}: controladores 1--25.}\label{tab:mendoza_programas_1}
-\input{datos/mendoza220k/tabla_programas_1.tex}
-\end{table}
-\begin{table}[!htbp]\centering\footnotesize
-\caption{Programas fijos del plan \texttt{P2}: controladores 26--50.}\label{tab:mendoza_programas_2}
-\input{datos/mendoza220k/tabla_programas_2.tex}
-\end{table}
-\begin{table}[!htbp]\centering\footnotesize
-\caption{Programas fijos del plan \texttt{P2}: controladores 51--73.}\label{tab:mendoza_programas_3}
-\input{datos/mendoza220k/tabla_programas_3.tex}
-\end{table}
-\FloatBarrier
-
-\subsection{Transformaciones de la demanda y selección del nominal}
+\subsubsection{Construcción de la demanda}
 \label{sec:mendoza_demanda_apendice}
 
-La distribución de la demanda final \texttt{O2} opera sobre el soporte de $517$ pares \acrshort{acr-od} activos y $6.204$ celdas flujo--hora a lo largo del horizonte diurno:
-\begin{enumerate}
-    \item \textbf{Primera redistribución} (\texttt{O1}): la demanda de partida se reescaló a 230.000 viajes nominales y se modificó mediante intercambios heurísticos guiados por la exposición de rutas a movimientos asociados con fallos. Se conservaron el soporte de pares, los totales horarios, las marginales esperadas por origen y destino y las celdas de la zona \acrshort{acr-taz} 28. El registro \path{datos/mendoza220k/ledger_o1_historico.json} conserva las operaciones; la matriz final se reescaló al nominal elegido antes del intercambio siguiente.
-    \item \textbf{Redistribución local en Tiburcio Benegas} (\texttt{O2}): en el volumen nominal de 220.000 viajes, se introdujo un intercambio balanceado entre cuatro pares \acrshort{acr-od} exclusivamente en la cuarta hora de simulación ($[10.800, 14.400)\,\text{s}$, 09:00--10:00) para aliviar la carga sobre el acceso recto de Tiburcio Benegas. Como muestra la Tabla \ref{tab:mendoza_exposicion_benegas}, en el catálogo de rutas el par $10\to27$ presentaba 87 de sus 209 itinerarios sobre dicho movimiento, por lo que se redujo su tasa en $\delta_{\lambda}=0{,}001117230520\,\text{veh/s}$ ($20\%$ de la menor tasa del cuarteto) y se compensó de forma cruzada con los pares $36\to15$, $10\to15$ y $36\to27$ (Tabla \ref{tab:mendoza_tasas_o2}), manteniendo inalteradas las sumas marginales por origen y destino ($8{,}044$ solicitudes esperadas transferidas sobre las $14.852{,}23$ de esa hora).
-\end{enumerate}
+La distribución espacial de demanda se generó a partir de flujos horarios y rutas explícitas, resolviendo por separado un problema lineal por hora. La tasa de cada flujo se representa mediante \texttt{period=exp($\lambda$)}, donde $\lambda=q/3600$ es la tasa de llegadas en vehículos por segundo, obtenida del flujo horario $q$. El intervalo exponencial se interpreta según la Ecuación \ref{eq:intervalo_exponencial} del Capítulo \ref{cap:marco_teorico}. La construcción evita Benegas→Civit y no conserva las marginales de la especificación previa; el cambio de itinerario modifica también las distancias. No acredita calibración de campo.
 
-\begin{table}[H]\centering\small
-\caption{Rutas asociadas con el movimiento recto analizado en Tiburcio Benegas.}\label{tab:mendoza_exposicion_benegas}
-\begin{tabular}{lrr}\hline
-Par \acrshort{acr-od} & Rutas del catálogo & Rutas con el movimiento \\\hline
-10→27 & 209 & 87 \\
-36→15 & 196 & 0 \\
-10→15 & 214 & 0 \\
-36→27 & 191 & 0 \\\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[H]\centering\small
-\caption{Tasas de arribo de los cuatro pares que intervienen en el intercambio final \texttt{O2} durante el intervalo $[10.800, 14.400)\,\text{s}$.}\label{tab:mendoza_tasas_o2}
-\input{datos/mendoza220k/tabla_tasas.tex}
-\end{table}
-
-La Tabla \ref{tab:mendoza_eleccion_nominal} sintetiza el barrido de niveles nominales diarios evaluados bajo el plan fijo \texttt{P2}. El nivel de 220.000 viajes con la distribución \texttt{O2} fue seleccionado como escenario definitivo de trabajo por constituir el máximo volumen que completó satisfactoriamente las seis semillas de verificación en ambos horizontes (en la semilla común $104759$ a doce horas, \texttt{O2} a 220.000 completó $125.100$ viajes con $\acrshort{acr-cr} = 0{,}8220$, superando en volumen absoluto atendido los $120.274$ viajes completados por \texttt{O1} a 210.000 con $\acrshort{acr-cr} = 0{,}8280$).
-
-\begin{table}[H]\centering\small
-\caption{Síntesis de los tratamientos evaluados para la elección del volumen nominal diario de Mendoza.}\label{tab:mendoza_eleccion_nominal}
-\begin{tabular}{@{}r>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{9cm}@{}}\hline
-Nominal diario & Tratamiento & Resultado en las ejecuciones de verificación \\\hline
-230.000 & \texttt{O1}/\texttt{P2} & Dos semillas completan doce horas; la semilla 104759 se satura antes del cierre. \\
-225.000 & \texttt{O2} reescalada/\texttt{P2} & No completa la tanda requerida de seis réplicas en el horizonte de doce horas. \\
-220.000 & \texttt{O1} reescalada/\texttt{P2} & Supera el horizonte de dos horas con la semilla 104759, pero falla en doce horas. \\
-220.000 & \texttt{O2}/\texttt{P2} & Las seis semillas completan satisfactoriamente los horizontes de dos y doce horas. \\
-210.000 & \texttt{O1} reescalada/\texttt{P2} & Las seis semillas completan ambos horizontes con menor volumen absoluto servido. \\\hline
-\end{tabular}
-\end{table}
-
-\subsection{Entradas, ejecución y evidencia final}
+\subsubsection{Configuración y resultados conservados}
 \label{sec:mendoza_evidencia_final}
 
-Las doce ejecuciones de verificación del escenario \texttt{O2}/\texttt{P2} se realizaron con el binario \texttt{v1\_25\_0+0570-f59cd14e561} de \acrshort{acr-sumo} empleando las seis semillas predefinidas ($104759$, $104729$, $104771$, $104861$, $104879$ y $104891$) sobre las ventanas de dos horas ($[1.800, 9.000)\,\text{s}$, 06:30--08:30) y doce horas ($[0, 43.200)\,\text{s}$, 06:00--18:00), partiendo en todos los casos desde la red vacía. El inventario completo de archivos de entrada y salida, junto con sus sumas de verificación criptográfica SHA-256, se preserva en \path{datos/mendoza220k/fuentes_locales_sha256.json} y es validado automáticamente mediante el script reproducible \path{datos/mendoza220k/generar.py}.
-
-La Tabla \ref{tab:mendoza_opciones_finales} enumera las opciones de configuración de \acrshort{acr-sumo} utilizadas en la campaña, y las Tablas \ref{tab:mendoza_casos_2h} y \ref{tab:mendoza_casos_12h} reportan los contadores exactos al cierre de cada una de las doce ejecuciones (donde $L$, $I$, $A$, $R$ y $W$ denotan los vehículos cargados, insertados, completados, aún circulando al cierre y pendientes de ingreso, respectivamente, y $\acrshort{acr-cr} = A/L$), todas las cuales finalizaron con cero teletransportes, cero colisiones detectadas y cero descartes, verificando exactamente las identidades de conservación $L = I + W$ e $I = A + R$. La ausencia de colisiones detectadas depende de las opciones de simulación empleadas, en particular de que no se activó \texttt{collision.check-junctions}, y no certifica la seguridad física de los cruces.
+Las configuraciones de 2 h y 12 h parten de una red vacía y usan paso de 1 s, \path{time-to-teleport}=300 s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas; no se completan opciones ausentes con valores predeterminados supuestos.
 
 \begin{table}[H]\centering\small
-\caption{Opciones efectivas de \acrshort{acr-sumo} en las ejecuciones de verificación del escenario de Mendoza.}\label{tab:mendoza_opciones_finales}
-\begin{tabular}{@{}ll@{}}\hline
-Opción & Valor \\\hline
-Paso de simulación & 1 segundo \\
-\texttt{time-to-teleport} & 300 segundos \\
-\texttt{max-num-teleports} & 0 \\
-\texttt{max-depart-delay} & $-1$ (sin descarte por demora de ingreso) \\
-\texttt{collision.action} & \texttt{warn} \\
-\texttt{junction-taz} & \texttt{true} \\
-\texttt{summary-output.period} & 1 segundo \\
-\texttt{tripinfo-output.write-unfinished} & \texttt{true} \\
-\texttt{tripinfo-output.write-undeparted} & \texttt{true} \\
-\texttt{xml-validation} & \texttt{never} (entradas validadas previamente) \\\hline
-\end{tabular}
+\caption{Opciones explícitas en las dos configuraciones de Mendoza balance.}\label{tab:mendoza_opciones_balance}
+\input{datos/mendoza220k_balance/tabla_opciones.tex}
 \end{table}
 
+Se observó una ejecución de desarrollo con semilla 104729 y tres semillas confirmatorias nuevas (2026102001--2026102003); cada semilla tiene un caso en ambas ventanas. Las configuraciones canónicas declaran 104729; los seis archivos por caso registran las semillas confirmatorias correspondientes. La unidad confirmatoria es la semilla, no cada combinación de semilla y horizonte. Según el balance definido en la Sección \ref{subsec:balance_vehiculos_mendoza} del Capítulo \ref{capitulo:metodologia}, $L$ es el total de vehículos cargados, $I$ el de insertados, $A$ el de viajes llegados, $R$ los que siguen circulando y $W$ los pendientes de ingreso. Las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} muestran esos contadores al cierre; la tasa de completitud es \acrshort{acr-cr}. Cero colisiones registradas describe el control configurado en SUMO y no certifica seguridad física.
+
 \begin{table}[H]\centering\small
-\caption{Ejecuciones de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de dos horas.}\label{tab:mendoza_casos_2h}
-\input{datos/mendoza220k/tabla_casos_2h.tex}
+\caption{Resultados por semilla en la ventana de 2 h.}\label{tab:mendoza_casos_balance_2h}
+\input{datos/mendoza220k_balance/tabla_casos_2h.tex}
 \end{table}
 \begin{table}[H]\centering\small
-\caption{Ejecuciones de aceptación con programas fijos (\texttt{O2}/\texttt{P2}): horizonte de doce horas.}\label{tab:mendoza_casos_12h}
-\input{datos/mendoza220k/tabla_casos_12h.tex}
+\caption{Resultados por semilla en la ventana de 12 h.}\label{tab:mendoza_casos_balance_12h}
+\input{datos/mendoza220k_balance/tabla_casos_12h.tex}
 \end{table}
+
+Las tres semillas confirmatorias completaron ambos horizontes con cero teletransportes, colisiones y descartes, y con una tasa de completitud de al menos 0,75. La tabla de síntesis resume solo esas tres semillas; el caso de desarrollo se muestra por separado en las tablas precedentes. Quedaron vehículos pendientes de ingreso, en especial desde las zonas de acceso de Las Heras 37 y 38, y se observó congestión en otros sectores. La evidencia fortalece la repetibilidad de este escenario bajo SUMO 1.27.1, pero no establece riesgo bajo de fallo, capacidad vial, calibración de campo ni desempeño de políticas aprendidas.
 
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
@@ -650,7 +558,7 @@ En esta prueba, B y D incluyen ejecuciones completadas y no se clasifican como f
 \subsection{Comparación local y vecinal multiescenario}
 \label{subsec:cooperacion_multiescenario}
 
-La comparación utiliza una misma configuración de hiperparámetros de \acrshort{acr-mappo} con arquitectura \texttt{h128} en las tres redes sintéticas. La variante C se eligió entre las formulaciones vecinales sin un criterio previo documentado; esta decisión no demuestra su superioridad.
+La comparación utiliza una misma configuración de hiperparámetros de \acrshort{acr-mappo} con arquitectura \texttt{h128} en las tres redes sintéticas. Para el contraste pareado se adoptó la variante C, que normaliza por el número de carriles entrantes $m_j$ tanto la observación como la recompensa vecinal; su elección frente a las variantes B y D no respondió a una regla estadística prefijada, por lo que la comparación evalúa únicamente C frente a A y no establece un orden general entre formulaciones vecinales.
 
 En la versión conservada para esta comparación, las atribuciones almacenadas en otros carriles no se actualizan cuando vence la memoria, lo que puede subestimar la espera atribuida al carril actual. La salida de vehículos, los cambios de carril y el vencimiento de la ventana también pueden reducir la señal local sin que disminuya la espera acumulada por viaje. Esta última se evalúa con \texttt{TripInfo.waitingTime}, que acumula la espera durante todo el viaje sin esa ventana de olvido \cite{SUMO2026_TripInfo}.
 
@@ -751,7 +659,7 @@ El protocolo original de la campaña, identificado en \path{docs/PROTOCOLO_COOPE
 
 \subsection{Alcance y limitaciones de la comparación}
 
-El contraste A/C modifica conjuntamente la observación y la recompensa vecinales y aumenta la dimensión de entrada del actor y del crítico centralizado. Por ello, no aísla el aporte de cada componente ni el de la información vecinal frente al aumento del número de parámetros. Tampoco anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes.
+El contraste A/C modifica conjuntamente la observación y la recompensa vecinales y aumenta la dimensión de entrada del actor y del crítico centralizado. Por ello, no aísla el efecto individual de cada componente ni el de la información vecinal frente al aumento del número de parámetros. Tampoco anticipa el desempeño de variantes con búsquedas de hiperparámetros independientes.
 
 La evidencia se limita a \acrshort{acr-mappo}, por lo que permite comparar A y C, pero no ordenar las formulaciones vecinales en general. La planificación muestral se basó en una diferencia absoluta y un intervalo del $95\%$; la regla de decisión usa el efecto relativo y un intervalo del $98{,}33\%$. Por esa diferencia, el cálculo muestral no asegura la precisión requerida por la regla final.
 
@@ -819,12 +727,12 @@ Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero desp
 
 \subsection{Preparación de las figuras de escenarios}
 
-Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se representan mediante calzadas divididas en carriles, con anchos convencionales y escala propia por panel. El mapa urbano conserva la captura de SUMO y destaca el tramo de la TAZ 28. El encuadre conserva la escala de distancia. La Figura \ref{fig:dominio_mendoza} muestra el dominio urbano modelado; el punto de conteo de la cámara 169 queda fuera de ese dominio y no aparece en la captura.
+Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. El mapa de Mendoza balance se construyó a partir de la red XML y ubica los controladores y el acceso TAZ 28; la cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas se presenta por separado en la Figura \ref{fig:mendoza_taz}.
 
 \Needspace{9\baselineskip}
 \subsection{Vistas documentales de los escenarios}
 
-La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos de referencia. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} conserva la vista completa de las zonas urbanas: el celeste identifica sus tramos y los recuadros rojos facilitan localizarlos; no son límites territoriales.
+La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos de referencia. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} representa las TAZ del escenario balance mediante sus tramos asociados; las marcas no son límites territoriales.
 
 \begin{figure}[H]
 \centering
@@ -835,7 +743,7 @@ La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución 
 
 \begin{figure}[H]
 \centering
-\sumonetcapture{imagenes/escenario_mendoza_taz_sumo.png}{215bp 0bp 480bp 0bp}{0.060575}{100\,m}
-\caption{Zonas de análisis de tránsito y sus tramos asociados en la red de Mendoza.}
+\input{imagenes/metodologia_mendoza_balance_taz.tex}
+\caption{Zonas de análisis de tránsito de Mendoza balance, representadas mediante sus tramos asociados. Los identificadores van de 0 a 38, salvo 6 y 9; las marcas no representan límites territoriales.}
 \label{fig:mendoza_taz}
 \end{figure}

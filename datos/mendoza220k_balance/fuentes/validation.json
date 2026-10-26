@@ -1,0 +1,400 @@
+{
+  "scenario": "mendoza_220k_balance",
+  "status": "passed",
+  "scenario_inputs_unchanged": true,
+  "sumo_version": "Eclipse SUMO sumo 1.27.1",
+  "binary_sha256": "c3cc34e2250b21eaca285f42186c713fa6be5ded681cb3532dbadb3cd67a87d1",
+  "inputs_sha256": {
+    "nets/Mendoza/mendoza_220k_balance.net.xml": "06222972799a5583f9d9846f69909e6a33cb01c06cc5e2f602c1511cf7671115",
+    "nets/Mendoza/mendoza_220k_balance.taz.xml": "b80859cb6f162601dd4b7dc8599144e0bf2608dd38a5bc1ca5cd2e1236702e0a",
+    "nets/Mendoza/mendoza_220k_balance.rou.xml": "917e1904329d6b84fece04766a4196eebae0fb2304a729944f5f52df2c00e0ca",
+    "nets/Mendoza/mendoza_220k_balance_12h.sumocfg": "eba9d238efdfc98d732d00d0c60183f30340b8869f03583b14f0da02ff2d3ddc",
+    "nets/Mendoza/mendoza_220k_balance_2h.sumocfg": "6d0922b1c9374b60b214e30d85efeb50dcb90d0f311af9620d22d3ac470b03cd",
+    "nets/Mendoza/gran_mendoza2.add.xml": "fe96f276987b8f9ccd71736a76a8524eb948b192b2326221b92f4959749b8a38"
+  },
+  "initial_manifest_sha256": "c9b231cfc95abedd0180da7504339fc6c202f3ac4333ff8f1a52561b3f666e16",
+  "development_seed": 104729,
+  "new_confirmatory_seeds": [
+    2026102001,
+    2026102002,
+    2026102003
+  ],
+  "statistical_units": "three new seeds, each required to pass both horizons; development excluded",
+  "validation": [
+    {
+      "case": "seed2026102001_12h",
+      "seed": 2026102001,
+      "horizon": "12h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_12h/result.json",
+      "sha256": "8e2b58b3c971d6917767111e684818eae491e5a6e36f7a46b7bbcbc2a85d1dbf",
+      "CR": 0.8514218055982573,
+      "last": {
+        "arrived": "130156",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "11",
+        "ended": "130156",
+        "halting": "500",
+        "inserted": "130956",
+        "loaded": "152869",
+        "meanSpeed": "2.71",
+        "meanSpeedRelative": "0.22",
+        "meanTravelTime": "228.87",
+        "meanWaitingTime": "1101.03",
+        "running": "800",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "43199.00",
+        "waiting": "21913"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 43200,
+        "green_seconds": {
+          "227830910#1_2": 11520,
+          "446118223#7_1": 8640
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 65,
+          "227830910#1_2": 65,
+          "446118223#7_0": 70,
+          "446118223#7_1": 37
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.33888888888888385
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.35294117647058826
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    },
+    {
+      "case": "seed2026102001_2h",
+      "seed": 2026102001,
+      "horizon": "2h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102001_2h/result.json",
+      "sha256": "92c2502c6ad1fbc175a2a2d8161ffc76d3b74b6f83d4cd32c6df6d2c59186c47",
+      "CR": 0.8085666705394834,
+      "last": {
+        "arrived": "20878",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "7",
+        "ended": "20878",
+        "halting": "528",
+        "inserted": "21723",
+        "loaded": "25821",
+        "meanSpeed": "2.74",
+        "meanSpeedRelative": "0.22",
+        "meanTravelTime": "222.68",
+        "meanWaitingTime": "151.26",
+        "running": "845",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "8999.00",
+        "waiting": "4098"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 7200,
+        "green_seconds": {
+          "227830910#1_2": 1920,
+          "446118223#7_1": 1440
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 64,
+          "227830910#1_2": 56,
+          "446118223#7_0": 69,
+          "446118223#7_1": 27
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.3333333333333333
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.29411764705882354
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    },
+    {
+      "case": "seed2026102002_12h",
+      "seed": 2026102002,
+      "horizon": "12h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102002_12h/result.json",
+      "sha256": "bf656754b6b0381d3264f22e7f3a1ce6724fde34827be387899da428ca48257b",
+      "CR": 0.8509247323143301,
+      "last": {
+        "arrived": "129378",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "11",
+        "ended": "129378",
+        "halting": "451",
+        "inserted": "130105",
+        "loaded": "152044",
+        "meanSpeed": "2.74",
+        "meanSpeedRelative": "0.21",
+        "meanTravelTime": "229.30",
+        "meanWaitingTime": "1075.87",
+        "running": "727",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "43199.00",
+        "waiting": "21939"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 43200,
+        "green_seconds": {
+          "227830910#1_2": 11520,
+          "446118223#7_1": 8640
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 65,
+          "227830910#1_2": 62,
+          "446118223#7_0": 70,
+          "446118223#7_1": 31
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.3333333333333333
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.29411764705882354
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    },
+    {
+      "case": "seed2026102002_2h",
+      "seed": 2026102002,
+      "horizon": "2h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102002_2h/result.json",
+      "sha256": "0db139f884d48bab914a13af136b9494e9a3fc500ba02083d3502ec509ca36da",
+      "CR": 0.8099861303744799,
+      "last": {
+        "arrived": "21024",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "7",
+        "ended": "21024",
+        "halting": "515",
+        "inserted": "21865",
+        "loaded": "25956",
+        "meanSpeed": "2.61",
+        "meanSpeedRelative": "0.21",
+        "meanTravelTime": "224.89",
+        "meanWaitingTime": "151.71",
+        "running": "841",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "8999.00",
+        "waiting": "4091"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 7200,
+        "green_seconds": {
+          "227830910#1_2": 1920,
+          "446118223#7_1": 1440
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 65,
+          "227830910#1_2": 45,
+          "446118223#7_0": 67,
+          "446118223#7_1": 30
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.3333333333333333
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.35294117647058826
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    },
+    {
+      "case": "seed2026102003_12h",
+      "seed": 2026102003,
+      "horizon": "12h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102003_12h/result.json",
+      "sha256": "e1a3a12dd092f4b289b272b7a9b06c35330a981a1fb1a170c538706bfd2df192",
+      "CR": 0.8493953781181963,
+      "last": {
+        "arrived": "129526",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "13",
+        "ended": "129526",
+        "halting": "472",
+        "inserted": "130276",
+        "loaded": "152492",
+        "meanSpeed": "2.49",
+        "meanSpeedRelative": "0.20",
+        "meanTravelTime": "229.28",
+        "meanWaitingTime": "1102.64",
+        "running": "750",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "43199.00",
+        "waiting": "22216"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 43200,
+        "green_seconds": {
+          "227830910#1_2": 11520,
+          "446118223#7_1": 8640
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 65,
+          "227830910#1_2": 63,
+          "446118223#7_0": 70,
+          "446118223#7_1": 49
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.3333333333333333
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.35294117647058826
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    },
+    {
+      "case": "seed2026102003_2h",
+      "seed": 2026102003,
+      "horizon": "2h",
+      "result": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/runs/seed2026102003_2h/result.json",
+      "sha256": "d1e941017363a089a1a594d62cb55b2b320e67f1878417823ed946bb00d15b1b",
+      "CR": 0.8061149832492587,
+      "last": {
+        "arrived": "20934",
+        "collisions": "0",
+        "discarded": "0",
+        "duration": "6",
+        "ended": "20934",
+        "halting": "507",
+        "inserted": "21764",
+        "loaded": "25969",
+        "meanSpeed": "2.74",
+        "meanSpeedRelative": "0.22",
+        "meanTravelTime": "224.51",
+        "meanWaitingTime": "139.08",
+        "running": "830",
+        "stopped": "0",
+        "teleports": "0",
+        "time": "8999.00",
+        "waiting": "4205"
+      },
+      "local_metrics": {
+        "blocked_fraction_of_all_green": {
+          "227830910#1_2": 0.0,
+          "446118223#7_1": 0.0
+        },
+        "blocked_green_seconds": {},
+        "frames": 7200,
+        "green_seconds": {
+          "227830910#1_2": 1920,
+          "446118223#7_1": 1440
+        },
+        "max_head_stop_seconds": {
+          "227830910#1_1": 64,
+          "227830910#1_2": 40,
+          "446118223#7_0": 69,
+          "446118223#7_1": 45
+        },
+        "receivers": [
+          {
+            "geometric_storage": 9,
+            "lane": "-161265844#1_1",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.3333333333333333
+          },
+          {
+            "geometric_storage": 17,
+            "lane": "227837259_0",
+            "worst_15min_near_full_fraction": 0.0,
+            "worst_15min_p95_stock_fraction": 0.47058823529411764
+          }
+        ],
+        "sampling": "native 1s; full requested horizon on completed runs",
+        "unknown_head_route_samples": {}
+      }
+    }
+  ],
+  "report": "experiments/mendoza_scenario/results/mendoza_balance_multiseed_20261020/README.md",
+  "report_json_sha256": "949d3fd732def8bc49bb9e18884a3034404448ed4f52083730a07dd4825c093c",
+  "prepared_sha256": "02e64dfb3dc8dedc523776e47e68605e1c21a160cd6807bc5bdd3997c2f0ec0d",
+  "failure_upper_one_sided_95_under_independence": 0.6315968501359612,
+  "limitations": [
+    "synthetic OD and fixed route policy; Benegas left turn unexposed",
+    "backlog remains, concentrated at Las Heras origins37/38",
+    "three new seed units do not establish low failure risk or field validity"
+  ]
+}
