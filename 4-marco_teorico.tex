@@ -892,6 +892,8 @@ Para mitigar la inestabilidad de la tríada mortal —en particular el problema 
     \item \textbf{Memoria de repetición de experiencias (\textit{replay buffer}):} almacena transiciones históricas $(s_t, a_t, r_{t+1}, s_{t+1}, d_{t+1})$ en un \textit{buffer} $\mathcal{D}$. La optimización extrae \textit{minibatches} aleatorios de esta memoria, lo cual mitiga la correlación temporal propia del flujo continuo de vehículos en el simulador y aproxima los datos a la hipótesis de muestras independientes.
 \end{itemize}
 
+En la repetición de experiencias priorizada, las transiciones con mayor magnitud de error de diferencia temporal tienen mayor probabilidad de ser muestreadas. Las actualizaciones se ponderan para atenuar el sesgo de este muestreo no uniforme \cite{schaul2016prioritized}.
+
 Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar; la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los \textit{minibatches} muestreados del \textit{buffer} contra el valor objetivo fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
 
 \begin{figure}[!htbp]
