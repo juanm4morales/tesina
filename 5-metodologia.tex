@@ -330,7 +330,7 @@ La Figura \ref{fig:informacion_controladores} compara la actualización de los a
 \section{Entrenamiento y búsqueda de hiperparámetros}
 \label{sec:experimentos_hiperparametros}
 
-La \glsdisp{acr-hpo}{Optimización de Hiperparámetros (\glsentryuseri{acr-hpo}, \glsentryshort{acr-hpo})} busca configuraciones de aprendizaje para los cuatro algoritmos en las tres redes sintéticas. Cada combinación de algoritmo y red constituye un \gls{estudio_hpo} con un cupo de 100 ensayos. Cada \gls{ensayo_hpo} entrena una configuración candidata desde cero con un presupuesto de 345.600 pasos de entorno. En los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el tamaño objetivo del lote es de 5.760 pasos de entorno; en \acrshort{acr-idqn}, se expresa en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La función objetivo se define en la Sección \ref{subsec:objetivo_busqueda} y el espacio de búsqueda, en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
+La \glsdisp{acr-hpo}{Optimización de Hiperparámetros (\glsentryuseri{acr-hpo}, \glsentryshort{acr-hpo})} busca configuraciones de aprendizaje para los cuatro algoritmos en las tres redes sintéticas. El diseño prevé un \gls{estudio_hpo} por combinación de algoritmo y red. Cada \gls{ensayo_hpo} entrena una configuración candidata desde cero. En los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el tamaño objetivo del lote es de 5.760 pasos de entorno; en \acrshort{acr-idqn}, se expresa en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La función objetivo se define en la Sección \ref{subsec:objetivo_busqueda}. Los dominios cotejados para \acrshort{acr-ippo} y \acrshort{acr-mappo} se detallan en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
 Optuna registra las configuraciones evaluadas y los valores de la función objetivo. Integrado con Ray Tune, propone nuevas configuraciones a partir de los resultados disponibles, mientras Ray Tune organiza la ejecución de los ensayos \cite{akiba2019optuna,liaw2018tune}.
 
@@ -344,13 +344,15 @@ El protocolo no aplica poda temprana, es decir, no detiene ensayos por su desemp
 \label{tab:diseno_busqueda}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{5cm}>{\raggedright\arraybackslash}p{7.5cm}@{}}\hline
 \textbf{Aspecto} & \textbf{Definición} \\\hline
-Cupo de ensayos & 100 por combinación de algoritmo y red sintética \\
-Presupuesto por ensayo & 345.600 pasos de entorno desde cero \\
+Cupo total previsto & 100 ensayos por estudio \\
+Presupuesto asignado por ensayo & 345.600 pasos de entorno \\
 Muestreador & \acrshort{acr-tpe} sobre Optuna, coordinado por Ray Tune \\
 Poda temprana & No se aplica \\
 Función objetivo & Espera media por vehículo insertado \\
 \hline
 \end{tabular}\end{table}
+
+Para \acrshort{acr-happo} e \acrshort{acr-idqn}, los registros locales cotejados documentan la preparación y el envío de los trabajos, pero no acreditan ensayos completados.
 
 \subsection{Condiciones de simulación y entrenamiento}
 \label{subsec:ciclo_episodico}

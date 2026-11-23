@@ -1308,11 +1308,11 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
 
 \subsection{Paradigmas de entrenamiento y ejecución}
 
-Para mitigar la no estacionariedad respetando la observabilidad parcial de los agentes durante la ejecución, la literatura distingue dos paradigmas fundamentales según la información disponible durante la optimización \cite{ctde_survey}:
+Los algoritmos multiagente pueden clasificarse según la información disponible durante el entrenamiento y la ejecución \cite[Sección~9.1]{marlbook}. A continuación se presentan los dos enfoques que utiliza esta tesina:
 
 \begin{itemize}
-    \item \textbf{Aprendizaje independiente (Independent Learning, \acrshort{acr-il}):} cada agente aprende de forma totalmente descentralizada tratando a los demás agentes como componentes estocásticos del entorno. Aunque computacionalmente simple y altamente escalable, es susceptible a la inestabilidad por no estacionariedad.
-    \item \textbf{Entrenamiento centralizado con ejecución descentralizada (Centralized Training with Decentralized Execution, \acrshort{acr-ctde}):} durante la etapa de entrenamiento en el simulador, se aprovecha información global privilegiada (estados conjuntos o concatenaciones de observaciones) para estimar valores y orientar el aprendizaje de las políticas locales; durante la etapa de ejecución, el componente centralizado se desacopla y cada agente opera con su política local. La Figura \ref{fig:ctde_architecture} ilustra esta separación entre etapas.
+    \item \textbf{Aprendizaje Independiente (\textit{Independent Learning}, \acrshort{acr-il}):} cada agente aprende a partir de su propia experiencia y trata las acciones de los demás como parte de la dinámica del entorno. Este enfoque evita representar un espacio de acciones conjuntas, cuyo tamaño crece con el número de agentes. Sin embargo, a medida que los demás agentes actualizan sus políticas, la dinámica que percibe cada agente puede cambiar y desestabilizar el aprendizaje.
+    \item \textbf{Entrenamiento Centralizado con Ejecución Descentralizada (\textit{Centralized Training with Decentralized Execution}, \acrshort{acr-ctde}):} durante el entrenamiento se puede utilizar información que no está disponible para cada agente al ejecutar su política. Por ejemplo, un crítico centralizado puede estimar valores a partir de las observaciones conjuntas para orientar el aprendizaje de las políticas locales. Durante la ejecución, cada agente actúa con su política local sin consultar al crítico. La Figura \ref{fig:ctde_architecture} ilustra ese ejemplo.
 \end{itemize}
 
 \begin{figure}[!htbp]
