@@ -274,6 +274,8 @@
 
 \newglossaryentry{funcion_valor}{
     name={Función de Valor},
+    text={función de valor},
+    plural={funciones de valor},
     description={Estimación matemática de la cantidad total de recompensa que un agente puede esperar acumular en el futuro, comenzando desde un estado particular y siguiendo una política específica}
 }
 
@@ -381,11 +383,11 @@
  description={Número que inicializa un generador de números pseudoaleatorios. Permite repetir su secuencia cuando se conservan el procedimiento y la configuración; usar la misma semilla no garantiza resultados idénticos si se modifican las decisiones del agente o el entorno}
 }
 \newglossaryentry{aceleracion_vehicular}{
- name={$a$ (aceleración vehicular)}, text={aceleración},
- description={Parámetro de aumento de velocidad del tipo de vehículo en SUMO, expresado en metros por segundo cuadrado. En las ecuaciones de aprendizaje, la letra $a$ puede representar una acción; son usos distintos que se distinguen por el contexto}
+ name={$a_{\mathrm{veh}}$ (aceleración vehicular)}, text={aceleración},
+ description={Parámetro de aumento de velocidad del tipo de vehículo en SUMO, expresado en metros por segundo cuadrado}
 }
 \newglossaryentry{desaceleracion_vehicular}{
- name={$d$ (desaceleración vehicular)}, text={desaceleración},
+ name={$d_{\mathrm{veh}}$ (desaceleración vehicular)}, text={desaceleración},
  description={Parámetro de frenado del tipo de vehículo en SUMO, expresado como una magnitud positiva en metros por segundo cuadrado}
 }
 \newglossaryentry{velocidad_maxima_vehicular}{
@@ -449,4 +451,32 @@
     text={vehículo pendiente de ingreso},
     plural={vehículos pendientes de ingreso},
     description={Vehículos cuya salida programada ya corresponde, pero que todavía no han podido insertarse en la red vial; se distinguen de los vehículos retenidos dentro de ella}
+}
+
+\newglossaryentry{aprendizaje_profundo}{
+    name={Aprendizaje profundo},
+    text={aprendizaje profundo},
+    plural={aprendizajes profundos},
+    description={Entrenamiento de arquitecturas con múltiples capas de parámetros ajustables, capaces de extraer representaciones jerárquicas y relaciones no lineales directamente de los datos. Se distingue de los métodos tabulares, que almacenan una estimación por cada estado y acción}
+}
+
+\newglossaryentry{red_neuronal}{
+    name={Red neuronal},
+    text={red neuronal},
+    plural={redes neuronales},
+    description={Modelo computacional determinista formado por capas de neuronas que aproxima funciones por aprendizaje. Se distingue de la red vial, que describe el conjunto de vías y arterias del escenario simulado}
+}
+
+\newglossaryentry{neurona_artificial}{
+    name={Neurona artificial},
+    text={neurona artificial},
+    plural={neuronas artificiales},
+    description={Unidad básica de procesamiento de una red neuronal. Pondera un vector de entradas con un vector de pesos, añade un sesgo y aplica una función de activación para producir una salida escalar}
+}
+
+\newglossaryentry{slurm}{
+    name={Slurm},
+    text={Slurm},
+    plural={Slurm},
+    description={Sistema de gestión de recursos y planificación de trabajos de clústeres de cómputo. El nombre no es una sigla y se escribe con mayúscula inicial}
 }

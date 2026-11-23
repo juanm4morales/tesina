@@ -221,6 +221,11 @@ mathfontname=mathsf]{mhchem}
   \fi
 }
 
+% Presentación bilingüe acotada a los nombres de aprendizaje; conserva enlace y uso de la sigla.
+\newcommand{\presentaraprendizaje}[2]{%
+  \glsdisp{#1}{#2 (\glsentryuseri{#1}, \glsentryshort{#1})}%
+}
+
 \loadglsentries{glosario.tex}
 \loadglsentries{glosario_abreviaturas.tex}
 \makeglossaries

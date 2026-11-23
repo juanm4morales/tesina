@@ -2,14 +2,14 @@
 \chapter{Metodología}
 \label{capitulo:metodologia}
 
-Este capítulo describe cómo se entrenan y evalúan políticas de control semafórico en redes viales simuladas. En tres redes sintéticas se comparan \acrshort{acr-mappo}, una adaptación de \acrshort{acr-happo} y los métodos independientes \acrshort{acr-ippo} e \acrshort{acr-idqn}. La evaluación considera la espera vehicular, la atención a la demanda y la distribución de las demoras entre intersecciones. Para el centro de Mendoza se construye un escenario con demanda sintética y se comprueba su funcionamiento con programas semafóricos fijos, sin evaluar allí políticas aprendidas.
+Este capítulo describe cómo se entrenan y evalúan políticas de control semafórico en redes viales simuladas. El diseño compara \acrshort{acr-mappo}, una adaptación de \acrshort{acr-happo} y los métodos independientes \acrshort{acr-ippo} e \acrshort{acr-idqn} en tres redes sintéticas. La evaluación considera la espera vehicular, la atención a la demanda y la distribución de las demoras entre intersecciones. Para el centro de Mendoza se construye un escenario con demanda sintética y se comprueba su funcionamiento con programas semafóricos fijos, sin evaluar allí políticas aprendidas.
 
-La Figura \ref{fig:flujo_metodologico_general} resume las seis etapas de la comparación en las redes sintéticas: preparar la geometría y la demanda en \acrshort{acr-sumo}; buscar hiperparámetros en dominios amplios; refinarlos en una segunda fase; seleccionar configuraciones con filtros operacionales en un panel común de semillas; entrenar desde cero un modelo por algoritmo y red; y evaluar la espera, la atención a la demanda y la distribución espacial de las demoras.
+La Figura \ref{fig:flujo_metodologico_general} resume el recorrido en cuatro pasos: preparar los escenarios, buscar configuraciones, entrenar cada configuración y medir su desempeño. La búsqueda no entrega una configuración ya validada: cada propuesta se entrena con el presupuesto asignado y se mide con la función objetivo definida en este capítulo; ese ciclo se repite para cada ensayo.
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_v2_flujo.tex}
-\caption{Etapas del procedimiento experimental en las redes sintéticas para comparar \mbox{\acrshort{acr-mappo}}, una adaptación de \acrshort{acr-happo}, \acrshort{acr-ippo} e \acrshort{acr-idqn}.}
+\caption{Recorrido del procedimiento experimental en las redes sintéticas para comparar \mbox{\acrshort{acr-mappo}}, una adaptación de \acrshort{acr-happo}, \acrshort{acr-ippo} e \acrshort{acr-idqn}: preparar escenarios, buscar configuraciones, entrenar cada configuración y medir su desempeño. Cada ensayo de búsqueda entrena y mide una propuesta; la flecha de retorno indica la repetición del ciclo.}
 \label{fig:flujo_metodologico_general}
 \end{figure}
 
@@ -24,11 +24,11 @@ El capítulo desarrolla el diseño experimental y los escenarios (secciones \ref
 
 La simulación microscópica permite probar las acciones semafóricas bajo condiciones controladas. El diseño utiliza un corredor de tres cruces ($3\times1$), una cuadrícula homogénea de nueve ($3\times3$) y una cuadrícula heterogénea de dieciséis ($4\times4\_H$). Esta última incorpora diferencias entre intersecciones en la cantidad de carriles, los sentidos de circulación y las fases disponibles.
 
-Los cuatro algoritmos comparten una interfaz de observación y acción. \acrshort{acr-mappo} y la adaptación de \acrshort{acr-happo} utilizan entrenamiento centralizado y ejecución descentralizada; \acrshort{acr-ippo} e \acrshort{acr-idqn} aprenden de forma independiente. El ajuste de hiperparámetros se divide en dos fases: la primera explora dominios amplios y la segunda reduce los intervalos a partir de las configuraciones de mejor desempeño de cada escenario. Antes del entrenamiento final, se seleccionan las configuraciones que cumplen los criterios operacionales.
+Los cuatro algoritmos comparten una interfaz de observación y acción. \acrshort{acr-mappo} y la adaptación de \acrshort{acr-happo} utilizan entrenamiento centralizado y ejecución descentralizada; \acrshort{acr-ippo} e \acrshort{acr-idqn} aprenden de forma independiente. El ajuste de hiperparámetros recorre cada combinación de algoritmo y red con una misma función objetivo y un cupo de ensayos.
 
-Como exploración preliminar, se probaron distintas formulaciones de observación y recompensa con \acrshort{acr-mappo} y se comparó una formulación local con otra vecinal. Esta comparación modificó conjuntamente la observación y la recompensa, por lo que no permite aislar sus efectos individuales. El protocolo refinado de comparación de algoritmos utiliza la formulación local. Las configuraciones y el procedimiento de las pruebas exploratorias se documentan en la Sección \ref{sec:comparacion_local_vecinal} del Apéndice \ref{apendice:arquitectura_software}.
+Como exploración preliminar, se probaron distintas formulaciones de observación y recompensa con \acrshort{acr-mappo} y se comparó una formulación local con otra vecinal. Esta comparación modificó conjuntamente la observación y la recompensa, por lo que no permite aislar sus efectos individuales. El protocolo de comparación de algoritmos utiliza la formulación local. Las configuraciones y el procedimiento de las pruebas exploratorias se documentan en la Sección \ref{sec:comparacion_local_vecinal} del Apéndice \ref{apendice:arquitectura_software}.
 
-En la selección de configuraciones y en la evaluación final, la espera media se analiza junto con la cantidad de vehículos insertados y la proporción de viajes completados. Una espera menor puede coincidir con el ingreso de menos vehículos a la red; por sí sola, esa reducción no demuestra que el tránsito circule con mayor fluidez \cite{jiang2024xlight}.
+En la búsqueda, la espera media se analiza junto con la cantidad de vehículos insertados y la proporción de viajes completados.
 
 \section{Escenarios de simulación}
 \label{sec:diseno_escenarios}
@@ -56,7 +56,7 @@ Rápido (\texttt{FASTVEHTYPE}) & 15\% & 3,1 & 5,0 & 19,44 \\\hline
 
 Los vehículos miden $4{,}5$ metros y mantienen una separación mínima de $2{,}5$ metros (\texttt{minGap}). Se utiliza el modelo de seguimiento de Krauss, que determina cómo un vehículo ajusta su velocidad respecto del que circula delante. Su parámetro adimensional $\sigma=0{,}5$ regula la variabilidad aleatoria de la conducción \cite{krauss1998microscopic,SUMO2026_SUMO}.
 
-Las rutas se generaron con \texttt{random\_}\allowbreak\texttt{routes\_}\allowbreak\texttt{taz.py} a partir de matrices \acrfull{acr-od}, que distribuyen el flujo entre las zonas \acrshort{acr-taz} perimetrales de cada red. Los archivos expresan la demanda solicitada en vehículos por hora mediante el atributo \texttt{vehsPerHour} de \acrshort{acr-sumo}. La construcción de las matrices y las asignaciones principales se detallan en la Sección \ref{subsec:detalles_redes_sinteticas} del Apéndice \ref{apendice:arquitectura_software}.
+Las rutas se generaron con \texttt{random\_}\allowbreak\texttt{routes\_}\allowbreak\texttt{taz.py} a partir de matrices \glsdisp{acr-od}{Origen-Destino (\glsentryuseri{acr-od}, \glsentryshort{acr-od})}, que distribuyen el flujo entre las zonas \acrshort{acr-taz} perimetrales de cada red. Los archivos expresan la demanda solicitada en vehículos por hora mediante el atributo \texttt{vehsPerHour} de \acrshort{acr-sumo}. La construcción de las matrices y las asignaciones principales se detallan en la Sección \ref{subsec:detalles_redes_sinteticas} del Apéndice \ref{apendice:arquitectura_software}.
 
 La Figura \ref{fig:topologias_sinteticas} muestra las tres redes a partir de sus archivos \acrshort{acr-xml}. Los puntos señalan intersecciones controladas y las flechas, el sentido de circulación. Las franjas representan carriles; cuando hay sentidos opuestos, se dibujan a ambos lados del eje vial. Las escalas y los anchos son convencionales y varían entre paneles. Las zonas \acrshort{acr-taz} se definen mediante los tramos de entrada y salida del perímetro. Para cada intersección $i$, $\glsdisp{carriles_controlados}{m_i}$ indica el número de carriles entrantes controlados y $\glsdisp{numero_acciones}{K_i}$, las fases verdes seleccionables. Las redes $3\times1$ y $3\times3$ tienen cuatro accesos por cruce y dos carriles por sentido. En cambio, la red $4\times4\_H$ combina tramos de uno a cuatro carriles por sentido e incluye arterias de mano única.
 \begin{figure}[H]
@@ -104,7 +104,7 @@ Flujo solicitado (vehículos por hora) & 3.260 & 7.087 & 7.202 \\
 \end{tabular}
 \end{table}
 
-La Tabla \ref{tab:tiempos_semaforicos_base} resume las secuencias de los programas semafóricos de referencia. Cada ciclo dura 90 segundos; la Figura \ref{fig:tiempos_semaforicos_base} del Apéndice \ref{apendice:arquitectura_software} muestra su distribución temporal. En la tabla, $V_i$ es el verde de la fase $i$, $A_i$ el intervalo amarillo (3\,s) y $R$ el intervalo de todo rojo o despeje (1\,s).
+La Tabla \ref{tab:tiempos_semaforicos_base} resume las secuencias de los programas semafóricos de referencia, cuyos ciclos duran 90 segundos, y la Figura \ref{fig:tiempos_semaforicos_base} del Apéndice \ref{apendice:arquitectura_software} muestra su distribución temporal. En la tabla, $V_i$ es el verde de la fase $i$, $A_i$ el intervalo amarillo (3\,s) y $R$ el intervalo de todo rojo o despeje (1\,s).
 
 En la red $4\times4\_H$, la tabla identifica la fase de giro protegido de C1 y el intervalo de todo rojo de C4 y D1. Las restricciones temporales del control aprendido se describen en la Sección \ref{subsec:acciones_masking}.
 
@@ -129,7 +129,7 @@ El escenario del centro de Mendoza representa una red urbana de geometría irreg
 \subsubsection{Área de estudio y datos disponibles}
 \label{subsubsec:mendoza_dominio_datos}
 
-La red vial se obtuvo de la cartografía de \acrshort{acr-osm} mediante \texttt{netconvert} y se proyectó en \acrfull{acr-utm} zona 19S, con referencia \acrfull{acr-wgs84}. Se revisaron imágenes satelitales y a nivel de calle para corregir los sentidos de circulación, la cantidad de carriles por aproximación, las conexiones de giro y los accesos laterales en Catamarca, Buenos Aires y Leandro N. Alem. El área comprende José Vicente Zapata y Colón al sur, Manuel Belgrano al oeste, Las Heras al norte y la avenida General San Martín como eje norte--sur.
+La red vial se obtuvo de la cartografía de \acrshort{acr-osm} mediante \texttt{netconvert} y se proyectó en \glsdisp{acr-utm}{Sistema de Coordenadas Universal Transversal de Mercator (\glsentryuseri{acr-utm}, \glsentryshort{acr-utm})} zona 19S, con referencia \acrfull{acr-wgs84}. Se revisaron imágenes satelitales y a nivel de calle para corregir los sentidos de circulación, la cantidad de carriles por aproximación, las conexiones de giro y los accesos laterales en Catamarca, Buenos Aires y Leandro N. Alem. El área comprende José Vicente Zapata y Colón al sur, Manuel Belgrano al oeste, Las Heras al norte y la avenida General San Martín como eje norte--sur.
 
 \Needspace{6\baselineskip}
 La Figura \ref{fig:mendoza_construccion_red} resume la preparación de la red, desde la cartografía hasta su conversión y depuración en \acrshort{acr-sumo}. El esquema ilustra esas etapas, pero no reproduce la geometría final de Mendoza balance.
@@ -162,7 +162,7 @@ La Figura \ref{fig:dominio_mendoza} ubica los controladores, las avenidas de ref
 
 El plan conserva un ciclo común de 90 segundos y los desfases de los controladores existentes, que sitúan el comienzo de cada programa respecto de un origen temporal común \cite[cap.~6]{fhwa_signal_timing_manual}. Para adaptar las duraciones, se fijaron los amarillos en cinco segundos, se reservaron los intervalos de todo rojo y se repartió el verde restante en proporción a las duraciones previas. El redondeo a segundos enteros conserva exactamente el ciclo y exige verdes de al menos cinco segundos.
 
-En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 60 segundos, cada una seguida por cinco segundos de amarillo y uno de todo rojo. Su desfase se fijó en cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La regla de reparto y las secuencias completas se documentan en la Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software}; el ciclo y los intervalos son decisiones del escenario, no valores óptimos estimados.
+En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 60 segundos, cada una seguida por cinco segundos de amarillo y uno de todo rojo, y con desfase cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La regla de reparto y las secuencias completas se documentan en la Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software}. El ciclo y los intervalos son decisiones del escenario, no valores óptimos estimados.
 
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
@@ -183,9 +183,9 @@ La generación de solicitudes es estocástica \cite{SUMO2026_Randomness}, de mod
 \end{figure}
 
 \Needspace{7\baselineskip}
-La Figura \ref{fig:mendoza_configuracion_sumo} resume cómo se relacionan los archivos del escenario. La red \texttt{.net.xml} reúne la geometría, las conexiones y los programas semafóricos; las rutas \texttt{.rou.xml} especifican la demanda, y el archivo \texttt{.taz.xml} asocia las zonas con sus tramos. Las conexiones hacia \texttt{.sumocfg} representan referencias a esas entradas; la flecha azul conduce a una visualización ilustrativa en el simulador.
+La Figura \ref{fig:mendoza_configuracion_sumo} resume cómo se relacionan los archivos del escenario: la red \texttt{.net.xml} reúne la geometría, las conexiones y los programas semafóricos, mientras que las rutas \texttt{.rou.xml} especifican la demanda y el archivo \texttt{.taz.xml} asocia las zonas con sus tramos. Las conexiones hacia \texttt{.sumocfg} representan referencias a esas entradas, y la flecha azul conduce a una visualización ilustrativa en el simulador.
 
-Las dos configuraciones de Mendoza balance utilizan los mismos archivos de entrada y un paso de simulación de un segundo. El umbral de teletransporte es de 300 segundos y la simulación se detiene ante el primer evento; las colisiones se registran como advertencias. La Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software} detalla las opciones y los hashes que identifican los archivos del escenario.
+Las dos configuraciones de Mendoza balance utilizan los mismos archivos de entrada y un paso de simulación de un segundo. El umbral de teletransporte es de 300 segundos y la simulación se detiene ante el primer evento, mientras que las colisiones se registran como advertencias. La Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software} detalla las opciones y los hashes que identifican los archivos del escenario.
 
 \begin{figure}[H]
 \centering
@@ -199,7 +199,7 @@ Las dos configuraciones de Mendoza balance utilizan los mismos archivos de entra
 
 Para verificar el escenario se utilizaron una semilla de desarrollo (104729) y tres semillas confirmatorias nuevas (2026102001, 2026102002 y 2026102003), cada una en las dos ventanas. Los dos horizontes de una misma semilla no se cuentan como réplicas independientes adicionales. Se fijó ese número de semillas para comprobar la repetibilidad en las condiciones ensayadas, sin calcular previamente la precisión estadística. Los resultados deben leerse considerando el inicio con la red vacía (Figura \ref{fig:construccion_urbana}) \cite{Law2015Output}.
 
-El criterio de aceptación exige completar el horizonte con cero teletransportes, cero colisiones registradas y cero descartes, y que al menos el $75\%$ de los vehículos cargados llegue a destino. Esta última proporción es la \acrfull{acr-cr}, definida en la Ecuación \eqref{eq:tasas_operacionales}. Los registros de desarrollo y confirmación se distinguen en la Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software}. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
+El criterio de aceptación exige completar el horizonte con cero teletransportes, cero colisiones registradas y cero descartes, y que al menos el $75\%$ de los vehículos cargados llegue a destino. Esta última proporción es la \glsdisp{acr-cr}{Tasa de Completitud (\glsentryuseri{acr-cr}, \glsentryshort{acr-cr})}, definida en la Ecuación \eqref{eq:tasas_operacionales}. Los registros de desarrollo y confirmación se distinguen en la Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software}. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
 
 \Needspace{4\baselineskip}
 Para contrastar la simulación con el tránsito real se necesitarían conteos independientes por movimiento y mediciones de tiempos de viaje en los corredores interiores \cite{Sargent2013,Wunderlich2019Microsimulation}.
@@ -300,17 +300,7 @@ L_i^{(t)} = W_i^{(t-1)} - W_i^{(t)}.
 \label{eq:recompensa_local}
 \end{equation}
 
-En la fase 1, la recompensa combina la señal local $L_i^{(t)}$ con un promedio de señales vecinales sin dividir por el número de carriles; el peso vecinal $\rho_{\mathrm{coop}}$ se explora en el intervalo $[0;\,0{,}95)$. En la fase 2 (búsqueda refinada), la recompensa es estrictamente local ($R_i^{(t)}=L_i^{(t)}$) y se fija $\rho_{\mathrm{coop}}=0$. La Tabla \ref{tab:alternativas_recompensa} resume las observaciones y recompensas utilizadas en las redes sintéticas.
-
-\begin{table}[H]\centering\small
-\caption{Observaciones y recompensas en las fases de búsqueda con redes sintéticas.}
-\label{tab:alternativas_recompensa}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.85cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{6.25cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}\hline
-\textbf{Procedimiento} & \textbf{Observación} & \textbf{Recompensa} & \textbf{Peso vecinal} \\\hline
-Fase 1: búsqueda amplia & Local & Local y vecinal, sin normalización por carriles & $[0;\,0{,}95)$ \\
-Fase 2: búsqueda refinada & Local & Local & 0 \\
-\hline
-\end{tabular}\end{table}
+En el protocolo de comparación de algoritmos, la recompensa es estrictamente local ($R_i^{(t)}=L_i^{(t)}$) y se fija $\rho_{\mathrm{coop}}=0$. La combinación con señales vecinales se examinó en las pruebas exploratorias descritas en la Sección \ref{sec:comparacion_local_vecinal} del Apéndice \ref{apendice:arquitectura_software}: allí, la recompensa combinó la señal local con el promedio de las variaciones de espera de los vecinos, normalizado por el número de carriles entrantes y ponderado por $\rho_{\mathrm{coop}}$.
 
 \Needspace{8\baselineskip}
 \subsection{Agentes y algoritmos de aprendizaje}
@@ -340,14 +330,27 @@ La Figura \ref{fig:informacion_controladores} compara la actualización de los a
 \section{Entrenamiento y búsqueda de hiperparámetros}
 \label{sec:experimentos_hiperparametros}
 
-La \acrfull{acr-hpo} busca configuraciones de aprendizaje y aplica el mismo máximo de iteraciones por ensayo a los cuatro algoritmos. Se organiza en dos fases: la primera explora dominios amplios, dos tamaños de perceptrón multicapa y el peso vecinal; la segunda refina los dominios y usa recompensa local. Cada \gls{ensayo_hpo} entrena una configuración candidata durante un número limitado de \glspl{iteracion_entrenamiento}. En la familia \acrshort{acr-ppo}, el tamaño objetivo del lote se expresa en episodios; en \acrshort{acr-idqn}, en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La Sección \ref{subsec:espacio_busqueda_fase1} del Apéndice \ref{apendice:arquitectura_software} detalla el espacio de búsqueda.
+La \glsdisp{acr-hpo}{Optimización de Hiperparámetros (\glsentryuseri{acr-hpo}, \glsentryshort{acr-hpo})} busca configuraciones de aprendizaje para los cuatro algoritmos en las tres redes sintéticas. Cada combinación de algoritmo y red constituye un \gls{estudio_hpo} con un cupo de 100 ensayos. Cada \gls{ensayo_hpo} entrena una configuración candidata desde cero con un presupuesto de 345.600 pasos de entorno. En la familia \acrshort{acr-ppo}, el tamaño objetivo del lote se expresa en episodios; en \acrshort{acr-idqn}, en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La función objetivo se define en la Sección \ref{subsec:objetivo_busqueda} y el espacio de búsqueda, en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
 Optuna registra las configuraciones evaluadas y los valores de la función objetivo. Integrado con Ray Tune, propone nuevas configuraciones a partir de los resultados disponibles, mientras Ray Tune organiza la ejecución de los ensayos \cite{akiba2019optuna,liaw2018tune}.
 
-El \acrfull{acr-tpe} separa los ensayos previos en dos grupos: los que obtuvieron mejores valores de la función objetivo y los restantes. Luego compara las distribuciones de sus hiperparámetros. Las propuestas favorecen valores frecuentes entre los ensayos de mejor desempeño y poco frecuentes entre los demás \cite{Bergstra2011TPE}.
+El \glsdisp{acr-tpe}{Estimador de Parzen Estructurado en Árbol (\glsentryuseri{acr-tpe}, \glsentryshort{acr-tpe})} separa los ensayos previos en dos grupos: los que obtuvieron mejores valores de la función objetivo y los restantes. Luego compara las distribuciones de sus hiperparámetros. Las propuestas favorecen valores frecuentes entre los ensayos de mejor desempeño y poco frecuentes entre los demás \cite{Bergstra2011TPE}.
 
 \Needspace{5\baselineskip}
-La búsqueda usa \acrfull{acr-asha} para detener ensayos antes de completar el presupuesto. El período de gracia fija cuántas iteraciones deben completarse antes de considerar una detención. A partir de ese momento, ASHA compara los resultados intermedios de ensayos con un avance similar y mantiene los de mejor desempeño. El factor de reducción determina qué proporción continúa; un factor mayor reduce esa proporción \cite{li2020system}.
+La búsqueda no configura poda: no se detienen ensayos por resultados intermedios. El presupuesto asignado a cada ensayo no se reduce por esa vía; el consumo efectivo se comprueba en los registros del estudio. La Tabla \ref{tab:diseno_busqueda} resume estas condiciones.
+
+\begin{table}[H]\centering\small
+\caption{Condiciones comunes de la búsqueda de configuraciones.}
+\label{tab:diseno_busqueda}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{5cm}>{\raggedright\arraybackslash}p{7.5cm}@{}}\hline
+\textbf{Aspecto} & \textbf{Definición} \\\hline
+Cupo de ensayos & 100 por combinación de algoritmo y red sintética \\
+Presupuesto por ensayo & 345.600 pasos de entorno desde cero \\
+Muestreador & \acrshort{acr-tpe} sobre Optuna, coordinado por Ray Tune \\
+Poda & No se configura \\
+Función objetivo & Espera media por vehículo insertado \\
+\hline
+\end{tabular}\end{table}
 
 \subsection{Condiciones de simulación y entrenamiento}
 \label{subsec:ciclo_episodico}
@@ -358,80 +361,32 @@ La Tabla \ref{tab:horizontes_simulacion} resume el calentamiento y la duración 
 \caption{Calentamiento y horizonte de simulación por procedimiento.}\label{tab:horizontes_simulacion}
 \begin{tabular}{>{\raggedright\arraybackslash}p{7cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.6cm}}\hline
 \textbf{Procedimiento} & \textbf{Calentamiento} & \textbf{Horizonte} \\\hline
-Redes sintéticas, búsqueda de fase 1 & 600 s & 3.600 s \\
-Redes sintéticas, búsqueda de fase 2 & 600 s & 3.600 s \\
-Redes sintéticas, entrenamiento y evaluación final & 600 s & 3.600 s \\
+Redes sintéticas, búsqueda de configuraciones & 600 s & 3.600 s \\
 Mendoza, aceptación con programas fijos (12 h) & No se añade & 43.200 s \\
 Mendoza, aceptación con programas fijos (2 h) & No se añade & 7.200 s \\
 \hline
 \end{tabular}\end{table}
 
 \Needspace{3\baselineskip}
-En la fase 1, una semilla inicializa el aprendizaje y la simulación de \acrshort{acr-sumo} durante el entrenamiento; otra controla las simulaciones de diagnóstico, y una tercera, independiente de la primera, inicializa el muestreador \acrshort{acr-tpe}. La Tabla \ref{tab:semillas_fase1} reúne estas semillas y las asociadas a las configuraciones de referencia para generar las rutas; la Tabla \ref{tab:busquedas_v2} presenta las de la búsqueda refinada.
-
-Durante el entrenamiento se intercalan episodios de diagnóstico, en los que las acciones se eligen de forma determinista: los métodos basados en \acrshort{acr-ppo} seleccionan la acción permitida con mayor probabilidad y \acrshort{acr-idqn}, la de mayor valor estimado. Sus registros se almacenan por separado y no forman parte del objetivo de optimización.
+En la búsqueda de configuraciones, cada estudio registra una semilla para el entrenamiento y una para el muestreador \acrshort{acr-tpe}; ambas cumplen funciones distintas y se conservan con los registros del estudio. Las semillas de las configuraciones de referencia para generar las rutas se conservan en los archivos de cada escenario.
 
 \Needspace{8\baselineskip}
 \subsection{Función objetivo de la búsqueda}
 \label{subsec:objetivo_busqueda}
 
-La búsqueda minimiza el objetivo compuesto $J_r$, expresado en segundos por vehículo, que combina la espera media con una penalización por inestabilidad reciente. En cada iteración válida de entrenamiento $r$, la espera media por vehículo insertado $w_r$ se calcula como la suma de los tiempos de espera (\texttt{TripInfo.waitingTime}) de los episodios completados dividida por el total de vehículos insertados en ellos.
+La búsqueda minimiza la espera media por vehículo insertado, medida sobre el último punto de control del ensayo en un episodio con una semilla de evaluación fijada y selección determinista de acciones. Optuna registra esa espera media, expresada en segundos por vehículo. La Sección \ref{sec:metricas_evidencia} define qué vehículos se incluyen y cómo se calcula esa media.
 
-Para medir la inestabilidad reciente se excluyen las primeras cinco mediciones válidas del ensayo y se conserva una ventana con hasta las diez más recientes. Cada par consecutivo de esa ventana aporta un incremento no negativo de espera $\Delta w_s = \max(0, w_s - w_{s-1})$, con $s=1,\ldots,n$ y un máximo de nueve diferencias.
+\subsection{Búsqueda de configuraciones}
+\label{subsec:hpo_busqueda}
 
-La penalización $T_r$ es el promedio del $20\%$ de los incrementos mayores, inspirado en el concepto de \acrfull{acr-cvar} para una muestra finita. Para calcularla se ordenan los incrementos de mayor a menor, $\Delta w_{(1)} \ge \cdots \ge \Delta w_{(n)}$, y se toman los primeros $k=\lceil 0{,}2n\rceil$. El objetivo suma la espera de la iteración actual y esta penalización:
-\begin{equation}
-J_r = w_r + T_r, \qquad \text{con} \quad T_r = \begin{cases}
-\dfrac{1}{k}\displaystyle\sum_{j=1}^{k} \Delta w_{(j)}, & \text{si } n > 0 \;\; \bigl(k = \lceil 0{,}2n \rceil\bigr),\\[8pt]
-0, & \text{si } n = 0.
-\end{cases}
-\label{eq:objetivo_estable_espera}
-\end{equation}
+El diseño de la búsqueda comprende las doce combinaciones de algoritmo y red sintética y asigna a cada una una arquitectura de perceptrón multicapa: dos capas ocultas de 256 unidades para \acrshort{acr-ippo} y \acrshort{acr-mappo} en $3\times1$, y dos de 128 en las restantes, según la Tabla \ref{tab:arquitecturas_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
-\subsection[Fase 1: búsqueda amplia]{Fase 1: búsqueda amplia}
-\label{subsec:hpo_phase1}
-
-La fase 1 combina los cuatro algoritmos y las tres redes sintéticas con dos arquitecturas de perceptrón multicapa: \texttt{h128}, con dos capas ocultas de 128 unidades cada una, y \texttt{h256}, con dos de 256. Se obtienen así $4 \times 3 \times 2 = 24$ \glspl{estudio_hpo} independientes.
-
-Cada estudio dispone de 100 ensayos iniciales, ampliables a 150, con un máximo de 40 iteraciones de entrenamiento por ensayo. \acrshort{acr-asha} utiliza un período de gracia de 10 iteraciones y un factor de reducción de 4. Los episodios de diagnóstico se ejecutan cada 10 iteraciones.
-
-La familia \acrshort{acr-ppo} explora la tasa de aprendizaje, el umbral de recorte del actor, los coeficientes de entropía y divergencia \acrshort{acr-kl}, el parámetro $\lambda$ de \acrshort{acr-gae}, la cota de pérdida del crítico y el tamaño de lote.
-
-\acrshort{acr-idqn} explora el horizonte del retorno de varios pasos, la frecuencia de actualización de la red objetivo y la evolución de la probabilidad de exploración de la estrategia $\varepsilon$-voraz.
-
-En los cuatro algoritmos se fija el factor de descuento en $\gamma = 0{,}99$ y se exploran conjuntamente la cantidad de niveles $I$ del codificador y el peso vecinal $\rho_{\mathrm{coop}}$ mediante una \gls{distribucion_uniforme_continua}, una \gls{distribucion_loguniforme} o muestreos discretos. Los dominios completos se presentan en las Tablas \ref{tab:dominios_fase1_ppo}, \ref{tab:dominios_fase1_idqn} y \ref{tab:factores_fase1} del Apéndice \ref{apendice:arquitectura_software} \cite{schulman2017ppo,yu2022surprising,Eimer2023HPO}.
-
-\subsection[Fase 2: búsqueda refinada]{Fase 2: búsqueda refinada}
-\label{subsec:hpo_phase2}
-
-La fase 2 utiliza los resultados de la fase 1 para reducir los dominios de búsqueda e identificar configuraciones candidatas para la selección final. Los presupuestos, las arquitecturas y las semillas se especifican en la Sección \ref{subsec:protocolo_refinado_apendice} del Apéndice \ref{apendice:arquitectura_software}; las reglas de reducción de dominios, en la Sección \ref{subsec:dominios_refinados}.
-
-\subsection{Criterios de selección de configuraciones}
-\label{subsec:seleccion_phase2}
-\label{subsec:seleccion_sintetica}
-
-Después de la fase 2, las configuraciones de cada combinación de algoritmo y red sintética pasan por una revisión técnica y una evaluación del tránsito antes del entrenamiento final desde cero. La selección considera la espera media, la cantidad de vehículos insertados, la tasa de completitud y los teletransportes:
-\begin{enumerate}
-    \item \textbf{Requisitos técnicos y preselección:} el ensayo debe completar 60 iteraciones. Sus métricas deben ser numéricas y finitas, con al menos 15 registros finitos de métricas de tránsito. Tanto la configuración utilizada como el archivo del modelo final deben estar completos y poder leerse.\par
-    Entre los candidatos que cumplen estos requisitos y tienen registros de espera en los episodios de diagnóstico, se da prioridad a los que registran cero inicios de teletransporte y una \acrshort{acr-ci} de al menos $0{,}95$ en esos episodios. Después se ordenan por menor espera y por identificador de política. El incumplimiento de las condiciones de teletransporte y completitud no excluye automáticamente un candidato en esta etapa.\par
-    Se toma primero un candidato de cada arquitectura disponible y se completa una lista de hasta tres candidatos con los restantes, respetando ese orden (Sección \ref{subsec:criterios_admisibilidad_hpo} del Apéndice \ref{apendice:arquitectura_software}).
-    \item \textbf{Evaluación en panel común y filtros operacionales:} los candidatos de los cuatro algoritmos de una misma red se evalúan con las mismas tres semillas de \acrshort{acr-sumo}. Para cada red y semilla, la referencia de inserciones es el mayor número de vehículos insertados entre los candidatos del panel. Cada episodio debe registrar: (i) cero inicios de teletransporte, (ii) una \acrfull{acr-ci} de al menos $0{,}95$ (Ecuación \eqref{eq:tasa_completitud}), y (iii) una cantidad de inserciones igual o superior al $95\%$ de esa referencia.
-    \item \textbf{Elección final:} entre los candidatos que superan los tres filtros operacionales se selecciona aquel de menor espera media por vehículo insertado. Las semillas de este panel, especificadas en la Sección \ref{subsec:criterios_admisibilidad_hpo} del Apéndice \ref{apendice:arquitectura_software}, quedan reservadas para esta etapa y no intervienen en la evaluación final, que emplea un conjunto propio de semillas (Sección \ref{sec:evaluacion_modelos_finales}).
-\end{enumerate}
+El espacio de búsqueda comprende los hiperparámetros de aprendizaje definidos para cada algoritmo en la configuración del estudio y la cantidad de niveles $I$ del codificador. El factor de descuento se fija en $\gamma = 0{,}99$ y la recompensa es local ($\rho_{\mathrm{coop}}=0$). La correspondencia entre parámetros y claves se conserva en la Tabla \ref{tab:claves_parametros} del Apéndice \ref{apendice:arquitectura_software}.
 
 \section{Evaluación y análisis del desempeño}
 \label{sec:evaluacion_modelos}
 
-En la evaluación, los pesos de las políticas permanecen fijos y las acciones se seleccionan de forma determinista. Se presenta primero el protocolo de los modelos finales y se definen las métricas globales y locales; luego se describe el balance de vehículos usado para verificar el escenario de Mendoza con programas fijos.
-
-\subsection{Entrenamiento y evaluación de los modelos finales}
-\label{sec:evaluacion_modelos_finales}
-
-En la comparación final de \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo}, se entrena desde cero un modelo por cada combinación de algoritmo y red sintética que tenga una configuración seleccionada en la Sección \ref{subsec:seleccion_phase2}. Se utiliza una nueva semilla de aprendizaje y se completan las 60 iteraciones previstas para la fase 2.
-
-La evaluación final utiliza el punto de control (\gls{checkpoint}) de la última iteración y comprende $20$ simulaciones con semillas de \acrshort{acr-sumo} nuevas, reservadas para esta etapa y distintas de las utilizadas en búsqueda y selección. Esto abarca hasta $240$ episodios para las doce combinaciones de algoritmo y red sintética, con $600\,\text{s}$ de calentamiento y $3.600\,\text{s}$ de control (Tabla \ref{tab:horizontes_simulacion}). El listado de veinte semillas se fija y registra por combinación antes de iniciar la evaluación. Cada ejecución se identifica mediante la semilla de simulación, la configuración efectiva y el punto de control evaluado.
-
-Para cada combinación y métrica se informan la media muestral y la desviación estándar muestral con divisor $20-1=19$, sin excluir observaciones después de conocer los resultados. El resumen requiere veinte observaciones válidas; si falta alguna, no se calcula para esa combinación y métrica. Las ejecuciones que terminan antes de tiempo se conservan en el registro y no cuentan como horizontes completos. Si una ejecución se repite por una falla técnica, se conserva el registro del intento original y se utiliza la misma semilla.
+A continuación se definen las métricas globales y locales de desempeño; luego se describe el balance de vehículos usado para verificar el escenario de Mendoza con programas fijos.
 
 \Needspace{9\baselineskip}
 \subsection{Métricas de desempeño y vehículos evaluados}
@@ -479,6 +434,8 @@ Sobre este conjunto de vehículos insertados $\mathcal{V}_{\mathrm{ins}}$ (con $
 
 Si no se inserta ningún vehículo en la ventana, las tres métricas quedan indefinidas.
 
+Una política puede registrar una espera media menor y, al mismo tiempo, admitir menos vehículos \cite{jiang2024xlight}. Por sí sola, la espera media por vehículo insertado no permite determinar si se atendió mejor la demanda.
+
 \subsubsection{Métricas locales por agente y equidad espacial}
 
 Para cada intersección se calculan dos indicadores a partir de su espera $W_i^{(t)}$, obtenida al sumar las esperas atribuidas a sus carriles:
@@ -496,21 +453,21 @@ Para cada intersección se calculan dos indicadores a partir de su espera $W_i^{
 \subsubsection{Incidencias de la simulación}
 \label{subsec:incidencias_simulacion}
 
-Durante las ventanas de evaluación se contabilizan los inicios de teletransporte mediante \texttt{getStarting}\allowbreak\texttt{TeleportIDList} de \acrshort{acr-traci}; un vehículo puede contribuir con más de un evento. La selección de configuraciones en las redes sintéticas exige cero inicios. El contador nativo \texttt{teleports} de Summary solo puede sustituir esta medición si se comprueba su equivalencia para el procedimiento correspondiente.
+Durante las ventanas de evaluación se contabilizan los inicios de teletransporte mediante \texttt{getStarting}\allowbreak\texttt{TeleportIDList} de \acrshort{acr-traci}; un vehículo puede contribuir con más de un evento. El contador nativo \texttt{teleports} de Summary solo puede sustituir esta medición si se comprueba su equivalencia para el procedimiento correspondiente.
 
 \subsection{Balance de vehículos en el escenario de Mendoza}
 \label{subsec:balance_vehiculos_mendoza}
 
 La verificación del escenario de Mendoza parte de la red vacía, sin calentamiento previo. El balance al cierre de cada horizonte utiliza cinco contadores del archivo \texttt{Summary} de \acrshort{acr-sumo} \cite{SUMO2026_Summary}. Se denotan por $L$ los vehículos cargados (\texttt{loaded}), por $I$ los insertados (\texttt{inserted}) y por $A$ los viajes completados (\texttt{arrived}). Los vehículos que siguen circulando son $R$ (\texttt{running}) y los \glspl{pendientes_ingreso}, $W$ (\texttt{waiting}).
 
-Estos conteos cumplen las identidades de conservación $L = I + W$ e $I = A + R$. A partir de ellos se definen la tasa \acrshort{acr-cr}, la \acrfull{acr-ir} y el cociente de llegadas sobre inserciones del horizonte:
+Estos conteos cumplen las identidades de conservación $L = I + W$ e $I = A + R$. A partir de ellos se definen la tasa \acrshort{acr-cr}, la \glsdisp{acr-ir}{Tasa de Inserción (\glsentryuseri{acr-ir}, \glsentryshort{acr-ir})} y el cociente de llegadas sobre inserciones del horizonte:
 \begin{equation}
     \acrshort{acr-cr} = \frac{A}{L}, \qquad
     \acrshort{acr-ir} = \frac{I}{L}, \qquad
     \frac{A}{I} = \frac{\acrshort{acr-cr}}{\acrshort{acr-ir}}.
     \label{eq:tasas_operacionales}
 \end{equation}
-Cada cociente se informa como indefinido si su denominador es cero. El contador \texttt{loaded} puede incluir solicitudes cuya salida está programada para más adelante; por ello, no equivale automáticamente a la demanda que ya debía ingresar.
+Cada cociente se informa como indefinido si su denominador es cero. El contador \texttt{loaded} puede incluir solicitudes cuya salida está programada para más adelante y, por ello, no equivale automáticamente a la demanda que ya debía ingresar.
 
 \FloatBarrier
 
@@ -527,11 +484,11 @@ Las campañas documentadas se ejecutaron en el clúster de cómputo de alto rend
 \subsection{Alcance y limitaciones}
 \label{subsec:alcance_limitaciones}
 
-En la comparación de los cuatro algoritmos, el protocolo define un modelo final por combinación de algoritmo y escenario, evaluado mediante veinte simulaciones con semillas distintas. La dispersión entre sus episodios representa variabilidad de la simulación, no de entrenamientos independientes \cite{Agarwal2021RLiable}.
+La dispersión entre episodios de evaluación representa variabilidad de la simulación, no de entrenamientos independientes \cite{Agarwal2021RLiable}.
 
-Las búsquedas fijan el mismo máximo de iteraciones para algoritmos que utilizan los datos de manera distinta: la familia \acrshort{acr-ppo} trabaja \textit{on-policy}, mientras que \acrshort{acr-idqn} reutiliza experiencias del \textit{replay buffer} y opera \textit{off-policy}. La comparación debe leerse teniendo en cuenta esa diferencia, los dominios de hiperparámetros explorados y las condiciones de tránsito definidas en este capítulo.
+Las búsquedas fijan el mismo presupuesto de pasos para algoritmos que utilizan los datos de manera distinta: la familia \acrshort{acr-ppo} trabaja \textit{on-policy}, mientras que \acrshort{acr-idqn} reutiliza experiencias del \textit{replay buffer} y opera \textit{off-policy}. La comparación debe leerse teniendo en cuenta esa diferencia, el espacio de hiperparámetros explorado y las condiciones de tránsito definidas en este capítulo.
 
-El objetivo $J_r$ ordena las configuraciones según la espera y sus aumentos recientes dentro de cada ensayo. Esta medida no permite estimar la variación entre entrenamientos ni asegurar que el aprendizaje se mantenga estable en iteraciones posteriores.
+El puntaje de un ensayo caracteriza el punto de control evaluado bajo la semilla utilizada. No estima la variación entre entrenamientos independientes.
 
 En Mendoza balance se redistribuyeron las solicitudes de cada hora y se fijaron rutas explícitas, lo que modificó los totales por origen y destino y las distancias respecto de la referencia. Los conteos parciales de los accesos no bastan para calibrar una matriz de viajes de toda la ciudad. La verificación con tres semillas confirmatorias se limita a la versión de SUMO y a los horizontes ensayados.
 

@@ -1,18 +1,20 @@
 \chapter{Análisis y discusión de resultados}
 \label{capitulo:resultados}
-Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de los modelos finales y verificación del escenario de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
+Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de políticas y verificación del escenario de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
 
-El escenario de Mendoza se verificó con una demanda nominal de 220.000 viajes diarios y programas semafóricos fijos. Sus conteos describen la operación simulada; no evalúan políticas aprendidas.
+El escenario de Mendoza se verificó con una demanda nominal de 220.000 viajes diarios y programas semafóricos fijos, y sus conteos describen la operación simulada sin evaluar políticas aprendidas.
 
 \section{Resultados del ajuste de hiperparámetros}
 
-La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los dominios y criterios se interpretan según el escenario al que corresponden.
+La presentación de \acrshort{acr-hpo} sigue la búsqueda de configuraciones en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los valores y criterios se interpretan según el escenario al que corresponden.
 
-\subsection{Estado de la consolidación y de las búsquedas}
+\subsection{Estado de los estudios de búsqueda}
+
+Al 13 de noviembre de 2026, una consulta a la base de Optuna de las búsquedas registró 100 ensayos en estado \texttt{COMPLETE} para cada combinación de \acrshort{acr-ippo} y \acrshort{acr-mappo} en sus tres redes sintéticas, es decir, en seis estudios. Esa consulta no comprendió \acrshort{acr-happo} ni \acrshort{acr-idqn}, de modo que no informa sobre el estado de sus búsquedas. La base no forma parte de este repositorio y la consulta no se conservó como registro versionado; la cifra describe el estado observado en esa fecha y no acredita cada ensayo individual ni el conjunto de los resultados.
 
 \subsection{Resultados del ajuste y análisis de sensibilidad}
 
-\subsection[Selección de configuraciones de HPO]{Selección de configuraciones de \acrshort{acr-hpo}}
+\subsection[Registros de la búsqueda]{Registros de la búsqueda}
 
 \section{Evaluación de políticas y verificación de escenarios}
 
@@ -23,7 +25,7 @@ La presentación de \acrshort{acr-hpo} sigue las dos fases de búsqueda en las t
 \subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
 \label{sec:resultados_mendoza_o2}
 
-Las seis ejecuciones de cada ventana completaron el horizonte y cumplieron los criterios de aceptación definidos en la metodología. La Tabla \ref{tab:metricas_validacion_mendoza} resume los doce casos: no hubo teletransportes, colisiones detectadas ni descartes, y al menos el 75\% de los vehículos cargados llegó a destino. La media de viajes completados asigna igual peso a las seis ejecuciones; los rangos muestran sus extremos. Los casos individuales y sus registros se conservan en el apéndice.
+Las seis ejecuciones de cada ventana completaron el horizonte y cumplieron los criterios de aceptación definidos en la metodología. La Tabla \ref{tab:metricas_validacion_mendoza} resume los doce casos: no hubo teletransportes, colisiones detectadas ni descartes, y al menos el 75\% de los vehículos cargados llegó a destino. La media de viajes completados asigna igual peso a las seis ejecuciones, y los rangos indican los valores mínimo y máximo. Los casos individuales y sus registros se conservan en el apéndice.
 
 \begin{table}[H]
 \centering\small
@@ -34,7 +36,7 @@ Las seis ejecuciones de cada ventana completaron el horizonte y cumplieron los c
 
 En doce horas se completaron, en promedio, 125.080,5 viajes, frente a 152.168,75 solicitudes esperadas por las tasas. Las solicitudes realizadas fluctúan: los cargados estuvieron entre 151.529 y 153.148. Al cierre permanecían entre 778 y 951 vehículos circulando y entre 25.984 y 26.529 pendientes de ingreso. Por tanto, el cumplimiento del criterio de aceptación no equivale a atender toda la demanda ni a servir 220.000 viajes en doce horas. El nominal diario y los conteos del horizonte describen magnitudes diferentes.
 
-La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículos pendientes de ingreso en las seis ejecuciones largas. Cada trazo corresponde a una ejecución; el rayado identifica la hora en que se redistribuyeron las solicitudes. Las trayectorias muestran acumulación de vehículos fuera de la red durante el horizonte, pero no permiten establecer la estabilidad de las colas para tiempos indefinidos.
+La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículos pendientes de ingreso en las seis ejecuciones largas: cada trazo corresponde a una ejecución y el rayado identifica la hora en que se redistribuyeron las solicitudes. Las trayectorias muestran acumulación de vehículos fuera de la red durante el horizonte, pero no permiten establecer la estabilidad de las colas para tiempos indefinidos.
 
 \begin{figure}[H]
 \centering
@@ -43,7 +45,7 @@ La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículo
 \label{fig:mendoza_pendientes_o2}
 \end{figure}
 
-En las ejecuciones de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las ejecuciones no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano; los detalles se conservan en el apéndice.
+En las ejecuciones de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las ejecuciones no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano. Los detalles de estas ejecuciones se conservan en el apéndice.
 
 Una ejecución larga con la demanda redistribuida completó el horizonte en condiciones en que la referencia uniforme había fallado. Esta diferencia describe los casos observados, pero no identifica una causa única: los cambios pueden alterar las solicitudes, su orden y la secuencia aleatoria. La selección adaptativa y la reutilización de semillas limitan la generalización.
 
