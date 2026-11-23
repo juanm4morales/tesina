@@ -23,31 +23,20 @@ Al 13 de noviembre de 2026, una consulta a la base de Optuna de las búsquedas r
 \subsection{Desempeño en escenarios sintéticos: \texorpdfstring{$3\times1$, $3\times3$, $4\times4$ heterogéneo}{3x1, 3x3, 4x4 heterogéneo}}
 
 \subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
-\label{sec:resultados_mendoza_o2}
+\label{sec:resultados_mendoza_balance}
 
-Las seis ejecuciones de cada ventana completaron el horizonte y cumplieron los criterios de aceptación definidos en la metodología. La Tabla \ref{tab:metricas_validacion_mendoza} resume los doce casos: no hubo teletransportes, colisiones detectadas ni descartes, y al menos el 75\% de los vehículos cargados llegó a destino. La media de viajes completados asigna igual peso a las seis ejecuciones, y los rangos indican los valores mínimo y máximo. Los casos individuales y sus registros se conservan en el apéndice.
+La Tabla \ref{tab:metricas_validacion_mendoza} resume la comprobación del escenario \texttt{mendoza\_220k\_balance}, con 74 controladores de tiempo fijo. En cada ventana, $n$ indica la cantidad de semillas confirmatorias, $A$ los viajes completados y $W$ los vehículos pendientes de ingreso al cierre. La tasa de completitud (\acrshort{acr-cr}) expresa la proporción de vehículos cargados que llegaron a destino. Las medias y los rangos excluyen la semilla de desarrollo (104729). Las ventanas de 2 h y 12 h se simularon por separado con las mismas tres semillas confirmatorias; no constituyen seis réplicas independientes.
 
 \begin{table}[H]
 \centering\small
-\caption{Comprobación del escenario urbano con programas fijos: síntesis por ventana.}
+\caption{Comprobación del escenario de Mendoza con programas fijos: síntesis por ventana.}
 \label{tab:metricas_validacion_mendoza}
-\input{datos/mendoza220k/tabla_sintesis.tex}
+\input{datos/mendoza220k_balance/tabla_sintesis.tex}
 \end{table}
 
-En doce horas se completaron, en promedio, 125.080,5 viajes, frente a 152.168,75 solicitudes esperadas por las tasas. Las solicitudes realizadas fluctúan: los cargados estuvieron entre 151.529 y 153.148. Al cierre permanecían entre 778 y 951 vehículos circulando y entre 25.984 y 26.529 pendientes de ingreso. Por tanto, el cumplimiento del criterio de aceptación no equivale a atender toda la demanda ni a servir 220.000 viajes en doce horas. El nominal diario y los conteos del horizonte describen magnitudes diferentes.
+Todas las ejecuciones confirmatorias completaron su horizonte sin teletransportes, colisiones registradas ni descartes. En cada caso, la tasa de completitud superó el umbral de aceptación del 75\%.
 
-La Figura \ref{fig:mendoza_pendientes_o2} muestra la evolución de los vehículos pendientes de ingreso en las seis ejecuciones largas: cada trazo corresponde a una ejecución y el rayado identifica la hora en que se redistribuyeron las solicitudes. Las trayectorias muestran acumulación de vehículos fuera de la red durante el horizonte, pero no permiten establecer la estabilidad de las colas para tiempos indefinidos.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\linewidth]{imagenes/mendoza220k_pendientes.pdf}
-\caption{Vehículos pendientes de ingreso durante las seis ejecuciones de doce horas. El rayado señala la hora en que se redistribuyeron las solicitudes.}
-\label{fig:mendoza_pendientes_o2}
-\end{figure}
-
-En las ejecuciones de aceptación con programas fijos y horizonte de dos horas llegó a destino entre el 76,32\% y el 77,17\% de los vehículos cargados. Este horizonte termina antes de la redistribución de solicitudes, por lo que no evalúa su efecto. Las ejecuciones no corresponden al ajuste de hiperparámetros previsto para el aprendizaje urbano. Los detalles de estas ejecuciones se conservan en el apéndice.
-
-Una ejecución larga con la demanda redistribuida completó el horizonte en condiciones en que la referencia uniforme había fallado. Esta diferencia describe los casos observados, pero no identifica una causa única: los cambios pueden alterar las solicitudes, su orden y la secuencia aleatoria. La selección adaptativa y la reutilización de semillas limitan la generalización.
+Cumplir el criterio de aceptación no equivale a atender toda la demanda: en ambas ventanas quedaron vehículos pendientes de ingreso al cierre. La demanda nominal de 220.000 viajes diarios tampoco es un conteo de solicitudes o llegadas en doce horas. Los valores por semilla se detallan en las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} de la Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software}.
 
 \section{Discusión e interpretación de resultados}
 
