@@ -2,14 +2,14 @@
 \chapter{Metodología}
 \label{capitulo:metodologia}
 
-Este capítulo describe cómo se entrenan y evalúan políticas de control semafórico en redes viales simuladas. El diseño compara \acrshort{acr-mappo}, una adaptación de \acrshort{acr-happo} y los métodos independientes \acrshort{acr-ippo} e \acrshort{acr-idqn} en tres redes sintéticas. La evaluación considera la espera vehicular, la atención a la demanda y la distribución de las demoras entre intersecciones. Para el centro de Mendoza se construye un escenario con demanda sintética y se comprueba su funcionamiento con programas semafóricos fijos, sin evaluar allí políticas aprendidas.
+Este capítulo describe cómo se entrenan y evalúan políticas de control semafórico en redes viales simuladas. El diseño utiliza cuatro escenarios: el corredor $3\times1$, la cuadrícula $3\times3$, la red heterogénea $4\times4\_H$ y el centro de Mendoza. La búsqueda de hiperparámetros se realiza en las tres redes sintéticas y abarca \acrshort{acr-mappo}, una adaptación de \acrshort{acr-happo} y los métodos independientes \acrshort{acr-ippo} e \acrshort{acr-idqn}. La evaluación considera la espera vehicular, la atención a la demanda y la distribución de las demoras entre intersecciones. En Mendoza se comprueba el funcionamiento del escenario con programas semafóricos fijos, sin evaluar políticas aprendidas.
 
 La Figura \ref{fig:flujo_metodologico_general} resume el recorrido en cuatro pasos: preparar los escenarios, buscar configuraciones, entrenar cada configuración y medir su desempeño. La búsqueda no entrega una configuración ya validada: cada propuesta se entrena con el presupuesto asignado y se mide con la función objetivo definida en este capítulo; ese ciclo se repite para cada ensayo.
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_v2_flujo.tex}
-\caption{Recorrido del procedimiento experimental en las redes sintéticas para comparar \mbox{\acrshort{acr-mappo}}, una adaptación de \acrshort{acr-happo}, \acrshort{acr-ippo} e \acrshort{acr-idqn}: preparar escenarios, buscar configuraciones, entrenar cada configuración y medir su desempeño. Cada ensayo de búsqueda entrena y mide una propuesta; la flecha de retorno indica la repetición del ciclo.}
+\caption{Flujo de la búsqueda de hiperparámetros en las redes sintéticas.}
 \label{fig:flujo_metodologico_general}
 \end{figure}
 
@@ -22,7 +22,7 @@ El capítulo desarrolla el diseño experimental y los escenarios (secciones \ref
 \label{sec:tarea_investigacion}
 \label{sec:enfoque_diseno}
 
-La simulación microscópica permite probar las acciones semafóricas bajo condiciones controladas. El diseño utiliza un corredor de tres cruces ($3\times1$), una cuadrícula homogénea de nueve ($3\times3$) y una cuadrícula heterogénea de dieciséis ($4\times4\_H$). Esta última incorpora diferencias entre intersecciones en la cantidad de carriles, los sentidos de circulación y las fases disponibles.
+La simulación microscópica permite probar las acciones semafóricas bajo condiciones controladas. Las tres redes sintéticas difieren en su tamaño y geometría. La red heterogénea incorpora, además, diferencias entre intersecciones en la cantidad de carriles, los sentidos de circulación y las fases disponibles.
 
 Los cuatro algoritmos comparten una interfaz de observación y acción. \acrshort{acr-mappo} y la adaptación de \acrshort{acr-happo} utilizan entrenamiento centralizado y ejecución descentralizada; \acrshort{acr-ippo} e \acrshort{acr-idqn} aprenden de forma independiente. El ajuste de hiperparámetros recorre cada combinación de algoritmo y red con una misma función objetivo y un cupo de ensayos.
 
@@ -313,7 +313,7 @@ Los cuatro algoritmos se implementaron en \texttt{marlTLC} con una interfaz com�
     \item \textbf{Aprendizaje independiente en \acrshort{acr-idqn} e \acrshort{acr-ippo}:} ambos métodos estiman valores y actualizan sus parámetros empleando únicamente las observaciones locales $o_i^{(t)}$ y las recompensas $R_i^{(t)}$ de cada intersección. En \acrshort{acr-idqn}, cada agente entrena su red de valores de acción con una red objetivo actualizada periódicamente y una memoria de experiencias multiagente (\textit{replay buffer}) con muestreo priorizado según la magnitud del error de diferencia temporal. En \acrshort{acr-ippo}, cada intersección entrena un actor y un crítico locales sobre lotes de episodios \textit{on-policy}, y estandariza por agente las ventajas estimadas mediante \acrshort{acr-gae}.
     \item \textbf{Crítico centralizado con salidas por agente en \acrshort{acr-mappo} y \acrshort{acr-happo}:} siguiendo el esquema \acrshort{acr-ctde} (Figura \ref{fig:ctde_architecture}), el \gls{critico} centralizado recibe la concatenación de las observaciones de todos los agentes. Si hay $N$ agentes, produce $N$ salidas escalares de valor asociadas a sus respectivas recompensas individuales.
 
-    Antes de actualizar las políticas, las ventajas se estandarizan por agente: se resta su media y se divide por su desviación estándar. Para calcular la pérdida del crítico, el error cuadrático medio entre agentes de cada transición se limita al umbral $c_v$ (\texttt{vf\_clip\_param}), según la Ecuación \eqref{eq:perdida_valor_marl_tlc} del Apéndice \ref{apendice:arquitectura_software}.
+    Antes de actualizar las políticas, las ventajas se estandarizan por agente: se resta su media y se divide por su desviación estándar.
     \item \textbf{Orden de actualización en \acrshort{acr-happo}:} en cada \glsdisp{epoca_entrenamiento}{época}, se actualiza primero el crítico y después los actores, uno por uno y con el lote completo de transiciones de cada agente. El orden $i_1,\ldots,i_N$ se fija antes de actualizar los actores. En cada posición, \texttt{greedy\_selection\_prob} determina la probabilidad de elegir, entre los agentes pendientes, al que tiene el mayor promedio del valor absoluto de su ventaja estandarizada $|\hat{A}_i|$. En los demás casos, se elige uno al azar.
 
     La adaptación conserva el factor acumulado $M_{i_{1:m}}$ de la actualización secuencial. Sin embargo, la garantía de mejora monótona de \acrshort{acr-haml} requiere una recompensa compartida y no se aplica directamente a esta adaptación, que utiliza recompensas individuales (Sección \ref{subsec:happo}). La secuencia implementada se detalla en la Sección \ref{sec:apendice_detalles_aprendizaje} del Apéndice \ref{apendice:arquitectura_software}.
@@ -330,14 +330,14 @@ La Figura \ref{fig:informacion_controladores} compara la actualización de los a
 \section{Entrenamiento y búsqueda de hiperparámetros}
 \label{sec:experimentos_hiperparametros}
 
-La \glsdisp{acr-hpo}{Optimización de Hiperparámetros (\glsentryuseri{acr-hpo}, \glsentryshort{acr-hpo})} busca configuraciones de aprendizaje para los cuatro algoritmos en las tres redes sintéticas. Cada combinación de algoritmo y red constituye un \gls{estudio_hpo} con un cupo de 100 ensayos. Cada \gls{ensayo_hpo} entrena una configuración candidata desde cero con un presupuesto de 345.600 pasos de entorno. En la familia \acrshort{acr-ppo}, el tamaño objetivo del lote se expresa en episodios; en \acrshort{acr-idqn}, en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La función objetivo se define en la Sección \ref{subsec:objetivo_busqueda} y el espacio de búsqueda, en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
+La \glsdisp{acr-hpo}{Optimización de Hiperparámetros (\glsentryuseri{acr-hpo}, \glsentryshort{acr-hpo})} busca configuraciones de aprendizaje para los cuatro algoritmos en las tres redes sintéticas. Cada combinación de algoritmo y red constituye un \gls{estudio_hpo} con un cupo de 100 ensayos. Cada \gls{ensayo_hpo} entrena una configuración candidata desde cero con un presupuesto de 345.600 pasos de entorno. En los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el tamaño objetivo del lote es de 5.760 pasos de entorno; en \acrshort{acr-idqn}, se expresa en transiciones extraídas del \textit{replay buffer} descrito en la Sección \ref{sec:implementacion_algoritmos}. La función objetivo se define en la Sección \ref{subsec:objetivo_busqueda} y el espacio de búsqueda, en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
 Optuna registra las configuraciones evaluadas y los valores de la función objetivo. Integrado con Ray Tune, propone nuevas configuraciones a partir de los resultados disponibles, mientras Ray Tune organiza la ejecución de los ensayos \cite{akiba2019optuna,liaw2018tune}.
 
 El \glsdisp{acr-tpe}{Estimador de Parzen Estructurado en Árbol (\glsentryuseri{acr-tpe}, \glsentryshort{acr-tpe})} separa los ensayos previos en dos grupos: los que obtuvieron mejores valores de la función objetivo y los restantes. Luego compara las distribuciones de sus hiperparámetros. Las propuestas favorecen valores frecuentes entre los ensayos de mejor desempeño y poco frecuentes entre los demás \cite{Bergstra2011TPE}.
 
 \Needspace{5\baselineskip}
-La búsqueda no configura poda: no se detienen ensayos por resultados intermedios. El presupuesto asignado a cada ensayo no se reduce por esa vía; el consumo efectivo se comprueba en los registros del estudio. La Tabla \ref{tab:diseno_busqueda} resume estas condiciones.
+El protocolo no aplica poda temprana, es decir, no detiene ensayos por su desempeño intermedio. No se ha comprobado que ese desempeño permita ordenar las configuraciones como al final del presupuesto. Los registros de cada ensayo permiten comprobar cuántos pasos de entorno se completan. La Tabla \ref{tab:diseno_busqueda} resume las condiciones de la búsqueda.
 
 \begin{table}[H]\centering\small
 \caption{Condiciones comunes de la búsqueda de configuraciones.}
@@ -347,7 +347,7 @@ La búsqueda no configura poda: no se detienen ensayos por resultados intermedio
 Cupo de ensayos & 100 por combinación de algoritmo y red sintética \\
 Presupuesto por ensayo & 345.600 pasos de entorno desde cero \\
 Muestreador & \acrshort{acr-tpe} sobre Optuna, coordinado por Ray Tune \\
-Poda & No se configura \\
+Poda temprana & No se aplica \\
 Función objetivo & Espera media por vehículo insertado \\
 \hline
 \end{tabular}\end{table}
@@ -370,18 +370,22 @@ Mendoza, aceptación con programas fijos (2 h) & No se añade & 7.200 s \\
 \Needspace{3\baselineskip}
 En la búsqueda de configuraciones, cada estudio registra una semilla para el entrenamiento y una para el muestreador \acrshort{acr-tpe}; ambas cumplen funciones distintas y se conservan con los registros del estudio. Las semillas de las configuraciones de referencia para generar las rutas se conservan en los archivos de cada escenario.
 
+Un punto de control (\gls{checkpoint}) guarda el estado del modelo y permite restaurarlo. El protocolo guarda un punto de control después de cada iteración de entrenamiento. El punto de control final corresponde a la iteración en la que el ensayo alcanza los 345.600 pasos de entorno.
+
 \Needspace{8\baselineskip}
 \subsection{Función objetivo de la búsqueda}
 \label{subsec:objetivo_busqueda}
 
-La búsqueda minimiza la espera media por vehículo insertado, medida sobre el último punto de control del ensayo en un episodio con una semilla de evaluación fijada y selección determinista de acciones. Optuna registra esa espera media, expresada en segundos por vehículo. La Sección \ref{sec:metricas_evidencia} define qué vehículos se incluyen y cómo se calcula esa media.
+La búsqueda minimiza la espera media por vehículo insertado. Para obtener el puntaje de un ensayo, el protocolo restaura el punto de control final y evalúa la política en un episodio separado, sin actualizar sus parámetros. El episodio utiliza una semilla de simulación fijada y la política selecciona las acciones sin muestreo aleatorio. Optuna registra la espera media observada en ese episodio, en segundos por vehículo. La Sección \ref{sec:metricas_evidencia} define qué vehículos se incluyen y cómo se calcula esa media.
 
 \subsection{Búsqueda de configuraciones}
 \label{subsec:hpo_busqueda}
 
 El diseño de la búsqueda comprende las doce combinaciones de algoritmo y red sintética y asigna a cada una una arquitectura de perceptrón multicapa: dos capas ocultas de 256 unidades para \acrshort{acr-ippo} y \acrshort{acr-mappo} en $3\times1$, y dos de 128 en las restantes, según la Tabla \ref{tab:arquitecturas_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
-El espacio de búsqueda comprende los hiperparámetros de aprendizaje definidos para cada algoritmo en la configuración del estudio y la cantidad de niveles $I$ del codificador. El factor de descuento se fija en $\gamma = 0{,}99$ y la recompensa es local ($\rho_{\mathrm{coop}}=0$). La correspondencia entre parámetros y claves se conserva en la Tabla \ref{tab:claves_parametros} del Apéndice \ref{apendice:arquitectura_software}.
+Para los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el espacio de búsqueda comprende los hiperparámetros de aprendizaje y la cantidad de niveles $I$ del codificador. El factor de descuento se fija en $\gamma = 0{,}99$ y la recompensa es local ($\rho_{\mathrm{coop}}=0$). Los dominios declarados se conservan en la Tabla \ref{tab:dominios_ippo_mappo} del Apéndice \ref{apendice:arquitectura_software}.
+
+En \acrshort{acr-ippo} y \acrshort{acr-mappo}, el crítico se ajusta a partir del error entre el valor predicho y su valor objetivo. La búsqueda incluye la mitad del error cuadrático medio y la pérdida de Huber. Esta última es cuadrática hasta un umbral y crece linealmente cuando la magnitud del error lo supera \cite{huber1964robust}. Así, un error mayor deja de aumentar la magnitud de la derivada de la pérdida respecto del error. Ambas pérdidas pueden combinarse con o sin normalización del retorno. La Sección \ref{subsec:perdida_valor_ippo_mappo} del Apéndice \ref{apendice:arquitectura_software} detalla estas alternativas.
 
 \section{Evaluación y análisis del desempeño}
 \label{sec:evaluacion_modelos}
@@ -474,7 +478,7 @@ Cada cociente se informa como indefinido si su denominador es cero. El contador 
 \section{Reproducibilidad y alcance}
 \label{sec:reproducibilidad_validez}
 
-Para identificar las condiciones de cada experimento se conservan los archivos de red y demanda, las configuraciones de \acrshort{acr-sumo}, las semillas de cada etapa, los dominios y valores de los hiperparámetros, y los puntos de control de los modelos entrenados. Su inventario se presenta en la Sección \ref{sec:apendice_reproduccion} del Apéndice \ref{apendice:arquitectura_software}.
+Para identificar las condiciones de cada experimento, el inventario se limita a las especificaciones y registros cotejados: archivos de red y demanda, configuraciones de \acrshort{acr-sumo}, semillas, dominios y valores de hiperparámetros declarados, y los puntos de control que esos registros permiten localizar. El Apéndice \ref{apendice:arquitectura_software} distingue los valores declarados de los usados y reúne el inventario en la Sección \ref{sec:apendice_reproduccion}.
 
 \subsection{Entorno de cómputo y envío de trabajos}
 \label{subsec:infraestructura_hpc}
@@ -484,11 +488,9 @@ Las campañas documentadas se ejecutaron en el clúster de cómputo de alto rend
 \subsection{Alcance y limitaciones}
 \label{subsec:alcance_limitaciones}
 
-La dispersión entre episodios de evaluación representa variabilidad de la simulación, no de entrenamientos independientes \cite{Agarwal2021RLiable}.
+El puntaje de un ensayo orienta la búsqueda: caracteriza el punto de control final bajo la semilla utilizada, pero no sustituye una evaluación independiente con otras semillas. Si se evalúa el mismo punto de control en varios episodios, la dispersión refleja la variabilidad de la simulación, no la de entrenamientos independientes \cite{Agarwal2021RLiable}.
 
-Las búsquedas fijan el mismo presupuesto de pasos para algoritmos que utilizan los datos de manera distinta: la familia \acrshort{acr-ppo} trabaja \textit{on-policy}, mientras que \acrshort{acr-idqn} reutiliza experiencias del \textit{replay buffer} y opera \textit{off-policy}. La comparación debe leerse teniendo en cuenta esa diferencia, el espacio de hiperparámetros explorado y las condiciones de tránsito definidas en este capítulo.
-
-El puntaje de un ensayo caracteriza el punto de control evaluado bajo la semilla utilizada. No estima la variación entre entrenamientos independientes.
+La búsqueda fija el mismo presupuesto de pasos para algoritmos que utilizan los datos de manera distinta: la familia \acrshort{acr-ppo} trabaja \textit{on-policy}, mientras que \acrshort{acr-idqn} reutiliza experiencias del \textit{replay buffer} y opera \textit{off-policy}. La comparación debe leerse teniendo en cuenta esa diferencia, el espacio de hiperparámetros explorado y las condiciones de tránsito definidas en este capítulo.
 
 En Mendoza balance se redistribuyeron las solicitudes de cada hora y se fijaron rutas explícitas, lo que modificó los totales por origen y destino y las distancias respecto de la referencia. Los conteos parciales de los accesos no bastan para calibrar una matriz de viajes de toda la ciudad. La verificación con tres semillas confirmatorias se limita a la versión de SUMO y a los horizontes ensayados.
 

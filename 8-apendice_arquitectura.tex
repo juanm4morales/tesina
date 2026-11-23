@@ -354,39 +354,29 @@ C1 tiene tres acciones seleccionables. C4 y D1 tienen dos, aunque sus programas 
 \subsection{Espacio de búsqueda}
 \label{subsec:espacio_busqueda}
 
-La búsqueda ajusta los hiperparámetros de aprendizaje de cada algoritmo y la cantidad de niveles $I$ del codificador de espera. El factor de descuento se fija en $\gamma=0{,}99$ y la recompensa es local en el protocolo de comparación. La Tabla \ref{tab:claves_parametros} conserva la correspondencia entre los parámetros y las claves de configuración.
+En los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, la búsqueda ajusta los hiperparámetros de aprendizaje y la cantidad de niveles $I$ del codificador de espera. La Tabla \ref{tab:dominios_ippo_mappo} transcribe los dominios declarados para esos estudios; no se extrapolan a \acrshort{acr-happo} ni a \acrshort{acr-idqn}. Los valores provienen de la especificación v2 del protocolo de comparación, conservada en \path{artifacts/phase3_comparison/phase3_hpo_spec_v2.json}; la especificación declara el compromiso \texttt{7d437b6} y la implementación se verificó en el compromiso \texttt{c31ff60} de \texttt{marl-tlc}. La preparación del 13 de noviembre de 2026 conserva la igualdad con esa especificación.
 
-Los intervalos y distribuciones declarados se conservan en la configuración de cada estudio. No se reproducen aquí como una tabla cerrada porque la especificación efectiva debe cotejarse con el registro del estudio correspondiente.
-
-En esta implementación, la cota de valor limita la pérdida cuadrática del crítico y no la espera física (Sección \ref{sec:apendice_detalles_aprendizaje}). El límite de escala del codificador de espera acumulada por carril se calibra por escenario; su fijación no implica que el \gls{percentil} utilizado sea superior a otras alternativas.
+La especificación fija $\gamma=0{,}99$, diez épocas, lotes de 5.760 pasos y 345.600 pasos de entorno por ensayo. También activa la pérdida \acrshort{acr-kl} con coeficiente $0{,}2$ y objetivo $0{,}01$, y fija el coeficiente de pérdida del valor en $1{,}0$.
 
 \begin{table}[H]\centering\small
-\caption{Correspondencia entre los parámetros de búsqueda y sus claves de configuración.}
-\label{tab:claves_parametros}
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{@{}ll@{}}\hline
+\caption{Dominios declarados para los estudios de IPPO y MAPPO.}\label{tab:dominios_ippo_mappo}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.8cm}>{\raggedright\arraybackslash}p{4cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{2.4cm}@{}}\hline
 \rowcolor{catAzulCielo!25}
-Parámetro & Clave en el código \\\hline
-Tasa de aprendizaje & \texttt{lr} \\
-Recorte del actor & \texttt{clip\_param} \\
-Parámetro de GAE & \texttt{lambda\_gae} \\
-Peso de entropía & \texttt{entropy\_coeff} \\
-Límite del gradiente & \texttt{grad\_clip} \\
-Coeficiente de penalización KL & \texttt{kl\_coeff} \\
-Objetivo de divergencia KL & \texttt{kl\_target} \\
-Cota de pérdida de valor & \texttt{vf\_clip\_param} \\
-Recorridos de optimización & \texttt{num\_epochs} \\
-Episodios por lote & \texttt{train\_batch\_episodes} \\
-Niveles del codificador & \texttt{encoder\_intervals} \\
-Tamaño del minilote & \texttt{minibatch\_size} \\
-Probabilidad de ordenación (HAPPO) & \texttt{greedy\_selection\_prob} \\
-Transiciones por lote & \texttt{train\_batch\_size\_per\_learner} \\
-Actualización de red objetivo & \texttt{target\_network\_update\_freq} \\
-Pasos para reducir exploración & \texttt{epsilon\_timesteps} \\
-Exploración final & \texttt{epsilon\_final} \\
-Horizonte del retorno & \texttt{n\_step} \\
-Pasos antes de aprender & \texttt{num\_steps\_sampled\_before\_learning\_starts} \\
-\hline\end{tabular}\end{table}
+Parámetro & Clave & Dominio & Muestreo \\\hline
+Tasa de aprendizaje del actor & \texttt{actor\_lr} & $[10^{-5};\,10^{-3}]$ & Loguniforme \\
+Tasa de aprendizaje del crítico & \texttt{critic\_lr} & $[10^{-5};\,10^{-3}]$ & Loguniforme \\
+Recorte del actor & \texttt{clip\_param} & $[0{,}05;\,0{,}22]$ & Uniforme \\
+Parámetro de GAE & \texttt{lambda\_gae} & $[0{,}88;\,0{,}99]$ & Uniforme \\
+Coeficiente de entropía & \texttt{entropy\_coeff} & $[0;\,0{,}01]$ & Uniforme \\
+Niveles del codificador & \texttt{encoder\_intervals} & 4--64 & Entero inclusivo \\
+Normalización del retorno & \texttt{value\_normalization} & \texttt{off}, \texttt{welford} & Categórico \\
+Pérdida del valor & \texttt{value\_loss} & \texttt{mse\_half}, \texttt{huber\_1}, \texttt{huber\_10} & Categórico \\
+Recorte del gradiente & \texttt{grad\_clip} & $\{1;\,10\}$ & Categórico \\
+\hline
+\end{tabular}\end{table}
+
+Los intervalos se transcriben de la especificación; el tipo de muestreo determina el tratamiento del extremo superior. El límite de escala del codificador de espera acumulada por carril se calibra por escenario; su fijación no implica que el \gls{percentil} utilizado sea superior a otras alternativas.
 
 \subsection{Arquitecturas de la búsqueda}
 \label{subsec:arquitecturas_busqueda}
@@ -404,7 +394,30 @@ Algoritmo & Red & Capas ocultas \\\hline
 \hline
 \end{tabular}\end{table}
 
-La arquitectura se conserva dentro de cada \gls{estudio_hpo} para evitar que RLlib 2.53 altere su especificación al almacenarla en otros campos de configuración, según la decisión registrada en \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{architectures.py}. Las semillas de entrenamiento y muestreo se registran en la configuración efectiva de cada estudio; no se reproducen aquí sin un cotejo de la especificación vigente.
+La arquitectura se conserva dentro de cada \gls{estudio_hpo} para evitar que RLlib 2.53 altere su especificación al almacenarla en otros campos de configuración, según la decisión registrada en \path{experiments/marl_experiments/tuning/shared/}\allowbreak\path{architectures.py}.
+
+\subsection{Semillas de los estudios de IPPO y MAPPO}
+\label{subsec:semillas_estudios}
+
+La Tabla \ref{tab:semillas_estudios} reúne las semillas de los seis estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}. Las de entrenamiento y muestreo provienen de los archivos \texttt{pair\_3x1.json}, \texttt{pair\_3x3.json} y \texttt{pair\_4x4\_H.json}, conservados junto a la especificación v2 y cotejados en el compromiso \texttt{c31ff60}. La semilla de evaluación prevista se toma del registro de semillas de esa especificación según la red.
+
+Para identificar los estudios se recalculó la huella digital a partir de la especificación completa, el algoritmo, la red, la clave de arquitectura y la semilla del muestreador. Los primeros 16 caracteres de cada huella coincidieron con los sufijos de los seis nombres del inventario del 12 de noviembre de 2026.
+
+\begin{table}[H]\centering\small
+\caption{Semillas de entrenamiento, evaluación prevista y muestreador para los seis estudios de IPPO y MAPPO.}\label{tab:semillas_estudios}
+\begin{tabular}{@{}llrrr@{}}\hline
+\rowcolor{catAzulCielo!25}
+Algoritmo & Red & Entrenamiento & Evaluación prevista & \acrshort{acr-tpe} \\\hline
+\acrshort{acr-ippo} & $3\times1$ & 102800001 & 102802001 & 102801001 \\
+\acrshort{acr-mappo} & $3\times1$ & 102800001 & 102802001 & 102801002 \\
+\acrshort{acr-ippo} & $3\times3$ & 102800011 & 102802011 & 102801011 \\
+\acrshort{acr-mappo} & $3\times3$ & 102800011 & 102802011 & 102801012 \\
+\acrshort{acr-ippo} & $4\times4\_H$ & 102800021 & 102802021 & 102801021 \\
+\acrshort{acr-mappo} & $4\times4\_H$ & 102800021 & 102802021 & 102801022 \\
+\hline
+\end{tabular}\end{table}
+
+La coincidencia de las huellas identifica los estudios, pero no acredita el uso de la semilla prevista en cada episodio. Para comprobarlo se requieren los registros de evaluación correspondientes.
 
 \subsection{Antecedente de calibración del codificador urbano}
 \label{subsec:protocolo_urbano_mendoza}
@@ -546,7 +559,15 @@ La evidencia se limita a \acrshort{acr-mappo}, por lo que permite comparar A y C
 \section{Detalles del aprendizaje y de la codificación}
 \label{sec:apendice_detalles_aprendizaje}
 
-En los módulos de aprendizaje propios de \acrshort{acr-mappo} y \acrshort{acr-happo}, $V_{b,i}$ es la predicción del crítico para el agente $i$ en la muestra $b$ y $y_{b,i}$ es su valor objetivo. Se denotan por $N$ el número de agentes, por $B$ la cantidad de muestras válidas del lote y por $c_v=\texttt{vf\_clip\_param}$ la cota superior configurada. Primero se calcula el error cuadrático promedio entre agentes de cada muestra, $\ell_b$; después se limita al intervalo $[0,c_v]$ y se promedian las pérdidas de las muestras válidas para obtener la pérdida final del crítico, $\mathcal{L}_V$:
+\subsection{Pérdida del valor en los estudios de IPPO y MAPPO}
+\label{subsec:perdida_valor_ippo_mappo}
+
+La Tabla \ref{tab:dominios_ippo_mappo} identifica tres opciones para el ajuste del crítico: la mitad del error cuadrático medio (\texttt{mse\_half}) y la pérdida de Huber con umbral $1$ o $10$. En \acrshort{acr-mappo}, Yu et al. \cite{yu2022surprising} informan un umbral de Huber igual a $10$ (Tabla~7 del Apéndice~C.4 de la versión arXiv v4, \url{https://arxiv.org/html/2103.01955v4}); ese antecedente no implica que el umbral sea preferible ni que se transfiera a estos estudios. Estos umbrales operan en la escala en la que se ajusta el crítico. Cuando se activa la normalización del retorno, el algoritmo de Welford actualiza la media y la varianza acumuladas de los valores objetivo que se usan para normalizarlos. Las opciones declaradas no indican cuál se usó en cada ensayo.
+
+\subsection{Pérdida del valor en la comparación A/C}
+\label{subsec:perdida_valor_ac}
+
+En la comparación A/C, el crítico centralizado de \acrshort{acr-mappo} se actualizó con la regla documentada en la Sección \ref{subsec:receta_ac_apendice}. Para el agente $i$ en la muestra $b$, $V_{b,i}$ es la predicción del crítico e $y_{b,i}$ es su valor objetivo. El error cuadrático medio de la muestra, $\ell_b$, se calcula sobre los $N$ agentes. Se limita ese error a la cota $c_v$ (\texttt{vf\_\allowbreak clip\_\allowbreak param}) y se promedian las pérdidas de las $B$ muestras válidas para obtener la pérdida del crítico, $\mathcal{L}_V$:
 \begin{equation}
  \ell_b=\frac{1}{N}\sum_{i=1}^{N}(V_{b,i}-y_{b,i})^2,
  \qquad
@@ -554,6 +575,9 @@ En los módulos de aprendizaje propios de \acrshort{acr-mappo} y \acrshort{acr-h
  \label{eq:perdida_valor_marl_tlc}
 \end{equation}
 Las muestras válidas son las que la máscara del lote no excluye del cálculo. Este recorte del error cuadrático no es el \textit{value clipping} convencional de \acrshort{acr-ppo}, que compara predicciones de valor recortadas y no recortadas. Como el error se promedia entre agentes antes de aplicar la cota, una muestra saturada deja de contribuir al ajuste de todas las salidas del crítico, lo que puede afectar las estimaciones de valor y las ventajas que guían a los actores; la frecuencia de saturación no se cuantifica en los registros descritos en este trabajo.
+
+\subsection{Actualización secuencial en la adaptación de HAPPO}
+\label{subsec:actualizacion_happo_apendice}
 
 En el aprendiz de \acrshort{acr-happo} de la versión congelada inspeccionada, el crítico se actualiza al comienzo de cada \gls{epoca_entrenamiento} con el lote completo. Se aplica un paso de gradiente por actor y época. Las ventajas individuales estandarizadas ya calculadas inicializan los factores de reponderación $M$; estos se reinician en cada \gls{epoca_entrenamiento}, y las ventajas no se recalculan durante la secuencia de actores. Antes de actualizar actores, el código construye un orden entero de agentes. En cada turno, \texttt{greedy\_selection\_prob} determina la probabilidad de elegir, entre los agentes pendientes, el que tiene la mayor media del valor absoluto de su factor inicial; de lo contrario, elige uno al azar. Esta regla ordena a los actores para su actualización, no selecciona la fase semafórica. El orden no se vuelve a sortear después de reponderar factores.
 
