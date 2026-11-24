@@ -19,7 +19,7 @@ Ray RLlib & Orquestación distribuida de los procesos de muestreo y optimizació
 PyTorch & Cómputo de redes neuronales y actualización de parámetros por gradiente. \\\hline
 \end{tabular}\end{table}
 
-La Figura \ref{fig:uml_entorno_agentes} organiza las responsabilidades del entorno: \texttt{BaseSumoEnvironment} administra la simulación y sus estados guardados; \texttt{SumoRllibEnv} adapta su interfaz a RLlib; \texttt{TrafficLight} gestiona fases, carriles, vecinos y recompensas; y \texttt{Lane}, las medidas de espera. Las flechas de herencia apuntan a la clase general y la multiplicidad $1..*$ indica uno o más objetos relacionados. Los diagramas representan la especificación de diseño, sin describir una correspondencia exhaustiva entre clases y archivos ejecutables.
+La Figura \ref{fig:uml_entorno_agentes} organiza las responsabilidades del entorno mediante un diagrama de clases en \glsdisp{acr-uml}{Lenguaje Unificado de Modelado (\glsentryuseri{acr-uml}, \glsentryshort{acr-uml})}. En este diagrama, \texttt{BaseSumoEnvironment} administra la simulación y sus estados guardados; \texttt{SumoRllibEnv} adapta su interfaz a RLlib; \texttt{TrafficLight} gestiona fases, carriles, vecinos y recompensas; y \texttt{Lane}, las medidas de espera. Las flechas de herencia apuntan a la clase general y la multiplicidad $1..*$ indica uno o más objetos relacionados. Los diagramas representan la especificación de diseño, sin describir una correspondencia exhaustiva entre clases y archivos ejecutables.
 
 \begin{figure}[!htbp]
 \centering
