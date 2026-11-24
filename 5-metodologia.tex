@@ -13,8 +13,6 @@ La Figura \ref{fig:flujo_metodologico_general} resume el recorrido en cuatro pas
 \label{fig:flujo_metodologico_general}
 \end{figure}
 
-La recompensa se basa en la variación de la espera vehicular entre decisiones consecutivas. La Sección \ref{subsec:recompensa_coordinacion} presenta las formulaciones utilizadas.
-
 El capítulo desarrolla el diseño experimental y los escenarios (secciones \ref{sec:tarea_investigacion} y \ref{sec:diseno_escenarios}); el sistema de control y la búsqueda de configuraciones (secciones \ref{sec:arquitectura_entorno_agentes} y \ref{sec:experimentos_hiperparametros}); y la evaluación, la reproducibilidad y el alcance del trabajo (secciones \ref{sec:evaluacion_modelos} y \ref{sec:reproducibilidad_validez}).
 
 \Needspace{9\baselineskip}
@@ -235,7 +233,7 @@ Al iniciar cada experimento, el entorno ejecuta el calentamiento configurado y g
 
 El episodio termina cuando se cumple el horizonte. La opción \texttt{terminate\_on\_}\allowbreak\texttt{empty}, si está activada, también permite finalizarlo cuando no quedan vehículos en la red ni pendientes de ingreso. Esta última condición se comprueba con \texttt{getMinExpectedNumber}.
 
-La interfaz de Gymnasium/RLlib distingue dos indicadores: \texttt{terminated} señala la terminación y \texttt{truncated}, el truncamiento por límite de tiempo. En los experimentos sintéticos, la opción \texttt{time\_limit\_as\_}\allowbreak\texttt{truncation} se fijó en \texttt{False}. Con esa configuración, al terminar el horizonte se activan ambos indicadores y no se usa el valor estimado del estado final para el \textit{bootstrapping} en la estimación de ventaja generalizada (Ecuación \eqref{eq:gae} del Capítulo \ref{cap:marco_teorico}).
+Gymnasium y RLlib distinguen el final de la tarea (\texttt{terminated}) de un corte externo, como un límite de tiempo ajeno a la tarea (\texttt{truncated}). En los estudios cotejados de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el horizonte forma parte de la tarea: al alcanzarlo, el entorno devuelve \texttt{terminated=True} y \texttt{truncated=False}. Por ello, el último residuo de la Ecuación \eqref{eq:gae} no incorpora el valor estimado del estado siguiente. Este comportamiento corresponde a las versiones del entorno identificadas en la Sección \ref{subsec:espacio_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
 
 La relación de vecindad se obtiene automáticamente del grafo vial. Dos agentes son vecinos directos si al menos una conexión saliente de un carril controlado por uno desemboca en un carril entrante controlado por el otro. Aunque la conexión vial tenga un solo sentido, la relación de vecindad se registra en ambos.
 
@@ -300,18 +298,18 @@ L_i^{(t)} = W_i^{(t-1)} - W_i^{(t)}.
 \label{eq:recompensa_local}
 \end{equation}
 
-En el protocolo de comparación de algoritmos, la recompensa es estrictamente local ($R_i^{(t)}=L_i^{(t)}$) y se fija $\rho_{\mathrm{coop}}=0$. La combinación con señales vecinales se examinó en las pruebas exploratorias descritas en la Sección \ref{sec:comparacion_local_vecinal} del Apéndice \ref{apendice:arquitectura_software}: allí, la recompensa combinó la señal local con el promedio de las variaciones de espera de los vecinos, normalizado por el número de carriles entrantes y ponderado por $\rho_{\mathrm{coop}}$.
+En el protocolo de comparación de algoritmos, la recompensa es estrictamente local ($R_i^{(t)}=L_i^{(t)}$). En la condición C de la comparación exploratoria A/C, se divide la variación de espera de cada vecino por su número de carriles entrantes antes de promediar entre vecinos. El coeficiente de cooperación $\rho_{\mathrm{coop}}$ pondera la combinación de la señal local y ese promedio; en la búsqueda se fija en cero. La Sección \ref{sec:comparacion_local_vecinal} del Apéndice \ref{apendice:arquitectura_software} describe ambas condiciones.
 
 \Needspace{8\baselineskip}
 \subsection{Agentes y algoritmos de aprendizaje}
 \label{sec:implementacion_algoritmos}
 \label{subsec:mecanismos_algoritmos}
 
-Los cuatro algoritmos se implementaron en \texttt{marlTLC} con una interfaz común de Ray RLlib, a partir de las formulaciones presentadas en la Sección \ref{sec:marl} y en las secciones \ref{subsec:mappo} y \ref{subsec:happo} del Capítulo \ref{cap:marco_teorico}. La implementación adopta las siguientes decisiones de arquitectura y aprendizaje:
+Los cuatro algoritmos se implementaron en \texttt{marlTLC} a partir de las formulaciones del Capítulo \ref{cap:marco_teorico}. La red neuronal que cada agente utiliza para elegir una fase tiene sus propios parámetros. Así, las dimensiones de su entrada y su salida pueden variar entre intersecciones, como ocurre en $4\times4\_H$. La organización de las redes de valor depende del algoritmo:
 \begin{itemize}
-    \item \textbf{Parámetros independientes por intersección:} cada agente tiene su propia red neuronal y no comparte pesos con los demás. Así, las redes neuronales pueden tener distintas dimensiones de entrada ($m_i$) y salida ($K_i$), según la intersección que controla cada agente, como ocurre en $4\times4\_H$.
-    \item \textbf{Aprendizaje independiente en \acrshort{acr-idqn} e \acrshort{acr-ippo}:} ambos métodos estiman valores y actualizan sus parámetros empleando únicamente las observaciones locales $o_i^{(t)}$ y las recompensas $R_i^{(t)}$ de cada intersección. En \acrshort{acr-idqn}, cada agente entrena su red de valores de acción con una red objetivo actualizada periódicamente y una memoria de experiencias multiagente (\textit{replay buffer}) con muestreo priorizado según la magnitud del error de diferencia temporal. En \acrshort{acr-ippo}, cada intersección entrena un actor y un crítico locales sobre lotes de episodios \textit{on-policy}, y estandariza por agente las ventajas estimadas mediante \acrshort{acr-gae}.
-    \item \textbf{Crítico centralizado con salidas por agente en \acrshort{acr-mappo} y \acrshort{acr-happo}:} siguiendo el esquema \acrshort{acr-ctde} (Figura \ref{fig:ctde_architecture}), el \gls{critico} centralizado recibe la concatenación de las observaciones de todos los agentes. Si hay $N$ agentes, produce $N$ salidas escalares de valor asociadas a sus respectivas recompensas individuales.
+    \item \textbf{\acrshort{acr-idqn}:} cada agente mantiene su propia red de valores de acción $Q_i(o_i,a_i)$ y una red objetivo que se actualiza periódicamente. El aprendizaje utiliza un \gls{replay_buffer} multiagente con muestreo priorizado según la magnitud del error de diferencia temporal.
+    \item \textbf{\acrshort{acr-ippo}:} cada intersección entrena un actor local $\pi_{\theta_i}(a_i\mid o_i)$ y un crítico local $V_{\phi_i}(o_i)$ con datos \textit{on-policy}, y estandariza por agente las ventajas estimadas mediante \acrshort{acr-gae}.
+    \item \textbf{\acrshort{acr-mappo} y la adaptación de \acrshort{acr-happo}:} cada agente conserva su propio actor $\pi_{\theta_i}(a_i\mid o_i)$. El crítico centralizado $V_\phi$ (Figura \ref{fig:ctde_architecture}) recibe la concatenación de las observaciones de todos los agentes y produce $N$ salidas escalares, una por agente; los valores y las ventajas se calculan por agente.
 
     Antes de actualizar las políticas, las ventajas se estandarizan por agente: se resta su media y se divide por su desviación estándar.
     \item \textbf{Orden de actualización en \acrshort{acr-happo}:} en cada \glsdisp{epoca_entrenamiento}{época}, se actualiza primero el crítico y después los actores, uno por uno y con el lote completo de transiciones de cada agente. El orden $i_1,\ldots,i_N$ se fija antes de actualizar los actores. En cada posición, \texttt{greedy\_selection\_prob} determina la probabilidad de elegir, entre los agentes pendientes, al que tiene el mayor promedio del valor absoluto de su ventaja estandarizada $|\hat{A}_i|$. En los demás casos, se elige uno al azar.
@@ -435,7 +433,7 @@ Sobre este conjunto de vehículos insertados $\mathcal{V}_{\mathrm{ins}}$ (con $
         \label{eq:tasa_completitud}
     \end{equation}
     \Needspace{4\baselineskip}
-    \item \textbf{Pérdida temporal media ($\bar{\ell}$):} promedio del atributo \texttt{timeLoss} sobre $\mathcal{V}_{\mathrm{ins}}$ (en segundos por vehículo), que cuantifica el exceso de tiempo de viaje respecto de la circulación en flujo libre \cite{SUMO2026_TripInfo}.
+    \item \textbf{Pérdida temporal media ($\bar{\ell}$):} promedio del atributo \texttt{timeLoss} sobre $\mathcal{V}_{\mathrm{ins}}$ (en segundos por vehículo). \acrshort{acr-sumo} calcula el tiempo perdido al circular por debajo de la velocidad ideal de cada vehículo y excluye las paradas programadas \cite{SUMO2026_TripInfo}.
 \end{itemize}
 
 Si no se inserta ningún vehículo en la ventana, las tres métricas quedan indefinidas.
@@ -473,7 +471,7 @@ Estos conteos cumplen las identidades de conservación $L = I + W$ e $I = A + R$
     \frac{A}{I} = \frac{\acrshort{acr-cr}}{\acrshort{acr-ir}}.
     \label{eq:tasas_operacionales}
 \end{equation}
-Cada cociente se informa como indefinido si su denominador es cero. El contador \texttt{loaded} puede incluir solicitudes cuya salida está programada para más adelante y, por ello, no equivale automáticamente a la demanda que ya debía ingresar.
+Cada cociente se informa como indefinido si su denominador es cero. La tasa \acrshort{acr-cr} usa los vehículos cargados $L$; la tasa \acrshort{acr-ci}, definida en la Ecuación \eqref{eq:tasa_completitud}, usa los vehículos insertados de $\mathcal{V}_{\mathrm{ins}}$. No son equivalentes. El contador \texttt{loaded} puede incluir solicitudes cuya salida está programada para más adelante y, por ello, no equivale automáticamente a la demanda que ya debía ingresar.
 
 \FloatBarrier
 
@@ -485,7 +483,7 @@ Para identificar las condiciones de cada experimento, el inventario se limita a 
 \subsection{Entorno de cómputo y envío de trabajos}
 \label{subsec:infraestructura_hpc}
 
-Las campañas documentadas se ejecutaron en el clúster de cómputo de alto rendimiento Toko (UNCuyo), mediante trabajos por lotes gestionados con Slurm. Los registros y archivos generados se guardaron por separado para cada combinación experimental. La Sección \ref{sec:infraestructura_apendice} del Apéndice \ref{apendice:arquitectura_software} detalla los recursos solicitados, los registros disponibles sobre su asignación y el almacenamiento de los resultados.
+Los registros disponibles documentan el envío de trabajos por lotes al clúster de cómputo de alto rendimiento Toko (UNCuyo) mediante Slurm. Los archivos de ejecución que se conservan están organizados por combinación experimental. La Sección \ref{sec:infraestructura_apendice} del Apéndice \ref{apendice:arquitectura_software} distingue los recursos solicitados de los que pueden acreditarse con registros de asignación y describe dónde se almacenaron los archivos.
 
 \subsection{Alcance y limitaciones}
 \label{subsec:alcance_limitaciones}
