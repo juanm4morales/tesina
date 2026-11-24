@@ -36,7 +36,7 @@ Cada escenario se compone de una red vial, una demanda de viajes y un programa s
 \subsection{Preparación de las redes viales}
 \label{subsec:metodologia_modelado_sumo}
 
-Para preparar las redes se definieron las calzadas, los carriles por aproximación y las longitudes de almacenamiento. Las redes sintéticas se construyeron con \texttt{netedit} y la de Mendoza, a partir de cartografía de \acrshort{acr-osm}. En las primeras se conservaron los programas semafóricos fijos de referencia (Tabla \ref{tab:tiempos_semaforicos_base}). Para Mendoza se construyó un plan fijo canónico de 4 s, descrito en la Sección \ref{subsec:escenario_mendoza} y detallado en la Sección \ref{sec:parametros_sumo} del Apéndice \ref{apendice:arquitectura_software}.
+Para preparar las redes se definieron las calzadas, los carriles por aproximación y las longitudes de almacenamiento. Las redes sintéticas se construyeron con \texttt{netedit} y la de Mendoza, a partir de cartografía de \acrshort{acr-osm}. Los programas fijos de las redes sintéticas se presentan a continuación. El plan fijo de Mendoza se describe en la Sección \ref{subsubsec:mendoza_plan_fijo}.
 
 \subsection{Redes viales sintéticas}
 \label{subsec:escenarios_sinteticos}
@@ -102,12 +102,12 @@ Flujo solicitado (vehículos por hora) & 3.260 & 7.087 & 7.202 \\
 \end{tabular}
 \end{table}
 
-La Tabla \ref{tab:tiempos_semaforicos_base} resume las secuencias de los programas semafóricos de referencia, cuyos ciclos duran 90 segundos, y la Figura \ref{fig:tiempos_semaforicos_base} del Apéndice \ref{apendice:arquitectura_software} muestra su distribución temporal. En la tabla, $V_i$ es el verde de la fase $i$, $A_i$ el intervalo amarillo (3\,s) y $R$ el intervalo de todo rojo o despeje (1\,s).
+La Tabla \ref{tab:tiempos_semaforicos_base} resume los programas fijos históricos, con amarillos de 3\,s y ciclos de 90\,s. La Figura \ref{fig:tiempos_semaforicos_base} del Apéndice \ref{apendice:arquitectura_software} muestra cómo se distribuye ese tiempo. En la tabla, $V_i$ es el verde de la fase $i$, $A_i$ el amarillo y $R$ el intervalo de todo rojo o despeje.
 
 En la red $4\times4\_H$, la tabla identifica la fase de giro protegido de C1 y el intervalo de todo rojo de C4 y D1. Las restricciones temporales del control aprendido se describen en la Sección \ref{subsec:acciones_masking}.
 
 \begin{table}[H]\centering\small
-\caption{Duraciones de los programas semafóricos de referencia en las redes sintéticas (segundos).}\label{tab:tiempos_semaforicos_base}
+\caption{Duraciones de los programas fijos históricos en las redes sintéticas (en segundos).}\label{tab:tiempos_semaforicos_base}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{6.2cm}>{\raggedright\arraybackslash}p{7.9cm}r@{}}\hline
 \textbf{Red vial e intersecciones} & \textbf{Secuencia cronológica de fases e intervalos} & \textbf{Ciclo} \\\hline
 $3\times1$: todas (3) & $V_1=42,\; A_1=3,\; V_2=42,\; A_2=3$ & 90\,s \\
@@ -116,6 +116,10 @@ $4\times4\_H$: 13 intersecciones con secuencia común & $V_1=42,\; A_1=3,\; V_2=
 $4\times4\_H$: C1 & $V_1=38,\; A_1=3,\; V_2=37,\; A_2=3,$\newline $V_3=6\text{ \footnotesize(giro protegido)},\; A_3=3$ & 90\,s \\
 $4\times4\_H$: C4 y D1 & $V_1=42,\; A_1=3,\; V_2=41,\; A_2=3,$\newline $R=1\text{ \footnotesize(todo rojo)}$ & 90\,s \\\hline
 \end{tabular}\end{table}
+
+En los estudios cotejados de \acrshort{acr-ippo} y \acrshort{acr-mappo}, SUMO usa estos programas durante el calentamiento. Al tomar el control, los agentes reciben el tránsito que dejó esa etapa, pero sus cambios de fase usan amarillos de 4\,s (Sección \ref{subsec:acciones_masking}).
+
+Los programas fijos actualizados también usan amarillos de 4\,s, pero no fueron parte de esos estudios. Como el cambio puede alterar el tránsito al comenzar el control, las políticas deben volver a evaluarse antes de compararlas con los programas actualizados.
 
 \FloatBarrier
 
@@ -158,9 +162,9 @@ La Figura \ref{fig:dominio_mendoza} ubica los controladores, las avenidas de ref
 \subsubsection{Construcción del plan fijo}
 \label{subsubsec:mendoza_plan_fijo}
 
-El plan canónico conserva un ciclo común de 90 segundos, los intervalos de todo rojo y los desfases de los controladores existentes, que sitúan el comienzo de cada programa respecto de un origen temporal común \cite[cap.~6]{fhwa_signal_timing_manual}. Para adaptar las duraciones, se fijaron los amarillos en cuatro segundos y se repartió el verde restante en proporción a las duraciones previas. El redondeo a segundos enteros conserva exactamente el ciclo y exige verdes de al menos cinco segundos.
+El plan canónico hereda del plan de referencia el ciclo común de 90 segundos, los intervalos de todo rojo y los desfases de los controladores existentes, que sitúan el comienzo de cada programa respecto de un origen temporal común \cite[cap.~6]{fhwa_signal_timing_manual}. Para adaptar las duraciones, se fijaron los amarillos en cuatro segundos y se repartió el verde restante en proporción a las duraciones previas. El redondeo a segundos enteros conserva exactamente el ciclo y exige verdes de al menos cinco segundos.
 
-En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 62 segundos, cada una seguida por cuatro segundos de amarillo y uno de todo rojo, y con desfase cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software} detalla la regla de reparto. El ciclo y los intervalos son decisiones del escenario, no valores óptimos estimados.
+En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 62 segundos, cada una seguida por cuatro segundos de amarillo y uno de todo rojo, y con desfase cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software} detalla la regla de reparto. El ciclo, la redistribución de verdes y los mínimos son decisiones de diseño, no valores óptimos ni garantía de operación en campo.
 
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
@@ -169,7 +173,7 @@ Se mantuvieron la demanda nominal de 220.000 viajes diarios y las tasas totales 
 
 Para distribuir las solicitudes se definieron hasta tres rutas por par \acrshort{acr-od}. Luego se resolvió un programa lineal por hora para asignar una tasa a cada ruta. El programa minimiza una suma ponderada de las desviaciones respecto de los flujos de referencia y de la distancia total prevista. El ajuste conserva el total horario y los pares activos, y limita las cargas previstas sobre accesos y movimientos mediante valores fijados para construir el escenario. Los totales por origen y destino, llamados marginales de la matriz, pueden cambiar. Ninguna de las rutas obtenidas utiliza el giro Benegas→Civit. La Sección \ref{sec:mendoza_demanda_apendice} del Apéndice \ref{apendice:arquitectura_software} presenta las variables, las restricciones, los pesos y la conversión a flujos de \acrshort{acr-sumo}.
 
-La Figura \ref{fig:construccion_urbana} muestra las solicitudes esperadas por hora según el horario definido para el escenario. Las dos ventanas comienzan por separado con la red vacía: la de 12 h cubre $[0,43.200)$\,s y la de 2 h, $[1.800,9.000)$\,s. Por eso, la ventana corta no reproduce el estado de la simulación larga a las 06:30.
+La Figura \ref{fig:construccion_urbana} muestra la demanda horaria esperada y señala las dos ventanas de simulación: de 06:30 a 08:30 y de 06:00 a 18:00. Cada ventana se simula por separado desde una red vacía \cite{Law2015Output}.
 
 La generación de solicitudes es estocástica \cite{SUMO2026_Randomness}, de modo que los conteos varían entre semillas. Si no encuentran una brecha suficiente en el carril de entrada, los vehículos permanecen pendientes de ingreso.
 
@@ -195,9 +199,9 @@ Las dos configuraciones canónicas de 4 s utilizan los mismos archivos de entrad
 \subsubsection{Verificación del escenario, aceptación y alcance}
 \label{subsubsec:mendoza_validacion_operacional}
 
-Para comprobar el plan de 4\,s se simuló una vez cada ventana con la semilla 104729. Ambas ejecuciones partieron de una red vacía, condición inicial que debe tenerse en cuenta al interpretar los resultados \cite{Law2015Output}. No se utilizaron otras semillas ni se repitieron las comprobaciones locales por corredor. La Sección \ref{subsec:mendoza_historico_5s} del Apéndice \ref{apendice:arquitectura_software} documenta por separado la evidencia histórica de 5\,s.
+Para comprobar el plan de 4\,s se simuló una vez cada ventana con la semilla 104729. Las dos ventanas no son réplicas independientes. No se utilizaron otras semillas ni se repitieron las comprobaciones locales por corredor. La Sección \ref{subsec:mendoza_historico_5s} del Apéndice \ref{apendice:arquitectura_software} documenta por separado la evidencia histórica de 5\,s.
 
-El criterio de aceptación exige completar el horizonte con cero teletransportes, cero colisiones registradas y cero descartes, y que al menos el $75\%$ de los vehículos cargados llegue a destino. Esta última proporción es la \glsdisp{acr-cr}{Tasa de Completitud (\glsentryuseri{acr-cr}, \glsentryshort{acr-cr})}, definida en la Ecuación \eqref{eq:tasas_operacionales}. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
+El criterio de aceptación exige completar la ventana sin teletransportes, colisiones registradas ni descartes. Además, al menos el $75\%$ de los vehículos cargados debe llegar a destino. Esa proporción se mide mediante la \glsdisp{acr-cr}{Tasa de Completitud (\glsentryuseri{acr-cr}, \glsentryshort{acr-cr})}, definida en la Ecuación \eqref{eq:tasas_operacionales}. El umbral se conserva de la comprobación anterior y se aplica solo a la simulación. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
 
 \Needspace{4\baselineskip}
 Para contrastar la simulación con el tránsito real se necesitarían conteos independientes por movimiento y mediciones de tiempos de viaje en los corredores interiores \cite{Sargent2013,Wunderlich2019Microsimulation}.
@@ -259,7 +263,7 @@ La salida de vehículos, sus cambios de carril y el vencimiento de la ventana de
 
 El codificador $e(x)$ asigna un nivel entero a la espera acumulada por carril. Cuando $x\geq M_{\mathrm{lane}}$, asigna el nivel máximo. Para valores menores, combina una transformación logarítmica, que distingue con mayor detalle las esperas bajas y moderadas, con una componente lineal. Luego redondea el resultado hacia arriba ($\operatorname{ceil}$). Las ecuaciones del codificador se presentan en la Sección \ref{subsec:codificacion_espera_apendice} del Apéndice \ref{apendice:arquitectura_software}.
 
-El número de niveles $I$ forma parte de los hiperparámetros explorados en las búsquedas. La cota de escala $M_{\mathrm{lane}}$ (\texttt{max\_lane\_value}) se fijó en una calibración previa con 300\,s de calentamiento, a partir del \gls{percentil} 99 del máximo por paso de $w_{i,l}^{(t)}$. Se obtuvieron $1.184$, $1.136$ y $712$\,veh$\cdot$s para las redes $3\times1$, $3\times3$ y $4\times4\_H$, respectivamente.
+El número de niveles $I$ forma parte de los hiperparámetros explorados en las búsquedas. La cota de escala $M_{\mathrm{lane}}$ (\texttt{max\_lane\_value}) se fijó en una calibración previa con 300\,s de calentamiento, a partir del \gls{percentil} 99 del máximo por paso de $w_{i,l}^{(t)}$. Se obtuvieron $1.184$, $1.136$ y $712$\,veh$\cdot$s para las redes $3\times1$, $3\times3$ y $4\times4\_H$, respectivamente. Esa calibración es independiente del calentamiento de 600\,s y no constituye evidencia de estabilidad del escenario.
 
 La Figura \ref{fig:codificacion_carriles} muestra la curva escalonada de $e(x)$ para $I=22$ niveles y $M_{\mathrm{lane}}=1.136$\,veh$\cdot$s (red $3\times3$). Los intervalos de espera que corresponden a cada nivel son más estrechos cerca del origen y se amplían hacia el extremo superior de la escala. Por ejemplo, $e(0)=0$, $e(120)=10$ y $e(600)=18$.
 
@@ -355,13 +359,13 @@ Para \acrshort{acr-happo} e \acrshort{acr-idqn}, los registros locales cotejados
 \subsection{Condiciones de simulación y entrenamiento}
 \label{subsec:ciclo_episodico}
 
-La Tabla \ref{tab:horizontes_simulacion} resume el calentamiento y la duración de cada procedimiento.
+La Tabla \ref{tab:horizontes_simulacion} distingue el calentamiento de la ventana evaluada. En los estudios sintéticos cotejados, SUMO avanza en pasos de 1\,s y los agentes deciden cada 5\,s. El calentamiento no cuenta para el presupuesto del ensayo.
 
 \begin{table}[H]\centering\small
-\caption{Calentamiento y horizonte de simulación por procedimiento.}\label{tab:horizontes_simulacion}
+\caption{Calentamiento y duración de la ventana evaluada por procedimiento.}\label{tab:horizontes_simulacion}
 \begin{tabular}{>{\raggedright\arraybackslash}p{7cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.6cm}}\hline
-\textbf{Procedimiento} & \textbf{Calentamiento} & \textbf{Horizonte} \\\hline
-Redes sintéticas, búsqueda de configuraciones & 600 s & 3.600 s \\
+\textbf{Procedimiento} & \textbf{Calentamiento} & \textbf{Duración} \\\hline
+Búsqueda sintética de \acrshort{acr-ippo} y \acrshort{acr-mappo} & 600\,s & 3.600\,s \\
 Mendoza, aceptación con programas fijos (12 h) & No se añade & 43.200 s \\
 Mendoza, aceptación con programas fijos (2 h) & No se añade & 7.200 s \\
 \hline
@@ -381,7 +385,7 @@ La búsqueda minimiza la espera media por vehículo insertado. Para obtener el p
 \subsection{Búsqueda de configuraciones}
 \label{subsec:hpo_busqueda}
 
-El diseño de la búsqueda comprende las doce combinaciones de algoritmo y red sintética y asigna a cada una una arquitectura de perceptrón multicapa: dos capas ocultas de 256 unidades para \acrshort{acr-ippo} y \acrshort{acr-mappo} en $3\times1$, y dos de 128 en las restantes, según la Tabla \ref{tab:arquitecturas_busqueda} del Apéndice \ref{apendice:arquitectura_software}.
+El diseño de la búsqueda comprende las doce combinaciones de algoritmo y red sintética y asigna a cada una una arquitectura de perceptrón multicapa: dos capas ocultas de 256 unidades para \acrshort{acr-ippo} y \acrshort{acr-mappo} en $3\times1$, y dos de 128 en las restantes, según la Tabla \ref{tab:arquitecturas_busqueda} del Apéndice \ref{apendice:arquitectura_software}. El ancho se fija por estudio; no se explora como hiperparámetro ni se interpreta como evidencia de superioridad.
 
 Para los estudios de \acrshort{acr-ippo} y \acrshort{acr-mappo}, el espacio de búsqueda comprende los hiperparámetros de aprendizaje y la cantidad de niveles $I$ del codificador. El factor de descuento se fija en $\gamma = 0{,}99$ y la recompensa es local ($\rho_{\mathrm{coop}}=0$). Los dominios declarados se conservan en la Tabla \ref{tab:dominios_ippo_mappo} del Apéndice \ref{apendice:arquitectura_software}.
 
