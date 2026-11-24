@@ -185,7 +185,7 @@ def main():
     write("tabla_opciones.tex", "\n".join(opts))
 
     cases_tex = r"\begin{tabular}{@{}rrrrrrrr@{}}\hline" + "\n"
-    cases_tex += "Semilla & $L$ & $I$ & $A$ & $R$ & $W$ & CR & TP/Col./Desc. \\\\ \\hline\n"
+    cases_tex += "Semilla & $N_L$ & $N_I$ & $N_A$ & $N_R$ & $N_W$ & CR & TP/Col./Desc. \\\\ \\hline\n"
     for seed in (104729, *validation["new_confirmatory_seeds"]):
         d = cases[(seed, "2h")]
         x = d["last"]
@@ -193,7 +193,7 @@ def main():
     cases_tex += r"\hline\end{tabular}"
     write("tabla_casos_2h.tex", cases_tex)
     cases_tex = r"\begin{tabular}{@{}rrrrrrrr@{}}\hline" + "\n"
-    cases_tex += "Semilla & $L$ & $I$ & $A$ & $R$ & $W$ & CR & TP/Col./Desc. \\\\ \\hline\n"
+    cases_tex += "Semilla & $N_L$ & $N_I$ & $N_A$ & $N_R$ & $N_W$ & CR & TP/Col./Desc. \\\\ \\hline\n"
     for seed in (104729, *validation["new_confirmatory_seeds"]):
         d = cases[(seed, "12h")]
         x = d["last"]
@@ -201,7 +201,7 @@ def main():
     cases_tex += r"\hline\end{tabular}"
     write("tabla_casos_12h.tex", cases_tex)
 
-    summary = [r"\begin{tabular}{@{}lrrrr@{}}\hline", "Ventana & $n$ & Media $A$ & CR medio & Rango $W$ \\\\ \\hline"]
+    summary = [r"\begin{tabular}{@{}lrrrr@{}}\hline", "Ventana & $n$ & Media $N_A$ & CR medio & Rango $N_W$ \\\\ \\hline"]
     for horizon in ("2h", "12h"):
         subset = [cases[(s, horizon)] for s in validation["new_confirmatory_seeds"]]
         arrivals = [int(d["last"]["arrived"]) for d in subset]
