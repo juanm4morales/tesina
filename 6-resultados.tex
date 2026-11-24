@@ -2,8 +2,6 @@
 \label{capitulo:resultados}
 Este capítulo organiza los resultados por procedimiento: búsqueda de hiperparámetros, evaluación de políticas y verificación del escenario de Mendoza. Sus métricas y criterios se interpretan según las unidades experimentales definidas en la metodología.
 
-El escenario de Mendoza se verificó con una demanda nominal de 220.000 viajes diarios y programas semafóricos fijos, y sus conteos describen la operación simulada sin evaluar políticas aprendidas.
-
 \section{Resultados del ajuste de hiperparámetros}
 
 La presentación de \acrshort{acr-hpo} sigue la búsqueda de configuraciones en las tres redes sintéticas. Extender el aprendizaje a Mendoza requiere adaptar y verificar el procedimiento para la demanda y los programas fijos descritos en la metodología. Los valores y criterios se interpretan según el escenario al que corresponden.
@@ -25,18 +23,19 @@ Al 13 de noviembre de 2026, una consulta a la base de Optuna de las búsquedas r
 \subsection{Comprobación operacional del escenario de la Ciudad de Mendoza}
 \label{sec:resultados_mendoza_balance}
 
-La Tabla \ref{tab:metricas_validacion_mendoza} resume la comprobación del escenario \texttt{mendoza\_220k\_balance}, con 74 controladores de tiempo fijo. En cada ventana, $n$ indica la cantidad de semillas confirmatorias, $A$ los viajes completados y $W$ los vehículos pendientes de ingreso al cierre. La tasa de completitud (\acrshort{acr-cr}) expresa la proporción de vehículos cargados que llegaron a destino. Las medias y los rangos excluyen la semilla de desarrollo (104729). Las ventanas de 2 h y 12 h se simularon por separado con las mismas tres semillas confirmatorias; no constituyen seis réplicas independientes.
+La Tabla \ref{tab:metricas_validacion_mendoza} resume la comprobación del plan fijo con amarillos de 4\,s. Cada ventana se simuló desde una red vacía con la misma semilla (104729), de modo que los dos horizontes no son réplicas independientes. Los contadores y la tasa de completitud (\acrshort{acr-cr}) se definen en la Sección \ref{subsec:balance_vehiculos_mendoza}.
 
-\begin{table}[H]
-\centering\small
-\caption{Comprobación del escenario de Mendoza con programas fijos: síntesis por ventana.}
+\begin{table}[H]\centering\small
+\caption{Comprobación del plan fijo de Mendoza con amarillos de 4\,s.}
 \label{tab:metricas_validacion_mendoza}
-\input{datos/mendoza220k_balance/tabla_sintesis.tex}
+\begin{tabular}{@{}lrrrrrr@{}}\hline
+Ventana & $L$ & $I$ & $A$ & $R$ & $W$ & \acrshort{acr-cr} \\ \hline
+2\,h & 25.924 & 21.756 & 20.962 & 794 & 4.168 & 80,86\,\% \\
+12\,h & 152.492 & 130.451 & 129.744 & 707 & 22.041 & 85,08\,\% \\ \hline
+\end{tabular}
 \end{table}
 
-Todas las ejecuciones confirmatorias completaron su horizonte sin teletransportes, colisiones registradas ni descartes. En cada caso, la tasa de completitud superó el umbral de aceptación del 75\%.
-
-Cumplir el criterio de aceptación no equivale a atender toda la demanda: en ambas ventanas quedaron vehículos pendientes de ingreso al cierre. La demanda nominal de 220.000 viajes diarios tampoco es un conteo de solicitudes o llegadas en doce horas. Los valores por semilla se detallan en las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} de la Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software}.
+Ambas ejecuciones completaron su horizonte sin teletransportes, colisiones registradas ni descartes, y superaron el umbral del 75\,\%. Eso no equivale a atender toda la demanda: al cierre quedaron vehículos pendientes de ingreso en ambas ventanas. La comparación descriptiva con el plan histórico de 5\,s se documenta en la Sección \ref{subsec:mendoza_historico_5s} del Apéndice \ref{apendice:arquitectura_software}.
 
 \section{Discusión e interpretación de resultados}
 

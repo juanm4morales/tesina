@@ -38,7 +38,7 @@ Cada escenario se compone de una red vial, una demanda de viajes y un programa s
 \subsection{Preparación de las redes viales}
 \label{subsec:metodologia_modelado_sumo}
 
-Para preparar las redes se definieron las calzadas, los carriles por aproximación y las longitudes de almacenamiento. Las redes sintéticas se construyeron con \texttt{netedit} y la de Mendoza, a partir de cartografía de \acrshort{acr-osm}. En las primeras se conservaron los programas semafóricos fijos de referencia (Tabla \ref{tab:tiempos_semaforicos_base}). Para Mendoza se construyó un plan coordinado, descrito en la Sección \ref{subsec:escenario_mendoza} y detallado en la Sección \ref{sec:parametros_sumo} del Apéndice \ref{apendice:arquitectura_software}.
+Para preparar las redes se definieron las calzadas, los carriles por aproximación y las longitudes de almacenamiento. Las redes sintéticas se construyeron con \texttt{netedit} y la de Mendoza, a partir de cartografía de \acrshort{acr-osm}. En las primeras se conservaron los programas semafóricos fijos de referencia (Tabla \ref{tab:tiempos_semaforicos_base}). Para Mendoza se construyó un plan fijo canónico de 4 s, descrito en la Sección \ref{subsec:escenario_mendoza} y detallado en la Sección \ref{sec:parametros_sumo} del Apéndice \ref{apendice:arquitectura_software}.
 
 \subsection{Redes viales sintéticas}
 \label{subsec:escenarios_sinteticos}
@@ -124,7 +124,7 @@ $4\times4\_H$: C4 y D1 & $V_1=42,\; A_1=3,\; V_2=41,\; A_2=3,$\newline $R=1\text
 \subsection{Red vial del centro de Mendoza}
 \label{subsec:escenario_mendoza}
 
-El escenario del centro de Mendoza representa una red urbana de geometría irregular. La configuración \texttt{mendoza\_220k\_balance} utiliza una demanda sintética nominal de 220.000 viajes diarios, distribuida entre 37 zonas \acrshort{acr-taz}, y 74 controladores semafóricos fijos. Esta versión modifica la red y la demanda de la variante anterior O2/P2.
+El escenario del centro de Mendoza representa una red urbana de geometría irregular. La configuración \texttt{mendoza\_220k\_balance} utiliza una demanda sintética nominal de 220.000 viajes diarios, distribuida entre 37 zonas \acrshort{acr-taz}, y 74 controladores semafóricos fijos. Esta versión modifica la red y la demanda de la variante histórica O2/P2.
 
 \subsubsection{Área de estudio y datos disponibles}
 \label{subsubsec:mendoza_dominio_datos}
@@ -160,14 +160,14 @@ La Figura \ref{fig:dominio_mendoza} ubica los controladores, las avenidas de ref
 \subsubsection{Construcción del plan fijo}
 \label{subsubsec:mendoza_plan_fijo}
 
-El plan conserva un ciclo común de 90 segundos y los desfases de los controladores existentes, que sitúan el comienzo de cada programa respecto de un origen temporal común \cite[cap.~6]{fhwa_signal_timing_manual}. Para adaptar las duraciones, se fijaron los amarillos en cinco segundos, se reservaron los intervalos de todo rojo y se repartió el verde restante en proporción a las duraciones previas. El redondeo a segundos enteros conserva exactamente el ciclo y exige verdes de al menos cinco segundos.
+El plan canónico conserva un ciclo común de 90 segundos, los intervalos de todo rojo y los desfases de los controladores existentes, que sitúan el comienzo de cada programa respecto de un origen temporal común \cite[cap.~6]{fhwa_signal_timing_manual}. Para adaptar las duraciones, se fijaron los amarillos en cuatro segundos y se repartió el verde restante en proporción a las duraciones previas. El redondeo a segundos enteros conserva exactamente el ciclo y exige verdes de al menos cinco segundos.
 
-En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 60 segundos, cada una seguida por cinco segundos de amarillo y uno de todo rojo, y con desfase cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La regla de reparto y las secuencias completas se documentan en la Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software}. El ciclo y los intervalos son decisiones del escenario, no valores óptimos estimados.
+En Benegas--Civit se incorporó un controlador con dos fases verdes, de 18 y 62 segundos, cada una seguida por cuatro segundos de amarillo y uno de todo rojo, y con desfase cero. Con esta incorporación, el escenario reúne 74 controladores fijos. La Sección \ref{sec:mendoza_plan_fijo_apendice} del Apéndice \ref{apendice:arquitectura_software} detalla la regla de reparto. El ciclo y los intervalos son decisiones del escenario, no valores óptimos estimados.
 
 \subsubsection{Construcción de la demanda}
 \label{subsubsec:mendoza_demanda_dinamica}
 
-Se mantuvieron la demanda nominal de 220.000 viajes diarios y las tasas totales de cada hora de la configuración de referencia. El volumen diario se adoptó como condición de diseño, sin volver a estimarlo a partir de conteos urbanos. Entre las 06:00 y las 18:00, esas tasas representan 152.168,75 solicitudes esperadas. Los vehículos efectivamente cargados, insertados y llegados a destino se contabilizan por separado.
+Se mantuvieron la demanda nominal de 220.000 viajes diarios y las tasas totales de cada hora de la configuración de referencia. El volumen diario se adoptó como condición de diseño, sin volver a estimarlo a partir de conteos urbanos. Los vehículos efectivamente cargados, insertados y llegados a destino se contabilizan por separado.
 
 Para distribuir las solicitudes se definieron hasta tres rutas por par \acrshort{acr-od}. Luego se resolvió un programa lineal por hora para asignar una tasa a cada ruta. El programa minimiza una suma ponderada de las desviaciones respecto de los flujos de referencia y de la distancia total prevista. El ajuste conserva el total horario y los pares activos, y limita las cargas previstas sobre accesos y movimientos mediante valores fijados para construir el escenario. Los totales por origen y destino, llamados marginales de la matriz, pueden cambiar. Ninguna de las rutas obtenidas utiliza el giro Benegas→Civit. La Sección \ref{sec:mendoza_demanda_apendice} del Apéndice \ref{apendice:arquitectura_software} presenta las variables, las restricciones, los pesos y la conversión a flujos de \acrshort{acr-sumo}.
 
@@ -183,9 +183,9 @@ La generación de solicitudes es estocástica \cite{SUMO2026_Randomness}, de mod
 \end{figure}
 
 \Needspace{7\baselineskip}
-La Figura \ref{fig:mendoza_configuracion_sumo} resume cómo se relacionan los archivos del escenario: la red \texttt{.net.xml} reúne la geometría, las conexiones y los programas semafóricos, mientras que las rutas \texttt{.rou.xml} especifican la demanda y el archivo \texttt{.taz.xml} asocia las zonas con sus tramos. Las conexiones hacia \texttt{.sumocfg} representan referencias a esas entradas, y la flecha azul conduce a una visualización ilustrativa en el simulador.
+La Figura \ref{fig:mendoza_configuracion_sumo} muestra cómo un archivo \texttt{.sumocfg} reúne las entradas de SUMO. En la configuración canónica, la red \texttt{.net.xml} aporta la geometría y las conexiones; un archivo adicional \texttt{.add.xml} selecciona los programas fijos con amarillos de 4\,s. Las rutas \texttt{.rou.xml} especifican la demanda y el archivo \texttt{.taz.xml} asocia las zonas con sus tramos.
 
-Las dos configuraciones de Mendoza balance utilizan los mismos archivos de entrada y un paso de simulación de un segundo. El umbral de teletransporte es de 300 segundos y la simulación se detiene ante el primer evento, mientras que las colisiones se registran como advertencias. La Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software} detalla las opciones y los hashes que identifican los archivos del escenario.
+Las dos configuraciones canónicas de 4 s utilizan los mismos archivos de entrada y un paso de simulación de un segundo. El umbral de teletransporte es de 300 segundos y la simulación se detiene ante el primer evento, mientras que las colisiones se registran como advertencias. La Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software} detalla las opciones y los hashes que identifican los archivos del escenario.
 
 \begin{figure}[H]
 \centering
@@ -197,9 +197,9 @@ Las dos configuraciones de Mendoza balance utilizan los mismos archivos de entra
 \subsubsection{Verificación del escenario, aceptación y alcance}
 \label{subsubsec:mendoza_validacion_operacional}
 
-Para verificar el escenario se utilizaron una semilla de desarrollo (104729) y tres semillas confirmatorias nuevas (2026102001, 2026102002 y 2026102003), cada una en las dos ventanas. Los dos horizontes de una misma semilla no se cuentan como réplicas independientes adicionales. Se fijó ese número de semillas para comprobar la repetibilidad en las condiciones ensayadas, sin calcular previamente la precisión estadística. Los resultados deben leerse considerando el inicio con la red vacía (Figura \ref{fig:construccion_urbana}) \cite{Law2015Output}.
+Para comprobar el plan de 4\,s se simuló una vez cada ventana con la semilla 104729. Ambas ejecuciones partieron de una red vacía, condición inicial que debe tenerse en cuenta al interpretar los resultados \cite{Law2015Output}. No se utilizaron otras semillas ni se repitieron las comprobaciones locales por corredor. La Sección \ref{subsec:mendoza_historico_5s} del Apéndice \ref{apendice:arquitectura_software} documenta por separado la evidencia histórica de 5\,s.
 
-El criterio de aceptación exige completar el horizonte con cero teletransportes, cero colisiones registradas y cero descartes, y que al menos el $75\%$ de los vehículos cargados llegue a destino. Esta última proporción es la \glsdisp{acr-cr}{Tasa de Completitud (\glsentryuseri{acr-cr}, \glsentryshort{acr-cr})}, definida en la Ecuación \eqref{eq:tasas_operacionales}. Los registros de desarrollo y confirmación se distinguen en la Sección \ref{sec:mendoza_evidencia_final} del Apéndice \ref{apendice:arquitectura_software}. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
+El criterio de aceptación exige completar el horizonte con cero teletransportes, cero colisiones registradas y cero descartes, y que al menos el $75\%$ de los vehículos cargados llegue a destino. Esta última proporción es la \glsdisp{acr-cr}{Tasa de Completitud (\glsentryuseri{acr-cr}, \glsentryshort{acr-cr})}, definida en la Ecuación \eqref{eq:tasas_operacionales}. La ausencia de colisiones registradas depende de las opciones de SUMO y no certifica seguridad física.
 
 \Needspace{4\baselineskip}
 Para contrastar la simulación con el tránsito real se necesitarían conteos independientes por movimiento y mediciones de tiempos de viaje en los corredores interiores \cite{Sargent2013,Wunderlich2019Microsimulation}.
@@ -494,7 +494,7 @@ El puntaje de un ensayo orienta la búsqueda: caracteriza el punto de control fi
 
 La búsqueda fija el mismo presupuesto de pasos para algoritmos que utilizan los datos de manera distinta: la familia \acrshort{acr-ppo} trabaja \textit{on-policy}, mientras que \acrshort{acr-idqn} reutiliza experiencias del \textit{replay buffer} y opera \textit{off-policy}. La comparación debe leerse teniendo en cuenta esa diferencia, el espacio de hiperparámetros explorado y las condiciones de tránsito definidas en este capítulo.
 
-En Mendoza balance se redistribuyeron las solicitudes de cada hora y se fijaron rutas explícitas, lo que modificó los totales por origen y destino y las distancias respecto de la referencia. Los conteos parciales de los accesos no bastan para calibrar una matriz de viajes de toda la ciudad. La verificación con tres semillas confirmatorias se limita a la versión de SUMO y a los horizontes ensayados.
+En Mendoza balance, la construcción de la demanda redistribuyó solicitudes de cada hora y fijó rutas explícitas; los totales por origen y destino y las distancias resultantes no coinciden con la referencia. Los conteos parciales de los accesos no bastan para calibrar una matriz de viajes de toda la ciudad. La comprobación canónica de 4 s se limita a una semilla y a los horizontes ensayados; la evidencia histórica de 5 s se conserva por separado.
 
 En Mendoza, completar el horizonte sin teletransportes y superar el umbral de completitud no garantiza que haya ingresado toda la demanda. Por eso, los vehículos que aún esperan ingresar deben informarse junto con los viajes completados. La estabilidad de las colas y el desempeño en períodos más extensos quedan fuera de estos horizontes.
 

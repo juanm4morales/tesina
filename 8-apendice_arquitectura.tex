@@ -1,7 +1,7 @@
 \chapter{Arquitectura de software y especificaciones experimentales}
 \label{apendice:arquitectura_software}
 
-Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, las arquitecturas y los parámetros de ejecución de la búsqueda de configuraciones y la evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. La documentación distingue el escenario histórico O2/P2 del canónico posterior \texttt{mendoza\_220k\_balance}; sus redes, programas y demandas no son intercambiables.
+Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, las arquitecturas y los parámetros de ejecución de la búsqueda de configuraciones y la evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. El escenario \texttt{mendoza\_220k\_balance} difiere en red y demanda de la variante anterior O2/P2. Para Mendoza balance se documentan por separado el plan fijo histórico de 5\,s y el plan canónico de 4\,s, que comparten red y demanda.
 
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
@@ -205,40 +205,40 @@ En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waitin
 \label{sec:procedencia_mendoza}
 \label{subsec:procedimiento_demanda_mendoza}
 
-El escenario \texttt{mendoza\_220k\_balance} utiliza SUMO 1.27.1, una red con 255 tramos de circulación, 554 carriles externos, ningún tramo interno, 744 conexiones y 74 controladores semafóricos fijos. El archivo de zonas contiene 37 \acrshort{acr-taz}, con identificadores de 0 a 38 salvo 6 y 9. Se conserva el ciclo común de 90 s. Los programas actuales derivan de un plan previo, incorporan un controlador y normalizan las fases preservando sus verdes relativos, con amarillo de 5 s.
+El escenario \texttt{mendoza\_220k\_balance} utiliza SUMO 1.27.1, una red con 255 tramos de circulación, 554 carriles externos, ningún tramo interno, 744 conexiones y 74 controladores semafóricos fijos. El archivo de zonas contiene 37 \acrshort{acr-taz}, con identificadores de 0 a 38 salvo 6 y 9.
 
 La matriz sintética contiene 6.204 flujos horarios entre 517 pares \acrshort{acr-od} activos. Se conservaron el nominal diario de 220.000 viajes y los totales horarios de la referencia, y se modificaron conjuntamente las tasas por par y la asignación de rutas. Las secciones siguientes especifican la transformación del plan fijo y el programa lineal de demanda.
 
-La Tabla \ref{tab:mendoza_archivos_balance} identifica las entradas congeladas y sus hashes SHA-256. Los manifiestos y registros compactos de cada caso se conservan bajo \path{datos/mendoza220k_balance/}, sin duplicar las salidas nativas extensas.
+El manifiesto canónico \path{nets/Mendoza/mendoza_220k_balance/mendoza_220k_balance.manifest.json} reúne los SHA-256 de red, demanda, \texttt{add.xml} y configuraciones; las configuraciones de 2 h y 12 h están en ese directorio. La Tabla \ref{tab:mendoza_archivos_balance} conserva, como referencia histórica, las entradas de la evidencia de 5 s y sus SHA-256. Los registros compactos se conservan bajo \path{datos/mendoza220k_balance/}, sin duplicar las salidas nativas.
 
 \begin{table}[H]\centering\small
-\caption{Entradas del escenario Mendoza balance y SHA-256.}\label{tab:mendoza_archivos_balance}
+\caption{Entradas de la evidencia histórica de 5 s y SHA-256.}\label{tab:mendoza_archivos_balance}
 \input{datos/mendoza220k_balance/tabla_entradas.tex}
 \end{table}
 
 \subsubsection{Programas semafóricos}
 \label{sec:mendoza_plan_fijo_apendice}
 
-El constructor conserva los estados y desfases de los 73 programas de referencia, adaptando el orden de sus señales a las conexiones de la red reconstruida. Fija en cinco segundos las fases que contienen amarillo y mantiene las duraciones de todo rojo. Para repartir el verde restante, se denota por $\mathcal{G}$ el conjunto de fases verdes y por $\mathcal{D}$ el de las demás fases. La duración verde anterior de la fase $p$ es $d_p^0$ y la duración reservada para cada fase $j\in\mathcal{D}$ es $d_j$, ambas en segundos. La cuota proporcional de verde $\widetilde g_p$, previa al redondeo, se calcula como:
+El plan canónico parte de los 74 programas históricos de 5\,s. Conserva la secuencia de estados, los desfases y el ciclo de 90\,s. Fija en cuatro segundos los intervalos con amarillo y mantiene las duraciones de todo rojo. Para repartir el verde restante, se denota por $\mathcal{G}$ el conjunto de intervalos con verde y sin amarillo, y por $\mathcal{D}$ el de los demás intervalos. La duración verde anterior del intervalo $p$ es $d_p^0$ y la duración reservada para cada intervalo $j\in\mathcal{D}$ es $d_j$, ambas en segundos. La cuota proporcional de verde $\widetilde g_p$, previa al redondeo, se calcula como:
 \begin{equation}
  \widetilde g_p=\left(90-\sum_{j\in\mathcal{D}}d_j\right)
  \frac{d_p^0}{\sum_{k\in\mathcal{G}}d_k^0},\qquad p\in\mathcal{G}.
  \label{eq:mendoza_conversion_fija}
 \end{equation}
-Primero se toma la parte entera de cada cuota. Los segundos restantes se asignan a las fases con mayor parte fraccionaria, resolviendo los empates por el orden de fase. El constructor exige una duración final de al menos cinco segundos para cada verde y verifica que el ciclo sume 90 segundos. El nuevo controlador de Benegas--Civit se define por separado, con secuencia $V=18$, $A=5$, $R=1$, $V=60$, $A=5$, $R=1$ y desfase cero.
+Primero se toma la parte entera de cada cuota. Los segundos restantes se asignan a los intervalos con mayor parte fraccionaria, resolviendo los empates según el orden del programa. Se verifica que cada verde dure al menos cinco segundos y que el ciclo sume 90 segundos. Por ejemplo, con este reparto los verdes de Benegas--Civit, que duraban 18 y 60\,s, pasan a durar 18 y 62\,s.
 
-Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} especifican los 74 programas resultantes. En sus secuencias cronológicas, $V$ identifica una fase con señales verdes, $A$ una fase que contiene amarillo y $R$ el estado de todo rojo; el número siguiente es la duración en segundos. Los estados de cada señal se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}.
+Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} conservan la versión histórica de 5 s y no describen el plan canónico de 4 s. En sus secuencias cronológicas, $V$ identifica una fase con señales verdes, $A$ una fase que contiene amarillo y $R$ el estado de todo rojo; el número siguiente es la duración en segundos. Los estados de cada señal del plan histórico se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}; el plan canónico se conserva en el \texttt{add.xml} y el manifiesto citados.
 
 \begin{table}[H]\centering\footnotesize
-\caption{Programas semafóricos de Mendoza balance, controladores 1--25.}\label{tab:mendoza_programas_balance_1}
+\caption{Programas semafóricos históricos de 5 s, controladores 1--25.}\label{tab:mendoza_programas_balance_1}
 \input{datos/mendoza220k_balance/tabla_programas_1.tex}
 \end{table}
 \begin{table}[H]\centering\footnotesize
-\caption{Programas semafóricos de Mendoza balance, controladores 26--50.}\label{tab:mendoza_programas_balance_2}
+\caption{Programas semafóricos históricos de 5 s, controladores 26--50.}\label{tab:mendoza_programas_balance_2}
 \input{datos/mendoza220k_balance/tabla_programas_2.tex}
 \end{table}
 \begin{table}[H]\centering\footnotesize
-\caption{Programas semafóricos de Mendoza balance, controladores 51--74.}\label{tab:mendoza_programas_balance_3}
+\caption{Programas semafóricos históricos de 5 s, controladores 51--74.}\label{tab:mendoza_programas_balance_3}
 \input{datos/mendoza220k_balance/tabla_programas_3.tex}
 \end{table}
 
@@ -290,30 +290,40 @@ Cada problema horario se resolvió con HiGHS mediante \texttt{scipy.optimize.lin
 
 El cociente entre la suma de incrementos positivos de flujo y el total horario de referencia cuantifica la fracción redistribuida: $\sum_{(o,d)}\max(q_{od,h}-b_{od,h},0)/\sum_{(o,d)}b_{od,h}$. En el diseño conservado varía entre el $11{,}6\%$ y el $23{,}6\%$. Esta modificación conjunta de tasas y rutas cambia también las distancias previstas; la conservación del total de solicitudes no equivale a conservar el trabajo de transporte.
 
-Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que los hashes de la Tabla \ref{tab:mendoza_archivos_balance} identifican las entradas finales.
+Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que el manifiesto canónico identifica las entradas finales; la Tabla \ref{tab:mendoza_archivos_balance} conserva los hashes históricos de 5 s.
 
-\subsubsection{Configuración y resultados conservados}
+\subsubsection{Configuración y evidencia canónica de 4 s}
 \label{sec:mendoza_evidencia_final}
 
-Las configuraciones de 2 h y 12 h parten de una red vacía y usan paso de 1 s, \path{time-to-teleport}=300 s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas; no se completan opciones ausentes con valores predeterminados supuestos.
+Las configuraciones canónicas de 2 h y 12 h están en \path{nets/Mendoza/mendoza_220k_balance/}; parten de una red vacía por separado y usan paso de 1 s, \path{time-to-teleport}=300 s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas; conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
 
 \begin{table}[H]\centering\small
-\caption{Opciones explícitas en las dos configuraciones de Mendoza balance.}\label{tab:mendoza_opciones_balance}
+\caption{Opciones explícitas en las configuraciones canónicas de 4 s.}\label{tab:mendoza_opciones_balance}
 \input{datos/mendoza220k_balance/tabla_opciones.tex}
 \end{table}
 
-Los registros comprenden una semilla de desarrollo (104729) y tres semillas confirmatorias nuevas (2026102001--2026102003); cada semilla tiene un caso en ambas ventanas. Las configuraciones canónicas declaran 104729; los seis archivos por caso registran las semillas confirmatorias correspondientes. La unidad confirmatoria es la semilla, no cada combinación de semilla y horizonte. Las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} muestran los contadores $L$, $I$, $A$, $R$ y $W$ definidos en la Sección \ref{subsec:balance_vehiculos_mendoza} del Capítulo \ref{capitulo:metodologia}, junto con la tasa \acrshort{acr-cr}. La primera fila corresponde a desarrollo; las tres restantes, a confirmación. La columna TP/Col./Desc. reúne teletransportes, colisiones registradas y descartes.
+El directorio \path{experiments/mendoza_scenario/results/mendoza_balance_fixed_20261123/} de \texttt{marl-tlc} conserva los comandos y hashes de las entradas en \texttt{prepared.json}, y los conteos y hashes de las salidas en \texttt{report.json}. Se utilizó el mismo binario de SUMO 1.27.1 que en la comprobación histórica. Los conteos se presentan en la Tabla \ref{tab:metricas_validacion_mendoza}.
+
+\subsubsection{Evidencia histórica de 5 s}
+\label{subsec:mendoza_historico_5s}
+
+La evidencia de 5 s se conserva por separado y no se combina con la comprobación de 4 s. La Tabla \ref{tab:mendoza_sintesis_historica} resume la campaña histórica; las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} detallan cada semilla.
 
 \begin{table}[H]\centering\small
-\caption{Resultados por semilla en la ventana de 2 h.}\label{tab:mendoza_casos_balance_2h}
+\caption{Síntesis histórica de 5 s con tres semillas confirmatorias.}\label{tab:mendoza_sintesis_historica}
+\input{datos/mendoza220k_balance/tabla_sintesis.tex}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Evidencia histórica de 5 s: resultados por semilla en la ventana de 2 h.}\label{tab:mendoza_casos_balance_2h}
 \input{datos/mendoza220k_balance/tabla_casos_2h.tex}
 \end{table}
 \begin{table}[H]\centering\small
-\caption{Resultados por semilla en la ventana de 12 h.}\label{tab:mendoza_casos_balance_12h}
+\caption{Evidencia histórica de 5 s: resultados por semilla en la ventana de 12 h.}\label{tab:mendoza_casos_balance_12h}
 \input{datos/mendoza220k_balance/tabla_casos_12h.tex}
 \end{table}
 
-Las tres semillas confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Los vehículos pendientes de ingreso, en especial desde las zonas de acceso de Las Heras 37 y 38, forman parte del balance y deben conservarse al interpretar la atención a la demanda. La evidencia caracteriza la repetibilidad del escenario bajo SUMO 1.27.1 y las condiciones ensayadas; su alcance se delimita en la Sección \ref{subsec:alcance_limitaciones} de la metodología.
+La primera fila de las tablas de casos corresponde a la semilla de desarrollo 104729; las tres restantes, a las confirmatorias. La unidad confirmatoria histórica es la semilla, no cada combinación de semilla y ventana. Las tres confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Con la semilla 104729, la evidencia histórica registra 80,78\% (2 h) y 84,94\% (12 h); la diferencia descriptiva respecto de la comprobación de 4 s es $+0{,}08$ y $+0{,}14$ puntos porcentuales. El cambio de amarillos también ajustó los verdes.
 
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
