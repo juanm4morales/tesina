@@ -196,7 +196,7 @@ Macroscópica & Flujo ($q$, vehículos por hora) & $q = 3600 / h_{\text{prom}}$ 
  & Velocidad media temporal ($v_t$, kilómetros por hora) & $v_t = v_s + \frac{\sigma_s^2}{v_s}$ (Relación de Wardrop) \\ \hline
 Microscópica & Velocidad puntual ($v_i$, kilómetros por hora) & Variable individual de cada vehículo \\ \cline{2-3}
  & Intervalo temporal ($h$, segundos) & Tiempo entre pasos de vehículos sucesivos \\ \cline{2-3}
- & Espaciamiento simple ($s$ en metros) & Distancia espacial entre paragolpes homólogos \\ \hline
+ & Espaciamiento simple ($s$, metros) & Distancia espacial entre paragolpes homólogos \\ \hline
 \end{tabular}
 \end{table}
 
@@ -249,7 +249,7 @@ La Figura \ref{fig:variables_microscopicas} complementa estas definiciones con l
         \draw[cotaTmp] (2,1.72) -- node[midway, above=2pt, rotulo] {avance $\beta$} (4,1.72);
         \draw[cotaTmp] (4,2.30) -- node[midway, above=2pt, rotulo] {brecha $g$} (8,2.30);
         \draw[cotaTmp] (4,2.88) -- node[midway, above=2pt, rotulo] {intervalo $h$} (10,2.88);
-        \node[anchor=east, font=\bfseries\footnotesize, text=colSeparacionTmp!80!black] at (1.65,2.30) {Tiempo (s)};
+        \node[anchor=east, font=\bfseries\footnotesize, text=colSeparacionTmp!80!black] at (1.65,2.30) {Tiempo (segundos)};
     \end{tikzpicture}
     \caption{Relaciones temporales y espaciales entre vehículos consecutivos de una corriente de tránsito: intervalo ($h$) y espaciamiento ($s$).}
     \label{fig:variables_microscopicas}
@@ -351,7 +351,7 @@ Desde el punto de vista operativo, la capacidad de descarga de un acceso semafor
     \centering
     \begin{tikzpicture}[font=\sffamily\small, >=Stealth]
     % Ejes
-    \draw[->, thick, gray] (0,0) -- (10,0) node[right, text=black] {Tiempo};
+    \draw[->, thick, gray] (0,0) -- (10,0) node[right, text=black] {Tiempo (segundos)};
     \draw[->, thick, gray] (0,0) -- (0,5) node[above, text=black, rotate=90, anchor=south, yshift=1ex, xshift=-2em] {Flujo (vehículos por hora)};
 
     % Fases semáforo (barra inferior)
@@ -728,7 +728,8 @@ En la Ecuación \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de 
         \draw[flujo] (obs.south) -- ++(0,-3.55) coordinate (statepath) -| (critic.south);
         \node[etiqueta, above] at ($(statepath)!0.72!(statepath -| critic.south)$) {$S_t$};
         \draw[flujo] (transition.south) |- (critic.east);
-        \draw[flujo] (critic.west) -- (td.east);
+        \draw[flujo] ([yshift=4pt]critic.west) -- ([yshift=4pt]td.east);
+        \draw[aprendizaje] ([yshift=-4pt]td.east) -- node[etiqueta, below=2pt] {$\phi$} ([yshift=-4pt]critic.west);
         \draw[aprendizaje] (td.north) -- node[etiqueta, right] {$\theta$} (actor.south);
         \draw[flujo] (transition.north) -- ++(0,0.78) -| node[etiqueta, pos=0.48, above] {$S_{t+1}$} (obs.north);
     \end{tikzpicture}%
@@ -921,7 +922,7 @@ Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa la obs
         dato/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.0cm},
         red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.5cm},
         salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.4cm},
-        memoria/.style={bloque, fill=catMelocoton!40, draw=catMelocoton!80!black, text width=2.7cm},
+        memoria/.style={bloque, fill=catMelocoton!40, draw=catMelocoton!80!black, text width=2.95cm},
         entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.4cm},
         flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
         copia/.style={flecha, dashed, draw=black!60},
@@ -933,7 +934,7 @@ Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa la obs
         \node[salida] (select) at (3.1,2.2) {Selección\\$\epsilon_{\mathrm{exp}}$-greedy};
         \node[entorno] (env) at (6.4,2.2) {\acrshort{acr-sumo}\\ejecuta $A_t$};
 
-        \node[memoria] (buffer) at (5.3,-1.55) {Buffer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1})$};
+        \node[memoria] (buffer) at (5.3,-1.55) {Buffer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1},d_{t+1})$};
         \node[red] (target) at (0.45,-1.55) {Red objetivo\\$\hat Q(S_{t+1},a;\theta^-)$};
         \node[salida] (loss) at (-4.15,-1.55) {Pérdida \acrshort{acr-td}\\$(y-Q_t)^2$};
 
@@ -1000,7 +1001,7 @@ El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, 
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-En esta formulación, el agente desacopla la recolección de experiencias en el simulador de la optimización paramétrica de la red. La memoria $\mathcal{D}$ reduce la correlación temporal de las observaciones de tránsito, mientras que la red objetivo estabiliza el valor objetivo de Bellman mediante la sincronización periódica de $\theta^-$. La especificación detallada de los hiperparámetros operacionales (capacidad $N$, horizonte $T$, tasa de aprendizaje y cronograma de exploración) se desarrolla en el Capítulo \ref{capitulo:metodologia}.
+En esta formulación, el agente desacopla la recolección de experiencias en el simulador de la optimización paramétrica de la red. La memoria $\mathcal{D}$ reduce la correlación temporal de las observaciones de tránsito, mientras que la red objetivo estabiliza el valor objetivo de Bellman mediante la sincronización periódica de $\theta^-$. La implementación multiagente de \acrshort{acr-idqn} y las condiciones comunes del protocolo de búsqueda de configuraciones se presentan en el Capítulo \ref{capitulo:metodologia}.
 \subsubsection{Aproximación de políticas, función de ventaja y gradiente de política}
 
 Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Bajo la formulación \acrshort{acr-mdp}, en un problema de acciones discretas la red recibe el estado $s$, calcula un vector de puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \gls{softmax} \cite{suttonRL,bishop2024deep}:
@@ -1100,7 +1101,7 @@ En la arquitectura actor-crítico, este objetivo de política se combina con la 
     J^{\text{PPO}}(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_1 \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right] + c_2 \hat{\mathbb{E}}_t\left[S[\pi_\theta](s_t)\right]
     \label{eq:objetivo_combinado_ppo}
 \end{equation}
-donde $\phi$ son los parámetros del crítico, $R_t^{\text{target}}$ es el retorno objetivo estimado (calculado como $\hat{A}_t + V_\phi(s_t)$), $S[\pi_\theta](s_t) \doteq -\sum_a \pi_\theta(a \mid s_t) \log \pi_\theta(a \mid s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes de ponderación \cite{schulman2017ppo}. La inclusión del término entrópico favorece la exploración activa al penalizar distribuciones excesivamente concentradas, favoreciendo que se consideren distintas fases durante el aprendizaje.
+donde $\phi$ son los parámetros del crítico, $R_t^{\text{target}}$ es el retorno objetivo estimado (calculado antes de las actualizaciones como $\hat{A}_t + V_{\phi_{\text{old}}}(s_t)$ con los parámetros previos $\phi_{\text{old}}$ y mantenido fijo durante la optimización de $\phi$), $S[\pi_\theta](s_t) \doteq -\sum_a \pi_\theta(a \mid s_t) \log \pi_\theta(a \mid s_t)$ es la entropía de Shannon de la política en $s_t$, y $c_1, c_2 > 0$ son coeficientes de ponderación \cite{schulman2017ppo}. La inclusión del término entrópico favorece la exploración activa al penalizar distribuciones excesivamente concentradas, favoreciendo que se consideren distintas fases durante el aprendizaje.
 
 Cada \gls{iteracion_entrenamiento} de \acrshort{acr-ppo} comienza con la recolección de secuencias de transiciones (\glspl{rollout}) mediante la política vigente $\pi_{\theta_{\text{old}}}$. El algoritmo reúne las secuencias en un lote, lo reutiliza durante un número acotado de épocas de optimización y luego lo descarta. De este modo, cada lote nuevo procede de la política vigente en esa iteración. El Algoritmo \ref{alg:ppo} describe el ciclo.
 
@@ -1259,10 +1260,10 @@ donde $\mathcal{N} = \{1, \dots, n\}$ es el conjunto de agentes (intersecciones)
 
 En el análisis de estabilidad de estos sistemas, el equilibrio de Nash describe una configuración donde ningún agente puede incrementar unilateralmente su retorno esperado desviándose de su política actual \cite{marlbook}. Formalmente, una política conjunta $\boldsymbol{\pi}^* = (\pi_1^*, \dots, \pi_n^*)$ constituye un equilibrio de Nash si:
 \begin{equation}
-    J(\pi_i, \boldsymbol{\pi}_{-i}^*) \le J(\pi_i^*, \boldsymbol{\pi}_{-i}^*), \quad \forall \pi_i \in \Pi_i, \quad \forall i \in \mathcal{N}
+    J_i(\pi_i, \boldsymbol{\pi}_{-i}^*) \le J_i(\pi_i^*, \boldsymbol{\pi}_{-i}^*), \quad \forall \pi_i \in \Pi_i, \quad \forall i \in \mathcal{N}
     \label{eq:equilibrio_nash}
 \end{equation}
-donde $J(\cdot)$ denota el retorno esperado del agente $i$ bajo el perfil de políticas indicado, $\boldsymbol{\pi}_{-i}^*$ representa el perfil de políticas conjuntas de todos los agentes excepto el agente $i$, y $\Pi_i$ es el espacio de políticas admisibles. Aunque en sistemas estrictamente cooperativos este equilibrio caracteriza puntos de estabilidad mutua, no garantiza por sí mismo la optimalidad global de Pareto.
+donde $J_i(\cdot)$ denota el retorno esperado del agente $i$ bajo el perfil de políticas indicado, $\boldsymbol{\pi}_{-i}^*$ representa el perfil de políticas conjuntas de todos los agentes excepto el agente $i$, y $\Pi_i$ es el espacio de políticas admisibles. Aunque en sistemas estrictamente cooperativos este equilibrio caracteriza puntos de estabilidad mutua, no garantiza por sí mismo la optimalidad global de Pareto.
 
 En redes urbanas reales, los agentes carecen de información instantánea y global sobre todo el trazado vial. Cada intersección opera sujeta a observabilidad parcial, percibiendo mediciones locales de su entorno inmediato (y, cuando existe comunicación acotada, variables resumidas de intersecciones adyacentes). Una formulación teórica para observabilidad parcial y retorno compartido es el \gls{acr-decpomdp} \cite{decpomdp-survey}. Su tupla se presenta en la Ecuación \eqref{eq:dec_pomdp}.
 \begin{equation}
@@ -1290,8 +1291,8 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
         \label{eq:no_estacionariedad}
     \end{equation}
-    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp}s estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
-    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes; si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
+    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp} estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
+    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En dicha figura, la diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente; cada punto representa una distribución sobre las tres acciones disponibles, las trayectorias muestran el avance de las políticas durante el entrenamiento y los marcadores centrales señalan la convergencia al equilibrio de Nash ($\pi^*(a) = 1/3$ para cada acción) \cite{bowling2002multiagent,marlbook}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes; si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
 
     \item \textbf{Observabilidad parcial:} bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia en información local acotada, desconociendo el estado completo de la red vial y las decisiones simultáneas de cruces distantes, lo cual dificulta la estimación del valor de sus decisiones.
 
@@ -1301,7 +1302,7 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.65\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
-    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en el juego de Piedra, Papel o Tijera. La diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. Cada punto en el símplex representa una distribución sobre las tres acciones disponibles; las trayectorias muestran el avance de las políticas durante el entrenamiento y los marcadores centrales destacan la política convergida en el equilibrio de Nash ($\pi^*(a) = 1/3$ para cada acción) \cite{bowling2002multiagent,marlbook}.}
+    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en el juego de Piedra, Papel o Tijera hacia el equilibrio de Nash ($\pi^*(a) = 1/3$) \cite{bowling2002multiagent,marlbook}.}
     \label{fig:no_estacionariedad_papel_piedra}
 \end{figure}
 
@@ -1363,7 +1364,7 @@ Los algoritmos multiagente pueden clasificarse según la información disponible
         \draw[arr] (actor2_ex) -- node[right, lbl] {$a_n$} (8.6, 3.2);
     \end{tikzpicture}%
     }
-    \caption{Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort{acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}
+    \caption[Paradigma de entrenamiento centralizado con ejecución descentralizada (CTDE)]{Paradigma de entrenamiento centralizado con ejecución descentralizada (\acrshort{acr-ctde}). Durante el entrenamiento, el crítico utiliza información global privilegiada para estimar valores o ventajas que orientan la actualización de los actores locales; durante la ejecución, los actores solo requieren observaciones locales.}
     \label{fig:ctde_architecture}
 \end{figure}
 
@@ -1391,13 +1392,13 @@ El objetivo de optimización de los actores, en ese esquema simplificado, promed
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \frac{1}{n} \sum_{i=1}^n \min\left( r_t^i(\theta) \hat{A}_t(s_t, \mathbf{a}_t), \, \text{clip}(r_t^i(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t(s_t, \mathbf{a}_t) \right) \right].
     \label{eq:objetivo_mappo}
 \end{equation}
-En esta función objetivo, $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. En el mismo esquema, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$, estimado empíricamente sobre el lote de transiciones mediante la suma de la ventaja \acrshort{acr-gae} y el valor de estado previo $\hat{A}_t(s_t, \mathbf{a}_t) + V_\phi(s_t)$ \cite{yu2022surprising,schulman2015high}:
+En esta función objetivo, $r_t^i(\theta) = \frac{\pi_{\theta_i}(a_t^i \mid o_t^i)}{\pi_{\theta_{i,\text{old}}}(a_t^i \mid o_t^i)}$ denota la razón de probabilidad local de cada agente y $\epsilon_{\mathrm{clip}}$ es el margen de recorte. En el mismo esquema, el crítico centralizado se actualiza minimizando el error cuadrático frente al retorno objetivo $R_t^{\text{target}}$, estimado empíricamente sobre el lote de transiciones mediante la suma de la ventaja \acrshort{acr-gae} y el valor de estado previo $\hat{A}_t(s_t, \mathbf{a}_t) + V_{\phi_{\text{old}}}(s_t)$, calculado con los parámetros $\phi_{\text{old}}$ previos a la optimización y mantenido fijo al actualizar $\phi$ \cite{yu2022surprising,schulman2015high}:
 \begin{equation}
     \mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right].
     \label{eq:perdida_valor_mappo}
 \end{equation}
 
-\subsubsection{Factores críticos de diseño y optimización en \acrshort{acr-mappo}}
+\subsubsection[Factores críticos de diseño y optimización en MAPPO]{Factores críticos de diseño y optimización en \acrshort{acr-mappo}}
 
 Yu et al. \cite{yu2022surprising} analizaron empíricamente diversos factores de implementación e hiperparámetros que afectan el rendimiento de \acrshort{acr-mappo}:
 \begin{enumerate}
@@ -1415,9 +1416,10 @@ El Algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-
 \Statex \textbf{Entrada:} entorno multiagente, $n$ agentes, horizonte de recolección, épocas $K$, $\gamma$, $\lambda_{\mathrm{GAE}}$ y $\epsilon_{\mathrm{clip}}$
 \Statex \textbf{Salida:} parámetros entrenados de los actores $\theta$ y del crítico centralizado $\phi$
 \State Inicializar los parámetros de la política (actor) $\theta$ y del valor (crítico) $\phi$
+\State Inicializar la política de recolección con $\theta_{\mathrm{old}} \leftarrow \theta$
 \State Inicializar el \textit{buffer} de datos $\mathcal{D} \leftarrow \emptyset$
 \For{iteración $= 1, 2, \dots$}
-    \State Recolectar trayectorias \textit{on-policy} para todos los agentes utilizando la política conjunta $\boldsymbol{\pi}_\theta$
+    \State Recolectar trayectorias \textit{on-policy} para todos los agentes utilizando la política conjunta $\boldsymbol{\pi}_{\theta_{\mathrm{old}}}$
     \State Calcular las ventajas conjuntas $\hat{A}_t(s_t, \mathbf{a}_t)$ mediante \acrshort{acr-gae} a partir del crítico centralizado $V_\phi(s_t)$
     \State Calcular los retornos objetivos $R_t^{\text{target}}$ para el crítico
     \State Almacenar las transiciones $(s_t, \mathbf{o}_t, \mathbf{a}_t, \hat{A}_t, R_t^{\text{target}})$ en $\mathcal{D}$
@@ -1426,6 +1428,7 @@ El Algoritmo \ref{alg:mappo} especifica el ciclo computacional de \acrshort{acr-
         \State Actualizar la política maximizando el objetivo de recorte por agente (Ecuación \eqref{eq:objetivo_mappo})
         \State Actualizar el crítico $\phi$ minimizando la pérdida de valor (Ecuación \eqref{eq:perdida_valor_mappo})
     \EndFor
+    \State Actualizar la política de recolección: $\theta_{\mathrm{old}} \leftarrow \theta$
     \State Vaciar el \textit{buffer} de datos $\mathcal{D} \leftarrow \emptyset$
 \EndFor
 \end{algorithmic}
@@ -1468,7 +1471,7 @@ Bajo retornos desacoplados, la identidad aditiva de la Ecuación \eqref{eq:happo
 
 La descomposición de la ventaja es una identidad exacta bajo los supuestos cooperativos presentados. A diferencia de este lema, otros métodos imponen una estructura a la función de valor de acción conjunta. Las \glsdisp{acr-vdn}{Redes de Descomposición de Valor (\glsentryuseri{acr-vdn}, \glsentryshort{acr-vdn})} la representan como una suma de valores individuales aprendidos \cite{vdn}. Por su parte, la \glsdisp{acr-qmix}{Red de Mezcla de Valores Q (\glsentryuseri{acr-qmix}, \glsentryshort{acr-qmix})} combina esos valores mediante una red sujeta a una condición de monotonía: si aumenta un valor individual y los demás permanecen fijos, el valor conjunto no puede disminuir \cite{qmix}. El lema no requiere ninguna de estas dos restricciones.
 
-\subsubsection{Esquema de actualización secuencial y factor de razón compuesto $M$}
+\subsubsection[Esquema de actualización secuencial y factor de razón compuesto M]{Esquema de actualización secuencial y factor de razón compuesto $M$}
 
 Para explotar analíticamente esta descomposición teniendo en cuenta los cambios de los agentes ya actualizados, \acrshort{acr-happo} actualiza las políticas de los agentes de manera secuencial dentro de cada iteración $k$. En cada ciclo se sortea una permutación de los agentes $i_{1:n} \in \text{Sym}(n)$ (donde $\text{Sym}(n)$ representa el conjunto de todas las permutaciones posibles de los $n$ agentes) para que ningún agente ocupe siempre la misma posición en la secuencia \cite{kuba2021trust,wang2023order}.
 
@@ -1531,14 +1534,14 @@ La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al susti
         \node[font=\bfseries\small, text=colDatoPrimario!90!black, anchor=east] at (-1.6, 0) {Iteración $k+1$};
 
         % Nodos de Agentes en Iteración K (Top)
-        \node[old] (pi1k) at (0, 2.5) {Agente 1\\$\pi_{\theta_k}^1$};
-        \node[old] (pi2k) at (5.2, 2.5) {Agente 2\\$\pi_{\theta_k}^2$};
-        \node[old] (pink) at (10.4, 2.5) {Agente $n$\\$\pi_{\theta_k}^n$};
+        \node[old] (pi1k) at (0, 2.5) {Agente $i_1$\\$\pi_{\theta_k^{i_1}}^{i_1}$};
+        \node[old] (pi2k) at (5.2, 2.5) {Agente $i_2$\\$\pi_{\theta_k^{i_2}}^{i_2}$};
+        \node[old] (pink) at (10.4, 2.5) {Agente $i_n$\\$\pi_{\theta_k^{i_n}}^{i_n}$};
 
         % Nodos de Agentes en Iteración K+1 (Bottom)
-        \node[new] (pi1new) at (0, 0) {Agente 1\\$\pi_{\theta_{k+1}}^1$};
-        \node[new] (pi2new) at (5.2, 0) {Agente 2\\$\pi_{\theta_{k+1}}^2$};
-        \node[new] (pinnew) at (10.4, 0) {Agente $n$\\$\pi_{\theta_{k+1}}^n$};
+        \node[new] (pi1new) at (0, 0) {Agente $i_1$\\$\pi_{\theta_{k+1}^{i_1}}^{i_1}$};
+        \node[new] (pi2new) at (5.2, 0) {Agente $i_2$\\$\pi_{\theta_{k+1}^{i_2}}^{i_2}$};
+        \node[new] (pinnew) at (10.4, 0) {Agente $i_n$\\$\pi_{\theta_{k+1}^{i_n}}^{i_n}$};
 
         % Actualizaciones verticales (Doble flecha discontinua con texto despejado a la izquierda)
         \draw[arr, dashed] (pi1k) -- node[midway, left=3pt, font=\scriptsize, align=right] {Ventaja\\conjunta $\hat{A}$} (pi1new);
@@ -1546,12 +1549,12 @@ La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al susti
         \draw[arr, dashed] (pink) -- (pinnew);
 
         % Condicionales secuenciales horizontales (factor de ventaja M)
-        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_2}$} (pi2new.west);
-        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi2new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_n}$} (pinnew.west);
+        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:2}}$} (pi2new.west);
+        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi2new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:n}}$} (pinnew.west);
 
         \node[font=\Large, text=black!50] at (7.8, 1.25) {$\dots$};
     \end{tikzpicture}
-    \caption{Esquema de actualización secuencial de \acrshort{acr-happo}. A diferencia de \acrshort{acr-ppo} independiente, la actualización de cada agente está condicionada por el factor de ventaja reponderada $M_{i_m}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}
+    \caption[Esquema de actualización secuencial de HAPPO]{Esquema de actualización secuencial de \acrshort{acr-happo}. A diferencia de las actualizaciones simultáneas, la optimización de cada agente $i_m$ está condicionada por el factor de ventaja ponderada $M_{i_{1:m}}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}
     \label{fig:happo_sequential}
 \end{figure}
 
@@ -1564,27 +1567,26 @@ El Algoritmo \ref{alg:happo} presenta la secuencia completa de optimización de 
 \Statex \textbf{Entrada:} entorno multiagente, conjunto $\mathcal{N}$ de $n$ agentes, horizonte de recolección, $\gamma$, $\lambda_{\mathrm{GAE}}$ y $\epsilon_{\mathrm{clip}}$
 \Statex \textbf{Salida:} políticas heterogéneas entrenadas $\{\theta^i\}_{i=1}^n$ y crítico centralizado $\phi$
 \State Inicializar los parámetros de las políticas individuales $\{\theta^i, \forall i \in \mathcal{N}\}$ y del crítico centralizado $V_\phi(s)$
-\For{iteración $= 1, 2, \dots$}
-    \State Recolectar un conjunto de trayectorias $\mathcal{D}$ utilizando la política conjunta $\boldsymbol{\pi}_\theta$
+\For{iteración $k = 1, 2, \dots$}
+    \State Fijar $\theta_k \leftarrow \theta$ y recolectar un conjunto de trayectorias $\mathcal{D}$ utilizando la política conjunta $\boldsymbol{\pi}_{\theta_k}$
     \State Calcular el estimador de ventaja conjunta $\hat{A}(s, \mathbf{a})$ con \acrshort{acr-gae} a partir del crítico $V_\phi(s)$
     \State Calcular los retornos objetivo $R_t^{\text{target}}$ utilizados para ajustar el crítico
     \State Sortear una permutación de los agentes $i_{1:n} \in \text{Sym}(n)$
-    \State Inicializar los factores $M_{i_m}(s, \mathbf{a}) \leftarrow \hat{A}(s, \mathbf{a})$ para todo $m \in \{1, \dots, n\}$
+    \State Inicializar el factor acumulado: $M_{i_{1:1}}(s_t, \mathbf{a}_t) \leftarrow \hat{A}(s_t, \mathbf{a}_t)$
     \For{$m = 1 \dots n$}
-        \State Obtener el agente actual $i_m$ y su factor modificador $M_{i_m}(s, \mathbf{a})$
-        \State Actualizar $\theta^{i_m}$ a $\theta_{k+1}^{i_m}$ maximizando el objetivo recortado de la Ecuación \eqref{eq:happo_objetivo_clip}
+        \State Actualizar $\theta_k^{i_m}$ a $\theta_{k+1}^{i_m}$ maximizando el objetivo recortado (Ecuación \eqref{eq:happo_objetivo_clip}) con $M_{i_{1:m}}(s_t, \mathbf{a}_t)$
         \State Recalcular la razón post-optimización: $\rho_{\text{post}}^{i_m} \leftarrow \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$
-        \For{$j = m+1 \dots n$}
-            \State Actualizar el factor modificador para agentes posteriores:
-            \Statex $M_{i_j}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_j}(s_t, \mathbf{a}_t)$
-        \EndFor
+        \If{$m < n$}
+            \State Actualizar el factor acumulado: $M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t)$
+        \EndIf
     \EndFor
+    \State Actualizar $\theta \leftarrow \{\theta_{k+1}^{i_m}\}_{m=1}^n$
     \State Actualizar el crítico centralizado $\phi$ mediante descenso de gradiente:
     \Statex $\mathcal{L}^{\text{VF}}(\phi) = \hat{\mathbb{E}}_t \left[ \left( V_\phi(s_t) - R_t^{\text{target}} \right)^2 \right]$
 \EndFor
 \end{algorithmic}
 \end{algorithm}
-El procedimiento de \acrshort{acr-happo} organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores modificadores $M_{i_m}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre agentes para seleccionar su acción \cite{kuba2021trust}.
+El procedimiento de \acrshort{acr-happo} organiza secuencialmente la actualización de los actores locales mediante la permutación aleatoria $i_{1:n}$ y la propagación recursiva de los factores acumulados $M_{i_{1:m}}$. Tras optimizar sucesivamente a los $n$ agentes sobre el lote de transiciones $\mathcal{D}$, el crítico centralizado $V_\phi$ ajusta sus parámetros mediante descenso de gradiente sobre los retornos acumulados. Durante la etapa de ejecución descentralizada, cada política local selecciona $a_i$ a partir de $o_i$, sin requerir evaluar el crítico centralizado ni comunicación entre agentes para seleccionar su acción \cite{kuba2021trust}.
 
 \begingroup
 \widowpenalty=10000
