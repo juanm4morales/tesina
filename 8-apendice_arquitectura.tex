@@ -292,38 +292,38 @@ El cociente entre la suma de incrementos positivos de flujo y el total horario d
 
 Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que el manifiesto canónico identifica las entradas finales; la Tabla \ref{tab:mendoza_archivos_balance} conserva los hashes históricos de 5 s.
 
-\subsubsection{Configuración y evidencia canónica de 4 s}
+\subsubsection[Configuración y evidencia canónica de 4 s]{Configuración y evidencia canónica de 4\,s}
 \label{sec:mendoza_evidencia_final}
 
-Las configuraciones canónicas de 2 h y 12 h están en \path{nets/Mendoza/mendoza_220k_balance/}; parten de una red vacía por separado y usan paso de 1 s, \path{time-to-teleport}=300 s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas; conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
+Las configuraciones canónicas de 2\,h y 12\,h están en \path{nets/Mendoza/mendoza_220k_balance/}; parten de una red vacía por separado y usan paso de 1\,s, \path{time-to-teleport}=300\,s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas de ejecución compartidas con las configuraciones base archivadas en \path{datos/mendoza220k_balance/fuentes/}; conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
 
 \begin{table}[H]\centering\small
-\caption{Opciones explícitas en las configuraciones canónicas de 4 s.}\label{tab:mendoza_opciones_balance}
+\caption[Opciones explícitas de ejecución en las configuraciones de 4 s.]{Opciones explícitas de ejecución en las configuraciones canónicas de 4\,s (compartidas con las configuraciones base de 5\,s).}\label{tab:mendoza_opciones_balance}
 \input{datos/mendoza220k_balance/tabla_opciones.tex}
 \end{table}
 
 El directorio \path{experiments/mendoza_scenario/results/mendoza_balance_fixed_20261123/} de \texttt{marl-tlc} conserva los comandos y hashes de las entradas en \texttt{prepared.json}, y los conteos y hashes de las salidas en \texttt{report.json}. Se utilizó el mismo binario de SUMO 1.27.1 que en la comprobación histórica. Los conteos se presentan en la Tabla \ref{tab:metricas_validacion_mendoza}.
 
-\subsubsection{Evidencia histórica de 5 s}
+\subsubsection[Evidencia histórica de 5 s]{Evidencia histórica de 5\,s}
 \label{subsec:mendoza_historico_5s}
 
-La evidencia de 5 s se conserva por separado y no se combina con la comprobación de 4 s. La Tabla \ref{tab:mendoza_sintesis_historica} resume la campaña histórica; las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} detallan cada semilla.
+La evidencia de 5\,s se conserva por separado y no se combina con la comprobación de 4\,s. La Tabla \ref{tab:mendoza_sintesis_historica} resume la campaña histórica; las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} detallan cada semilla.
 
 \begin{table}[H]\centering\small
-\caption{Síntesis histórica de 5 s con tres semillas confirmatorias.}\label{tab:mendoza_sintesis_historica}
+\caption[Síntesis histórica de 5 s con tres semillas confirmatorias.]{Síntesis histórica de 5\,s con tres semillas confirmatorias.}\label{tab:mendoza_sintesis_historica}
 \input{datos/mendoza220k_balance/tabla_sintesis.tex}
 \end{table}
 
 \begin{table}[H]\centering\small
-\caption{Evidencia histórica de 5 s: resultados por semilla en la ventana de 2 h.}\label{tab:mendoza_casos_balance_2h}
+\caption[Evidencia histórica de 5 s: resultados por semilla en la ventana de 2 h.]{Evidencia histórica de 5\,s: resultados por semilla en la ventana de 2\,h.}\label{tab:mendoza_casos_balance_2h}
 \input{datos/mendoza220k_balance/tabla_casos_2h.tex}
 \end{table}
 \begin{table}[H]\centering\small
-\caption{Evidencia histórica de 5 s: resultados por semilla en la ventana de 12 h.}\label{tab:mendoza_casos_balance_12h}
+\caption[Evidencia histórica de 5 s: resultados por semilla en la ventana de 12 h.]{Evidencia histórica de 5\,s: resultados por semilla en la ventana de 12\,h.}\label{tab:mendoza_casos_balance_12h}
 \input{datos/mendoza220k_balance/tabla_casos_12h.tex}
 \end{table}
 
-La primera fila de las tablas de casos corresponde a la semilla de desarrollo 104729; las tres restantes, a las confirmatorias. La unidad confirmatoria histórica es la semilla, no cada combinación de semilla y ventana. Las tres confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Con la semilla 104729, la evidencia histórica registra 80,78\% (2 h) y 84,94\% (12 h); la diferencia descriptiva respecto de la comprobación de 4 s es $+0{,}08$ y $+0{,}14$ puntos porcentuales. El cambio de amarillos también ajustó los verdes.
+La primera fila de las tablas de casos corresponde a la semilla de desarrollo 104729; las tres restantes, a las confirmatorias. La unidad confirmatoria histórica es la semilla, no cada combinación de semilla y ventana. Las tres confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Con la semilla 104729, la evidencia histórica registra 80,78\% (2\,h) y 84,94\% (12\,h); la diferencia descriptiva respecto de la comprobación de 4\,s es $+0{,}08$ y $+0{,}14$ puntos porcentuales. El cambio de amarillos también ajustó los verdes.
 
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
@@ -641,7 +641,7 @@ Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero desp
 
 \subsection{Preparación de las figuras de escenarios}
 
-Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. El mapa de Mendoza balance se construyó a partir de la red XML y ubica los controladores y el acceso TAZ 28; la cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas se presenta por separado en la Figura \ref{fig:mendoza_taz}.
+Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. La vista del dominio urbano de Mendoza (Figura \ref{fig:dominio_mendoza}) combina una captura de la red en \acrshort{acr-sumo} con anotaciones de las avenidas de referencia y del acceso asociado a la zona \acrshort{acr-taz} 28; la cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas de Mendoza balance, generada a partir de los archivos \acrshort{acr-xml} del escenario, se presenta por separado en la Figura \ref{fig:mendoza_taz}.
 
 \Needspace{9\baselineskip}
 \subsection{Vistas documentales de los escenarios}
