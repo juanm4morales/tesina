@@ -199,7 +199,7 @@ La especificación de \texttt{marlTLC} utiliza los siguientes mecanismos de dise
 \section{Parámetros de SUMO y programas semafóricos de referencia}
 \label{sec:parametros_sumo}
 
-En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. La Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia} documenta los programas fijos sintéticos históricos. El manifiesto \path{nets/synthetic_fixed.manifest.json} de \texttt{marl-tlc} identifica las entradas de esos programas y las de la versión actualizada con amarillos de 4\,s. Una comparación directa entre esa referencia fija y una política aprendida debe partir del mismo estado vehicular al finalizar el calentamiento.
+En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. El manifiesto \path{nets/synthetic_fixed.manifest.json} de \texttt{marl-tlc} identifica los archivos de los programas fijos sintéticos de la Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia}. Estos programas tienen amarillos de 4\,s y ciclos de 90\,s.
 
 \subsection{Mendoza balance: red, demanda y evidencia operacional}
 \label{sec:procedencia_mendoza}
@@ -284,18 +284,18 @@ Las Heras & \texttt{227837259} & 250 \\\hline
 \end{tabular}
 \end{table}
 
-La biblioteca se construye sobre las conexiones existentes. El costo por tramo utiliza su longitud y una velocidad de referencia limitada a $13{,}89$\,m/s. Para una conexión semaforizada se agrega $90(1-f)^2/2$ segundos, con $f$ igual a la fracción de servicio anterior; para una conexión minoritaria sin semáforo se agregan 20 segundos. Al ingresar en los tramos de la Tabla \ref{tab:mendoza_topes_diseno} o en el tramo \texttt{249657488\#2} de Perú, se añade una penalización de 120 segundos multiplicada por un factor de exploración. Se prueban sucesivamente los factores $0$, $1$, $3$, $6$ y $10$, acumulando además diez segundos por tramo de cada ruta encontrada para favorecer alternativas. La enumeración concluye al reunir tres rutas distintas o agotar esos factores. La biblioteca resultante no contiene itinerarios con el giro izquierdo Benegas→Civit; esa ausencia restringe la demanda servida por dicho movimiento.
+La biblioteca se construye sobre las conexiones existentes. El costo por tramo utiliza su longitud y una velocidad de referencia limitada a $13{,}89$\,m/s. Para una conexión semaforizada se agrega $90(1-f)^2/2$ segundos, con $f$ igual a la fracción de servicio anterior. Para una conexión minoritaria sin semáforo se agregan 20 segundos. Al ingresar en los tramos de la Tabla \ref{tab:mendoza_topes_diseno} o en el tramo \texttt{249657488\#2} de Perú, se añade una penalización de 120 segundos multiplicada por un factor de exploración. Se prueban sucesivamente los factores $0$, $1$, $3$, $6$ y $10$, acumulando además diez segundos por tramo de cada ruta encontrada para favorecer alternativas. La enumeración concluye al reunir tres rutas distintas o agotar esos factores. La biblioteca resultante no contiene itinerarios con el giro izquierdo Benegas→Civit. Esa ausencia restringe la demanda servida por dicho movimiento.
 
 Cada problema horario se resolvió con HiGHS mediante \texttt{scipy.optimize.linprog} \cite{scipy_linprog_2026}. La tasa escrita en SUMO es \texttt{period=exp($\lambda$)}, con $\lambda=q_{od,h}/3600$ en vehículos por segundo; el intervalo entre solicitudes sigue la Ecuación \ref{eq:intervalo_exponencial} del Capítulo \ref{cap:marco_teorico}. La probabilidad de cada itinerario es $x_{p,h}/q_{od,h}$. El redondeo de tasas a 18 posiciones decimales se compensa en el par de mayor flujo para preservar el total horario escrito. Una vez elegido el itinerario, no se aplica reasignación dinámica de rutas.
 
 El cociente entre la suma de incrementos positivos de flujo y el total horario de referencia cuantifica la fracción redistribuida: $\sum_{(o,d)}\max(q_{od,h}-b_{od,h},0)/\sum_{(o,d)}b_{od,h}$. En el diseño conservado varía entre el $11{,}6\%$ y el $23{,}6\%$. Esta modificación conjunta de tasas y rutas cambia también las distancias previstas; la conservación del total de solicitudes no equivale a conservar el trabajo de transporte.
 
-Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que el manifiesto canónico identifica las entradas finales; la Tabla \ref{tab:mendoza_archivos_balance} conserva los hashes históricos de 5 s.
+Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que el manifiesto canónico identifica las entradas finales. La Tabla \ref{tab:mendoza_archivos_balance} conserva los hashes históricos de 5 s.
 
 \subsubsection[Configuración y evidencia canónica de 4 s]{Configuración y evidencia canónica de 4\,s}
 \label{sec:mendoza_evidencia_final}
 
-Las configuraciones canónicas de 2\,h y 12\,h están en \path{nets/Mendoza/mendoza_220k_balance/}; parten de una red vacía por separado y usan paso de 1\,s, \path{time-to-teleport}=300\,s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas de ejecución compartidas con las configuraciones base archivadas en \path{datos/mendoza220k_balance/fuentes/}; conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
+Las configuraciones canónicas de 2\,h y 12\,h están en \path{nets/Mendoza/mendoza_220k_balance/}. Parten de una red vacía por separado y usan paso de 1\,s, \path{time-to-teleport}=300\,s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas de ejecución compartidas con las configuraciones base archivadas en \path{datos/mendoza220k_balance/fuentes/}. La tabla conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
 
 \begin{table}[H]\centering\small
 \caption[Opciones explícitas de ejecución en las configuraciones de 4 s.]{Opciones explícitas de ejecución en las configuraciones canónicas de 4\,s (compartidas con las configuraciones base de 5\,s).}\label{tab:mendoza_opciones_balance}
@@ -467,7 +467,7 @@ En la versión conservada para esta comparación, las atribuciones almacenadas e
 
 En la variante C, el vector de observación local definido en la Ecuación \eqref{eq:observacion_local_metodologia} se amplía con un término codificado $e\bigl(W_j^{(t)}/m_j\bigr)$ por cada vecino directo $j \in \mathcal{N}(i)$, escalado según el umbral vecinal $M_{\mathrm{vec}}$ documentado en la Sección \ref{subsec:calibraciones_cooperacion}.
 
-La recompensa local $L_i^{(t)}$ se define en la Ecuación \eqref{eq:recompensa_local}. En la variante C, cada agente $i$ complementa esa señal con el promedio de las variaciones de espera de sus vecinos directos $j \in \mathcal{N}(i)$, normalizadas por el número de carriles entrantes $m_j$; el peso de cooperación se fija en $\rho_{\mathrm{coop}}=0{,}1$. Como todas las intersecciones controladas de los escenarios estudiados tienen al menos un vecino ($|\mathcal{N}(i)|\geq1$), el término vecinal por carril $N_{i,\mathrm{carril}}^{(t)}$ y la recompensa compuesta $R_i^{(t)}$ quedan definidos por:
+La recompensa local $L_i^{(t)}$ se define en la Ecuación \eqref{eq:recompensa_local}. En la variante C, cada agente $i$ complementa esa señal con el promedio de las variaciones de espera de sus vecinos directos $j \in \mathcal{N}(i)$, normalizadas por el número de carriles entrantes $m_j$. El peso de cooperación se fija en $\rho_{\mathrm{coop}}=0{,}1$. Como todas las intersecciones controladas de los escenarios estudiados tienen al menos un vecino ($|\mathcal{N}(i)|\geq1$), el término vecinal por carril $N_{i,\mathrm{carril}}^{(t)}$ y la recompensa compuesta $R_i^{(t)}$ quedan definidos por:
 \begin{align}
 N_{i,\mathrm{carril}}^{(t)} &= \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} \frac{L_j^{(t)}}{m_j}, \label{eq:recompensa_vecinal} \\
 R_i^{(t)} &= (1 - \rho_{\mathrm{coop}}) L_i^{(t)} + \rho_{\mathrm{coop}} N_{i,\mathrm{carril}}^{(t)}, \label{eq:recompensa_compuesta}
@@ -483,7 +483,7 @@ La Figura \ref{fig:contraste_ac} compara ambas formulaciones para un agente $i$ 
 \label{fig:contraste_ac}
 \end{figure}
 
-La comparación A/C usa un diseño pareado: cada \gls{parpoliticas} reúne dos políticas, una por variante, emparejadas por la semilla utilizada durante el entrenamiento. El emparejamiento no implica igualdad de inicializaciones al cambiar las dimensiones de entrada. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución; para evaluar se retuvo el modelo de la última iteración.
+La comparación A/C usa un diseño pareado: cada \gls{parpoliticas} reúne dos políticas, una por variante, emparejadas por la semilla utilizada durante el entrenamiento. El emparejamiento no implica igualdad de inicializaciones al cambiar las dimensiones de entrada. Se entrenaron $24$ pares independientes por red sintética ($72$ pares y $144$ políticas en total), durante $40$ iteraciones por ejecución. Para evaluar se retuvo el modelo de la última iteración.
 
 \subsection{Configuración fija de la comparación multiescenario}
 \label{subsec:receta_ac_apendice}
@@ -641,17 +641,17 @@ Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero desp
 
 \subsection{Preparación de las figuras de escenarios}
 
-Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. La vista del dominio urbano de Mendoza (Figura \ref{fig:dominio_mendoza}) combina una captura de la red en \acrshort{acr-sumo} con anotaciones de las avenidas de referencia y del acceso asociado a la zona \acrshort{acr-taz} 28; la cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas de Mendoza balance, generada a partir de los archivos \acrshort{acr-xml} del escenario, se presenta por separado en la Figura \ref{fig:mendoza_taz}.
+Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. La vista del dominio urbano de Mendoza (Figura \ref{fig:dominio_mendoza}) combina una captura de la red en \acrshort{acr-sumo} con anotaciones de las avenidas de referencia y del acceso asociado a la zona \acrshort{acr-taz} 28. La cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas de Mendoza balance, generada a partir de los archivos \acrshort{acr-xml} del escenario, se presenta por separado en la Figura \ref{fig:mendoza_taz}.
 
 \Needspace{9\baselineskip}
 \subsection{Vistas documentales de los escenarios}
 
-La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos históricos de referencia, con amarillo de 3\,s. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} representa las TAZ del escenario balance mediante sus tramos asociados; las marcas no son límites territoriales.
+La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos fijos vigentes, con amarillos de 4\,s y ciclos de 90\,s. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} representa las TAZ del escenario balance mediante sus tramos asociados. Las marcas no son límites territoriales.
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_tiempos_semaforicos.tex}
-\caption{Distribución de los intervalos de verde, amarillo y todo rojo en los ciclos históricos de referencia de 90 segundos (amarillo de 3\,s).}
+\caption{Distribución de los intervalos de verde, amarillo y todo rojo en los programas sintéticos fijos vigentes (ciclo de 90 segundos y amarillos de 4\,s).}
 \label{fig:tiempos_semaforicos_base}
 \end{figure}
 
@@ -661,3 +661,16 @@ La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución 
 \caption{Zonas de análisis de tránsito de Mendoza balance, representadas mediante sus tramos asociados. Los identificadores van de 0 a 38, salvo 6 y 9; las marcas no representan límites territoriales.}
 \label{fig:mendoza_taz}
 \end{figure}
+
+\section{Créditos y licencias}\label{sec:creditos_licencias}
+
+La Figura \ref{fig:no_estacionariedad_papel_piedra} sigue la de Albrecht, Christianos y Schäfer \cite{marlbook}. Un \href{https://github.com/marl-book/slides/blob/b3ca17ba/source/images/chapter6/wolfphc_rps_own.pdf}{gráfico equivalente} se distribuye en el \href{https://github.com/marl-book/slides}{repositorio de las diapositivas oficiales}. A continuación se reproduce la licencia MIT de ese repositorio.
+
+{\small\setstretch{1}
+\noindent MIT License --- Copyright (c) 2024 marl-book\par
+
+\noindent Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ``Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\par
+
+\noindent The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\par
+
+\noindent THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\par}

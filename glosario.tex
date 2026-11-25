@@ -106,7 +106,7 @@
     name={Máscara de acciones},
     text={máscara de acciones},
     plural={máscaras de acciones},
-    description={Representación de las acciones habilitadas en una decisión; excluye del proceso de selección las acciones no admisibles. En el control semafórico, la admisibilidad depende de las fases, las transiciones y los tiempos definidos por el control; la máscara no constituye por sí sola una garantía de seguridad vial en campo}
+    description={Representación de las acciones habilitadas en una decisión. Excluye del proceso de selección las acciones no admisibles. En el control semafórico, la admisibilidad depende de las fases, las transiciones y los tiempos definidos por el control. La máscara no constituye por sí sola una garantía de seguridad vial en campo}
 }
 
 \newglossaryentry{ensayo_hpo}{
@@ -138,10 +138,10 @@
 }
 
 \newglossaryentry{batch_entrenamiento}{
-    name={Lote (\textit{batch})},
+    name={Lote (\textit{Batch})},
     text={lote},
     plural={lotes},
-    description={Conjunto de muestras o transiciones procesadas conjuntamente durante una operación de entrenamiento.}
+    description={Conjunto de muestras o transiciones procesadas conjuntamente durante una operación de entrenamiento}
 }
 
 \newglossaryentry{buffer_datos}{
@@ -181,7 +181,7 @@
     name={\textit{checkpoint}},
     text={\textit{checkpoint}},
     plural={\textit{checkpoints}},
-    description={Archivo que guarda los parámetros del modelo y, si está implementado, el estado del entrenamiento en una iteración intermedia o final. Puede utilizarse para reanudar o evaluar desde ese punto; su existencia no demuestra que el ensayo esté completo ni que sus resultados sean admisibles}
+    description={Archivo que guarda los parámetros del modelo y, si está implementado, el estado del entrenamiento en una iteración intermedia o final. Puede utilizarse para reanudar o evaluar desde ese punto. Su existencia no demuestra que el ensayo esté completo ni que sus resultados sean admisibles}
 }
 
 \newglossaryentry{lambda_gae}{
@@ -385,7 +385,7 @@
 
 \newglossaryentry{semilla}{
  name={Semilla}, text={semilla},
- description={Número que inicializa un generador de números pseudoaleatorios. Permite repetir su secuencia cuando se conservan el procedimiento y la configuración; usar la misma semilla no garantiza resultados idénticos si se modifican las decisiones del agente o el entorno}
+ description={Número que inicializa un generador de números pseudoaleatorios. Permite repetir su secuencia cuando se conservan el procedimiento y la configuración. Usar la misma semilla no garantiza resultados idénticos si se modifican las decisiones del agente o el entorno}
 }
 \newglossaryentry{aceleracion_vehicular}{
  name={$a_{\mathrm{veh}}$ (aceleración vehicular)}, text={aceleración},
@@ -397,7 +397,7 @@
 }
 \newglossaryentry{velocidad_maxima_vehicular}{
  name={$v_{\max}$ (velocidad máxima vehicular)}, text={velocidad máxima},
- description={Velocidad máxima configurada para un tipo de vehículo, expresada en metros por segundo; el límite de la vía también restringe la velocidad permitida}
+ description={Velocidad máxima configurada para un tipo de vehículo, expresada en metros por segundo. El límite de la vía también restringe la velocidad permitida}
 }
 
 \newglossaryentry{hiperparametro}{
@@ -422,7 +422,7 @@
 }
 \newglossaryentry{intervalo_confianza}{
  name={Intervalo de confianza}, text={intervalo de confianza},
- description={Rango que expresa la incertidumbre de una estimación. Su nivel nominal indica la proporción de estudios repetidos en la que el procedimiento cubriría el valor verdadero bajo sus supuestos; no asigna una probabilidad a ese valor una vez calculado el intervalo}
+ description={Rango que expresa la incertidumbre de una estimación. Su nivel nominal indica la proporción de estudios repetidos en la que el procedimiento cubriría el valor verdadero bajo sus supuestos. No asigna una probabilidad a ese valor una vez calculado el intervalo}
 }
 
 \newglossaryentry{carriles_controlados}{
@@ -432,7 +432,7 @@
 
 \newglossaryentry{numero_acciones}{
     name={$K_i$ (número de acciones)},
-    description={Número de fases semafóricas seleccionables por el agente $i$. Excluye las fases con amarillo y el estado final de todo rojo; las restricciones temporales pueden reducir el subconjunto de acciones habilitado en un instante}
+    description={Número de fases verdes seleccionables por el agente $i$. Las restricciones temporales pueden reducir el subconjunto admisible en cada decisión}
 }
 
 \newglossaryentry{grado_vecindad}{
@@ -442,7 +442,7 @@
 
 \newglossaryentry{espera_interseccion}{
     name={$W_i^{(t)}$ (espera atribuida a la intersección)},
-    description={Suma de las esperas atribuidas a los carriles controlados por el agente $i$ en el paso de decisión $t$, en veh·s. Se utiliza en la observación vecinal y en las diferencias de espera de la recompensa; depende de la memoria temporal finita de SUMO y no equivale a la espera total por viaje de TripInfo}
+    description={Suma de las esperas atribuidas a los carriles controlados por el agente $i$ en el paso de decisión $t$, en veh·s. Se utiliza en la observación vecinal y en las diferencias de espera de la recompensa. Depende de la memoria temporal finita de SUMO y no equivale a la espera total por viaje de TripInfo}
 }
 
 \newglossaryentry{desfase_semaforico}{

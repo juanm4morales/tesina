@@ -26,7 +26,7 @@ Entre las definiciones más utilizadas se pueden mencionar las siguientes:
     \item \textbf{Fase (\textit{phase}), ciclo (\textit{cycle}) e intervalo (\textit{interval}):} una fase es una configuración de señales que habilita simultáneamente un conjunto de movimientos compatibles \cite{ite_handbook}. El ciclo corresponde a la secuencia completa de fases necesaria para atender los movimientos de la intersección. Un intervalo es el período durante el cual las indicaciones semafóricas permanecen constantes \cite{calymayor}.
 \end{itemize}
 
-La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en una intersección de cuatro accesos con dos carriles por sentido. Los números 1 a 8 identifican los ocho carriles de entrada, comenzando por el carril interior del acceso norte y siguiendo en sentido antihorario alrededor de la intersección; las flechas, sin numerar, muestran los movimientos que se ejecutan desde cada carril. La numeración solo señala el punto de entrada y no implica que los movimientos se habiliten simultáneamente; tampoco representa la configuración de una red experimental ni una asignación obligatoria de \glspl{fase} para el caso de estudio. La Figura reúne en un mismo esquema los doce movimientos de la intersección, de modo que se aprecian tanto los cruces entre trayectorias como la relación entre cada movimiento y el carril del que parte; las trayectorias peatonales de cada acceso se muestran sin numerar. El color sirve solo para diferenciar trayectorias que comparten carril o se cruzan; no indica prioridad de paso ni separación de niveles. Cada flecha ocupa el carril que le corresponde en la circulación por la derecha. En este trabajo, la Figura se utiliza para separar la noción geométrica de movimiento de la regla semafórica que habilita un conjunto de movimientos compatibles. Por ejemplo, dos movimientos que no comparten un punto de conflicto pueden incluirse en una misma fase, mientras que los que sí lo comparten deben atenderse en fases compatibles o sucesivas.
+La Figura \ref{fig:movimientos_fases_interseccion} ilustra estos conceptos en una intersección de cuatro accesos con dos carriles por sentido. Los números 1 a 8 identifican los ocho carriles de entrada, comenzando por el carril interior del acceso norte y siguiendo en sentido antihorario alrededor de la intersección. Las flechas, sin numerar, muestran los movimientos que se ejecutan desde cada carril. La numeración solo señala el punto de entrada y no implica que los movimientos se habiliten simultáneamente. Tampoco representa la configuración de una red experimental ni una asignación obligatoria de \glspl{fase} para el caso de estudio. La Figura reúne en un mismo esquema los doce movimientos de la intersección, de modo que se aprecian tanto los cruces entre trayectorias como la relación entre cada movimiento y el carril del que parte. Las trayectorias peatonales de cada acceso se muestran sin numerar. El color sirve solo para diferenciar trayectorias que comparten carril o se cruzan; no indica prioridad de paso ni separación de niveles. Cada flecha ocupa el carril que le corresponde en la circulación por la derecha. En este trabajo, la Figura se utiliza para separar la noción geométrica de movimiento de la regla semafórica que habilita un conjunto de movimientos compatibles. Por ejemplo, dos movimientos que no comparten un punto de conflicto pueden incluirse en una misma fase, mientras que los que sí lo comparten deben atenderse en fases compatibles o sucesivas.
 
 \begin{figure}[!htbp]
     \centering
@@ -200,7 +200,7 @@ Microscópica & Velocidad puntual ($v_i$, kilómetros por hora) & Variable indiv
 \end{tabular}
 \end{table}
 
-La Figura \ref{fig:variables_microscopicas} complementa estas definiciones con las magnitudes que se miden en el espacio y en el tiempo. El largo del vehículo $l$ y la separación libre $e$ son distancias, expresadas en metros; el espaciamiento $s$ es la distancia entre puntos homólogos de vehículos consecutivos, también en metros. El avance temporal $\beta$ es el tiempo asociado al recorrido del largo del vehículo a la velocidad $v$, la brecha temporal $g$ es el tiempo entre el paso del vehículo precedente y el siguiente respecto de puntos de referencia distintos, y el intervalo temporal $h$ es el tiempo entre pasos de puntos homólogos; $\beta$, $g$ y $h$ se expresan en segundos. Las cotas inferiores representan relaciones espaciales y las superiores relaciones temporales; no son dos vehículos distintos ni dos mediciones independientes. En esta tesina, estas magnitudes sirven para vincular la descripción individual de los vehículos con las variables agregadas del flujo.
+La Figura \ref{fig:variables_microscopicas} complementa estas definiciones con las magnitudes que se miden en el espacio y en el tiempo. El largo del vehículo $l$ y la separación libre $e$ son distancias, expresadas en metros. El espaciamiento $s$ también es una distancia expresada en metros y mide la separación entre puntos homólogos de vehículos consecutivos. El avance temporal $\beta$ es el tiempo asociado al recorrido del largo del vehículo a la velocidad $v$. La brecha temporal $g$ mide el tiempo entre el paso del vehículo precedente y el siguiente respecto de puntos de referencia distintos, mientras que el intervalo temporal $h$ mide el tiempo entre pasos de puntos homólogos. Las tres magnitudes temporales se expresan en segundos. Las cotas inferiores representan relaciones espaciales y las superiores relaciones temporales; no son dos vehículos distintos ni dos mediciones independientes. En esta tesina, estas magnitudes sirven para vincular la descripción individual de los vehículos con las variables agregadas del flujo.
 
 \begin{figure}[!htbp]
     \centering
@@ -306,6 +306,7 @@ En esta tesina, la limitación de los modelos analíticos motiva el uso de simul
   ymin=0, ymax=1.25,
   xtick={0,1,2,3,4,5},
   ytick={0,0.25,0.50,0.75,1.00,1.25},
+  yticklabel style={/pgf/number format/use comma},
   legend style={at={(0.97,0.97)}, anchor=north east, font=\sffamily\footnotesize},
   axis lines=left,
   every axis plot/.append style={line width=1.5pt}
@@ -345,7 +346,7 @@ Para garantizar la seguridad vial, las transiciones entre fases no pueden ejecut
 
 \subsubsection{Modelado de la capacidad y el verde efectivo}
 
-Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite{fernandez}. En la Figura \ref{fig:verde_efectivo}, $q_{\max}$ representa la tasa de descarga de saturación, medida en vehículos por hora, $g$ el intervalo de verde efectivo, y $l_1$ y $l_2$ las pérdidas inicial y final de servicio, respectivamente; el tiempo se expresa en segundos. La barra inferior distingue los intervalos de rojo, verde y amarillo, mientras que la curva superior muestra cómo la descarga alcanza y abandona el régimen de saturación. La descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control. La Figura \ref{fig:verde_efectivo} debe leerse como una relación temporal: las pérdidas $l_1$ y $l_2$ reducen el intervalo en que la fase puede descargar vehículos a la tasa $q_{\max}$, de modo que el verde efectivo $g$ no equivale necesariamente al verde nominal programado en el controlador. La Figura es conceptual: estos parámetros no se estiman en esta tesina. En su lugar, los efectos se representan mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
+Desde el punto de vista operativo, la capacidad de descarga de un acceso semaforizado depende del tiempo efectivo de servicio que recibe cada fase y de la tasa con la que la fila puede disiparse cuando el movimiento tiene prioridad \cite{fernandez}. En la Figura \ref{fig:verde_efectivo}, $q_{\max}$ representa la tasa de descarga de saturación, medida en vehículos por hora. Las magnitudes temporales se expresan en segundos: $g$ indica el intervalo de verde efectivo y $l_1$ y $l_2$ indican las pérdidas inicial y final de servicio, respectivamente. La barra inferior distingue los intervalos de rojo, verde y amarillo, mientras que la curva superior muestra cómo la descarga alcanza y abandona el régimen de saturación. La descarga observada no depende solo de la duración nominal del verde, sino también de pérdidas de arranque, transiciones y otras restricciones temporales del control. Las pérdidas $l_1$ y $l_2$ reducen el intervalo en que la fase puede descargar vehículos a la tasa $q_{\max}$, de modo que el verde efectivo $g$ no equivale necesariamente al verde nominal programado en el controlador. La Figura es conceptual: estos parámetros no se estiman en esta tesina. En su lugar, los efectos se representan mediante la dinámica microscópica del simulador y la configuración temporal del sistema semafórico, ya que esas interacciones determinan las colas, demoras y detenciones que el controlador busca mejorar.
 
 \begin{figure}[!htbp]
     \centering
@@ -425,27 +426,25 @@ La simulación microscópica provista por \acrshort{acr-sumo} resulta apropiada 
 
 La naturaleza microscópica de la simulación no se reduce a representar visualmente vehículos. Cada unidad modifica su velocidad y posición de acuerdo con modelos de seguimiento vehicular y cambio de carril, los parámetros de su tipo de vehículo y las restricciones de la red \cite{SUMO2026_SUMO}. De este modo, variables como la aceleración, la separación entre vehículos, la velocidad deseada y la disponibilidad de carriles intervienen en la formación y dispersión de colas. Los valores concretos utilizados para la flota y para estos parámetros pertenecen a la configuración experimental y se detallan en la metodología.
 
-En este trabajo final de carrera \acrshort{acr-sumo} constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. La Figura \ref{fig:sumo_intersection_elements} esquematiza la representación microscópica de una intersección con circulación por la derecha, en la que se distinguen carriles, líneas de detención y conexiones:
+En este trabajo final de carrera \acrshort{acr-sumo} constituye el entorno operativo sobre el cual se formaliza el problema de control semafórico. La Figura \ref{fig:sumo_intersection_elements} esquematiza la representación microscópica de una intersección con circulación por la derecha, en la que se distinguen carriles y conexiones:
 \begin{itemize}
-    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} los carriles entrantes conducen el flujo vehicular hacia la intersección y los salientes reciben la descarga tras cruzar el nodo, indicados mediante flechas que señalan el sentido de circulación.
-    \item \textbf{Línea de detención (\textit{stop line}):} líneas blancas continuas próximas al final de cada carril entrante, delante de las cuales se detienen los vehículos cuando la fase no habilita su movimiento.
-    \item \textbf{Conexiones (\textit{links}):} relaciones que conectan un carril entrante con uno saliente a través del área de cruce. En \acrshort{acr-sumo}, cada enlace controlado se asocia con un índice y con un estado de señal ($G$ para verde prioritario, $g$ para verde con cesión de paso, $y$ para amarillo y $r$ para rojo). En la fase conceptual ilustrada, las flechas verdes corresponden a los movimientos directos opuestos habilitados del eje horizontal, mientras que las flechas rojas señalan las conexiones retenidas.
+    \item \textbf{Carriles entrantes ($L_{\text{in}}$) y salientes ($L_{\text{out}}$):} los carriles entrantes conducen el flujo vehicular hacia la intersección y los salientes reciben la descarga tras cruzar el nodo, indicados mediante flechas que señalan el sentido de circulación. Las marcas blancas transversales indican las líneas de detención de los carriles entrantes.
+    \item \textbf{Conexiones (\textit{links}):} unen un carril entrante con uno saliente. En \acrshort{acr-sumo}, cada conexión controlada tiene un índice y un estado de señal. En la fase ilustrada, el verde prioritario ($G$) habilita los dos movimientos directos del eje horizontal. Las flechas discontinuas en rojo ($r$) muestran solo algunas de las conexiones retenidas.
 \end{itemize}
 
 \begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
-        scale=0.92,
+        scale=0.86,
         font=\sffamily\small,
         >=Stealth,
         roadAsphalt/.style={fill=black!75, draw=black!90, line width=1.4pt},
-        laneInBg/.style={fill=colEntorno!25, draw=colEntorno!80!black, line width=1pt},
-        laneOutBg/.style={fill=black!55, draw=black!40, line width=1pt},
         stopLine/.style={draw=white, line width=2.5pt},
         dashDivider/.style={draw=white, dashed, line width=1pt},
         linkStraight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoVerde},
-        linkLeft/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo},
-        linkRight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo}
+        % El estado r se distingue del G también por trazo discontinuo, no solo por color (lectura en grises).
+        linkLeft/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo, dash pattern=on 4.5pt off 2.5pt},
+        linkRight/.style={-{Stealth[length=7pt,width=5pt]}, line width=2.2pt, colSemaforoRojo, dash pattern=on 4.5pt off 2.5pt}
     ]
 
         % 1. BASE DE CALZADA DE ASFALTO (Tránsito por la Derecha - RHT Argentina)
@@ -470,28 +469,28 @@ En este trabajo final de carrera \acrshort{acr-sumo} constituye el entorno opera
 
         % 3. ETIQUETAS DE CARRILES Y SENTIDOS DE CIRCULACIÓN (Manejo por la Derecha / Argentina)
         % Acceso Oeste (y < 0 es L_in ingresando al Este; y > 0 es L_out saliendo al Oeste)
-        \node[font=\small\bfseries, colEntorno!30] at (-3.2, -0.65) {$L_{\text{in}}$};
-        \draw[->, colEntorno!30, line width=1.2pt] (-4.0, -0.25) -- (-2.4, -0.25);
-        \node[font=\small\bfseries, white!85] at (-3.2, 0.65) {$L_{\text{out}}$};
-        \draw[<-, white!80, line width=1.2pt] (-4.0, 0.25) -- (-2.4, 0.25);
+        \node[font=\small\bfseries, colEntorno] at (-3.2, -0.65) {$L_{\text{in}}$};
+        \draw[->, colEntorno, line width=1.2pt] (-4.0, -0.25) -- (-2.4, -0.25);
+        \node[font=\small\bfseries, white] at (-3.2, 0.65) {$L_{\text{out}}$};
+        \draw[<-, white, line width=1.2pt] (-4.0, 0.25) -- (-2.4, 0.25);
 
         % Acceso Este (y > 0 es L_in ingresando al Oeste; y < 0 es L_out saliendo al Este)
-        \node[font=\small\bfseries, colEntorno!30] at (3.2, 0.65) {$L_{\text{in}}$};
-        \draw[<-, colEntorno!30, line width=1.2pt] (2.4, 0.25) -- (4.0, 0.25);
-        \node[font=\small\bfseries, white!85] at (3.2, -0.65) {$L_{\text{out}}$};
-        \draw[->, white!80, line width=1.2pt] (2.4, -0.25) -- (4.0, -0.25);
+        \node[font=\small\bfseries, colEntorno] at (3.2, 0.65) {$L_{\text{in}}$};
+        \draw[<-, colEntorno, line width=1.2pt] (2.4, 0.25) -- (4.0, 0.25);
+        \node[font=\small\bfseries, white] at (3.2, -0.65) {$L_{\text{out}}$};
+        \draw[->, white, line width=1.2pt] (2.4, -0.25) -- (4.0, -0.25);
 
         % Acceso Norte (x < 0 es L_in ingresando al Sur; x > 0 es L_out saliendo al Norte)
-        \node[font=\small\bfseries, colEntorno!30, rotate=-90] at (-0.65, 3.0) {$L_{\text{in}}$};
-        \draw[->, colEntorno!30, line width=1.2pt] (-0.25, 3.8) -- (-0.25, 2.2);
-        \node[font=\small\bfseries, white!85, rotate=-90] at (0.65, 3.0) {$L_{\text{out}}$};
-        \draw[<-, white!80, line width=1.2pt] (0.25, 3.8) -- (0.25, 2.2);
+        \node[font=\small\bfseries, colEntorno, rotate=-90] at (-0.65, 3.0) {$L_{\text{in}}$};
+        \draw[->, colEntorno, line width=1.2pt] (-0.25, 3.8) -- (-0.25, 2.2);
+        \node[font=\small\bfseries, white, rotate=-90] at (0.65, 3.0) {$L_{\text{out}}$};
+        \draw[<-, white, line width=1.2pt] (0.25, 3.8) -- (0.25, 2.2);
 
         % Acceso Sur (x > 0 es L_in ingresando al Norte; x < 0 es L_out saliendo al Sur)
-        \node[font=\small\bfseries, colEntorno!30, rotate=90] at (0.65, -3.0) {$L_{\text{in}}$};
-        \draw[->, colEntorno!30, line width=1.2pt] (0.25, -3.8) -- (0.25, -2.2);
-        \node[font=\small\bfseries, white!85, rotate=90] at (-0.65, -3.0) {$L_{\text{out}}$};
-        \draw[<-, white!80, line width=1.2pt] (-0.25, -3.8) -- (-0.25, -2.2);
+        \node[font=\small\bfseries, colEntorno, rotate=90] at (0.65, -3.0) {$L_{\text{in}}$};
+        \draw[->, colEntorno, line width=1.2pt] (0.25, -3.8) -- (0.25, -2.2);
+        \node[font=\small\bfseries, white, rotate=90] at (-0.65, -3.0) {$L_{\text{out}}$};
+        \draw[<-, white, line width=1.2pt] (-0.25, -3.8) -- (-0.25, -2.2);
 
         % Conexiones representadas en una fase con prioridad para el eje horizontal.
         \draw[linkStraight] (-1.3, -0.65) -- (1.3, -0.65);
@@ -501,22 +500,16 @@ En este trabajo final de carrera \acrshort{acr-sumo} constituye el entorno opera
         \draw[linkLeft] (-0.65, 1.3) -- (-0.65, -1.3);
         \draw[linkLeft] (0.65, -1.3) -- (0.65, 1.3);
 
-        % 5. LEYENDA ESPACIADA AL PIE (Textos ultra-cortos sin superposición)
-        \begin{scope}[shift={(0, -5.4)}]
-            \draw[draw=colEntorno!80!black, fill=colEntorno!25, line width=1pt] (-4.0, 0.4) rectangle (-3.3, 0.65);
-            \node[anchor=west, font=\scriptsize] at (-3.2, 0.52) {Carril $L_{\text{in}}$};
+        % 5. LEYENDA AL PIE: los dos estados de señal de la fase ilustrada, centrada
+        \begin{scope}[shift={(0, -5.75)}]
+            \draw[linkStraight] (-3.85, 0.43) -- (-3.05, 0.43);
+            \node[anchor=west, font=\scriptsize] at (-2.95, 0.43) {Verde prioritario (\textbf{G})};
 
-            \draw[draw=black!70, fill=black!55, line width=1pt] (0.5, 0.4) rectangle (1.2, 0.65);
-            \node[anchor=west, font=\scriptsize] at (1.3, 0.52) {Carril $L_{\text{out}}$};
-
-            \draw[linkStraight] (-4.0, -0.1) -- (-3.3, -0.1);
-            \node[anchor=west, font=\scriptsize] at (-3.2, -0.1) {Verde (\textbf{G})};
-
-            \draw[linkLeft] (0.5, -0.1) -- (1.2, -0.1);
-            \node[anchor=west, font=\scriptsize] at (1.3, -0.1) {Rojo (\textbf{r})};
+            \draw[linkLeft] (1.75, 0.43) -- (2.55, 0.43);
+            \node[anchor=west, font=\scriptsize] at (2.65, 0.43) {Rojo (\textbf{r})};
         \end{scope}
     \end{tikzpicture}
-    \caption{Esquema conceptual de carriles, línea de detención y conexiones de una intersección semaforizada bajo circulación por la derecha. La fase representada habilita movimientos directos opuestos del eje horizontal y retiene los movimientos conflictivos.}
+    \caption{Esquema conceptual de carriles y conexiones de una intersección semaforizada bajo circulación por la derecha.}
     \label{fig:sumo_intersection_elements}
 \end{figure}
 
@@ -579,7 +572,7 @@ La formulación básica distingue entre el agente (\textit{agent}), que aprende 
 
 En este trabajo, se utiliza controlador para el sistema general que regula las señales y agente para la entidad que aprende y selecciona acciones. Cada agente regula una intersección y la red vial simulada en \acrshort{acr-sumo} constituye su entorno. La selección de una fase constituye la acción, mientras que la evolución posterior del tránsito produce nuevas observaciones y una señal de recompensa que orienta el aprendizaje \cite{lopez2018sumo}.
 
-Un aspecto característico de \acrshort{acr-rl} es el dilema entre exploración y explotación. El agente debe explotar acciones que, según su experiencia, producen buenos resultados, pero también debe explorar alternativas menos conocidas que podrían conducir a políticas superiores. Si explora demasiado, desperdicia oportunidades de obtener recompensa; si explota demasiado pronto, puede converger a comportamientos subóptimos. Este equilibrio es especialmente relevante en problemas de control, donde las acciones modifican la experiencia futura disponible para el aprendizaje \cite{suttonRL}.
+Un aspecto característico de \acrshort{acr-rl} es el dilema entre exploración y explotación. El agente debe explotar acciones que, según su experiencia, producen buenos resultados, pero también debe explorar alternativas menos conocidas que podrían conducir a políticas superiores. Si explora demasiado, desperdicia oportunidades de obtener recompensa; si explota demasiado pronto, puede converger a comportamientos subóptimos. Este equilibrio es especialmente relevante en problemas de control, donde las acciones modifican la experiencia futura disponible para el aprendizaje \cite{suttonRL}. En control semafórico multiagente, Chu et al. añadieron un término de entropía de la política a su objetivo para fomentar la exploración al comienzo del aprendizaje \cite{Chu2019}.
 
 \subsection[Procesos de decisión de Markov (MDP)]{Procesos de decisión de Markov (\acrshort{acr-mdp})}
 
@@ -638,12 +631,91 @@ Los algoritmos de \acrshort{acr-rl} pueden agruparse, a grandes rasgos, en méto
 
 Esta clasificación distingue dos formas de obtener una regla de decisión. Los métodos basados en política aprenden directamente una función que relaciona cada estado con una acción o con una distribución de probabilidad sobre las acciones. En cambio, los métodos basados en valor aprenden indirectamente la regla de decisión: estiman la conveniencia de los estados o de los pares estado--acción y, a partir de esas estimaciones, determinan qué alternativa conviene ejecutar \cite{suttonRL}. En el control semafórico, las alternativas corresponden a las distintas fases admisibles de una intersección.
 
-La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. En la explotación de una estrategia $\varepsilon$-greedy se elige la acción con mayor estimación $Q(s,a)$, mientras que la exploración permite seleccionar acciones alternativas \cite{suttonRL}. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$. Si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
+La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. En una estrategia $\epsilon_{\mathrm{exp}}$-greedy, con probabilidad $1-\epsilon_{\mathrm{exp}}$ se selecciona la rama de explotación —que elige una acción con mayor estimación $Q(s,a)$ entre las admisibles— y con probabilidad $\epsilon_{\mathrm{exp}}$ se selecciona una acción al azar entre todas las acciones admisibles \cite{suttonRL}. Como esta rama aleatoria puede escoger también una acción maximizadora, $1-\epsilon_{\mathrm{exp}}$ corresponde a la probabilidad de explotar y no a la probabilidad total de elegir esa acción. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$. Si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.98\textwidth]{imagenes/metodo_valor_2.png}
-    \caption[Esquema de un método basado en valor]{Esquema de un método basado en valor.}
+    \begingroup
+    \setstretch{1}
+    \begin{tikzpicture}[
+        >=Stealth,
+        font=\sffamily\fontsize{8.5}{10}\selectfont,
+        mv/arrow/.style={-{Stealth[length=2mm]}, draw=black!75, line width=0.8pt}
+    ]
+        % Etapa 1: Estado observado ilustrativo + cruce semaforizado
+        \filldraw[fill=colEntorno!13, draw=colEntorno!70!black, line width=0.7pt, rounded corners=3pt]
+            (0.0, -2.25) rectangle (3.6, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (1.8, 1.56) {(datos ilustrativos)};
+
+        % Esquema compacto de intersección (circulación por la derecha)
+        \fill[black!75] (0.75, 0.02) rectangle (2.85, 0.58);
+        \fill[black!75] (1.52, -0.70) rectangle (2.08, 1.30);
+        \fill[black!65] (1.52, 0.02) rectangle (2.08, 0.58);
+        \draw[white, dashed, line width=0.55pt] (0.75, 0.30) -- (1.52, 0.30);
+        \draw[white, dashed, line width=0.55pt] (2.08, 0.30) -- (2.85, 0.30);
+        \draw[white, dashed, line width=0.55pt] (1.80, -0.70) -- (1.80, 0.02);
+        \draw[white, dashed, line width=0.55pt] (1.80, 0.58) -- (1.80, 1.30);
+        \draw[white, line width=1.4pt] (1.52, 0.02) -- (1.52, 0.30);
+        \draw[white, line width=1.4pt] (2.08, 0.30) -- (2.08, 0.58);
+        \draw[white, line width=1.4pt] (1.52, 0.58) -- (1.80, 0.58);
+        \draw[white, line width=1.4pt] (1.80, 0.02) -- (2.08, 0.02);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoVerde, line width=1.5pt] (1.54, 0.16) -- (2.06, 0.16);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoVerde, line width=1.5pt] (2.06, 0.44) -- (1.54, 0.44);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.66, 0.56) -- (1.66, 0.04);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.94, 0.04) -- (1.94, 0.56);
+
+        \node at (1.8, -1.22) {Fase activa: Fase 1};
+        \node at (1.8, -1.66) {Esperas por carril};
+
+        % Flecha Etapa 1 -> Etapa 2
+        \draw[mv/arrow] (3.6, 0) -- (4.3, 0);
+
+        % Etapa 2: Función de valor de acción Q(s, a)
+        \filldraw[fill=colInterfaz!18, draw=colInterfaz!65!black, line width=0.7pt, rounded corners=3pt]
+            (4.3, -2.25) rectangle (8.8, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (6.55, 1.92) {Función de valor $Q(s,a)$};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, 1.56) {(valores ilustrativos de acción)};
+
+        \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, 0.40) rectangle (8.50, 0.98);
+        \node[anchor=west] at (4.76, 0.69) {Fase 1};
+        \node[anchor=east] at (8.34, 0.69) {$-12{,}4$};
+
+        \filldraw[fill=colAgente!14, draw=colAgente!70!black, line width=0.8pt, rounded corners=2pt] (4.60, -0.35) rectangle (8.50, 0.23);
+        \node[anchor=west, font=\sffamily\fontsize{8.5}{10}\selectfont\bfseries] at (4.76, -0.06) {Fase 2};
+        \node[anchor=east] at (8.34, -0.06) {\textbf{$-4{,}2$} {\scriptsize(máx.)}};
+
+        \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, -1.10) rectangle (8.50, -0.52);
+        \node[anchor=west] at (4.76, -0.81) {Fase 3};
+        \node[anchor=east] at (8.34, -0.81) {$-9{,}1$};
+
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, -1.78) {Fases admisibles en $\mathcal{A}(s)$};
+
+        % Etapa 3: Selección epsilon-greedy (dos ramas)
+        \draw[draw=black!55, dashed, line width=0.7pt, rounded corners=3pt]
+            (9.7, -2.25) rectangle (15.2, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (12.45, 1.92) {Selección $\epsilon_{\mathrm{exp}}$-greedy};
+
+        \filldraw[fill=colAgente!16, draw=colAgente!70!black, line width=0.7pt, rounded corners=3pt]
+            (9.95, 0.04) rectangle (14.95, 1.48);
+        \node at (12.45, 1.20) {\textbf{Explotación} (prob. $1-\epsilon_{\mathrm{exp}}$)};
+        \node at (12.45, 0.72) {$\arg\max_{a\in\mathcal{A}(s)} Q(s,a) \;\Rightarrow\;$ \textbf{Fase 2}};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, 0.28) {(resultado de explotar; valor $-4{,}2$)};
+
+        \filldraw[fill=catLilaSuave!24, draw=catLilaSuave!75!black, line width=0.7pt, rounded corners=3pt]
+            (9.95, -1.96) rectangle (14.95, -0.34);
+        \node at (12.45, -0.66) {\textbf{Exploración} (prob. $\epsilon_{\mathrm{exp}}$)};
+        \node at (12.45, -1.15) {Azar uniforme en $\mathcal{A}(s)$};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, -1.62) {(puede elegir Fase 1, Fase 2 o Fase 3)};
+
+        % Bifurcación Etapa 2 -> Etapa 3
+        \draw[draw=black!75, line width=0.8pt] (8.8, 0) -- (9.25, 0);
+        \fill[black!75] (9.25, 0) circle (1.8pt);
+        \draw[mv/arrow] (9.25, 0) |- (9.95, 0.76);
+        \draw[mv/arrow] (9.25, 0) |- (9.95, -1.15);
+    \end{tikzpicture}
+    \endgroup
+    \caption[Esquema de un método basado en valor]{Esquema ilustrativo de un método basado en valor con selección $\epsilon_{\mathrm{exp}}$-greedy sobre fases admisibles; los datos de entrada y los valores $Q(s,a)$ son ilustrativos.}
     \label{fig:metodo_basado_valor}
 \end{figure}
 
@@ -671,8 +743,85 @@ Por su parte, en los métodos basados en política, la regla de decisión se par
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.98\textwidth]{imagenes/metodo_politica_2.png}
-    \caption[Esquema de un método basado en política]{Esquema de un método basado en política.}
+    \begingroup
+    \setstretch{1}
+    \begin{tikzpicture}[
+        >=Stealth,
+        font=\sffamily\fontsize{8.5}{10}\selectfont,
+        mp/arrow/.style={-{Stealth[length=2mm]}, draw=black!75, line width=0.8pt}
+    ]
+        % Etapa 1: Estado observado ilustrativo + mismo cruce semaforizado
+        \filldraw[fill=colEntorno!13, draw=colEntorno!70!black, line width=0.7pt, rounded corners=3pt]
+            (0.0, -2.25) rectangle (3.6, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (1.8, 1.56) {(datos ilustrativos)};
+
+        \fill[black!75] (0.75, 0.02) rectangle (2.85, 0.58);
+        \fill[black!75] (1.52, -0.70) rectangle (2.08, 1.30);
+        \fill[black!65] (1.52, 0.02) rectangle (2.08, 0.58);
+        \draw[white, dashed, line width=0.55pt] (0.75, 0.30) -- (1.52, 0.30);
+        \draw[white, dashed, line width=0.55pt] (2.08, 0.30) -- (2.85, 0.30);
+        \draw[white, dashed, line width=0.55pt] (1.80, -0.70) -- (1.80, 0.02);
+        \draw[white, dashed, line width=0.55pt] (1.80, 0.58) -- (1.80, 1.30);
+        \draw[white, line width=1.4pt] (1.52, 0.02) -- (1.52, 0.30);
+        \draw[white, line width=1.4pt] (2.08, 0.30) -- (2.08, 0.58);
+        \draw[white, line width=1.4pt] (1.52, 0.58) -- (1.80, 0.58);
+        \draw[white, line width=1.4pt] (1.80, 0.02) -- (2.08, 0.02);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoVerde, line width=1.5pt] (1.54, 0.16) -- (2.06, 0.16);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoVerde, line width=1.5pt] (2.06, 0.44) -- (1.54, 0.44);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.66, 0.56) -- (1.66, 0.04);
+        \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.94, 0.04) -- (1.94, 0.56);
+
+        \node at (1.8, -1.22) {Fase activa: Fase 1};
+        \node at (1.8, -1.66) {Esperas por carril};
+
+        % Flecha Etapa 1 -> Etapa 2
+        \draw[mp/arrow] (3.6, 0) -- (4.3, 0);
+
+        % Etapa 2: Política estocástica sobre las mismas fases admisibles
+        \filldraw[fill=colInterfaz!18, draw=colInterfaz!65!black, line width=0.7pt, rounded corners=3pt]
+            (4.3, -2.25) rectangle (8.8, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (6.55, 1.92) {Política $\pi_\theta(a\mid s)$};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, 1.56) {(distribución sobre $\mathcal{A}(s)$)};
+
+        \filldraw[fill=colAgente!14, draw=colAgente!70!black, line width=0.8pt, rounded corners=2pt] (4.60, 0.40) rectangle (8.50, 0.98);
+        \node[anchor=west, font=\sffamily\fontsize{8.5}{10}\selectfont\bfseries] at (4.74, 0.69) {Fase 1};
+        \filldraw[fill=white, draw=black!25] (6.00, 0.56) rectangle (7.45, 0.82);
+        \fill[colAgente!80!black] (6.00, 0.56) rectangle (6.22, 0.82);
+        \node[anchor=east] at (8.36, 0.69) {\textbf{15\%}};
+
+        \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, -0.35) rectangle (8.50, 0.23);
+        \node[anchor=west] at (4.74, -0.06) {Fase 2};
+        \filldraw[fill=white, draw=black!25] (6.00, -0.19) rectangle (7.45, 0.07);
+        \fill[colInterfaz!70!black] (6.00, -0.19) rectangle (7.02, 0.07);
+        \node[anchor=east] at (8.36, -0.06) {70\%};
+
+        \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, -1.10) rectangle (8.50, -0.52);
+        \node[anchor=west] at (4.74, -0.81) {Fase 3};
+        \filldraw[fill=white, draw=black!25] (6.00, -0.94) rectangle (7.45, -0.68);
+        \fill[colInterfaz!70!black] (6.00, -0.94) rectangle (6.22, -0.68);
+        \node[anchor=east] at (8.36, -0.81) {15\%};
+
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, -1.78) {Fases admisibles en $\mathcal{A}(s)$};
+
+        % Flecha Etapa 2 -> Etapa 3
+        \draw[mp/arrow] (8.8, 0.52) -- (9.95, 0.52);
+
+        % Etapa 3: Realización del muestreo estocástico
+        \draw[draw=black!55, dashed, line width=0.7pt, rounded corners=3pt]
+            (9.7, -2.25) rectangle (15.2, 2.25);
+        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (12.45, 1.92) {Muestreo estocástico};
+
+        \filldraw[fill=colAgente!16, draw=colAgente!70!black, line width=0.7pt, rounded corners=3pt]
+            (9.95, -0.35) rectangle (14.95, 1.42);
+        \node at (12.45, 1.05) {\textbf{Realización de} $a \sim \pi_\theta(\cdot\mid s)$};
+        \node at (12.45, 0.50) {Ejemplo muestreado: \textbf{Fase 1} (15\%)};
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, -0.02) {(realización posible; no la más probable)};
+
+        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75, align=center] at (12.45, -1.26) {Cualquier fase admisible puede salir\\según su probabilidad en $\pi_\theta(a\mid s)$};
+    \end{tikzpicture}
+    \endgroup
+    \caption[Esquema de un método basado en política]{Esquema ilustrativo de un método basado en política estocástica sobre fases admisibles; los datos de entrada y las probabilidades son ilustrativos y la fase marcada muestra una realización posible del muestreo.}
     \label{fig:metodo_basado_politica}
 \end{figure}
 
@@ -692,12 +841,16 @@ Después de ejecutar $A_t$ en $S_t$, el entorno devuelve la recompensa $R_{t+1}$
     \label{eq:actor_critic_td}
 \end{equation}
 \Needspace{3\baselineskip}
-En la Ecuación \eqref{eq:actor_critic_td}, el factor $(1-d_{t+1})$ anula la contribución del estado siguiente ante transiciones terminales. Cuando $V_\phi$ aproxima adecuadamente el valor real $V^\pi$, $\delta_t$ actúa como un estimador de un paso de la ventaja. Un valor positivo de $\delta_t$ refleja que la fase ejecutada reportó un desempeño superior al esperado en ese estado de tránsito, mientras que uno negativo indica lo contrario. El crítico ajusta sus parámetros $\phi$ minimizando el error temporal, mientras que el actor utiliza esta misma señal $\delta_t$ para modular la actualización de la política según la Ecuación \eqref{eq:actor_critic_update}.
+\begingroup
+\widowpenalty=10000
+\displaywidowpenalty=10000
+En la Ecuación \eqref{eq:actor_critic_td}, el factor $(1-d_{t+1})$ anula la contribución del estado siguiente ante transiciones terminales. Cuando $V_\phi$ aproxima adecuadamente el valor real $V^\pi$, $\delta_t$ actúa como un estimador de un paso de la \gls{ventaja}. La Ecuación \eqref{eq:funcion_ventaja} define la ventaja como la diferencia entre el retorno esperado al elegir una acción y seguir luego la política $\pi$ y el retorno esperado al seguir esa misma política desde el estado. Un valor positivo de $\delta_t$ sugiere que la fase ejecutada superó la estimación actual del crítico para ese estado, mientras que uno negativo sugiere lo contrario. El crítico ajusta sus parámetros $\phi$ minimizando el error temporal, mientras que el actor utiliza esta misma señal $\delta_t$ para modular la actualización de la política según la Ecuación \eqref{eq:actor_critic_update}.
 \begin{equation}
     \theta \leftarrow \theta + \alpha_\theta\,\delta_t\,
     \nabla_\theta \log \pi_\theta(A_t\mid S_t).
     \label{eq:actor_critic_update}
 \end{equation}
+\endgroup
 En la Ecuación \eqref{eq:actor_critic_update}, $\alpha_\theta>0$ es la tasa de aprendizaje del actor y $\nabla_\theta \log \pi_\theta(A_t\mid S_t)$ indica cómo cambiar sus parámetros para aumentar la probabilidad de la acción elegida. Un error $\delta_t$ positivo favorece esa acción, mientras que uno negativo reduce su probabilidad. Los métodos posteriores emplean estimadores de ventaja de varios pasos, como \glsdisp{acr-gae}{Estimación Generalizada de Ventaja (\glsentryuseri{acr-gae}, \glsentryshort{acr-gae})}, y procesan conjuntos de transiciones llamados \glsdisp{batch_entrenamiento}{lotes} (\textit{batches}). La Figura \ref{fig:actor_critic} sintetiza el flujo operativo entre actor y entorno y muestra el circuito de evaluación del crítico, que produce el error temporal o la ventaja usados para actualizar el actor.
 
 \begin{figure}[!htbp]
@@ -911,89 +1064,136 @@ Para mitigar la inestabilidad de la tríada mortal —en particular el problema 
 
 En la repetición de experiencias priorizada, las transiciones con mayor magnitud de error de diferencia temporal tienen mayor probabilidad de ser muestreadas. Las actualizaciones se ponderan para atenuar el sesgo de este muestreo no uniforme \cite{schaul2016prioritized}.
 
-Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa la observación de tránsito y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar. Tras ejecutar la acción, la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento, la red en línea actualiza sus pesos $\theta$ a partir de los minilotes muestreados del \textit{buffer} contra el valor objetivo fijado por la red objetivo, cuyos parámetros $\theta^-$ se sincronizan solo de forma periódica (Figura \ref{fig:arquitectura_dqn}).
+Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa el estado $S_t$ y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar. Tras ejecutar $A_t$, la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento por minilotes, la red en línea recibe $s_j$ y se toma la predicción correspondiente a la acción almacenada $a_j$. En paralelo, la red objetivo evalúa el estado sucesor $s_{j+1}$ sobre sus fases admisibles, y un cálculo separado combina esa salida con $r_{j+1}$ y $d_{j+1}$ para obtener el valor objetivo $y_j$ según si la transición es terminal. La pérdida \acrshort{acr-td} compara ambas cantidades para actualizar $\theta$ por gradiente, mientras que los parámetros $\theta^-$ se copian periódicamente cada $C$ decisiones (Figura \ref{fig:arquitectura_dqn}).
 
 \begin{figure}[!htbp]
     \centering
     \resizebox{0.98\textwidth}{!}{%
     \begin{tikzpicture}[
         font=\sffamily\small,
-        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.9cm, font=\sffamily\small},
+        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.98cm, font=\sffamily\small},
         dato/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.0cm},
-        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.5cm},
-        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.4cm},
+        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.95cm},
+        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.55cm},
         memoria/.style={bloque, fill=catMelocoton!40, draw=catMelocoton!80!black, text width=2.95cm},
-        entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.4cm},
-        flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
-        copia/.style={flecha, dashed, draw=black!60},
-        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1pt, align=center}
+        entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.3cm},
+        calc/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=6.25cm},
+        flujo/.style={-{Stealth[length=5.5pt]}, thick, draw=black!80},
+        gradiente/.style={-{Stealth[length=5.5pt]}, thick, dashed, draw=colConflicto!85!black},
+        copia/.style={-{Stealth[length=5.5pt]}, very thick, densely dotted, draw=colDatoPrimario!85!black},
+        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1.5pt, align=center}
     ]
-        \node[dato] (state) at (-7.0,2.2) {Estado\\$S_t$};
-        \node[red] (online) at (-3.8,2.2) {Red en línea\\$Q(S_t,a;\theta)$};
-        \node[salida] (values) at (-0.35,2.2) {Valores de fase\\$Q_1,\ldots,Q_m$};
-        \node[salida] (select) at (3.1,2.2) {Selección\\$\epsilon_{\mathrm{exp}}$-greedy};
-        \node[entorno] (env) at (6.4,2.2) {\acrshort{acr-sumo}\\ejecuta $A_t$};
+        % Fila 1: Interacción con el entorno
+        \node[dato] (state) at (-7.5,3.4) {Estado\\$S_t$};
+        \node[red] (online) at (-3.4,3.4) {Red en línea\\$Q(s,\cdot;\theta)$};
+        \node[salida] (values) at (0.5,3.4) {Valores de fase\\$Q(S_t,a;\theta)$};
+        \node[salida, text width=2.2cm] (select) at (4.1,3.4) {Selección\\$\epsilon_{\mathrm{exp}}$-greedy};
+        \node[entorno] (env) at (7.6,3.4) {\acrshort{acr-sumo}\\ejecuta $A_t$};
 
-        \node[memoria] (buffer) at (5.3,-1.55) {Buffer $\mathcal D$\\$(S_t,A_t,$\\$R_{t+1},S_{t+1},d_{t+1})$};
-        \node[red] (target) at (0.45,-1.55) {Red objetivo\\$\hat Q(S_{t+1},a;\theta^-)$};
-        \node[salida] (loss) at (-4.15,-1.55) {Pérdida \acrshort{acr-td}\\$(y-Q_t)^2$};
+        % Fila 2: Memoria y evaluación por lotes
+        \node[salida, text width=2.8cm] (pick) at (-7.5,0.2) {Selección por $a_j$\\$Q_j = Q(s_j,a_j;\theta)$};
+        \node[red] (target) at (2.15,0.2) {Red objetivo\\$\hat Q(s_{j+1},\cdot;\theta^-)$};
+        \node[memoria] (buffer) at (7.6,0.2) {Buffer $\mathcal D$\\$(s_j,a_j,r_{j+1},$\\$s_{j+1},d_{j+1})$};
 
-        \draw[flecha] (state) -- (online);
-        \draw[flecha] (online) -- (values);
-        \draw[flecha] (values) -- (select);
-        \draw[flecha] (select) -- node[etiqueta, above] {$A_t$} (env);
-        \draw[flecha] (env.south) -- node[etiqueta, right=2pt] {transición} ++(0,-1.15) -| (buffer.north);
-        \draw[flecha] (buffer) -- node[etiqueta, above] {minilote} (target);
-        \draw[flecha] (target) -- node[etiqueta, above] {objetivo $y$} (loss);
-        \draw[flecha] (buffer.south) -- ++(0,-0.75) -|
-            node[etiqueta, pos=0.72, below] {$S_t,A_t$} (loss.south);
-        \draw[copia] (loss.north) -- ++(0,0.75) -|
-            node[etiqueta, pos=0.72, left] {actualiza $\theta$} (online.south west);
-        \draw[copia] (online.south east) -- ++(0,-0.75) -|
-            node[etiqueta, pos=0.28, below] {copia periódica} (target.north);
+        % Fila 3: Cálculo del valor objetivo y pérdida TD
+        \node[salida, text width=3.3cm] (loss) at (-3.4,-2.4) {Pérdida \acrshort{acr-td}\\$\frac{1}{B}\sum_{j=1}^{B}(y_j-Q_j)^2$};
+        \node[calc] (ycalc) at (2.15,-2.4) {Cálculo de $y_j$\\[2pt]{\scriptsize $r_{j+1}$ (si $d_{j+1}{=}1$)}\\[1pt]{\scriptsize $r_{j+1}+\gamma\max_{a'\in\mathcal{A}(s_{j+1})}\hat Q(s_{j+1},a';\theta^-)$ (si $d_{j+1}{=}0$)}};
+
+        % Flujo de interacción
+        \draw[flujo] (state) -- (online);
+        \draw[flujo] (online) -- (values);
+        \draw[flujo] (values) -- (select);
+        \draw[flujo] (select) -- node[etiqueta, above=2pt] {$A_t$} (env);
+        \draw[flujo] (env.south) -- node[etiqueta, right=2pt] {transición} (buffer.north);
+
+        % Flujo de datos desde buffer hacia red en línea y selección por a_j
+        \draw[flujo] ([xshift=-20pt]buffer.north) -- ([xshift=-20pt]buffer.north |- 0,2.25) -|
+            node[etiqueta, pos=0.25, above=2pt] {minilote: $s_j$} ([xshift=34pt]online.south);
+        \draw[flujo] ([xshift=-26pt]online.south) -- ([xshift=-26pt]online.south |- 0,1.95) -|
+            node[etiqueta, pos=0.26, above=2pt] {$Q(s_j,\cdot;\theta)$} (pick.north);
+        \draw[flujo] ([xshift=16pt]buffer.south) -- ([xshift=16pt]buffer.south |- 0,-3.55) -|
+            node[etiqueta, pos=0.38, above=2pt] {$a_j$} (pick.south);
+        \draw[flujo] (pick.east) -- ++(0.35,0) |-
+            node[etiqueta, pos=0.25, right=2pt] {$Q_j$} (loss.west);
+
+        % Flujo de datos hacia red objetivo y cálculo de y_j
+        \draw[flujo] (buffer.west) -- node[etiqueta, above=2pt] {$s_{j+1}$} (target.east);
+        \draw[flujo] (target.south) -- node[etiqueta, right=2pt] {$\hat Q(s_{j+1},a';\theta^-)$,\\$a'\in\mathcal{A}(s_{j+1})$} (ycalc.north);
+        \draw[flujo] ([xshift=-16pt]buffer.south) |-
+            node[etiqueta, pos=0.72, below=2pt] {$r_{j+1},$\\$d_{j+1}$} (ycalc.east);
+        \draw[flujo] (ycalc.west) -- node[etiqueta, above=2pt] {$y_j$} (loss.east);
+
+        % Gradiente y copia periódica
+        \draw[gradiente] (loss.north) -- node[etiqueta, left=2pt, pos=0.52] {actualiza $\theta$} (online.south);
+        \draw[copia] ([xshift=15pt]online.south) -- ([xshift=15pt]online.south |- 0,1.45) -|
+            node[etiqueta, pos=0.25, above=2pt] {copia cada $C$ pasos ($\theta^- \leftarrow \theta$)} (target.north);
+
+        % Leyenda de tipos de flecha
+        \draw[flujo] (-6.5,-4.25) -- (-5.4,-4.25);
+        \node[etiqueta, anchor=west] at (-5.3,-4.25) {Flujo de datos};
+        \draw[gradiente] (-1.5,-4.25) -- (-0.4,-4.25);
+        \node[etiqueta, anchor=west] at (-0.3,-4.25) {Actualización por gradiente};
+        \draw[copia] (4.3,-4.25) -- (5.4,-4.25);
+        \node[etiqueta, anchor=west] at (5.5,-4.25) {Copia periódica de parámetros};
     \end{tikzpicture}%
     }
-    \caption[Flujo conceptual de DQN con repetición de experiencias y red objetivo]{Flujo conceptual de \acrshort{acr-dqn} con repetición de experiencias y red objetivo. La red en línea selecciona acciones y recibe las actualizaciones; la red objetivo proporciona el término de \textit{bootstrapping} del valor objetivo \acrshort{acr-td} \cite{mnih2015}.}
+    \caption[Flujo conceptual de DQN con repetición de experiencias y red objetivo]{Flujo conceptual de \acrshort{acr-dqn} con repetición de experiencias y red objetivo. La red en línea evalúa los estados actuales para seleccionar acciones y calcular las predicciones de entrenamiento; la red objetivo evalúa el estado sucesor para construir el valor objetivo \acrshort{acr-td} \cite{mnih2015}.}
     \label{fig:arquitectura_dqn}
 \end{figure}
+\FloatBarrier
 
-La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bloque inferior de la Figura \ref{fig:arquitectura_dqn}, se define en la Ecuación \eqref{eq:perdida_dqn}.
+\begingroup
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bloque inferior izquierdo de la Figura \ref{fig:arquitectura_dqn}, se define en la Ecuación \eqref{eq:perdida_dqn}.
 \begin{equation}
-\mathcal{L}(\theta) = \mathbb{E}_{(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1}) \sim \mathcal{D}}
-\left[\left(\begin{aligned}
-&\underbrace{r_{j+1} + \gamma(1-d_{j+1}) \max_{a'} \hat{Q}(s_{j+1}, a'; \theta^{-})}_{\text{Valor objetivo de \acrshort{acr-td}}} \\
-&- \underbrace{Q(s_j, a_j; \theta)}_{\text{Predicción actual}}
-\end{aligned}\right)^2\right]
+\begin{aligned}
+\mathcal{L}(\theta) &= \mathbb{E}_{(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1}) \sim \mathcal{D}}
+\left[\left(y_j - Q(s_j, a_j; \theta)\right)^2\right], \\[4pt]
+y_j &= \begin{cases}
+r_{j+1}, & \text{si } d_{j+1} = 1, \\
+r_{j+1} + \gamma \max\limits_{a' \in \mathcal{A}(s_{j+1})} \hat{Q}(s_{j+1}, a'; \theta^{-}), & \text{si } d_{j+1} = 0.
+\end{cases}
+\end{aligned}
 \label{eq:perdida_dqn}
 \end{equation}
-En la Ecuación \eqref{eq:perdida_dqn}, la esperanza se evalúa empíricamente promediando sobre un minilote de transiciones $(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1})$ extraídas de $\mathcal{D}$. La función de pérdida minimiza la discrepancia cuadrática entre la estimación actual $Q(s_j, a_j; \theta)$ y el valor objetivo temporal compuesto por la recompensa inmediata observada y la mayor estimación del valor futuro sobre las fases admisibles, calculada por la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$. El factor $(1-d_{j+1})$ anula la contribución del estado siguiente cuando la transición es terminal ($d_{j+1}=1$), mientras que $a'$ recorre las fases semafóricas admisibles.
+\endgroup
+La Ecuación \eqref{eq:perdida_dqn} expresa la pérdida esperada sobre la distribución del \textit{buffer} $\mathcal{D}$. Durante el entrenamiento, se aproxima empíricamente promediando los errores cuadráticos de un minilote de $B$ transiciones extraídas de $\mathcal{D}$. En cada muestra, la predicción actual $Q(s_j, a_j; \theta)$ se compara con el valor objetivo temporal $y_j$. Si la transición termina el episodio ($d_{j+1}=1$), $y_j$ coincide con la recompensa inmediata $r_{j+1}$. Si no es terminal ($d_{j+1}=0$), incorpora además la mayor estimación futura descontada que la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$ asigna sobre las fases admisibles $\mathcal{A}(s_{j+1})$.
 
 Los bloques numerados como algoritmos son pseudocódigos, no fragmentos ejecutables. Las líneas «Entrada» y «Salida» indican qué necesita el procedimiento y qué produce; la sangría identifica las instrucciones de cada ciclo.
 
-El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de minilotes muestreados del \gls{replay_buffer}. El Algoritmo \ref{alg:dqn} especifica este procedimiento.
+El procedimiento ilustrativo de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de minilotes muestreados del \gls{replay_buffer}. El Algoritmo \ref{alg:dqn} especifica este procedimiento.
 
-\begin{algorithm}[H]
+\begin{algorithm}[!htb]
 \caption{Deep Q-Network con repetición de experiencias}
 \label{alg:dqn}
 \begin{algorithmic}[1]
-\Statex \textbf{Entrada:} entorno, fases admisibles, capacidad $N$, horizonte $T$ en pasos de decisión, $\gamma$ y $\epsilon_{\mathrm{exp}}$
+\Statex \textbf{Entrada:} entorno, fases admisibles $\mathcal{A}(\cdot)$, capacidad $N$, tamaño de minilote $B$, período de sincronización $C$, horizonte $T$ en pasos de decisión, $\gamma$ y $\epsilon_{\mathrm{exp}}$
 \Statex \textbf{Salida:} parámetros entrenados $\theta$ de la red de acción-valor
-\State Inicializar el \textit{buffer} de experiencias $\mathcal{D}$ con capacidad $N$
-\State Inicializar la red de acción-valor $Q(s,a;\theta)$ con parámetros aleatorios
-\State Inicializar la red objetivo $\hat{Q}(s,a;\theta^-)$ con $\theta^- \leftarrow \theta$
+\State Inicializar el \textit{buffer} de experiencias $\mathcal{D}$ (capacidad $N$) y el contador $c \leftarrow 0$
+\State Inicializar $Q(s,a;\theta)$ aleatoriamente y la red objetivo $\hat{Q}(s,a;\theta^-)$ con $\theta^- \leftarrow \theta$
 \For{episodio $= 1, 2, \dots$}
-    \State Inicializar el estado $s_t$
+    \State Inicializar el estado $s_1$
     \For{$t = 1, 2, \dots, T$}
-        \State Seleccionar $a_t$ mediante una política $\epsilon_{\mathrm{exp}}$-greedy basada en $Q(s_t,a;\theta)$
-        \State Ejecutar $a_t$ y observar la recompensa $r_{t+1}$, el estado $s_{t+1}$ y si el episodio terminó
+        \State Seleccionar $a_t \in \mathcal{A}(s_t)$ mediante una política $\epsilon_{\mathrm{exp}}$-greedy basada en $Q(s_t,a;\theta)$
+        \State Ejecutar $a_t$ y observar $r_{t+1}$, $s_{t+1}$ y el indicador terminal $d_{t+1} \in \{0, 1\}$
         \State Almacenar $(s_t,a_t,r_{t+1},s_{t+1},d_{t+1})$ en $\mathcal{D}$
-        \If{$\mathcal{D}$ contiene al menos un minilote completo}
-            \State Extraer un minilote de transiciones de $\mathcal{D}$
-            \State Calcular $y_j = r_{j+1} + \gamma(1-d_{j+1})\max_{a'}\hat{Q}(s_{j+1},a';\theta^-)$
-            \State Actualizar $\theta$ minimizando $\left(y_j-Q(s_j,a_j;\theta)\right)^2$
+        \State $c \leftarrow c + 1$
+        \If{$|\mathcal{D}| \ge B$}
+            \State Extraer un minilote de $B$ transiciones $\{(s_j,a_j,r_{j+1},s_{j+1},d_{j+1})\}_{j=1}^{B}$ de $\mathcal{D}$
+            \For{$j = 1, \dots, B$}
+                \If{$d_{j+1} = 1$}
+                    \State $y_j \leftarrow r_{j+1}$
+                \Else
+                    \State $y_j \leftarrow r_{j+1} + \gamma \max_{a' \in \mathcal{A}(s_{j+1})} \hat{Q}(s_{j+1},a';\theta^-)$
+                \EndIf
+            \EndFor
+            \State Actualizar $\theta$ minimizando $\frac{1}{B}\sum_{j=1}^{B}\left(y_j-Q(s_j,a_j;\theta)\right)^2$
         \EndIf
-        \State Actualizar periódicamente la red objetivo: $\theta^- \leftarrow \theta$
-        \State $s_t \leftarrow s_{t+1}$
+        \If{$c \bmod C = 0$}
+            \State Sincronizar la red objetivo: $\theta^- \leftarrow \theta$
+        \EndIf
         \If{$d_{t+1}=1$}
             \State Terminar el ciclo interno y comenzar un nuevo episodio
         \EndIf
@@ -1001,15 +1201,26 @@ El procedimiento de \acrshort{acr-dqn} combina la recolección de experiencias, 
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+\FloatBarrier
+
+\begingroup
+\clubpenalty=10000
 En esta formulación, el agente desacopla la recolección de experiencias en el simulador de la optimización paramétrica de la red. La memoria $\mathcal{D}$ reduce la correlación temporal de las observaciones de tránsito, mientras que la red objetivo estabiliza el valor objetivo de Bellman mediante la sincronización periódica de $\theta^-$. La implementación multiagente de \acrshort{acr-idqn} y las condiciones comunes del protocolo de búsqueda de configuraciones se presentan en el Capítulo \ref{capitulo:metodologia}.
+\par
+\endgroup
+
 \subsubsection{Aproximación de políticas, función de ventaja y gradiente de política}
 
+\begingroup
+\widowpenalty=10000
+\displaywidowpenalty=10000
 Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Bajo la formulación \acrshort{acr-mdp}, en un problema de acciones discretas la red recibe el estado $s$, calcula un vector de puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \gls{softmax} \cite{suttonRL,bishop2024deep}:
 \begin{equation}
     \pi_\theta(a_i \mid s) = \frac{e^{z_i}}{\sum_{j=1}^m e^{z_j}}
     \label{eq:softmax_policy}
 \end{equation}
-la cual garantiza valores estrictamente positivos que suman la unidad. En este ejemplo, las acciones corresponden a las fases semafóricas admisibles: las variables del estado de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. Las políticas basadas en observaciones locales se formalizan posteriormente mediante \glsdisp{acr-decpomdp}{Proceso de Decisión de Markov Parcialmente Observable Descentralizado (\glsentryuseri{acr-decpomdp}, \glsentryshort{acr-decpomdp})}. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
+\endgroup
+La función softmax garantiza valores estrictamente positivos que suman la unidad. En este ejemplo, las acciones corresponden a las fases semafóricas admisibles: las variables del estado de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. Las políticas basadas en observaciones locales se formalizan posteriormente mediante \glsdisp{acr-decpomdp}{Proceso de Decisión de Markov Parcialmente Observable Descentralizado (\glsentryuseri{acr-decpomdp}, \glsentryshort{acr-decpomdp})}. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
 
 La Figura \ref{fig:red_politica} muestra este recorrido para un agente semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la acción; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente del logaritmo de la probabilidad de la acción observada.
 
@@ -1048,7 +1259,11 @@ La Figura \ref{fig:red_politica} muestra este recorrido para un agente semafóri
     \label{fig:red_politica}
 \end{figure}
 
+\begingroup
+\clubpenalty=10000
 La optimización de políticas se fundamenta en aislar la contribución específica de una acción respecto del rendimiento promedio del estado. Formalmente, la función de ventaja (\textit{Advantage Function}) se define como la diferencia entre el valor de la acción y el valor medio del estado, como se expresa en la Ecuación \eqref{eq:funcion_ventaja} \cite{suttonRL}.
+\par
+\endgroup
 \begin{equation}
     A^\pi(s, a) \doteq Q^\pi(s, a) - V^\pi(s).
     \label{eq:funcion_ventaja}
@@ -1286,13 +1501,13 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
     \end{equation}
     Cuando todos los agentes poseen $A$ acciones, esta cardinalidad es $A^n$ y, por tanto, crece exponencialmente con el número de agentes. Para una red de escala urbana, evaluar o enumerar exhaustivamente $\boldsymbol{\mathcal{A}}$ deja de ser una alternativa viable, lo que motiva el diseño de enfoques escalables, como políticas de decisión localmente descentralizadas.
 
-    \item \textbf{No estacionariedad y el problema del valor objetivo cambiante:} desde la perspectiva local del agente $i$, la función de transición ambiental percibida:
+    \item \textbf{No estacionariedad y el problema del valor objetivo cambiante:} desde la perspectiva local del agente $i$, la función de transición ambiental percibida se expresa en la Ecuación \eqref{eq:no_estacionariedad}.
     \begin{equation}
         \mathcal{P}_i(s' \mid s, a_i) = \sum_{\mathbf{a}_{-i}} P(s' \mid s, a_i, \mathbf{a}_{-i}) \boldsymbol{\pi}_{-i}(\mathbf{a}_{-i} \mid s)
         \label{eq:no_estacionariedad}
     \end{equation}
-    varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp} estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
-    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En dicha figura, la diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente; cada punto representa una distribución sobre las tres acciones disponibles, las trayectorias muestran el avance de las políticas durante el entrenamiento y los marcadores centrales señalan la convergencia al equilibrio de Nash ($\pi^*(a) = 1/3$ para cada acción) \cite{bowling2002multiagent,marlbook}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes; si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
+    Esta función varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp} estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
+    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En dicha figura, la diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. El Agente 1 se lee en los ejes inferior e izquierdo rotulados ($\pi_1(\text{Piedra})$ y $\pi_1(\text{Papel})$); el Agente 2, en las escalas invertidas superior y derecha, que carecen de rótulo en la figura original. Cada punto representa una distribución sobre las tres acciones disponibles y las trayectorias muestran la evolución de las políticas durante el entrenamiento. Los marcadores centrales señalan el equilibrio de Nash teórico ($\pi^*(a) = 1/3$ para cada acción), aunque no constituyen por sí solos una demostración de convergencia \cite{bowling2002multiagent,marlbook}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes. Si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
 
     \item \textbf{Observabilidad parcial:} bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia en información local acotada, desconociendo el estado completo de la red vial y las decisiones simultáneas de cruces distantes, lo cual dificulta la estimación del valor de sus decisiones.
 
@@ -1301,10 +1516,11 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.65\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
-    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en el juego de Piedra, Papel o Tijera hacia el equilibrio de Nash ($\pi^*(a) = 1/3$) \cite{bowling2002multiagent,marlbook}.}
+    \includegraphics[width=0.62\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
+    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución ilustrativa de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en Piedra, Papel o Tijera frente al equilibrio de Nash teórico ($\pi^*(a) = 1/3$) \cite{bowling2002multiagent,marlbook}. Véase la Sección \ref{sec:creditos_licencias} para los créditos.}
     \label{fig:no_estacionariedad_papel_piedra}
 \end{figure}
+\FloatBarrier
 
 \subsection{Paradigmas de entrenamiento y ejecución}
 
@@ -1385,7 +1601,7 @@ Para extender las ventajas de estabilidad de \acrshort{acr-ppo} al contexto mult
     \item \textbf{Crítico centralizado ($V_\phi(s)$):} durante el entrenamiento, el crítico puede utilizar información global que no está disponible para los actores. Una representación global adecuada puede facilitar la estimación del valor. Una estimación más precisa también puede reducir la variabilidad de las actualizaciones, aunque esto depende de la configuración \cite{yu2022surprising}.
 \end{itemize}
 
-Las Ecuaciones \eqref{eq:objetivo_mappo} y \eqref{eq:perdida_valor_mappo}, junto con el Algoritmo \ref{alg:mappo}, presentan un esquema ilustrativo simplificado. Usan una ventaja conjunta y una pérdida cuadrática; no reproducen literalmente la formulación de Yu et al. ni el protocolo de esta tesina. Yu et al. reportan una pérdida de Huber en la Tabla~7 del Apéndice~C.4 de la versión arXiv v4 \cite{yu2022surprising}, y la normalización de retornos no es obligatoria. En la implementación local, el crítico centralizado produce una salida por agente y las ventajas y los objetivos se calculan por agente; la pérdida y la normalización dependen del protocolo.
+Las ecuaciones \eqref{eq:objetivo_mappo} y \eqref{eq:perdida_valor_mappo}, junto con el Algoritmo \ref{alg:mappo}, presentan un esquema ilustrativo simplificado. Usan una ventaja conjunta y una pérdida cuadrática; no reproducen literalmente la formulación de Yu et al. ni el protocolo de esta tesina. Yu et al. reportan una pérdida de Huber en la Tabla~7 del Apéndice~C.4 de la versión arXiv v4 \cite{yu2022surprising}, y la normalización de retornos no es obligatoria. En la implementación local, el crítico centralizado produce una salida por agente y las ventajas y los objetivos se calculan por agente; la pérdida y la normalización dependen del protocolo.
 
 El objetivo de optimización de los actores, en ese esquema simplificado, promedia los términos individuales de recorte \acrshort{acr-ppo} sobre los $n$ agentes, como se expresa en la Ecuación \eqref{eq:objetivo_mappo}.
 \begin{equation}
@@ -1458,7 +1674,7 @@ Esta descomposición se formaliza en el lema de descomposición de la ventaja mu
     A^{\boldsymbol{\pi}}(s, \mathbf{a}) = \sum_{m=1}^n A_{i_m}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m})
     \label{eq:happo_descomposicion_ventaja}
 \end{equation}
-donde la ventaja marginal del agente $i_m$ se define como:
+La Ecuación \eqref{eq:happo_ventaja_marginal} define la ventaja marginal del agente $i_m$.
 \begin{equation}
     A_{i_m}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m}) \doteq Q_{i_{1:m}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}, a_{i_m}) - Q_{i_{1:m-1}}^{\boldsymbol{\pi}}(s, \mathbf{a}_{i_{1:m-1}}).
     \label{eq:happo_ventaja_marginal}
@@ -1475,7 +1691,7 @@ La descomposición de la ventaja es una identidad exacta bajo los supuestos coop
 
 Para explotar analíticamente esta descomposición teniendo en cuenta los cambios de los agentes ya actualizados, \acrshort{acr-happo} actualiza las políticas de los agentes de manera secuencial dentro de cada iteración $k$. En cada ciclo se sortea una permutación de los agentes $i_{1:n} \in \text{Sym}(n)$ (donde $\text{Sym}(n)$ representa el conjunto de todas las permutaciones posibles de los $n$ agentes) para que ningún agente ocupe siempre la misma posición en la secuencia \cite{kuba2021trust,wang2023order}.
 
-Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan aún sus parámetros previos $\theta_k^{i_j}$. Para guiar al agente $i_m$ teniendo en cuenta la alteración de la distribución conjunta producida por los agentes ya actualizados, Kuba et al. \cite{kuba2021trust} demostraron que no se requiere entrenar un crítico separado por cada subgrupo; la ventaja marginal puede computarse reponderando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ mediante la productoria acumulada de las razones de probabilidad de los agentes ya actualizados:
+Cuando corresponde el turno del agente $i_m$, los agentes previos en la secuencia ($i_{1:m-1}$) ya han actualizado sus parámetros a $\theta_{k+1}^{i_j}$, mientras que los agentes posteriores ($i_{m+1:n}$) conservan aún sus parámetros previos $\theta_k^{i_j}$. Kuba et al. \cite{kuba2021trust} muestran que la esperanza de la ventaja marginal puede calcularse a partir de muestras de la política de referencia, ponderando la ventaja conjunta $A^{\boldsymbol{\pi}_k}(s, \mathbf{a})$ por las razones de los agentes ya actualizados y por la razón de la política candidata del agente en turno menos uno. La Ecuación \eqref{eq:happo_factor_m} agrupa la ventaja conjunta y la ponderación de los predecesores en el factor $M_{i_{1:m}}$:
 \begin{equation}
     M_{i_{1:m}}(s_t, \mathbf{a}_t) \doteq \left( \prod_{j=1}^{m-1} \frac{\pi_{\theta_{k+1}^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})}{\pi_{\theta_k^{i_j}}^{i_j}(a_t^{i_j} \mid o_t^{i_j})} \right) A^{\boldsymbol{\pi}_k}(s_t, \mathbf{a}_t)
     \label{eq:happo_factor_m}
@@ -1495,14 +1711,14 @@ Así, la política del agente $i_m$ se optimiza maximizando el objetivo sustitut
 \end{equation}
 donde $r_t^{i_m}(\theta^{i_m}) = \frac{\pi_{\theta^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$ representa la razón de probabilidad individual del agente.
 
-Concluida la optimización de $\theta^{i_m}$, se computa la razón post-optimización:
+Concluida la optimización de $\theta^{i_m}$, se computa para cada muestra la razón post-optimización, evaluada en la misma acción y observación respecto de la política recolectora:
 \begin{equation}
-    \rho_{\text{post}}^{i_m} \doteq \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}
+    \rho_{\text{post},t}^{i_m} \doteq \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}
     \label{eq:happo_rho_post}
 \end{equation}
 y se propaga recursivamente hacia los agentes pendientes mediante:
 \begin{equation}
-    M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t).
+    M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post},t}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t).
     \label{eq:happo_actualizacion_recursiva}
 \end{equation}
 
@@ -1515,46 +1731,47 @@ El principio de mejora monótona en aprendizaje por refuerzo formaliza que la se
 \end{equation}
 Para políticas heterogéneas, Kuba et al. \cite{kuba2021trust} demostraron analíticamente esta propiedad para el algoritmo \gls{acr-hatrpo} bajo los supuestos del juego markoviano cooperativo con recompensa compartida y una actualización restringida por la divergencia \acrshort{acr-kl}. Resolver las restricciones de \acrshort{acr-hatrpo} en redes neuronales profundas requiere un costo de cómputo elevado. Por ello, \acrshort{acr-happo} sustituye la cota formal de divergencia \acrshort{acr-kl} por el objetivo sustituto recortado \acrshort{acr-clip} de primer orden de la Ecuación \eqref{eq:happo_objetivo_clip}.
 
-La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al sustituir su restricción por un recorte. El análisis de \acrshort{acr-happo} dentro de \acrshort{acr-haml} establece garantías bajo las condiciones de ese marco \cite{kuba2021trust,zhong2024heterogeneous}. Su aplicación a un controlador semafórico requiere comprobar esas condiciones: las recompensas específicas de cada agente no definen por sí solas el retorno compartido del planteo cooperativo. La metodología delimita por ello el alcance de las garantías para la adaptación utilizada y evalúa empíricamente su desempeño. La Figura \ref{fig:happo_sequential} resume este esquema de propagación secuencial.
+La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al sustituir su restricción por un recorte. El análisis de \acrshort{acr-happo} dentro de \acrshort{acr-haml} establece garantías bajo las condiciones de ese marco \cite{kuba2021trust,zhong2024heterogeneous}. Su aplicación a un controlador semafórico requiere comprobar esas condiciones: las recompensas específicas de cada agente no definen por sí solas el retorno compartido del planteo cooperativo. La metodología describe por ello la adaptación utilizada, delimita el alcance de sus garantías y establece el protocolo previsto para evaluar su desempeño. La Figura \ref{fig:happo_sequential} resume el esquema teórico de propagación secuencial con ventaja conjunta estimada $\hat{A}$: al llegar el turno del agente $i_m$, el factor $M_{i_{1:m}}$ incorpora las razones de probabilidad de sus predecesores ($i_1,\dots,i_{m-1}$), y no la del propio $i_m$.
 
 \begin{figure}[!htbp]
     \centering
     \begin{tikzpicture}[
-        scale=0.9,
+        scale=0.84,
         >=Stealth,
         font=\sffamily\small,
-        box/.style={draw, rounded corners=4pt, thick, align=center, font=\sffamily\small, fill=catAzulCielo!12, minimum height=1.1cm, minimum width=2.4cm},
+        box/.style={draw, rounded corners=4pt, thick, align=center, font=\sffamily\small, fill=catAzulCielo!12, minimum height=1.1cm, minimum width=2.25cm},
         old/.style={box, draw=gray!60, fill=gray!15, text=gray!80!black},
         new/.style={box, draw=colDatoPrimario!90!black, fill=colDatoPrimario!20},
         arr/.style={-{Stealth[length=6pt]}, thick, draw=black!70},
         lbl/.style={font=\scriptsize, align=right, inner sep=2pt}
     ]
         % Etiquetas de Iteración a la izquierda (ancladas a la derecha con anchor=east para 0% superposición)
-        \node[font=\bfseries\small, text=gray!80!black, anchor=east] at (-1.6, 2.5) {Iteración $k$};
-        \node[font=\bfseries\small, text=colDatoPrimario!90!black, anchor=east] at (-1.6, 0) {Iteración $k+1$};
+        \node[font=\bfseries\small, text=gray!80!black, anchor=east] at (-1.5, 2.5) {Iteración $k$};
+        \node[font=\bfseries\small, text=colDatoPrimario!90!black, anchor=east] at (-1.5, 0) {Iteración $k+1$};
 
-        % Nodos de Agentes en Iteración K (Top)
+        % Nodos de Agentes en Iteración k (fila superior)
         \node[old] (pi1k) at (0, 2.5) {Agente $i_1$\\$\pi_{\theta_k^{i_1}}^{i_1}$};
         \node[old] (pi2k) at (5.2, 2.5) {Agente $i_2$\\$\pi_{\theta_k^{i_2}}^{i_2}$};
-        \node[old] (pink) at (10.4, 2.5) {Agente $i_n$\\$\pi_{\theta_k^{i_n}}^{i_n}$};
+        \node[old] (pink) at (12.2, 2.5) {Agente $i_n$\\$\pi_{\theta_k^{i_n}}^{i_n}$};
 
-        % Nodos de Agentes en Iteración K+1 (Bottom)
+        % Nodos de Agentes en Iteración k+1 (fila inferior)
         \node[new] (pi1new) at (0, 0) {Agente $i_1$\\$\pi_{\theta_{k+1}^{i_1}}^{i_1}$};
         \node[new] (pi2new) at (5.2, 0) {Agente $i_2$\\$\pi_{\theta_{k+1}^{i_2}}^{i_2}$};
-        \node[new] (pinnew) at (10.4, 0) {Agente $i_n$\\$\pi_{\theta_{k+1}^{i_n}}^{i_n}$};
+        \node[new] (pinnew) at (12.2, 0) {Agente $i_n$\\$\pi_{\theta_{k+1}^{i_n}}^{i_n}$};
 
-        % Actualizaciones verticales (Doble flecha discontinua con texto despejado a la izquierda)
+        % Actualizaciones verticales (flechas discontinuas; texto despejado a la izquierda)
         \draw[arr, dashed] (pi1k) -- node[midway, left=3pt, font=\scriptsize, align=right] {Ventaja\\conjunta $\hat{A}$} (pi1new);
         \draw[arr, dashed] (pi2k) -- (pi2new);
         \draw[arr, dashed] (pink) -- (pinnew);
 
-        % Condicionales secuenciales horizontales (factor de ventaja M)
+        % Propagación secuencial de M con interrupción explícita por agentes omitidos
         \draw[arr, draw=colDatoPrimario!72!black, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:2}}$} (pi2new.west);
-        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi2new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:n}}$} (pinnew.west);
-
-        \node[font=\Large, text=black!50] at (7.8, 1.25) {$\dots$};
+        \draw[draw=colDatoPrimario!72!black, thick] (pi2new.east) -- (7.15, 0);
+        \node[font=\large, text=black!60] at (7.85, 2.5) {$\cdots$};
+        \node[font=\large, text=colDatoPrimario!72!black] at (7.85, 0) {$\cdots$};
+        \draw[arr, draw=colDatoPrimario!72!black, thick] (8.55, 0) -- node[pos=0.44, above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:n}}$} (pinnew.west);
     \end{tikzpicture}
-    \caption[Esquema de actualización secuencial de HAPPO]{Esquema de actualización secuencial de \acrshort{acr-happo}. A diferencia de las actualizaciones simultáneas, la optimización de cada agente $i_m$ está condicionada por el factor de ventaja ponderada $M_{i_{1:m}}$, que incorpora los cambios efectuados por los agentes que lo precedieron en la secuencia.}
+    \caption[Esquema de actualización secuencial de HAPPO]{Esquema teórico de actualización secuencial de \acrshort{acr-happo} con ventaja conjunta estimada $\hat{A}$.}
     \label{fig:happo_sequential}
 \end{figure}
 
@@ -1575,9 +1792,9 @@ El Algoritmo \ref{alg:happo} presenta la secuencia completa de optimización de 
     \State Inicializar el factor acumulado: $M_{i_{1:1}}(s_t, \mathbf{a}_t) \leftarrow \hat{A}(s_t, \mathbf{a}_t)$
     \For{$m = 1 \dots n$}
         \State Actualizar $\theta_k^{i_m}$ a $\theta_{k+1}^{i_m}$ maximizando el objetivo recortado (Ecuación \eqref{eq:happo_objetivo_clip}) con $M_{i_{1:m}}(s_t, \mathbf{a}_t)$
-        \State Recalcular la razón post-optimización: $\rho_{\text{post}}^{i_m} \leftarrow \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$
+        \State Recalcular la razón post-optimización: $\rho_{\text{post},t}^{i_m} \leftarrow \frac{\pi_{\theta_{k+1}^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}{\pi_{\theta_k^{i_m}}^{i_m}(a_t^{i_m} \mid o_t^{i_m})}$
         \If{$m < n$}
-            \State Actualizar el factor acumulado: $M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post}}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t)$
+            \State Actualizar el factor acumulado: $M_{i_{1:m+1}}(s_t, \mathbf{a}_t) \leftarrow \rho_{\text{post},t}^{i_m} \cdot M_{i_{1:m}}(s_t, \mathbf{a}_t)$
         \EndIf
     \EndFor
     \State Actualizar $\theta \leftarrow \{\theta_{k+1}^{i_m}\}_{m=1}^n$
@@ -1590,7 +1807,7 @@ El procedimiento de \acrshort{acr-happo} organiza secuencialmente la actualizaci
 
 \begingroup
 \widowpenalty=10000
-La adaptación para control semafórico de este trabajo conserva la actualización sucesiva de los actores, pero inicializa los factores $M_{i_m}$ con las ventajas individuales $\hat{A}_i(s, \mathbf{a})$ calculadas mediante el crítico centralizado multi-salida a partir de las señales de recompensa individuales, propagándolos mediante la razón $\rho_{\text{post}}^{i_m}$ tras optimizar a cada actor. A diferencia del Algoritmo \ref{alg:happo}, la implementación actualiza el crítico al comienzo de cada época, antes de los actores (Sección \ref{subsec:mecanismos_algoritmos}).
+La adaptación para control semafórico de este trabajo conserva la actualización sucesiva de los actores, pero asigna a cada agente pendiente un factor propio inicializado con su ventaja individual estandarizada $\hat{A}_i(s, \mathbf{a})$ —calculada mediante el crítico centralizado multi-salida a partir de las señales de recompensa individuales— y reiniciado en cada época. Tras optimizar a cada actor $i_m$, su razón $\rho_{\text{post},t}^{i_m}$ (calculada para cada muestra en la misma acción y observación respecto de la política recolectora) multiplica los factores de los agentes aún pendientes, sin recalcular las ventajas ni aplicar pasos de gradiente adicionales sobre estos. A diferencia del Algoritmo \ref{alg:happo}, la implementación actualiza el crítico al comienzo de cada época, antes de los actores (Sección \ref{subsec:mecanismos_algoritmos}).
 \par
 \endgroup
 
@@ -1663,7 +1880,7 @@ HeteroLight aborda la heterogeneidad mediante una arquitectura de parámetros co
 
 En particular, este trabajo explora una codificación híbrida logarítmica-lineal del tiempo de espera acumulado por carril. Al asignar valores continuos a un conjunto finito de intervalos, la cuantización agrupa esperas dentro de una misma categoría y limita los valores representables, mientras que la saturación reúne los que alcanzan la cota. En aprendizaje por refuerzo, una abstracción de estados puede simplificar el problema y conservar comportamiento cercano al óptimo cuando los estados agrupados son suficientemente similares, bajo las condiciones teóricas correspondientes \cite{abel2016approxabstraction}. Ese resultado no constituye una garantía para esta codificación: aquí se transforman observaciones locales en un problema parcialmente observable y no se demuestra que los valores agrupados sean equivalentes para la política óptima. La resolución no uniforme del codificador asigna más niveles a esperas bajas, lo que permite distinguirlas con mayor detalle; es una hipótesis de diseño, pues la cuantización también puede descartar distinciones relevantes, en particular cerca de los umbrales entre intervalos.
 
-Su efecto se examina como parte del sistema completo, sin un experimento que compare el mismo sistema con y sin esa transformación. Esta propuesta se diferencia de las observaciones agregadas utilizadas por los enfoques \acrshort{acr-dqn}, de las proyecciones latentes basadas en grafos y de la partición espacial de Deng et al. \cite{deng2026roadpartition}, que divide los accesos y no codifica la espera acumulada por carril.
+Su efecto se examina como parte del sistema completo, sin un experimento que compare el mismo sistema con y sin esa transformación. Esta propuesta se diferencia de las observaciones agregadas utilizadas por los enfoques \acrshort{acr-dqn} y de las proyecciones latentes basadas en grafos.
 
 El diseño experimental contempla la búsqueda de configuraciones para \acrshort{acr-idqn}, \acrshort{acr-ippo}, \acrshort{acr-mappo} y \acrshort{acr-happo} sobre una misma representación local de observación. En \acrshort{acr-mappo} se utiliza un crítico centralizado compartido de múltiples salidas, condicionado por la concatenación de observaciones locales, con valores y ventajas calculados por agente. En \acrshort{acr-happo}, las ventajas individuales estimadas mediante \acrshort{acr-gae} se reponderan en las actualizaciones secuenciales de los actores; esta adaptación no aplica directamente el lema original de descomposición de ventajas.
 
