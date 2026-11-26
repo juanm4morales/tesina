@@ -18,8 +18,6 @@ Estas magnitudes cumplen una función doble en el modelo computacional: pueden f
 
 Antes de formular el problema de control, es necesario distinguir algunos términos que se utilizarán a lo largo del capítulo. En particular, se diferencian los movimientos que realizan los vehículos, las fases que habilitan esos movimientos y los intervalos durante los cuales se mantienen las indicaciones semafóricas \cite{fhwa_signal_timing_manual}.
 
-Entre las definiciones más utilizadas se pueden mencionar las siguientes:
-
 \begin{itemize}
     \item \textbf{Intersección (\textit{intersection}), acceso (\textit{approach}) y carril (\textit{lane}):} una intersección es el área física y operacional en la que confluyen dos o más corrientes de tránsito. Cada una de las calzadas de aproximación que ingresan a ella constituye un acceso \cite{ite_handbook}, organizándose internamente en uno o más carriles destinados a canalizar los flujos vehiculares \cite{calymayor}.
     \item \textbf{Movimiento vehicular y movimientos en conflicto:} un movimiento vehicular representa la trayectoria específica que describe un vehículo al cruzar la intersección hacia una salida determinada, por ejemplo, un giro o un movimiento directo \cite{WeiH2019ASTSCM}. Dos movimientos pueden generar puntos de conflicto cuando sus trayectorias se intersectan (véase la Figura \ref{fig:conflictos_interseccion}). Cuando la geometría y la señalización no permiten proteger su operación simultánea, esos movimientos deben programarse en intervalos distintos por razones de seguridad \cite{fernandez}.
@@ -631,7 +629,7 @@ Los algoritmos de \acrshort{acr-rl} pueden agruparse, a grandes rasgos, en méto
 
 Esta clasificación distingue dos formas de obtener una regla de decisión. Los métodos basados en política aprenden directamente una función que relaciona cada estado con una acción o con una distribución de probabilidad sobre las acciones. En cambio, los métodos basados en valor aprenden indirectamente la regla de decisión: estiman la conveniencia de los estados o de los pares estado--acción y, a partir de esas estimaciones, determinan qué alternativa conviene ejecutar \cite{suttonRL}. En el control semafórico, las alternativas corresponden a las distintas fases admisibles de una intersección.
 
-La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A partir del estado observado, la función de valor estima la conveniencia esperada de las acciones disponibles y la decisión se obtiene comparando esas estimaciones. En una estrategia $\epsilon_{\mathrm{exp}}$-greedy, con probabilidad $1-\epsilon_{\mathrm{exp}}$ se selecciona la rama de explotación —que elige una acción con mayor estimación $Q(s,a)$ entre las admisibles— y con probabilidad $\epsilon_{\mathrm{exp}}$ se selecciona una acción al azar entre todas las acciones admisibles \cite{suttonRL}. Como esta rama aleatoria puede escoger también una acción maximizadora, $1-\epsilon_{\mathrm{exp}}$ corresponde a la probabilidad de explotar y no a la probabilidad total de elegir esa acción. El esquema corresponde directamente al caso de una función de valor de acción $Q(s,a)$. Si se utiliza una función de valor de estado $V(s)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
+La Figura \ref{fig:metodo_basado_valor} muestra cómo se elige una fase a partir de los valores de acción $Q(s,a)$. La regla $\epsilon_{\mathrm{exp}}$-greedy recurre a la explotación con probabilidad $1-\epsilon_{\mathrm{exp}}$ y a la exploración con probabilidad $\epsilon_{\mathrm{exp}}$ \cite{suttonRL}. En el ejemplo, la explotación elige la fase 2, que tiene el mayor valor estimado entre las fases admisibles. La exploración elige cualquiera de esas fases con igual probabilidad y también puede seleccionar la fase 2. Por eso, $1-\epsilon_{\mathrm{exp}}$ no es la probabilidad total de elegir esa fase. Si se utiliza una función de valor de estado $V(s)$ en lugar de $Q(s,a)$, la elección de la acción requiere valorar los estados sucesores que produciría cada alternativa. Por ello, $V(s)$ y $Q(s,a)$ cumplen funciones relacionadas, pero no intercambiables en la evaluación de los estados y en la selección de acciones.
 
 \begin{figure}[!htbp]
     \centering
@@ -639,14 +637,13 @@ La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
     \setstretch{1}
     \begin{tikzpicture}[
         >=Stealth,
-        font=\sffamily\fontsize{8.5}{10}\selectfont,
+        font=\sffamily\fontsize{9}{10.5}\selectfont,
         mv/arrow/.style={-{Stealth[length=2mm]}, draw=black!75, line width=0.8pt}
     ]
         % Etapa 1: Estado observado ilustrativo + cruce semaforizado
         \filldraw[fill=colEntorno!13, draw=colEntorno!70!black, line width=0.7pt, rounded corners=3pt]
             (0.0, -2.25) rectangle (3.6, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (1.8, 1.56) {(datos ilustrativos)};
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
 
         % Esquema compacto de intersección (circulación por la derecha)
         \fill[black!75] (0.75, 0.02) rectangle (2.85, 0.58);
@@ -665,8 +662,8 @@ La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
         \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.66, 0.56) -- (1.66, 0.04);
         \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.94, 0.04) -- (1.94, 0.56);
 
-        \node at (1.8, -1.22) {Fase activa: Fase 1};
-        \node at (1.8, -1.66) {Esperas por carril};
+        \node[font=\sffamily\bfseries] at (1.8, -1.30) {Fase activa · 1};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont, text=black!75] at (1.8, -1.72) {Esperas por carril};
 
         % Flecha Etapa 1 -> Etapa 2
         \draw[mv/arrow] (3.6, 0) -- (4.3, 0);
@@ -674,8 +671,7 @@ La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
         % Etapa 2: Función de valor de acción Q(s, a)
         \filldraw[fill=colInterfaz!18, draw=colInterfaz!65!black, line width=0.7pt, rounded corners=3pt]
             (4.3, -2.25) rectangle (8.8, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (6.55, 1.92) {Función de valor $Q(s,a)$};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, 1.56) {(valores ilustrativos de acción)};
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (6.55, 1.92) {Valor por fase · $Q(s,a)$};
 
         \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, 0.40) rectangle (8.50, 0.98);
         \node[anchor=west] at (4.76, 0.69) {Fase 1};
@@ -683,30 +679,30 @@ La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
 
         \filldraw[fill=colAgente!14, draw=colAgente!70!black, line width=0.8pt, rounded corners=2pt] (4.60, -0.35) rectangle (8.50, 0.23);
         \node[anchor=west, font=\sffamily\fontsize{8.5}{10}\selectfont\bfseries] at (4.76, -0.06) {Fase 2};
-        \node[anchor=east] at (8.34, -0.06) {\textbf{$-4{,}2$} {\scriptsize(máx.)}};
+        \node[anchor=east] at (8.34, -0.06) {\textbf{$-4{,}2$} {\scriptsize(máximo)}};
 
         \filldraw[fill=white, draw=black!35, rounded corners=2pt] (4.60, -1.10) rectangle (8.50, -0.52);
         \node[anchor=west] at (4.76, -0.81) {Fase 3};
         \node[anchor=east] at (8.34, -0.81) {$-9{,}1$};
 
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, -1.78) {Fases admisibles en $\mathcal{A}(s)$};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont, text=black!75] at (6.55, -1.78) {Fases admisibles};
 
-        % Etapa 3: Selección epsilon-greedy (dos ramas)
+        % Etapa 3: Explotación y exploración
         \draw[draw=black!55, dashed, line width=0.7pt, rounded corners=3pt]
             (9.7, -2.25) rectangle (15.2, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (12.45, 1.92) {Selección $\epsilon_{\mathrm{exp}}$-greedy};
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (12.45, 1.92) {Selección $\epsilon_{\mathrm{exp}}$-greedy};
 
         \filldraw[fill=colAgente!16, draw=colAgente!70!black, line width=0.7pt, rounded corners=3pt]
             (9.95, 0.04) rectangle (14.95, 1.48);
-        \node at (12.45, 1.20) {\textbf{Explotación} (prob. $1-\epsilon_{\mathrm{exp}}$)};
-        \node at (12.45, 0.72) {$\arg\max_{a\in\mathcal{A}(s)} Q(s,a) \;\Rightarrow\;$ \textbf{Fase 2}};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, 0.28) {(resultado de explotar; valor $-4{,}2$)};
+        \node[font=\sffamily\bfseries] at (12.45, 1.18) {Explotación};
+        \node[font=\sffamily\fontsize{8}{9.5}\selectfont, text=black!75] at (12.45, 0.82) {Probabilidad de explotar: $1-\epsilon_{\mathrm{exp}}$};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont] at (12.45, 0.44) {Mayor valor $\longrightarrow$ \textbf{Fase 2}};
 
         \filldraw[fill=catLilaSuave!24, draw=catLilaSuave!75!black, line width=0.7pt, rounded corners=3pt]
             (9.95, -1.96) rectangle (14.95, -0.34);
-        \node at (12.45, -0.66) {\textbf{Exploración} (prob. $\epsilon_{\mathrm{exp}}$)};
-        \node at (12.45, -1.15) {Azar uniforme en $\mathcal{A}(s)$};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, -1.62) {(puede elegir Fase 1, Fase 2 o Fase 3)};
+        \node[font=\sffamily\bfseries] at (12.45, -0.62) {Exploración};
+        \node[font=\sffamily\fontsize{8}{9.5}\selectfont, text=black!75] at (12.45, -1.02) {Probabilidad de explorar: $\epsilon_{\mathrm{exp}}$};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont] at (12.45, -1.48) {azar uniforme: fases 1, 2 y 3};
 
         % Bifurcación Etapa 2 -> Etapa 3
         \draw[draw=black!75, line width=0.8pt] (8.8, 0) -- (9.25, 0);
@@ -715,7 +711,7 @@ La Figura \ref{fig:metodo_basado_valor} representa esta segunda alternativa. A p
         \draw[mv/arrow] (9.25, 0) |- (9.95, -1.15);
     \end{tikzpicture}
     \endgroup
-    \caption[Esquema de un método basado en valor]{Esquema ilustrativo de un método basado en valor con selección $\epsilon_{\mathrm{exp}}$-greedy sobre fases admisibles; los datos de entrada y los valores $Q(s,a)$ son ilustrativos.}
+    \caption[Esquema de un método basado en valor]{Esquema ilustrativo de selección $\epsilon_{\mathrm{exp}}$-greedy.}
     \label{fig:metodo_basado_valor}
 \end{figure}
 
@@ -739,7 +735,7 @@ donde $\alpha \in (0, 1]$ es la tasa de aprendizaje (\textit{learning rate}) que
 
 Q-learning es un algoritmo \textit{off-policy}, lo que significa que la política que genera los datos de interacción puede diferir de la política objetivo cuya función de valor se estima. En cambio, en el aprendizaje \textit{on-policy} se evalúa o mejora la misma política que se utiliza para tomar decisiones \cite{suttonRL}.
 
-Por su parte, en los métodos basados en política, la regla de decisión se parametriza directamente como $\pi_\theta(a \mid s) = \Pr\{A_t = a \mid S_t = s, \theta\}$, donde $\theta \in \mathbb{R}^d$ representa el vector de parámetros ajustables de la política. La política puede ser determinista, si asigna siempre la misma acción a un estado, o estocástica, si produce una distribución de probabilidad sobre las acciones posibles. La Figura \ref{fig:metodo_basado_politica} ilustra el caso estocástico, en el que, para el estado observado, la política asigna probabilidades a cada fase admisible. Durante la ejecución, la acción puede seleccionarse mediante muestreo de esa distribución o como la alternativa más probable, según el modo de ejecución adoptado \cite{suttonRL}.
+Por su parte, en los métodos basados en política, la regla de decisión se parametriza directamente como $\pi_\theta(a \mid s) = \Pr\{A_t = a \mid S_t = s, \theta\}$, donde $\theta \in \mathbb{R}^d$ representa el vector de parámetros ajustables de la política. La política puede ser determinista, si asigna siempre la misma acción a un estado, o estocástica, si produce una distribución de probabilidad sobre las acciones posibles. La Figura \ref{fig:metodo_basado_politica} ilustra el caso estocástico con tres fases admisibles. Aunque la fase 2 es la más probable, el muestreo puede seleccionar la fase 1, como en el ejemplo. Elegir siempre la fase más probable, en lugar de muestrear, sería otro modo de ejecución \cite{suttonRL}.
 
 \begin{figure}[!htbp]
     \centering
@@ -747,14 +743,13 @@ Por su parte, en los métodos basados en política, la regla de decisión se par
     \setstretch{1}
     \begin{tikzpicture}[
         >=Stealth,
-        font=\sffamily\fontsize{8.5}{10}\selectfont,
+        font=\sffamily\fontsize{9}{10.5}\selectfont,
         mp/arrow/.style={-{Stealth[length=2mm]}, draw=black!75, line width=0.8pt}
     ]
         % Etapa 1: Estado observado ilustrativo + mismo cruce semaforizado
         \filldraw[fill=colEntorno!13, draw=colEntorno!70!black, line width=0.7pt, rounded corners=3pt]
             (0.0, -2.25) rectangle (3.6, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (1.8, 1.56) {(datos ilustrativos)};
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (1.8, 1.92) {Estado observado $s$};
 
         \fill[black!75] (0.75, 0.02) rectangle (2.85, 0.58);
         \fill[black!75] (1.52, -0.70) rectangle (2.08, 1.30);
@@ -772,8 +767,8 @@ Por su parte, en los métodos basados en política, la regla de decisión se par
         \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.66, 0.56) -- (1.66, 0.04);
         \draw[-{Stealth[length=4pt,width=3.5pt]}, colSemaforoRojo, line width=1.3pt] (1.94, 0.04) -- (1.94, 0.56);
 
-        \node at (1.8, -1.22) {Fase activa: Fase 1};
-        \node at (1.8, -1.66) {Esperas por carril};
+        \node[font=\sffamily\bfseries] at (1.8, -1.30) {Fase activa · 1};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont, text=black!75] at (1.8, -1.72) {Esperas por carril};
 
         % Flecha Etapa 1 -> Etapa 2
         \draw[mp/arrow] (3.6, 0) -- (4.3, 0);
@@ -781,8 +776,7 @@ Por su parte, en los métodos basados en política, la regla de decisión se par
         % Etapa 2: Política estocástica sobre las mismas fases admisibles
         \filldraw[fill=colInterfaz!18, draw=colInterfaz!65!black, line width=0.7pt, rounded corners=3pt]
             (4.3, -2.25) rectangle (8.8, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (6.55, 1.92) {Política $\pi_\theta(a\mid s)$};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, 1.56) {(distribución sobre $\mathcal{A}(s)$)};
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (6.55, 1.92) {Política $\pi_\theta(a\mid s)$};
 
         \filldraw[fill=colAgente!14, draw=colAgente!70!black, line width=0.8pt, rounded corners=2pt] (4.60, 0.40) rectangle (8.50, 0.98);
         \node[anchor=west, font=\sffamily\fontsize{8.5}{10}\selectfont\bfseries] at (4.74, 0.69) {Fase 1};
@@ -802,26 +796,23 @@ Por su parte, en los métodos basados en política, la regla de decisión se par
         \fill[colInterfaz!70!black] (6.00, -0.94) rectangle (6.22, -0.68);
         \node[anchor=east] at (8.36, -0.81) {15\%};
 
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75] at (6.55, -1.78) {Fases admisibles en $\mathcal{A}(s)$};
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont, text=black!75] at (6.55, -1.78) {Probabilidad por fase};
 
         % Flecha Etapa 2 -> Etapa 3
         \draw[mp/arrow] (8.8, 0.52) -- (9.95, 0.52);
 
-        % Etapa 3: Realización del muestreo estocástico
+        % Etapa 3: Muestreo de una fase posible
         \draw[draw=black!55, dashed, line width=0.7pt, rounded corners=3pt]
-            (9.7, -2.25) rectangle (15.2, 2.25);
-        \node[font=\sffamily\fontsize{9}{10.5}\selectfont\bfseries] at (12.45, 1.92) {Muestreo estocástico};
+            (9.7, -0.62) rectangle (15.2, 2.25);
+        \node[font=\sffamily\fontsize{10}{11.5}\selectfont\bfseries] at (12.45, 1.92) {Muestreo};
 
         \filldraw[fill=colAgente!16, draw=colAgente!70!black, line width=0.7pt, rounded corners=3pt]
-            (9.95, -0.35) rectangle (14.95, 1.42);
-        \node at (12.45, 1.05) {\textbf{Realización de} $a \sim \pi_\theta(\cdot\mid s)$};
-        \node at (12.45, 0.50) {Ejemplo muestreado: \textbf{Fase 1} (15\%)};
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!80] at (12.45, -0.02) {(realización posible; no la más probable)};
-
-        \node[font=\sffamily\fontsize{7.5}{9}\selectfont, text=black!75, align=center] at (12.45, -1.26) {Cualquier fase admisible puede salir\\según su probabilidad en $\pi_\theta(a\mid s)$};
+            (9.95, -0.15) rectangle (14.95, 1.42);
+        \node[font=\sffamily\fontsize{8.5}{10}\selectfont, text=black!75] at (12.45, 1.03) {Resultado posible};
+        \node[font=\sffamily\fontsize{12}{14}\selectfont\bfseries] at (12.45, 0.43) {Fase 1};
     \end{tikzpicture}
     \endgroup
-    \caption[Esquema de un método basado en política]{Esquema ilustrativo de un método basado en política estocástica sobre fases admisibles; los datos de entrada y las probabilidades son ilustrativos y la fase marcada muestra una realización posible del muestreo.}
+    \caption[Esquema de un método basado en política]{Esquema ilustrativo de muestreo estocástico.}
     \label{fig:metodo_basado_politica}
 \end{figure}
 
@@ -1064,80 +1055,90 @@ Para mitigar la inestabilidad de la tríada mortal —en particular el problema 
 
 En la repetición de experiencias priorizada, las transiciones con mayor magnitud de error de diferencia temporal tienen mayor probabilidad de ser muestreadas. Las actualizaciones se ponderan para atenuar el sesgo de este muestreo no uniforme \cite{schaul2016prioritized}.
 
-Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa el estado $S_t$ y una regla $\epsilon_{\mathrm{exp}}$-greedy selecciona la fase a ejecutar. Tras ejecutar $A_t$, la transición resultante se almacena en $\mathcal{D}$. Durante el entrenamiento por minilotes, la red en línea recibe $s_j$ y se toma la predicción correspondiente a la acción almacenada $a_j$. En paralelo, la red objetivo evalúa el estado sucesor $s_{j+1}$ sobre sus fases admisibles, y un cálculo separado combina esa salida con $r_{j+1}$ y $d_{j+1}$ para obtener el valor objetivo $y_j$ según si la transición es terminal. La pérdida \acrshort{acr-td} compara ambas cantidades para actualizar $\theta$ por gradiente, mientras que los parámetros $\theta^-$ se copian periódicamente cada $C$ decisiones (Figura \ref{fig:arquitectura_dqn}).
+La Figura \ref{fig:arquitectura_dqn} muestra cómo \acrshort{acr-dqn} reúne y reutiliza experiencias. En cada decisión, la red en línea estima los valores $Q$ de las fases admisibles en el estado $S_t$. En explotación, la regla $\epsilon_{\mathrm{exp}}$-greedy selecciona una fase admisible con el mayor valor estimado. \acrshort{acr-sumo} ejecuta la fase seleccionada $A_t$ y la transición resultante se guarda en la memoria de experiencias $\mathcal{D}$.
+
+Para entrenar, se extrae un minilote de esa memoria. Se usa esa misma red en línea para estimar el valor de la fase $a_j$ registrada en cada transición: $Q_j=Q(s_j,a_j;\theta)$. La pérdida \acrshort{acr-td} compara esa predicción con el valor objetivo $y_j$.
+
+Si la transición termina el episodio, $y_j$ es la recompensa inmediata. En caso contrario, incorpora además una estimación descontada del valor futuro obtenida con la red objetivo. El gradiente de la pérdida actualiza solo la red en línea. Cada $C$ decisiones, los parámetros $\theta$ de esa red se copian a la red objetivo, cuyos parámetros $\theta^-$ permanecen fijos entre copias.
 
 \begin{figure}[!htbp]
     \centering
     \resizebox{0.98\textwidth}{!}{%
     \begin{tikzpicture}[
         font=\sffamily\small,
-        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.98cm, font=\sffamily\small},
-        dato/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.0cm},
-        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.95cm},
-        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.55cm},
-        memoria/.style={bloque, fill=catMelocoton!40, draw=catMelocoton!80!black, text width=2.95cm},
-        entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.3cm},
-        calc/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=6.25cm},
-        flujo/.style={-{Stealth[length=5.5pt]}, thick, draw=black!80},
-        gradiente/.style={-{Stealth[length=5.5pt]}, thick, dashed, draw=colConflicto!85!black},
-        copia/.style={-{Stealth[length=5.5pt]}, very thick, densely dotted, draw=colDatoPrimario!85!black},
-        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1.5pt, align=center}
+        bloque/.style={draw, rounded corners=3pt, thick, align=center, minimum height=0.95cm, inner sep=3pt, font=\sffamily\small},
+        dato/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=1.8cm},
+        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, minimum width=2.8cm, minimum height=1.05cm},
+        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, minimum width=2.5cm},
+        entorno/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, minimum width=2.15cm},
+        calc/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, minimum width=2.8cm, minimum height=1.05cm},
+        flujo/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
+        gradiente/.style={-{Stealth[length=5pt]}, thick, dashed, draw=colConflicto!85!black},
+        copia/.style={-{Stealth[length=5pt]}, very thick, densely dotted, draw=colDatoPrimario!85!black},
+        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1pt, align=center},
+        neticon/.pic={
+            \foreach \yi in {-0.17,0.17} {
+                \foreach \yh in {-0.22,0,0.22} {
+                    \draw[black!65, line width=.35pt] (0.08,\yi) -- (0.42,\yh);
+                    \draw[black!65, line width=.35pt] (0.42,\yh) -- (0.76,\yi);
+                }
+            }
+            \foreach \yi in {-0.17,0.17} {
+                \filldraw[fill=white, draw=colAgente!80!black, line width=.45pt] (0.08,\yi) circle (1.5pt);
+                \filldraw[fill=white, draw=colAgente!80!black, line width=.45pt] (0.76,\yi) circle (1.5pt);
+            }
+            \foreach \yh in {-0.22,0,0.22} {
+                \filldraw[fill=white, draw=colAgente!80!black, line width=.45pt] (0.42,\yh) circle (1.5pt);
+            }
+        }
     ]
-        % Fila 1: Interacción con el entorno
-        \node[dato] (state) at (-7.5,3.4) {Estado\\$S_t$};
-        \node[red] (online) at (-3.4,3.4) {Red en línea\\$Q(s,\cdot;\theta)$};
-        \node[salida] (values) at (0.5,3.4) {Valores de fase\\$Q(S_t,a;\theta)$};
-        \node[salida, text width=2.2cm] (select) at (4.1,3.4) {Selección\\$\epsilon_{\mathrm{exp}}$-greedy};
-        \node[entorno] (env) at (7.6,3.4) {\acrshort{acr-sumo}\\ejecuta $A_t$};
+        % Interacción: estado, política, entorno y almacenamiento.
+        \node[dato] (state) at (-6.7,3.15) {Estado\\$S_t$};
+        \node[red] (onlineAct) at (-3.45,3.15) {};
+        \pic at ($(onlineAct.west)+(0.17,0)$) {neticon};
+        \node[align=center, font=\sffamily\small] at ($(onlineAct.center)+(0.58,0)$) {En línea\\$\theta$};
+        \node[salida] (policy) at (-0.1,3.15) {$\epsilon_{\mathrm{exp}}$-greedy};
+        \node[entorno] (env) at (3.2,3.15) {SUMO\\ejecuta fase};
 
-        % Fila 2: Memoria y evaluación por lotes
-        \node[salida, text width=2.8cm] (pick) at (-7.5,0.2) {Selección por $a_j$\\$Q_j = Q(s_j,a_j;\theta)$};
-        \node[red] (target) at (2.15,0.2) {Red objetivo\\$\hat Q(s_{j+1},\cdot;\theta^-)$};
-        \node[memoria] (buffer) at (7.6,0.2) {Buffer $\mathcal D$\\$(s_j,a_j,r_{j+1},$\\$s_{j+1},d_{j+1})$};
+        \draw[flujo] (state) -- (onlineAct);
+        \draw[flujo] (onlineAct) -- node[etiqueta, above=2pt] {$Q$} (policy);
+        \draw[flujo] (policy) -- node[etiqueta, above=2pt] {$A_t$} (env);
 
-        % Fila 3: Cálculo del valor objetivo y pérdida TD
-        \node[salida, text width=3.3cm] (loss) at (-3.4,-2.4) {Pérdida \acrshort{acr-td}\\$\frac{1}{B}\sum_{j=1}^{B}(y_j-Q_j)^2$};
-        \node[calc] (ycalc) at (2.15,-2.4) {Cálculo de $y_j$\\[2pt]{\scriptsize $r_{j+1}$ (si $d_{j+1}{=}1$)}\\[1pt]{\scriptsize $r_{j+1}+\gamma\max_{a'\in\mathcal{A}(s_{j+1})}\hat Q(s_{j+1},a';\theta^-)$ (si $d_{j+1}{=}0$)}};
+        % Memoria de experiencias representada por celdas.
+        \draw[rounded corners=3pt, thick, draw=catMelocoton!80!black, fill=catMelocoton!35]
+            (4.65,0.95) rectangle (7.85,2.15);
+        \node[font=\sffamily\small] at (6.25,1.86) {Buffer $\mathcal D$};
+        \foreach \x in {4.95,5.62,6.29,6.96} {
+            \draw[draw=catMelocoton!80!black, fill=white, line width=.55pt]
+                (\x,1.18) rectangle ++(0.55,0.42);
+            \draw[draw=catMelocoton!80!black, line width=.45pt]
+                (\x+0.12,1.39) -- (\x+0.43,1.39);
+        }
+        \draw[flujo] (env.south) -- node[etiqueta, right=2pt, fill=white] {transición} (6.25,2.15);
 
-        % Flujo de interacción
-        \draw[flujo] (state) -- (online);
-        \draw[flujo] (online) -- (values);
-        \draw[flujo] (values) -- (select);
-        \draw[flujo] (select) -- node[etiqueta, above=2pt] {$A_t$} (env);
-        \draw[flujo] (env.south) -- node[etiqueta, right=2pt] {transición} (buffer.north);
+        % Minilote y sus tres entradas independientes.
+        \node[red] (onlineBatch) at (-4.5,-0.8) {};
+        \pic at ($(onlineBatch.west)+(0.17,0)$) {neticon};
+        \node[align=center, font=\sffamily\small] at ($(onlineBatch.center)+(0.58,0)$) {En línea\\$\theta$};
+        \node[red] (target) at (0.7,-0.8) {};
+        \pic at ($(target.west)+(0.17,0)$) {neticon};
+        \node[align=center, font=\sffamily\small] at ($(target.center)+(0.58,0)$) {Objetivo\\$\theta^-$};
+        \node[calc, text width=2.8cm] (targetCalc) at (5.5,-0.8) {Cálculo de $y_j$};
+        \node[salida, minimum width=2.5cm] (loss) at (-4.5,-2.75) {Pérdida TD};
 
-        % Flujo de datos desde buffer hacia red en línea y selección por a_j
-        \draw[flujo] ([xshift=-20pt]buffer.north) -- ([xshift=-20pt]buffer.north |- 0,2.25) -|
-            node[etiqueta, pos=0.25, above=2pt] {minilote: $s_j$} ([xshift=34pt]online.south);
-        \draw[flujo] ([xshift=-26pt]online.south) -- ([xshift=-26pt]online.south |- 0,1.95) -|
-            node[etiqueta, pos=0.26, above=2pt] {$Q(s_j,\cdot;\theta)$} (pick.north);
-        \draw[flujo] ([xshift=16pt]buffer.south) -- ([xshift=16pt]buffer.south |- 0,-3.55) -|
-            node[etiqueta, pos=0.38, above=2pt] {$a_j$} (pick.south);
-        \draw[flujo] (pick.east) -- ++(0.35,0) |-
-            node[etiqueta, pos=0.25, right=2pt] {$Q_j$} (loss.west);
+        \draw[flujo, -] (6.25,0.95) -- node[etiqueta, right=2pt, fill=white] {minilote} (6.25,0.35) -- (-4.5,0.35);
+        \draw[flujo] (-4.5,0.35) -- node[etiqueta, left=2pt] {$s_j,a_j$} (onlineBatch.north);
+        \draw[flujo] (target.north |- 0,0.35) -- node[etiqueta, left=2pt] {$s_{j+1}$} (target.north);
+        \draw[flujo] (5.5,0.35) -- node[etiqueta, right=2pt] {$r_{j+1},d_{j+1}$} (targetCalc.north);
 
-        % Flujo de datos hacia red objetivo y cálculo de y_j
-        \draw[flujo] (buffer.west) -- node[etiqueta, above=2pt] {$s_{j+1}$} (target.east);
-        \draw[flujo] (target.south) -- node[etiqueta, right=2pt] {$\hat Q(s_{j+1},a';\theta^-)$,\\$a'\in\mathcal{A}(s_{j+1})$} (ycalc.north);
-        \draw[flujo] ([xshift=-16pt]buffer.south) |-
-            node[etiqueta, pos=0.72, below=2pt] {$r_{j+1},$\\$d_{j+1}$} (ycalc.east);
-        \draw[flujo] (ycalc.west) -- node[etiqueta, above=2pt] {$y_j$} (loss.east);
-
-        % Gradiente y copia periódica
-        \draw[gradiente] (loss.north) -- node[etiqueta, left=2pt, pos=0.52] {actualiza $\theta$} (online.south);
-        \draw[copia] ([xshift=15pt]online.south) -- ([xshift=15pt]online.south |- 0,1.45) -|
-            node[etiqueta, pos=0.25, above=2pt] {copia cada $C$ pasos ($\theta^- \leftarrow \theta$)} (target.north);
-
-        % Leyenda de tipos de flecha
-        \draw[flujo] (-6.5,-4.25) -- (-5.4,-4.25);
-        \node[etiqueta, anchor=west] at (-5.3,-4.25) {Flujo de datos};
-        \draw[gradiente] (-1.5,-4.25) -- (-0.4,-4.25);
-        \node[etiqueta, anchor=west] at (-0.3,-4.25) {Actualización por gradiente};
-        \draw[copia] (4.3,-4.25) -- (5.4,-4.25);
-        \node[etiqueta, anchor=west] at (5.5,-4.25) {Copia periódica de parámetros};
+        \draw[flujo] (onlineBatch.south) -- node[etiqueta, right=2pt] {$Q_j$} (loss.north);
+        \draw[flujo] (target.east) -- node[etiqueta, above=2pt] {$\hat Q$} (targetCalc.west);
+        \draw[flujo] (targetCalc.south) |- node[etiqueta, right=3pt, pos=0.15] {$y_j$} (loss.east);
+        \draw[gradiente] (loss.west) -- (-7.5,-2.75) |- node[etiqueta, left=2pt, pos=0.55] {$\nabla_\theta$} (onlineBatch.west);
+        \draw[copia] (onlineBatch.east) -- node[etiqueta, above=3pt, fill=white, inner sep=1pt] {Copiar parámetros} (target.west);
     \end{tikzpicture}%
     }
-    \caption[Flujo conceptual de DQN con repetición de experiencias y red objetivo]{Flujo conceptual de \acrshort{acr-dqn} con repetición de experiencias y red objetivo. La red en línea evalúa los estados actuales para seleccionar acciones y calcular las predicciones de entrenamiento; la red objetivo evalúa el estado sucesor para construir el valor objetivo \acrshort{acr-td} \cite{mnih2015}.}
+    \caption[Flujo conceptual de DQN con repetición de experiencias y red objetivo]{Flujo de DQN con repetición de experiencias y red objetivo \cite{mnih2015}.}
     \label{fig:arquitectura_dqn}
 \end{figure}
 \FloatBarrier
@@ -1146,7 +1147,7 @@ Durante la interacción con \acrshort{acr-sumo}, la red en línea evalúa el est
 \clubpenalty=10000
 \widowpenalty=10000
 \displaywidowpenalty=10000
-La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bloque inferior izquierdo de la Figura \ref{fig:arquitectura_dqn}, se define en la Ecuación \eqref{eq:perdida_dqn}.
+La función de pérdida minimizada por \acrshort{acr-dqn}, representada en el bloque de pérdida de la Figura \ref{fig:arquitectura_dqn}, se define en la Ecuación \eqref{eq:perdida_dqn}.
 \begin{equation}
 \begin{aligned}
 \mathcal{L}(\theta) &= \mathbb{E}_{(s_j, a_j, r_{j+1}, s_{j+1}, d_{j+1}) \sim \mathcal{D}}
@@ -1160,8 +1161,6 @@ r_{j+1} + \gamma \max\limits_{a' \in \mathcal{A}(s_{j+1})} \hat{Q}(s_{j+1}, a'; 
 \end{equation}
 \endgroup
 La Ecuación \eqref{eq:perdida_dqn} expresa la pérdida esperada sobre la distribución del \textit{buffer} $\mathcal{D}$. Durante el entrenamiento, se aproxima empíricamente promediando los errores cuadráticos de un minilote de $B$ transiciones extraídas de $\mathcal{D}$. En cada muestra, la predicción actual $Q(s_j, a_j; \theta)$ se compara con el valor objetivo temporal $y_j$. Si la transición termina el episodio ($d_{j+1}=1$), $y_j$ coincide con la recompensa inmediata $r_{j+1}$. Si no es terminal ($d_{j+1}=0$), incorpora además la mayor estimación futura descontada que la red objetivo $\hat{Q}(s_{j+1}, a'; \theta^-)$ asigna sobre las fases admisibles $\mathcal{A}(s_{j+1})$.
-
-Los bloques numerados como algoritmos son pseudocódigos, no fragmentos ejecutables. Las líneas «Entrada» y «Salida» indican qué necesita el procedimiento y qué produce; la sangría identifica las instrucciones de cada ciclo.
 
 El procedimiento ilustrativo de \acrshort{acr-dqn} combina la recolección de experiencias, la selección de fases con política $\epsilon_{\mathrm{exp}}$-greedy y la optimización de la red neuronal a partir de minilotes muestreados del \gls{replay_buffer}. El Algoritmo \ref{alg:dqn} especifica este procedimiento.
 
@@ -1214,7 +1213,7 @@ En esta formulación, el agente desacopla la recolección de experiencias en el 
 \begingroup
 \widowpenalty=10000
 \displaywidowpenalty=10000
-Como alternativa a derivar la política de forma indirecta a partir de una función de valor (como en \acrshort{acr-dqn}), \acrshort{acr-drl} permite parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Bajo la formulación \acrshort{acr-mdp}, en un problema de acciones discretas la red recibe el estado $s$, calcula un vector de puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \gls{softmax} \cite{suttonRL,bishop2024deep}:
+Como alternativa a derivar la política de forma indirecta a partir de una función de valor, como en \acrshort{acr-dqn}, los métodos basados en política permiten parametrizar directamente la política del agente mediante una red neuronal $\pi(a|s; \theta)$ \cite{marlbook}. Así, mientras \acrshort{acr-dqn} estima valores $Q$, la red de política produce probabilidades de acción. Bajo la formulación \acrshort{acr-mdp}, para acciones discretas la red recibe el estado $s$, calcula puntajes continuos $z \in \mathbb{R}^m$ y los proyecta a una distribución de probabilidad mediante la función \gls{softmax} \cite{suttonRL,bishop2024deep}:
 \begin{equation}
     \pi_\theta(a_i \mid s) = \frac{e^{z_i}}{\sum_{j=1}^m e^{z_j}}
     \label{eq:softmax_policy}
@@ -1222,40 +1221,56 @@ Como alternativa a derivar la política de forma indirecta a partir de una funci
 \endgroup
 La función softmax garantiza valores estrictamente positivos que suman la unidad. En este ejemplo, las acciones corresponden a las fases semafóricas admisibles: las variables del estado de tránsito ingresan a la red y sus salidas representan probabilidades sobre dicho conjunto de acciones. Las políticas basadas en observaciones locales se formalizan posteriormente mediante \glsdisp{acr-decpomdp}{Proceso de Decisión de Markov Parcialmente Observable Descentralizado (\glsentryuseri{acr-decpomdp}, \glsentryshort{acr-decpomdp})}. La acción puede muestrearse de esa distribución durante el entrenamiento, preservando la exploración estocástica.
 
-La Figura \ref{fig:red_politica} muestra este recorrido para un agente semafórico. A diferencia de \acrshort{acr-dqn}, las salidas no son estimaciones de valor: son probabilidades que suman uno. La señal de ventaja no entra a la red para seleccionar la acción; se utiliza durante el entrenamiento para modificar los parámetros en la dirección indicada por el gradiente del logaritmo de la probabilidad de la acción observada.
+La Figura \ref{fig:red_politica} resume este recorrido de inferencia y su uso en el aprendizaje. La ventaja estimada expresa la diferencia entre el valor de una acción y el del estado bajo la misma política. No interviene en la selección: durante el entrenamiento pondera el gradiente del logaritmo de probabilidad de la acción registrada.
 
 \begin{figure}[!htbp]
     \centering
-    \resizebox{\textwidth}{!}{%
+    \resizebox{0.96\textwidth}{!}{%
     \begin{tikzpicture}[
-        node distance=0.9cm and 1.05cm,
         font=\sffamily\small,
-        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.95cm, font=\sffamily\small},
-        entrada/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=2.3cm},
-        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=2.5cm},
-        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=2.6cm},
-        accion/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=2.2cm},
-        ventaja/.style={bloque, fill=catMelocoton!42, draw=catMelocoton!80!black, text width=3.2cm},
+        bloque/.style={draw, rounded corners=4pt, thick, align=center, minimum height=0.9cm, inner sep=4pt, font=\sffamily\small},
+        entrada/.style={bloque, fill=colDatoPrimario!15, draw=colDatoPrimario!80!black, text width=1.65cm},
+        red/.style={bloque, fill=colAgente!20, draw=colAgente!80!black, text width=1.95cm},
+        salida/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=1.8cm},
+        accion/.style={bloque, fill=colEntorno!20, draw=colEntorno!80!black, text width=1.7cm},
+        ventaja/.style={bloque, fill=catMelocoton!42, draw=catMelocoton!80!black, text width=1.8cm},
+        actualiza/.style={bloque, fill=colInterfaz!22, draw=colInterfaz!80!black, text width=3.0cm},
         flecha/.style={-{Stealth[length=5pt]}, thick, draw=black!80},
-        aprendizaje/.style={flecha, dashed, draw=black!65},
-        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1pt, align=center}
+        aprendizaje/.style={-{Stealth[length=5pt]}, thick, dashed, draw=colConflicto!85!black},
+        etiqueta/.style={font=\sffamily\scriptsize, inner sep=1.5pt, align=center}
     ]
-        \node[entrada] (state) {Estado\\$S_t$};
-        \node[red, right=of state] (hidden) {Red neuronal\\parámetros $\theta$};
-        \node[salida, right=of hidden] (logits) {Puntajes\\$z_1,\ldots,z_m$};
-        \node[salida, right=of logits] (probs) {\textit{Softmax}\\$\pi_\theta(a\mid S_t)$};
-        \node[accion, right=of probs] (action) {Muestreo\\acción $A_t$};
-        \node[ventaja, below=1.3cm of probs] (adv) {Ventaja\\$\hat A_t$};
+        % Inferencia: estado a distribución y muestra de fase admisible.
+        \node[entrada] (state) at (-6.7,1.2) {Estado\\$S_t$};
+        \node[red] (policy) at (-3.6,1.2) {Red de política\\$\theta$};
+        \node[salida] (scores) at (-0.5,1.2) {Puntajes\\$z$};
+        \node[salida] (dist) at (2.6,1.2) {Softmax\\$\pi_\theta(\cdot\mid S_t)$};
+        \node[accion] (sample) at (5.7,1.2) {Muestreo\\$A_t$};
 
-        \draw[flecha] (state) -- (hidden);
-        \draw[flecha] (hidden) -- (logits);
-        \draw[flecha] (logits) -- (probs);
-        \draw[flecha] (probs) -- (action);
-        \draw[aprendizaje] (action.south) |- node[etiqueta, near start, right] {$\log\pi_\theta(A_t\mid S_t)$} (adv.east);
-        \draw[aprendizaje] (adv.west) -| node[etiqueta, near end, left] {actualiza $\theta$} (hidden.south);
+        \draw[flecha] (state) -- (policy);
+        \draw[flecha] (policy) -- (scores);
+        \draw[flecha] (scores) -- (dist);
+        \draw[flecha] (dist) -- (sample);
+
+        % Aprendizaje: log-probabilidad de la acción y ventaja separada.
+        \node[salida, text width=2.6cm, font=\sffamily\scriptsize] (logprob) at (5.7,-0.45) {Log-prob.\\$\log\pi_\theta(A_t\mid S_t)$};
+        \node[ventaja] (adv) at (-2.0,-0.45) {Ventaja $\hat A_t$\\pondera el gradiente};
+        \node[actualiza] (update) at (1.8,-2.65) {Gradiente de política};
+
+        % Entradas independientes por el borde superior de la actualización.
+        \draw[aprendizaje] (sample.south) -- (logprob.north);
+        \draw[aprendizaje] (dist.south) -- (dist.south |- logprob.west) -- (logprob.west);
+        \coordinate (updateRouteY) at ([yshift=0.28cm]update.north);
+        \coordinate (updateRight) at ([xshift=0.4cm]update.north);
+        \coordinate (updateLeft) at ([xshift=-0.4cm]update.north);
+        \draw[aprendizaje] (logprob.south) -- (logprob.south |- updateRouteY) -- (updateRight |- updateRouteY) -- (updateRight);
+        \draw[aprendizaje] (adv.south) -- (adv.south |- updateRouteY) -- (updateLeft |- updateRouteY) -- (updateLeft);
+        \coordinate (policyPort) at ([xshift=-0.7cm]policy.south);
+        \coordinate (returnLane) at (policyPort |- update.west);
+        \draw[aprendizaje] (update.west) -- (returnLane) -- (policyPort);
+
     \end{tikzpicture}%
     }
-    \caption[Red de política para un espacio discreto de acciones]{Red de política para un espacio discreto de acciones en la formulación de un \acrshort{acr-mdp}. El estado determina una distribución sobre las acciones disponibles; durante el aprendizaje, la ventaja pondera el gradiente del logaritmo de la probabilidad de la acción seleccionada \cite{suttonRL,konda2003actorcritic}.}
+    \caption[Red de política para un espacio discreto de acciones]{Red de política para un espacio discreto de acciones \cite{suttonRL,konda2003actorcritic}.}
     \label{fig:red_politica}
 \end{figure}
 
@@ -1282,7 +1297,7 @@ El Teorema del Gradiente de Política (\textit{Policy Gradient Theorem}) \cite{s
     \nabla_\theta J(\theta) \approx \hat{\mathbb{E}}_t \left[ \nabla_\theta \log \pi_\theta(A_t \mid S_t) \hat{A}_t \right]
     \label{eq:gradiente_politica}
 \end{equation}
-donde $\pi_\theta(A_t \mid S_t)$ denota la probabilidad asignada a la fase $A_t$ bajo los parámetros $\theta$, y $\hat{A}_t$ es la ventaja estimada mediante \acrshort{acr-gae}. La esperanza muestral promedia los productos correspondientes a las transiciones recolectadas. La Figura \ref{fig:red_politica} ilustra que una ventaja positiva favorece la probabilidad de la fase observada, mientras que una ventaja negativa la reduce; esta interpretación describe la dirección de la actualización, no garantiza que cada paso de entrenamiento aumente el retorno observado.
+donde $\pi_\theta(A_t \mid S_t)$ denota la probabilidad asignada a la fase $A_t$ bajo los parámetros $\theta$, y $\hat{A}_t$ es la ventaja estimada mediante \acrshort{acr-gae}. La esperanza muestral promedia los productos correspondientes a las transiciones recolectadas. Una ventaja positiva favorece la probabilidad de la fase observada, mientras que una negativa la reduce; esta interpretación describe la dirección de la actualización, no garantiza que cada paso de entrenamiento aumente el retorno observado.
 
 \subsubsection[Proximal Policy Optimization (PPO)]{Proximal Policy Optimization (\acrshort{acr-ppo}) y control de las actualizaciones}
 
@@ -1309,7 +1324,7 @@ En esta expresión, $\pi_{\theta_{\text{old}}}$ representa la política que reco
     L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t \left[ \min\left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1-\epsilon_{\mathrm{clip}}, 1+\epsilon_{\mathrm{clip}}) \hat{A}_t \right) \right]
     \label{eq:objetivo_clip_ppo}
 \end{equation}
-En la Ecuación \eqref{eq:objetivo_clip_ppo}, $\epsilon_{\mathrm{clip}}>0$ fija el margen de recorte. La función $\operatorname{clip}(x,l,u)$ conserva $x$ si está entre $l$ y $u$, devuelve $l$ si queda por debajo y $u$ si lo supera. El operador $\min$ elige el menor de los dos términos. Así, una ventaja positiva deja de incentivar aumentos de la razón por encima de $1+\epsilon_{\mathrm{clip}}$, y una ventaja negativa deja de incentivar reducciones por debajo de $1-\epsilon_{\mathrm{clip}}$. Este mecanismo limita el incentivo del objetivo; no impone una restricción estricta al cambio de la política.
+En la Ecuación \eqref{eq:objetivo_clip_ppo}, $\epsilon_{\mathrm{clip}}>0$ fija el margen de recorte. La función $\operatorname{clip}(x,l,u)$ conserva $x$ si está entre $l$ y $u$, devuelve $l$ si queda por debajo y $u$ si lo supera. Así, una ventaja positiva deja de incentivar aumentos de la razón por encima de $1+\epsilon_{\mathrm{clip}}$, y una ventaja negativa deja de incentivar reducciones por debajo de $1-\epsilon_{\mathrm{clip}}$. Este mecanismo limita el incentivo del objetivo; no impone una restricción estricta al cambio de la política.
 
 En la arquitectura actor-crítico, este objetivo de política se combina con la regresión del crítico y un término de regularización entrópica:
 \begin{equation}
@@ -1507,7 +1522,7 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
         \label{eq:no_estacionariedad}
     \end{equation}
     Esta función varía de forma continua a medida que los restantes agentes adaptan sus respectivas políticas $\boldsymbol{\pi}_{-i}$. Como formalizaron Bowling y Veloso \cite{bowling2002multiagent}, este cambio produce el problema del valor objetivo cambiante (\textit{moving target}): una política óptima frente al comportamiento vigente de los vecinos puede dejar de ser adecuada en cuanto estos ajustan sus parámetros. Aunque el sistema global puede seguir describiéndose mediante un juego markoviano, la dinámica observada por un agente local se vuelve no estacionaria cuando las políticas de los demás agentes cambian y no forman parte de su información. En consecuencia, las condiciones de convergencia de los métodos de agente único basados en \acrshort{acr-mdp} estacionarios dejan de ser suficientes~\cite{foerster2017,liang2025marlreview}.
-    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje, amortiguando las espirales hacia el equilibrio de Nash ($\pi^*(a) = 1/3$), como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En dicha figura, la diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. El Agente 1 se lee en los ejes inferior e izquierdo rotulados ($\pi_1(\text{Piedra})$ y $\pi_1(\text{Papel})$); el Agente 2, en las escalas invertidas superior y derecha, que carecen de rótulo en la figura original. Cada punto representa una distribución sobre las tres acciones disponibles y las trayectorias muestran la evolución de las políticas durante el entrenamiento. Los marcadores centrales señalan el equilibrio de Nash teórico ($\pi^*(a) = 1/3$ para cada acción), aunque no constituyen por sí solos una demostración de convergencia \cite{bowling2002multiagent,marlbook}. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes. Si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
+    En juegos competitivos o de suma cero como Piedra, Papel o Tijera, el aprendizaje independiente con tasas fijas genera trayectorias oscilatorias alrededor del equilibrio. Algoritmos especializados como \glsdisp{acr-wolf-phc}{Ascenso de Colina en la Política con Ganar o Aprender Rápido (\glsentryuseri{acr-wolf-phc}, \glsentryshort{acr-wolf-phc})} modulan adaptativamente su tasa de aprendizaje para amortiguar esas oscilaciones \cite{bowling2002multiagent}, como ilustra la Figura \ref{fig:no_estacionariedad_papel_piedra}. En dicha figura, la diagonal discontinua divide el gráfico en dos símplex de probabilidad, uno para cada agente. El Agente 1 se lee en los ejes inferior e izquierdo, que muestran las probabilidades de «Piedra» y «Papel», respectivamente; las escalas invertidas superior y derecha se interpretan para el Agente 2 aunque no están rotuladas. Cada punto representa una distribución sobre las tres acciones disponibles y las trayectorias muestran la evolución de las políticas durante el entrenamiento. Las dos estrellas, identificadas en la leyenda como «Política convergida», quedan cerca del equilibrio de Nash teórico ($\pi^*(a) = 1/3$ para cada acción); el gráfico ilustra el acercamiento que el algoritmo puede producir, pero no demuestra la convergencia. En el control semafórico, la no estacionariedad se manifiesta cuando un cruce extiende su verde para permitir el paso de un grupo de vehículos y modifica las llegadas a los cruces siguientes. Si los agentes aprenden sin coordinación, corren el riesgo de generar variaciones de las colas que dificulten el servicio en otros cruces.
 
     \item \textbf{Observabilidad parcial:} bajo el formalismo \acrshort{acr-decpomdp}, cada semáforo basa su inferencia en información local acotada, desconociendo el estado completo de la red vial y las decisiones simultáneas de cruces distantes, lo cual dificulta la estimación del valor de sus decisiones.
 
@@ -1516,8 +1531,8 @@ La transición desde el aprendizaje individual hacia el dominio multiagente intr
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.62\textwidth]{imagenes/non_stationary_papel_piedra.jpeg}
-    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución ilustrativa de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en Piedra, Papel o Tijera frente al equilibrio de Nash teórico ($\pi^*(a) = 1/3$) \cite{bowling2002multiagent,marlbook}. Véase la Sección \ref{sec:creditos_licencias} para los créditos.}
+    \includegraphics[width=0.62\textwidth]{imagenes/wolfphc_rps_own_es.pdf}
+    \caption[Evolución de las políticas de dos agentes bajo WoLF-PHC en Piedra, Papel o Tijera]{Evolución ilustrativa de las políticas de dos agentes con el algoritmo \acrshort{acr-wolf-phc} en Piedra, Papel o Tijera frente al equilibrio de Nash teórico ($\pi^*(a) = 1/3$). Adaptación de las diapositivas de Albrecht, Christianos y Schäfer. Véase la Sección \ref{sec:creditos_licencias}.}
     \label{fig:no_estacionariedad_papel_piedra}
 \end{figure}
 \FloatBarrier
@@ -1765,11 +1780,11 @@ La garantía de \acrshort{acr-hatrpo} no se transfiere automáticamente al susti
         \draw[arr, dashed] (pink) -- (pinnew);
 
         % Propagación secuencial de M con interrupción explícita por agentes omitidos
-        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi1new.east) -- node[above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:2}}$} (pi2new.west);
+        \draw[arr, draw=colDatoPrimario!72!black, thick] (pi1new.east) -- node[above=10pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:2}}$} (pi2new.west);
         \draw[draw=colDatoPrimario!72!black, thick] (pi2new.east) -- (7.15, 0);
         \node[font=\large, text=black!60] at (7.85, 2.5) {$\cdots$};
         \node[font=\large, text=colDatoPrimario!72!black] at (7.85, 0) {$\cdots$};
-        \draw[arr, draw=colDatoPrimario!72!black, thick] (8.55, 0) -- node[pos=0.44, above=2pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:n}}$} (pinnew.west);
+        \draw[arr, draw=colDatoPrimario!72!black, thick] (8.55, 0) -- node[pos=0.44, above=10pt, align=center, font=\scriptsize, text=colDatoPrimario!72!black] {Factor de ventaja\\$M_{i_{1:n}}$} (pinnew.west);
     \end{tikzpicture}
     \caption[Esquema de actualización secuencial de HAPPO]{Esquema teórico de actualización secuencial de \acrshort{acr-happo} con ventaja conjunta estimada $\hat{A}$.}
     \label{fig:happo_sequential}

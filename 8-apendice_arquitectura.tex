@@ -1,7 +1,7 @@
 \chapter{Arquitectura de software y especificaciones experimentales}
 \label{apendice:arquitectura_software}
 
-Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, las arquitecturas y los parámetros de ejecución de la búsqueda de configuraciones y la evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. El escenario \texttt{mendoza\_220k\_balance} difiere en red y demanda de la variante anterior O2/P2. Para Mendoza balance se documentan por separado el plan fijo histórico de 5\,s y el plan canónico de 4\,s, que comparten red y demanda.
+Este apéndice complementa el Capítulo \ref{capitulo:metodologia} documentando el diseño orientado a objetos del paquete \texttt{marlTLC}, las especificaciones detalladas del escenario urbano de Mendoza, las arquitecturas y los parámetros de ejecución de la búsqueda de configuraciones y la evaluación, y las formulaciones algebraicas del codificador de observaciones y de la pérdida del crítico. El escenario \texttt{mendoza\_220k\_balance} difiere en red y demanda de la variante anterior O2/P2. Para esta configuración se documentan por separado el plan fijo histórico de 5\,s y el plan canónico de 4\,s, que comparten red y demanda.
 
 \section{Diseño orientado a objetos del entorno de simulación}
 \label{sec:apendice_uml_entorno}
@@ -199,9 +199,9 @@ La especificación de \texttt{marlTLC} utiliza los siguientes mecanismos de dise
 \section{Parámetros de SUMO y programas semafóricos de referencia}
 \label{sec:parametros_sumo}
 
-En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. El manifiesto \path{nets/synthetic_fixed.manifest.json} de \texttt{marl-tlc} identifica los archivos de los programas fijos sintéticos de la Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia}. Estos programas tienen amarillos de 4\,s y ciclos de 90\,s.
+En todos los experimentos de aprendizaje sintéticos, el parámetro \path{waiting_time_memory} de \acrshort{acr-sumo} —que fija la ventana temporal de la métrica \path{getAccumulatedWaitingTime} \cite{SUMO2026_TraCIVehicle}— se establece en $1.000\,\text{s}$. El manifiesto \path{nets/synthetic_fixed.manifest.json} de \texttt{marl-tlc} identifica los archivos de los programas fijos sintéticos de la Tabla \ref{tab:tiempos_semaforicos_base} del Capítulo \ref{capitulo:metodologia}.
 
-\subsection{Mendoza balance: red, demanda y evidencia operacional}
+\subsection{Escenario de Mendoza: red, demanda y evidencia operacional}
 \label{sec:procedencia_mendoza}
 \label{subsec:procedimiento_demanda_mendoza}
 
@@ -227,7 +227,7 @@ El plan canónico parte de los 74 programas históricos de 5\,s. Conserva la sec
 \end{equation}
 Primero se toma la parte entera de cada cuota. Los segundos restantes se asignan a los intervalos con mayor parte fraccionaria, resolviendo los empates según el orden del programa. Se verifica que cada verde dure al menos cinco segundos y que el ciclo sume 90 segundos. Por ejemplo, con este reparto los verdes de Benegas--Civit, que duraban 18 y 60\,s, pasan a durar 18 y 62\,s.
 
-Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} conservan la versión histórica de 5 s y no describen el plan canónico de 4 s. En sus secuencias cronológicas, $V$ identifica una fase con señales verdes, $A$ una fase que contiene amarillo y $R$ el estado de todo rojo; el número siguiente es la duración en segundos. Los estados de cada señal del plan histórico se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}; el plan canónico se conserva en el \texttt{add.xml} y el manifiesto citados.
+Las Tablas \ref{tab:mendoza_programas_balance_1}--\ref{tab:mendoza_programas_balance_3} conservan la versión histórica de 5\,s, no el plan canónico. En sus secuencias cronológicas, $V$ identifica una fase con señales verdes, $A$ una fase que contiene amarillo y $R$ el estado de todo rojo; el número siguiente es la duración en segundos. Los estados de cada señal del plan histórico se conservan en \path{datos/mendoza220k_balance/fuentes/programas.json}; el plan canónico se conserva en el \texttt{add.xml} y el manifiesto citados.
 
 \begin{table}[H]\centering\footnotesize
 \caption{Programas semafóricos históricos de 5 s, controladores 1--25.}\label{tab:mendoza_programas_balance_1}
@@ -273,7 +273,7 @@ La cota inferior es $0{,}2b_{od,h}$ y la superior habitual, $3b_{od,h}$. Para lo
 Los topes $c_a$ se construyen a partir de una referencia supuesta de $1.050$ vehículos por hora y carril, multiplicada por una fracción de servicio. En conexiones semaforizadas, esa fracción es $(t_G+0{,}3t_g)/90$, donde $t_G$ y $t_g$ son los segundos de verde protegido y permisivo. En conexiones no semaforizadas, vale $0{,}1$ para los estados minoritarios \texttt{m}/\texttt{o} de SUMO y uno para los demás. Para cada movimiento se suman los aportes de sus carriles; para cada acceso, los máximos por carril. Sobre los accesos críticos se aplica además el menor entre ese valor y los topes de la Tabla \ref{tab:mendoza_topes_diseno}. Son supuestos de construcción del escenario, no capacidades medidas ni una estimación de almacenamiento vehicular.
 
 \begin{table}[H]\centering\small
-\caption{Topes adicionales de diseño para la asignación de demanda de Mendoza balance.}
+\caption{Topes adicionales de diseño para la asignación de demanda del escenario de Mendoza.}
 \label{tab:mendoza_topes_diseno}
 \begin{tabular}{@{}llr@{}}\hline
 Acceso o receptor & Tramo SUMO & Tope (vehículos/hora) \\\hline
@@ -292,13 +292,13 @@ El cociente entre la suma de incrementos positivos de flujo y el total horario d
 
 Las copias de los constructores de la red y la demanda, el diseño y sus hashes se conservan en \path{datos/mendoza220k_balance/fuentes/construccion/}. Los programas originales se ejecutan dentro de la estructura de \texttt{marl-tlc}. Su archivo permite identificar las reglas aplicadas, mientras que el manifiesto canónico identifica las entradas finales. La Tabla \ref{tab:mendoza_archivos_balance} conserva los hashes históricos de 5 s.
 
-\subsubsection[Configuración y evidencia canónica de 4 s]{Configuración y evidencia canónica de 4\,s}
+\subsubsection{Configuración y evidencia canónica}
 \label{sec:mendoza_evidencia_final}
 
 Las configuraciones canónicas de 2\,h y 12\,h están en \path{nets/Mendoza/mendoza_220k_balance/}. Parten de una red vacía por separado y usan paso de 1\,s, \path{time-to-teleport}=300\,s, \path{max-num-teleports}=0, \path{max-depart-delay}=$-1$ y \path{collision.action=warn}. La Tabla \ref{tab:mendoza_opciones_balance} resume las opciones explícitas de ejecución compartidas con las configuraciones base archivadas en \path{datos/mendoza220k_balance/fuentes/}. La tabla conserva el rótulo «semilla de desarrollo» de la configuración de origen, aunque 104729 es la única semilla usada en esta comprobación. No se completan opciones ausentes con valores predeterminados supuestos.
 
 \begin{table}[H]\centering\small
-\caption[Opciones explícitas de ejecución en las configuraciones de 4 s.]{Opciones explícitas de ejecución en las configuraciones canónicas de 4\,s (compartidas con las configuraciones base de 5\,s).}\label{tab:mendoza_opciones_balance}
+\caption[Opciones explícitas en la configuración canónica.]{Opciones explícitas de ejecución en las configuraciones canónicas de Mendoza, compartidas con las configuraciones base históricas de 5\,s.}\label{tab:mendoza_opciones_balance}
 \input{datos/mendoza220k_balance/tabla_opciones.tex}
 \end{table}
 
@@ -307,7 +307,7 @@ El directorio \path{experiments/mendoza_scenario/results/mendoza_balance_fixed_2
 \subsubsection[Evidencia histórica de 5 s]{Evidencia histórica de 5\,s}
 \label{subsec:mendoza_historico_5s}
 
-La evidencia de 5\,s se conserva por separado y no se combina con la comprobación de 4\,s. La Tabla \ref{tab:mendoza_sintesis_historica} resume la campaña histórica; las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} detallan cada semilla.
+Los resultados históricos se conservan por separado y no se combinan con la comprobación del plan canónico. La Tabla \ref{tab:mendoza_sintesis_historica} resume la campaña histórica; las Tablas \ref{tab:mendoza_casos_balance_2h} y \ref{tab:mendoza_casos_balance_12h} detallan cada semilla.
 
 \begin{table}[H]\centering\small
 \caption[Síntesis histórica de 5 s con tres semillas confirmatorias.]{Síntesis histórica de 5\,s con tres semillas confirmatorias.}\label{tab:mendoza_sintesis_historica}
@@ -323,7 +323,7 @@ La evidencia de 5\,s se conserva por separado y no se combina con la comprobaci�
 \input{datos/mendoza220k_balance/tabla_casos_12h.tex}
 \end{table}
 
-La primera fila de las tablas de casos corresponde a la semilla de desarrollo 104729; las tres restantes, a las confirmatorias. La unidad confirmatoria histórica es la semilla, no cada combinación de semilla y ventana. Las tres confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Con la semilla 104729, la evidencia histórica registra 80,78\% (2\,h) y 84,94\% (12\,h); la diferencia descriptiva respecto de la comprobación de 4\,s es $+0{,}08$ y $+0{,}14$ puntos porcentuales. El cambio de amarillos también ajustó los verdes.
+La primera fila de las tablas de casos corresponde a la semilla de desarrollo 104729; las tres restantes, a las confirmatorias. La unidad confirmatoria histórica es la semilla, no cada combinación de semilla y ventana. Las tres confirmatorias completaron ambos horizontes con cero teletransportes, colisiones registradas y descartes, y con una tasa de completitud de al menos $0{,}75$. Con la semilla 104729, la evidencia histórica registra 80,78\% (2\,h) y 84,94\% (12\,h); la diferencia descriptiva respecto de la comprobación canónica es $+0{,}08$ y $+0{,}14$ puntos porcentuales. El cambio de amarillos también ajustó los verdes.
 
 \section{Especificaciones para reproducir los experimentos}
 \label{sec:apendice_reproduccion}
@@ -641,30 +641,30 @@ Con $\log(0)=-\infty$, las acciones no permitidas reciben probabilidad cero desp
 
 \subsection{Preparación de las figuras de escenarios}
 
-Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. La vista del dominio urbano de Mendoza (Figura \ref{fig:dominio_mendoza}) combina una captura de la red en \acrshort{acr-sumo} con anotaciones de las avenidas de referencia y del acceso asociado a la zona \acrshort{acr-taz} 28. La cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas de Mendoza balance, generada a partir de los archivos \acrshort{acr-xml} del escenario, se presenta por separado en la Figura \ref{fig:mendoza_taz}.
+Las redes sintéticas se representan con TikZ a partir de los XML de SUMO mediante \texttt{metodologia\_generar\_redes.py}. El generador conserva los hashes de las fuentes, verifica los conteos de agentes, tramos y carriles y representa los sentidos de circulación. Las conexiones entre centros de nodos se muestran con anchos convencionales y escala propia por panel. La vista del dominio urbano de Mendoza (Figura \ref{fig:dominio_mendoza}) combina una captura de la red en \acrshort{acr-sumo} con anotaciones de las avenidas de referencia y del acceso asociado a la zona \acrshort{acr-taz} 28. La cámara 169 está fuera del dominio y no se le asigna una posición en la figura. La vista completa de las zonas del escenario de Mendoza, generada a partir de los archivos \acrshort{acr-xml} del escenario, se presenta por separado en la Figura \ref{fig:mendoza_taz}.
 
 \Needspace{9\baselineskip}
 \subsection{Vistas documentales de los escenarios}
 
-La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos fijos vigentes, con amarillos de 4\,s y ciclos de 90\,s. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} representa las TAZ del escenario balance mediante sus tramos asociados. Las marcas no son límites territoriales.
+La Figura \ref{fig:tiempos_semaforicos_base} permite consultar la distribución temporal de los programas sintéticos fijos vigentes. Los intervalos $V_i$, $A_i$ y $R$ corresponden a verde, amarillo y todo rojo, respectivamente. La Figura \ref{fig:mendoza_taz} representa las TAZ del escenario de Mendoza mediante sus tramos asociados. Las marcas no son límites territoriales.
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_tiempos_semaforicos.tex}
-\caption{Distribución de los intervalos de verde, amarillo y todo rojo en los programas sintéticos fijos vigentes (ciclo de 90 segundos y amarillos de 4\,s).}
+\caption{Distribución de los intervalos de verde, amarillo y todo rojo en los programas sintéticos fijos vigentes.}
 \label{fig:tiempos_semaforicos_base}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \input{imagenes/metodologia_mendoza_balance_taz.tex}
-\caption{Zonas de análisis de tránsito de Mendoza balance, representadas mediante sus tramos asociados. Los identificadores van de 0 a 38, salvo 6 y 9; las marcas no representan límites territoriales.}
+\caption{Zonas de análisis de tránsito del escenario de Mendoza, representadas mediante sus tramos asociados. Los identificadores van de 0 a 38, salvo 6 y 9; las marcas no representan límites territoriales.}
 \label{fig:mendoza_taz}
 \end{figure}
 
 \section{Créditos y licencias}\label{sec:creditos_licencias}
 
-La Figura \ref{fig:no_estacionariedad_papel_piedra} sigue la de Albrecht, Christianos y Schäfer \cite{marlbook}. Un \href{https://github.com/marl-book/slides/blob/b3ca17ba/source/images/chapter6/wolfphc_rps_own.pdf}{gráfico equivalente} se distribuye en el \href{https://github.com/marl-book/slides}{repositorio de las diapositivas oficiales}. A continuación se reproduce la licencia MIT de ese repositorio.
+La Figura \ref{fig:no_estacionariedad_papel_piedra} adapta el \href{https://github.com/marl-book/slides/blob/b3ca17ba/source/images/chapter6/wolfphc_rps_own.pdf}{archivo oficial} de las diapositivas de Albrecht, Christianos y Schäfer \cite{marlbook}. Se tradujeron y redistribuyeron los rótulos sin alterar las trayectorias ni los datos. A continuación se reproduce la \href{https://github.com/marl-book/slides/blob/b3ca17ba/LICENSE}{licencia MIT} del repositorio.
 
 {\small\setstretch{1}
 \noindent MIT License --- Copyright (c) 2024 marl-book\par
